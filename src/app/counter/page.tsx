@@ -34,6 +34,7 @@ function CounterPage() {
         </button>
       </div>
       {value}
+      <img src="" />
     </div>
   );
 }
