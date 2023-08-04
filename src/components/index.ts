@@ -1,1 +1,1 @@
-export { default as ReduxProvider } from "./reduxProvider";
+export { default as StoreProvider } from "./storeProvider";
