@@ -13,9 +13,8 @@ import {
 function CounterPage() {
   const counter = useAppSelector(selectCount);
   const dispatch = useAppDispatch();
-  const { value } = counter;
 
-  function handleIncrement() {
+  function incrementClick() {
     dispatch(increment());
   }
 
@@ -26,15 +25,22 @@ function CounterPage() {
   return (
     <div className="flex flex-col items-center">
       <div className="flex my-4 space-x-2">
-        <button className="btn btn-primary w-1/2" onClick={handleIncrement}>
+        <button
+          type="button"
+          className="btn btn-primary w-1/2"
+          onClick={incrementClick}
+        >
           +
         </button>
-        <button className="btn btn-primary w-1/2" onClick={handleDecrement}>
+        <button
+          type="button"
+          className="btn btn-primary w-1/2"
+          onClick={handleDecrement}
+        >
           -
         </button>
       </div>
-      {value}
-      <img src="" />
+      {counter.value}
     </div>
   );
 }
