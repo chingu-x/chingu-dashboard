@@ -27,7 +27,8 @@
     "@typescript-eslint/naming-convention": [
       "error",
       {
-        "selector": "interface", "format": ["PascalCase"]
+        "selector": "interface",
+        "format": ["PascalCase"]
       }
     ],
     "react/jsx-pascal-case": 2,
