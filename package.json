@@ -13,6 +13,7 @@
     "cypress": "cypress open"
   },
   "dependencies": {
+    "@prisma/client": "5.1.1",
     "@reduxjs/toolkit": "^1.9.5",
     "next": "13.4.12",
     "next-auth": "^4.22.3",
