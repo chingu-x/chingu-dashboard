@@ -13,9 +13,6 @@ yarn
 
 Create a `.env` file at the root of your project using the `.env.example` file to know which keys to add
 
-You need to have [Postgres](https://www.postgresql.org/download/) installed on your computer.
-The link will send you to the download page in the postgresql site
-
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -23,11 +20,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 First, run the development server:
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
