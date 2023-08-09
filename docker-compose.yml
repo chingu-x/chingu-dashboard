@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  app:
+    container_name: app
+    build: 
+      dockerfile: Dockerfile.dev
+      context: .
+    ports:
+      - 3000:3000
