@@ -8,6 +8,7 @@ services:
       context: .
     ports:
       - 3000:3000
+      - 5555:5555
     depends_on:
       - db
   db:
@@ -28,7 +29,7 @@ services:
     depends_on:
       - db
     ports:
-      - "5555:80"
+      - "4000:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: $PGADMIN_EMAIL
       PGADMIN_DEFAULT_PASSWORD: $PGADMIN_PW
