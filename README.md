@@ -46,7 +46,15 @@ those in its name).
 
 If you have docker desktop, you can just use the cli in the app container using the gui (way easier).
 
-To open pgadmin, go to localhost:5000. Put in the credentials, as written in the .env file. Again, if you have docker desktop, you can just open from the gui.
+To open pgadmin, go to localhost:4000. Put in the credentials, as written in the .env file. Again, if you have docker desktop, you can just open from the gui.
+
+To run prisma studio, follow the same steps above to invoke a command inside your docker container.
+
+```
+docker ps (to find the id of your container)
+docker exec -it <id of app container> sh
+npx prisma studio
+```
 
 When done with your session, run the following command:
 
