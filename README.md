@@ -56,6 +56,8 @@ docker exec -it <id of app container> sh
 npx prisma studio
 ```
 
+**It is important to run your migration before running prisma studio or it will error**
+
 When done with your session, run the following command:
 
 ```
