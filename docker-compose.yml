@@ -15,12 +15,11 @@ services:
     container_name: db
     image: postgres:latest
     hostname: $HOSTNAME
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
       POSTGRES_DB: $POSTGRES_DB
+      PGPORT: 5433
     volumes:
       - postgres-data:/var/lib/postgresql/data
   pgadmin:
