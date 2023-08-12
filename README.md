@@ -13,8 +13,56 @@ yarn
 
 Create a `.env` file at the root of your project using the `.env.example` file to know which keys to add
 
-You need to have [Postgres](https://www.postgresql.org/download/) installed on your computer.
-The link will send you to the download page in the postgresql site
+
+Add these env variables specifically (it's important to have exactly the same so we all run the same db in docker):
+```
+DATABASE_URL=postgresql://chingu:chingu@chingu:5432/dashboard?schema=public
+HOSTNAME=chingu
+POSTGRES_USER=chingu
+POSTGRES_PASSWORD=chingu
+POSTGRES_DB=dashboard
+PGADMIN_EMAIL=chinguadmin@chingu.com
+PGADMIN_PW=chingu5432
+```
+
+Run these commands when starting up your project:
+
+```
+docker compose build
+docker compose up
+```
+
+Open a 2nd terminal window and run these commands:
+
+```
+docker ps
+docker exec -it <id of app container> sh
+npx prisma migrate dev
+```
+
+Docker ps should list 3 containers (assuming you're not running anything else). If you have more, you can just look for 3 that were created recently. The
+id you want should be under a image name of something like chingu-dashboard_app (it should be whatyounamedyourprojectfolder-app). The other 2 image names will have pgadmin and postgres in it (look for the one without
+those in its name).
+
+If you have docker desktop, you can just use the cli in the app container using the gui (way easier).
+
+To open pgadmin, go to localhost:4000. Put in the credentials, as written in the .env file. Again, if you have docker desktop, you can just open from the gui.
+
+To run prisma studio, follow the same steps above to invoke a command inside your docker container.
+
+```
+docker ps (to find the id of your container)
+docker exec -it <id of app container> sh
+npx prisma studio
+```
+
+**It is important to run your migration before running prisma studio or it will error**
+
+When done with your session, run the following command:
+
+```
+docker compose down
+```
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -23,11 +71,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 First, run the development server:
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
