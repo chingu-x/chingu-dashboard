@@ -31,13 +31,10 @@
         "format": ["PascalCase"]
       }
     ],
-    "react/jsx-pascal-case": 2,
-    "react/function-component-definition": 2,
-    "react/destructuring-assignment": 2,
+    "react/function-component-definition": [2, { "namedComponents": "function-declaration" }],
+    "react/destructuring-assignment": [2, "always"],
     "react/button-has-type": 2,
-    "react/boolean-prop-naming": 2,
     "react/no-array-index-key": 2,
-    "import/order": 2,
-    "react/jsx-handler-names": 2
+    "import/order": 2
   }
 }
