@@ -14,9 +14,9 @@ yarn
 Create a `.env` file at the root of your project using the `.env.example` file to know which keys to add
 
 
-Add these env variables specifically (it's important to have exactly the same so we all run the same db in docker):
+Add these env variables specifically (it's important to have exactly the same because of how docker is configured):
 ```
-DATABASE_URL=postgresql://chingu:chingu@chingu:5432/dashboard?schema=public
+DATABASE_URL=postgresql://chingu:chingu@chingu:5433/dashboard?schema=public
 HOSTNAME=chingu
 POSTGRES_USER=chingu
 POSTGRES_PASSWORD=chingu
@@ -57,6 +57,8 @@ npx prisma studio
 ```
 
 **It is important to run your migration before running prisma studio or it will error**
+
+You can access prisma studio at localhost:5555
 
 When done with your session, run the following command:
 
