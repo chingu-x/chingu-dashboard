@@ -9,8 +9,8 @@
     "lint": "next lint",
     "prettier": "prettier . --write",
     "prepare": "husky install",
-    "test": "jest --watch",
-    "cypress": "cypress open"
+    "test": "jest",
+    "cypress": "cypress run"
   },
   "dependencies": {
     "@prisma/client": "5.1.1",
