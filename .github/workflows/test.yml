@@ -3,7 +3,7 @@ name: Lint & Test Workflow
 on:
   pull_request:
     branches:
-      - main
+      [main, dev]
 
 jobs:
   build:
