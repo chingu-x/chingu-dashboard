@@ -3,12 +3,13 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-on: pull_request
+on:
+  pull_request:
+    branches:
+        [main, dev]
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    outputs:
-      url: ${{ steps.preview-deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v3
       - name: install Vercel CLI
