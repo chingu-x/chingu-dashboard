@@ -1,1 +1,1 @@
-export const frontend = ["JavaScript", "React", "Vue", "Angular", "TypeScript"];
+export const frontend: string[] = ["JavaScript", "React", "Vue", "Angular", "TypeScript"];

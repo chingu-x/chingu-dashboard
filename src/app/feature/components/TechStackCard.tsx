@@ -7,7 +7,7 @@ export default function TechStackCard() {
         <h2 className="text-xl font-semibold text-neutral-900 mt-5 ml-5">
           Frontend
         </h2>
-        <button type="button" className="btn mt-5 mr-5">
+        <button type="button" className="btn mt-5 mr-5 capitalize">
           Edit
         </button>
       </div>
