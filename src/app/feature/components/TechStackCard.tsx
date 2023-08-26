@@ -13,9 +13,11 @@ export default function TechStackCard() {
       </div>
       <div className="h-40 overflow-y-auto ml-5 mr-5 mt-6 mb-5">
         <ul className="text-neutral-900">
-          {frontend.map(element => 
-            <li className="text-base mb-5" key={element}>{element}</li>
-            )}
+          {frontend.map((element) => (
+            <li className="text-base mb-5" key={element}>
+              {element}
+            </li>
+          ))}
         </ul>
       </div>
     </div>
