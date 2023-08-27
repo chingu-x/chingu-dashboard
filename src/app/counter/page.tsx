@@ -34,7 +34,7 @@ function CounterPage() {
         </button>
         <button
           type="button"
-          className="btn btn-primary w-1/2"
+          className="btn btn-secondary w-1/2"
           onClick={handleDecrement}
         >
           -
