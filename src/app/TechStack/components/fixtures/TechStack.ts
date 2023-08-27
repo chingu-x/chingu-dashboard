@@ -1,3 +1,12 @@
+export const cards = [
+  "Frontend",
+  "CSS Library",
+  "Backend",
+  "Project Management",
+  "Server-Side",
+  "Hoisting",
+];
+
 export const frontend = [
   { id: 1, value: "JavaScript", users: ["Tim", "John"] },
   { id: 2, value: "React", users: ["John"] },

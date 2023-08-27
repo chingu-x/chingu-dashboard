@@ -1,8 +1,8 @@
-import { frontend } from "./fixtures/TechStackCard";
+import { frontend } from "./fixtures/TechStack";
 import { Avatar } from "@/components";
 
 interface TechStackCardProps {
-  title: string
+  title: string;
 }
 
 export default function TechStackCard({ title }: TechStackCardProps) {
