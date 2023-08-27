@@ -3,11 +3,11 @@
 "use client";
 
 import {
+  decrement,
+  increment,
   selectCount,
   useAppDispatch,
   useAppSelector,
-  increment,
-  decrement,
 } from "@/store";
 
 function CounterPage() {
