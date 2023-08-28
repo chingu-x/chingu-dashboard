@@ -3,8 +3,8 @@ import { TechStackCard } from ".";
 
 export default function TechStackContainer() {
   return (
-    <div className="card w-tech-card-container bg-primary p-10">
-      <ul className="grid grid-cols-3 gap-y-20">
+    <div className="card max-w-tech-card-container bg-primary p-10">
+      <ul className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-y-20 gap-x-16">
         {Object.keys(techStack).map((cardType) => (
           <li className="mx-auto" key={cardType}>
             <TechStackCard
