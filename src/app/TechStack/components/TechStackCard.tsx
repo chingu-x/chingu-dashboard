@@ -1,11 +1,12 @@
-import { frontend } from "./fixtures/TechStack";
+import { TechItem } from "./fixtures/TechStack";
 import { Avatar } from "@/components";
 
 interface TechStackCardProps {
   title: string;
+  data: TechItem[];
 }
 
-export default function TechStackCard({ title }: TechStackCardProps) {
+export default function TechStackCard({ title, data }: TechStackCardProps) {
   return (
     <div className="card w-96 text-primary-content bg-neutral-100 rounded-lg">
       <div className="flex flex-row justify-between">
@@ -22,7 +23,7 @@ export default function TechStackCard({ title }: TechStackCardProps) {
       </div>
       <div className="h-40 overflow-y-auto mx-5 mt-6 mb-5">
         <ul className="text-neutral-900 last:mb-0">
-          {frontend.map((element) => (
+          {data.map((element) => (
             <li
               className="text-base mb-5 last:mb-0 relative grid grid-cols-[1fr,auto] items-center"
               key={element.id}
