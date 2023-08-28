@@ -4,7 +4,13 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  theme: {},
+  theme: {
+    extend: {
+      width: {
+        "tech-card-container": "85.5625rem",
+      },
+    },
+  },
   daisyui: {
     themes: [
       {
