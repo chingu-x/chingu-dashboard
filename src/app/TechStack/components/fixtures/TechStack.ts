@@ -1,4 +1,4 @@
-type CardType = 
+type CardType =
   | "Frontend"
   | "CSS Library"
   | "Backend"
@@ -7,13 +7,13 @@ type CardType =
   | "Hosting";
 
 export interface TechItem {
-    id: number;
-    value: string;
-    users: string[];
+  id: number;
+  value: string;
+  users: string[];
 }
 
 export const techStack: Record<CardType, TechItem[]> = {
-  'Frontend': [
+  Frontend: [
     { id: 1, value: "JavaScript", users: ["Tim", "John"] },
     { id: 2, value: "React", users: ["John"] },
     { id: 3, value: "Vue", users: ["Myke", "Josh", "Jack"] },
@@ -27,7 +27,7 @@ export const techStack: Record<CardType, TechItem[]> = {
     { id: 4, value: "Vanilla CSS", users: ["John"] },
     { id: 5, value: "Materialize", users: ["Jack", "John"] },
   ],
-  'Backend': [
+  Backend: [
     { id: 1, value: "Node", users: ["Tim", "John"] },
     { id: 2, value: "NET", users: ["John"] },
     { id: 3, value: "Ruby", users: ["Myke", "Josh", "Jack"] },
@@ -48,7 +48,7 @@ export const techStack: Record<CardType, TechItem[]> = {
     { id: 4, value: "Linode", users: ["John"] },
     { id: 5, value: "Google Cloud", users: ["Jack", "John"] },
   ],
-  'Hosting': [
+  Hosting: [
     { id: 1, value: "Heroku", users: ["Tim", "John"] },
     { id: 2, value: "Netlify", users: ["John"] },
     { id: 3, value: "Github", users: ["Myke", "Josh", "Jack"] },
