@@ -3,7 +3,7 @@ import { TechStackCard } from ".";
 
 export default function TechStackContainer() {
   return (
-    <div className="card max-w-tech-card-container bg-primary p-10">
+    <div className="card max-w-tech-card-container bg-primary-100 p-10">
       <ul className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-y-20 justify-items-stretch">
         {Object.keys(techStack).map((cardType, index) => (
           <li
@@ -12,8 +12,8 @@ export default function TechStackContainer() {
               index % 3 === 0
                 ? "justify-self-start"
                 : index % 3 === 1
-                ? "justify-self-center"
-                : "justify-self-end"
+                  ? "justify-self-center"
+                  : "justify-self-end"
             }`}
           >
             <TechStackCard

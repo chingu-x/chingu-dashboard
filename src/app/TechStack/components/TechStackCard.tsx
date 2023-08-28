@@ -9,7 +9,7 @@ interface TechStackCardProps {
 
 export default function TechStackCard({ title, data }: TechStackCardProps) {
   return (
-    <div className="card w-72 sm:w-96 text-primary-content bg-neutral-100 rounded-lg">
+    <div className="card w-72 sm:w-96 text-primary-content bg-neutral-50 rounded-lg">
       <div className="flex flex-row justify-between">
         <h3 className="text-xl font-semibold text-neutral-900 mt-5 ml-5 self-center">
           {title}
