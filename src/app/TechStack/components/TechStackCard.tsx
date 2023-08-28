@@ -24,7 +24,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         </button>
       </div>
       <div className="h-40 overflow-y-auto mx-5 mt-6 mb-5">
-        <ul className="text-neutral-900 last:mb-0">
+        <ul className="text-neutral-900">
           {data.map((element) => (
             <li
               className="text-base mb-5 last:mb-0 relative grid grid-cols-[1fr,auto] items-center"
