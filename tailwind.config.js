@@ -5,9 +5,11 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {width: {
-      'tech-card-container': '85.5625rem',
-    },},
+    extend: {
+      width: {
+        "tech-card-container": "85.5625rem",
+      },
+    },
   },
   plugins: [require("daisyui")],
 };
