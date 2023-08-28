@@ -43,4 +43,3 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     </div>
   );
 }
-

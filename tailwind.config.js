@@ -6,7 +6,7 @@ module.exports = {
   ],
   theme: {
     extend: {
-      width: {
+      maxWidth: {
         "tech-card-container": "85.5625rem",
       },
     },
