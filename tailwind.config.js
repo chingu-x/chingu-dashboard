@@ -4,12 +4,20 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  theme: {
-    extend: {
-      width: {
-        "tech-card-container": "85.5625rem",
+  theme: {},
+  daisyui: {
+    themes: [
+      {
+        chingu: {
+          primary: "#40936d",
+          secondary: "#E6624B",
+          warning: "#f6d860",
+          accent: "#37cdbe",
+          neutral: "#757575",
+          "base-100": "#ffffff",
+        },
       },
-    },
+    ],
   },
   plugins: [require("daisyui")],
 };

@@ -9,10 +9,11 @@
     "lint": "next lint",
     "prettier": "prettier . --write",
     "prepare": "husky install",
-    "test": "jest --watch",
-    "cypress": "cypress open"
+    "test": "jest",
+    "cypress": "cypress run"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "@prisma/client": "5.1.1",
     "@reduxjs/toolkit": "^1.9.5",
     "next": "13.4.12",
