@@ -3,7 +3,7 @@ type CardType =
   | "CSS Library"
   | "Backend"
   | "Project Management"
-  | "Server-Side"
+  | "Cloud Provider"
   | "Hosting";
 
 export interface TechItem {
@@ -41,7 +41,7 @@ export const techStack: Record<CardType, TechItem[]> = {
     { id: 4, value: "Notion", users: ["John"] },
     { id: 5, value: "Obsidian", users: ["Jack", "John"] },
   ],
-  "Server-Side": [
+  "Cloud Provider": [
     { id: 1, value: "AWS", users: ["Tim", "John"] },
     { id: 2, value: "Azure", users: ["John"] },
     { id: 3, value: "Firebase", users: ["Myke", "Josh", "Jack"] },

@@ -1,9 +1,10 @@
 import { techStack } from "./fixtures/TechStack";
+import styles from "./TechStackContainer.module.css";
 import { TechStackCard } from ".";
 
 export default function TechStackContainer() {
   return (
-    <div className="card max-w-tech-card-container bg-primary-100 p-10">
+    <div className={`card bg-primary p-10 ${styles["tech-container-width"]}`}>
       <ul className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-y-20 justify-items-stretch">
         {Object.keys(techStack).map((cardType, index) => (
           <li
