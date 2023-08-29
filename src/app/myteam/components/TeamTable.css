@@ -1,0 +1,11 @@
+.table {
+  @apply border-separate;
+}
+
+.table :where(thead, tbody) :where(tr:not(:last-child)), .table :where(thead, tbody) :where(tr:first-child:last-child) {
+  @apply border-none;
+}
+
+.table :where(thead) {
+ @apply mb-10;
+}
