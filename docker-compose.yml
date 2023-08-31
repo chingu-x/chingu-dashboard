@@ -11,6 +11,11 @@ services:
       - 5555:5555
     depends_on:
       - db
+    environment:
+      - WATCHPACK_POLLING=true
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
   db:
     container_name: db
     image: postgres:latest
