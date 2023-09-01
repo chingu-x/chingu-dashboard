@@ -7,7 +7,7 @@ interface TeamRowProps {
 function TeamRow({ teamMemeber }: TeamRowProps) {
   return (
     <tr>
-      <td className="text-[#000000]">{teamMemeber.name}</td>
+      <td className="text-black">{teamMemeber.name}</td>
       <td>{teamMemeber.discordId}</td>
       <td>{teamMemeber.averageHour}</td>
       <td>{teamMemeber.location}</td>

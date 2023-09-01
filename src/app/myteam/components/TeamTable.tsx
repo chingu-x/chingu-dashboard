@@ -4,9 +4,9 @@ import { TeamRow } from ".";
 function TeamTable() {
   return (
     <div className="overflow-x-auto">
-      <table className="table bg-[#C4DED2] px-6 py-7 border-separate border-none">
+      <table className="table px-6 border-separate border-none bg-primary/30 py-7">
         {/* head */}
-        <thead className="text-xl font-semibold text-[#000000] mb-10">
+        <thead className="mb-10 text-xl font-semibold text-black">
           <tr>
             <th>Name</th>
             <th>Discord ID</th>
@@ -17,7 +17,7 @@ function TeamTable() {
             <th>Position</th>
           </tr>
         </thead>
-        <tbody className="text-base font-medium text-[#757575]">
+        <tbody className="text-base font-medium text-neutral">
           {/* rows */}
           {teamMembers.map((teamMemeber) => (
             <TeamRow key={teamMemeber.id} teamMemeber={teamMemeber} />
