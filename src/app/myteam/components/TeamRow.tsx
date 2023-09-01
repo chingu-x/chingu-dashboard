@@ -1,14 +1,4 @@
-import React from "react";
-
-interface TeamMember {
-  name: string;
-  discordId: string;
-  averageHour: number;
-  location: string;
-  timeZone: string;
-  email: string;
-  position: string;
-}
+import { TeamMember } from "./fixtures/MyTeam";
 
 interface TeamRowProps {
   teamMemeber: TeamMember;
