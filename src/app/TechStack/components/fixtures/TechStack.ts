@@ -1,10 +1,4 @@
-type CardType =
-  | "Frontend"
-  | "CSS Library"
-  | "Backend"
-  | "Project Management"
-  | "Cloud Provider"
-  | "Hosting";
+import { CardType } from "../types/types";
 
 export interface TechItem {
   id: number;
