@@ -5,4 +5,3 @@ export type CardType =
   | "Project Management"
   | "Cloud Provider"
   | "Hosting";
-
