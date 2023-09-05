@@ -1,5 +1,6 @@
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { TechItem } from "./fixtures/TechStack";
-import { Avatar, EditButton } from "@/components";
+import { Avatar, Button } from "@/components";
 
 interface TechStackCardProps {
   title: string;
@@ -13,7 +14,13 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <h3 className="text-xl font-semibold text-black mt-5 ml-5 self-center">
           {title}
         </h3>
-        <EditButton title={title} />
+        <Button
+          title={`edit ${title}`}
+          customClassName="mt-5 mr-5 capitalize w-16 h-8 p-0 min-h-full text-sm font-semibold text-black bg-secondary border-transparent"
+        >
+          <PencilSquareIcon className="h-4 w-4 text-black" />
+          Edit
+        </Button>
       </div>
       <div className="h-40 overflow-y-auto mx-5 mt-6 mb-5">
         <ul className="text-black">
