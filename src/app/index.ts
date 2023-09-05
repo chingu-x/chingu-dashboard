@@ -1,1 +1,1 @@
-export { default as CounterPage } from "./counter/page";
+export { TeckStackPage } from "./tech-stack/";
