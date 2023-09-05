@@ -21,12 +21,6 @@ function CreateIdeationContainer() {
       >
         Create Project
       </Button>
-      {/* <button
-        className="btn btn-primary text-base-content w-1/7 normal-case"
-        type="button"
-      >
-        Create Project
-      </button> */}
     </div>
   );
 }
