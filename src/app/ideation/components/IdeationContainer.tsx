@@ -1,11 +1,10 @@
-import { VoteCard } from ".";
-import { Button } from "@/components";
+import { ContributionCard, VoteCard } from ".";
 
 function IdeationContainer() {
   return (
     <div className="card w-[1280px] h-[457px] bg-primary-content text-neutral-content flex flex-row items-start p-10 gap-x-20">
       <VoteCard />
-      <section className="card-body gap-y-7 p-0 w-[1150px] h-[377px] overflow-y-auto pr-2">
+      <section className="card-body gap-y-7 p-0 w-[1000px] h-[377px] overflow-y-auto pr-5">
         <h2 className="text-xl font-semibold text-neutral-focus">
           Real Estate Crowdsourcing
         </h2>
@@ -36,12 +35,7 @@ function IdeationContainer() {
           future and build wealth through real estate investments.
         </p>
       </section>
-      <Button
-        title="Create Project"
-        customClassName="w-1/7 btn-primary text-base-content normal-case"
-      >
-        Create Project
-      </Button>
+      <ContributionCard />
     </div>
   );
 }
