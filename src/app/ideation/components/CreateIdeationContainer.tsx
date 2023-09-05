@@ -1,4 +1,5 @@
 import { VoteDescriptionCard } from ".";
+import { Button } from "@/components";
 
 function CreateIdeationContainer() {
   return (
@@ -14,12 +15,18 @@ function CreateIdeationContainer() {
           bring to users.
         </p>
       </section>
-      <button
+      <Button
+        title="Create Project"
+        customClassName="w-1/7 btn-primary text-base-content normal-case"
+      >
+        Create Project
+      </Button>
+      {/* <button
         className="btn btn-primary text-base-content w-1/7 normal-case"
         type="button"
       >
         Create Project
-      </button>
+      </button> */}
     </div>
   );
 }
