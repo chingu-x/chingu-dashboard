@@ -32,7 +32,11 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               {element.value}
               <div className="avatar-group -space-x-2 absolute left-28">
                 {element.users.map((user) => (
-                  <Avatar key={`${element.id}-${user}`} image="https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg" width={24} height={24} />
+                  <Avatar
+                    key={`${element.id}-${user}`}
+                    width={24}
+                    height={24}
+                  />
                 ))}
               </div>
             </li>
