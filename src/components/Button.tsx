@@ -1,16 +1,16 @@
 import { ReactNode } from "react";
 
-interface EditButtonProps {
+interface ButtonProps {
   title: string;
   children: ReactNode;
-  customClassName: string;
+  customClassName?: string;
 }
 
 export default function Button({
   title,
   children,
   customClassName,
-}: EditButtonProps) {
+}: ButtonProps) {
   return (
     <button
       type="button"
