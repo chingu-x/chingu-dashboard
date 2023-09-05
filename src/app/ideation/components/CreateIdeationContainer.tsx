@@ -14,7 +14,10 @@ function CreateIdeationContainer() {
           bring to users.
         </p>
       </section>
-      <button className="btn btn-primary text-base-content w-1/7 normal-case" type="button">
+      <button
+        className="btn btn-primary text-base-content w-1/7 normal-case"
+        type="button"
+      >
         Create Project
       </button>
     </div>
