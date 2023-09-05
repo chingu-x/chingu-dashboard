@@ -27,7 +27,7 @@ function IdeationContainer({
           {vision_statement}
         </p>
       </section>
-      <ContributionCard />
+      <ContributionCard own_idea={own_idea} contributed_by={contributed_by} />
     </div>
   );
 }

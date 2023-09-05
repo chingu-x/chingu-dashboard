@@ -18,7 +18,11 @@ function VoteCard({ users, voted }: VoteCardProps) {
             <Avatar width={24} height={24} key={user} />
           ))}
         </div>
-        <Button title="Vote" customClassName="w-full bg-primary hover:bg-primary-focus disabled:bg-primary-focus disabled:text-base-content" disabled={voted}>
+        <Button
+          title="Vote"
+          customClassName="w-full bg-primary hover:bg-primary-focus disabled:bg-primary-focus disabled:text-base-content"
+          disabled={voted}
+        >
           {voted ? "Voted" : "Vote"}
         </Button>
       </section>
