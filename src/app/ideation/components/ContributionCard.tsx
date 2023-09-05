@@ -9,7 +9,10 @@ function ContributionCard() {
         </h1>
         <Avatar width={64} height={64} />
         <h2 className="text-xl font-semibold text-neutral-focus">Test User</h2>
-        <Button title="Vote" customClassName="w-full bg-base-content text-neutral-focus border-primary">
+        <Button
+          title="Vote"
+          customClassName="w-full bg-base-content text-neutral-focus border-primary"
+        >
           Vote
         </Button>
       </section>

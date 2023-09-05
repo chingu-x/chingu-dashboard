@@ -5,6 +5,10 @@ const nextConfig = {
             {
                 protocol: "https",
                 hostname: "png.pngtree.com"
+            },
+            {
+                protocol: "https",
+                hostname: "encrypted-tbn0.gstatic.com"
             }
         ]
     }
