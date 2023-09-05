@@ -1,7 +1,15 @@
-export default function Avatar() {
+import Image from "next/image";
+
+interface AvatarProps {
+  image: string;
+  width: number;
+  height: number;
+}
+
+export default function Avatar({ image, width, height }: AvatarProps) {
   return (
-    <div className="avatar bg-neutral-300 rounded-full border border-base-content">
-      <div className="w-6"></div>
+    <div className="avatar rounded-full border border-base-content">
+      <Image alt="avatar" src={image} width={width} height={height}></Image>
     </div>
   );
 }

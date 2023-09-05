@@ -14,7 +14,7 @@ export default function TechStackContainer() {
             className={`mx-auto xl:mx-0 ${
               index % 3 === 0
                 ? "justify-self-start"
-                : index % 3 === 1 
+                : index % 3 === 1
                 ? "justify-self-center" // eslint-disable-line
                 : "justify-self-end" // eslint-disable-line
             }`}
