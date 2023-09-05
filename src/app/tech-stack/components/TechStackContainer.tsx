@@ -4,7 +4,7 @@ import { TechStackCard } from ".";
 
 export default function TechStackContainer() {
   return (
-    <div className={`card bg-primary p-10 ${styles["tech-container-width"]}`}>
+    <div className={`card bg-primary-content p-10 ${styles["tech-container-width"]}`}>
       <ul className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-y-20 justify-items-stretch">
         {Object.keys(techStack).map((cardType, index) => (
           <li
