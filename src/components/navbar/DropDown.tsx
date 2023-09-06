@@ -20,7 +20,7 @@ export default function DropDown({ name }: { name: string }) {
       <summary className=" pl-2 text-white font-semibold hover:text-white duration-200">
         {name}
       </summary>
-      <ul className="mx-4 p-2 bg-white  left-2 font-medium">
+      <ul className="mx-4 p-2 bg-white  left-2 font-medium z-10">
         <li>
           <DropDownLink handleClick={handleClick} title="Link 1" />
           <DropDownLink handleClick={handleClick} title="404???" href="/hello404" />
