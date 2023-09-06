@@ -1,4 +1,7 @@
-import { ArrowRightOnRectangleIcon, ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowRightOnRectangleIcon,
+  ArrowLeftOnRectangleIcon,
+} from "@heroicons/react/24/solid";
 
 export default function Sidebar() {
   return (
@@ -25,7 +28,6 @@ export default function Sidebar() {
             <a>Sidebar Item 2</a>
           </li>
         </ul>
-
       </div>
     </div>
   );
