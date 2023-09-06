@@ -4,12 +4,15 @@ import Image from "next/image";
 
 export default function ChinguMenu() {
   return (
-    <Image
-      src="/chingu_white_text_logo.svg"
-      width={100}
-      height={70}
-      alt="Chingu Logo"
-      priority={true}
-    />
+    <div className="flex items-center gap-2">
+      <Image
+        src="/chingu_logo.png"
+        width={50}
+        height={50}
+        alt="Chingu Logo"
+        priority={false}
+      />
+      <h2 className="text-white font-semibold text-lg">Chingu</h2>
+    </div>
   );
 }
