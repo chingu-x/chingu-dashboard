@@ -7,10 +7,10 @@ export default function Bell({
 }) {
   return (
     <div className="indicator">
-      <span className="indicator-item badge badge-secondary px-1 rounded-full text-white">
+      <span className="indicator-item badge badge-error px-1 rounded-full text-white">
         {notificationCount}
       </span>
-      <BellIcon className="h-6 w-6 text-white hover:text-slate-300 duration-200 self-center cursor-pointer" />
+      <BellIcon className="h-6 w-6 text-white hover:text-base-100 duration-200 self-center cursor-pointer" />
     </div>
   );
 }
