@@ -3,8 +3,8 @@ import { TeamRow } from ".";
 
 function TeamTable() {
   return (
-    <div className="overflow-x-auto">
-      <table className="table px-6 border-separate border-none bg-primary/30 py-7">
+    <div className="mx-8 overflow-x-auto">
+      <table className="table px-6 border-separate border-none bg-primary-content py-7">
         {/* head */}
         <thead className="mb-10 text-xl font-semibold text-black">
           <tr>
