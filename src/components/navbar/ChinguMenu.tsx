@@ -12,7 +12,7 @@ export default function ChinguMenu() {
         alt="Chingu Logo"
         priority={false}
       />
-      <h2 className="text-white font-semibold text-lg">Chingu</h2>
+      <h2 className=" font-semibold text-lg">Chingu</h2>
     </div>
   );
 }
