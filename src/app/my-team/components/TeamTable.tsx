@@ -22,10 +22,10 @@ function TeamTable() {
         </thead>
         <tbody className="text-base font-medium text-neutral">
           {/* rows */}
-          {teamMembers.map((teamMemeber) => (
+          {teamMembers.map((teamMember) => (
             <TeamRow
-              key={teamMemeber.id}
-              teamMemeber={teamMemeber}
+              key={teamMember.id}
+              teamMember={teamMember}
               currentUserId={currentUserId}
             />
           ))}
