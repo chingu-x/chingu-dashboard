@@ -1,35 +1,18 @@
-"use client";
-
-import { useRef } from "react";
-import { useOnClickOutside } from "usehooks-ts";
 import DropDownLink from "./DropDownLink";
 
 export default function DropDown({ name }: { name: string }) {
-  const ref = useRef<HTMLDetailsElement | null>(null);
-
-  const handleClick = () => {
-    if (ref.current) {
-      ref.current.open = !open;
-    }
-  };
-
-  useOnClickOutside(ref, () => handleClick());
 
   return (
-    <details ref={ref}>
-      <summary className=" pl-2 text-white font-semibold hover:text-white duration-200">
-        {name}
-      </summary>
-      <ul className="mx-4 p-2 bg-white  left-2 font-medium z-10">
-        <li>
-          <DropDownLink handleClick={handleClick} title="Link 1" />
-          <DropDownLink
-            handleClick={handleClick}
-            title="404???"
-            href="/hello404"
-          />
-        </li>
+    <div className="dropdown bg-transparent dropdown-bottom">
+      <label tabIndex={0} className="btn m-0 p-0 bg-transparent border-none hover:border-none hover:bg-transparent">{ name }</label>
+      <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box right-0">
+        <DropDownLink title="Link 1" />
+        <DropDownLink
+          title="404???"
+          href="/hello404"
+        />
       </ul>
-    </details>
+    </div>
+  
   );
 }
