@@ -1,6 +1,9 @@
 import { teamMembers } from "./fixtures/MyTeam";
 import { TeamRow } from ".";
 
+// Temp:
+const currentUserId = "1";
+
 function TeamTable() {
   return (
     <div className="overflow-x-auto">
@@ -20,7 +23,11 @@ function TeamTable() {
         <tbody className="text-base font-medium text-neutral">
           {/* rows */}
           {teamMembers.map((teamMemeber) => (
-            <TeamRow key={teamMemeber.id} teamMemeber={teamMemeber} />
+            <TeamRow
+              key={teamMemeber.id}
+              teamMemeber={teamMemeber}
+              currentUserId={currentUserId}
+            />
           ))}
         </tbody>
       </table>
