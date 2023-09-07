@@ -6,7 +6,11 @@ interface AvatarProps {
   height: number;
 }
 
-export default function Avatar({ image, width = 24, height = 24 }: AvatarProps) {
+export default function Avatar({
+  image,
+  width = 24,
+  height = 24,
+}: AvatarProps) {
   return (
     <div className="px-0 pointer-events-none rounded-full">
       <Image

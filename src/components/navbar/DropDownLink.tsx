@@ -5,10 +5,7 @@ interface DropDownLinkProps {
   href?: string;
 }
 
-export default function DropDownLink({
-  title,
-  href = "#",
-}: DropDownLinkProps) {
+export default function DropDownLink({ title, href = "#" }: DropDownLinkProps) {
   return (
     <li>
       <Link
