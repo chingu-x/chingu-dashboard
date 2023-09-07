@@ -1,7 +1,5 @@
-import { Avatar } from "..";
-import Bell from "./Bell";
-import ChinguMenu from "./ChinguMenu";
-import DropDown from "./DropDown";
+import { Avatar } from "@/components";
+import { Bell, ChinguMenu, DropDown } from "@/components/navbar";
 
 const name = "Yorick";
 const notificationCount = 4;
