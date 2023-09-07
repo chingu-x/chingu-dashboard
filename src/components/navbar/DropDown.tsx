@@ -2,7 +2,7 @@ import DropDownLink from "./DropDownLink";
 
 export default function DropDown({ name }: { name: string }) {
   return (
-    <div className="dropdown py-0 mx-1 dropdown-bottom">
+    <div className="dropdown py-0 mx-2 dropdown-bottom">
       <label
         tabIndex={0}
         className="btn m-0 p-0 bg-transparent border-none hover:border-none hover:bg-transparent"
