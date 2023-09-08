@@ -1,33 +1,17 @@
-import {
-  ArrowRightOnRectangleIcon,
-  ArrowLeftOnRectangleIcon,
-} from "@heroicons/react/24/solid";
-
 export default function Sidebar() {
   return (
-    <div className="drawer">
-      <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Page content here */}
-        <div className="menu p-4 w-24 min-h-screen h-20 bg-base-200">
-          <label htmlFor="my-drawer" className="btn btn-white drawer-button">
-            <ArrowRightOnRectangleIcon className="text-black h-6 w-6" />
-          </label>
-        </div>
-      </div>
-      <div className="drawer-side">
-        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-          {/* Sidebar content here */}
-          <label htmlFor="my-drawer" className="btn btn-primary drawer-button">
-            <ArrowLeftOnRectangleIcon className="text-black h-6 w-6" />
-          </label>
-          <li>
-            <a>Sidebar Item 1</a>
-          </li>
-          <li>
-            <a>Sidebar Item 2</a>
-          </li>
+    <div className="fixed top-[75px] bottom-0 left-0 w-[93px] text-center bg-white border border-black">
+      <div className="flex flex-col justify-between h-full">
+        <ul className="flex flex-col items-center pt-[24px] h-">
+          <li className="w-[24px] h-[24px] bg-black p-[24px] mb-[16px]"></li>
+          <li className="w-[24px] h-[24px] bg-black p-[24px] mb-[16px]"></li>
+          <li className="w-[24px] h-[24px] bg-black p-[24px] mb-[60px]"></li>
+          <li className="w-[24px] h-[24px] bg-black p-[24px]"></li>
         </ul>
+        <div className="flex flex-col items-center">
+          <div className="bg-black h-[1px] w-full mb-[56px]"></div>
+          <div className="w-[24px] h-[24px] bg-black p-[24px]"></div>
+        </div>
       </div>
     </div>
   );
