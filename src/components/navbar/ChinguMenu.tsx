@@ -1,10 +1,8 @@
-"use client";
-
 import Image from "next/image";
 
 export default function ChinguMenu() {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 cursor-pointer">
       <Image
         src="/chingu_logo.png"
         width={50}
