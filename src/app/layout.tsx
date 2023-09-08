@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en" className={`${inter.className} bg-base-content`}>
       <body>
         <nav>
           <BellIcon className="h-12 w-12 text-primary" />
