@@ -1,7 +1,7 @@
 import { TeamTable } from "./components";
 
-function MyTeamPage() {
+function DirectoryPage() {
   return <TeamTable />;
 }
 
-export default MyTeamPage;
+export default DirectoryPage;
