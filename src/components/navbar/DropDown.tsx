@@ -1,3 +1,4 @@
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import DropDownLink from "./DropDownLink";
 
 export default function DropDown({ name }: { name: string }) {
@@ -7,7 +8,7 @@ export default function DropDown({ name }: { name: string }) {
         tabIndex={0}
         className="btn m-0 p-0 bg-transparent border-none hover:border-none hover:bg-transparent"
       >
-        {name}
+        {name} <ChevronDownIcon className="w-4" />
       </label>
       <ul
         tabIndex={0}
