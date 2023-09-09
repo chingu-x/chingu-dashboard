@@ -7,8 +7,6 @@ interface BannerProps {
   description: string;
 }
 
-// eslint and prettier conflicting again. object-curly-newline
-// eslint-disable-next-line
 function Banner({ image, alt, title, description }: BannerProps) {
   return (
     <div className="card w-[1280px] h-[320px] bg-accent-content flex flex-row px-20">
