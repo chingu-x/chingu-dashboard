@@ -1,3 +1,4 @@
+import styles from "./TeamRow.module.css";
 import { teamMembers } from "./fixtures/MyTeam";
 import { TeamRow } from ".";
 
@@ -7,7 +8,9 @@ const currentUserId = "1";
 function TeamTable() {
   return (
     <div className="overflow-x-auto">
-      <table className="table px-6 border-separate border-none bg-primary-content py-7">
+      <table
+        className={`table px-6 pb-10 border-separate border-none bg-primary-content pt-7 ${styles["table"]}`}
+      >
         {/* head */}
         <thead className="mb-10 text-xl font-semibold text-black">
           <tr>
