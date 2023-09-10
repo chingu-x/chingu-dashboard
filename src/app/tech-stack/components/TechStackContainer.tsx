@@ -3,6 +3,15 @@ import styles from "./TechStackContainer.module.css";
 import { TechStackCard } from ".";
 
 export default function TechStackContainer() {
+  function getJustifyClass(index: number) {
+    if (index % 3 === 0) {
+      return "justify-self-start";
+    } else if (index % 3 === 1) {
+      return "justify-self-center";
+    } else {
+      return "justify-self-end";
+    }
+  }
   return (
     <div
       className={`card bg-primary-content p-10 ${styles["tech-container-width"]}`}
@@ -11,13 +20,7 @@ export default function TechStackContainer() {
         {Object.keys(techStack).map((cardType, index) => (
           <li
             key={cardType}
-            className={`mx-auto xl:mx-0 ${
-              index % 3 === 0
-                ? "justify-self-start"
-                : index % 3 === 1
-                ? "justify-self-center" // eslint-disable-line
-                : "justify-self-end" // eslint-disable-line
-            }`}
+            className={`mx-auto xl:mx-0 ${getJustifyClass(index)}`}
           >
             <TechStackCard
               title={cardType}
