@@ -12,7 +12,9 @@ function VoteCard({ users, voted }: VoteCardProps) {
         <h1 className="text-3xl font-semibold text-neutral-focus">
           {users.length}
         </h1>
-        <h2 className="text-xl font-semibold text-neutral-focus">{`Vote${users.length > 1 ? "s" : ""}`}</h2>
+        <h2 className="text-xl font-semibold text-neutral-focus">{`Vote${
+          users.length > 1 ? "s" : ""
+        }`}</h2>
         <div className="avatar-group -space-x-2 w-full">
           {users.map((user) => (
             <Avatar width={24} height={24} key={user} />
