@@ -15,7 +15,7 @@ export default function Sidebar() {
   const [expand, setExpand] = useState(false);
 
   return (
-    <div
+    <aside
       className={`fixed z-0 top-0 bottom-0 left-0 ${
         expand ? "w-[295px]" : "w-[93px]"
       } text-center bg-white transition-all box-content`}
@@ -86,6 +86,6 @@ export default function Sidebar() {
           </Button>
         </div>
       </div>
-    </div>
+    </aside>
   );
 }
