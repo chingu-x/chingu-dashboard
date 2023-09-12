@@ -11,64 +11,66 @@ import {
 } from "@heroicons/react/24/solid";
 import { Button } from "@/components";
 
-export default function Sidebar() {
-  const [expand, setExpand] = useState(false);
+enum Pages {
+  DASHBOARD = "Dashboard",
+  ASSESSMENT = "Assessment",
+  RESOURCES = "Resources",
+  MY_VOYAGE = "My Voyage"
+}
 
+export default function Sidebar() {
+  const [expand, setExpand] = useState<boolean>(false);
+  const [selectedButton, setSelectedButton] = useState<Pages>();
+
+  const buttonStyles = `${expand ? "w-[230px] flex justify-start pl-[24px] transition-all" : "w-[50px]"} h-[50px] text-black capitalize border-none`;
+
+  const getButtonBackgroundStyle = (page: Pages) => selectedButton === page ? "bg-neutral-content" : "bg-white";
+
+  const getDisplayText = (page: Pages) => expand ? page : "";
+  
   return (
     <aside
       className={`fixed z-0 top-0 bottom-0 left-0 ${
         expand ? "w-[295px]" : "w-[93px]"
       } text-center bg-white transition-all box-content`}
     >
-      <div className="flex flex-col justify-between h-full pt-[64px]">
+      <div id="container" className="flex flex-col justify-between h-full pt-[64px]">
         <ul
           className={`flex flex-col ${
             expand ? "items-start pl-[40px]" : "items-center"
           } pt-[24px] h-full transition-all`}
         >
           <Button
-            title="Dashboard"
-            customClassName={`${
-              expand
-                ? "w-[230px] flex justify-start pl-[24px] transition-all"
-                : "w-[50px]"
-            } h-[50px] mb-[16px] bg-white text-black capitalize border-none`}
+            title={Pages.DASHBOARD}
+            customClassName={`${buttonStyles} ${getButtonBackgroundStyle(Pages.DASHBOARD)} mb-[16px]`}
+            onClick={() => setSelectedButton(Pages.DASHBOARD)}
           >
             <RectangleGroupIcon className="h-[18px]" />
-            {expand ? "Dashboard" : ""}
+            {getDisplayText(Pages.DASHBOARD)}
           </Button>
           <Button
-            title="Assessment"
-            customClassName={`${
-              expand
-                ? "w-[230px] flex justify-start pl-[24px] transition-all"
-                : "w-[50px]"
-            } h-[50px] mb-[16px] bg-white text-black capitalize border-none`}
+            title={Pages.ASSESSMENT}
+            customClassName={`${buttonStyles} ${getButtonBackgroundStyle(Pages.ASSESSMENT)} mb-[16px]`}
+            onClick={() => setSelectedButton(Pages.ASSESSMENT)}
           >
             <ChartBarIcon className="h-[18px]" />
-            {expand ? "Assessment" : ""}
+            {getDisplayText(Pages.ASSESSMENT)}
           </Button>
           <Button
-            title="Resources"
-            customClassName={`${
-              expand
-                ? "w-[230px] flex justify-start pl-[24px] transition-all"
-                : "w-[50px]"
-            } h-[50px] mb-[60px] bg-white text-black capitalize border-none`}
+            title={Pages.RESOURCES}
+            customClassName={`${buttonStyles} ${getButtonBackgroundStyle(Pages.RESOURCES)} mb-[60px]`}
+            onClick={() => setSelectedButton(Pages.RESOURCES)}
           >
             <BookmarkSquareIcon className="h-[18px]" />
-            {expand ? "Resources" : ""}
+            {getDisplayText(Pages.RESOURCES)}
           </Button>
           <Button
-            title="My Voyage"
-            customClassName={`${
-              expand
-                ? "w-[230px] flex justify-start pl-[24px] transition-all"
-                : "w-[50px]"
-            } h-[50px] bg-white text-black capitalize border-none`}
+            title={Pages.MY_VOYAGE}
+            customClassName={`${buttonStyles} ${getButtonBackgroundStyle(Pages.MY_VOYAGE)}`}
+            onClick={() => setSelectedButton(Pages.MY_VOYAGE)}
           >
             <RocketLaunchIcon className="h-[18px]" />
-            {expand ? "My Voyage" : ""}
+            {getDisplayText(Pages.MY_VOYAGE)}
           </Button>
         </ul>
         <div className="flex flex-col items-end justify-start border-t border-secondary-focus h-[80px]">
