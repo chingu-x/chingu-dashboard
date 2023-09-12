@@ -69,6 +69,7 @@
     "object-curly-newline": [2, { "minProperties": 4, "consistent": true }],
     "brace-style": 2,
     "no-multiple-empty-lines": 2,
-    "eol-last": [2, "always"]
+    "eol-last": [2, "always"],
+    "no-nested-ternary": 2
   }
 }
