@@ -1,0 +1,7 @@
+.table :where(td) {
+  @apply py-1;
+}
+
+.table :where(th) {
+  @apply pb-6;
+}
