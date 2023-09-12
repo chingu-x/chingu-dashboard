@@ -10,7 +10,8 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "import"
+    "import",
+    "no-relative-import-paths"
   ],
   "extends": [
     "plugin:import/recommended",
@@ -49,6 +50,12 @@
     "react/button-has-type": 2,
     "react/no-array-index-key": 2,
     "import/order": 2,
+    "no-relative-import-paths/no-relative-import-paths": [
+      "error",
+      {
+        "allowSameFolder": true
+      }
+    ],
     "semi": [
       2,
       "always"
