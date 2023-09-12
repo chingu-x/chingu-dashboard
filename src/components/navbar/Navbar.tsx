@@ -1,4 +1,4 @@
-import { Avatar } from "@/components";
+import { Avatar, ModeToggle } from "@/components";
 import { Bell, ChinguMenu, DropDown } from "@/components/navbar";
 
 const name = "Yorick";
@@ -6,13 +6,14 @@ const notificationCount = 4;
 
 export default function Navbar() {
   return (
-    <nav className="navbar bg-primary h-8">
+    <nav className="h-8 navbar bg-primary">
       <div className="flex-1 pl-2">
         <ChinguMenu />
       </div>
-      <div>
+      <div className="flex gap-x-10">
+        <ModeToggle />
         <Bell notificationCount={notificationCount} />
-        <div className="px-2 ml-6 flex flex-row items-center">
+        <div className="flex flex-row items-center pr-2">
           <Avatar image="/avatar.png" height={34} width={34} />
           <DropDown name={name} />
         </div>
