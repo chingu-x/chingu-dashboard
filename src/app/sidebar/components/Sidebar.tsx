@@ -8,19 +8,45 @@ import {
   RocketLaunchIcon,
   ArrowRightOnRectangleIcon,
   ArrowLeftOnRectangleIcon,
+  LockClosedIcon,
 } from "@heroicons/react/24/solid";
 import { Button } from "@/components";
 
-enum Pages {
-  DASHBOARD = "Dashboard",
-  ASSESSMENT = "Assessment",
-  RESOURCES = "Resources",
-  MY_VOYAGE = "My Voyage",
-}
+const pagesProperties = [
+  {
+    name: "Dashboard",
+    marginBottom: "mb-[16px]",
+    icon: <RectangleGroupIcon className="h-[18px]" />
+  },
+  {
+    name: "Assessment",
+    marginBottom: "mb-[16px]",
+    icon: <ChartBarIcon className="h-[18px]" />
+  },
+  {
+    name: "Resources",
+    marginBottom: "mb-[60px]",
+    icon: <BookmarkSquareIcon className="h-[18px]" />
+  },
+  {
+    name: "My Voyage",
+    marginBottom: "mb-[20px]",
+    icon: <RocketLaunchIcon className="h-[18px]" />
+  },
+];
+
+const voyagePages = [
+  "Directory",
+  "Tech Stack",
+  "Ideation",
+  "Features",
+  "Sprints",
+  "Resources",
+];
 
 export default function Sidebar() {
   const [expand, setExpand] = useState<boolean>(false);
-  const [selectedButton, setSelectedButton] = useState<Pages>();
+  const [selectedButton, setSelectedButton] = useState<string>();
 
   const buttonStyles = `${
     expand
@@ -28,10 +54,10 @@ export default function Sidebar() {
       : "w-[50px]"
   } h-[50px] text-black capitalize border-none`;
 
-  const getButtonBackgroundStyle = (page: Pages) =>
+  const getButtonBackgroundStyle = (page: string) =>
     selectedButton === page ? "bg-neutral-content" : "bg-white";
 
-  const getButtonText = (page: Pages) => (expand ? page : "");
+  const getButtonText = (page: string) => (expand ? page : "");
 
   return (
     <aside
@@ -42,48 +68,37 @@ export default function Sidebar() {
       <ul
         className={`flex flex-col ${
           expand ? "items-start pl-[40px]" : "items-center"
-        } pt-[24px] h-full transition-all`}
+        } pt-[24px]  transition-all`}
       >
-        <Button
-          title={Pages.DASHBOARD}
-          customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
-            Pages.DASHBOARD,
-          )} mb-[16px]`}
-          onClick={() => setSelectedButton(Pages.DASHBOARD)}
-        >
-          <RectangleGroupIcon className="h-[18px]" />
-          {getButtonText(Pages.DASHBOARD)}
-        </Button>
-        <Button
-          title={Pages.ASSESSMENT}
-          customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
-            Pages.ASSESSMENT,
-          )} mb-[16px]`}
-          onClick={() => setSelectedButton(Pages.ASSESSMENT)}
-        >
-          <ChartBarIcon className="h-[18px]" />
-          {getButtonText(Pages.ASSESSMENT)}
-        </Button>
-        <Button
-          title={Pages.RESOURCES}
-          customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
-            Pages.RESOURCES,
-          )} mb-[60px]`}
-          onClick={() => setSelectedButton(Pages.RESOURCES)}
-        >
-          <BookmarkSquareIcon className="h-[18px]" />
-          {getButtonText(Pages.RESOURCES)}
-        </Button>
-        <Button
-          title={Pages.MY_VOYAGE}
-          customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
-            Pages.MY_VOYAGE,
-          )}`}
-          onClick={() => setSelectedButton(Pages.MY_VOYAGE)}
-        >
-          <RocketLaunchIcon className="h-[18px]" />
-          {getButtonText(Pages.MY_VOYAGE)}
-        </Button>
+        {pagesProperties.map((element) =>
+          <li key={element.name}>
+            <Button
+              title={element.name}
+              customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
+                element.name,
+              )} ${element.marginBottom}`}
+              onClick={() => setSelectedButton(element.name)}
+            >
+              {element.icon}
+              {getButtonText(element.name)}
+            </Button>
+          </li>
+        )}
+        {expand && (
+          <ul className="flex flex-col items-center">
+            {voyagePages.map((element) => (
+              <li key={element} className="h-[28px]">
+                <Button
+                  title={element}
+                  customClassName="bg-transparent hover:bg-transparent w-[150px] h-[28px] min-h-0 mb-[10px] flex justify-start pl-[24px] transition-all text-black capitalize border-none"
+                >
+                  <LockClosedIcon className="h-[18px]" />
+                  {element}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        )}
       </ul>
       <div className="flex flex-col items-end justify-start border-t border-secondary-focus h-[80px]">
         <Button
