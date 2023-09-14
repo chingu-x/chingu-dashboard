@@ -16,22 +16,22 @@ const pagesProperties = [
   {
     name: "Dashboard",
     marginBottom: "mb-[16px]",
-    icon: <RectangleGroupIcon className="h-[18px]" />
+    icon: <RectangleGroupIcon className="h-[18px]" />,
   },
   {
     name: "Assessment",
     marginBottom: "mb-[16px]",
-    icon: <ChartBarIcon className="h-[18px]" />
+    icon: <ChartBarIcon className="h-[18px]" />,
   },
   {
     name: "Resources",
     marginBottom: "mb-[60px]",
-    icon: <BookmarkSquareIcon className="h-[18px]" />
+    icon: <BookmarkSquareIcon className="h-[18px]" />,
   },
   {
     name: "My Voyage",
-    marginBottom: "mb-[20px]",
-    icon: <RocketLaunchIcon className="h-[18px]" />
+    marginBottom: "mb-[16px]",
+    icon: <RocketLaunchIcon className="h-[18px]" />,
   },
 ];
 
@@ -70,7 +70,7 @@ export default function Sidebar() {
           expand ? "items-start pl-[40px]" : "items-center"
         } pt-[24px]  transition-all`}
       >
-        {pagesProperties.map((element) =>
+        {pagesProperties.map((element) => (
           <li key={element.name}>
             <Button
               title={element.name}
@@ -83,14 +83,14 @@ export default function Sidebar() {
               {getButtonText(element.name)}
             </Button>
           </li>
-        )}
+        ))}
         {expand && (
           <ul className="flex flex-col items-center">
             {voyagePages.map((element) => (
               <li key={element} className="h-[28px]">
                 <Button
                   title={element}
-                  customClassName="bg-transparent hover:bg-transparent w-[150px] h-[28px] min-h-0 mb-[10px] flex justify-start pl-[24px] transition-all text-black capitalize border-none"
+                  customClassName="bg-transparent hover:bg-transparent w-[150px] h-[19px] min-h-0 mb-[10px] flex justify-start pl-[24px] transition-all text-neutral-focus capitalize border-none"
                 >
                   <LockClosedIcon className="h-[18px]" />
                   {element}
@@ -100,6 +100,18 @@ export default function Sidebar() {
           </ul>
         )}
       </ul>
+      <div className="flex-grow flex flex-col justify-end">
+        {expand && (
+          <div className="w-[215px] h-[155px] bg-secondary-content rounded-2xl mx-auto px-[24px] py-[16px] mb-[64px] transition-all">
+            <h3 className="text-black mb-[11px] text-xl font-semibold text-left">
+              Voyage Status
+            </h3>
+            <p className="text-black text-base font-medium text-left">
+              Please join a voyage to see your status information.
+            </p>
+          </div>
+        )}
+      </div>
       <div className="flex flex-col items-end justify-start border-t border-secondary-focus h-[80px]">
         <Button
           title="Expand"
