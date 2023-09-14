@@ -12,7 +12,13 @@ import {
 } from "@heroicons/react/24/solid";
 import { Button } from "@/components";
 
-const pagesProperties = [
+type PageProperty = {
+  name: string;
+  marginBottom: string;
+  icon: JSX.Element;
+};
+
+const pagesProperties: PageProperty[] = [
   {
     name: "Dashboard",
     marginBottom: "mb-4",
@@ -35,7 +41,7 @@ const pagesProperties = [
   },
 ];
 
-const voyagePages = [
+const voyagePages: string[] = [
   "Directory",
   "Tech Stack",
   "Ideation",
