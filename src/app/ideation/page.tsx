@@ -1,8 +1,4 @@
-import {
-  CreateIdeationContainer,
-  IdeationContainer,
-  ideation,
-} from "./components";
+import { CreateIdeationContainer, IdeationContainer, ideation } from ".";
 import { Banner } from "@/components";
 
 function IdeationPage() {
