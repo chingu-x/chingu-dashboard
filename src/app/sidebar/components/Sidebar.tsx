@@ -15,23 +15,23 @@ import { Button } from "@/components";
 const pagesProperties = [
   {
     name: "Dashboard",
-    marginBottom: "mb-[16px]",
-    icon: <RectangleGroupIcon className="h-[18px]" />,
+    marginBottom: "mb-4",
+    icon: <RectangleGroupIcon className="h-[1.125rem]" />,
   },
   {
     name: "Assessment",
-    marginBottom: "mb-[16px]",
-    icon: <ChartBarIcon className="h-[18px]" />,
+    marginBottom: "mb-4",
+    icon: <ChartBarIcon className="h-[1.125rem]" />,
   },
   {
     name: "Resources",
-    marginBottom: "mb-[60px]",
-    icon: <BookmarkSquareIcon className="h-[18px]" />,
+    marginBottom: "mb-[3.75rem]",
+    icon: <BookmarkSquareIcon className="h-[1.125rem]" />,
   },
   {
     name: "My Voyage",
-    marginBottom: "mb-[16px]",
-    icon: <RocketLaunchIcon className="h-[18px]" />,
+    marginBottom: "mb-4",
+    icon: <RocketLaunchIcon className="h-[1.125rem]" />,
   },
 ];
 
@@ -50,9 +50,9 @@ export default function Sidebar() {
 
   const buttonStyles = `${
     expand
-      ? "w-[230px] flex justify-start pl-[24px] transition-all"
-      : "w-[50px]"
-  } h-[50px] text-black capitalize border-none`;
+      ? "w-[14.375rem] flex justify-start pl-6 transition-all"
+      : "w-[3.125rem]"
+  } h-[3.125rem] text-black capitalize border-none`;
 
   const getButtonBackgroundStyle = (page: string) =>
     selectedButton === page ? "bg-neutral-content" : "bg-white";
@@ -62,13 +62,13 @@ export default function Sidebar() {
   return (
     <aside
       className={`fixed z-0 top-0 bottom-0 left-0 ${
-        expand ? "w-[295px]" : "w-[93px]"
-      } text-center bg-white transition-all box-content flex flex-col justify-between pt-[64px]`}
+        expand ? "w-[18.4375rem]" : "w-[5.8125rem]"
+      } text-center bg-white transition-all box-content flex flex-col justify-between pt-16`}
     >
       <ul
         className={`flex flex-col ${
-          expand ? "items-start pl-[40px]" : "items-center"
-        } pt-[24px]  transition-all`}
+          expand ? "items-start pl-10" : "items-center"
+        } pt-6  transition-all`}
       >
         {pagesProperties.map((element) => (
           <li key={element.name}>
@@ -87,12 +87,12 @@ export default function Sidebar() {
         {expand && (
           <ul className="flex flex-col items-center">
             {voyagePages.map((element) => (
-              <li key={element} className="h-[28px]">
+              <li key={element} className="h-7">
                 <Button
                   title={element}
-                  customClassName="bg-transparent hover:bg-transparent w-[150px] h-[19px] min-h-0 mb-[10px] flex justify-start pl-[24px] transition-all text-neutral-focus capitalize border-none"
+                  customClassName="bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start pl-6 transition-all text-neutral-focus capitalize border-none"
                 >
-                  <LockClosedIcon className="h-[18px]" />
+                  <LockClosedIcon className="h-[1.125rem]" />
                   {element}
                 </Button>
               </li>
@@ -102,8 +102,8 @@ export default function Sidebar() {
       </ul>
       <div className="flex-grow flex flex-col justify-end">
         {expand && (
-          <div className="w-[215px] h-[155px] bg-secondary-content rounded-2xl mx-auto px-[24px] py-[16px] mb-[64px] transition-all">
-            <h3 className="text-black mb-[11px] text-xl font-semibold text-left">
+          <div className="w-[13.4375rem] h-[9.6875rem] bg-secondary-content rounded-2xl mx-auto px-6 py-4 mb-16 transition-all">
+            <h3 className="text-black mb-[0.6875rem] text-xl font-semibold text-left">
               Voyage Status
             </h3>
             <p className="text-black text-base font-medium text-left">
@@ -112,17 +112,17 @@ export default function Sidebar() {
           </div>
         )}
       </div>
-      <div className="flex flex-col items-end justify-start border-t border-secondary-focus h-[80px]">
+      <div className="flex flex-col items-end justify-start border-t border-secondary-focus h-20">
         <Button
           title="Expand"
-          customClassName="w-[50px]
-             bg-white text-black capitalize hover:bg-white mr-[8px] border-none"
+          customClassName="w-[3.125rem]
+             bg-white text-black capitalize hover:bg-white mr-2 border-none"
           onClick={() => setExpand(!expand)}
         >
           {expand ? (
-            <ArrowLeftOnRectangleIcon className="h-[24px]" />
+            <ArrowLeftOnRectangleIcon className="h-6" />
           ) : (
-            <ArrowRightOnRectangleIcon className="h-[24px]" />
+            <ArrowRightOnRectangleIcon className="h-6" />
           )}
         </Button>
       </div>
