@@ -1,4 +1,4 @@
-import { TechStackContainer } from "./components";
+import { TechStackContainer } from ".";
 
 export default function TeckStackPage() {
   return <TechStackContainer />;

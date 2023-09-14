@@ -1,5 +1,5 @@
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-import { TeamMember } from "./fixtures/MyTeam";
+import { TeamMember } from ".";
 import { Button } from "@/components";
 
 interface TeamRowProps {
