@@ -10,6 +10,8 @@ import {
   ArrowLeftOnRectangleIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
+import { ArrowRightCircleIcon } from "@heroicons/react/20/solid";
+import Link from "next/link";
 import { Button } from "@/components";
 
 type PageProperty = {
@@ -50,9 +52,18 @@ const voyagePages: string[] = [
   "Resources",
 ];
 
+const voyageStarted: boolean = true;
+
+const voyageData = {
+  tier: "Tier 3",
+  team: "Team",
+  voyage: "V29",
+};
+
 export default function Sidebar() {
   const [expand, setExpand] = useState<boolean>(false);
   const [selectedButton, setSelectedButton] = useState<string>();
+  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const buttonStyles = `${
     expand
@@ -78,29 +89,45 @@ export default function Sidebar() {
       >
         {pagesProperties.map((element) => (
           <li key={element.name}>
-            <Button
-              title={element.name}
-              customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
-                element.name,
-              )} ${element.marginBottom}`}
-              onClick={() => setSelectedButton(element.name)}
-            >
-              {element.icon}
-              {getButtonText(element.name)}
-            </Button>
+            <Link href={`/${element.name.toLowerCase()}`}>
+              <Button
+                title={element.name}
+                customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
+                  element.name,
+                )} ${element.marginBottom}`}
+                onClick={() => setSelectedButton(element.name)}
+              >
+                {element.icon}
+                {getButtonText(element.name)}
+              </Button>
+            </Link>
           </li>
         ))}
         {expand && (
           <ul className="flex flex-col items-center">
             {voyagePages.map((element) => (
               <li key={element} className="h-7">
-                <Button
-                  title={element}
-                  customClassName="bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start pl-6 transition-all text-neutral-focus capitalize border-none"
-                >
-                  <LockClosedIcon className="h-[1.125rem]" />
-                  {element}
-                </Button>
+                <Link href={"#"}>
+                  <Button
+                    title={element}
+                    customClassName={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${
+                      voyageStarted ? "pl-11" : "pl-6"
+                    } transition-all text-neutral-focus capitalize border-none`}
+                    onMouseEnter={() => setHoveredButton(element)}
+                    onMouseLeave={() => setHoveredButton(null)}
+                    onClick={() => voyageStarted && setSelectedButton(element)}
+                  >
+                    {!voyageStarted && (
+                      <LockClosedIcon className="h-[1.125rem]" />
+                    )}
+                    {voyageStarted &&
+                      (hoveredButton === element ||
+                        selectedButton === element) && (
+                      <ArrowRightCircleIcon className="h-[1.125rem]" />
+                    )}
+                    {element}
+                  </Button>
+                </Link>
               </li>
             ))}
           </ul>
@@ -109,12 +136,23 @@ export default function Sidebar() {
       <div className="flex-grow flex flex-col justify-end">
         {expand && (
           <div className="w-[13.4375rem] h-[9.6875rem] bg-secondary-content rounded-2xl mx-auto px-6 py-4 mb-16 transition-all">
-            <h3 className="text-black mb-[0.6875rem] text-xl font-semibold text-left">
+            <h3 className="text-black text-xl font-semibold text-left">
               Voyage Status
             </h3>
-            <p className="text-black text-base font-medium text-left">
-              Please join a voyage to see your status information.
-            </p>
+            {voyageStarted ? (
+              Object.values(voyageData).map((element) => (
+                <p
+                  key={element}
+                  className="mt-[0.6875rem] h-[1.1875rem] text-black text-base font-medium text-left"
+                >
+                  {element}
+                </p>
+              ))
+            ) : (
+              <p className="mt-[0.6875rem] text-black text-base font-medium text-left">
+                Please join a voyage to see your status information.
+              </p>
+            )}
           </div>
         )}
       </div>
