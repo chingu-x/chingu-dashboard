@@ -61,8 +61,8 @@ const voyageData = {
 };
 
 export default function Sidebar() {
-  const [expand, setExpand] = useState<boolean>(false);
-  const [selectedButton, setSelectedButton] = useState<string>();
+  const [openSidebar, setOpenSidebar] = useState<boolean>(true);
+  const [selectedButton, setSelectedButton] = useState<string>("");
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const showIcon = (element: string) => {
@@ -80,36 +80,48 @@ export default function Sidebar() {
   };
 
   const buttonStyles = `${
-    expand
+    openSidebar
       ? "w-[14.375rem] flex justify-start pl-6 transition-all"
       : "w-[3.125rem]"
   } h-[3.125rem] text-black capitalize border-none`;
 
   const getButtonBackgroundStyle = (page: string) =>
-    selectedButton === page ? "bg-neutral-content" : "bg-white";
+    selectedButton === page || page === "My Voyage" && voyagePages.includes(selectedButton) ? "bg-neutral-content" : "bg-white";
 
-  const getButtonText = (page: string) => (expand ? page : "");
+  const getButtonText = (page: string) => (openSidebar ? page : "");
+
+  const handlePageClick = (element: PageProperty | string) => {
+    if (typeof element === "string") {
+      setSelectedButton(element);
+      setOpenSidebar(false);
+    } else if(element.name === "My Voyage") {
+      setOpenSidebar(true);
+    } else {
+      setSelectedButton(element.name);
+      setOpenSidebar(false);
+    }
+  };
 
   return (
     <aside
       className={`fixed z-0 top-0 bottom-0 left-0 ${
-        expand ? "w-[18.4375rem]" : "w-[5.8125rem]"
+        openSidebar ? "w-[18.4375rem]" : "w-[5.8125rem]"
       } text-center bg-white transition-all box-content flex flex-col justify-between pt-16`}
     >
       <ul
         className={`flex flex-col ${
-          expand ? "items-start pl-10" : "items-center"
+          openSidebar ? "items-start pl-10" : "items-center"
         } pt-6  transition-all`}
       >
         {pagesProperties.map((element) => (
           <li key={element.name}>
-            <Link href={`/${element.name.toLowerCase()}`}>
+            <Link href={element.name !== "My Voyage" ? `/${element.name.toLowerCase()}` : ""}>
               <Button
                 title={element.name}
                 customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
                   element.name,
                 )} ${element.marginBottom}`}
-                onClick={() => setSelectedButton(element.name)}
+                onClick={() => handlePageClick(element)}
               >
                 {element.icon}
                 {getButtonText(element.name)}
@@ -117,7 +129,7 @@ export default function Sidebar() {
             </Link>
           </li>
         ))}
-        {expand && (
+        {openSidebar && (
           <ul className="flex flex-col items-center">
             {voyagePages.map((element) => (
               <li key={element} className="h-7">
@@ -129,7 +141,7 @@ export default function Sidebar() {
                     } transition-all text-neutral-focus capitalize border-none relative`}
                     onMouseEnter={() => setHoveredButton(element)}
                     onMouseLeave={() => setHoveredButton(null)}
-                    onClick={() => voyageStarted && setSelectedButton(element)}
+                    onClick={() => voyageStarted && handlePageClick(element)}
                   >
                     {showIcon(element)}
                     {element}
@@ -141,7 +153,7 @@ export default function Sidebar() {
         )}
       </ul>
       <div className="flex-grow flex flex-col justify-end">
-        {expand && (
+        {openSidebar && (
           <div className="w-[13.4375rem] h-[9.6875rem] bg-secondary-content rounded-2xl mx-auto px-6 py-4 mb-16 transition-all">
             <h3 className="text-black text-xl font-semibold text-left">
               Voyage Status
@@ -168,9 +180,9 @@ export default function Sidebar() {
           title="Expand"
           customClassName="w-[3.125rem]
              bg-white text-black capitalize hover:bg-white mr-2 border-none"
-          onClick={() => setExpand(!expand)}
+          onClick={() => setOpenSidebar(!openSidebar)}
         >
-          {expand ? (
+          {openSidebar ? (
             <ArrowLeftOnRectangleIcon className="h-6" />
           ) : (
             <ArrowRightOnRectangleIcon className="h-6" />
