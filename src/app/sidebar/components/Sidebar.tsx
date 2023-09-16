@@ -65,6 +65,20 @@ export default function Sidebar() {
   const [selectedButton, setSelectedButton] = useState<string>();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
+  const showIcon = (element: string) => {
+    if (!voyageStarted) {
+      return <LockClosedIcon className="h-[1.125rem]" />;
+    } else if (
+      voyageStarted &&
+      (hoveredButton === element || selectedButton === element)
+    ) {
+      return (
+        <div className="absolute left-[1.4rem]">
+          <ArrowRightCircleIcon className="h-[1.125rem] text-primary" />
+        </div>);
+    }
+  };
+
   const buttonStyles = `${
     expand
       ? "w-[14.375rem] flex justify-start pl-6 transition-all"
@@ -112,19 +126,12 @@ export default function Sidebar() {
                     title={element}
                     customClassName={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${
                       voyageStarted ? "pl-11" : "pl-6"
-                    } transition-all text-neutral-focus capitalize border-none`}
+                    } transition-all text-neutral-focus capitalize border-none relative`}
                     onMouseEnter={() => setHoveredButton(element)}
                     onMouseLeave={() => setHoveredButton(null)}
                     onClick={() => voyageStarted && setSelectedButton(element)}
                   >
-                    {!voyageStarted && (
-                      <LockClosedIcon className="h-[1.125rem]" />
-                    )}
-                    {voyageStarted &&
-                      (hoveredButton === element ||
-                        selectedButton === element) && (
-                      <ArrowRightCircleIcon className="h-[1.125rem]" />
-                    )}
+                    {showIcon(element)}
                     {element}
                   </Button>
                 </Link>
