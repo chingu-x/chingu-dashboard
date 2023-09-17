@@ -52,7 +52,7 @@ const voyagePages: string[] = [
   "Resources",
 ];
 
-const voyageStarted: boolean = true;
+const voyageStarted: boolean = false;
 
 const voyageData = {
   tier: "Tier 3",
@@ -81,7 +81,7 @@ export default function Sidebar() {
 
   const buttonStyles = `${
     openSidebar
-      ? "w-[14.375rem] flex justify-start pl-6 transition-all"
+      ? "w-[14.375rem] flex justify-start pl-6"
       : "w-[3.125rem]"
   } h-[3.125rem] text-black capitalize border-none`;
 
@@ -95,6 +95,7 @@ export default function Sidebar() {
       setSelectedButton(element);
       setOpenSidebar(false);
     } else if(element.name === "My Voyage") {
+      setSelectedButton(element.name);
       setOpenSidebar(true);
     } else {
       setSelectedButton(element.name);
@@ -106,12 +107,12 @@ export default function Sidebar() {
     <aside
       className={`fixed z-0 top-0 bottom-0 left-0 ${
         openSidebar ? "w-[18.4375rem]" : "w-[5.8125rem]"
-      } text-center bg-white transition-all box-content flex flex-col justify-between pt-16`}
+      } text-center bg-white box-content flex flex-col justify-between pt-16`}
     >
       <ul
         className={`flex flex-col ${
           openSidebar ? "items-start pl-10" : "items-center"
-        } pt-6  transition-all`}
+        } pt-6`}
       >
         {pagesProperties.map((element) => (
           <li key={element.name}>
@@ -138,7 +139,7 @@ export default function Sidebar() {
                     title={element}
                     customClassName={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${
                       voyageStarted ? "pl-11" : "pl-6"
-                    } transition-all text-neutral-focus capitalize border-none relative`}
+                    } text-neutral-focus capitalize border-none relative`}
                     onMouseEnter={() => setHoveredButton(element)}
                     onMouseLeave={() => setHoveredButton(null)}
                     onClick={() => voyageStarted && handlePageClick(element)}
@@ -154,7 +155,7 @@ export default function Sidebar() {
       </ul>
       <div className="flex-grow flex flex-col justify-end">
         {openSidebar && (
-          <div className="w-[13.4375rem] h-[9.6875rem] bg-secondary-content rounded-2xl mx-auto px-6 py-4 mb-16 transition-all">
+          <div className="w-[13.4375rem] h-[9.6875rem] bg-secondary-content rounded-2xl mx-auto px-6 py-4 mb-16">
             <h3 className="text-black text-xl font-semibold text-left">
               Voyage Status
             </h3>
