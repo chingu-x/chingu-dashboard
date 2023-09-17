@@ -1,6 +1,5 @@
-import { techStack } from "./fixtures/TechStack";
 import styles from "./TechStackContainer.module.css";
-import { TechStackCard } from ".";
+import { TechStackCard, techStack } from ".";
 
 export default function TechStackContainer() {
   function getJustifyClass(index: number) {

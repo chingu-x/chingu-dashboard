@@ -1,4 +1,4 @@
-import { CardType } from "../types/types";
+import { CardType } from "@/app/tech-stack/components/types/types";
 
 export interface TechItem {
   id: number;
