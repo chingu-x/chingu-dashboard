@@ -57,13 +57,14 @@ const pagesProperties: PageProperty[] = [
   },
 ];
 
+//-- Mocked fake data just for testing purpose --//
 const isVoyageStarted: boolean = true;
-
 const voyageData = {
   tier: "Tier 3",
   team: "Team",
   voyage: "V29",
 };
+//-- --//
 
 export default function Sidebar() {
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(true);
