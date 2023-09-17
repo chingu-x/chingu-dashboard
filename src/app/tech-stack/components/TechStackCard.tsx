@@ -1,5 +1,5 @@
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-import { TechItem } from "./fixtures/TechStack";
+import { TechItem } from ".";
 import { Avatar, Button } from "@/components";
 
 interface TechStackCardProps {

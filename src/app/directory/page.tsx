@@ -1,4 +1,4 @@
-import { TeamTable } from "./components";
+import { TeamTable } from ".";
 
 function DirectoryPage() {
   return <TeamTable />;
