@@ -5,7 +5,7 @@ const notificationCount = 4;
 
 export default function Navbar() {
   return (
-    <nav className="navbar bg-primary h-8">
+    <nav className="navbar fixed bg-primary h-8 z-10">
       <div className="flex-1 pl-2">
         <ChinguMenu />
       </div>

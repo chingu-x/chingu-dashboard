@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { StoreProvider, Navbar } from "@/components";
+import { StoreProvider, Navbar, Sidebar } from "@/components";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,8 +23,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} bg-base-content`}>
       <body>
+        <div className="flex min-h-screen h-full">
         <Navbar />
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <Sidebar />
+          <main className="mt-16 flex-1 bg-yellow-200">{children}</main>
+        </StoreProvider>
+        </div>
       </body>
     </html>
   );
