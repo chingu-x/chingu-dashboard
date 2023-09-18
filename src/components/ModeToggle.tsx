@@ -23,6 +23,7 @@ export default function ModeToggle() {
   return (
     <label className="swap swap-rotate">
       <input
+        data-testid="mode-toggle"
         type="checkbox"
         onChange={toggleTheme}
         checked={theme === "light"}

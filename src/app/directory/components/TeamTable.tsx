@@ -1,6 +1,5 @@
 import styles from "./TeamRow.module.css";
-import { teamMembers } from "./fixtures/MyTeam";
-import { TeamRow } from ".";
+import { TeamRow, teamMembers } from ".";
 
 // Temp:
 const currentUserId = "1";

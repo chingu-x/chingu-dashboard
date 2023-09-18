@@ -1,5 +1,5 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import DropDownLink from "./DropDownLink";
+import { DropDownLink } from ".";
 
 export default function DropDown({ name }: { name: string }) {
   return (
