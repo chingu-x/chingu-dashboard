@@ -86,7 +86,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`sticky top-14 h-full ${
+      className={`sticky h-[calc(100vh-theme(spacing.16))] ${
         isOpenSidebar ? "w-[18.4375rem]" : "w-[5.8125rem]"
       } text-center bg-white box-content flex flex-col justify-between pt-16`}
     >
