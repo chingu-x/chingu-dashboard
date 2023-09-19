@@ -40,7 +40,7 @@ function CounterPage() {
           -
         </button>
       </div>
-      {counter.value}
+      <div className="text-black">{counter.value}</div>
     </div>
   );
 }
