@@ -7,6 +7,7 @@ interface PageButtonProps {
   onClick: (element: string | PageProperty) => void;
   selectedButton: string;
   isOpen: boolean;
+  link: string;
 }
 
 export default function PageButton({
@@ -14,6 +15,7 @@ export default function PageButton({
   onClick,
   selectedButton,
   isOpen,
+  link
 }: PageButtonProps) {
   const buttonStyles = `${
     isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem]"
@@ -32,8 +34,8 @@ export default function PageButton({
     <li>
       <Link
         href={
-          element.name !== MainPages.myVoyage
-            ? `/${element.name.toLowerCase()}`
+          element.name !== String(MainPages.myVoyage)
+            ? link
             : ""
         }
       >
