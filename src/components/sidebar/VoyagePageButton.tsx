@@ -20,7 +20,7 @@ export default function VoyagePageButton({
   selectedButton,
   isVoyageStarted,
   setHoveredButton,
-  link
+  link,
 }: VoyagePageButtonProps) {
   const showIcon = (element: string) => {
     if (!isVoyageStarted) {

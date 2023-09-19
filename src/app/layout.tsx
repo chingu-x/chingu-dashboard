@@ -27,9 +27,7 @@ export default function RootLayout({
           <Navbar />
           <StoreProvider>
             <Sidebar />
-            <main className="mt-16 flex-1">
-              {children}
-            </main>
+            <main className="mt-16 flex-1">{children}</main>
           </StoreProvider>
         </div>
       </body>

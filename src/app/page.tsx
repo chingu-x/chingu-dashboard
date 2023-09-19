@@ -1,7 +1,5 @@
-// counter page is just a test, remove later. Don't remove the provider
-
-import { CounterPage } from ".";
+// replace with dashboard page when that's completed
 
 export default function Home() {
-  return <CounterPage />;
+  return null;
 }

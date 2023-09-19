@@ -38,27 +38,27 @@ export enum VoyagePages {
 const voyagePages = [
   {
     name: VoyagePages.directory,
-    link: "/directory"
+    link: "/directory",
   },
   {
     name: VoyagePages.techStack,
-    link: "/tech-stack"
+    link: "/tech-stack",
   },
   {
     name: VoyagePages.ideation,
-    link: "/ideation"
+    link: "/ideation",
   },
   {
     name: VoyagePages.features,
-    link: "/features"
+    link: "/features",
   },
   {
     name: VoyagePages.sprints,
-    link: "/sprints"
+    link: "/sprints",
   },
   {
     name: VoyagePages.resources,
-    link: "/voyage-resources"
+    link: "/voyage-resources",
   },
 ];
 
@@ -67,25 +67,25 @@ const pagesProperties: PageProperty[] = [
     name: MainPages.dashboard,
     marginBottom: "mb-4",
     icon: <RectangleGroupIcon className="h-[1.125rem]" />,
-    link: "/"
+    link: "/",
   },
   {
     name: MainPages.assessment,
     marginBottom: "mb-4",
     icon: <ChartBarIcon className="h-[1.125rem]" />,
-    link: "/assessment"
+    link: "/assessment",
   },
   {
     name: MainPages.resources,
     marginBottom: "mb-[3.75rem]",
     icon: <BookmarkSquareIcon className="h-[1.125rem]" />,
-    link: "/resources"
+    link: "/resources",
   },
   {
     name: MainPages.myVoyage,
     marginBottom: "mb-4",
     icon: <RocketLaunchIcon className="h-[1.125rem]" />,
-    link: ""
+    link: "",
   },
 ];
 
