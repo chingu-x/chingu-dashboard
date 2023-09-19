@@ -4,7 +4,7 @@ export default function ChinguMenu() {
   return (
     <div className="flex items-center gap-2 cursor-pointer">
       <Image
-        src="/chingu_logo.png"
+        src="/img/chingu_logo.png"
         width={50}
         height={50}
         alt="Chingu Logo"
