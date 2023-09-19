@@ -37,7 +37,7 @@ export default function VoyagePageButton({
 
   return (
     <li className="h-7">
-      <Link href={"#"}>
+      <Link href={`/${element.toLowerCase()}`}>
         <Button
           title={element}
           customClassName={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${

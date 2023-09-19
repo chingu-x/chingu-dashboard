@@ -4,9 +4,7 @@ import { Button } from "@/components";
 
 interface PageButtonProps {
   element: PageProperty;
-  onClick: (
-    element: string | PageProperty,
-  ) => void;
+  onClick: (element: string | PageProperty) => void;
   selectedButton: string;
   isOpen: boolean;
 }
@@ -23,7 +21,8 @@ export default function PageButton({
 
   const getButtonBackgroundStyle = (page: string) =>
     selectedButton === page ||
-    (page as MainPages === MainPages.myVoyage && Object.values(VoyagePages).includes(selectedButton as VoyagePages))
+    ((page as MainPages) === MainPages.myVoyage &&
+      Object.values(VoyagePages).includes(selectedButton as VoyagePages))
       ? "bg-neutral-content"
       : "bg-white";
 
@@ -33,7 +32,9 @@ export default function PageButton({
     <li>
       <Link
         href={
-          element.name !== "My Voyage" ? `/${element.name.toLowerCase()}` : ""
+          element.name !== MainPages.myVoyage
+            ? `/${element.name.toLowerCase()}`
+            : ""
         }
       >
         <Button
