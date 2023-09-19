@@ -10,6 +10,7 @@ interface VoyagePageButtonProps {
   selectedButton: string;
   isVoyageStarted: boolean;
   setHoveredButton: (element: string | null) => void;
+  link: string;
 }
 
 export default function VoyagePageButton({
@@ -19,6 +20,7 @@ export default function VoyagePageButton({
   selectedButton,
   isVoyageStarted,
   setHoveredButton,
+  link
 }: VoyagePageButtonProps) {
   const showIcon = (element: string) => {
     if (!isVoyageStarted) {
@@ -37,7 +39,7 @@ export default function VoyagePageButton({
 
   return (
     <li className="h-7">
-      <Link href={`/${element.toLowerCase()}`}>
+      <Link href={link}>
         <Button
           title={element}
           customClassName={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${

@@ -16,6 +16,7 @@ export type PageProperty = {
   name: string;
   marginBottom: string;
   icon: JSX.Element;
+  link: string;
 };
 
 export enum MainPages {
@@ -34,26 +35,57 @@ export enum VoyagePages {
   resources = "Resources",
 }
 
+const voyagePages = [
+  {
+    name: VoyagePages.directory,
+    link: "/directory"
+  },
+  {
+    name: VoyagePages.techStack,
+    link: "/tech-stack"
+  },
+  {
+    name: VoyagePages.ideation,
+    link: "/ideation"
+  },
+  {
+    name: VoyagePages.features,
+    link: "/features"
+  },
+  {
+    name: VoyagePages.sprints,
+    link: "/sprints"
+  },
+  {
+    name: VoyagePages.resources,
+    link: "/voyage-resources"
+  },
+];
+
 const pagesProperties: PageProperty[] = [
   {
     name: MainPages.dashboard,
     marginBottom: "mb-4",
     icon: <RectangleGroupIcon className="h-[1.125rem]" />,
+    link: "/"
   },
   {
     name: MainPages.assessment,
     marginBottom: "mb-4",
     icon: <ChartBarIcon className="h-[1.125rem]" />,
+    link: "/assessment"
   },
   {
     name: MainPages.resources,
     marginBottom: "mb-[3.75rem]",
     icon: <BookmarkSquareIcon className="h-[1.125rem]" />,
+    link: "/resources"
   },
   {
     name: MainPages.myVoyage,
     marginBottom: "mb-4",
     icon: <RocketLaunchIcon className="h-[1.125rem]" />,
+    link: ""
   },
 ];
 
@@ -102,14 +134,16 @@ export default function Sidebar() {
             onClick={handlePageClick}
             selectedButton={selectedButton}
             isOpen={isOpenSidebar}
+            link={element.link}
           />
         ))}
         {isOpenSidebar && (
           <ul className="flex flex-col items-center">
-            {Object.values(VoyagePages).map((element) => (
+            {voyagePages.map((element) => (
               <VoyagePageButton
-                key={element}
-                element={element}
+                key={element.name}
+                element={element.name}
+                link={element.link}
                 onClick={handlePageClick}
                 hoveredButton={hoveredButton}
                 selectedButton={selectedButton}
