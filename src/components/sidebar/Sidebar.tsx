@@ -22,7 +22,7 @@ export enum MainPages {
   dashboard = "Dashboard",
   assessment = "Assessment",
   resources = "Resources",
-  myVoyage = "My Voyage"
+  myVoyage = "My Voyage",
 }
 
 export enum VoyagePages {
@@ -75,7 +75,7 @@ export default function Sidebar() {
     if (typeof element === "string") {
       setSelectedButton(element);
       setIsOpenSidebar(false);
-    } else if (element.name as MainPages === MainPages.myVoyage) {
+    } else if ((element.name as MainPages) === MainPages.myVoyage) {
       setSelectedButton(element.name);
       setIsOpenSidebar(true);
     } else {
@@ -107,14 +107,25 @@ export default function Sidebar() {
         {isOpenSidebar && (
           <ul className="flex flex-col items-center">
             {Object.values(VoyagePages).map((element) => (
-              <VoyagePageButton key={element} element={element} onClick={handlePageClick} hoveredButton={hoveredButton} selectedButton={selectedButton} isVoyageStarted={isVoyageStarted} setHoveredButton={setHoveredButton} />
+              <VoyagePageButton
+                key={element}
+                element={element}
+                onClick={handlePageClick}
+                hoveredButton={hoveredButton}
+                selectedButton={selectedButton}
+                isVoyageStarted={isVoyageStarted}
+                setHoveredButton={setHoveredButton}
+              />
             ))}
           </ul>
         )}
       </ul>
       <div className="flex-grow flex flex-col justify-end">
         {isOpenSidebar && (
-          <VoyageStatus isVoyageStarted={isVoyageStarted} voyageData={voyageData}  />
+          <VoyageStatus
+            isVoyageStarted={isVoyageStarted}
+            voyageData={voyageData}
+          />
         )}
       </div>
       <div className="flex flex-col items-end justify-start border-t border-secondary-focus h-20">
