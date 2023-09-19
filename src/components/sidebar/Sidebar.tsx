@@ -86,9 +86,9 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`sticky top-14 h-full max-w-[15%] ${
-        isOpenSidebar ? "w-[15%] h-full" : "w-[5%] h-full"
-      } text-center bg-white box-content flex flex-col justify-between pt-16`}
+      className={`sticky top-16 h-[calc(100vh-theme(spacing.16))] w-[15%] ${
+        isOpenSidebar ? "w-[15%]" : "w-[6%]"
+      } text-center bg-white flex flex-col justify-between pt-16`}
     >
       <ul
         className={`flex flex-col ${
