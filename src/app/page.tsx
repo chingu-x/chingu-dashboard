@@ -3,9 +3,5 @@
 import { CounterPage } from ".";
 
 export default function Home() {
-  return (
-    <main>
-      <CounterPage />
-    </main>
-  );
+  return <CounterPage />;
 }
