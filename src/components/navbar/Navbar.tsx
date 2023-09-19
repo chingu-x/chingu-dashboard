@@ -13,7 +13,7 @@ export default function Navbar() {
         <ModeToggle />
         <Bell notificationCount={notificationCount} />
         <div className="flex flex-row items-center px-2 ml-6">
-          <Avatar image="/avatar.png" height={34} width={34} />
+          <Avatar image="/img/avatar.png" height={34} width={34} />
           <DropDown name={name} />
         </div>
       </div>
