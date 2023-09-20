@@ -1,16 +1,16 @@
 import { ArrowRightCircleIcon } from "@heroicons/react/20/solid";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import { VoyagePageProperty } from "./Sidebar";
 import { Button } from "@/components";
 
 interface VoyagePageButtonProps {
-  element: string;
+  element: VoyagePageProperty;
   onClick: (element: string) => void;
   hoveredButton: string | null;
   selectedButton: string;
   isVoyageStarted: boolean;
   setHoveredButton: (element: string | null) => void;
-  link: string;
 }
 
 export default function VoyagePageButton({
@@ -20,7 +20,6 @@ export default function VoyagePageButton({
   selectedButton,
   isVoyageStarted,
   setHoveredButton,
-  link,
 }: VoyagePageButtonProps) {
   const showIcon = (element: string) => {
     if (!isVoyageStarted) {
@@ -39,18 +38,18 @@ export default function VoyagePageButton({
 
   return (
     <li className="h-7">
-      <Link href={link}>
+      <Link href={element.link}>
         <Button
-          title={element}
+          title={element.name}
           customClassName={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${
             isVoyageStarted ? "pl-11" : "pl-6"
           } text-neutral-focus capitalize border-none relative`}
-          onMouseEnter={() => setHoveredButton(element)}
+          onMouseEnter={() => setHoveredButton(element.link)}
           onMouseLeave={() => setHoveredButton(null)}
-          onClick={() => isVoyageStarted && onClick(element)}
+          onClick={() => isVoyageStarted && onClick(element.link)}
         >
-          {showIcon(element)}
-          {element}
+          {showIcon(element.link)}
+          {element.name}
         </Button>
       </Link>
     </li>

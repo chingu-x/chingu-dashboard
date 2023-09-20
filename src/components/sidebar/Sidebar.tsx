@@ -19,6 +19,11 @@ export type PageProperty = {
   link: string;
 };
 
+export type VoyagePageProperty = {
+  name: string;
+  link: string;
+}
+
 export enum MainPages {
   dashboard = "Dashboard",
   assessment = "Assessment",
@@ -35,7 +40,7 @@ export enum VoyagePages {
   resources = "Resources",
 }
 
-const voyagePages = [
+export const voyagePages: VoyagePageProperty[] = [
   {
     name: VoyagePages.directory,
     link: "/directory",
@@ -135,6 +140,7 @@ export default function Sidebar() {
             selectedButton={selectedButton}
             isOpen={isOpenSidebar}
             link={element.link}
+            setHoveredButton={setHoveredButton}
           />
         ))}
         {isOpenSidebar && (
@@ -142,8 +148,7 @@ export default function Sidebar() {
             {voyagePages.map((element) => (
               <VoyagePageButton
                 key={element.name}
-                element={element.name}
-                link={element.link}
+                element={element}
                 onClick={handlePageClick}
                 hoveredButton={hoveredButton}
                 selectedButton={selectedButton}
