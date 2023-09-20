@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MainPages, PageProperty, VoyagePages } from "./Sidebar";
+import { MainPages, PageProperty, voyagePages } from "./Sidebar";
 import { Button } from "@/components";
 
 interface PageButtonProps {
@@ -8,6 +8,7 @@ interface PageButtonProps {
   selectedButton: string;
   isOpen: boolean;
   link: string;
+  setHoveredButton: (element: string | null) => void;
 }
 
 export default function PageButton({
@@ -16,6 +17,7 @@ export default function PageButton({
   selectedButton,
   isOpen,
   link,
+  setHoveredButton
 }: PageButtonProps) {
   const buttonStyles = `${
     isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem]"
@@ -24,7 +26,7 @@ export default function PageButton({
   const getButtonBackgroundStyle = (page: string) =>
     selectedButton === page ||
     ((page as MainPages) === MainPages.myVoyage &&
-      Object.values(VoyagePages).includes(selectedButton as VoyagePages))
+      voyagePages.some((voyagePage) => voyagePage.link === selectedButton))
       ? "bg-neutral-content"
       : "bg-white";
 
@@ -38,6 +40,8 @@ export default function PageButton({
           customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
             element.name,
           )} ${element.marginBottom}`}
+          onMouseEnter={() => setHoveredButton(element.name)}
+          onMouseLeave={() => setHoveredButton(null)}
           onClick={() => onClick(element)}
         >
           {element.icon}
