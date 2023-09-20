@@ -22,7 +22,7 @@ export type PageProperty = {
 export type VoyagePageProperty = {
   name: string;
   link: string;
-}
+};
 
 export enum MainPages {
   dashboard = "Dashboard",

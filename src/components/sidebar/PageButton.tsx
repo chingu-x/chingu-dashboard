@@ -17,7 +17,7 @@ export default function PageButton({
   selectedButton,
   isOpen,
   link,
-  setHoveredButton
+  setHoveredButton,
 }: PageButtonProps) {
   const buttonStyles = `${
     isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem]"
