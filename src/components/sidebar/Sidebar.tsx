@@ -113,10 +113,10 @@ export default function Sidebar() {
       setSelectedButton(element);
       setIsOpenSidebar(false);
     } else if ((element.name as MainPages) === MainPages.myVoyage) {
-      setSelectedButton(element.name);
+      setSelectedButton(element.link);
       setIsOpenSidebar(true);
     } else {
-      setSelectedButton(element.name);
+      setSelectedButton(element.link);
       setIsOpenSidebar(false);
     }
   };
@@ -125,7 +125,7 @@ export default function Sidebar() {
     <aside
       className={`sticky top-16 h-[calc(100vh-theme(spacing.16))] ${
         isOpenSidebar ? "w-[18.4375rem]" : "w-[5.8125rem]"
-      } text-center bg-white flex flex-col justify-between`}
+      } text-center bg-base-200 flex flex-col justify-between`}
     >
       <ul
         className={`flex flex-col ${
