@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { StoreProvider, Navbar, ThemeProvider } from "@/components";
+import { StoreProvider, Navbar, Sidebar, ThemeProvider } from "@/components";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -31,9 +31,15 @@ export default function RootLayout({
           defaultTheme="light"
           enableSystem={false}
           storageKey="chingu-theme"
+          disableTransitionOnChange
         >
-          <Navbar />
-          <StoreProvider>{children}</StoreProvider>
+          <div className="flex min-h-screen">
+            <Navbar />
+            <StoreProvider>
+              <Sidebar />
+              <main className="mt-16 flex-1">{children}</main>
+            </StoreProvider>
+          </div>
         </ThemeProvider>
       </body>
     </html>
