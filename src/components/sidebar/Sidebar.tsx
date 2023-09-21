@@ -125,8 +125,8 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`sticky top-16 h-[calc(100vh-theme(spacing.16))] ${
-        isOpenSidebar ? "w-[18.4375rem]" : "w-[5.8125rem]"
+      className={`overflow-y-auto ${
+        isOpenSidebar ? "w-[18.438rem]" : "w-[5.813rem]"
       } text-center bg-base-200 flex flex-col justify-between`}
     >
       <ul
@@ -169,7 +169,7 @@ export default function Sidebar() {
           />
         )}
       </div>
-      <div className="flex flex-col items-end justify-start border-t border-neutral-content h-20">
+      <div className="flex flex-col items-end justify-start border-t border-neutral-content">
         <ExpandButton isOpen={isOpenSidebar} onClick={setIsOpenSidebar} />
       </div>
     </aside>
