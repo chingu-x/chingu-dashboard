@@ -40,7 +40,7 @@ export default function VoyagePageButton({
 
   return (
     <li className="h-7">
-      <Link href={isVoyageStarted ? element.link : "#"} >
+      <Link href={isVoyageStarted ? element.link : "#"}>
         <Button
           title={element.name}
           customClassName={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${
