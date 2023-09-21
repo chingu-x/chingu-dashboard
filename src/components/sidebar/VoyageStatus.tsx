@@ -13,7 +13,7 @@ export default function VoyageStatus({
 }: VoyageStatusProps) {
   return (
     <div className="w-[13.4375rem] h-[9.6875rem] bg-secondary-content rounded-2xl mx-auto px-6 py-4 mb-16">
-      <h3 className="text-black text-xl font-semibold text-left">
+      <h3 className="text-base-300 text-xl font-semibold text-left">
         Voyage Status
       </h3>
       {isVoyageStarted ? (
@@ -26,7 +26,7 @@ export default function VoyageStatus({
           </p>
         ))
       ) : (
-        <p className="mt-[0.6875rem] text-black text-base font-medium text-left">
+        <p className="mt-[0.6875rem] text-base-300 text-base font-medium text-left">
           Please join a voyage to see your status information.
         </p>
       )}

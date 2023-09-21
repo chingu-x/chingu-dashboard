@@ -31,6 +31,7 @@ export default function RootLayout({
           defaultTheme="light"
           enableSystem={false}
           storageKey="chingu-theme"
+          disableTransitionOnChange
         >
           <div className="flex min-h-screen">
             <Navbar />
