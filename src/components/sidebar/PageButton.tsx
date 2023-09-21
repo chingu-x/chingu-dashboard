@@ -24,7 +24,7 @@ export default function PageButton({
 
   const buttonStyles = `${
     isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem]"
-  } h-[3.125rem] text-base-300 capitalize border-none hover:bg-neutral-content`;
+  } h-[3.125rem] text-base-300 capitalize border-none hover:bg-base-100`;
 
   const getButtonBackgroundStyle = (page: string) =>
     (selectedButton === page && selectedButton === currentPath) ||

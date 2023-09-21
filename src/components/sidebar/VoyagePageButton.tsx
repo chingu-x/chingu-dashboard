@@ -29,9 +29,11 @@ export default function VoyagePageButton({
       (hoveredButton === element || selectedButton === element)
     ) {
       return (
-        <div className="absolute left-[1.4rem]">
-          <ArrowRightCircleIcon className="h-[1.125rem] text-primary" />
-        </div>
+        <>
+          <div className="absolute left-[1.4rem]">
+            <ArrowRightCircleIcon className="h-[1.125rem] text-primary" />
+          </div>
+        </>
       );
     }
   };

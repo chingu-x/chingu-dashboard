@@ -20,7 +20,7 @@ export default function VoyageStatus({
         Object.values(voyageData).map((element) => (
           <p
             key={element}
-            className="mt-[0.6875rem] h-[1.1875rem] text-black text-base font-medium text-left"
+            className="mt-[0.6875rem] h-[1.1875rem] text-base-300 text-base font-medium text-left"
           >
             {element}
           </p>
