@@ -33,11 +33,15 @@ export default function RootLayout({
           storageKey="chingu-theme"
           disableTransitionOnChange
         >
-          <div className="flex min-h-screen">
+          <div className="flex flex-col h-screen">
             <Navbar />
             <StoreProvider>
-              <Sidebar />
-              <main className="mt-16 flex-1">{children}</main>
+              <div className="flex flex-1 overflow-hidden">
+                <Sidebar />
+                <main className="flex flex-col flex-1 overflow-y-auto items-center">
+                  {children}
+                </main>
+              </div>
             </StoreProvider>
           </div>
         </ThemeProvider>
