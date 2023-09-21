@@ -40,11 +40,11 @@ export default function VoyagePageButton({
 
   return (
     <li className="h-7">
-      <Link href={element.link}>
+      <Link href={isVoyageStarted ? element.link : "#"} >
         <Button
           title={element.name}
           customClassName={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${
-            isVoyageStarted ? "pl-11" : "pl-6"
+            isVoyageStarted ? "pl-11" : "pl-6 pointer-events-none"
           } text-neutral-focus capitalize border-none relative`}
           onMouseEnter={() => setHoveredButton(element.link)}
           onMouseLeave={() => setHoveredButton(null)}
