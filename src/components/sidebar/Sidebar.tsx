@@ -169,7 +169,7 @@ export default function Sidebar() {
           />
         )}
       </div>
-      <div className="flex flex-col items-end justify-start border-t border-secondary-focus h-20">
+      <div className="flex flex-col items-end justify-start border-neutral-content border-secondary-focus h-20">
         <ExpandButton isOpen={isOpenSidebar} onClick={setIsOpenSidebar} />
       </div>
     </aside>
