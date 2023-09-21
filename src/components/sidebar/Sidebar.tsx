@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   RectangleGroupIcon,
   ChartBarIcon,
@@ -104,8 +105,10 @@ const voyageData = {
 //-- --//
 
 export default function Sidebar() {
+  const currentPath = usePathname();
+
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(true);
-  const [selectedButton, setSelectedButton] = useState<string>("");
+  const [selectedButton, setSelectedButton] = useState<string>(currentPath);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const handlePageClick = (element: PageProperty | string) => {
@@ -113,7 +116,6 @@ export default function Sidebar() {
       setSelectedButton(element);
       setIsOpenSidebar(false);
     } else if ((element.name as MainPages) === MainPages.myVoyage) {
-      setSelectedButton(element.link);
       setIsOpenSidebar(true);
     } else {
       setSelectedButton(element.link);
