@@ -10,7 +10,6 @@ import {
 } from "@heroicons/react/24/solid";
 import PageButton from "./PageButton";
 import VoyagePageButton from "./VoyagePageButton";
-import VoyageStatus from "./VoyageStatus";
 import ExpandButton from "./ExpandButton";
 
 export type PageProperty = {
@@ -97,11 +96,6 @@ const pagesProperties: PageProperty[] = [
 
 //-- Mocked fake data just for testing purpose --//
 const isVoyageStarted: boolean = true;
-const voyageData = {
-  tier: "Tier 3",
-  team: "Team",
-  voyage: "V29",
-};
 //-- --//
 
 export default function Sidebar() {
