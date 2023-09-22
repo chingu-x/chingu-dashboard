@@ -3,7 +3,7 @@ import { Button } from "@/components";
 
 function CreateIdeationContainer() {
   return (
-    <div className="card w-[1280px] h-[190px] bg-base-100 text-neutral-content flex flex-row items-center px-10">
+    <div className="card w-full h-[190px] bg-base-100 text-neutral-content flex flex-row items-center px-10">
       <VoteDescriptionCard />
       <section className="card-body gap-y-7 px-20">
         <h2 className="text-xl font-semibold text-neutral-focus">
