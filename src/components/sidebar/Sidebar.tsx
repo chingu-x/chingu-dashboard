@@ -161,14 +161,6 @@ export default function Sidebar() {
           </ul>
         )}
       </ul>
-      <div className="flex-grow flex flex-col justify-end">
-        {isOpenSidebar && (
-          <VoyageStatus
-            isVoyageStarted={isVoyageStarted}
-            voyageData={voyageData}
-          />
-        )}
-      </div>
       <div className="flex flex-col items-end justify-start border-t border-neutral-content">
         <ExpandButton isOpen={isOpenSidebar} onClick={setIsOpenSidebar} />
       </div>
