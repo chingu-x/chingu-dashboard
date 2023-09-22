@@ -38,7 +38,7 @@ export default function RootLayout({
             <StoreProvider>
               <div className="flex flex-1 overflow-hidden">
                 <Sidebar />
-                <main className="flex flex-col flex-1 overflow-y-auto items-center">
+                <main className="flex flex-col flex-1 overflow-y-auto items-center p-3">
                   {children}
                 </main>
               </div>
