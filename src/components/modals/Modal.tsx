@@ -47,7 +47,12 @@ export default function Modal({
         {/* HEADER */}
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-semibold capitalize">{title}</h3>
-          <button aria-label="close modal" onClick={onClose}>
+          <button
+            type="button"
+            aria-label="close modal"
+            className="btn btn-circle"
+            onClick={onClose}
+          >
             <XMarkIcon className="w-6 h-6 fill-current" />
           </button>
         </div>
