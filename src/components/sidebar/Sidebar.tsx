@@ -131,7 +131,9 @@ export default function Sidebar() {
     <aside
       className={`sticky top-16 h-[calc(100vh-theme(spacing.16))] ${
         isOpenSidebar ? "w-[18.4375rem]" : "w-[5.8125rem]"
-      } text-center bg-base-200 flex flex-col justify-between ${isDark ? "sidebar-shadow-dark" : "sidebar-shadow-light"}`}
+      } text-center bg-base-200 flex flex-col justify-between ${
+        isDark ? "sidebar-shadow-dark" : "sidebar-shadow-light"
+      }`}
     >
       <ul
         className={`flex flex-col ${
