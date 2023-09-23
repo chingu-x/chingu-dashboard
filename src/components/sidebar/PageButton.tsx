@@ -21,7 +21,6 @@ export default function PageButton({
   setHoveredButton,
 }: PageButtonProps) {
   const currentPath = usePathname();
-
   const buttonStyles = `${
     isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem]"
   } h-[3.125rem] text-base-300 capitalize border-none hover:bg-base-100`;
@@ -37,7 +36,7 @@ export default function PageButton({
 
   return (
     <li>
-      <Link href={element.name !== String(MainPages.myVoyage) ? link : ""}>
+      <Link href={element.name !== MainPages.myVoyage ? link : ""}>
         <Button
           title={element.name}
           customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
