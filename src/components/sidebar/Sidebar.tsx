@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type React from "react";
 import { usePathname } from "next/navigation";
 import {
   RectangleGroupIcon,
@@ -11,18 +12,6 @@ import {
 import PageButton from "./PageButton";
 import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
-
-export type PageProperty = {
-  name: string;
-  marginBottom: string;
-  icon: JSX.Element;
-  link: string;
-};
-
-export type VoyagePageProperty = {
-  name: string;
-  link: string;
-};
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -39,6 +28,18 @@ export enum VoyagePages {
   sprints = "Sprints",
   resources = "Resources",
 }
+
+export type VoyagePageProperty = {
+  name: string;
+  link: string;
+};
+
+export type PageProperty = {
+  name: MainPages;
+  marginBottom: string;
+  icon: React.JSX.Element;
+  link: string;
+};
 
 export const voyagePages: VoyagePageProperty[] = [
   {
@@ -109,7 +110,7 @@ export default function Sidebar() {
     if (typeof element === "string") {
       setSelectedButton(element);
       setIsOpenSidebar(false);
-    } else if ((element.name as MainPages) === MainPages.myVoyage) {
+    } else if (element.name === MainPages.myVoyage) {
       setIsOpenSidebar(true);
     } else {
       setSelectedButton(element.link);
