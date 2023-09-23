@@ -1,7 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { StoreProvider, Navbar, Sidebar, ThemeProvider } from "@/components";
+import {
+  StoreProvider,
+  Navbar,
+  Sidebar,
+  ThemeProvider,
+  ModalProvider,
+} from "@/components";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -36,8 +42,9 @@ export default function RootLayout({
           <div className="flex min-h-screen">
             <Navbar />
             <StoreProvider>
+              <ModalProvider />
               <Sidebar />
-              <main className="mt-16 flex-1">{children}</main>
+              <main className="flex-1 mt-16">{children}</main>
             </StoreProvider>
           </div>
         </ThemeProvider>
