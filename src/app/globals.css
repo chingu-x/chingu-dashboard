@@ -21,3 +21,11 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #C0C0C0;
 }
+
+.sidebar-shadow-light {
+    box-shadow: 8px 0 10px -5px var(--neutral-focus);
+  }
+  
+.sidebar-shadow-dark {
+    box-shadow: 8px 0 10px -5px var(--neutral-focus);
+  }

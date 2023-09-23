@@ -8,6 +8,7 @@ import {
   BookmarkSquareIcon,
   RocketLaunchIcon,
 } from "@heroicons/react/24/solid";
+import { useTheme } from "next-themes";
 import PageButton from "./PageButton";
 import VoyagePageButton from "./VoyagePageButton";
 import VoyageStatus from "./VoyageStatus";
@@ -106,6 +107,7 @@ const voyageData = {
 
 export default function Sidebar() {
   const currentPath = usePathname();
+  const { theme } = useTheme();
 
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(true);
   const [selectedButton, setSelectedButton] = useState<string>(currentPath);
@@ -123,11 +125,13 @@ export default function Sidebar() {
     }
   };
 
+  const isDark = theme === "dark";
+
   return (
     <aside
       className={`sticky top-16 h-[calc(100vh-theme(spacing.16))] ${
         isOpenSidebar ? "w-[18.4375rem]" : "w-[5.8125rem]"
-      } text-center bg-base-200 flex flex-col justify-between`}
+      } text-center bg-base-200 flex flex-col justify-between ${isDark ? "sidebar-shadow-dark" : "sidebar-shadow-light"}`}
     >
       <ul
         className={`flex flex-col ${
