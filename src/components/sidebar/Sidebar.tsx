@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type React from "react";
 import { usePathname } from "next/navigation";
 import {
   RectangleGroupIcon,
@@ -10,20 +11,7 @@ import {
 } from "@heroicons/react/24/solid";
 import PageButton from "./PageButton";
 import VoyagePageButton from "./VoyagePageButton";
-import VoyageStatus from "./VoyageStatus";
 import ExpandButton from "./ExpandButton";
-
-export type PageProperty = {
-  name: string;
-  marginBottom: string;
-  icon: JSX.Element;
-  link: string;
-};
-
-export type VoyagePageProperty = {
-  name: string;
-  link: string;
-};
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -40,6 +28,18 @@ export enum VoyagePages {
   sprints = "Sprints",
   resources = "Resources",
 }
+
+export type VoyagePageProperty = {
+  name: string;
+  link: string;
+};
+
+export type PageProperty = {
+  name: MainPages;
+  marginBottom: string;
+  icon: React.JSX.Element;
+  link: string;
+};
 
 export const voyagePages: VoyagePageProperty[] = [
   {
@@ -97,11 +97,6 @@ const pagesProperties: PageProperty[] = [
 
 //-- Mocked fake data just for testing purpose --//
 const isVoyageStarted: boolean = true;
-const voyageData = {
-  tier: "Tier 3",
-  team: "Team",
-  voyage: "V29",
-};
 //-- --//
 
 export default function Sidebar() {
@@ -115,7 +110,7 @@ export default function Sidebar() {
     if (typeof element === "string") {
       setSelectedButton(element);
       setIsOpenSidebar(false);
-    } else if ((element.name as MainPages) === MainPages.myVoyage) {
+    } else if (element.name === MainPages.myVoyage) {
       setIsOpenSidebar(true);
     } else {
       setSelectedButton(element.link);
@@ -127,7 +122,7 @@ export default function Sidebar() {
     <aside
       className={`overflow-y-auto ${
         isOpenSidebar ? "w-[18.438rem]" : "w-[5.813rem]"
-      } text-center bg-base-200 flex flex-col justify-between`}
+      } text-center bg-base-200 flex flex-col justify-between border-r border-neutral-content`}
     >
       <ul
         className={`flex flex-col ${
@@ -161,14 +156,6 @@ export default function Sidebar() {
           </ul>
         )}
       </ul>
-      <div className="flex-grow flex flex-col justify-end">
-        {isOpenSidebar && (
-          <VoyageStatus
-            isVoyageStarted={isVoyageStarted}
-            voyageData={voyageData}
-          />
-        )}
-      </div>
       <div className="flex flex-col items-end justify-start border-t border-neutral-content">
         <ExpandButton isOpen={isOpenSidebar} onClick={setIsOpenSidebar} />
       </div>
