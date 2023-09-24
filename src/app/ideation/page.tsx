@@ -3,7 +3,7 @@ import { Banner } from "@/components";
 
 function IdeationPage() {
   return (
-    <div className="flex flex-col gap-y-9 p-3">
+    <>
       <Banner
         image="/img/ideation_banner.png"
         alt="ideation_banner"
@@ -23,7 +23,7 @@ function IdeationPage() {
           contributed_by={i.contributed_by}
         />
       ))}
-    </div>
+    </>
   );
 }
 
