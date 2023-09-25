@@ -16,6 +16,10 @@ export default function Example1Modal() {
       <input type="text" placeholder="Type here" className="w-full input" />
       <input type="text" placeholder="Type here" className="w-full input" />
       <input type="text" placeholder="Type here" className="w-full input" />
+      <textarea className="textarea" placeholder="Bio"></textarea>
+      <textarea className="textarea" placeholder="Bio"></textarea>
+      <textarea className="textarea" placeholder="Bio"></textarea>
+      <textarea className="textarea" placeholder="Bio"></textarea>
     </div>
   );
 
@@ -26,7 +30,7 @@ export default function Example1Modal() {
         dispatch(onClose());
       }}
       onSubmit={() => {}}
-      title="Create project"
+      title="create project"
       primaryActionLabel="submit"
       secondaryAction={() => {}}
       secondaryActionLabel="delete project"
