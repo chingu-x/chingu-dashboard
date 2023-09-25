@@ -10,7 +10,7 @@ function IdeationContainer({
   contributed_by,
 }: Ideation) {
   return (
-    <div className="card w-[1280px] h-[457px] bg-primary-content text-neutral-content flex flex-row items-start p-10 gap-x-20">
+    <div className="card w-full h-[457px] bg-primary-content text-neutral-content flex flex-row items-start p-10 gap-x-20">
       <VoteCard users={users} voted={voted} />
       <section className="card-body gap-y-7 p-0 w-[1000px] h-[377px] overflow-y-auto pr-5">
         <h2 className="text-xl font-semibold text-neutral-focus">{title}</h2>
