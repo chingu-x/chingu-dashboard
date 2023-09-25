@@ -6,7 +6,7 @@ const currentUserId = "1";
 
 function TeamTable() {
   return (
-    <div className="overflow-x-auto">
+    <div className="w-full">
       <table
         className={`table px-6 pb-10 border-separate border-none bg-primary-content pt-7 ${styles["table"]}`}
       >
