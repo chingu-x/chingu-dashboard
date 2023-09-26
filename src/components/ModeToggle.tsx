@@ -21,15 +21,15 @@ export default function ModeToggle() {
   };
 
   return (
-    <label className="swap swap-rotate">
+    <label className="swap swap-rotate ">
       <input
         data-testid="mode-toggle"
         type="checkbox"
         onChange={toggleTheme}
         checked={theme === "light"}
       />
-      <MoonIcon className="w-6 h-6 duration-200 fill-current swap-on" />
-      <SunIcon className="w-6 h-6 duration-200 fill-current swap-off" />
+      <MoonIcon className="w-6 h-6 duration-200 fill-current swap-on text-base-300" />
+      <SunIcon className="w-6 h-6 duration-200 fill-current swap-off text-base-300" />
     </label>
   );
 }
