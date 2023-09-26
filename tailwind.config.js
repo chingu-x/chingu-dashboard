@@ -38,11 +38,11 @@ module.exports = {
       {
         dark: {
           primary: "#40936D",
-          "primary-focus": "#82D9B1",
-          "primary-content": "#7FB79D",
-          secondary: "#8FB4CC",
-          "secondary-focus": "#A6D1ED",
-          "secondary-content": "#697F8C",
+          "primary-focus": "#5F8E6C",
+          "primary-content": "#394741",
+          secondary: "#44728D",
+          "secondary-focus": "#5E7387",
+          "secondary-content": "#36444D",
           accent: "#494C4D",
           "accent-focus": "#595655",
           "accent-content": "#404040",
