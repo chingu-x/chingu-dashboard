@@ -10,7 +10,7 @@ export default function DropDownLink({ title, href = "#" }: DropDownLinkProps) {
     <li>
       <Link
         href={href}
-        className="text-neutral hover:text-neutral-focus font-semibold  duration-200"
+        className="font-semibold  text-base-300 duration-200"
       >
         {title}
       </Link>
