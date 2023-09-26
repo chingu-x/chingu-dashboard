@@ -1,8 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-const NEUTRAL_FOCUS_LIGHT = "#4C515B";
-const NEUTRAL_FOCUS_DARK = "#A0A5AE";
-
 module.exports = {
   content: [
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -23,7 +20,7 @@ module.exports = {
           "accent-focus": "#98DDBD",
           "accent-content": "#D7EDE3",
           neutral: "#6B7280",
-          "neutral-focus": NEUTRAL_FOCUS_LIGHT,
+          "neutral-focus": "#4C515B",
           "neutral-content": "#9CA1AA",
           info: "#8FC4E5",
           "info-content": "#DCEDF7",
@@ -37,7 +34,6 @@ module.exports = {
           "base-200": "#F5F5F5",
           "base-300": "#16171A",
           "base-content": "#EEEFF0",
-          "--neutral-focus": NEUTRAL_FOCUS_LIGHT,
         },
       },
       {
@@ -52,7 +48,7 @@ module.exports = {
           "accent-focus": "#6EE7B7",
           "accent-content": "#6B9984",
           neutral: "#6B7280",
-          "neutral-focus": NEUTRAL_FOCUS_DARK,
+          "neutral-focus": "#A0A5AE",
           "neutral-content": "#3B3F46",
           info: "#84B5D4",
           "info-content": "#668BA3",
@@ -66,7 +62,6 @@ module.exports = {
           "base-200": "#16171A",
           "base-300": "#F5F5F5",
           "base-content": "#2D3036",
-          "--neutral-focus": NEUTRAL_FOCUS_DARK,
         },
       },
     ],
