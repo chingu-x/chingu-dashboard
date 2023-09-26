@@ -4,9 +4,9 @@ import { TeamRow, teamMembers } from ".";
 // Temp:
 const currentUserId = "1";
 
-function TeamTable() {
+export default function TeamTable() {
   return (
-    <div className="w-full">
+    <div className="hidden w-full min-[1920px]:block">
       <table
         className={`table px-6 pb-10 border-separate border-none bg-secondary-content text-base-300 pt-7 ${styles["table"]}`}
       >
@@ -36,5 +36,3 @@ function TeamTable() {
     </div>
   );
 }
-
-export default TeamTable;
