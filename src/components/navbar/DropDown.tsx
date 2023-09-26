@@ -12,7 +12,7 @@ export default function DropDown({ name }: { name: string }) {
       </label>
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box right-0"
+        className="dropdown-content z-[1] menu p-2 mt-2 shadow bg-base-100 right-0 border border-neutral rounded-2xl"
       >
         <DropDownLink title="Link 1" />
         <DropDownLink title="404???" href="/hello404" />
