@@ -9,7 +9,7 @@ function CreateIdeationContainer() {
         <h2 className="text-xl font-semibold text-base-300">
           What is your Voyage project idea & vision?
         </h2>
-        <p className="text-base font-medium text-base-300">
+        <p className="text-base font-medium text-neutral-focus">
           We value your ideas! Share your ideas on what our project should be.
           Describe your vision to capture what it does and the benefit it will
           bring to users.
@@ -17,7 +17,7 @@ function CreateIdeationContainer() {
       </section>
       <Button
         title="Create Project"
-        customClassName="w-1/7 btn-primary text-base-200 normal-case"
+        customClassName="w-1/7 btn-primary text-base-300 normal-case"
       >
         Create Project
       </Button>

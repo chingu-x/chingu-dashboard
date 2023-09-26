@@ -22,7 +22,7 @@ function VoteCard({ users, voted }: VoteCardProps) {
         </div>
         <Button
           title="Vote"
-          customClassName="w-full btn-primary disabled:bg-primary-focus disabled:text-base-content"
+          customClassName="w-full btn-primary text-base-300 disabled:bg-primary-focus disabled:text-base-200"
           disabled={voted}
         >
           {voted ? "Voted" : "Vote"}
