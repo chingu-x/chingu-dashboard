@@ -10,18 +10,17 @@ interface TeamRowProps {
 function TeamRow({ teamMember, currentUserId }: TeamRowProps) {
   return (
     <tr>
-      <td className="text-black">{teamMember.name}</td>
+      <td>{teamMember.name}</td>
       <td>{teamMember.discordId}</td>
       <td>
-        <div className="flex items-center justify-between h-[35px] bg-white rounded-md pl-4">
+        <div className="flex items-center justify-between h-[35px] bg-base-100 hover:bg-secondary hover:cursor-pointer rounded-md pl-4">
           {teamMember.averageHour === 0 ? "Add hours" : teamMember.averageHour}
           {teamMember.id === currentUserId && (
-            <Button
-              title={"edit"}
-              customClassName="pl-2 pr-1 h-full rounded-l-none rounded-r-md p-0 min-h-0 text-sm font-semibold text-black bg-white border-transparent hover:bg-white hover:border-transparent"
+            <div
+              className="flex items-center justify-between pr-4 text-sm font-semibold "
             >
-              <PencilSquareIcon className="w-4 h-4 text-black" />
-            </Button>
+              <PencilSquareIcon className="w-4 h-4 text-base-300 bg-transparent" />
+            </div>
           )}
         </div>
       </td>
