@@ -9,7 +9,6 @@ import {
   BookmarkSquareIcon,
   RocketLaunchIcon,
 } from "@heroicons/react/24/solid";
-import { useTheme } from "next-themes";
 import PageButton from "./PageButton";
 import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
@@ -102,7 +101,6 @@ const isVoyageStarted: boolean = true;
 
 export default function Sidebar() {
   const currentPath = usePathname();
-  const { theme } = useTheme();
 
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(true);
   const [selectedButton, setSelectedButton] = useState<string>(currentPath);
@@ -120,15 +118,11 @@ export default function Sidebar() {
     }
   };
 
-  const isDark = theme === "dark";
-
   return (
     <aside
       className={`overflow-y-auto ${
         isOpenSidebar ? "w-[18.438rem]" : "w-[5.813rem]"
-      } text-center bg-base-200 flex flex-col justify-between border-r border-neutral-content ${
-        isDark ? "sidebar-shadow-dark" : "sidebar-shadow-light"
-      }`}
+      } text-center bg-base-200 flex flex-col justify-between border-r border-neutral-content shadow-[4px_4px_4px_0] shadow-neutral-focus/30`}
     >
       <ul
         className={`flex flex-col ${
