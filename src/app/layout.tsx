@@ -1,13 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import {
-  StoreProvider,
-  Navbar,
-  Sidebar,
-  ThemeProvider,
-  ModalProvider,
-} from "@/components";
+import { StoreProvider, Navbar, Sidebar, ThemeProvider } from "@/components";
+import ServerModalContainer from "@/components/modals/RSCModalContainer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -43,7 +38,7 @@ export default function RootLayout({
             <Navbar />
             <StoreProvider>
               <div className="flex flex-1 overflow-hidden">
-                <ModalProvider />
+                <ServerModalContainer />
                 <Sidebar />
                 <main className="flex flex-col items-center flex-1 w-full p-10 overflow-y-auto gap-y-9">
                   {children}

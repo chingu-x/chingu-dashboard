@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-import { Example1Modal, Example2Modal } from "./modals";
-
-export default function ModalProvider() {
+export default function ModalProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -13,10 +15,5 @@ export default function ModalProvider() {
 
   if (!isMounted) return null;
 
-  return (
-    <>
-      <Example1Modal />
-      <Example2Modal />
-    </>
-  );
+  return <>{children}</>;
 }
