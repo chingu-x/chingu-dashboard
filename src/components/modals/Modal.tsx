@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { XMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/components";
 
@@ -25,7 +25,16 @@ export default function Modal({
   secondaryActionLabel,
   secondaryAction,
 }: ModalProps) {
-  // Use ESC tp close the modal
+  const [showModal, setShowModal] = useState(isOpen);
+
+  // To keep DaisyUI modal animation
+  useEffect(() => {
+    setTimeout(() => {
+      setShowModal(isOpen);
+    }, 200);
+  }, [isOpen]);
+
+  // Use ESC to close the modal
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -38,8 +47,12 @@ export default function Modal({
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    <dialog className="modal bg-base-300/25" open={isOpen} onClick={onClose}>
+    <dialog className="modal bg-base-300/25" open={showModal} onClick={onClose}>
       <div
         onClick={(e) => e.stopPropagation()}
         className="modal-box bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden p-10"
