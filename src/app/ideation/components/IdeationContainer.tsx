@@ -17,7 +17,7 @@ function IdeationContainer({
         <h3 className="text-base text-neutral-focus font-semibold">
           Project Idea
         </h3>
-        <p className="text-base text-neutral-focus font-medium">
+        <p className="text-base text-base-300 font-medium">
           {project_idea}
         </p>
         <h3 className="text-base text-neutral-focus font-semibold">

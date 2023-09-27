@@ -7,12 +7,12 @@ interface VoteCardProps {
 
 function VoteCard({ users, voted }: VoteCardProps) {
   return (
-    <div className="card w-1/3 h-fit bg-base-content rounded-lg">
+    <div className="card w-1/3 h-fit bg-primary-content rounded-lg">
       <section className="flex flex-col items-start p-4 gap-y-4">
-        <h1 className="text-3xl font-semibold text-neutral-focus">
+        <h1 className="text-3xl font-semibold text-base-300">
           {users.length}
         </h1>
-        <h2 className="text-xl font-semibold text-neutral-focus">{`Vote${
+        <h2 className="text-xl font-semibold text-base-300">{`Vote${
           users.length > 1 ? "s" : ""
         }`}</h2>
         <div className="avatar-group -space-x-2 w-full">

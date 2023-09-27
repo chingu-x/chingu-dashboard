@@ -10,9 +10,9 @@ interface ContributionCardProps {
 
 function ContributionCard({ own_idea, contributed_by }: ContributionCardProps) {
   return (
-    <div className="card w-1/3 h-fit bg-accent-focus rounded-lg">
+    <div className="card w-1/3 h-fit bg-secondary-content rounded-lg">
       <section className="flex flex-col items-start p-4 gap-y-4">
-        <h1 className="text-base font-medium text-neutral-focus">
+        <h1 className="text-base font-medium text-base-300">
           Contributed By
         </h1>
         <Avatar width={64} height={64} image={contributed_by.avatar} />
