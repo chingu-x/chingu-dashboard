@@ -7,7 +7,7 @@ interface VoteCardProps {
 
 function VoteCard({ users, voted }: VoteCardProps) {
   return (
-    <div className="card w-1/3 h-fit bg-primary-content rounded-lg">
+    <div className="card max-w-[200px] w-full h-fit bg-primary-content rounded-lg">
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-3xl font-semibold text-base-300">
           {users.length}
