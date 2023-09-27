@@ -122,7 +122,7 @@ export default function Sidebar() {
     <aside
       className={`overflow-y-auto ${
         isOpenSidebar ? "w-[18.438rem]" : "w-[5.813rem]"
-      } text-center bg-base-200 flex flex-col justify-between border-r border-neutral-content shadow-[4px_4px_4px_0] shadow-neutral-focus/30`}
+      } text-center bg-base-200 flex flex-col justify-between border-r border-neutral-content shadow-[4px_4px_4px_0] shadow-neutral-focus/5`}
     >
       <ul
         className={`flex flex-col ${
