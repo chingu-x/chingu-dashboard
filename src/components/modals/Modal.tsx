@@ -34,7 +34,7 @@ export default function Modal({
     dispatch(onClose());
   }, [dispatch]);
 
-  // Use ESC tp close the modal
+  // Use ESC to close the modal
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
