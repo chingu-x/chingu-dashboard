@@ -8,10 +8,10 @@ function TeamTable() {
   return (
     <div className="w-full">
       <table
-        className={`table px-6 pb-10 border-separate border-none bg-primary-content pt-7 ${styles["table"]}`}
+        className={`table px-6 pb-10 border-separate border-none bg-secondary-content pt-7 ${styles["table"]}`}
       >
         {/* head */}
-        <thead className="mb-10 text-xl font-semibold text-black">
+        <thead className="mb-10 text-xl font-semibold text-base-300">
           <tr>
             <th>Name</th>
             <th>Discord ID</th>
@@ -22,7 +22,7 @@ function TeamTable() {
             <th>Position</th>
           </tr>
         </thead>
-        <tbody className="text-base font-medium text-neutral">
+        <tbody className="text-base font-medium text-base-300">
           {/* rows */}
           {teamMembers.map((teamMember) => (
             <TeamRow
