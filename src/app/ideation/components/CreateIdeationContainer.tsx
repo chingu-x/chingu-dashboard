@@ -3,9 +3,17 @@ import { Button } from "@/components";
 
 function CreateIdeationContainer() {
   return (
-    <div className="card w-full h-[190px] bg-base-100 flex flex-row items-center px-10">
-      <VoteDescriptionCard />
-      <section className="card-body gap-y-7 px-20">
+    <div className="card w-full min-h-[300px] bg-base-100 flex flex-row items-center px-10">
+      <div className="flex flex-col justify-between h-full py-10">
+        <VoteDescriptionCard />
+        <Button
+          title="Create Project"
+          customClassName="w-1/7 btn-primary text-base-300 normal-case"
+        >
+          Create Project
+        </Button>
+      </div>
+      <section className="card-body gap-y-7 px-20 max-w-[1312px]">
         <h2 className="text-xl font-semibold text-base-300">
           What is your Voyage project idea & vision?
         </h2>
@@ -15,12 +23,6 @@ function CreateIdeationContainer() {
           bring to users.
         </p>
       </section>
-      <Button
-        title="Create Project"
-        customClassName="w-1/7 btn-primary text-base-300 normal-case"
-      >
-        Create Project
-      </Button>
     </div>
   );
 }

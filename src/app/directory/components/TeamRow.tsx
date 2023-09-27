@@ -2,7 +2,6 @@ import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { TeamMember } from ".";
 import { Button } from "@/components";
 
-
 interface TeamRowProps {
   teamMember: TeamMember;
   currentUserId: string;
@@ -17,9 +16,7 @@ function TeamRow({ teamMember, currentUserId }: TeamRowProps) {
         <div className="flex items-center justify-between h-[35px] bg-white rounded-md pl-4">
           {teamMember.averageHour === 0 ? "Add hours" : teamMember.averageHour}
           {teamMember.id === currentUserId && (
-            <div
-              className="flex items-center justify-between pr-4 text-sm font-semibold "
-            >
+            <div className="flex items-center justify-between pr-4 text-sm font-semibold ">
               <PencilSquareIcon className="w-4 h-4 text-base-300 bg-transparent" />
             </div>
           )}
