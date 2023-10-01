@@ -1,3 +1,5 @@
+"use client";
+
 import Modal from "./Modal";
 
 export default function Example1Modal() {
