@@ -46,7 +46,7 @@ export default function Modal({
     const down = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        onClose();
+        dispatch(onClose());
       }
     };
 
@@ -80,7 +80,7 @@ export default function Modal({
           </button>
         </div>
         {/* FORM */}
-        <form onSubmit={onSubmit} className="flex flex-col">
+        <form onSubmit={onSubmit} className="flex flex-col overflow-hidden">
           {/* BODY */}
           <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[100px]">
             {children}
