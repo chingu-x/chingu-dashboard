@@ -1,4 +1,7 @@
+"use client";
+
 import Modal from "./Modal";
+import { TextInput } from "@/components/inputs";
 
 export default function Example2Modal() {
   return (
@@ -8,10 +11,10 @@ export default function Example2Modal() {
       primaryActionLabel="submit"
       onSubmit={() => {}}
     >
-      <div className="flex flex-col gap-4">
-        <textarea
-          className="textarea"
-          placeholder="What is your feature suggestion?"
+      <div className="flex flex-col gap-6">
+        <TextInput
+          id="suggestion"
+          placeholder="What is your tech stack suggestion?"
         />
       </div>
     </Modal>
