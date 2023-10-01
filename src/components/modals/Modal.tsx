@@ -1,52 +1,46 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { XMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/components";
 
-import { useAppDispatch, useAppSelector } from "@/store";
-import { onClose } from "@/store/features/modal";
-import { ModalType } from "@/store/features/modal/modalSlice";
-
 interface ModalProps {
+  isOpen: boolean;
   title: string;
-  modalType: ModalType;
   primaryActionLabel: string;
   secondaryActionLabel?: string;
   secondaryAction?: () => void;
   onSubmit: () => void;
+  onClose: () => void;
   children: React.ReactNode;
 }
 
 export default function Modal({
+  isOpen,
   title,
-  modalType,
   children,
   primaryActionLabel,
   secondaryAction,
   secondaryActionLabel,
   onSubmit,
+  onClose,
 }: ModalProps) {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
-  const dispatch = useAppDispatch();
-
-  const isModalOpen = isOpen && type === modalType;
-  const [showModal, setShowModal] = useState(isModalOpen);
+  const [showModal, setShowModal] = useState(isOpen);
 
   // To keep DaisyUI modal animation
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowModal(isModalOpen);
+      setShowModal(isOpen);
     }, 100);
     return () => clearTimeout(timer);
-  }, [isModalOpen]);
+  }, [isOpen]);
 
   // Use ESC to close the modal
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        dispatch(onClose());
+        onClose();
       }
     };
 
@@ -54,20 +48,12 @@ export default function Modal({
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  const handleClose = useCallback(() => {
-    dispatch(onClose());
-  }, [dispatch]);
-
-  if (!isModalOpen) {
+  if (!isOpen) {
     return null;
   }
 
   return (
-    <dialog
-      className="modal bg-base-300/25"
-      open={showModal}
-      onClick={handleClose}
-    >
+    <dialog className="modal bg-base-300/25" open={showModal} onClick={onClose}>
       <div
         onClick={(e) => e.stopPropagation()}
         className="modal-box bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden p-10"
@@ -75,7 +61,7 @@ export default function Modal({
         {/* HEADER */}
         <div className="flex items-center justify-between pb-8">
           <h3 className="text-xl font-semibold capitalize">{title}</h3>
-          <button type="button" aria-label="close modal" onClick={handleClose}>
+          <button type="button" aria-label="close modal" onClick={onClose}>
             <XMarkIcon className="w-6 h-6 fill-current" />
           </button>
         </div>
