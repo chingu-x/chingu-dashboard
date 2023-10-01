@@ -73,7 +73,7 @@ export default function Modal({
         className="modal-box bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden p-10"
       >
         {/* HEADER */}
-        <div className="flex items-center justify-between pb-10">
+        <div className="flex items-center justify-between pb-8">
           <h3 className="text-xl font-semibold capitalize">{title}</h3>
           <button type="button" aria-label="close modal" onClick={handleClose}>
             <XMarkIcon className="w-6 h-6 fill-current" />
@@ -82,11 +82,11 @@ export default function Modal({
         {/* FORM */}
         <form onSubmit={onSubmit} className="flex flex-col overflow-hidden">
           {/* BODY */}
-          <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[100px]">
+          <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[50px]">
             {children}
           </div>
           {/* BUTTONS */}
-          <div className="flex flex-col gap-5 pt-10">
+          <div className="flex flex-col gap-5 pt-8">
             <Button
               type="submit"
               title={primaryActionLabel}
