@@ -3,12 +3,12 @@ import { Button } from "@/components";
 
 function CreateIdeationContainer() {
   return (
-    <div className="card w-full min-h-[300px] bg-base-100 flex flex-row items-center px-10">
+    <div className="card w-full min-h-[190px] max-[1919px]:min-h-[280px] bg-base-100 flex flex-row items-center px-10">
       <div className="flex flex-col justify-between h-full py-10 min-[1920px]:hidden">
         <VoteDescriptionCard />
         <Button
           title="Create Project"
-          customClassName="w-1/7 btn-primary text-base-300 normal-case"
+          customClassName="max-[1920px]:w-[160px] btn-primary text-base-300 normal-case"
         >
           Create Project
         </Button>
