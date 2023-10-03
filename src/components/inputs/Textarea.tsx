@@ -19,7 +19,7 @@ export default function Textarea({
   errors,
 }: TextareaProps) {
   return (
-    <div className="form-control">
+    <div className="w-full pr-2 ml-1 form-control">
       <label htmlFor={id} className="p-0 label">
         <span className="text-base font-medium capitalize label-text text-base-300">
           {label}
@@ -27,8 +27,10 @@ export default function Textarea({
       </label>
       <textarea
         id={id}
-        className={`w-full h-24 my-2 text-base shadow-sm textarea textarea-bordered bg-base-200 text-neutral-focus focus-visible:ring-0 focus-visible:bg-base-200 placeholder-base ${
-          errors[id] ? "border-error" : "border-neutral/40"
+        className={`w-full h-24 my-2 text-base shadow-transparent shadow-[0px_0px_0px_3px] textarea textarea-bordered bg-base-200 text-neutral-focus focus-visible:ring-0 focus-visible:bg-base-200 placeholder-base ${
+          errors[id]
+            ? "border-error focus-visible:shadow-error/30"
+            : "border-neutral/40 focus-visible:shadow-neutral/30"
         }`}
         placeholder={placeholder}
         {...register(id)}
