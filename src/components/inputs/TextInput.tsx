@@ -1,6 +1,7 @@
 "use client";
 
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 
 interface TextInputProps {
   id: string;
@@ -25,19 +26,24 @@ export default function TextInput({
             {label}
           </span>
         )}
-        <span className="h-6 label-text-alt text-error">
-          {errors[id]?.message as string}
-        </span>
       </label>
       <input
         id={id}
         type="text"
         placeholder={placeholder}
         {...register(id)}
-        className={`w-full my-2 text-base shadow-sm input input-bordered bg-base-200 text-neutral-focus border-neutral/40 focus-visible:ring-0 focus-visible:bg-base-200 ${
+        className={`w-full my-2 text-base shadow-sm input input-bordered bg-base-200 text-neutral-focus focus-visible:ring-0 focus-visible:bg-base-200 ${
           errors[id] ? "border-error" : "border-neutral/40"
         }`}
       />
+      <label className="p-0 label">
+        <span className="flex items-center h-4 gap-1 text-sm label-text-alt text-error">
+          {errors[id] && (
+            <QuestionMarkCircleIcon className="w-4 h-4 stroke-error fill-transparent" />
+          )}
+          {errors[id]?.message as string}
+        </span>
+      </label>
     </div>
   );
 }

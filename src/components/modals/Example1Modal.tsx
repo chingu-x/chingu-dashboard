@@ -12,25 +12,41 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { onClose } from "@/store/features/modal";
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required.",
-  }),
-  projectIdea: z
+  title: z
     .string()
     .min(1, {
-      message: "Project idea is required.",
+      message: "Title is required.",
     })
-    .min(5, {
-      message: "More words, please.",
+    .refine(
+      (val) => val.length <= 20,
+      (val) => ({ message: `Character length ${val.length}/20` })
+    ),
+  projectIdea: z.string().min(1, {
+    message: "Project idea is required.",
+  }),
+  visionStatement: z
+    .string()
+    .min(1, {
+      message: "Vision statement is required.",
     })
-    .min(25, {
-      message: "More!",
-    })
-    .max(100, {
-      message: "It's enough.",
+    .refine(
+      (val) => val.length <= 100,
+      (val) => ({ message: `Character length ${val.length}/100` })
+    ),
+  luckyNumber: z
+    .number()
+    .or(
+      z
+        .string()
+        .min(1, {
+          message: "Lucky number is required.",
+        })
+        .regex(/\d+/)
+        .transform(Number)
+    )
+    .refine((n) => n >= 0, {
+      message: "It should be a number.",
     }),
-  visionStatement1: z.string(),
-  visionStatement2: z.string(),
 });
 
 export default function Example1Modal() {
@@ -67,7 +83,7 @@ export default function Example1Modal() {
       onSubmit={handleSubmit(onSubmit)}
       onClose={handleClose}
     >
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
         <TextInput
           id="title"
           label="title"
@@ -83,16 +99,16 @@ export default function Example1Modal() {
           errors={errors}
         />
         <Textarea
-          id="visionStatement1"
+          id="visionStatement"
           label="vision statement"
           placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
           register={register}
           errors={errors}
         />
-        <Textarea
-          id="visionStatement2"
-          label="vision statement"
-          placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
+        <TextInput
+          id="luckyNumber"
+          label="lucky number"
+          placeholder="Enter your lucky number"
           register={register}
           errors={errors}
         />
