@@ -68,7 +68,7 @@ export default function Modal({
         {/* FORM */}
         <form onSubmit={onSubmit} className="flex flex-col overflow-hidden">
           {/* BODY */}
-          <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[50px]">
+          <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[90px]">
             {children}
           </div>
           {/* BUTTONS */}

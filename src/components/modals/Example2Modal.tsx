@@ -49,7 +49,7 @@ export default function Example2Modal() {
       onSubmit={handleSubmit(onSubmit)}
       onClose={handleClose}
     >
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
         <TextInput
           id="suggestion"
           placeholder="What is your tech stack suggestion?"
