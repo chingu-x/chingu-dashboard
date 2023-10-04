@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components";
 import Link from "next/link";
+import { Button } from "@/components";
 
 export default function Example4ModalClient() {
   return (
