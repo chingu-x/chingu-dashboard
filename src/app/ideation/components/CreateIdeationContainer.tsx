@@ -8,7 +8,7 @@ function CreateIdeationContainer() {
         <VoteDescriptionCard />
         <Button
           title="Create Project"
-          customClassName="max-[1920px]:w-[160px] btn-primary text-base-300 normal-case"
+          customClassName="max-[1920px]:w-[160px] btn-primary text-base-300 capitalize"
         >
           Create Project
         </Button>
@@ -26,7 +26,7 @@ function CreateIdeationContainer() {
       </section>
       <Button
         title="Create Project"
-        customClassName="max-w-[200px] w-full btn-primary text-base-300 normal-case hidden min-[1920px]:block"
+        customClassName="max-w-[200px] w-full btn-primary text-base-300 capitalize hidden min-[1920px]:block"
       >
         Create Project
       </Button>
