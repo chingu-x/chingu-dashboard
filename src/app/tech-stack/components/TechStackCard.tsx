@@ -37,12 +37,12 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         </ul>
       </div>
       <Button
-          title={`edit ${title}`}
-          customClassName="mt-6 capitalize w-full h-8 p-0 min-h-full text-xs font-medium text-base-300 bg-secondary border-transparent flex justify-start pl-5 items-center"
-        >
-          <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
-          Add Tech Stack
-        </Button>
+        title={`edit ${title}`}
+        customClassName="mt-6 capitalize w-full h-8 p-0 min-h-full text-xs font-medium text-base-300 bg-secondary border-transparent flex justify-start pl-5 items-center"
+      >
+        <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
+        Add Tech Stack
+      </Button>
     </div>
   );
 }
