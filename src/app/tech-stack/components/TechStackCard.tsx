@@ -34,7 +34,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               </div>
               <Button
                 title={title}
-                customClassName="capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 bg-primary-content border-transparent mr-4 rounded-[32px]"
+                customClassName="capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 bg-primary-content border-transparent mr-4 rounded-[32px] hover:bg-primary hover:border-transparent"
               >
                 Vote
               </Button>
@@ -44,7 +44,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       </div>
       <Button
         title={`add ${title}`}
-        customClassName="mt-6 capitalize w-full h-[42px] p-0 min-h-full text-xs font-medium text-base-300 bg-secondary border-transparent flex justify-start pl-5 items-center"
+        customClassName="mt-6 capitalize w-full h-[42px] p-0 min-h-full text-xs font-medium text-base-300 bg-secondary border-transparent flex justify-start pl-5 items-center hover:bg-secondary hover:border-transparent"
       >
         <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
         Add Tech Stack
