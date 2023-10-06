@@ -6,23 +6,25 @@ interface ContributionCardProps {
     name: string;
     avatar?: string;
   };
+  className?: string
+
 }
 
-function ContributionCard({ own_idea, contributed_by }: ContributionCardProps) {
+function ContributionCard({ own_idea, contributed_by, className }: ContributionCardProps) {
   return (
-    <div className="card w-1/3 h-fit bg-secondary-content rounded-lg">
+    <div className={`card max-w-[200px] w-full max-[1919px]:min-w-[160px] h-fit bg-secondary-content rounded-lg ${className}`}>
       <section className="flex flex-col items-start p-4 gap-y-4">
-        <h1 className="text-base font-medium text-base-300">
-          Contributed By
-        </h1>
-        <Avatar width={64} height={64} image={contributed_by.avatar} />
-        <h2 className="text-xl font-semibold text-base-300">
-          {contributed_by.name}
-        </h2>
+        <h1 className="text-base font-medium text-base-300">Contributed By</h1>
+        <div className="flex bg-base-100 items-center rounded-[100px] h-[25px] gap-x-2 py-[3px] px-[9px]">
+          <Avatar width={16} height={16} image={contributed_by.avatar} />
+          <h2 className="text-base font-medium text-base-300 leading-[19px]">
+            {contributed_by.name}
+          </h2>
+        </div>
         {own_idea ? (
           <Button
             title="Vote"
-            customClassName="w-full btn-secondary text-base-300 "
+            customClassName="w-full btn-secondary text-base-300 capitalize"
           >
             Edit Project
           </Button>
