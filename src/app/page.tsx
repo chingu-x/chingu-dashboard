@@ -1,11 +1,5 @@
-// counter page is just a test, remove later. Don't remove the provider
-
-import { CounterPage } from "@/app/counter";
+// replace with dashboard page when that's completed
 
 export default function Home() {
-  return (
-    <main>
-      <CounterPage />
-    </main>
-  );
+  return null;
 }
