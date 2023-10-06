@@ -9,7 +9,7 @@ interface TechStackCardProps {
 
 export default function TechStackCard({ title, data }: TechStackCardProps) {
   return (
-    <div className="card w-72 sm:w-96 text-base-300 bg-base-200 rounded-lg px-6 py-5">
+    <div className="card min-w-[400px] sm:w-96 text-base-300 bg-base-200 rounded-lg px-6 py-5">
       <div className="flex flex-row justify-between">
         <h3 className="text-xl font-semibold text-base-300 self-center">
           {title}
@@ -38,7 +38,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       </div>
       <Button
         title={`edit ${title}`}
-        customClassName="mt-6 capitalize w-full h-8 p-0 min-h-full text-xs font-medium text-base-300 bg-secondary border-transparent flex justify-start pl-5 items-center"
+        customClassName="mt-6 capitalize w-full h-[42px] p-0 min-h-full text-xs font-medium text-base-300 bg-secondary border-transparent flex justify-start pl-5 items-center"
       >
         <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
         Add Tech Stack

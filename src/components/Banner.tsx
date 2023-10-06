@@ -9,7 +9,7 @@ interface BannerProps {
 
 function Banner({ image, alt, title, description }: BannerProps) {
   return (
-    <div className="card w-full max-h-[320px] bg-primary-content flex flex-row justify-between px-20 py-6 box-border gap-x-10 lg:gap-x-20">
+    <div className="card w-full max-h-[320px] flex flex-row justify-between px-20 py-6 box-border gap-x-10 lg:gap-x-20">
       <div className="h-[200px] w-[276px] relative shrink-0">
         <Image
           src={image}
