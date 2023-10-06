@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { StoreProvider, Navbar } from "@/components";
+import { StoreProvider, Navbar, Sidebar, ThemeProvider } from "@/components";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,10 +21,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.className} bg-base-content`}>
+    <html
+      lang="en"
+      className={`${inter.className} bg-base-content`}
+      suppressHydrationWarning
+    >
       <body>
-        <Navbar />
-        <StoreProvider>{children}</StoreProvider>
+        <ThemeProvider
+          defaultTheme="light"
+          enableSystem={false}
+          storageKey="chingu-theme"
+          disableTransitionOnChange
+        >
+          <div className="flex flex-col h-screen">
+            <Navbar />
+            <StoreProvider>
+              <div className="flex flex-1 overflow-hidden">
+                <Sidebar />
+                <main className="flex flex-col flex-1 overflow-y-auto items-center gap-y-9 p-10 w-full">
+                  {children}
+                </main>
+              </div>
+            </StoreProvider>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
