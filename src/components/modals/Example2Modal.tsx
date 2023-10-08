@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -11,11 +11,13 @@ import { TextInput } from "@/components/inputs";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { onClose } from "@/store/features/modal";
 
-const formSchema = z.object({
+const validationSchema = z.object({
   suggestion: z.string().min(1, {
     message: "This field is required.",
   }),
 });
+
+export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function Example2Modal() {
   const { isOpen, type } = useAppSelector((state) => state.modal);
@@ -28,11 +30,11 @@ export default function Example2Modal() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FieldValues>({
-    resolver: zodResolver(formSchema),
+  } = useForm<ValidationSchema>({
+    resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
   };
 
@@ -53,7 +55,7 @@ export default function Example2Modal() {
         <TextInput
           id="suggestion"
           placeholder="What is your tech stack suggestion?"
-          register={register}
+          register={{ ...register("suggestion") }}
           errors={errors}
         />
       </div>

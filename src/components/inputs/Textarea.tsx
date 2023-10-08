@@ -1,13 +1,13 @@
 "use client";
 
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
-import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
+import { FieldErrors, UseFormRegisterReturn } from "react-hook-form";
+import ErrorMessage from "./ErrorMessage";
 
 interface TextareaProps {
   id: string;
   label: string;
   placeholder: string;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegisterReturn;
   errors: FieldErrors;
 }
 
@@ -33,16 +33,9 @@ export default function Textarea({
             : "border-neutral/40 focus-visible:shadow-neutral/30"
         }`}
         placeholder={placeholder}
-        {...register(id)}
+        {...register}
       />
-      <label className="p-0 label">
-        <span className="flex items-center h-4 gap-1 text-sm label-text-alt text-error">
-          {errors[id] && (
-            <QuestionMarkCircleIcon className="w-4 h-4 stroke-error fill-transparent" />
-          )}
-          {errors[id]?.message as string}
-        </span>
-      </label>
+      <ErrorMessage message={errors[id]?.message as string} />
     </div>
   );
 }
