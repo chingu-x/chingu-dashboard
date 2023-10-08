@@ -34,7 +34,7 @@ export const ideation = [
           future and build wealth through real estate investments.`,
     users: ["Test User 1", "Test User 2", "Test User 3"],
     contributed_by: {
-      name: "Test User 1",
+      name: "@User 1",
       avatar:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm3RFDZM21teuCMFYx_AROjt-AzUwDBROFww&usqp=CAU",
     },
@@ -54,7 +54,7 @@ export const ideation = [
     great way for families to save money by swapping gently used toys instead of buying new ones.`,
     users: ["Test User 1", "Test User 2"],
     contributed_by: {
-      name: "Test User 2",
+      name: "@User 2",
     },
     voted: false,
     own_idea: false,
