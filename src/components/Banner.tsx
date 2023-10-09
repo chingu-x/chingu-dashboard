@@ -15,8 +15,8 @@ function Banner({ image, alt, title, description }: BannerProps) {
           src={image}
           alt={alt}
           fill={true}
-          objectFit="contain"
-          priority={false}
+          style={{ objectFit: "contain" }}
+          priority={true}
         />
       </div>
       <div className="flex flex-col max-w-[700px] 2xl:max-w-none justify-center gap-y-3.5">

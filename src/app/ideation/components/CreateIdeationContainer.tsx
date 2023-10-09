@@ -1,5 +1,5 @@
-import { VoteDescriptionCard } from ".";
-import { Button } from "@/components";
+import VoteDescriptionCard from "./VoteDescriptionCard";
+import Button from "@/components/Button";
 
 function CreateIdeationContainer() {
   return (

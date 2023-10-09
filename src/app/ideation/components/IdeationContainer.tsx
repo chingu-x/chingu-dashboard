@@ -1,4 +1,6 @@
-import { ContributionCard, VoteCard, type Ideation } from ".";
+import ContributionCard from "./ContributionCard";
+import VoteCard from "./VoteCard";
+import type { Ideation } from "./fixtures/ideation";
 
 function IdeationContainer({
   title,

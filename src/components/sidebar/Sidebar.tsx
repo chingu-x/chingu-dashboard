@@ -109,12 +109,10 @@ export default function Sidebar() {
   const handlePageClick = (element: PageProperty | string) => {
     if (typeof element === "string") {
       setSelectedButton(element);
-      setIsOpenSidebar(false);
     } else if (element.name === MainPages.myVoyage) {
       setIsOpenSidebar(true);
     } else {
       setSelectedButton(element.link);
-      setIsOpenSidebar(false);
     }
   };
 
