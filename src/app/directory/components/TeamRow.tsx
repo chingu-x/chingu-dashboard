@@ -1,4 +1,5 @@
-import { EditCell, TeamMember } from ".";
+import EditCell from "./EditCell";
+import type { TeamMember } from "./fixtures/MyTeam";
 
 interface TeamRowProps {
   teamMember: TeamMember;

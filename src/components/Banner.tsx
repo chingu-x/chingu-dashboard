@@ -15,7 +15,7 @@ function Banner({ image, alt, title, description }: BannerProps) {
           src={image}
           alt={alt}
           fill={true}
-          objectFit="contain"
+          style={{ objectFit: "contain" }}
           priority={true}
         />
       </div>

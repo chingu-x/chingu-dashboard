@@ -1,5 +1,5 @@
-import { TeamDirectory } from ".";
-import { Banner } from "@/components";
+import TeamDirectory from "./components/TeamDirectory";
+import Banner from "@/components/Banner";
 
 function DirectoryPage() {
   return (
