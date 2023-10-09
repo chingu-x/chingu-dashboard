@@ -1,5 +1,5 @@
-import { TechStackContainer } from ".";
-import { Banner } from "@/components";
+import TechStackContainer from "./components/TechStackContainer";
+import Banner from "@/components/Banner";
 
 export default function TeckStackPage() {
   return (

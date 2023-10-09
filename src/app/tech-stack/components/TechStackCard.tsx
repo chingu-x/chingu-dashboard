@@ -1,6 +1,7 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { TechItem } from ".";
-import { Avatar, Button } from "@/components";
+import type { TechItem } from "./fixtures/TechStack";
+import Avatar from "@/components/Avatar";
+import Button from "@/components/Button";
 
 interface TechStackCardProps {
   title: string;

@@ -1,4 +1,5 @@
-import { TeamCardsContainer, TeamTable } from ".";
+import TeamCardsContainer from "./TeamCardsContainer";
+import TeamTable from "./TeamTable";
 
 export default function TeamDirectory() {
   return (
