@@ -1,4 +1,5 @@
-import { Avatar, Button } from "@/components";
+import Avatar from "@/components/Avatar";
+import Button from "@/components/Button";
 
 interface ContributionCardProps {
   own_idea: boolean;

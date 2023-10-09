@@ -1,4 +1,5 @@
-import { TechStackCard, techStack } from ".";
+import TechStackCard from "./TechStackCard";
+import { techStack } from "./fixtures/TechStack";
 
 export default function TechStackContainer() {
   return (

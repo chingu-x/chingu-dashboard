@@ -1,5 +1,7 @@
-import { CreateIdeationContainer, IdeationContainer, ideation } from ".";
-import { Banner } from "@/components";
+import CreateIdeationContainer from "./components/CreateIdeationContainer";
+import IdeationContainer from "./components/IdeationContainer";
+import { ideation } from "./components/fixtures/ideation";
+import Banner from "@/components/Banner";
 
 function IdeationPage() {
   return (

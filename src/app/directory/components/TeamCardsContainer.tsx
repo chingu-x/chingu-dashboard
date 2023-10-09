@@ -1,4 +1,5 @@
-import { TeamCard, teamMembers } from ".";
+import TeamCard from "./TeamCard";
+import { teamMembers } from "./fixtures/MyTeam";
 
 // Temp:
 const currentUserId = "1";

@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ThemeProvider, useTheme } from "next-themes";
-import { ModeToggle } from "@/components";
+import ModeToggle from "@/components/ModeToggle";
 
 function WrapperComponent({
   children,
