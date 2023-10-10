@@ -8,8 +8,8 @@ import { ValidationSchema, validationSchema } from "./Example1ModalValidation";
 import Modal from "@/components/modals/Modal";
 import { TextInput, Textarea } from "@/components/inputs";
 
-import { useAppDispatch, useAppSelector } from "@/store";
-import { onClose } from "@/store/features/modal";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { onClose } from "@/store/features/modal/modalSlice";
 
 export default function Example1Modal() {
   const { isOpen, type } = useAppSelector((state) => state.modal);

@@ -8,8 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Modal from "./Modal";
 import { TextInput } from "@/components/inputs";
 
-import { useAppDispatch, useAppSelector } from "@/store";
-import { onClose } from "@/store/features/modal";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { onClose } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   suggestion: z.string().min(1, {
