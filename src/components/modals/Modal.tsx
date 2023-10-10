@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { XMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
-import { Button } from "@/components";
+import Button from "@/components/Button";
 
 interface ModalProps {
   isOpen: boolean;
