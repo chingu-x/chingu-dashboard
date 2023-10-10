@@ -1,3 +1,5 @@
+"use client";
+
 import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 
 export default function ErrorMessage({ message }: { message: string }) {

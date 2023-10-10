@@ -2,14 +2,41 @@
 
 import { useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { ValidationSchema, validationSchema } from "./Example1ModalValidation";
+import { validateTextInput } from "@/helpers/validation/validateInput";
+
 import Modal from "@/components/modals/Modal";
 import { TextInput, Textarea } from "@/components/inputs";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
+
+const validationSchema = z.object({
+  title: validateTextInput({
+    inputName: "Title",
+    required: true,
+    minLen: 10,
+    maxLen: 20,
+  }),
+  projectIdea: validateTextInput({
+    inputName: "Project idea",
+    required: true,
+  }),
+  visionStatement: validateTextInput({
+    inputName: "Vision statement",
+    required: true,
+    maxLen: 100,
+  }),
+  email: validateTextInput({
+    inputName: "Email",
+    required: true,
+    isEmail: true,
+  }),
+});
+
+type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function Example1Modal() {
   const { isOpen, type } = useAppSelector((state) => state.modal);
@@ -66,10 +93,10 @@ export default function Example1Modal() {
           errors={errors}
         />
         <TextInput
-          id="luckyNumber"
-          label="lucky number"
-          placeholder="Enter your lucky number"
-          register={register("luckyNumber")}
+          id="email"
+          label="email"
+          placeholder="Enter your email"
+          register={register("email")}
           errors={errors}
         />
       </div>
