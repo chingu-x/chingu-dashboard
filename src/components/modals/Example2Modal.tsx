@@ -5,10 +5,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { validateTextInput } from "@/helpers/validation/validateInput";
-
 import Modal from "./Modal";
 import { TextInput } from "@/components/inputs";
+
+import { validateTextInput } from "@/helpers/validation/validateInput";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
