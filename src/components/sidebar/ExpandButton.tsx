@@ -2,7 +2,7 @@ import {
   ArrowLeftOnRectangleIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/solid";
-import { Button } from "@/components";
+import Button from "@/components/Button";
 
 interface ExpandButtonProps {
   isOpen: boolean;
