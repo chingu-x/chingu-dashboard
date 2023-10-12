@@ -1,16 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { XMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
-import Button from "@/components/Button";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 
 interface ModalProps {
   isOpen: boolean;
   title: string;
-  primaryActionLabel: string;
-  secondaryActionLabel?: string;
-  secondaryAction?: () => void;
-  onSubmit: () => void;
   onClose: () => void;
   children: React.ReactNode;
 }
@@ -19,10 +14,6 @@ export default function Modal({
   isOpen,
   title,
   children,
-  primaryActionLabel,
-  secondaryAction,
-  secondaryActionLabel,
-  onSubmit,
   onClose,
 }: ModalProps) {
   const [showModal, setShowModal] = useState(isOpen);
@@ -65,33 +56,8 @@ export default function Modal({
             <XMarkIcon className="w-6 h-6 fill-current" />
           </button>
         </div>
-        {/* FORM */}
-        <form onSubmit={onSubmit} className="flex flex-col overflow-hidden">
-          {/* BODY */}
-          <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[90px]">
-            {children}
-          </div>
-          {/* BUTTONS */}
-          <div className="flex flex-col gap-5 pt-8">
-            <Button
-              type="submit"
-              title={primaryActionLabel}
-              customClassName="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
-            >
-              {primaryActionLabel}
-            </Button>
-            {secondaryAction && secondaryActionLabel && (
-              <Button
-                onClick={secondaryAction}
-                title={secondaryActionLabel}
-                customClassName="text-base border-none font-semibold capitalize bg-error-content text-base-300 hover:bg-error"
-              >
-                <TrashIcon className="w-4 h-4" />
-                {secondaryActionLabel}
-              </Button>
-            )}
-          </div>
-        </form>
+        {/* CONTENT */}
+        {children}
       </div>
     </dialog>
   );

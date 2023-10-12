@@ -5,7 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import Modal from "./Modal";
+import Button from "@/components/Button";
+import Modal from "@/components/modals/Modal";
 import { TextInput } from "@/components/inputs";
 
 import { validateTextInput } from "@/helpers/validation/validateInput";
@@ -47,21 +48,39 @@ export default function Example2Modal() {
   }, [dispatch]);
 
   return (
-    <Modal
-      isOpen={isModalOpen}
-      title="add feature"
-      primaryActionLabel="submit"
-      onSubmit={handleSubmit(onSubmit)}
-      onClose={handleClose}
-    >
-      <div className="flex flex-col gap-4">
-        <TextInput
-          id="suggestion"
-          placeholder="What is your tech stack suggestion?"
-          register={{ ...register("suggestion") }}
-          errors={errors}
-        />
-      </div>
+    <Modal isOpen={isModalOpen} title="add feature" onClose={handleClose}>
+      {/* FORM */}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col overflow-hidden"
+      >
+        {/* BODY WITHOUT VERTICAL SCROLL*/}
+        <div className="flex flex-col gap-4">
+          <TextInput
+            id="suggestion"
+            placeholder="What is your tech stack suggestion?"
+            register={{ ...register("suggestion") }}
+            errors={errors}
+          />
+        </div>
+        {/* BUTTONS */}
+        <div className="flex gap-5 pt-8">
+          <Button
+            onClick={() => {}}
+            title="go back"
+            customClassName="flex-1 text-base border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100/80"
+          >
+            Go back
+          </Button>
+          <Button
+            type="submit"
+            title="submit"
+            customClassName="flex-1 text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
     </Modal>
   );
 }
