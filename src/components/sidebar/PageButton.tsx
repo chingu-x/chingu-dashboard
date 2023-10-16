@@ -36,7 +36,14 @@ export default function PageButton({
 
   return (
     <li>
-      <Link href={element.name !== MainPages.myVoyage ? link : ""}>
+      <Link
+        href={element.name !== MainPages.myVoyage ? link : ""}
+        className={
+          element.name === MainPages.myVoyage && isOpen
+            ? "cursor-default pointer-events-none"
+            : ""
+        }
+      >
         <Button
           title={element.name}
           customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
