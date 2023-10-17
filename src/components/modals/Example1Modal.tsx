@@ -11,7 +11,7 @@ import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 
-import { validateTextInput } from "@/helpers/validation/validateInput";
+import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
@@ -26,11 +26,12 @@ const validationSchema = z.object({
   projectIdea: validateTextInput({
     inputName: "Project idea",
     required: true,
+    maxLen: 50,
   }),
   visionStatement: validateTextInput({
     inputName: "Vision statement",
     required: true,
-    maxLen: 100,
+    maxLen: 50,
   }),
   email: validateTextInput({
     inputName: "Email",
@@ -79,6 +80,7 @@ export default function Example1Modal() {
               placeholder="Enter you voyage project idea"
               register={{ ...register("title") }}
               errors={errors}
+              maxLength={30}
             />
             <Textarea
               id="projectIdea"
@@ -86,6 +88,7 @@ export default function Example1Modal() {
               placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
               register={{ ...register("projectIdea") }}
               errors={errors}
+              maxLength={50}
             />
             <Textarea
               id="visionStatement"
@@ -93,6 +96,7 @@ export default function Example1Modal() {
               placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
               register={{ ...register("visionStatement") }}
               errors={errors}
+              maxLength={50}
             />
             <TextInput
               id="email"
