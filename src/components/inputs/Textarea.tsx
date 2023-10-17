@@ -1,7 +1,7 @@
 "use client";
 
 import { FieldErrors, UseFormRegisterReturn } from "react-hook-form";
-import ErrorMessage from "./ErrorMessage";
+import FieldMessage from "./FieldMessage";
 
 interface TextareaProps {
   id: string;
@@ -35,7 +35,7 @@ export default function Textarea({
         placeholder={placeholder}
         {...register}
       />
-      <ErrorMessage message={errors[id]?.message as string} />
+      <FieldMessage errorMessage={errors[id]?.message as string} />
     </div>
   );
 }

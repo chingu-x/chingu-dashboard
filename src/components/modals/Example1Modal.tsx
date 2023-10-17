@@ -8,7 +8,8 @@ import { TrashIcon } from "@heroicons/react/20/solid";
 
 import Button from "@/components/Button";
 import Modal from "@/components/modals/Modal";
-import { TextInput, Textarea } from "@/components/inputs";
+import TextInput from "@/components/inputs/TextInput";
+import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/helpers/validation/validateInput";
 
