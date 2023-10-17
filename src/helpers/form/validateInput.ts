@@ -1,5 +1,3 @@
-"use client";
-
 import { z } from "zod";
 
 interface ValidateTextInput {

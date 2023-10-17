@@ -15,7 +15,7 @@ export default function FieldMessage({
   suggestionMessage,
 }: FieldMessageProps) {
   return (
-    <div className="p-0 pt-1 label">
+    <div className="p-0 label">
       <span
         className={`flex items-center h-4 gap-1 text-[13px] label-text-alt font-medium ${
           errorMessage ? "text-error" : "text-base-300"
