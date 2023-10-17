@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import Button from "@/components/Button";
 import Modal from "@/components/modals/Modal";
-import { TextInput } from "@/components/inputs";
+import TextInput from "@/components/inputs/TextInput";
 
 import { validateTextInput } from "@/helpers/validation/validateInput";
 
@@ -18,6 +18,7 @@ const validationSchema = z.object({
   suggestion: validateTextInput({
     inputName: "Suggestion",
     required: true,
+    maxLen: 30,
   }),
 });
 
@@ -61,6 +62,8 @@ export default function Example2Modal() {
             placeholder="What is your tech stack suggestion?"
             register={{ ...register("suggestion") }}
             errors={errors}
+            suggestion="Tip: keep it short and sweet"
+            maxLength={30}
           />
         </div>
         {/* BUTTONS */}
