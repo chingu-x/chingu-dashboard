@@ -55,6 +55,8 @@ export default function Textarea({
     const currentLength = e.target.value.length;
     if (currentLength > 0) {
       setCurrentSuggestion(`Character length ${currentLength}/${maxLength}`);
+    } else {
+      setCurrentSuggestion(suggestion);
     }
   }
 
