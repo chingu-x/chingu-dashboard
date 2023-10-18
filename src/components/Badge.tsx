@@ -1,7 +1,7 @@
 import Avatar from "./Avatar";
 
 interface BadgeProps {
-    data: {
+  data: {
     name: string;
     avatar?: string;
   };
