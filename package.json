@@ -10,7 +10,8 @@
     "prettier": "prettier . --write",
     "prepare": "husky install",
     "test": "jest",
-    "cypress": "cypress run"
+    "cypress": "cypress run",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
