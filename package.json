@@ -8,10 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier . --write",
-    "prepare": "husky install",
     "test": "jest",
-    "cypress": "cypress run",
-    "postinstall": "husky install"
+    "cypress": "cypress run"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
@@ -43,12 +41,17 @@
     "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.28.0",
     "eslint-plugin-no-relative-import-paths": "^1.5.2",
-    "husky": "^8.0.0",
+    "husky": "4.3.0",
     "jest": "^29.6.2",
     "jest-environment-jsdom": "^29.6.2",
     "postcss": "8.4.27",
     "prettier": "^3.0.1",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn prettier && yarn lint && yarn cypress"
+    }
   }
 }
