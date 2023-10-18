@@ -1,5 +1,5 @@
-import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
+import Badge from "@/components/Badge";
 
 interface ContributionCardProps {
   own_idea: boolean;
@@ -21,12 +21,7 @@ function ContributionCard({
     >
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
-        <div className="flex bg-base-100 items-center rounded-[100px] h-[25px] gap-x-2 py-[3px] px-[9px]">
-          <Avatar width={16} height={16} image={contributed_by.avatar} />
-          <h2 className="text-base font-medium text-base-300 leading-[19px]">
-            {contributed_by.name}
-          </h2>
-        </div>
+        <Badge data={contributed_by} />
         {own_idea ? (
           <Button
             title="Vote"
