@@ -27,7 +27,7 @@ function ContributionCard({
             title="Vote"
             customClassName="w-full btn-secondary text-base-300 capitalize"
           >
-            Edit Project
+            Edit Project 
           </Button>
         ) : null}
       </section>
