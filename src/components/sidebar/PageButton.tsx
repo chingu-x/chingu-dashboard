@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MainPages, PageProperty, voyagePages } from "./Sidebar";
-import { Button } from "@/components";
+import Button from "@/components/Button";
 
 interface PageButtonProps {
   element: PageProperty;
@@ -36,7 +36,14 @@ export default function PageButton({
 
   return (
     <li>
-      <Link href={element.name !== MainPages.myVoyage ? link : ""}>
+      <Link
+        href={element.name !== MainPages.myVoyage ? link : ""}
+        className={
+          element.name === MainPages.myVoyage && isOpen
+            ? "cursor-default pointer-events-none"
+            : ""
+        }
+      >
         <Button
           title={element.name}
           customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
