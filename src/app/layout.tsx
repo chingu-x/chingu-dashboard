@@ -1,7 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { StoreProvider, Navbar, Sidebar, ThemeProvider } from "@/components";
+import StoreProvider from "@/components/StoreProvider";
+import ThemeProvider from "@/components/ThemeProvider";
+import Sidebar from "@/components/sidebar/Sidebar";
+import Navbar from "@/components/navbar/Navbar";
+import ModalProvider from "@/components/ModalProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -37,9 +41,12 @@ export default function RootLayout({
             <Navbar />
             <StoreProvider>
               <div className="flex flex-1 overflow-hidden">
+                <ModalProvider />
                 <Sidebar />
-                <main className="flex flex-col flex-1 overflow-y-auto items-center gap-y-9 p-10 w-full">
-                  {children}
+                <main className="flex flex-col items-center flex-1 w-full p-10 overflow-y-auto">
+                  <div className="flex flex-col max-w-[1353px] gap-y-9">
+                    {children}
+                  </div>
                 </main>
               </div>
             </StoreProvider>

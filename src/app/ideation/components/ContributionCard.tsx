@@ -1,4 +1,5 @@
-import { Avatar, Button } from "@/components";
+import Avatar from "@/components/Avatar";
+import Button from "@/components/Button";
 
 interface ContributionCardProps {
   own_idea: boolean;
@@ -6,13 +7,18 @@ interface ContributionCardProps {
     name: string;
     avatar?: string;
   };
-  className?: string
-
+  className?: string;
 }
 
-function ContributionCard({ own_idea, contributed_by, className }: ContributionCardProps) {
+function ContributionCard({
+  own_idea,
+  contributed_by,
+  className,
+}: ContributionCardProps) {
   return (
-    <div className={`card max-w-[200px] w-full max-[1919px]:min-w-[160px] h-fit bg-secondary-content rounded-lg ${className}`}>
+    <div
+      className={`card max-w-[200px] w-full max-[1919px]:min-w-[160px] h-fit bg-secondary-content rounded-lg ${className}`}
+    >
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
         <div className="flex bg-base-100 items-center rounded-[100px] h-[25px] gap-x-2 py-[3px] px-[9px]">

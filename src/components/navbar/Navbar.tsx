@@ -1,4 +1,8 @@
-import { Avatar, Bell, ChinguMenu, DropDown, ModeToggle } from "@/components";
+import DropDown from "./DropDown";
+import ChinguMenu from "./ChinguMenu";
+import Bell from "./Bell";
+import Avatar from "@/components/Avatar";
+import ModeToggle from "@/components/ModeToggle";
 
 const name = "Yorick";
 const notificationCount = 4;
