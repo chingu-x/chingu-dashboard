@@ -21,7 +21,7 @@ export default function Avatar({
         }
         width={width}
         height={height}
-      ></Image>
+      />
     </div>
   );
 }
