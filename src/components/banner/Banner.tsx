@@ -1,18 +1,40 @@
 import Image from "next/image";
 
 interface BannerProps {
-  image: string;
+  imageLight: string;
+  imageDark: string;
   alt: string;
   title: string;
   description: string;
 }
 
-function Banner({ image, alt, title, description }: BannerProps) {
+function Banner({
+  imageLight,
+  imageDark,
+  alt,
+  title,
+  description,
+}: BannerProps) {
   return (
     <div className="card w-full max-h-[320px] flex flex-row justify-between px-20 py-6 box-border gap-x-10 lg:gap-x-20">
-      <div className="h-[200px] w-[276px] relative shrink-0">
+      <div
+        data-hide-on-theme="dark"
+        className="h-[200px] w-[276px] relative shrink-0"
+      >
         <Image
-          src={image}
+          src={imageLight}
+          alt={alt}
+          fill={true}
+          style={{ objectFit: "contain" }}
+          priority={true}
+        />
+      </div>
+      <div
+        data-hide-on-theme="light"
+        className="h-[200px] w-[276px] relative shrink-0"
+      >
+        <Image
+          src={imageDark}
           alt={alt}
           fill={true}
           style={{ objectFit: "contain" }}

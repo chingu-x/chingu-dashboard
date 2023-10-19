@@ -1,10 +1,10 @@
 import TechStackContainer from "./components/TechStackContainer";
-import BannerWrapper from "@/components/banner/BannerWrapper";
+import Banner from "@/components/banner/Banner";
 
 export default function TeckStackPage() {
   return (
     <>
-      <BannerWrapper
+      <Banner
         imageLight="/img/tech_stack_banner_light.png"
         imageDark="/img/tech_stack_banner_dark.png"
         alt="teck_stack_banner"

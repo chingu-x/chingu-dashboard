@@ -12,7 +12,7 @@ export default function EditCell({ teamMember, currentUserId }: EditCellProps) {
     <div
       className={`flex items-center justify-between h-[35px] rounded-md pl-4 ${
         teamMember.id === currentUserId &&
-        "bg-base-100 hover:bg-secondary transition"
+        "bg-base-100 hover:cursor-pointer hover:bg-secondary transition"
       }`}
     >
       {teamMember.averageHour === 0 ? "Add hours" : teamMember.averageHour}
