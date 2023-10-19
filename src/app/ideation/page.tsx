@@ -1,12 +1,12 @@
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationContainer from "./components/IdeationContainer";
 import { ideation } from "./components/fixtures/ideation";
-import BannerWrapper from "@/components/banner/BannerWrapper";
+import Banner from "@/components/banner/Banner";
 
 function IdeationPage() {
   return (
     <>
-      <BannerWrapper
+      <Banner
         imageLight="/img/ideation_banner_light.png"
         imageDark="/img/ideation_banner_dark.png"
         alt="ideation_banner"
