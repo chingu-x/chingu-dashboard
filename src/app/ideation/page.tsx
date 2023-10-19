@@ -7,7 +7,7 @@ function IdeationPage() {
   return (
     <>
       <Banner
-        image="/img/ideation_banner.svg"
+        image="/img/ideation_banner.png"
         alt="ideation_banner"
         title="Ideation"
         description="Okay, time to put on your thinking caps and channel your inner creativity! What kind of amazing, mind-blowing project idea do you have that will make SpaceX jealous? Let's hear it!"
