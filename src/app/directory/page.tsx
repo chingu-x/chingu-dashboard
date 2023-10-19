@@ -1,10 +1,10 @@
 import TeamDirectory from "./components/TeamDirectory";
-import BannerWrapper from "@/components/banner/BannerWrapper";
+import Banner from "@/components/banner/Banner";
 
 function DirectoryPage() {
   return (
     <>
-      <BannerWrapper
+      <Banner
         imageLight="/img/directory_banner_light.png"
         imageDark="/img/directory_banner_dark.png"
         alt="directory_banner"
