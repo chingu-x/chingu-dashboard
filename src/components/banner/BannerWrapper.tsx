@@ -1,4 +1,3 @@
-/* eslint-disable react/function-component-definition */
 "use client";
 import React from "react";
 import { useTheme } from "next-themes";
@@ -12,13 +11,13 @@ interface BannerWrapperProps {
   imageDark: string;
 }
 
-const BannerWrapper: React.FC<BannerWrapperProps> = ({
+function BannerWrapper({
   imageLight,
   imageDark,
   alt,
   title,
   description,
-}) => {
+}: BannerWrapperProps) {
   const { theme } = useTheme();
 
   const getImageBasedOnTheme = () => {
@@ -34,6 +33,6 @@ const BannerWrapper: React.FC<BannerWrapperProps> = ({
   return (
     <Banner image={image} alt={alt} title={title} description={description} />
   );
-};
+}
 
 export default BannerWrapper;
