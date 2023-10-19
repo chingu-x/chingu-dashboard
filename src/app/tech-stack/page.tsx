@@ -1,5 +1,5 @@
 import TechStackContainer from "./components/TechStackContainer";
-import BannerWrapper from "@/components/BannerWrapper";
+import BannerWrapper from "@/components/banner/BannerWrapper";
 
 export default function TeckStackPage() {
   return (

@@ -1,7 +1,7 @@
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationContainer from "./components/IdeationContainer";
 import { ideation } from "./components/fixtures/ideation";
-import BannerWrapper from "@/components/BannerWrapper";
+import BannerWrapper from "@/components/banner/BannerWrapper";
 
 function IdeationPage() {
   return (

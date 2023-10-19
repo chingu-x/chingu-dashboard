@@ -1,5 +1,5 @@
 import TeamDirectory from "./components/TeamDirectory";
-import BannerWrapper from "@/components/BannerWrapper";
+import BannerWrapper from "@/components/banner/BannerWrapper";
 
 function DirectoryPage() {
   return (
