@@ -21,3 +21,9 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #C0C0C0;
 }
+
+/* to hide or show content based on the current theme */
+[data-theme='dark'] [data-hide-on-theme='dark'],
+[data-theme='light'] [data-hide-on-theme='light'] {
+  display: none;
+}
