@@ -32,7 +32,6 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider
-          defaultTheme="system"
           enableSystem={true}
           storageKey="chingu-theme"
           disableTransitionOnChange
