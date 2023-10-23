@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export type ModalType = "example1" | "example2";
+export type ModalType = "example1" | "example2" | "TechStackModal";
 
 interface ModalState {
   type: ModalType | null;

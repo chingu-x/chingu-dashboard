@@ -1,7 +1,11 @@
+"use client";
+
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import type { TechItem } from "./fixtures/TechStack";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpen } from "@/store/features/modal/modalSlice";
 
 interface TechStackCardProps {
   title: string;
@@ -9,6 +13,8 @@ interface TechStackCardProps {
 }
 
 export default function TechStackCard({ title, data }: TechStackCardProps) {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="card min-w-[400px] sm:w-96 text-base-300 bg-base-200 rounded-lg px-6 py-5">
       <div className="flex flex-row justify-between">
@@ -46,6 +52,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       <Button
         title={`add ${title}`}
         customClassName="mt-6 capitalize w-full h-[42px] p-0 min-h-full text-xs font-medium text-base-300 bg-secondary border-transparent flex justify-start pl-5 items-center hover:bg-secondary hover:border-transparent"
+        onClick={() => dispatch(onOpen({ type: "TechStackModal" }))}
       >
         <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
         Add Tech Stack
