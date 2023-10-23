@@ -3,40 +3,43 @@ import type { TeamMember } from "./fixtures/MyTeam";
 
 interface TeamCardProps {
   teamMember: TeamMember;
-  currentUserId: string;
+  currentUser: {
+    id: string;
+    teamId: number;
+  };
 }
 
-export default function TeamCard({ teamMember, currentUserId }: TeamCardProps) {
+export default function TeamCard({ teamMember, currentUser }: TeamCardProps) {
   return (
     <div className="box-border flex flex-col items-center p-10 card bg-secondary-content">
       <ul className="flex flex-col gap-6 min-w-[400px]">
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Name</span>
-          <span>{teamMember.name}</span>
+          <span>{`${teamMember.member.firstName} ${teamMember.member.lastName}`}</span>
         </li>
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Discord ID</span>
-          <span>{teamMember.discordId}</span>
+          <span>{teamMember.member.discordId}</span>
         </li>
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Average Hour/Sprint</span>
-          <EditCell teamMember={teamMember} currentUserId={currentUserId} />
+          <EditCell teamMember={teamMember} currentUser={currentUser} />
         </li>
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Location</span>
-          <span>{teamMember.location}</span>
+          <span>{teamMember.member.countryCode}</span>
         </li>
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Timezone</span>
-          <span>{teamMember.timeZone}</span>
+          <span>{teamMember.member.timezone}</span>
         </li>
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Email</span>
-          <span>{teamMember.email}</span>
+          <span>{teamMember.member.email}</span>
         </li>
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Position</span>
-          <span>{teamMember.position}</span>
+          <span>{teamMember.voyageRole.name}</span>
         </li>
       </ul>
     </div>

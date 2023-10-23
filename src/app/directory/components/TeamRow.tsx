@@ -3,21 +3,24 @@ import type { TeamMember } from "./fixtures/MyTeam";
 
 interface TeamRowProps {
   teamMember: TeamMember;
-  currentUserId: string;
+  currentUser: {
+    id: string;
+    teamId: number;
+  };
 }
 
-export default function TeamRow({ teamMember, currentUserId }: TeamRowProps) {
+export default function TeamRow({ teamMember, currentUser }: TeamRowProps) {
   return (
     <tr>
-      <td>{teamMember.name}</td>
-      <td>{teamMember.discordId}</td>
+      <td>{`${teamMember.member.firstName} ${teamMember.member.lastName}`}</td>
+      <td>{teamMember.member.discordId}</td>
       <td>
-        <EditCell teamMember={teamMember} currentUserId={currentUserId} />
+        <EditCell teamMember={teamMember} currentUser={currentUser} />
       </td>
-      <td>{teamMember.location}</td>
-      <td>{teamMember.timeZone}</td>
-      <td>{teamMember.email}</td>
-      <td>{teamMember.position}</td>
+      <td>{teamMember.member.countryCode}</td>
+      <td>{teamMember.member.timezone}</td>
+      <td>{teamMember.member.email}</td>
+      <td>{teamMember.voyageRole.name}</td>
     </tr>
   );
 }
