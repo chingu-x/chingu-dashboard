@@ -49,7 +49,7 @@ export default function TechStackModal() {
   }, [dispatch]);
 
   return (
-    <Modal isOpen={isModalOpen} title="add technology" onClose={handleClose}>
+    <Modal isOpen={isModalOpen} title="Add Tech Stack" onClose={handleClose}>
       {/* FORM */}
       <form
         onSubmit={handleSubmit(onSubmit)}
