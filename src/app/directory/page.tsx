@@ -1,6 +1,6 @@
-import { getMembers } from "@/api/routes";
 import TeamDirectory from "./components/TeamDirectory";
 import { TeamMember } from "./components/fixtures/MyTeam";
+import { getMembers } from "@/api/routes";
 import Banner from "@/components/banner/Banner";
 
 async function DirectoryPage() {
