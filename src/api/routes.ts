@@ -9,3 +9,30 @@ export async function getMembers(teamId: number) {
 
   return res.json();
 }
+
+export async function updateHours({
+  teamId,
+  userId,
+  newAvgHours,
+}: {
+  teamId: number;
+  userId: string;
+  newAvgHours: number;
+}) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}teams/${teamId}/member/${userId}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify({ hrPerSprint: newAvgHours }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to update data");
+  }
+
+  return res.json();
+}
