@@ -1,12 +1,10 @@
 export interface TeamMember {
   member: {
+    id: string;
     firstName: string;
     lastName: string;
-    avatar: string;
     discordId: string;
-    countryCode: string;
     timezone: string;
-    email: string;
   };
   hrPerSprint: number;
   voyageRole: { name: string };
@@ -15,26 +13,22 @@ export interface TeamMember {
 export const teamMembers: TeamMember[] = [
   {
     member: {
+      id: "1",
       firstName: "Danney",
       lastName: "Trieu",
-      avatar: "",
       discordId: "danneytrieuwork#2558",
-      countryCode: "US",
       timezone: "America/Los_Angeles",
-      email: "danney@gmail.com",
     },
     hrPerSprint: 12,
     voyageRole: { name: "Product Owner" },
   },
   {
     member: {
+      id: "2",
       firstName: "Jane",
       lastName: "Morez",
-      avatar: "",
       discordId: "Jan_morez#2341",
-      countryCode: "US",
       timezone: "America/Los_Angeles",
-      email: "jane@gmail.com",
     },
     hrPerSprint: 9,
     voyageRole: { name: "Back-end Developer" },
@@ -42,13 +36,11 @@ export const teamMembers: TeamMember[] = [
 
   {
     member: {
+      id: "3",
       firstName: "Kayla",
       lastName: "Montre",
-      avatar: "",
       discordId: "KaylaMon#5678",
-      countryCode: "US",
       timezone: "America/Las_Vegas",
-      email: "kayla@gmail.com",
     },
     hrPerSprint: 12,
     voyageRole: { name: "UX/UI Designer" },
@@ -56,13 +48,11 @@ export const teamMembers: TeamMember[] = [
 
   {
     member: {
+      id: "4",
       firstName: "Jackson",
       lastName: "Pez",
-      avatar: "",
       discordId: "jackson#2558",
-      countryCode: "US",
       timezone: "America/Los_Angeles",
-      email: "jackson@gmail.com",
     },
     hrPerSprint: 12,
     voyageRole: { name: "Front-end Developer" },
