@@ -6,30 +6,30 @@ export type CardType =
   | "Cloud Provider"
   | "Hosting";
 
-export interface Member {
-  id: string;
-  firstName: string;
-  lastName: string;
-  avatar: string;
-}
-
-export interface TeamTechStackItemVote {
-  votedBy: {
-    member: Member;
-  };
-}
-
-export interface TeamTechStackItem {
-  id: number;
-  name: string;
-  teamTechStackItemVotes: TeamTechStackItemVote[];
-}
-
-export interface TechGroup {
+export interface TechStack {
   id: number;
   name: string;
   description: string;
-  teamTechStackItems: TeamTechStackItem[];
+  teamTechStackItems: TeamTechStackItems[];
 }
 
-export type TechsResponse = TechGroup[];
+export interface TeamTechStackItems {
+  id: number;
+  name: string;
+  teamTechStackItemVotes: TeamTechStackItemVotes[];
+}
+
+export interface TeamTechStackItemVotes {
+  votedBy: User;
+}
+
+export interface User {
+  member: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    avatar: string;
+  };
+}
+
+export type TechsResponse = TechStack[];

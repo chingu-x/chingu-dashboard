@@ -1,3 +1,5 @@
+import type { TechsResponse } from "@/app/tech-stack/components/types/types";
+
 export async function getMembers(teamId: number) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}teams/${teamId}/members`,
@@ -10,7 +12,7 @@ export async function getMembers(teamId: number) {
   return res.json();
 }
 
-export async function getTechStack(teamId: number) {
+export async function getTechStack(teamId: number): Promise<TechsResponse> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/techs/team/${teamId}`,
   );
@@ -19,5 +21,7 @@ export async function getTechStack(teamId: number) {
     throw new Error("Failed to fetch data");
   }
 
-  return res.json();
+  const data = (await res.json()) as TechsResponse;
+
+  return data;
 }

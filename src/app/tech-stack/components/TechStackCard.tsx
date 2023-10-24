@@ -1,7 +1,7 @@
 "use client";
 
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import type { TechItem } from "./fixtures/TechStack";
+import type { TeamTechStackItems } from "./types/types";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import { useAppDispatch } from "@/store/hooks";
@@ -9,7 +9,7 @@ import { onOpen } from "@/store/features/modal/modalSlice";
 
 interface TechStackCardProps {
   title: string;
-  data: TechItem[];
+  data: TeamTechStackItems[];
 }
 
 export default function TechStackCard({ title, data }: TechStackCardProps) {
@@ -29,14 +29,10 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               className="text-base mb-5 last:mb-0 relative grid grid-cols-[1fr,auto] items-center"
               key={element.id}
             >
-              {element.value}
+              {element.name}
               <div className="avatar-group -space-x-2 absolute left-28">
-                {element.users.map((user) => (
-                  <Avatar
-                    key={`${element.id}-${user}`}
-                    width={24}
-                    height={24}
-                  />
+                {element.teamTechStackItemVotes.map((user) => (
+                  <Avatar key={user.votedBy.member.id} width={24} height={24} />
                 ))}
               </div>
               <Button
