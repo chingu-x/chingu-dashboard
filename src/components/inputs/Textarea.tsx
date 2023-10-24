@@ -11,6 +11,7 @@ interface TextareaProps {
   placeholder: string;
   register: UseFormRegisterReturn;
   errors: FieldErrors;
+  disabled: boolean;
   suggestion?: string;
   maxLength?: number;
 }
@@ -21,6 +22,7 @@ export default function Textarea({
   placeholder,
   register,
   errors,
+  disabled,
   suggestion,
   maxLength,
 }: TextareaProps) {
@@ -34,7 +36,7 @@ export default function Textarea({
     if (textAreaRef !== null && textAreaRef.current !== null) {
       textAreaRef.current.style.height = `${Math.max(
         textAreaRef.current.scrollHeight + 2,
-        0,
+        0
       )}px`;
     }
   }, []);
@@ -45,7 +47,7 @@ export default function Textarea({
     e.target.style.height = e.target.style.minHeight = "auto";
     e.target.style.minHeight = `${Math.min(
       e.target.scrollHeight + 2,
-      parseInt(e.target.style.maxHeight),
+      parseInt(e.target.style.maxHeight)
     )}px`;
     e.target.style.height = `${Math.max(e.target.scrollHeight + 2, 0)}px`;
 
@@ -70,6 +72,7 @@ export default function Textarea({
       <textarea
         id={id}
         rows={1}
+        disabled={disabled}
         ref={(e) => {
           ref(e);
           textAreaRef.current = e;

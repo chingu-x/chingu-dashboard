@@ -14,11 +14,12 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
+import { updateHours } from "@/api/routes";
 
 const validationSchema = z.object({
   avgHours: validateTextInput({
-    inputName: "average hours/sprint",
     required: true,
+    isHours: true,
   }),
 });
 
@@ -35,7 +36,7 @@ export default function EditHoursModal() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting: isLoading },
     reset,
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
@@ -47,19 +48,19 @@ export default function EditHoursModal() {
   }, [dispatch]);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    try {
-      // CORS problem
-      await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}teams/${teamId}/member/${userId}`,
-        {
-          method: "PATCH",
-          body: JSON.stringify({ hrPerSprint: +data.avgHours }),
-        }
-      );
-      handleClose();
-      router.refresh();
-    } catch (error) {
-      console.log(error);
+    if (userId && teamId) {
+      try {
+        await updateHours({
+          userId: userId,
+          teamId: teamId,
+          newAvgHours: +data.avgHours,
+        });
+        handleClose();
+        router.refresh();
+      } catch (error) {
+        // Temp: log error, later the toast message gonna be added
+        console.log(error);
+      }
     }
   };
 
@@ -82,6 +83,7 @@ export default function EditHoursModal() {
             placeholder="Add your hours, we typically recommend 10-12 hours per week"
             register={{ ...register("avgHours") }}
             errors={errors}
+            disabled={isLoading}
             suggestion="Please input hours only"
           />
         </div>
@@ -90,7 +92,8 @@ export default function EditHoursModal() {
           <Button
             type="submit"
             title="submit"
-            customClassName="flex-1 text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+            disabled={isLoading}
+            customClassName="flex-1 text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus disabled:bg-primary disabled:hover:bg-primary-focus disabled:text-neutral-focus disabled:cursor-not-allowed disabled:hover:cursor-not-allowed"
           >
             Submit
           </Button>

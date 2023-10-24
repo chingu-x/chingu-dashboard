@@ -32,7 +32,7 @@ export default function Example2Modal() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting: isLoading },
     reset,
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
@@ -61,6 +61,7 @@ export default function Example2Modal() {
             placeholder="What is your tech stack suggestion?"
             register={{ ...register("suggestion") }}
             errors={errors}
+            disabled={isLoading}
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
           />
@@ -77,7 +78,8 @@ export default function Example2Modal() {
           <Button
             type="submit"
             title="submit"
-            customClassName="flex-1 text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+            disabled={isLoading}
+            customClassName="flex-1 text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus disabled:bg-primary disabled:hover:bg-primary-focus disabled:text-neutral-focus disabled:cursor-not-allowed disabled:hover:cursor-not-allowed"
           >
             Submit
           </Button>
