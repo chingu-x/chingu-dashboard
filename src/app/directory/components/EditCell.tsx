@@ -27,29 +27,24 @@ export default function EditCell({ teamMember, currentUser }: EditCellProps) {
     );
   }
 
+  if (teamMember.member.id === currentUser.id) {
+    return (
+      <Button
+        onClick={handleClick}
+        title="edit"
+        className="flex items-center justify-between h-[35px] min-w-[198px] rounded-md px-4 bg-base-100 hover:cursor-pointer hover:bg-secondary transition"
+      >
+        {teamMember.hrPerSprint === 0 ? "Add hours" : teamMember.hrPerSprint}
+        <div className="">
+          <PencilSquareIcon className="w-4 h-4 text-base-300" />
+        </div>
+      </Button>
+    );
+  }
+
   return (
-    <div
-      className={`flex items-center justify-between h-[35px] rounded-md pl-4 ${
-        // need ids in the res as well
-        // teamMember.member.id === currentUser.id &&
-        teamMember.member.discordId === "joso-discord" &&
-        "bg-base-100 hover:cursor-pointer hover:bg-secondary transition"
-      }`}
-    >
+    <div className="flex items-center justify-between h-[35px] rounded-md pl-4">
       {teamMember.hrPerSprint === 0 ? "Add hours" : teamMember.hrPerSprint}
-      {
-        // need ids in the res as well
-        // teamMember.member.id === currentUser.id && (
-        teamMember.member.discordId === "joso-discord" && (
-          <Button
-            onClick={handleClick}
-            title="edit"
-            customClassName="pl-2 pr-1 h-full rounded-l-none rounded-r-md p-0 min-h-0 text-sm font-medium text-base-300 bg-transparent border-transparent hover:bg-transparent hover:border-transparent"
-          >
-            <PencilSquareIcon className="w-4 h-4 text-base-300" />
-          </Button>
-        )
-      }
     </div>
   );
 }
