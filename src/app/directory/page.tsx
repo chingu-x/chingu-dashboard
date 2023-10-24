@@ -6,13 +6,13 @@ import Banner from "@/components/banner/Banner";
 async function DirectoryPage() {
   // Get current user logic. For now assume we get current user's object which has user's id and team's id back from some api call, or cookie or etc
   const currentUser = {
-    id: "",
-    teamId: 11,
+    id: process.env.CURRENT_USER_ID!,
+    teamId: +process.env.TEAM_ID!,
   };
 
   // Get data on the server
   const data = (await getMembers(currentUser.teamId)) as TeamMember[];
-  // console.log(data);
+  console.log(data);
 
   return (
     <>

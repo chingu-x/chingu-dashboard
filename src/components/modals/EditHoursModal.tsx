@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import * as z from "zod";
@@ -31,16 +31,23 @@ export default function EditHoursModal() {
   const { isOpen, type, data } = useAppSelector((state) => state.modal);
 
   const isModalOpen = isOpen && type === "editHours";
-  const { userId, teamId } = data;
+  const { userId, teamId, avgHours } = data;
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting: isLoading },
     reset,
+    setValue,
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
+
+  useEffect(() => {
+    if (avgHours && avgHours !== "") {
+      setValue("avgHours", avgHours);
+    }
+  }, [avgHours]);
 
   const handleClose = useCallback(() => {
     reset();

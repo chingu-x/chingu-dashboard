@@ -5,6 +5,7 @@ export type ModalType = "example1" | "example2" | "editHours";
 interface ModalData {
   teamId?: number;
   userId?: string;
+  avgHours?: string;
 }
 
 interface ModalState {

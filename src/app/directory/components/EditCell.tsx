@@ -17,12 +17,18 @@ interface EditCellProps {
 
 export default function EditCell({ teamMember, currentUser }: EditCellProps) {
   const dispatch = useAppDispatch();
+  const hasAvgHours =
+    teamMember.hrPerSprint !== 0 && teamMember.hrPerSprint !== null;
 
   function handleClick() {
     dispatch(
       onOpen({
         type: "editHours",
-        data: { userId: currentUser.id, teamId: currentUser.teamId },
+        data: {
+          userId: currentUser.id,
+          teamId: currentUser.teamId,
+          avgHours: hasAvgHours ? teamMember.hrPerSprint.toString() : "",
+        },
       })
     );
   }
@@ -34,7 +40,7 @@ export default function EditCell({ teamMember, currentUser }: EditCellProps) {
         title="edit"
         className="flex items-center justify-between h-[35px] min-w-[198px] rounded-md px-4 bg-base-100 hover:cursor-pointer hover:bg-secondary transition"
       >
-        {teamMember.hrPerSprint === 0 ? "Add hours" : teamMember.hrPerSprint}
+        {hasAvgHours ? teamMember.hrPerSprint : "Add hours"}
         <div className="">
           <PencilSquareIcon className="w-4 h-4 text-base-300" />
         </div>
