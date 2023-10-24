@@ -16,7 +16,6 @@ import { onClose } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   suggestion: validateTextInput({
-    inputName: "Suggestion",
     required: true,
     maxLen: 30,
   }),
