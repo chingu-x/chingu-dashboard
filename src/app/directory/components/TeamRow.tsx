@@ -17,9 +17,7 @@ export default function TeamRow({ teamMember, currentUser }: TeamRowProps) {
       <td>
         <EditCell teamMember={teamMember} currentUser={currentUser} />
       </td>
-      <td>{teamMember.member.countryCode}</td>
       <td>{teamMember.member.timezone}</td>
-      <td>{teamMember.member.email}</td>
       <td>{teamMember.voyageRole.name}</td>
     </tr>
   );

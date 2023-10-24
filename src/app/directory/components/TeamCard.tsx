@@ -26,16 +26,8 @@ export default function TeamCard({ teamMember, currentUser }: TeamCardProps) {
           <EditCell teamMember={teamMember} currentUser={currentUser} />
         </li>
         <li className="grid grid-cols-2 gap-6">
-          <span className="font-semibold">Location</span>
-          <span>{teamMember.member.countryCode}</span>
-        </li>
-        <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Timezone</span>
           <span>{teamMember.member.timezone}</span>
-        </li>
-        <li className="grid grid-cols-2 gap-6">
-          <span className="font-semibold">Email</span>
-          <span>{teamMember.member.email}</span>
         </li>
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Position</span>

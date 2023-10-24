@@ -30,9 +30,7 @@ export default function TeamDirectory({
               <th>Name</th>
               <th>Discord ID</th>
               <th>Average Hour/Sprint</th>
-              <th>Location</th>
               <th>Time Zone</th>
-              <th>Email</th>
               <th>Position</th>
             </tr>
           </thead>
