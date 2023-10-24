@@ -26,7 +26,7 @@ export default function TeamCard({ teamMember, currentUser }: TeamCardProps) {
           <EditCell teamMember={teamMember} currentUser={currentUser} />
         </li>
         <li className="grid grid-cols-2 gap-6">
-          <span className="font-semibold">Timezone</span>
+          <span className="font-semibold">Time Zone</span>
           <span>{teamMember.member.timezone}</span>
         </li>
         <li className="grid grid-cols-2 gap-6">
