@@ -1,16 +1,8 @@
-import type { TechsResponse } from "@/app/tech-stack/components/types/types";
-
-export async function getMembers(teamId: number) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}teams/${teamId}/members`,
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
+import type {
+  TechsResponse,
+  PostTechBody,
+  PostTechResponse,
+} from "@/app/tech-stack/components/types/types";
 
 export async function getTechStack(teamId: number): Promise<TechsResponse> {
   const res = await fetch(
@@ -22,6 +14,30 @@ export async function getTechStack(teamId: number): Promise<TechsResponse> {
   }
 
   const data = (await res.json()) as TechsResponse;
+
+  return data;
+}
+
+export async function postNewTech(
+  teamId: number,
+  body: PostTechBody,
+): Promise<PostTechResponse> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/techs/team/${teamId}/tech/new`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to post data");
+  }
+
+  const data = (await res.json()) as PostTechResponse;
 
   return data;
 }

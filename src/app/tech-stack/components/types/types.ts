@@ -6,6 +6,19 @@ export type CardType =
   | "Cloud Provider"
   | "Hosting";
 
+export interface PostTechBody {
+  votedBy: string;
+  techName: string;
+  techCategoryId: number;
+}
+
+export interface PostTechResponse {
+  id: number;
+  teamTechId: number;
+  teamMemberId: number;
+  createdAt: string;
+  updatedAt: string;
+}
 export interface TechStack {
   id: number;
   name: string;

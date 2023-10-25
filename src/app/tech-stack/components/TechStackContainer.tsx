@@ -1,11 +1,6 @@
 import TechStackCard from "./TechStackCard";
+import { currentUser } from "./fixtures/fixtures";
 import { getTechStack } from "@/api/routes";
-
-// Mock data for the user
-const currentUser = {
-  id: "b52046f9-db9c-4373-950a-ce8c861307ab",
-  teamId: 11,
-};
 
 export default async function TechStackContainer() {
   // Get data on the server
