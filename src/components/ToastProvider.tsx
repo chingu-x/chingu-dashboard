@@ -37,17 +37,17 @@ export default function ToastProvider() {
     error: "bg-error-content border-error",
   };
 
-  const toastVariant: Variants = {
+  const toastVariants: Variants = {
     hidden: {
-      opacity: 0,
-      x: "120%",
-      transition: { duration: 0.3 },
+      x: "100vw",
+      transition: { delay: 0.5, duration: 0.4 },
     },
     show: {
-      opacity: 1,
       x: 0,
       transition: {
-        duration: 0.3,
+        type: "spring",
+        stiffness: 120,
+        damping: 18,
         delay: 1,
       },
     },
@@ -58,7 +58,7 @@ export default function ToastProvider() {
       {isToastOpen && (
         <motion.div
           key="toast"
-          variants={toastVariant}
+          variants={toastVariants}
           initial="hidden"
           animate="show"
           exit="hidden"
