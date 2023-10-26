@@ -2,7 +2,6 @@
 
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import type { TeamTechStackItems } from "./types/types";
-import { getPostBody } from "./helpers";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import { useAppDispatch } from "@/store/hooks";
