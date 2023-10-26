@@ -1,3 +1,4 @@
+import { getTimezone } from "@/helpers/getTimezone";
 import EditCell from "./EditCell";
 import type { TeamMember } from "./fixtures/MyTeam";
 
@@ -27,7 +28,7 @@ export default function TeamCard({ teamMember, currentUser }: TeamCardProps) {
         </li>
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Time Zone</span>
-          <span>{teamMember.member.timezone}</span>
+          <span>{getTimezone(teamMember.member.timezone)}</span>
         </li>
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Position</span>

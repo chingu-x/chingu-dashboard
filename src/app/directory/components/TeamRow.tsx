@@ -1,3 +1,4 @@
+import { getTimezone } from "@/helpers/getTimezone";
 import EditCell from "./EditCell";
 import type { TeamMember } from "./fixtures/MyTeam";
 
@@ -17,7 +18,7 @@ export default function TeamRow({ teamMember, currentUser }: TeamRowProps) {
       <td>
         <EditCell teamMember={teamMember} currentUser={currentUser} />
       </td>
-      <td>{teamMember.member.timezone}</td>
+      <td>{getTimezone(teamMember.member.timezone)}</td>
       <td>{teamMember.voyageRole.name}</td>
     </tr>
   );
