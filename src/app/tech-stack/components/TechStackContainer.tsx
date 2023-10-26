@@ -1,6 +1,10 @@
 import TechStackCard from "./TechStackCard";
-import { currentUser } from "./fixtures/fixtures";
 import { getTechStack } from "@/api/routes";
+
+const currentUser = {
+  id: process.env.CURRENT_USER_ID!,
+  teamId: +process.env.TEAM_ID!,
+};
 
 export default async function TechStackContainer() {
   // Get data on the server
