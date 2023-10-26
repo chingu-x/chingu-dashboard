@@ -1,6 +1,6 @@
-import { getTimezone } from "@/helpers/getTimezone";
 import EditCell from "./EditCell";
 import type { TeamMember } from "./fixtures/MyTeam";
+import { getTimezone } from "@/helpers/getTimezone";
 
 interface TeamRowProps {
   teamMember: TeamMember;
