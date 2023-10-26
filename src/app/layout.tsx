@@ -6,6 +6,7 @@ import ThemeProvider from "@/components/ThemeProvider";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ModalProvider from "@/components/ModalProvider";
+import ToastProvider from "@/components/ToastProvider";
 
 export const metadata: Metadata = {
   title: "Chingu Dashboard",
@@ -30,15 +31,13 @@ export default function RootLayout({
       className={`${inter.className} bg-base-content`}
       suppressHydrationWarning
     >
-      <body>
-        <ThemeProvider
-          storageKey="chingu-theme"
-          disableTransitionOnChange
-        >
+      <body className="relative">
+        <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
           <div className="flex flex-col h-screen">
             <Navbar />
             <StoreProvider>
               <div className="flex flex-1 overflow-hidden">
+                <ToastProvider />
                 <ModalProvider />
                 <Sidebar />
                 <main className="flex flex-col items-center flex-1 w-full p-10 overflow-y-auto">
