@@ -31,12 +31,12 @@ export default function RootLayout({
       className={`${inter.className} bg-base-content`}
       suppressHydrationWarning
     >
-      <body className="relative">
+      <body>
         <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
           <div className="flex flex-col h-screen">
             <Navbar />
             <StoreProvider>
-              <div className="flex flex-1 overflow-hidden">
+              <div className="relative flex flex-1 overflow-hidden">
                 <ToastProvider />
                 <ModalProvider />
                 <Sidebar />

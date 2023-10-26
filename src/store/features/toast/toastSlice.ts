@@ -1,16 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export type ToastType = "success" | "error";
+export type ToastContext = "success" | "error";
 
 interface ToastState {
   message: string;
-  toastType: ToastType;
+  context: ToastContext;
   isToastOpen: boolean;
 }
 
 const initialState: ToastState = {
   message: "",
-  toastType: "success",
+  context: "success",
   isToastOpen: false,
 };
 
@@ -20,16 +20,16 @@ export const toastSlice = createSlice({
   reducers: {
     onOpen: (
       state,
-      action: PayloadAction<{ message: string; toastType: ToastType }>
+      action: PayloadAction<{ message: string; context: ToastContext }>,
     ) => {
       state.isToastOpen = true;
-      state.toastType = action.payload.toastType;
+      state.context = action.payload.context;
       state.message = action.payload.message;
     },
     onClose: (state) => {
       state.isToastOpen = false;
       state.message = "";
-      state.toastType = "success";
+      state.context = "success";
     },
   },
 });
