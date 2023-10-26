@@ -31,10 +31,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        <ThemeProvider
-          storageKey="chingu-theme"
-          disableTransitionOnChange
-        >
+        <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
           <div className="flex flex-col h-screen">
             <Navbar />
             <StoreProvider>
