@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export type ToastContext = "success" | "error";
+export type ToastContext = "success" | "error" | "warning";
 
 interface ToastState {
   message: string;
