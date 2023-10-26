@@ -65,7 +65,10 @@ export default function Example1Modal() {
     dispatch(onClose());
     router.refresh();
     dispatch(
-      onOpen({ context: "success", message: "Your information updated." }),
+      onOpen({
+        context: "warning",
+        message: "Your information has been deleted",
+      }),
     );
   };
 

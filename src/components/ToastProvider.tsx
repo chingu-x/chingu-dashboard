@@ -5,6 +5,7 @@ import { AnimatePresence, Variants, motion } from "framer-motion";
 
 import {
   ExclamationTriangleIcon,
+  ExclamationCircleIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/solid";
 
@@ -30,11 +31,13 @@ export default function ToastProvider() {
   const icon = {
     success: <CheckCircleIcon />,
     error: <ExclamationTriangleIcon />,
+    warning: <ExclamationCircleIcon />,
   };
 
   const customStyles = {
     success: "bg-success-content border-success",
     error: "bg-error-content border-error",
+    warning: "bg-info-content border-info",
   };
 
   const toastVariants: Variants = {
