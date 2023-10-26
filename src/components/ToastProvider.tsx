@@ -40,13 +40,13 @@ export default function ToastProvider() {
   const toastVariant: Variants = {
     hidden: {
       x: "120%",
-      transition: { duration: 0.5 },
+      transition: { duration: 0.3 },
     },
     show: {
       x: 0,
       transition: {
         type: "spring",
-        bounce: 0.2,
+        bounce: 0.15,
         delay: 1,
       },
     },
