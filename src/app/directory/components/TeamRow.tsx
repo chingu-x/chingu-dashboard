@@ -6,7 +6,7 @@ interface TeamRowProps {
   currentUserId: string;
 }
 
-export default function TeamRow({ teamMember, currentUserId }) {
+export default function TeamRow({ teamMember, currentUserId }: TeamRowProps) {
   return (
     <tr>
       <td>{teamMember.name}</td>
