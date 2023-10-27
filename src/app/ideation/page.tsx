@@ -10,7 +10,7 @@ import { store } from "@/store/store";
 const TEAMID = 3;
 
 async function IdeationPage() {
-  const res = await fetch(`https://chingu-dashboard-be-development.up.railway.app/api/v1/teams/${TEAMID}/ideations`, { cache: "no-store" });
+  const res = await fetch(`https://chingu-dashboard-be-development.up.railway.app/api/v1/teams/${TEAMID}/ideations`);
   const data = await res.json() as IdeationData[];
 
   store.dispatch(fetchIdeations(data));

@@ -1,13 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface VoyageMember {
+export interface VoyageMember {
   id: number;
   avatar: string;
   firstName: string;
   lastName: string;
 }
 
-interface ProjectIdeaVotes {
+export interface ProjectIdeaVotes {
   id: number;
   voyageTeamMemberId: number;
   projectIdeaId: number;
@@ -27,7 +27,7 @@ export interface IdeationData {
   contributedBy: {
     member: VoyageMember;
   };
-  projectIdeaVotes: ProjectIdeaVotes;
+  projectIdeaVotes: ProjectIdeaVotes[];
 }
 
 interface IdeationState {
