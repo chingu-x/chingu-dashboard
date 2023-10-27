@@ -5,7 +5,7 @@ export type ModalType = "example1" | "example2" | "ideation";
 interface ModalState {
   type: ModalType | null;
   isOpen: boolean;
-  mode: string;
+  mode: string | null;
 }
 
 interface ModalActionPayload {
@@ -16,7 +16,7 @@ interface ModalActionPayload {
 const initialState: ModalState = {
   type: null,
   isOpen: false,
-  mode: "",
+  mode: null,
 };
 
 export const modalSlice = createSlice({
@@ -31,6 +31,7 @@ export const modalSlice = createSlice({
     onClose: (state) => {
       state.isOpen = false;
       state.type = null;
+      state.mode = null;
     },
   },
 });

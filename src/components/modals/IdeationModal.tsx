@@ -50,18 +50,17 @@ export default function IdeationModal() {
     reset,
   } = useForm<ValidationSchema>({
     mode: "onTouched",
-    defaultValues: {
-      title: "",
-      projectIdea: "",
-      visionStatement: "",
-    },
     resolver: zodResolver(validationSchema),
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => console.log(data);
 
   const handleClose = useCallback(() => {
-    reset();
+    reset({
+      title: "",
+      projectIdea: "",
+      visionStatement: "",
+    });
     dispatch(onClose());
   }, [dispatch, reset]);
 
@@ -71,14 +70,6 @@ export default function IdeationModal() {
         title: "some project title",
         projectIdea: "some project idea",
         visionStatement: "some vision statement",
-      });
-    }
-
-    if (mode === "create") {
-      reset({
-        title: "",
-        projectIdea: "",
-        visionStatement: "",
       });
     }
   }, [mode, reset]);
