@@ -26,7 +26,7 @@ function Alert({ context, message }: AlertProps) {
 
   return (
     <div
-      className={`flex gap-x-4 items-center p-6 2xl:text-xl 2xl:font-medium border rounded-2xl min-w-[420px] text-base-300 shadow-sm ${customStyles[context]}`}
+      className={`flex gap-x-4 items-center p-6 min-[1920px]:text-xl min-[1920px]:font-medium border rounded-2xl min-w-[420px] text-base-300 shadow-sm ${customStyles[context]}`}
     >
       <div className="w-6 h-6 text-base-300">{icon[context]}</div>
       <span>{message}</span>
