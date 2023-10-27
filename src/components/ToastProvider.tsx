@@ -3,11 +3,7 @@
 import { useEffect } from "react";
 import { AnimatePresence, Variants, motion } from "framer-motion";
 
-import {
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
-  CheckCircleIcon,
-} from "@heroicons/react/24/solid";
+import Alert from "./Alert";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/toast/toastSlice";
@@ -27,18 +23,6 @@ export default function ToastProvider() {
       return () => clearTimeout(timer);
     }
   }, [isToastOpen]);
-
-  const icon = {
-    success: <CheckCircleIcon />,
-    error: <ExclamationTriangleIcon />,
-    warning: <InformationCircleIcon />,
-  };
-
-  const customStyles = {
-    success: "bg-success-content border-success",
-    error: "bg-error-content border-error",
-    warning: "bg-info-content border-info",
-  };
 
   const toastVariants: Variants = {
     hidden: {
@@ -65,10 +49,9 @@ export default function ToastProvider() {
           initial="hidden"
           animate="show"
           exit="hidden"
-          className={`absolute z-10 right-3 top-3 flex gap-x-4 items-center p-6 text-xl font-medium border rounded-2xl w-[424px] text-base-300 shadow-sm ${customStyles[context]}`}
+          className="absolute z-10 right-3 top-3"
         >
-          <div className="w-6 h-6 text-base-300">{icon[context]}</div>
-          <span>{message}</span>
+          <Alert context={context} message={message} />
         </motion.div>
       )}
     </AnimatePresence>
