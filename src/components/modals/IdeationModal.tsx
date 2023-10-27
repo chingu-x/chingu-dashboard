@@ -21,17 +21,17 @@ const validationSchema = z.object({
     inputName: "Title",
     required: true,
     minLen: 10,
-    maxLen: 30,
+    maxLen: 50,
   }),
   projectIdea: validateTextInput({
     inputName: "Project idea",
     required: true,
-    maxLen: 50,
+    minLen: 10,
   }),
   visionStatement: validateTextInput({
     inputName: "Vision statement",
     required: true,
-    maxLen: 50,
+    minLen: 10,
   }),
 });
 
@@ -65,6 +65,7 @@ export default function IdeationModal() {
     formState: { errors, isDirty, isValid },
     reset,
   } = useForm<ValidationSchema>({
+    mode: "onChange",
     defaultValues: defaultValues,
     resolver: zodResolver(validationSchema),
   });
@@ -92,7 +93,7 @@ export default function IdeationModal() {
               placeholder="Enter you voyage project idea"
               register={{ ...register("title") }}
               errors={errors}
-              maxLength={30}
+              maxLength={50}
             />
             <Textarea
               id="projectIdea"
@@ -100,7 +101,6 @@ export default function IdeationModal() {
               placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
               register={{ ...register("projectIdea") }}
               errors={errors}
-              maxLength={50}
             />
             <Textarea
               id="visionStatement"
@@ -108,7 +108,6 @@ export default function IdeationModal() {
               placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
               register={{ ...register("visionStatement") }}
               errors={errors}
-              maxLength={50}
             />
           </div>
         </div>
