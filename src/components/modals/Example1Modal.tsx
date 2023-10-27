@@ -66,8 +66,8 @@ export default function Example1Modal() {
     router.refresh();
     dispatch(
       onOpen({
-        context: "warning",
-        message: "Your information has been deleted",
+        context: "success",
+        message: "Your information has been updated",
       }),
     );
   };
