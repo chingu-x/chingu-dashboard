@@ -21,7 +21,7 @@ const validationSchema = z.object({
     inputName: "Title",
     required: true,
     minLen: 10,
-    maxLen: 20,
+    maxLen: 30,
   }),
   projectIdea: validateTextInput({
     inputName: "Project idea",
@@ -33,11 +33,6 @@ const validationSchema = z.object({
     required: true,
     maxLen: 50,
   }),
-  email: validateTextInput({
-    inputName: "Email",
-    required: true,
-    isEmail: true,
-  }),
 });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
@@ -45,15 +40,32 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function IdeationModal() {
   const { isOpen, type } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
+  const editProject = false;
+  let defaultValues = {};
+
+  if (editProject) {
+    defaultValues = {
+      title: "some project title",
+      projectIdea: "some project idea",
+      visionStatement: "some vision statement",
+    };
+  } else {
+    defaultValues = {
+      title: "",
+      projectIdea: "",
+      visionStatement: "",
+    };
+  }
 
   const isModalOpen = isOpen && type === "ideation";
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     reset,
   } = useForm<ValidationSchema>({
+    defaultValues: defaultValues,
     resolver: zodResolver(validationSchema),
   });
 
@@ -98,13 +110,6 @@ export default function IdeationModal() {
               errors={errors}
               maxLength={50}
             />
-            <TextInput
-              id="email"
-              label="email"
-              placeholder="Enter your email"
-              register={register("email")}
-              errors={errors}
-            />
           </div>
         </div>
         {/* BUTTONS */}
@@ -112,9 +117,10 @@ export default function IdeationModal() {
           <Button
             type="submit"
             title="submit"
-            customClassName="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+            disabled={!isDirty || !isValid}
+            customClassName="text-base gap-x-0 border-none font-semibold capitalize btn-primary text-base-300 hover:btn-primary-focus disabled:bg-primary-focus disabled:text-neutral-content"
           >
-            Submit
+            Submit Project
           </Button>
           <Button
             onClick={() => {}}
