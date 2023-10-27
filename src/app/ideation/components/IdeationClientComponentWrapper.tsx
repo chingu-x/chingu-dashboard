@@ -1,21 +1,22 @@
 "use client";
 
 import IdeationContainer from "./IdeationContainer";
-import { ideation } from "./fixtures/ideation";
+// import { ideation } from "./fixtures/ideation";
+import { useAppSelector } from "@/store/hooks";
 
 function IdeationClientComponentWrapper() {
+  const { data } = useAppSelector((state) => state.ideation);
+
   return (
     <>
-      {ideation.map((i) => (
+      {data.map((i) => (
         <IdeationContainer
           key={i.id}
           title={i.title}
-          project_idea={i.project_idea}
-          vision_statement={i.vision_statement}
-          users={i.users}
-          voted={i.voted}
-          own_idea={i.own_idea}
-          contributed_by={i.contributed_by}
+          project_idea={i.description}
+          vision_statement={i.vision}
+          users={i.projectIdeaVotes}
+          contributed_by={i.contributedBy}
         />
       ))}
     </>

@@ -1,13 +1,13 @@
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
+import { ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 
 interface VoteCardProps {
-  users: string[];
-  voted: boolean;
+  users: ProjectIdeaVotes[];
   className?: string;
 }
 
-function VoteCard({ users, voted, className }: VoteCardProps) {
+function VoteCard({ users, className }: VoteCardProps) {
   return (
     <div
       className={`card max-w-[200px] max-[1919px]:min-w-[160px] w-full h-fit bg-primary-content rounded-lg ${className}`}
@@ -19,15 +19,14 @@ function VoteCard({ users, voted, className }: VoteCardProps) {
         }`}</h2>
         <div className="avatar-group -space-x-2 w-full">
           {users.map((user) => (
-            <Avatar width={24} height={24} key={user} />
+            <Avatar width={24} height={24} key={user.id} />
           ))}
         </div>
         <Button
           title="Vote"
           customClassName="w-full btn-primary text-base-300 disabled:bg-primary-focus disabled:text-base-200 capitalize"
-          disabled={voted}
         >
-          {voted ? "Voted" : "Vote"}
+          {"Vote"}
         </Button>
       </section>
     </div>
