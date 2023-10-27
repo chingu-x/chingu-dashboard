@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,24 +38,8 @@ const validationSchema = z.object({
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function IdeationModal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type, mode } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
-  const editProject = false;
-  let defaultValues = {};
-
-  if (editProject) {
-    defaultValues = {
-      title: "some project title",
-      projectIdea: "some project idea",
-      visionStatement: "some vision statement",
-    };
-  } else {
-    defaultValues = {
-      title: "",
-      projectIdea: "",
-      visionStatement: "",
-    };
-  }
 
   const isModalOpen = isOpen && type === "ideation";
 
@@ -65,8 +49,12 @@ export default function IdeationModal() {
     formState: { errors, isDirty, isValid },
     reset,
   } = useForm<ValidationSchema>({
-    mode: "onChange",
-    defaultValues: defaultValues,
+    mode: "onTouched",
+    defaultValues: {
+      title: "",
+      projectIdea: "",
+      visionStatement: "",
+    },
     resolver: zodResolver(validationSchema),
   });
 
@@ -75,7 +63,25 @@ export default function IdeationModal() {
   const handleClose = useCallback(() => {
     reset();
     dispatch(onClose());
-  }, [dispatch]);
+  }, [dispatch, reset]);
+
+  useEffect(() => {
+    if (mode === "edit") {
+      reset({
+        title: "some project title",
+        projectIdea: "some project idea",
+        visionStatement: "some vision statement",
+      });
+    }
+
+    if (mode === "create") {
+      reset({
+        title: "",
+        projectIdea: "",
+        visionStatement: "",
+      });
+    }
+  }, [mode, reset]);
 
   return (
     <Modal isOpen={isModalOpen} title="create project" onClose={handleClose}>
@@ -121,14 +127,16 @@ export default function IdeationModal() {
           >
             Submit Project
           </Button>
-          <Button
-            onClick={() => {}}
-            title="delete"
-            customClassName="text-base border-none font-semibold capitalize bg-error-content text-base-300 hover:bg-error"
-          >
-            <TrashIcon className="w-4 h-4" />
-            Delete
-          </Button>
+          {mode === "edit" && (
+            <Button
+              onClick={() => {}}
+              title="delete"
+              customClassName="text-base border-none font-semibold capitalize bg-error-content text-base-300 hover:bg-error"
+            >
+              <TrashIcon className="w-4 h-4" />
+              Delete Project
+            </Button>
+          )}
         </div>
       </form>
     </Modal>

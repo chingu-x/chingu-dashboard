@@ -31,7 +31,7 @@ function CreateIdeationContainer() {
       <Button
         title="Create Project"
         type="button"
-        onClick={() => dispatch(onOpen({ type: "ideation" }))}
+        onClick={() => dispatch(onOpen({ type: "ideation", mode: "create" }))}
         customClassName="max-w-[200px] w-full btn-primary text-base-300 capitalize hidden min-[1920px]:block"
       >
         Create Project
