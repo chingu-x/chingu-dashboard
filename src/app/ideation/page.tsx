@@ -1,11 +1,23 @@
+import Preloader from "./components/Preloader";
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationClientComponentWrapper from "./components/IdeationClientComponentWrapper";
+import { IdeationData, fetchIdeations } from "@/store/features/ideation/ideationSlice";
 
 import Banner from "@/components/banner/Banner";
+import { store } from "@/store/store";
 
-function IdeationPage() {
+// const USERID = "be650b1e-078a-4ebd-ad07-6a368d5f250a";
+const TEAMID = 3;
+
+async function IdeationPage() {
+  const res = await fetch(`https://chingu-dashboard-be-development.up.railway.app/api/v1/teams/${TEAMID}/ideations`, { cache: "no-store" });
+  const data = await res.json() as IdeationData[];
+
+  store.dispatch(fetchIdeations(data));
+
   return (
     <>
+      <Preloader data={data} />
       <Banner
         imageLight="/img/ideation_banner_light.png"
         imageDark="/img/ideation_banner_dark.png"
