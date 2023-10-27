@@ -1,3 +1,5 @@
+"use client";
+
 import VoteDescriptionCard from "./VoteDescriptionCard";
 import Button from "@/components/Button";
 import { useAppDispatch } from "@/store/hooks";

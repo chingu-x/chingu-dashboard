@@ -1,13 +1,11 @@
 "use client";
 
-import CreateIdeationContainer from "./CreateIdeationContainer";
 import IdeationContainer from "./IdeationContainer";
 import { ideation } from "./fixtures/ideation";
 
 function IdeationClientComponentWrapper() {
   return (
     <>
-      <CreateIdeationContainer />
       {ideation.map((i) => (
         <IdeationContainer
           key={i.id}

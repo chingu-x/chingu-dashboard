@@ -37,7 +37,7 @@ export default function Textarea({
         0,
       )}px`;
     }
-  }, []);
+  }, [textAreaRef]);
 
   function handleOnChange(e: ChangeEvent<HTMLTextAreaElement>) {
     // Make Textarea expand or shrink vertically to fit the content
