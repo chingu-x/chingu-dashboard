@@ -1,9 +1,11 @@
+"use client";
+
 import IdeationContainer from "./IdeationContainer";
+import { useAppSelector } from "@/store/hooks";
 // import { ideation } from "./fixtures/ideation";
-import { store } from "@/store/store";
 
 function IdeationClientComponentWrapper() {
-  const { data } = store.getState().ideation;
+  const { data } = useAppSelector((state) => state.ideation);
 
   return (
     <>

@@ -1,5 +1,3 @@
-"use client";
-
 import { useCallback, useEffect, useState } from "react";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
@@ -26,7 +24,6 @@ function VoteCard({ users, className }: VoteCardProps) {
     } else {
       setCurrentUserVoted(false);
     }
-
   }, [getVoteUsers]);
 
   return (
@@ -40,13 +37,18 @@ function VoteCard({ users, className }: VoteCardProps) {
         }`}</h2>
         <div className="avatar-group -space-x-2 w-full">
           {users.map((user) => (
-            <Avatar width={24} height={24} key={user.id} image={user.votedBy.member.avatar} />
+            <Avatar
+              width={24}
+              height={24}
+              key={user.id}
+              image={user.votedBy.member.avatar}
+            />
           ))}
         </div>
         <Button
           title="Vote"
           customClassName="w-full btn-primary text-base-300 disabled:bg-primary-focus disabled:text-base-200 capitalize"
-          disabled={getVoteUsers().includes(USERID)}
+          disabled={currentUserVoted}
           onClick={() => {}}
         >
           {currentUserVoted ? "Voted" : "Vote"}
