@@ -1,7 +1,10 @@
 import ContributionCard from "./ContributionCard";
 import VoteCard from "./VoteCard";
 // import type { Ideation } from "./fixtures/ideation";
-import { ProjectIdeaVotes, VoyageMember } from "@/store/features/ideation/ideationSlice";
+import {
+  ProjectIdeaVotes,
+  VoyageMember,
+} from "@/store/features/ideation/ideationSlice";
 
 interface IdeationContainerProps {
   title: string;
@@ -9,10 +12,9 @@ interface IdeationContainerProps {
   vision_statement: string;
   users: ProjectIdeaVotes[];
   contributed_by: {
-    member: VoyageMember
+    member: VoyageMember;
   };
 }
-
 
 function IdeationContainer({
   title,
@@ -27,10 +29,7 @@ function IdeationContainer({
         <VoteCard users={users} />
         <ContributionCard contributed_by={contributed_by} />
       </div>
-      <VoteCard
-        users={users}
-        className="hidden min-[1920px]:block"
-      />
+      <VoteCard users={users} className="hidden min-[1920px]:block" />
       <section className="card-body gap-y-7 p-0 w-[1000px] h-[377px] overflow-y-auto pr-5">
         <h2 className="text-xl font-semibold text-base-300">{title}</h2>
         <h3 className="text-base text-neutral-focus font-semibold">
