@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import IdeationContainer from "./IdeationContainer";
 // import { ideation } from "./fixtures/ideation";
 import { store } from "@/store/store";
@@ -8,7 +7,7 @@ function IdeationClientComponentWrapper() {
   const { data } = store.getState().ideation;
 
   return (
-    <Suspense fallback={<div>loading...</div>}>
+    <>
       {data.map((i) => (
         <IdeationContainer
           key={i.id}
@@ -19,7 +18,7 @@ function IdeationClientComponentWrapper() {
           contributed_by={i.contributedBy}
         />
       ))}
-    </Suspense>
+    </>
   );
 }
 
