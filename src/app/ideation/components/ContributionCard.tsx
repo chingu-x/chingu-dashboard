@@ -3,7 +3,7 @@ import { VoyageMember } from "@/store/features/ideation/ideationSlice";
 
 interface ContributionCardProps {
   contributed_by: {
-    member: VoyageMember
+    member: VoyageMember;
   };
   className?: string;
 }

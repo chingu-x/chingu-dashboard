@@ -1,7 +1,10 @@
 import Preloader from "./components/Preloader";
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationClientComponentWrapper from "./components/IdeationClientComponentWrapper";
-import { IdeationData, fetchIdeations } from "@/store/features/ideation/ideationSlice";
+import {
+  IdeationData,
+  fetchIdeations,
+} from "@/store/features/ideation/ideationSlice";
 
 import Banner from "@/components/banner/Banner";
 import { store } from "@/store/store";
@@ -10,8 +13,10 @@ import { store } from "@/store/store";
 const TEAMID = 3;
 
 async function IdeationPage() {
-  const res = await fetch(`https://chingu-dashboard-be-development.up.railway.app/api/v1/teams/${TEAMID}/ideations`);
-  const data = await res.json() as IdeationData[];
+  const res = await fetch(
+    `https://chingu-dashboard-be-development.up.railway.app/api/v1/teams/${TEAMID}/ideations`,
+  );
+  const data = (await res.json()) as IdeationData[];
 
   store.dispatch(fetchIdeations(data));
 
