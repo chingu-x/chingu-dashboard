@@ -3,7 +3,6 @@ import IdeationContainer from "./IdeationContainer";
 import { store } from "@/store/store";
 
 function IdeationClientComponentWrapper() {
-
   const { data } = store.getState().ideation;
 
   return (

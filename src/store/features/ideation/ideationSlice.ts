@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface VoyageMember {
-  id: number;
+  id: string;
   avatar: string;
   firstName: string;
   lastName: string;
