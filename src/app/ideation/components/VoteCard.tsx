@@ -1,9 +1,9 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import { ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
-import { useCallback, useEffect, useState } from "react";
 
 const USERID = "be650b1e-078a-4ebd-ad07-6a368d5f250a";
 
@@ -40,7 +40,7 @@ function VoteCard({ users, className }: VoteCardProps) {
         }`}</h2>
         <div className="avatar-group -space-x-2 w-full">
           {users.map((user) => (
-            <Avatar width={24} height={24} key={user.id} />
+            <Avatar width={24} height={24} key={user.id} image={user.votedBy.member.avatar} />
           ))}
         </div>
         <Button
