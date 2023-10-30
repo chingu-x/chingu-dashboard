@@ -41,3 +41,28 @@ export async function postNewTech(
 
   return data;
 }
+
+export async function voteExistingTech(
+  teamId: number,
+  teamTechId: number,
+  votedBy: string,
+): Promise<unknown> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}techs/teams/${teamId}/techs/${teamTechId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ votedBy: votedBy }),
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to post data");
+  }
+
+  const data = (await res.json()) as unknown;
+
+  return data;
+}

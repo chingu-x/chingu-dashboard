@@ -2,6 +2,7 @@
 
 import { currentUser } from "./TechStackContainer";
 import Button from "@/components/Button";
+import { voteExistingTech } from "@/api/routes";
 
 interface VoteButtonProps {
   title: string;
@@ -10,10 +11,12 @@ interface VoteButtonProps {
 
 export default function VoteButton({ title, id }: VoteButtonProps) {
 
-  const onClick = () => {
-    console.log(id);
-    console.log(currentUser.teamId);
-    console.log(currentUser.id);
+  const onClick = async () => {
+    try {
+      await voteExistingTech(currentUser.teamId, id, currentUser.id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
