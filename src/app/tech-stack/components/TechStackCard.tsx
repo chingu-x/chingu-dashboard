@@ -1,7 +1,7 @@
 import type { TeamTechStackItems } from "./types/types";
 import TechStackButton from "./TechStackButton";
+import VoteButton from "./VoteButton";
 import Avatar from "@/components/Avatar";
-import Button from "@/components/Button";
 
 interface TechStackCardProps {
   title: string;
@@ -30,12 +30,10 @@ export default function TechStackCard({ title, data, id }: TechStackCardProps) {
                   <Avatar key={user.votedBy.member.id} width={24} height={24} />
                 ))}
               </div>
-              <Button
+              <VoteButton
                 title={title}
-                customClassName="capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 bg-primary-content border-transparent mr-4 rounded-[32px] hover:bg-primary hover:border-transparent gap-x-0"
-              >
-                Vote
-              </Button>
+                id={id}
+              />
             </li>
           ))}
         </ul>
