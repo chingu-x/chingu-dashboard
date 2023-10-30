@@ -6,9 +6,10 @@ import Button from "@/components/Button";
 interface TechStackCardProps {
   title: string;
   data: TeamTechStackItems[];
+  id: number;
 }
 
-export default function TechStackCard({ title, data }: TechStackCardProps) {
+export default function TechStackCard({ title, data, id }: TechStackCardProps) {
   return (
     <div className="card min-w-[400px] sm:w-96 text-base-300 bg-base-200 rounded-lg px-6 py-5">
       <div className="flex flex-row justify-between">
@@ -39,7 +40,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
           ))}
         </ul>
       </div>
-      <TechStackButton title={title} />
+      <TechStackButton title={title} id={id} />
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -14,6 +15,10 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
 
+import { currentUser } from "@/app/tech-stack/components/TechStackContainer";
+import { getPostBody } from "@/app/tech-stack/components/helpers";
+import { postNewTech } from "@/api/routes";
+
 const validationSchema = z.object({
   suggestion: validateTextInput({
     inputName: "Suggestion",
@@ -25,7 +30,9 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function TechStackModal() {
+  const router = useRouter();
   const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { currentStackId } = useAppSelector((state) => state.techStack);
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "TechStackModal";
@@ -39,8 +46,17 @@ export default function TechStackModal() {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = async ({ suggestion }) => {
+    if (suggestion && currentStackId) {
+      const body = getPostBody(currentUser.id, suggestion, currentStackId);
+      try {
+        await postNewTech(currentUser.teamId, body);
+        handleClose();
+        router.refresh();
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   const handleClose = useCallback(() => {

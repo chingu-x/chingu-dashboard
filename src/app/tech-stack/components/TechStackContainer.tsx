@@ -1,9 +1,9 @@
 import TechStackCard from "./TechStackCard";
 import { getTechStack } from "@/api/routes";
 
-const currentUser = {
-  id: process.env.CURRENT_USER_ID!,
-  teamId: +process.env.TEAM_ID!,
+export const currentUser = {
+  id: "e7a6262d-c596-44ac-9a50-373bcff1e155",
+  teamId: 5,
 };
 
 export default async function TechStackContainer() {
@@ -18,6 +18,7 @@ export default async function TechStackContainer() {
             <TechStackCard
               title={techObject.name}
               data={techObject.teamTechStackItems}
+              id={techObject.id}
             />
           </li>
         ))}

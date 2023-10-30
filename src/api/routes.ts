@@ -23,7 +23,7 @@ export async function postNewTech(
   body: PostTechBody,
 ): Promise<PostTechResponse> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}techs/teams/${teamId}/tech/new`,
+    `${process.env.NEXT_PUBLIC_API_URL}techs/teams/${teamId}/techs`,
     {
       method: "POST",
       headers: {
