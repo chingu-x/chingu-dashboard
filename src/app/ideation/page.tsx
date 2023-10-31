@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import Preloader from "./components/Preloader";
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationClientComponentWrapper from "./components/IdeationClientComponentWrapper";
@@ -13,6 +14,8 @@ import { store } from "@/store/store";
 const TEAMID = 5;
 
 async function IdeationPage() {
+  revalidatePath("/ideation");
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams/${TEAMID}/ideations`,
   );
