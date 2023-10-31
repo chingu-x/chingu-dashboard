@@ -2,7 +2,7 @@ import type {
   TechsResponse,
   PostTechBody,
   PostTechResponse,
-  VoteTechResponse
+  VoteTechResponse,
 } from "@/app/tech-stack/components/types/types";
 
 export async function getTechStack(teamId: number): Promise<TechsResponse> {

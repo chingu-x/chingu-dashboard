@@ -19,7 +19,10 @@ export default function VoteButton({ title, id, votedBy }: VoteButtonProps) {
 
   useEffect(() => {
     // Check if currentUser.id is in the votedBy array
-    const hasVoted: boolean = votedBy.some((vote: TeamTechStackItemVotes) => vote.votedBy.member.id === currentUser.id);
+    const hasVoted: boolean = votedBy.some(
+      (vote: TeamTechStackItemVotes) =>
+        vote.votedBy.member.id === currentUser.id,
+    );
     setVoted(hasVoted);
   }, [votedBy]);
 
@@ -46,7 +49,9 @@ export default function VoteButton({ title, id, votedBy }: VoteButtonProps) {
   return (
     <Button
       title={title}
-      customClassName={`capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 border-transparent mr-4 rounded-[32px] hover:bg-primary hover:border-transparent gap-x-0 ${voted ? "bg-primary-focus" : "bg-primary-content"}`}
+      customClassName={`capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 border-transparent mr-4 rounded-[32px] hover:bg-primary hover:border-transparent gap-x-0 ${
+        voted ? "bg-primary-focus" : "bg-primary-content"
+      }`}
       onClick={onClick}
     >
       {voted ? "Voted" : "Vote"}

@@ -30,7 +30,11 @@ export default function TechStackCard({ title, data, id }: TechStackCardProps) {
                   <Avatar key={user.votedBy.member.id} width={24} height={24} />
                 ))}
               </div>
-              <VoteButton title={title} id={element.id} votedBy={element.teamTechStackItemVotes} />
+              <VoteButton
+                title={title}
+                id={element.id}
+                votedBy={element.teamTechStackItemVotes}
+              />
             </li>
           ))}
         </ul>
