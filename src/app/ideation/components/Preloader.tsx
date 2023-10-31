@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   IdeationData,
@@ -15,13 +14,10 @@ interface PreloaderProps {
 function Preloader({ data }: PreloaderProps) {
   const [isMounted, setIsMounted] = useState(false);
 
-  const router = useRouter();
-
   useEffect(() => {
     store.dispatch(fetchIdeations(data));
     setIsMounted(true);
 
-    router.refresh();
     // eslint-disable-next-line
   }, []);
 

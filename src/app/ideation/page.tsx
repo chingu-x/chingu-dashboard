@@ -1,4 +1,4 @@
-
+import { revalidatePath } from "next/cache";
 import Preloader from "./components/Preloader";
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationClientComponentWrapper from "./components/IdeationClientComponentWrapper";
@@ -10,13 +10,14 @@ import {
 import Banner from "@/components/banner/Banner";
 import { store } from "@/store/store";
 
-// const USERID = "be650b1e-078a-4ebd-ad07-6a368d5f250a";
-const TEAMID = 3;
+// const USERID = "e7a6262d-c596-44ac-9a50-373bcff1e155";
+const TEAMID = 5;
 
 async function IdeationPage() {
   const res = await fetch(
-    `https://chingu-dashboard-be-development.up.railway.app/api/v1/teams/${TEAMID}/ideations`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams/${TEAMID}/ideations`,
   );
+
   const data = (await res.json()) as IdeationData[];
 
   store.dispatch(fetchIdeations(data));
@@ -32,8 +33,7 @@ async function IdeationPage() {
         description="Okay, time to put on your thinking caps and channel your inner creativity! What kind of amazing, mind-blowing project idea do you have that will make SpaceX jealous? Let's hear it!"
       />
       <CreateIdeationContainer />
-      
-        <IdeationClientComponentWrapper />
+      <IdeationClientComponentWrapper />
     </>
   );
 }
