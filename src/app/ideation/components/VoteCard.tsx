@@ -10,7 +10,7 @@ import {
 } from "@/store/features/ideation/ideationSlice";
 import { addIdeationVote } from "@/api/ideationService";
 
-const USERID = "be650b1e-078a-4ebd-ad07-6a368d5f250a";
+const USERID = "e7a6262d-c596-44ac-9a50-373bcff1e155";
 
 interface VoteCardProps {
   users: ProjectIdeaVotes[];
