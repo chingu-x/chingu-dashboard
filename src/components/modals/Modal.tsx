@@ -37,6 +37,7 @@ export default function Modal({
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
+    // eslint-disable-next-line
   }, []);
 
   if (!isOpen) {

@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import Preloader from "./components/Preloader";
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationClientComponentWrapper from "./components/IdeationClientComponentWrapper";
