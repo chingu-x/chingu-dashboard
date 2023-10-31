@@ -62,7 +62,7 @@ export default function Example1Modal() {
   const handleClose = useCallback(() => {
     reset();
     dispatch(onClose());
-  }, [dispatch]);
+  }, [dispatch, reset]);
 
   return (
     <Modal isOpen={isModalOpen} title="create project" onClose={handleClose}>
