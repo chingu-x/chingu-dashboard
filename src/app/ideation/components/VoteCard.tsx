@@ -1,7 +1,14 @@
+"use client";
+
 import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
-import { ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
+import {
+  ProjectIdeaVotes,
+  addVote,
+} from "@/store/features/ideation/ideationSlice";
+import { addIdeationVote } from "@/api/ideationService";
 
 const USERID = "be650b1e-078a-4ebd-ad07-6a368d5f250a";
 
@@ -12,6 +19,13 @@ interface VoteCardProps {
 
 function VoteCard({ users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState(false);
+  const dispatch = useDispatch();
+
+  async function addProjectVote() {
+    const data = await addIdeationVote({ teamId: 5, ideationId: 17 });
+
+    dispatch(addVote(data));
+  }
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
@@ -49,7 +63,7 @@ function VoteCard({ users, className }: VoteCardProps) {
           title="Vote"
           customClassName="w-full btn-primary text-base-300 disabled:bg-primary-focus disabled:text-base-200 capitalize"
           disabled={currentUserVoted}
-          onClick={() => {}}
+          onClick={addProjectVote}
         >
           {currentUserVoted ? "Voted" : "Vote"}
         </Button>

@@ -1,23 +1,21 @@
-"use client";
-
 import { Suspense } from "react";
 import IdeationContainer from "./IdeationContainer";
-import { useAppSelector } from "@/store/hooks";
+import { store } from "@/store/store";
 // import { ideation } from "./fixtures/ideation";
 
 function IdeationClientComponentWrapper() {
-  const { data } = useAppSelector((state) => state.ideation);
+  const { projectIdeas } = store.getState().ideation;
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      {data.map((i) => (
+      {projectIdeas.map((projectIdea) => (
         <IdeationContainer
-          key={i.id}
-          title={i.title}
-          project_idea={i.description}
-          vision_statement={i.vision}
-          users={i.projectIdeaVotes}
-          contributed_by={i.contributedBy}
+          key={projectIdea.id}
+          title={projectIdea.title}
+          project_idea={projectIdea.description}
+          vision_statement={projectIdea.vision}
+          users={projectIdea.projectIdeaVotes}
+          contributed_by={projectIdea.contributedBy}
         />
       ))}
     </Suspense>

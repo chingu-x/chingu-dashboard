@@ -31,11 +31,11 @@ export interface IdeationData {
 }
 
 interface IdeationState {
-  data: IdeationData[];
+  projectIdeas: IdeationData[];
 }
 
 const initialState: IdeationState = {
-  data: [],
+  projectIdeas: [],
 };
 
 export const ideationSlice = createSlice({
@@ -43,11 +43,18 @@ export const ideationSlice = createSlice({
   initialState,
   reducers: {
     fetchIdeations: (state, action: PayloadAction<IdeationData[]>) => {
-      state.data = action.payload;
+      state.projectIdeas = action.payload;
+    },
+    addVote: (state, action: PayloadAction<ProjectIdeaVotes>) => {
+      state.projectIdeas.map((projectIdea) => {
+        if (projectIdea.id === action.payload.projectIdeaId) {
+          projectIdea.projectIdeaVotes.push(action.payload);
+        }
+      });
     },
   },
 });
 
-export const { fetchIdeations } = ideationSlice.actions;
+export const { fetchIdeations, addVote } = ideationSlice.actions;
 
 export default ideationSlice.reducer;
