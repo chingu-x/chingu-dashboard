@@ -19,6 +19,14 @@ export interface PostTechResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface VoteTechResponse {
+  id: number;
+  teamTechId: number;
+  teamMemberId: number;
+  createdAt: string;
+  updatedAt: string;
+}
 export interface TechStack {
   id: number;
   name: string;

@@ -2,6 +2,7 @@ import type {
   TechsResponse,
   PostTechBody,
   PostTechResponse,
+  VoteTechResponse
 } from "@/app/tech-stack/components/types/types";
 
 export async function getTechStack(teamId: number): Promise<TechsResponse> {
@@ -46,7 +47,7 @@ export async function voteExistingTech(
   teamId: number,
   teamTechId: number,
   votedBy: string,
-): Promise<unknown> {
+): Promise<VoteTechResponse> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}techs/teams/${teamId}/techs/${teamTechId}`,
     {
@@ -62,7 +63,32 @@ export async function voteExistingTech(
     throw new Error("Failed to post data");
   }
 
-  const data = (await res.json()) as unknown;
+  const data = (await res.json()) as VoteTechResponse;
+
+  return data;
+}
+
+export async function removeVote(
+  teamId: number,
+  teamTechId: number,
+  votedBy: string,
+): Promise<VoteTechResponse> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}techs/teams/${teamId}/techs/${teamTechId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ removedBy: votedBy }),
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to post data");
+  }
+
+  const data = (await res.json()) as VoteTechResponse;
 
   return data;
 }
