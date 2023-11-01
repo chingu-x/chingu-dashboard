@@ -63,8 +63,8 @@ export default function EditHoursModal() {
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     try {
       await updateHours({
-        userId: process.env.NEXT_PUBLIC_CURRENT_USER_ID!,
-        teamId: +process.env.NEXT_PUBLIC_TEAM_ID!,
+        userId: "6eafeed5-a440-4b67-8016-0bfde5c4387c",
+        teamId: 5,
         newAvgHours: +data.avgHours,
       });
       handleClose();
