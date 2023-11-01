@@ -1,18 +1,12 @@
-import Preloader from "./components/Preloader";
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationClientComponentWrapper from "./components/IdeationClientComponentWrapper";
 import Banner from "@/components/banner/Banner";
-import { fetchProjectIdeas } from "@/api/ideationService";
 
 // const USERID = "e7a6262d-c596-44ac-9a50-373bcff1e155";
-const TEAMID = 1;
 
-async function IdeationPage() {
-  const data = await fetchProjectIdeas({ teamId: TEAMID });
-
+function IdeationPage() {
   return (
     <>
-      <Preloader data={data} />
       <Banner
         imageLight="/img/ideation_banner_light.png"
         imageDark="/img/ideation_banner_dark.png"
