@@ -1,28 +1,14 @@
-import { revalidatePath } from "next/cache";
 import Preloader from "./components/Preloader";
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationClientComponentWrapper from "./components/IdeationClientComponentWrapper";
-import {
-  IdeationData,
-  fetchIdeations,
-} from "@/store/features/ideation/ideationSlice";
-
 import Banner from "@/components/banner/Banner";
-import { store } from "@/store/store";
+import { fetchProjectIdeas } from "@/api/ideationService";
 
 // const USERID = "e7a6262d-c596-44ac-9a50-373bcff1e155";
 const TEAMID = 5;
 
 async function IdeationPage() {
-  revalidatePath("/ideation");
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams/${TEAMID}/ideations`,
-  );
-
-  const data = (await res.json()) as IdeationData[];
-
-  store.dispatch(fetchIdeations(data));
+  const data = await fetchProjectIdeas({ teamId: TEAMID });
 
   return (
     <>

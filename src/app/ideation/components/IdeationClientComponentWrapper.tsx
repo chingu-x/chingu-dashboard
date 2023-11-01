@@ -1,32 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import IdeationContainer from "./IdeationContainer";
-import { store } from "@/store/store";
-import { IdeationData } from "@/store/features/ideation/ideationSlice";
+import { useAppSelector } from "@/store/hooks";
 // import { ideation } from "./fixtures/ideation";
 
 function IdeationClientComponentWrapper() {
-  const [projectIdeas, setProjectIdeas] = useState<IdeationData[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  console.log(loading);
-
-  useEffect(() => {
-    setLoading(true);
-    const { projectIdeas } = store.getState().ideation;
-
-    setProjectIdeas(projectIdeas);
-
-    setLoading(false);
-    
-  }, []);
+  const { projectIdeas } = useAppSelector((state) => state.ideation);
   
-
   return (
     <>
-      {loading === true && <div>Loading...</div>}
-      {loading === false && projectIdeas.map((projectIdea) => (
+      {projectIdeas.map((projectIdea) => (
         <IdeationContainer
           key={projectIdea.id}
           title={projectIdea.title}
