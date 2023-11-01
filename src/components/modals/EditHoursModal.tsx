@@ -13,8 +13,9 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { useAppDispatch, useDirectory, useModal } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
-import { updateHours } from "@/api/directoryService";
 import { setHoursPerSprint } from "@/store/features/directory/directorySlice";
+import { onOpen } from "@/store/features/toast/toastSlice";
+import { updateHours } from "@/api/directoryService";
 
 const validationSchema = z.object({
   avgHours: validateTextInput({
@@ -66,11 +67,12 @@ export default function EditHoursModal() {
         teamId: 5,
         newAvgHours: +data.avgHours,
       });
-      handleClose();
       dispatch(setHoursPerSprint({ hoursPerSprint: +data.avgHours }));
+      handleClose();
+      dispatch(onOpen({ context: "success", message: "Sprint hours updated" }));
     } catch (error) {
-      // Temp: log error, later the toast message gonna be added
-      console.log(error);
+      handleClose();
+      dispatch(onOpen({ context: "error", message: "An error has occurred" }));
     }
   };
 
