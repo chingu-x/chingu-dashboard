@@ -18,7 +18,7 @@ export const directorySlice = createSlice({
   reducers: {
     setHoursPerSprint: (
       state,
-      action: PayloadAction<DirectoryActionPayload>
+      action: PayloadAction<DirectoryActionPayload>,
     ) => {
       state.hoursPerSprint = action.payload.hoursPerSprint;
     },

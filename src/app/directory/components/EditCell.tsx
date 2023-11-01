@@ -34,7 +34,7 @@ export default function EditCell({ teamMember, currentUser }: EditCellProps) {
       onOpen({
         type: "editHours",
         isEditing: hasAvgHours,
-      })
+      }),
     );
   }
 

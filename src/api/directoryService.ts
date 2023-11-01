@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 export async function getMembers(teamId: number) {
   revalidatePath("/directory");
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams/${teamId}/members`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams/${teamId}/members`,
   );
 
   if (!res.ok) {
@@ -32,7 +32,7 @@ export async function updateHours({
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    }
+    },
   );
 
   if (!res.ok) {
