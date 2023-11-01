@@ -1,9 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import {
-  IdeationData,
-} from "@/store/features/ideation/ideationSlice";
+import { IdeationData } from "@/store/features/ideation/ideationSlice";
 
 interface AddIdeationVoteProps {
   teamId: number;
@@ -23,8 +21,8 @@ export interface IdeationVoteResponse {
   votedBy: {
     member: {
       avatar: string;
-    }
-  }
+    };
+  };
 }
 
 export async function fetchProjectIdeas({ teamId }: FetchIdeationsProps) {

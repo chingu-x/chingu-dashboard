@@ -32,17 +32,24 @@ export interface IdeationData {
 }
 
 interface IdeationState {
+  loading: boolean;
   projectIdeas: IdeationData[];
+  errors: object | null;
 }
 
 const initialState: IdeationState = {
+  loading: false,
   projectIdeas: [],
+  errors: null,
 };
 
 export const ideationSlice = createSlice({
   name: "ideation",
   initialState,
   reducers: {
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
     fetchIdeations: (state, action: PayloadAction<IdeationData[]>) => {
       state.projectIdeas = action.payload;
     },
@@ -56,6 +63,6 @@ export const ideationSlice = createSlice({
   },
 });
 
-export const { fetchIdeations, addVote } = ideationSlice.actions;
+export const { fetchIdeations, addVote, setLoading } = ideationSlice.actions;
 
 export default ideationSlice.reducer;
