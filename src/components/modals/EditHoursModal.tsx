@@ -18,6 +18,7 @@ import { updateHours } from "@/api/routes";
 
 const validationSchema = z.object({
   avgHours: validateTextInput({
+    inputName: "Average Hour/Sprint",
     required: true,
     isHours: true,
   }),

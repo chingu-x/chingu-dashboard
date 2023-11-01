@@ -18,19 +18,23 @@ import { onClose } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   title: validateTextInput({
+    inputName: "Title",
     required: true,
     minLen: 10,
     maxLen: 20,
   }),
   projectIdea: validateTextInput({
+    inputName: "Project idea",
     required: true,
     maxLen: 50,
   }),
   visionStatement: validateTextInput({
+    inputName: "Vision statement",
     required: true,
     maxLen: 50,
   }),
   email: validateTextInput({
+    inputName: "Email",
     required: true,
     isEmail: true,
   }),

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 interface ValidateTextInput {
+  inputName: string;
   required?: boolean;
   minLen?: number;
   maxLen?: number;
@@ -9,6 +10,7 @@ interface ValidateTextInput {
 }
 
 export function validateTextInput({
+  inputName,
   required,
   minLen,
   maxLen,
@@ -19,7 +21,7 @@ export function validateTextInput({
   rules = z.string();
   // Required
   if (required || (minLen && minLen === 1)) {
-    rules = rules.min(1, { message: "Required" });
+    rules = rules.min(1, { message: `${inputName} is required.` });
   }
   // Must be email
   if (isEmail) {
