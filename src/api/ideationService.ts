@@ -1,11 +1,16 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
+import { IdeationData, ProjectIdeaVotes, fetchIdeations } from "@/store/features/ideation/ideationSlice";
+import { store } from "@/store/store";
 
 interface AddIdeationVoteProps {
   teamId: number;
   ideationId: number;
+}
+
+interface FetchIdeationsProps {
+  teamId: number;
 }
 
 // export interface IdeationVoteResponse {
@@ -15,6 +20,20 @@ interface AddIdeationVoteProps {
 //   createdAt: Date;
 //   updatedAt: Date;
 // }
+
+export async function fetchProjectIdeas({ teamId }: FetchIdeationsProps) {
+  revalidatePath("/ideation");
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams/${teamId}/ideations`,
+  );
+
+  const data = (await res.json()) as IdeationData[];
+
+  store.dispatch(fetchIdeations(data));
+
+  return data;
+}
 
 export async function addIdeationVote({
   teamId,
