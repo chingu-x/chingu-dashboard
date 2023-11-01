@@ -1,12 +1,13 @@
 "use client";
 
+import { useEffect } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import type { TeamMember } from "./fixtures/MyTeam";
 import Button from "@/components/Button";
 
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useDirectory } from "@/store/hooks";
 import { onOpen } from "@/store/features/modal/modalSlice";
-import { getHoursPerSprint } from "@/store/features/directory/directorySlice";
+import { setHoursPerSprint } from "@/store/features/directory/directorySlice";
 
 interface EditCellProps {
   teamMember: TeamMember;
@@ -18,14 +19,17 @@ interface EditCellProps {
 
 export default function EditCell({ teamMember, currentUser }: EditCellProps) {
   const dispatch = useAppDispatch();
+  const { hoursPerSprint } = useDirectory();
   const hasAvgHours =
     teamMember.hrPerSprint !== 0 && teamMember.hrPerSprint !== null;
 
-  function handleClick() {
+  useEffect(() => {
     if (hasAvgHours) {
-      dispatch(getHoursPerSprint({ hoursPerSprint: teamMember.hrPerSprint }));
+      dispatch(setHoursPerSprint({ hoursPerSprint: teamMember.hrPerSprint }));
     }
+  }, []);
 
+  function handleClick() {
     dispatch(
       onOpen({
         type: "editHours",
@@ -41,7 +45,7 @@ export default function EditCell({ teamMember, currentUser }: EditCellProps) {
         title="edit"
         className="flex items-center justify-between h-[35px] min-w-[198px] rounded-md px-4 bg-base-100 hover:cursor-pointer hover:bg-secondary transition"
       >
-        {hasAvgHours ? teamMember.hrPerSprint : "Add hours"}
+        {hasAvgHours ? hoursPerSprint : "Add hours"}
         <div className="">
           <PencilSquareIcon className="w-4 h-4 text-base-300" />
         </div>

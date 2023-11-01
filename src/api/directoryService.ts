@@ -1,4 +1,9 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+
 export async function getMembers(teamId: number) {
+  revalidatePath("/directory");
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams/${teamId}/members`
   );
@@ -33,6 +38,8 @@ export async function updateHours({
   if (!res.ok) {
     throw new Error("Failed to update data");
   }
+
+  revalidatePath("/directory");
 
   return res.json();
 }

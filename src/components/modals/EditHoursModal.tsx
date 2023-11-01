@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -15,6 +14,7 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 import { useAppDispatch, useDirectory, useModal } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
 import { updateHours } from "@/api/directoryService";
+import { setHoursPerSprint } from "@/store/features/directory/directorySlice";
 
 const validationSchema = z.object({
   avgHours: validateTextInput({
@@ -27,7 +27,6 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function EditHoursModal() {
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const { isOpen, type, isEditing } = useModal();
@@ -68,7 +67,7 @@ export default function EditHoursModal() {
         newAvgHours: +data.avgHours,
       });
       handleClose();
-      router.refresh();
+      dispatch(setHoursPerSprint({ hoursPerSprint: +data.avgHours }));
     } catch (error) {
       // Temp: log error, later the toast message gonna be added
       console.log(error);
