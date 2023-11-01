@@ -10,7 +10,7 @@ import {
 } from "@/store/features/ideation/ideationSlice";
 import { addIdeationVote } from "@/api/ideationService";
 
-const USERID = "e7a6262d-c596-44ac-9a50-373bcff1e155";
+const USERID = "1bbd9ddb-f4b3-4e88-b2d8-fec82f653feb";
 
 interface VoteCardProps {
   users: ProjectIdeaVotes[];
@@ -22,7 +22,7 @@ function VoteCard({ users, className }: VoteCardProps) {
   const dispatch = useDispatch();
 
   async function addProjectVote() {
-    const data = await addIdeationVote({ teamId: 5, ideationId: 17 });
+    const data = await addIdeationVote({ teamId: 1, ideationId: 1 });
 
     dispatch(addVote(data));
   }
