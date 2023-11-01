@@ -2,41 +2,36 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type ModalType = "example1" | "example2" | "editHours";
 
-interface ModalData {
-  teamId?: number;
-  userId?: string;
-  avgHours?: string;
-}
-
 interface ModalState {
   type: ModalType | null;
-  data: ModalData;
   isOpen: boolean;
+  isEditing?: boolean;
+}
+
+interface ModalActionPayload {
+  type: ModalType;
+  isEditing?: boolean;
 }
 
 const initialState: ModalState = {
   type: null,
-  data: {},
   isOpen: false,
+  isEditing: false,
 };
 
 export const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    onOpen: (
-      state,
-      action: PayloadAction<{ type: ModalType; data?: ModalData }>
-    ) => {
+    onOpen: (state, action: PayloadAction<ModalActionPayload>) => {
       state.isOpen = true;
       state.type = action.payload.type;
-
-      if (action.payload.data) state.data = action.payload.data;
+      state.isEditing = action.payload.isEditing;
     },
     onClose: (state) => {
       state.isOpen = false;
       state.type = null;
-      state.data = {};
+      state.isEditing = false;
     },
   },
 });

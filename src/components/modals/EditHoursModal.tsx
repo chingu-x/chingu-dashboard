@@ -12,9 +12,9 @@ import TextInput from "@/components/inputs/TextInput";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useDirectory, useModal } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
-import { updateHours } from "@/api/routes";
+import { updateHours } from "@/api/directoryService";
 
 const validationSchema = z.object({
   avgHours: validateTextInput({
@@ -29,46 +29,49 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 export default function EditHoursModal() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { isOpen, type, data } = useAppSelector((state) => state.modal);
+
+  const { isOpen, type, isEditing } = useModal();
+  const { hoursPerSprint } = useDirectory();
+  // const { userId, teamId } = useCurrentUser();
+  // Also will get userId and teamId from userSlice when it's ready
+  // for now using process.env.NEXT_PUBLIC_CURRENT_USER_ID and +process.env.NEXT_PUBLIC_TEAM_ID
 
   const isModalOpen = isOpen && type === "editHours";
-  const { userId, teamId, avgHours } = data;
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting: isLoading },
+    formState: { errors, isSubmitting, isDirty, isValid },
     reset,
-    setValue,
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
   useEffect(() => {
-    if (avgHours && avgHours !== "") {
-      setValue("avgHours", avgHours);
+    // populating data if editing
+    if (isEditing && hoursPerSprint) {
+      reset({ avgHours: hoursPerSprint.toString() });
     }
-  }, [avgHours]);
+  }, [reset, isEditing, hoursPerSprint]);
 
   const handleClose = useCallback(() => {
-    reset();
+    reset({ avgHours: "" });
     dispatch(onClose());
-  }, [dispatch]);
+  }, [dispatch, reset]);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    if (userId && teamId) {
-      try {
-        await updateHours({
-          userId: userId,
-          teamId: teamId,
-          newAvgHours: +data.avgHours,
-        });
-        handleClose();
-        router.refresh();
-      } catch (error) {
-        // Temp: log error, later the toast message gonna be added
-        console.log(error);
-      }
+    try {
+      await updateHours({
+        userId: process.env.NEXT_PUBLIC_CURRENT_USER_ID!,
+        teamId: +process.env.NEXT_PUBLIC_TEAM_ID!,
+        newAvgHours: +data.avgHours,
+      });
+      handleClose();
+      router.refresh();
+    } catch (error) {
+      // Temp: log error, later the toast message gonna be added
+      console.log(error);
     }
   };
 
@@ -91,7 +94,7 @@ export default function EditHoursModal() {
             placeholder="Add your hours, we typically recommend 10-12 hours per week"
             register={{ ...register("avgHours") }}
             errors={errors}
-            disabled={isLoading}
+            disabled={isSubmitting}
             suggestion="Please input hours only"
           />
         </div>
@@ -100,7 +103,7 @@ export default function EditHoursModal() {
           <Button
             type="submit"
             title="submit"
-            disabled={isLoading}
+            disabled={!isDirty || !isValid || isSubmitting}
             customClassName="flex-1 text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus disabled:bg-primary disabled:hover:bg-primary-focus disabled:text-neutral-focus disabled:cursor-not-allowed disabled:hover:cursor-not-allowed"
           >
             Submit

@@ -6,6 +6,7 @@ import Button from "@/components/Button";
 
 import { useAppDispatch } from "@/store/hooks";
 import { onOpen } from "@/store/features/modal/modalSlice";
+import { getHoursPerSprint } from "@/store/features/directory/directorySlice";
 
 interface EditCellProps {
   teamMember: TeamMember;
@@ -21,14 +22,14 @@ export default function EditCell({ teamMember, currentUser }: EditCellProps) {
     teamMember.hrPerSprint !== 0 && teamMember.hrPerSprint !== null;
 
   function handleClick() {
+    if (hasAvgHours) {
+      dispatch(getHoursPerSprint({ hoursPerSprint: teamMember.hrPerSprint }));
+    }
+
     dispatch(
       onOpen({
         type: "editHours",
-        data: {
-          userId: currentUser.id,
-          teamId: currentUser.teamId,
-          avgHours: hasAvgHours ? teamMember.hrPerSprint.toString() : "",
-        },
+        isEditing: hasAvgHours,
       })
     );
   }
