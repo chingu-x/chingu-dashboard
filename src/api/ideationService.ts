@@ -1,8 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { IdeationData, ProjectIdeaVotes, fetchIdeations } from "@/store/features/ideation/ideationSlice";
-import { store } from "@/store/store";
+import {
+  IdeationData,
+} from "@/store/features/ideation/ideationSlice";
 
 interface AddIdeationVoteProps {
   teamId: number;
@@ -13,13 +14,18 @@ interface FetchIdeationsProps {
   teamId: number;
 }
 
-// export interface IdeationVoteResponse {
-//   id: number;
-//   voyageTeamMemberId: number;
-//   projectIdeaId: number;
-//   createdAt: Date;
-//   updatedAt: Date;
-// }
+export interface IdeationVoteResponse {
+  id: number;
+  voyageTeamMemberId: number;
+  projectIdeaId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  votedBy: {
+    member: {
+      avatar: string;
+    }
+  }
+}
 
 export async function fetchProjectIdeas({ teamId }: FetchIdeationsProps) {
   revalidatePath("/ideation");
@@ -29,8 +35,6 @@ export async function fetchProjectIdeas({ teamId }: FetchIdeationsProps) {
   );
 
   const data = (await res.json()) as IdeationData[];
-
-  store.dispatch(fetchIdeations(data));
 
   return data;
 }
@@ -49,14 +53,14 @@ export async function addIdeationVote({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: "e7a6262d-c596-44ac-9a50-373bcff1e155",
+          userId: "1bbd9ddb-f4b3-4e88-b2d8-fec82f653feb",
         }),
       },
     );
 
     revalidatePath("/ideation");
 
-    return (await res.json()) as ProjectIdeaVotes;
+    return (await res.json()) as IdeationVoteResponse;
   } catch (error) {
     let message;
 

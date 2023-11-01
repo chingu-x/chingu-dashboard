@@ -6,7 +6,7 @@ import { useAppSelector } from "@/store/hooks";
 
 function IdeationClientComponentWrapper() {
   const { projectIdeas } = useAppSelector((state) => state.ideation);
-  
+
   return (
     <>
       {projectIdeas.map((projectIdea) => (

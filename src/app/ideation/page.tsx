@@ -5,7 +5,7 @@ import Banner from "@/components/banner/Banner";
 import { fetchProjectIdeas } from "@/api/ideationService";
 
 // const USERID = "e7a6262d-c596-44ac-9a50-373bcff1e155";
-const TEAMID = 5;
+const TEAMID = 1;
 
 async function IdeationPage() {
   const data = await fetchProjectIdeas({ teamId: TEAMID });

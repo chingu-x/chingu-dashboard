@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { IdeationVoteResponse } from "@/api/ideationService";
 
 export interface VoyageMember {
   id: string;
@@ -45,10 +46,10 @@ export const ideationSlice = createSlice({
     fetchIdeations: (state, action: PayloadAction<IdeationData[]>) => {
       state.projectIdeas = action.payload;
     },
-    addVote: (state, action: PayloadAction<ProjectIdeaVotes>) => {
+    addVote: (state, action: PayloadAction<IdeationVoteResponse>) => {
       state.projectIdeas.map((projectIdea) => {
         if (projectIdea.id === action.payload.projectIdeaId) {
-          projectIdea.projectIdeaVotes.push(action.payload);
+          projectIdea.projectIdeaVotes.push(action.payload as ProjectIdeaVotes);
         }
       });
     },
