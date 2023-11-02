@@ -24,7 +24,7 @@ export default function EditCell({ teamMember, currentUser }: EditCellProps) {
     teamMember.hrPerSprint !== 0 && teamMember.hrPerSprint !== null;
 
   useEffect(() => {
-    if (hasAvgHours) {
+    if (teamMember.member.id === currentUser.id && hasAvgHours) {
       dispatch(setHoursPerSprint({ hoursPerSprint: teamMember.hrPerSprint }));
     }
   }, []);
@@ -34,7 +34,7 @@ export default function EditCell({ teamMember, currentUser }: EditCellProps) {
       onOpen({
         type: "editHours",
         isEditing: hasAvgHours,
-      }),
+      })
     );
   }
 
