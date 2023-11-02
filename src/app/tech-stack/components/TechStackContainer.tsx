@@ -2,8 +2,8 @@ import TechStackCard from "./TechStackCard";
 import { getTechStack } from "@/api/routes";
 
 export const currentUser = {
-  id: "e7a6262d-c596-44ac-9a50-373bcff1e155",
-  teamId: 5,
+  id: "35b33c68-4810-4193-8311-4ab330bd669e",
+  teamId: 11,
 };
 
 export default async function TechStackContainer() {
