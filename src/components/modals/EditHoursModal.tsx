@@ -34,7 +34,10 @@ export default function EditHoursModal() {
   const { hoursPerSprint } = useDirectory();
   // const { userId, teamId } = useCurrentUser();
   // Also will get userId and teamId from userSlice when it's ready
-  // for now using process.env.NEXT_PUBLIC_CURRENT_USER_ID and +process.env.NEXT_PUBLIC_TEAM_ID
+  const currentUser = {
+    id: "471abdd7-3f3a-43c4-8a91-e479e7aaeb10",
+    teamId: 11,
+  };
 
   const isModalOpen = isOpen && type === "editHours";
 
@@ -63,8 +66,8 @@ export default function EditHoursModal() {
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     try {
       await updateHours({
-        userId: "6eafeed5-a440-4b67-8016-0bfde5c4387c",
-        teamId: 5,
+        userId: currentUser.id,
+        teamId: currentUser.teamId,
         newAvgHours: +data.avgHours,
       });
       dispatch(setHoursPerSprint({ hoursPerSprint: +data.avgHours }));

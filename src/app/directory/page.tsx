@@ -6,8 +6,8 @@ import Banner from "@/components/banner/Banner";
 async function DirectoryPage() {
   // Get current user logic. For now assume we get current user's object which has user's id and team's id back from some api call, or cookie or etc
   const currentUser = {
-    id: "6eafeed5-a440-4b67-8016-0bfde5c4387c",
-    teamId: 5,
+    id: "471abdd7-3f3a-43c4-8a91-e479e7aaeb10",
+    teamId: 11,
   };
 
   // Get data on the server
