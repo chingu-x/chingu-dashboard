@@ -2,7 +2,6 @@
 
 import { useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -18,7 +17,7 @@ import { onOpen } from "@/store/features/toast/toastSlice";
 
 import { currentUser } from "@/app/tech-stack/components/TechStackContainer";
 import { getPostBody } from "@/app/tech-stack/components/helpers";
-import { postNewTech } from "@/api/routes";
+import { postNewTech } from "@/api/techStackService/techStackService";
 
 const validationSchema = z.object({
   suggestion: validateTextInput({
@@ -31,7 +30,6 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function TechStackModal() {
-  const router = useRouter();
   const { isOpen, type } = useAppSelector((state) => state.modal);
   const { currentStackId } = useAppSelector((state) => state.techStack);
   const dispatch = useAppDispatch();
@@ -54,10 +52,11 @@ export default function TechStackModal() {
         await postNewTech(currentUser.teamId, body);
         handleClose();
         dispatch(onOpen({ context: "success", message: "Tech stack added" }));
-        router.refresh();
       } catch (error) {
         handleClose();
-        dispatch(onOpen({ context: "error", message: "An error has occurred" }));
+        dispatch(
+          onOpen({ context: "error", message: "An error has occurred" }),
+        );
       }
     }
   };

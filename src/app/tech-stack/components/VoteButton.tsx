@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { currentUser } from "./TechStackContainer";
 import { TeamTechStackItemVotes } from "./types/types";
 import Button from "@/components/Button";
-import { voteExistingTech, removeVote } from "@/api/routes";
+import {
+  removeVote,
+  voteExistingTech,
+} from "@/api/techStackService/techStackService";
 
 interface VoteButtonProps {
   title: string;
@@ -15,7 +17,6 @@ interface VoteButtonProps {
 
 export default function VoteButton({ title, id, votedBy }: VoteButtonProps) {
   const [voted, setVoted] = useState<boolean>(false);
-  const router = useRouter();
 
   useEffect(() => {
     // Check if currentUser.id is in the votedBy array
@@ -31,7 +32,6 @@ export default function VoteButton({ title, id, votedBy }: VoteButtonProps) {
       try {
         await voteExistingTech(currentUser.teamId, id, currentUser.id);
         setVoted(true);
-        router.refresh();
       } catch (error) {
         console.log(error);
       }
@@ -39,7 +39,6 @@ export default function VoteButton({ title, id, votedBy }: VoteButtonProps) {
       try {
         await removeVote(currentUser.teamId, id, currentUser.id);
         setVoted(false);
-        router.refresh();
       } catch (error) {
         console.log(error);
       }

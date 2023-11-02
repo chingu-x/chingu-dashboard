@@ -1,3 +1,6 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
 import type {
   TechsResponse,
   PostTechBody,
@@ -6,6 +9,7 @@ import type {
 } from "@/app/tech-stack/components/types/types";
 
 export async function getTechStack(teamId: number): Promise<TechsResponse> {
+  revalidatePath("/directory");
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}techs/teams/${teamId}`,
   );
@@ -38,6 +42,7 @@ export async function postNewTech(
     throw new Error("Failed to post data");
   }
 
+  revalidatePath("/directory");
   const data = (await res.json()) as PostTechResponse;
 
   return data;
@@ -63,6 +68,7 @@ export async function voteExistingTech(
     throw new Error("Failed to post data");
   }
 
+  revalidatePath("/directory");
   const data = (await res.json()) as VoteTechResponse;
 
   return data;
@@ -88,6 +94,7 @@ export async function removeVote(
     throw new Error("Failed to post data");
   }
 
+  revalidatePath("/directory");
   const data = (await res.json()) as VoteTechResponse;
 
   return data;

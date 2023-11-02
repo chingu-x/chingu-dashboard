@@ -1,5 +1,5 @@
 import TechStackCard from "./TechStackCard";
-import { getTechStack } from "@/api/routes";
+import { getTechStack } from "@/api/techStackService/techStackService";
 
 export const currentUser = {
   id: "35b33c68-4810-4193-8311-4ab330bd669e",
