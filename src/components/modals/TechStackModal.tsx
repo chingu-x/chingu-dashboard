@@ -14,6 +14,7 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
+import { onOpen } from "@/store/features/toast/toastSlice";
 
 import { currentUser } from "@/app/tech-stack/components/TechStackContainer";
 import { getPostBody } from "@/app/tech-stack/components/helpers";
@@ -52,9 +53,11 @@ export default function TechStackModal() {
       try {
         await postNewTech(currentUser.teamId, body);
         handleClose();
+        dispatch(onOpen({ context: "success", message: "Tech stack added" }));
         router.refresh();
       } catch (error) {
-        console.log(error);
+        handleClose();
+        dispatch(onOpen({ context: "error", message: "An error has occurred" }));
       }
     }
   };
