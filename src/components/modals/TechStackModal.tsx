@@ -81,7 +81,7 @@ export default function TechStackModal() {
   const handleClose = useCallback(() => {
     reset();
     dispatch(onClose());
-  }, [dispatch]);
+  }, [dispatch, reset]);
 
   return (
     <Modal isOpen={isModalOpen} title="Add Tech Stack" onClose={handleClose}>
