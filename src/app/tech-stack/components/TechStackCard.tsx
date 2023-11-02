@@ -39,7 +39,7 @@ export default function TechStackCard({ title, data, id }: TechStackCardProps) {
           ))}
         </ul>
       </div>
-      <TechStackButton title={title} id={id} />
+      <TechStackButton title={title} id={id} data={data} />
     </div>
   );
 }

@@ -31,7 +31,7 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function TechStackModal() {
   const { isOpen, type } = useAppSelector((state) => state.modal);
-  const { currentStackId } = useAppSelector((state) => state.techStack);
+  const { currentStackId, techNames } = useAppSelector((state) => state.techStack);
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "TechStackModal";
@@ -46,6 +46,12 @@ export default function TechStackModal() {
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = async ({ suggestion }) => {
+
+    if (techNames.some((techName) => techName.toLowerCase() === suggestion.toLowerCase())) {
+      dispatch(onOpen({ context: "warning", message: "Duplicate item, please try another suggestion" }));
+      return;
+    }
+
     if (suggestion && currentStackId) {
       const body = getPostBody(currentUser.id, suggestion, currentStackId);
       try {

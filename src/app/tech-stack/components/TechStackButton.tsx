@@ -1,22 +1,28 @@
 "use client";
 
+import { useMemo } from "react";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { TeamTechStackItems } from "./types/types";
 import Button from "@/components/Button";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpen } from "@/store/features/modal/modalSlice";
-import { setCurrentStackId } from "@/store/features/techStack/techStackSlice";
+import { setCurrentStackId, setTechNames } from "@/store/features/techStack/techStackSlice";
 
 interface TechStackButtonProps {
   title: string;
   id: number;
+  data: TeamTechStackItems[];
 }
 
-export default function TechStackButton({ title, id }: TechStackButtonProps) {
+export default function TechStackButton({ title, id, data }: TechStackButtonProps) {
   const dispatch = useAppDispatch();
+
+  const techNamesArray = useMemo(() => data.map((item) => item.name), [data]);
 
   const onClick = () => {
     dispatch(onOpen({ type: "TechStackModal" }));
     dispatch(setCurrentStackId(id));
+    dispatch(setTechNames(techNamesArray));
   };
 
   return (
