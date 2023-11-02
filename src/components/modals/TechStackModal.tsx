@@ -17,7 +17,10 @@ import { onClose } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
 
 import { currentUser } from "@/app/tech-stack/components/TechStackContainer";
-import { getPostBody, checkIfDuplicated } from "@/app/tech-stack/components/helpers";
+import {
+  getPostBody,
+  checkIfDuplicated,
+} from "@/app/tech-stack/components/helpers";
 import { postNewTech } from "@/api/techStackService/techStackService";
 
 const validationSchema = z.object({

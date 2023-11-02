@@ -6,7 +6,7 @@ export const getPostBody = (
   techCategoryId: number,
 ): PostTechBody => ({ votedBy, techName, techCategoryId });
 
-
-export const checkIfDuplicated = (techNames: string[], suggestion: string) => techNames.some(
-  (techName) => techName.toLowerCase() === suggestion.toLowerCase(),
-);
+export const checkIfDuplicated = (techNames: string[], suggestion: string) =>
+  techNames.some(
+    (techName) => techName.toLowerCase() === suggestion.toLowerCase(),
+  );
