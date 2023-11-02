@@ -48,8 +48,8 @@ export default function VoteButton({ title, id, votedBy }: VoteButtonProps) {
   return (
     <Button
       title={title}
-      customClassName={`capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 border-transparent mr-4 rounded-[32px] hover:bg-primary hover:border-transparent gap-x-0 ${
-        voted ? "bg-primary-focus" : "bg-primary-content"
+      customClassName={`capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 border-transparent mr-4 rounded-[32px] hover:bg-primary hover:border-transparent hover:text-white gap-x-0 ${
+        voted ? "bg-primary-focus text-white" : "bg-primary-content"
       }`}
       onClick={onClick}
     >

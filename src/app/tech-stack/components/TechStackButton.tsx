@@ -6,7 +6,10 @@ import { TeamTechStackItems } from "./types/types";
 import Button from "@/components/Button";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpen } from "@/store/features/modal/modalSlice";
-import { setCurrentStackId, setTechNames } from "@/store/features/techStack/techStackSlice";
+import {
+  setCurrentStackId,
+  setTechNames,
+} from "@/store/features/techStack/techStackSlice";
 
 interface TechStackButtonProps {
   title: string;
@@ -14,7 +17,11 @@ interface TechStackButtonProps {
   data: TeamTechStackItems[];
 }
 
-export default function TechStackButton({ title, id, data }: TechStackButtonProps) {
+export default function TechStackButton({
+  title,
+  id,
+  data,
+}: TechStackButtonProps) {
   const dispatch = useAppDispatch();
 
   const techNamesArray = useMemo(() => data.map((item) => item.name), [data]);

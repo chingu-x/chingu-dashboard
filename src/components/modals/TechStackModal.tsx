@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button";
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
+import Alert from "@/components/Alert";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 
@@ -16,7 +17,7 @@ import { onClose } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
 
 import { currentUser } from "@/app/tech-stack/components/TechStackContainer";
-import { getPostBody } from "@/app/tech-stack/components/helpers";
+import { getPostBody, checkIfDuplicated } from "@/app/tech-stack/components/helpers";
 import { postNewTech } from "@/api/techStackService/techStackService";
 
 const validationSchema = z.object({
@@ -30,11 +31,19 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function TechStackModal() {
+  const [isDuplicated, setIsDuplicated] = useState<boolean>(false);
+
   const { isOpen, type } = useAppSelector((state) => state.modal);
-  const { currentStackId, techNames } = useAppSelector((state) => state.techStack);
+  const { currentStackId, techNames } = useAppSelector(
+    (state) => state.techStack,
+  );
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "TechStackModal";
+
+  useEffect(() => {
+    setIsDuplicated(false);
+  }, [isModalOpen]);
 
   const {
     register,
@@ -46,9 +55,8 @@ export default function TechStackModal() {
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = async ({ suggestion }) => {
-
-    if (techNames.some((techName) => techName.toLowerCase() === suggestion.toLowerCase())) {
-      dispatch(onOpen({ context: "warning", message: "Duplicate item, please try another suggestion" }));
+    if (checkIfDuplicated(techNames, suggestion)) {
+      setIsDuplicated(true);
       return;
     }
 
@@ -81,6 +89,12 @@ export default function TechStackModal() {
       >
         {/* BODY WITHOUT VERTICAL SCROLL*/}
         <div className="flex flex-col gap-4">
+          {isDuplicated ? (
+            <Alert
+              context="duplicate"
+              message={"Duplicate item, please try another suggestion"}
+            />
+          ) : null}
           <TextInput
             id="suggestion"
             placeholder="What is your tech stack suggestion?"

@@ -16,12 +16,14 @@ function Alert({ context, message }: AlertProps) {
     success: <CheckCircleIcon />,
     error: <ExclamationTriangleIcon />,
     warning: <InformationCircleIcon />,
+    duplicate: <InformationCircleIcon />,
   };
 
   const customStyles = {
     success: "bg-success-content border-success",
     error: "bg-error-content border-error",
     warning: "bg-info-content border-info",
+    duplicate: "bg-warning-content border-warning",
   };
 
   return (
