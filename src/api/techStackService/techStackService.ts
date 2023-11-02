@@ -11,7 +11,7 @@ import type {
 export async function getTechStack(teamId: number): Promise<TechsResponse> {
   revalidatePath("/directory");
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}techs/teams/${teamId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/techs/teams/${teamId}`,
   );
 
   if (!res.ok) {
@@ -28,7 +28,7 @@ export async function postNewTech(
   body: PostTechBody,
 ): Promise<PostTechResponse> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}techs/teams/${teamId}/techs`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/techs/teams/${teamId}/techs`,
     {
       method: "POST",
       headers: {
@@ -54,7 +54,7 @@ export async function voteExistingTech(
   votedBy: string,
 ): Promise<VoteTechResponse> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}techs/teams/${teamId}/techs/${teamTechId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/techs/teams/${teamId}/techs/${teamTechId}`,
     {
       method: "POST",
       headers: {
@@ -80,7 +80,7 @@ export async function removeVote(
   votedBy: string,
 ): Promise<VoteTechResponse> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}techs/teams/${teamId}/techs/${teamTechId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/techs/teams/${teamId}/techs/${teamTechId}`,
     {
       method: "DELETE",
       headers: {
