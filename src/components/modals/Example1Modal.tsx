@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TrashIcon } from "@heroicons/react/20/solid";
 
@@ -15,6 +16,7 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
+import { onOpen } from "@/store/features/toast/toastSlice";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -45,6 +47,7 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function Example1Modal() {
   const { isOpen, type } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const isModalOpen = isOpen && type === "example1";
 
@@ -57,7 +60,17 @@ export default function Example1Modal() {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+    console.log(data);
+    dispatch(onClose());
+    router.refresh();
+    dispatch(
+      onOpen({
+        context: "success",
+        message: "Your information has been updated",
+      }),
+    );
+  };
 
   const handleClose = useCallback(() => {
     reset();
