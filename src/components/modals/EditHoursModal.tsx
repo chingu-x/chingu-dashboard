@@ -35,8 +35,8 @@ export default function EditHoursModal() {
   // const { userId, teamId } = useCurrentUser();
   // Also will get userId and teamId from userSlice when it's ready
   const currentUser = {
-    id: "471abdd7-3f3a-43c4-8a91-e479e7aaeb10",
-    teamId: 11,
+    id: "25b7b76c-1567-4910-9d50-e78819daccf1",
+    teamId: 17,
   };
 
   const isModalOpen = isOpen && type === "editHours";
