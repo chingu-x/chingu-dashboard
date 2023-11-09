@@ -54,7 +54,7 @@ export default function Example1Modal() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting: isLoading },
     reset,
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
@@ -93,6 +93,7 @@ export default function Example1Modal() {
               placeholder="Enter you voyage project idea"
               register={{ ...register("title") }}
               errors={errors}
+              disabled={isLoading}
               maxLength={30}
             />
             <Textarea
@@ -101,6 +102,7 @@ export default function Example1Modal() {
               placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
               register={{ ...register("projectIdea") }}
               errors={errors}
+              disabled={isLoading}
               maxLength={50}
             />
             <Textarea
@@ -109,6 +111,7 @@ export default function Example1Modal() {
               placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
               register={{ ...register("visionStatement") }}
               errors={errors}
+              disabled={isLoading}
               maxLength={50}
             />
             <TextInput
@@ -116,6 +119,7 @@ export default function Example1Modal() {
               label="email"
               placeholder="Enter your email"
               register={register("email")}
+              disabled={isLoading}
               errors={errors}
             />
           </div>
@@ -125,13 +129,15 @@ export default function Example1Modal() {
           <Button
             type="submit"
             title="submit"
-            customClassName="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+            disabled={isLoading}
+            customClassName="flex-1 text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus disabled:bg-primary disabled:hover:bg-primary-focus disabled:text-neutral-focus disabled:cursor-not-allowed disabled:hover:cursor-not-allowed"
           >
             Submit
           </Button>
           <Button
             onClick={() => {}}
             title="delete"
+            disabled={isLoading}
             customClassName="text-base border-none font-semibold capitalize bg-error-content text-base-300 hover:bg-error"
           >
             <TrashIcon className="w-4 h-4" />

@@ -11,6 +11,9 @@ const nextConfig = {
                 hostname: "encrypted-tbn0.gstatic.com"
             }
         ]
+    },
+    experimental: {
+        serverActions: true,
     }
 };
 

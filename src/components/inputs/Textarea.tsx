@@ -11,6 +11,7 @@ interface TextareaProps {
   placeholder: string;
   register: UseFormRegisterReturn;
   errors: FieldErrors;
+  disabled: boolean;
   suggestion?: string;
   maxLength?: number;
 }
@@ -21,6 +22,7 @@ export default function Textarea({
   placeholder,
   register,
   errors,
+  disabled,
   suggestion,
   maxLength,
 }: TextareaProps) {
@@ -70,6 +72,7 @@ export default function Textarea({
       <textarea
         id={id}
         rows={1}
+        disabled={disabled}
         ref={(e) => {
           ref(e);
           textAreaRef.current = e;

@@ -1,29 +1,61 @@
+"use client";
+
+import { useEffect } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import type { TeamMember } from "./fixtures/MyTeam";
 import Button from "@/components/Button";
 
+import { useAppDispatch, useDirectory } from "@/store/hooks";
+import { onOpen } from "@/store/features/modal/modalSlice";
+import { setHoursPerSprint } from "@/store/features/directory/directorySlice";
+
 interface EditCellProps {
   teamMember: TeamMember;
-  currentUserId: string;
+  currentUser: {
+    id: string;
+    teamId: number;
+  };
 }
 
-export default function EditCell({ teamMember, currentUserId }: EditCellProps) {
-  return (
-    <div
-      className={`flex items-center justify-between h-[35px] rounded-md pl-4 ${
-        teamMember.id === currentUserId &&
-        "bg-base-100 hover:cursor-pointer hover:bg-secondary transition"
-      }`}
-    >
-      {teamMember.averageHour === 0 ? "Add hours" : teamMember.averageHour}
-      {teamMember.id === currentUserId && (
-        <Button
-          title="edit"
-          customClassName="pl-2 pr-1 h-full rounded-l-none rounded-r-md p-0 min-h-0 text-sm font-medium text-base-300 bg-transparent border-transparent hover:bg-transparent hover:border-transparent"
-        >
+export default function EditCell({ teamMember, currentUser }: EditCellProps) {
+  const dispatch = useAppDispatch();
+  const { hoursPerSprint } = useDirectory();
+  const hasAvgHours =
+    teamMember.hrPerSprint !== 0 && teamMember.hrPerSprint !== null;
+
+  useEffect(() => {
+    if (teamMember.member.id === currentUser.id && hasAvgHours) {
+      dispatch(setHoursPerSprint({ hoursPerSprint: teamMember.hrPerSprint }));
+    }
+  }, []);
+
+  function handleClick() {
+    dispatch(
+      onOpen({
+        type: "editHours",
+        isEditing: hasAvgHours,
+      })
+    );
+  }
+
+  if (teamMember.member.id === currentUser.id) {
+    return (
+      <Button
+        onClick={handleClick}
+        title="edit"
+        className="flex items-center justify-between h-[35px] min-w-[198px] rounded-md px-4 bg-base-100 hover:cursor-pointer hover:bg-secondary transition"
+      >
+        {hasAvgHours ? hoursPerSprint : "Add hours"}
+        <div className="">
           <PencilSquareIcon className="w-4 h-4 text-base-300" />
-        </Button>
-      )}
+        </div>
+      </Button>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-between h-[35px] rounded-md pl-4">
+      {teamMember.hrPerSprint === 0 ? "Add hours" : teamMember.hrPerSprint}
     </div>
   );
 }

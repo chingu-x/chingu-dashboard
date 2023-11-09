@@ -11,6 +11,7 @@ interface TextInputProps {
   placeholder: string;
   register: UseFormRegisterReturn;
   errors: FieldErrors;
+  disabled: boolean;
   suggestion?: string;
   maxLength?: number;
 }
@@ -21,6 +22,7 @@ export default function TextInput({
   placeholder,
   register,
   errors,
+  disabled,
   suggestion,
   maxLength,
 }: TextInputProps) {
@@ -49,6 +51,7 @@ export default function TextInput({
       <input
         id={id}
         type="text"
+        disabled={disabled}
         placeholder={placeholder}
         {...register}
         onChange={(e) => {
