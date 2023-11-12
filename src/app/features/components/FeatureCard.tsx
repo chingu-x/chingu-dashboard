@@ -1,5 +1,7 @@
 "use client";
 
+import { Droppable, DroppableProvided } from "react-beautiful-dnd";
+
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Feature } from "./fixtures/Features";
 import FeatureCardItem from "./FeatureCardItem";
@@ -32,15 +34,25 @@ export default function FeatureCard({
         )}
         {/* Non-empty card */}
         {/* Features container / drag and drop area */}
-        <ul className="flex flex-col gap-y-6">
-          {features.map((feature) => (
-            <FeatureCardItem
-              key={feature.id}
-              feature={feature}
-              currentUserId={currentUser.id}
-            />
-          ))}
-        </ul>
+        <Droppable droppableId={title} type="COLUMN" direction="vertical">
+          {(provided: DroppableProvided) => (
+            <ul
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className="flex flex-col min-h-[24px]"
+            >
+              {features.map((feature, index) => (
+                <FeatureCardItem
+                  key={feature.id}
+                  index={index}
+                  feature={feature}
+                  currentUserId={currentUser.id}
+                />
+              ))}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
         <div className="card-actions">
           {/* Similiar to tech stack button, need to be a shared component */}
           <Button
