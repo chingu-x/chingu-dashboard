@@ -39,7 +39,7 @@ export default function FeatureCard({
             <ul
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className="flex flex-col min-h-[24px]"
+              className="flex flex-col min-h-[100px]"
             >
               {features.map((feature, index) => (
                 <FeatureCardItem
