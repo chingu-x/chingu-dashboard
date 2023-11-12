@@ -1,0 +1,50 @@
+import Image from "next/image";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { Feature } from "./fixtures/Features";
+import Button from "@/components/Button";
+
+interface FeatureCardItemProps {
+  feature: Feature;
+  currentUserId: string;
+}
+
+export default function FeatureCardItem({
+  feature,
+  currentUserId,
+}: FeatureCardItemProps) {
+  const userFullName =
+    feature.addedBy.member.firstName + " " + feature.addedBy.member.lastName;
+
+  return (
+    <li className="bg-base-200 py-[14px] px-[22px] rounded-lg text-base-300">
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-y-1">
+          <h5 className="text-base font-semibold">{feature.description}</h5>
+          <span className="text-[10px] text-neutral">{`Added by ${
+            feature.addedBy.member.id === currentUserId ? "you" : userFullName
+          }`}</span>
+        </div>
+        {feature.addedBy.member.id === currentUserId ? (
+          // Edit Button
+          <Button
+            customClassName="p-0 m-0 bg-transparent hover:bg-transparent border-none gap-x-0"
+            title="feature menu"
+          >
+            <EllipsisVerticalIcon className="w-5 h-5 text-base-300" />
+          </Button>
+        ) : (
+          // Creator's avatar
+          <div className="overflow-hidden rounded-full">
+            <Image
+              width={24}
+              height={24}
+              style={{ objectFit: "cover" }}
+              src={feature.addedBy.member.avatar}
+              alt={userFullName}
+            />
+          </div>
+        )}
+      </div>
+    </li>
+  );
+}
