@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Draggable } from "react-beautiful-dnd";
+import { Draggable, DraggableProvided } from "react-beautiful-dnd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 import { Feature } from "./fixtures/Features";
@@ -24,7 +24,7 @@ export default function FeatureCardItem({
 
   return (
     <Draggable draggableId={feature.id.toString()} index={index}>
-      {(provided) => (
+      {(provided: DraggableProvided) => (
         <li
           ref={provided.innerRef}
           {...provided.draggableProps}

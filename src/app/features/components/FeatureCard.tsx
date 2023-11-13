@@ -1,6 +1,10 @@
 "use client";
 
-import { Droppable, DroppableProvided } from "react-beautiful-dnd";
+import {
+  Droppable,
+  DroppableProvided,
+  DroppableStateSnapshot,
+} from "react-beautiful-dnd";
 
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Feature } from "./fixtures/Features";
@@ -22,10 +26,12 @@ export default function FeatureCard({
   features,
   currentUser,
 }: FeatureCardProps) {
+  console.log(features);
+
   return (
-    <div className="w-full p-10 font-semibold card bg-secondary-content rounded-2xl text-base-300">
+    <div className="w-full px-8 py-10 font-semibold card bg-secondary-content rounded-2xl text-base-300">
       <div className="p-0 card-body gap-y-6">
-        <h4 className="mb-4 text-xl capitalize card-title">{title}</h4>
+        <h4 className="mb-2 text-xl capitalize card-title">{title}</h4>
         {/* Empty card */}
         {features.length === 0 && (
           <span className="text-neutral-focus bg-base-200 py-[14px] px-[22px] rounded-lg">
@@ -34,23 +40,29 @@ export default function FeatureCard({
         )}
         {/* Non-empty card */}
         {/* Features container / drag and drop area */}
-        <Droppable droppableId={title} type="COLUMN" direction="vertical">
-          {(provided: DroppableProvided) => (
-            <ul
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              className="flex flex-col min-h-[100px]"
+        <Droppable droppableId={title} type="COLUMN">
+          {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
+            <div
+              className={`max-h-[300px] overflow-y-auto overflow-x-hidden px-2 rounded-lg ${
+                snapshot.draggingFromThisWith && "bg-secondary/20"
+              } ${snapshot.isDraggingOver && "bg-base-100/40"}`}
             >
-              {features.map((feature, index) => (
-                <FeatureCardItem
-                  key={feature.id}
-                  index={index}
-                  feature={feature}
-                  currentUserId={currentUser.id}
-                />
-              ))}
-              {provided.placeholder}
-            </ul>
+              <ul
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className="flex flex-col min-h-[100px]"
+              >
+                {features.map((feature, index) => (
+                  <FeatureCardItem
+                    key={feature.id}
+                    index={index}
+                    feature={feature}
+                    currentUserId={currentUser.id}
+                  />
+                ))}
+                {provided.placeholder}
+              </ul>
+            </div>
           )}
         </Droppable>
         <div className="card-actions">
