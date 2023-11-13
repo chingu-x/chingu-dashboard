@@ -19,14 +19,14 @@ export default function Features({ features, currentUser }: FeaturesProps) {
 
   // TODO: change to feature.category.id maybe if they don't change or leave like this
   const mustHave = features.filter(
-    (feature) => feature.category.name === "must have"
+    (feature) => feature.category.name === "must have",
   );
 
   const shouldHave = features.filter(
-    (feature) => feature.category.name === "should have"
+    (feature) => feature.category.name === "should have",
   );
   const niceToHave = features.filter(
-    (feature) => feature.category.name === "nice to have"
+    (feature) => feature.category.name === "nice to have",
   );
 
   const featuresMap: { [key: string]: Feature[] } = {
@@ -58,7 +58,7 @@ export default function Features({ features, currentUser }: FeaturesProps) {
     if (sourceCard === destinationCard) {
       const card = featuresMap[sourceCard];
       const draggableItem = featuresMap[sourceCard].find(
-        (feature) => feature.id.toString() === draggableId
+        (feature) => feature.id.toString() === draggableId,
       );
 
       card.splice(source.index, 1);
@@ -70,7 +70,7 @@ export default function Features({ features, currentUser }: FeaturesProps) {
       const cardMovedFrom = featuresMap[sourceCard];
       const cardMovedTo = featuresMap[destinationCard];
       const draggableItem = featuresMap[sourceCard].find(
-        (feature) => feature.id.toString() === draggableId
+        (feature) => feature.id.toString() === draggableId,
       );
 
       cardMovedFrom.splice(source.index, 1);
