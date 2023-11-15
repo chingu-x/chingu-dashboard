@@ -57,7 +57,7 @@ export default function FeatureModal() {
     dispatch(onClose());
   }, [dispatch, reset]);
 
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     // TODO: temp
     console.log(data);
     handleClose();
@@ -76,7 +76,7 @@ export default function FeatureModal() {
     // TODO: temp
     handleClose();
     dispatch(
-      onOpen({ context: "warning", message: "Your feature has been deleted" })
+      onOpen({ context: "warning", message: "Your feature has been deleted" }),
     );
   };
 

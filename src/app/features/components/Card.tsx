@@ -4,10 +4,10 @@ import Image from "next/image";
 import { Draggable, DraggableProvided } from "@hello-pangea/dnd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
+import { Feature } from "./fixtures/Features";
+
 import { useAppDispatch } from "@/store/hooks";
 import { onOpen } from "@/store/features/modal/modalSlice";
-
-import { Feature } from "./fixtures/Features";
 
 import Button from "@/components/Button";
 
@@ -27,7 +27,7 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
       onOpen({
         type: "feature",
         isEditing: true,
-      })
+      }),
     );
   }
 
