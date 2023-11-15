@@ -1,24 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { Draggable, DraggableProvided } from "react-beautiful-dnd";
+import { Draggable, DraggableProvided } from "@hello-pangea/dnd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 import { Feature } from "./fixtures/Features";
 
 import Button from "@/components/Button";
 
-interface FeatureCardItemProps {
+interface CardProps {
   feature: Feature;
   currentUserId: string;
   index: number;
 }
 
-export default function FeatureCardItem({
-  feature,
-  currentUserId,
-  index,
-}: FeatureCardItemProps) {
+export default function Card({ feature, currentUserId, index }: CardProps) {
   const userFullName =
     feature.addedBy.member.firstName + " " + feature.addedBy.member.lastName;
 

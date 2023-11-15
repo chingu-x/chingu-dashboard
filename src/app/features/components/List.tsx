@@ -4,15 +4,16 @@ import {
   Droppable,
   DroppableProvided,
   DroppableStateSnapshot,
-} from "react-beautiful-dnd";
+} from "@hello-pangea/dnd";
 
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Feature } from "./fixtures/Features";
-import FeatureCardItem from "./FeatureCardItem";
+import FeatureCard from "./Card";
 
 import Button from "@/components/Button";
 
-interface FeatureCardProps {
+interface ListProps {
+  id: string;
   title: string;
   features: Feature[];
   currentUser: {
@@ -21,26 +22,13 @@ interface FeatureCardProps {
   };
 }
 
-export default function FeatureCard({
-  title,
-  features,
-  currentUser,
-}: FeatureCardProps) {
-  console.log(features);
-
+export default function List({ id, title, features, currentUser }: ListProps) {
   return (
     <div className="w-full px-8 py-10 font-semibold card bg-secondary-content rounded-2xl text-base-300">
       <div className="p-0 card-body gap-y-6">
         <h4 className="mb-2 text-xl capitalize card-title">{title}</h4>
-        {/* Empty card */}
-        {features.length === 0 && (
-          <span className="text-neutral-focus bg-base-200 py-[14px] px-[22px] rounded-lg">
-            Share your suggestions!
-          </span>
-        )}
-        {/* Non-empty card */}
         {/* Features container / drag and drop area */}
-        <Droppable droppableId={title} type="COLUMN">
+        <Droppable droppableId={id}>
           {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
             <div
               className={`max-h-[300px] overflow-y-auto overflow-x-hidden px-2 rounded-lg ${
@@ -50,10 +38,16 @@ export default function FeatureCard({
               <ul
                 ref={provided.innerRef}
                 {...provided.droppableProps}
-                className="flex flex-col min-h-[100px]"
+                className="flex flex-col"
               >
+                {/* Empty list suggestion */}
+                {features.length === 0 && !snapshot.isDraggingOver && (
+                  <span className="text-neutral-focus bg-base-200 py-[14px] px-[22px] rounded-lg">
+                    Share your suggestions!
+                  </span>
+                )}
                 {features.map((feature, index) => (
-                  <FeatureCardItem
+                  <FeatureCard
                     key={feature.id}
                     index={index}
                     feature={feature}
