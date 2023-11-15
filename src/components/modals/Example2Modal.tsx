@@ -46,7 +46,7 @@ export default function Example2Modal() {
   const handleClose = useCallback(() => {
     reset();
     dispatch(onClose());
-  }, [dispatch]);
+  }, [dispatch, reset]);
 
   return (
     <Modal isOpen={isModalOpen} title="add feature" onClose={handleClose}>
@@ -69,7 +69,7 @@ export default function Example2Modal() {
         {/* BUTTONS */}
         <div className="flex gap-5 pt-8">
           <Button
-            onClick={() => {}}
+            onClick={() => { }}
             title="go back"
             customClassName="flex-1 text-base border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100/80"
           >
