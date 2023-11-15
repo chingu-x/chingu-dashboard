@@ -30,7 +30,7 @@ export default function FeaturesContainer({
   }, [data]);
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
+    const { destination, source } = result;
 
     // dropped nowhere
     if (!destination) {
@@ -39,20 +39,20 @@ export default function FeaturesContainer({
 
     // if dropped in the same position
     if (
-      source.droppableId === destination!.droppableId &&
-      source.index === destination!.index
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
     ) {
       return;
     }
 
-    let newOrderedData = [...orderedData];
+    const newOrderedData = [...orderedData];
 
     // source and destination lists
     const sourceList = newOrderedData.find(
-      (list) => list.categoryId.toString() === source.droppableId
+      (list) => list.categoryId.toString() === source.droppableId,
     );
     const destList = newOrderedData.find(
-      (list) => list.categoryId.toString() === destination.droppableId
+      (list) => list.categoryId.toString() === destination.droppableId,
     );
 
     if (!sourceList || !destList) {
@@ -104,17 +104,15 @@ export default function FeaturesContainer({
   return (
     <div className="grid items-start grid-cols-3 gap-x-10">
       <DragDropContext onDragEnd={onDragEnd}>
-        {orderedData.map((list) => {
-          return (
-            <List
-              id={list.categoryId.toString()}
-              key={list.categoryId}
-              title={list.categoryName}
-              features={list.features}
-              currentUser={currentUser}
-            />
-          );
-        })}
+        {orderedData.map((list) => (
+          <List
+            id={list.categoryId.toString()}
+            key={list.categoryId}
+            title={list.categoryName}
+            features={list.features}
+            currentUser={currentUser}
+          />
+        ))}
       </DragDropContext>
     </div>
   );
