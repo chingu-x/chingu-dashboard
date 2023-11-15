@@ -26,14 +26,14 @@ export default function Component() {
   });
 
   return (
-    <div className="w-full max-w-md px-8 py-6 bg-white dark:bg-gray-800 rounded-xl shadow-md space-y-6">
-      <h2 className="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+    <div className="w-full max-w-md px-8 py-6 bg-white rounded-xl shadow-md space-y-6">
+      <h2 className="text-center text-3xl font-extrabold text-gray-900">
         Register
       </h2>
       <form className="space-y-6">
         <div>
           <label
-            className="text-sm font-medium text-gray-700 dark:text-gray-200"
+            className="text-sm font-medium text-gray-700"
             htmlFor="username"
           >
             Username
@@ -49,7 +49,7 @@ export default function Component() {
         </div>
         <div>
           <label
-            className="text-sm font-medium text-gray-700 dark:text-gray-200"
+            className="text-sm font-medium text-gray-700"
             htmlFor="password"
           >
             Password
