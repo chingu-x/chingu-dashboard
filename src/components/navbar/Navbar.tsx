@@ -18,7 +18,7 @@ export default function Navbar({ isAuthPage = false }: NavbarProps) {
         <ChinguMenu />
       </div>
       <div className="flex gap-x-10">
-        <ModeToggle />
+        <ModeToggle isAuthPage={isAuthPage} />
         {!isAuthPage ? (
           <>
             <Bell notificationCount={notificationCount} />
