@@ -49,10 +49,10 @@ export default function FeaturesContainer({
 
     // source and destination lists
     const sourceList = newOrderedData.find(
-      (list) => list.categoryId.toString() === source.droppableId,
+      (list) => list.categoryId.toString() === source.droppableId
     );
     const destList = newOrderedData.find(
-      (list) => list.categoryId.toString() === destination.droppableId,
+      (list) => list.categoryId.toString() === destination.droppableId
     );
 
     if (!sourceList || !destList) {
@@ -65,7 +65,6 @@ export default function FeaturesContainer({
       const reorderedCards = [...sourceList.features];
       const [removed] = reorderedCards.splice(source.index, 1);
       reorderedCards.splice(destination.index, 0, removed);
-      console.log(reorderedCards);
 
       reorderedCards.forEach((card, idx) => {
         card.order = idx;
