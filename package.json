@@ -13,6 +13,7 @@
     "cypress": "cypress run"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^16.3.0",
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.1",
     "@reduxjs/toolkit": "^1.9.5",
@@ -20,7 +21,6 @@
     "next": "^13.5.4",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.46.2",
     "react-redux": "^8.1.2",
@@ -32,7 +32,6 @@
     "@testing-library/react": "^14.0.0",
     "@types/node": "20.4.5",
     "@types/react": "18.2.18",
-    "@types/react-beautiful-dnd": "^13.1.7",
     "@types/react-dom": "18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
