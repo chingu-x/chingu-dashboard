@@ -22,7 +22,9 @@ export default function PageButton({
 }: PageButtonProps) {
   const currentPath = usePathname();
   const buttonStyles = `${
-    isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem] tooltip hover:tooltip-open tooltip-right before:bg-base-100 after:border-r-base-100 overflow:false"
+    isOpen
+      ? "w-[14.375rem] flex justify-start pl-6"
+      : "w-[3.125rem] tooltip hover:tooltip-open tooltip-right before:bg-base-100 before:text-base-300 after:border-r-base-100 overflow:false"
   } h-[3.125rem] text-base-300 capitalize border-none hover:bg-base-100`;
 
   const getButtonBackgroundStyle = (page: string) =>
@@ -48,7 +50,7 @@ export default function PageButton({
           title={element.name}
           data-tip={element.name}
           customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
-            element.link,
+            element.link
           )} ${element.marginBottom}`}
           onMouseEnter={() => setHoveredButton(element.name)}
           onMouseLeave={() => setHoveredButton(null)}
