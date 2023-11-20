@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: false, // allows react-beautiful-dnd to work in dev mode
     images: {
         remotePatterns: [
             {
