@@ -1,6 +1,7 @@
 "use client";
 
 import Avatar from "@/components/Avatar";
+import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
 import { useAppSelector } from "@/store/hooks";
@@ -19,7 +20,14 @@ export default function AvatarContainer() {
           <Avatar image="/img/avatar.png" height={34} width={34} />
           <DropDown name={name} />
         </>
-      ) : null}
+      ) : (
+        <Button
+          title="Login"
+          customClassName="btn-primary text-base-300 capitalize"
+        >
+          Log In
+        </Button>
+      )}
     </div>
   );
 }
