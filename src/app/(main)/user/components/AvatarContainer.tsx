@@ -1,10 +1,11 @@
 "use client";
 
+import { serverSignIn } from "@/app/(main)/user/actions";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
-import { signIn } from "@/store/features/auth/authSlice";
+import { clientSignIn } from "@/store/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const name = "Yorick";
@@ -14,8 +15,9 @@ export default function AvatarContainer() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  function handleClick() {
-    dispatch(signIn());
+  async function handleClick() {
+    await serverSignIn();
+    dispatch(clientSignIn());
   }
 
   return (
