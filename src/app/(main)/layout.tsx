@@ -11,12 +11,12 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="flex flex-col h-screen w-screen">
       <Navbar>
-        <div className="flex gap-x-10">
+        <>
           <ModeToggle />
           <>
             <AvatarContainer />
           </>
-        </div>
+        </>
       </Navbar>
       <div className="relative flex flex-1 overflow-hidden">
         <Sidebar />

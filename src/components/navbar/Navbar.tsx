@@ -10,7 +10,7 @@ export default function Navbar({ children }: NavbarProps) {
       <div className="flex-1 pl-2">
         <ChinguMenu />
       </div>
-      {children}
+      <div className="flex gap-x-10">{children}</div>
     </nav>
   );
 }
