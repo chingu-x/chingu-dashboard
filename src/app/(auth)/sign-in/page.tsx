@@ -13,7 +13,7 @@ export default function Component() {
         >
           <Image
             src="/img/login_image_light.png"
-            alt="prova"
+            alt="Light login image"
             fill={true}
             style={{ objectFit: "contain" }}
             priority={true}
@@ -25,7 +25,7 @@ export default function Component() {
         >
           <Image
             src="/img/login_image_dark.png"
-            alt="prova"
+            alt="Dark login image"
             fill={true}
             style={{ objectFit: "contain" }}
             priority={true}
