@@ -1,76 +1,40 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Button from "@/components/Button";
-import TextInput from "@/components/inputs/TextInput";
-import { validateTextInput } from "@/helpers/form/validateInput";
-
-const validationSchema = z.object({
-  suggestion: validateTextInput({
-    inputName: "Suggestion",
-    required: true,
-    maxLen: 30,
-  }),
-});
-
-export type ValidationSchema = z.infer<typeof validationSchema>;
+import Image from "next/image";
 
 export default function Component() {
-  const {
-    register,
-    formState: { errors },
-  } = useForm<ValidationSchema>({
-    resolver: zodResolver(validationSchema),
-  });
 
   return (
-    <div className="w-full max-w-md px-8 py-6 bg-white rounded-xl shadow-md space-y-6">
-      <h2 className="text-center text-3xl font-extrabold text-gray-900">
-        Login
-      </h2>
-      <form className="space-y-6">
-        <div>
-          <label
-            className="text-sm font-medium text-gray-700"
-            htmlFor="username"
-          >
-            Username
-          </label>
-          <TextInput
-            id="suggestion"
-            placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
-            suggestion="Tip: keep it short and sweet"
-            maxLength={30}
-          />
-        </div>
-        <div>
-          <label
-            className="text-sm font-medium text-gray-700"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <TextInput
-            id="suggestion"
-            placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
-            suggestion="Tip: keep it short and sweet"
-            maxLength={30}
-          />
-        </div>
-        <Button
-          title="title"
-          className="w-full bg-blue-500 text-white rounded-md py-2"
-          type="submit"
+    <div className="flex items-center">
+      <div className="flex min-h-[486px] flex-col justify-center">
+        <div
+          data-hide-on-theme="dark"
+          className="h-[200px] w-[628px] w-full relative shrink-0"
         >
-          Login
-        </Button>
-      </form>
+          <Image
+            src="/img/login_image_light.png"
+            alt="prova"
+            fill={true}
+            style={{ objectFit: "contain" }}
+            priority={true}
+          />
+        </div>
+        <div
+          data-hide-on-theme="light"
+          className="h-[200px] w-[628px] w-full relative shrink-0"
+        >
+          <Image
+            src="/img/login_image_dark.png"
+            alt="prova"
+            fill={true}
+            style={{ objectFit: "contain" }}
+            priority={true}
+          />
+        </div>
+        <h3 className="text-base-300 text-center mt-[27px]">Ready to dive in?</h3>
+        <h2 className="text-base-300 text-center">Join Chingu today!</h2>
+      </div>
+      <div className="w-[403px] h-[652px] w-full bg-base-200"></div>
     </div>
   );
 }
