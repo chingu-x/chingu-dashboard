@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function Component() {
   return (
@@ -14,7 +14,7 @@ export default function Component() {
             src="/img/login_image_light.png"
             alt="Light login image"
             fill={true}
-            style={{ objectFit: 'contain' }}
+            style={{ objectFit: "contain" }}
             priority={true}
           />
         </div>
@@ -26,7 +26,7 @@ export default function Component() {
             src="/img/login_image_dark.png"
             alt="Dark login image"
             fill={true}
-            style={{ objectFit: 'contain' }}
+            style={{ objectFit: "contain" }}
             priority={true}
           />
         </div>
