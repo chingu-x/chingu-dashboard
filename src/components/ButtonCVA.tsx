@@ -47,7 +47,7 @@ const button = cva(
         link: ["hover:text-neutral-focus"],
       },
       size: {
-        s: ["text-[13px]", "py-2.5", "px-[18px]"],
+        sm: ["text-[13px]", "py-2.5", "px-[18px]"],
         md: ["text-[13px]", "py-3", "px-5"],
         lg: ["text-base", "py-[14px]", "px-[22px]"],
         xl: ["text-base", "py-4", "px-6"],
