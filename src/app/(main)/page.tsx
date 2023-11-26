@@ -17,14 +17,12 @@ export default function Home() {
       <Alert context="error" message={"Your resource could not be shared"} />
       <>
         <h2>Buttons</h2>
-        <div>
+        <div className="flex flex-col items-start gap-2">
           <Button variant="primary" size="xxl">
-            <EnvelopeIcon className="h-[18px] w-[18px]" />
             primary
           </Button>
           <Button variant="secondary" size="xl">
             secondary
-            <ArrowRightIcon className="h-[18px] w-[18px]" />
           </Button>
           <Button variant="accent" size="lg">
             accent
@@ -32,18 +30,26 @@ export default function Home() {
           <Button variant="neutral" size="md">
             neutral
           </Button>
-          <Button variant="error" size="md">
+          <Button variant="error" size="sm">
             error
           </Button>
-          <Button variant="error" size="md" disabled={true}>
+          <Button variant="error" size="sm" disabled={true}>
             error-disabled
           </Button>
-          <Button variant="link" size="md">
+          <Button variant="error" size="sm">
+            <EnvelopeIcon className="h-[18px] w-[18px]" />
+            error-icon
+          </Button>
+          <Button variant="error" size="sm">
+            error-icon
+            <ArrowRightIcon className="h-[18px] w-[18px]" />
+          </Button>
+          <Button variant="link" size="sm">
             <EnvelopeIcon className="h-[18px] w-[18px] text-base-300" />
-            error-disabled
+            link
             <ArrowRightIcon className="h-[18px] w-[18px] text-base-300" />
           </Button>
-          <div className="w-[300px] flex flex-col gap-3">
+          <div className="w-[300px] flex flex-col gap-2">
             <Button
               type="button"
               variant="secondary"
@@ -59,8 +65,8 @@ export default function Home() {
               size="md"
               className="justify-end"
             >
-              Add Tech Stack
-              <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
+              Next page
+              <ArrowRightIcon className="h-[18px] w-[18px] text-base-300" />
             </Button>
           </div>
         </div>
