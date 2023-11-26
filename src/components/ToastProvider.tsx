@@ -49,7 +49,7 @@ export default function ToastProvider() {
           initial="hidden"
           animate="show"
           exit="hidden"
-          className="absolute z-10 right-3 top-3"
+          className="absolute z-10 right-3 top-[80px]"
         >
           <Alert context={context} message={message} />
         </motion.div>
