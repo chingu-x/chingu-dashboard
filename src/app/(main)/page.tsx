@@ -1,13 +1,14 @@
 // replace with dashboard page when that's completed
 
-import Alert from "@/components/Alert";
-import { Button } from "@/components/ButtonCVA";
-import TempModalControls from "@/components/modals/TempModalControls";
 import {
   EnvelopeIcon,
   ArrowRightIcon,
   PlusCircleIcon,
 } from "@heroicons/react/24/solid";
+
+import Alert from "@/components/Alert";
+import { Button } from "@/components/ButtonCVA";
+import TempModalControls from "@/components/modals/TempModalControls";
 
 export default function Home() {
   return (
