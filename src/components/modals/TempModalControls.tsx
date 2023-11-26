@@ -2,7 +2,7 @@
 
 import { useAppDispatch } from "@/store/hooks";
 import { onOpen } from "@/store/features/modal/modalSlice";
-import { Button } from "../ButtonCVA";
+import { Button } from "@/components/ButtonCVA";
 
 export default function TempModalControls() {
   const dispatch = useAppDispatch();
