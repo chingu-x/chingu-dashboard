@@ -29,7 +29,7 @@ export default function RootLayout({
       className={`${inter.className} bg-base-content`}
       suppressHydrationWarning
     >
-      <body>
+      <body className="overflow-hidden">
         <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
           <StoreProvider>
             <ToastProvider />
