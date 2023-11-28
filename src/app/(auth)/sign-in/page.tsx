@@ -66,7 +66,36 @@ export default function Component() {
           Join Chingu today!
         </h2>
       </div>
-      <div className="w-[403px] h-[652px] bg-base-200 rounded-2xl ml-60">
+      <div className="w-[403px] h-[652px] bg-base-200 rounded-2xl ml-60 p-6">
+        <p className="text-primary-focus text-2xl text-center mt-[27px] font-semibold">
+          Welcome to Chingu
+        </p>
+        <div className="flex flex-col items-center">
+          <Button
+            type="button"
+            title="github"
+            customClassName="text-base gap-x-0 font-semibold bg-base-200 hover:bg-base-content hover:border-base-100 capitalize text-base-300 h-16 mt-2 mb-2 border-2 border-base-100 w-full"
+            iconSrc="/img/github.png"
+          >
+            Continue with Github
+          </Button>
+          <Button
+            type="button"
+            title="github"
+            customClassName="text-base gap-x-0 font-semibold bg-base-200 hover:bg-base-content hover:border-base-100 capitalize text-base-300 h-16 mt-2 mb-2 border-2 border-base-100 w-full"
+            iconSrc="/img/github.png"
+          >
+            Continue with Github
+          </Button>
+          <Button
+            type="button"
+            title="github"
+            customClassName="text-base gap-x-0 font-semibold bg-base-200 hover:bg-base-content hover:border-base-100 capitalize text-base-300 h-16 mt-2 mb-2 border-2 border-base-100 w-full"
+            iconSrc="/img/github.png"
+          >
+            Continue with Github
+          </Button>
+        </div>
         <form
           onSubmit={() => console.log("submit")}
           className="flex flex-col overflow-hidden"
