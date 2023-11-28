@@ -14,7 +14,7 @@ const validationSchema = z.object({
     required: true,
     isEmail: true,
   }),
-  title: validateTextInput({
+  password: validateTextInput({
     inputName: "Password",
     required: true,
     minLen: 8,
