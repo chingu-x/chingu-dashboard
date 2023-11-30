@@ -1,5 +1,3 @@
-"use server";
-
 export async function serverSignIn() {
   try {
     const res = await fetch(
@@ -14,10 +12,48 @@ export async function serverSignIn() {
           email: "jessica.williamson@gmail.com",
           password: "password",
         }),
-        cache: "no-store",
+        credentials: "include",
       }
     );
 
-    console.log(await res.json());
-  } catch (error) {}
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function serverSignOut() {
+  try {
+    const data = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/logout`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return await data.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getUser() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/me`,
+      {
+        credentials: "include",
+      }
+    );
+
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
 }
