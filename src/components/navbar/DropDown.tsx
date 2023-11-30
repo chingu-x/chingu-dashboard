@@ -1,7 +1,22 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 import DropDownLink from "./DropDownLink";
+import Button from "@/components/Button";
+import { serverSignOut } from "@/app/(main)/user/actions";
+import { useAppDispatch } from "@/store/hooks";
+import { clientSignOut } from "@/store/features/auth/authSlice";
 
 export default function DropDown({ name }: { name: string }) {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  async function handleClick() {
+    await serverSignOut();
+    dispatch(clientSignOut());
+
+    router.refresh();
+  }
+
   return (
     <div className="dropdown py-0 mx-2 dropdown-bottom">
       <label
@@ -16,6 +31,14 @@ export default function DropDown({ name }: { name: string }) {
       >
         <DropDownLink title="Link 1" />
         <DropDownLink title="404???" href="/hello404" />
+        <Button
+          title="signout"
+          type="button"
+          customClassName="bg-base-100 border-none capitalize font-semibold text-base-300 hover:text-base-300 duration-200 hover:bg-neutral-content"
+          onClick={handleClick}
+        >
+          Sign Out
+        </Button>
       </ul>
     </div>
   );
