@@ -1,5 +1,4 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { useRouter } from "next/navigation";
 import DropDownLink from "./DropDownLink";
 import Button from "@/components/Button";
 import { serverSignOut } from "@/app/(main)/user/actions";
@@ -8,13 +7,10 @@ import { clientSignOut } from "@/store/features/auth/authSlice";
 
 export default function DropDown({ name }: { name: string }) {
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   async function handleClick() {
     await serverSignOut();
     dispatch(clientSignOut());
-
-    router.refresh();
   }
 
   return (

@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { getUser, serverSignIn } from "@/app/(main)/user/actions";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
@@ -16,7 +15,6 @@ const notificationCount = 4;
 export default function AvatarContainer() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   async function handleClick() {
     await serverSignIn();
