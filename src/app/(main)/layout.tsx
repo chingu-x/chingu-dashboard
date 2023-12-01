@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import AvatarContainer from "./user/components/AvatarContainer";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
@@ -8,13 +9,15 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const hasCookie = cookies().has("access_token");
+
   return (
     <div className="flex flex-col h-screen w-screen">
       <Navbar>
         <>
           <ModeToggle />
           <>
-            <AvatarContainer />
+            <AvatarContainer hasCookie={hasCookie} />
           </>
         </>
       </Navbar>
