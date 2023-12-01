@@ -1,3 +1,6 @@
+"use server";
+import { cookies } from "next/headers";
+
 export async function serverSignIn() {
   try {
     const res = await fetch(
@@ -18,6 +21,16 @@ export async function serverSignIn() {
 
     const data = await res.json();
 
+    const cookie = Object.entries(data).flat();
+
+    cookies().set({
+      name: `${cookie[0]}`,
+      value: `${cookie[1]}`,
+      httpOnly: true,
+      path: "/",
+      secure: true,
+    });
+
     return data;
   } catch (error) {
     console.log(error);
@@ -26,18 +39,14 @@ export async function serverSignIn() {
 
 export async function serverSignOut() {
   try {
-    const data = await fetch(
+    return await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/logout`,
       {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
       }
-    );
-
-    return await data.json();
+    ).then(() => {
+      cookies().delete("access_token");
+    });
   } catch (error) {
     console.log(error);
   }
