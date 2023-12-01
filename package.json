@@ -13,6 +13,7 @@
     "cypress": "cypress run"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^16.3.0",
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.1",
     "@reduxjs/toolkit": "^1.9.5",
