@@ -17,7 +17,6 @@ export async function serverSignIn() {
         }),
       }
     );
-
     const data = await res.json();
 
     const cookie = Object.entries(data).flat();
@@ -31,9 +30,7 @@ export async function serverSignIn() {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 }
 
 export async function serverSignOut() {
@@ -52,19 +49,19 @@ export async function serverSignOut() {
 }
 
 export async function getUser() {
-  try {
-    const token = cookies().get("access_token")?.value || "";
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/me`,
-      {
-        headers: {
-          Cookie: `access_token=${token}`,
-        },
-      }
-    );
+  const token = cookies().get("access_token")?.value || "";
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/me`,
+    {
+      headers: {
+        Cookie: `access_token=${token}`,
+      },
+    }
+  );
 
-    return await res.json();
-  } catch (error) {
-    console.log(error);
+  if (!res.ok) {
+    throw new Error(res.statusText);
   }
+
+  return await res.json();
 }
