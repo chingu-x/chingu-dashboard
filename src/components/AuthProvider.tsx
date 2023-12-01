@@ -1,29 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
-import { getUser } from "@/app/(main)/user/actions";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 
-interface AuthProviderProps {
-  children: React.ReactNode;
+interface AuthInitProps {
+  hasCookie: boolean;
 }
 
-export default function AuthProvider() {
+export default function AuthInit({ hasCookie }: AuthInitProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const getAuthStatus = async () => {
-      try {
-        const user = await getUser();
-        dispatch(clientSignIn());
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    void getAuthStatus();
-  }, [dispatch]);
+    if (hasCookie) {
+      dispatch(clientSignIn());
+    }
+  }, [dispatch, hasCookie]);
 
   return null;
 }

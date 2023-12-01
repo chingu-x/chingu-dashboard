@@ -1,11 +1,12 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { cookies } from "next/headers";
 import StoreProvider from "@/components/StoreProvider";
 import ThemeProvider from "@/components/ThemeProvider";
 import ModalProvider from "@/components/ModalProvider";
 import ToastProvider from "@/components/ToastProvider";
-import AuthProvider from "@/components/AuthProvider";
+import AuthInit from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Chingu Dashboard",
@@ -24,6 +25,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const hasCookie = cookies().has("access_token");
+
   return (
     <html
       lang="en"
@@ -33,7 +36,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
           <StoreProvider>
-            <AuthProvider />
+            <AuthInit hasCookie={hasCookie} />
             <ToastProvider />
             <ModalProvider />
             {children}
