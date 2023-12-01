@@ -15,7 +15,6 @@ export async function serverSignIn() {
           email: "jessica.williamson@gmail.com",
           password: "password",
         }),
-        credentials: "include",
       }
     );
 
@@ -54,10 +53,13 @@ export async function serverSignOut() {
 
 export async function getUser() {
   try {
+    const token = cookies().get("access_token")?.value || "";
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/me`,
       {
-        credentials: "include",
+        headers: {
+          Cookie: `access_token=${token}`,
+        },
       }
     );
 
