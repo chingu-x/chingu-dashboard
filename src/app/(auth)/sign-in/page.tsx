@@ -34,7 +34,7 @@ export default function Component() {
   });
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex flex-col lg:flex-row items-center justify-center">
       <div className="flex min-h-[486px] flex-col justify-center">
         <div
           data-hide-on-theme="dark"
@@ -67,7 +67,7 @@ export default function Component() {
           Join Chingu today!
         </h2>
       </div>
-      <div className="w-[403px] min-h-[652px] bg-base-200 rounded-2xl ml-60 p-6">
+      <div className="w-[403px] min-h-[652px] bg-base-200 rounded-2xl lg:ml-60 p-6">
         <p className="text-base-300 text-2xl text-center mt-2.5 mb-[26px] font-medium">
           Welcome to Chingu
         </p>
@@ -131,7 +131,7 @@ export default function Component() {
               </Link>
             </div>
           </div>
-          <div className="flex flex-col gap-5 pt-8">
+          <div className="flex flex-col gap-3 pt-8">
             <Button
               type="submit"
               title="submit"
@@ -139,6 +139,12 @@ export default function Component() {
             >
               Sign in
             </Button>
+            <Link
+              href={""}
+              className="font-semibold text-xs text-base-300 ml-1 self-center mb-[10px]"
+            >
+              Don’t have an account? Sign up for an account now
+            </Link>
           </div>
         </form>
       </div>
