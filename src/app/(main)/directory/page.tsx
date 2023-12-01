@@ -1,7 +1,12 @@
+import { getUser } from "src/app/(main)/user/actions";
 import TeamDirectory from "./components/TeamDirectory";
 import Banner from "@/components/banner/Banner";
 
-function DirectoryPage() {
+async function DirectoryPage() {
+  const user = await getUser();
+
+  console.log(user);
+
   return (
     <>
       <Banner
