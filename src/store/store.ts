@@ -3,6 +3,7 @@ import counterReducer from "./features/counter/counterSlice";
 import modalReducer from "./features/modal/modalSlice";
 import toastReducer from "./features/toast/toastSlice";
 import authReducer from "./features/auth/authSlice";
+import userReducer from "./features/user/userSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     modal: modalReducer,
     toast: toastReducer,
     auth: authReducer,
+    user: userReducer,
   },
 });
 

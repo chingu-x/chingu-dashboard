@@ -1,13 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { serverSignIn } from "@/app/(main)/user/actions";
+import { getUser, serverSignIn } from "@/app/(main)/user/actions";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { getUserState } from "@/store/features/user/userSlice";
 
 const name = "Yorick";
 const notificationCount = 4;
@@ -19,8 +20,9 @@ export default function AvatarContainer() {
 
   async function handleClick() {
     await serverSignIn();
+    const user = await getUser();
     dispatch(clientSignIn());
-    router.refresh();
+    dispatch(getUserState(user));
   }
 
   return (
