@@ -1,12 +1,7 @@
-import { getUser } from "src/app/(main)/user/actions";
 import TeamDirectory from "./components/TeamDirectory";
 import Banner from "@/components/banner/Banner";
 
-async function DirectoryPage() {
-  const user = await getUser();
-
-  console.log(user);
-
+export default function DirectoryPage() {
   return (
     <>
       <Banner
@@ -20,5 +15,3 @@ async function DirectoryPage() {
     </>
   );
 }
-
-export default DirectoryPage;
