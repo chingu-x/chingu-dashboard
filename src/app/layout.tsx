@@ -6,7 +6,7 @@ import StoreProvider from "@/components/StoreProvider";
 import ThemeProvider from "@/components/ThemeProvider";
 import ModalProvider from "@/components/ModalProvider";
 import ToastProvider from "@/components/ToastProvider";
-import AuthInit from "@/components/AuthProvider";
+import AuthInit from "@/components/AuthInit";
 
 export const metadata: Metadata = {
   title: "Chingu Dashboard",
