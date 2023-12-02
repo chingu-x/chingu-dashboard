@@ -48,7 +48,7 @@ export default function TextInput({
       </label>
       <input
         id={id}
-        type="text"
+        type="password"
         placeholder={placeholder}
         {...register}
         onChange={(e) => {

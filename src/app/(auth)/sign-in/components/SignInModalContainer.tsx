@@ -5,7 +5,7 @@ import SignInFormContainer from "./SignInFormContainer";
 
 function SignInModalContainer() {
   return (
-    <div className="w-[403px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 p-6">
+    <div className="w-[451px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 p-6">
       <p className="text-base-300 text-2xl text-center mt-2.5 mb-[26px] font-medium">
         Welcome to Chingu
       </p>
