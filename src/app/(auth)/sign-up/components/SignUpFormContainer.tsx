@@ -22,7 +22,11 @@ const validationSchema = z.object({
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
-function SignUpFormContainer() {
+interface SignUpFormContainerProps {
+  handleSubmit: () => void;
+}
+
+function SignUpFormContainer({ handleSubmit }: SignUpFormContainerProps) {
   const {
     register,
     formState: { errors },
@@ -31,10 +35,7 @@ function SignUpFormContainer() {
   });
 
   return (
-    <form
-      onSubmit={() => console.log("submit")}
-      className="flex flex-col overflow-hidden"
-    >
+    <form onSubmit={handleSubmit} className="flex flex-col overflow-hidden">
       <div className="flex flex-col min-h-[90px]">
         <div className="flex flex-col">
           <TextInput
@@ -60,7 +61,7 @@ function SignUpFormContainer() {
           title="submit"
           customClassName="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
         >
-          Sign up
+          Join Now
         </Button>
         <Link
           href={"/sign-in"}
