@@ -1,9 +1,9 @@
 "use client";
 
 import SocialLoginButtonsContainer from "./SocialLoginButtonsContainer";
-import SignInFormContainer from "./SignInFormContainer";
+import SignUpFormContainer from "./SignUpFormContainer";
 
-function SignInModalContainer() {
+function SignUpModalContainer() {
   return (
     <div className="w-[403px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 p-6">
       <p className="text-base-300 text-2xl text-center mt-2.5 mb-[26px] font-medium">
@@ -17,9 +17,9 @@ function SignInModalContainer() {
           <hr className="flex-grow border-neutral-content w-11/12" />
         </div>
       </div>
-      <SignInFormContainer />
+      <SignUpFormContainer />
     </div>
   );
 }
 
-export default SignInModalContainer;
+export default SignUpModalContainer;

@@ -22,7 +22,7 @@ const validationSchema = z.object({
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
-function SignInFormContainer() {
+function SignUpFormContainer() {
   const {
     register,
     formState: { errors },
@@ -52,9 +52,6 @@ function SignInFormContainer() {
             errors={errors}
             maxLength={30}
           />
-          <Link href={""} className="font-medium text-xs text-base-300 ml-1">
-            Forgot your password?
-          </Link>
         </div>
       </div>
       <div className="flex flex-col gap-3 pt-8">
@@ -63,17 +60,17 @@ function SignInFormContainer() {
           title="submit"
           customClassName="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
         >
-          Sign in
+          Sign up
         </Button>
         <Link
-          href={"/sign-up"}
+          href={"/sign-in"}
           className="font-semibold text-xs text-base-300 ml-1 self-center mb-[10px]"
         >
-          Don’t have an account? Sign up for an account now
+          Already have an account? Sign in now
         </Link>
       </div>
     </form>
   );
 }
 
-export default SignInFormContainer;
+export default SignUpFormContainer;
