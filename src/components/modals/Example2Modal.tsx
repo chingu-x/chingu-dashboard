@@ -13,6 +13,7 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
+import { onOpen } from "@/store/features/toast/toastSlice";
 
 const validationSchema = z.object({
   suggestion: validateTextInput({
@@ -41,6 +42,13 @@ export default function Example2Modal() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
+    dispatch(
+      onOpen({
+        context: "success",
+        message: "Your information has been updated",
+      }),
+    );
+    handleClose();
   };
 
   const handleClose = useCallback(() => {
