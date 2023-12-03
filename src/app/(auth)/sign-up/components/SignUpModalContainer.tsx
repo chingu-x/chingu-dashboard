@@ -9,7 +9,7 @@ function SignUpModalContainer() {
   const [showConfirmationModal, setShowConfirmationModal] =
     useState<boolean>(false);
 
-  const handleSubmit = () => {
+  const handleConfirmationModal = () => {
     setShowConfirmationModal(true);
   };
 
@@ -30,7 +30,9 @@ function SignUpModalContainer() {
               <hr className="flex-grow border-neutral-content w-11/12" />
             </div>
           </div>
-          <SignUpFormContainer handleSubmit={handleSubmit} />
+          <SignUpFormContainer
+            handleConfirmationModal={handleConfirmationModal}
+          />
         </div>
       )}
     </>
