@@ -12,7 +12,19 @@ function ConfirmationMailModalContainer() {
         className="flex h-[171px] w-[168px] relative shrink-0"
       >
         <Image
-          src="/img/retro_mac.png"
+          src="/img/retro_mac_light.png"
+          alt="Light login image"
+          fill={true}
+          style={{ objectFit: "contain" }}
+          priority={true}
+        />
+      </div>
+      <div
+        data-hide-on-theme="light"
+        className="flex h-[171px] w-[168px] relative shrink-0"
+      >
+        <Image
+          src="/img/retro_mac_dark.png"
           alt="Light login image"
           fill={true}
           style={{ objectFit: "contain" }}
