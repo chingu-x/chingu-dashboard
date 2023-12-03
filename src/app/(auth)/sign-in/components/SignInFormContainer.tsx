@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button";
@@ -26,13 +26,18 @@ function SignInFormContainer() {
   const {
     register,
     formState: { errors },
+    handleSubmit,
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
 
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+    console.log(data);
+  };
+
   return (
     <form
-      onSubmit={() => console.log("submit")}
+      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col overflow-hidden"
     >
       <div className="flex flex-col min-h-[90px]">
