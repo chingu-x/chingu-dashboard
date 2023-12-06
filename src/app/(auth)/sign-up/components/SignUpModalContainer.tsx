@@ -4,10 +4,12 @@ import { useState } from "react";
 import SocialLoginButtonsContainer from "./SocialLoginButtonsContainer";
 import SignUpFormContainer from "./SignUpFormContainer";
 import ConfirmationMailModalContainer from "./ConfirmationMailModalContainer";
+import Alert from "@/components/Alert";
 
 function SignUpModalContainer() {
   const [showConfirmationModal, setShowConfirmationModal] =
     useState<boolean>(false);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const handleConfirmationModal = () => {
     setShowConfirmationModal(true);
@@ -22,6 +24,14 @@ function SignUpModalContainer() {
           <p className="text-base-300 text-2xl text-center mt-2.5 mb-[26px] font-medium">
             Welcome to Chingu
           </p>
+          {showAlert && (
+            <div className="mb-8">
+              <Alert
+                context="error"
+                message={"Login failed. Invalid email and/or password."}
+              />
+            </div>
+          )}
           <div className="flex flex-col items-center">
             <SocialLoginButtonsContainer />
             <div className="flex items-center mt-6 mb-8 w-full">
