@@ -65,7 +65,7 @@ function SignInFormContainer({
           />
           <div
             onClick={handleResetPasswordModal}
-            className="cursor-pointer font-medium text-xs text-base-300 ml-1"
+            className="cursor-pointer font-medium text-xs text-base-300 ml-1 mt-1"
           >
             Forgot your password?
           </div>
