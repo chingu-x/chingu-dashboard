@@ -13,15 +13,19 @@
     "cypress": "cypress run"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^16.3.0",
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.1",
     "@reduxjs/toolkit": "^1.9.5",
+    "class-variance-authority": "^0.7.0",
+    "framer-motion": "^10.16.4",
     "next": "^13.5.4",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.46.2",
     "react-redux": "^8.1.2",
+    "tailwind-merge": "^2.0.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
