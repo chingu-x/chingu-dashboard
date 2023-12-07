@@ -68,14 +68,14 @@ export default function Example1Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      }),
+      })
     );
   };
 
   const handleClose = useCallback(() => {
     reset();
     dispatch(onClose());
-  }, [dispatch]);
+  }, [dispatch, reset]);
 
   return (
     <Modal isOpen={isModalOpen} title="create project" onClose={handleClose}>
