@@ -1,7 +1,7 @@
 import TeamDirectory from "./components/TeamDirectory";
 import Banner from "@/components/banner/Banner";
 
-function DirectoryPage() {
+export default function DirectoryPage() {
   return (
     <>
       <Banner
@@ -15,5 +15,3 @@ function DirectoryPage() {
     </>
   );
 }
-
-export default DirectoryPage;
