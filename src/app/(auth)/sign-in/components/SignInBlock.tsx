@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SocialLoginButtonsContainer from "./SocialLoginButtonsContainer";
 import SignInFormContainer from "./SignInFormContainer";
 import Alert from "@/components/Alert";
@@ -7,9 +6,10 @@ interface SignInBlockProps {
   handleResetPasswordModal: () => void;
 }
 
-function SignInBlock({ handleResetPasswordModal }: SignInBlockProps) {
-  const [showAlert, setShowAlert] = useState<boolean>(false);
+// Mocked value that will be removed when we will have setup the authentication from the backend
+const showAlert = true;
 
+function SignInBlock({ handleResetPasswordModal }: SignInBlockProps) {
   return (
     <>
       <div className="w-[451px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 p-6">
