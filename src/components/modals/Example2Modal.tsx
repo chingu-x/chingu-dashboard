@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import Button from "@/components/Button";
+import { Button } from "@/components/ButtonCVA";
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
 
@@ -46,7 +46,7 @@ export default function Example2Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      }),
+      })
     );
     handleClose();
   };
@@ -54,7 +54,7 @@ export default function Example2Modal() {
   const handleClose = useCallback(() => {
     reset();
     dispatch(onClose());
-  }, [dispatch]);
+  }, [dispatch, reset]);
 
   return (
     <Modal isOpen={isModalOpen} title="add feature" onClose={handleClose}>
@@ -75,18 +75,22 @@ export default function Example2Modal() {
           />
         </div>
         {/* BUTTONS */}
-        <div className="flex gap-5 pt-8">
+        <div className="flex flex-1 gap-5 pt-8">
           <Button
+            variant="neutral"
+            size="lg"
+            aria-label="go back"
             onClick={() => {}}
-            title="go back"
-            customClassName="flex-1 text-base border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100/80"
+            className="w-full"
           >
             Go back
           </Button>
           <Button
             type="submit"
-            title="submit"
-            customClassName="flex-1 text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+            variant="primary"
+            size="lg"
+            aria-label="submit"
+            className="w-full"
           >
             Submit
           </Button>
