@@ -12,7 +12,7 @@ interface ModeToggleProps {
 
 export default function ModeToggle({ isAuthPage }: ModeToggleProps) {
   const [mounted, setMounted] = useState(false);
-  const { setTheme, theme } = useTheme();
+  const { setTheme, theme, resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -20,6 +20,12 @@ export default function ModeToggle({ isAuthPage }: ModeToggleProps) {
 
   if (!mounted) {
     return null;
+  }
+
+  // If enableSystem is true and the active theme is "system" (when a user firsts visits a website), resolvedTheme returns whether the system preference resolved to "dark" or "light".
+  // So we need to set theme to resolvedTheme first time the user visits, but next time the theme is gonna come from localStorage
+  if (theme === "system" && resolvedTheme) {
+    setTheme(resolvedTheme);
   }
 
   const toggleTheme = (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,9 +55,9 @@ export default function ModeToggle({ isAuthPage }: ModeToggleProps) {
         checked={theme === "light"}
       />
       <AnimatePresence mode="wait">
-        {theme === "dark" && (
+        {theme === "light" && (
           <motion.div
-            key="modeToggleDark"
+            key="moneIcon"
             variants={modeToggleVariants}
             initial="hidden"
             animate="show"
@@ -59,9 +65,9 @@ export default function ModeToggle({ isAuthPage }: ModeToggleProps) {
             <MoonIcon className="w-6 h-6 duration-200 fill-current swap-on text-base-300" />
           </motion.div>
         )}
-        {theme === "light" && (
+        {theme === "dark" && (
           <motion.div
-            key="modeToggleLight"
+            key="sunIcon"
             variants={modeToggleVariants}
             initial="hidden"
             animate="show"
