@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Example1Modal from "./modals/Example1Modal";
 import Example2Modal from "./modals/Example2Modal";
 import TechStackModal from "./modals/TechStackModal";
+import FeatureModal from "./modals/FeatureModal";
 
 export default function ModalProvider() {
   const [isMounted, setIsMounted] = useState(false);
@@ -20,6 +21,7 @@ export default function ModalProvider() {
       <Example1Modal />
       <Example2Modal />
       <TechStackModal />
+      <FeatureModal />
     </>
   );
 }

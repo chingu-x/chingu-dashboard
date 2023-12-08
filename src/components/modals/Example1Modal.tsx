@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TrashIcon } from "@heroicons/react/20/solid";
 
-import Button from "@/components/Button";
+import { Button } from "@/components/ButtonCVA";
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
@@ -122,17 +122,15 @@ export default function Example1Modal() {
         </div>
         {/* BUTTONS */}
         <div className="flex flex-col gap-5 pt-8">
-          <Button
-            type="submit"
-            title="submit"
-            customClassName="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
-          >
+          <Button type="submit" variant="primary" size="lg" aria-label="submit">
             Submit
           </Button>
           <Button
+            variant="error"
+            size="lg"
             onClick={() => {}}
             title="delete"
-            customClassName="text-base border-none font-semibold capitalize bg-error-content text-base-300 hover:bg-error"
+            aria-label="delete"
           >
             <TrashIcon className="w-4 h-4" />
             Delete
