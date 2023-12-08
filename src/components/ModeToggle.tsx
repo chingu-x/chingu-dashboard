@@ -55,26 +55,28 @@ export default function ModeToggle({ isAuthPage }: ModeToggleProps) {
         checked={theme === "light"}
       />
       <AnimatePresence mode="wait" initial={false}>
-        {theme === "light" && (
-          <motion.div
-            key="moneIcon"
-            variants={modeToggleVariants}
-            initial="hidden"
-            animate="show"
-          >
-            <MoonIcon className="w-6 h-6 duration-200 fill-current swap-on text-base-300" />
-          </motion.div>
-        )}
-        {theme === "dark" && (
-          <motion.div
-            key="sunIcon"
-            variants={modeToggleVariants}
-            initial="hidden"
-            animate="show"
-          >
-            <SunIcon className="w-6 h-6 duration-200 fill-current swap-off text-base-300" />{" "}
-          </motion.div>
-        )}
+        <div className="w-6 h-6">
+          {theme === "light" && (
+            <motion.div
+              key="moneIcon"
+              variants={modeToggleVariants}
+              initial="hidden"
+              animate="show"
+            >
+              <MoonIcon className="w-full h-full fill-current text-base-300" />
+            </motion.div>
+          )}
+          {theme === "dark" && (
+            <motion.div
+              key="sunIcon"
+              variants={modeToggleVariants}
+              initial="hidden"
+              animate="show"
+            >
+              <SunIcon className="w-full h-full fill-current text-base-300" />
+            </motion.div>
+          )}
+        </div>
       </AnimatePresence>
     </label>
   );
