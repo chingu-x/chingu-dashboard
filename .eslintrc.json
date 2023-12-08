@@ -8,11 +8,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "@typescript-eslint",
-    "import",
-    "no-relative-import-paths"
-  ],
+  "plugins": ["@typescript-eslint", "import", "no-relative-import-paths"],
   "extends": [
     "plugin:import/recommended",
     "plugin:import/typescript",
@@ -33,9 +29,7 @@
       "error",
       {
         "selector": "interface",
-        "format": [
-          "PascalCase"
-        ]
+        "format": ["PascalCase"]
       }
     ],
     "react/function-component-definition": [
@@ -44,10 +38,7 @@
         "namedComponents": "function-declaration"
       }
     ],
-    "react/destructuring-assignment": [
-      2,
-      "always"
-    ],
+    "react/destructuring-assignment": [2, "always"],
     "react/button-has-type": 2,
     "react/no-array-index-key": 2,
     "import/order": 2,
@@ -57,14 +48,8 @@
         "allowSameFolder": true
       }
     ],
-    "semi": [
-      2,
-      "always"
-    ],
-    "quotes": [
-      2,
-      "double"
-    ],
+    "semi": [2, "always"],
+    "quotes": [2, "double"],
     "prefer-destructuring": [
       2,
       {
@@ -81,18 +66,9 @@
         "enforceForRenamedProperties": false
       }
     ],
-    "object-curly-spacing": [
-      2,
-      "always"
-    ],
-    "arrow-body-style": [
-      2,
-      "as-needed"
-    ],
-    "arrow-parens": [
-      2,
-      "always"
-    ],
+    "object-curly-spacing": [2, "always"],
+    "arrow-body-style": [2, "as-needed"],
+    "arrow-parens": [2, "always"],
     "space-infix-ops": 2,
     "arrow-spacing": [
       2,
@@ -110,16 +86,10 @@
     ],
     "guard-for-in": 2,
     "no-await-in-loop": 2,
-    "indent": [
-      2,
-      2
-    ],
+    "indent": [2, 2],
     "brace-style": 2,
     "no-multiple-empty-lines": 2,
-    "eol-last": [
-      2,
-      "always"
-    ],
+    "eol-last": [2, "always"],
     "no-nested-ternary": 2,
     "@typescript-eslint/no-misused-promises": [
       2,
