@@ -6,10 +6,12 @@ import SignUpFormContainer from "./SignUpFormContainer";
 import ConfirmationMailModalContainer from "./ConfirmationMailModalContainer";
 import Alert from "@/components/Alert";
 
+// Mocked value that will be removed when we will have setup the authentication from the backend
+const showAlert = true;
+
 function SignUpModalContainer() {
   const [showConfirmationModal, setShowConfirmationModal] =
     useState<boolean>(false);
-  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const handleConfirmationModal = () => {
     setShowConfirmationModal(true);
