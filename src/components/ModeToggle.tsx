@@ -54,7 +54,7 @@ export default function ModeToggle({ isAuthPage }: ModeToggleProps) {
         onChange={toggleTheme}
         checked={theme === "light"}
       />
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         {theme === "light" && (
           <motion.div
             key="moneIcon"
