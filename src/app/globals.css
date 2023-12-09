@@ -4,57 +4,57 @@
 
 @layer base {
     :root {
-        --primary: #40936D;
-        --primary-focus: #327355;
-        --primary-content: #C4DED2;
-        --secondary: #A3CEE9;
-        --secondary-focus: #B1C6D4;
-        --secondary-content: #DAEAF2;
-        --accent: #868079;
-        --accent-focus: #A6998D;
-        --accent-content: #D9D5D0;
-        --neutral: #6B7280;
-        --neutral-focus: #4C515B;
-        --neutral-content: #9CA1AA;
-        --info: #8FC4E5;
-        --info-content: #DCEDF7;
-        --success: #14B8A6;
-        --success-content: #B6E9E3;
-        --warning: #FFAC0C;
-        --warning-content: #FFE5B4;
-        --error: #E6624B;
-        --error-content: #F7CEC7;
-        --base-100: #D1D3D8;
-        --base-200: #F5F5F5;
-        --base-300: #16171A;
-        --base-content: #EEEFF0;
+        --primary: 64 147 109;
+        --primary-focus: 50 115 85;
+        --primary-content: 196 222 210;
+        --secondary: 163 206 233;
+        --secondary-focus: 177 198 212;
+        --secondary-content: 218 234 242;
+        --accent: 134 128 121;
+        --accent-focus: 166 153 141;
+        --accent-content: 217 213 208;
+        --neutral: 107 114 128;
+        --neutral-focus: 76 81 91;
+        --neutral-content: 156 161 170;
+        --info: 143 196 229;
+        --info-content: 220 237 247;
+        --success: 20 184 166;
+        --success-content: 182 233 227;
+        --warning: 255 172 12;
+        --warning-content: 255 229 180;
+        --error: 230 98 75;
+        --error-content: 247 206 199;
+        --base-100: 209 211 216;
+        --base-200: 245 245 245;
+        --base-300: 22 23 26;
+        --base-content: 238 239 240;
   }
   
   [data-theme='dark'] {
-    --primary: #40936D;
-    --primary-focus: #5F8E6C;
-    --primary-content: #394741;
-    --secondary: #44728D;
-    --secondary-focus: #5E7387;
-    --secondary-content: #36444D;
-    --accent: #616566;
-    --accent-focus: #595655;
-    --accent-content: #404040;
-    --neutral: #6B7280;
-    --neutral-focus: #A0A5AE;
-    --neutral-content: #3B3F46;
-    --info: #84B5D4;
-    --info-content: #668BA3;
-    --success: #43C6B8;
-    --success-content: #0E8376;
-    --warning: #FFBD3D;
-    --warning-content: #B57A09;
-    --error: #EB816F;
-    --error-content: #A34635;
-    --base-100: #4C515B;
-    --base-200: #16171A;
-    --base-300: #F5F5F5;
-    --base-content: #2D3036;
+    --primary: 64 147 109;
+    --primary-focus: 95 142 108;
+    --primary-content: 57 71 65;
+    --secondary: 68 114 141;
+    --secondary-focus: 94 115 135;
+    --secondary-content: 54 68 77;
+    --accent: 97 101 102;
+    --accent-focus: 89 86 85;
+    --accent-content: 64 64 64;
+    --neutral: 107 114 128;
+    --neutral-focus: 160 165 174;
+    --neutral-content: 59 63 70;
+    --info: 132 181 212;
+    --info-content: 102 139 163;
+    --success: 67 198 184;
+    --success-content: 14 131 118;
+    --warning: 255 189 61;
+    --warning-content: 181 122 9;
+    --error: 235 129 111;
+    --error-content: 163 70 53;
+    --base-100: 76 81 91;
+    --base-200: 22 23 26;
+    --base-300: 245 245 245;
+    --base-content: 45 48 54;
 }
 }
 
