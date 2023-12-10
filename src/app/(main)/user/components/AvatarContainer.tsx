@@ -19,6 +19,7 @@ export default function AvatarContainer() {
   async function handleClick() {
     await serverSignIn();
     const user = await getUser();
+    console.log(user);
     dispatch(clientSignIn());
     dispatch(getUserState(user));
   }

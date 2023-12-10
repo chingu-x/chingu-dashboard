@@ -19,11 +19,11 @@ export async function serverSignIn() {
     );
     const data = await res.json();
 
-    const cookie = Object.entries(data).flat();
+    const cookie = res.headers.getSetCookie();
 
     cookies().set({
-      name: `${cookie[0]}`,
-      value: `${cookie[1]}`,
+      name: "access_token",
+      value: `${cookie[0].split("; ")[0].split("access_token=")[1]}`,
       httpOnly: true,
       path: "/",
       secure: true,
@@ -50,6 +50,7 @@ export async function serverSignOut() {
 
 export async function getUser() {
   const token = cookies().get("access_token")?.value || "";
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/me`,
     {
