@@ -51,6 +51,8 @@ export async function serverSignOut() {
 export async function getUser() {
   const token = cookies().get("access_token")?.value || "";
 
+  if (!token) return;
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/me`,
     {
