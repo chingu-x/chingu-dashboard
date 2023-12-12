@@ -19,3 +19,11 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
+
+## Storybook
+
+To launch Storybook run the following in the command line
+
+```
+yarn storybook
+```
