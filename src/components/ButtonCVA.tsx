@@ -4,12 +4,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const button = cva(
-  "rounded-lg gap-x-2 flex items-center justify-center text-base-300 font-semibold border-[1px] border-transparent transition-colors capitalize disabled:cursor-not-allowed",
+  "rounded-lg gap-x-2 flex items-center justify-center text-base-300 font-medium 3xl:font-semibold border-[1px] border-transparent transition-colors child:transition-colors capitalize disabled:cursor-not-allowed",
   {
     variants: {
       variant: {
         primary: [
           "bg-primary",
+          "border-primary",
           "hover:bg-primary-content",
           "focus:text-base-200",
           "focus:bg-primary-focus",
@@ -18,6 +19,7 @@ const button = cva(
         ],
         secondary: [
           "bg-secondary",
+          "border-secondary",
           "hover:bg-secondary-content",
           "focus:bg-secondary-focus",
           "disabled:text-neutral-focus",
@@ -25,6 +27,7 @@ const button = cva(
         ],
         accent: [
           "bg-accent",
+          "border-accent",
           "hover:bg-accent-content",
           "focus:bg-accent-focus",
           "disabled:text-neutral-focus",
@@ -32,6 +35,7 @@ const button = cva(
         ],
         neutral: [
           "bg-base-100",
+          "border-base-100",
           "hover:bg-neutral-content",
           "focus:bg-neutral-focus",
           "disabled:text-neutral-focus",
@@ -39,12 +43,17 @@ const button = cva(
         ],
         error: [
           "bg-error-content",
+          "border-error-content",
           "hover:bg-error",
           "focus:bg-error",
           "disabled:text-neutral-focus",
           "disabled:bg-error",
         ],
-        link: ["hover:text-neutral-focus"],
+        link: [
+          "hover:text-neutral-focus",
+          "child:text-base-300",
+          "hover:child:text-neutral-focus",
+        ],
       },
       size: {
         sm: ["text-[13px]", "py-2.5", "px-[18px]"],
@@ -53,11 +62,16 @@ const button = cva(
         xl: ["text-base", "py-4", "px-6"],
         xxl: ["text-xl", "py-[18px]", "px-[26px]"],
       },
+      outline: {
+        true: ["bg-transparent", "disabled:bg-base-100"],
+        false: ["border-transparent"],
+      },
     },
-    compoundVariants: [{ variant: "primary", size: "md" }],
+    compoundVariants: [{ variant: "primary", size: "md", outline: false }],
     defaultVariants: {
       variant: "primary",
       size: "md",
+      outline: false,
     },
   },
 );
@@ -66,11 +80,17 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof button> {}
 
-export function Button({ className, variant, size, ...props }: ButtonProps) {
+export function Button({
+  className,
+  variant,
+  size,
+  outline,
+  ...props
+}: ButtonProps) {
   return (
     <button
       type="button"
-      className={cn(button({ variant, size, className }))}
+      className={cn(button({ variant, size, outline, className }))}
       {...props}
     />
   );
