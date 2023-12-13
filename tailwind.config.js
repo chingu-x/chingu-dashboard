@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        "3xl": "1920px"
+      },
       colors: {
         primary: "rgb(var(--primary) / <alpha-value>)",
         "primary-focus": "rgb(var(--primary-focus) / <alpha-value>)",
