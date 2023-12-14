@@ -33,7 +33,7 @@ const meta = {
       description: "Is it disabled?",
       defaultValue: { summary: false },
       control: "boolean",
-    }
+    },
   },
 } satisfies Meta<typeof Button>;
 
