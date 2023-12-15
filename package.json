@@ -64,5 +64,6 @@
     "storybook": "^7.6.4",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6"
-  }
+  },
+  "packageManager": "yarn@4.0.2"
 }
