@@ -32,7 +32,7 @@ export default function List({ id, title, features, currentUser }: ListProps) {
     dispatch(
       onOpen({
         type: "feature",
-      })
+      }),
     );
   }
   return (

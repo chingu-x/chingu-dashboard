@@ -25,7 +25,7 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
       onOpen({
         type: "feature",
         isEditing: true,
-      })
+      }),
     );
   }
 
@@ -50,6 +50,7 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
             {feature.addedBy.member.id === currentUserId ? (
               // Edit Button
               <button
+                type="button"
                 onClick={handleClick}
                 className="p-0 m-0 bg-transparent border-none hover:bg-transparent gap-x-0"
                 aria-label="feature menu"
