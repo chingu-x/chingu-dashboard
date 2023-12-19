@@ -17,6 +17,7 @@ export default function EditCell({ teamMember, currentUserId }: EditCellProps) {
       {teamMember.averageHour === 0 ? "Add hours" : teamMember.averageHour}
       {teamMember.id === currentUserId && (
         <button
+          type="button"
           title="edit"
           className="h-full min-h-0 p-0 pl-2 pr-[10px] text-sm font-medium bg-transparent border-transparent rounded-l-none rounded-r-md text-base-300 hover:bg-transparent hover:border-transparent"
         >
