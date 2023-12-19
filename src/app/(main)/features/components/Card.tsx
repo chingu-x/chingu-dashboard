@@ -9,8 +9,6 @@ import { Feature } from "./fixtures/Features";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpen } from "@/store/features/modal/modalSlice";
 
-import Button from "@/components/Button";
-
 interface CardProps {
   feature: Feature;
   currentUserId: string;
@@ -27,7 +25,7 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
       onOpen({
         type: "feature",
         isEditing: true,
-      }),
+      })
     );
   }
 
@@ -51,13 +49,13 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
             </div>
             {feature.addedBy.member.id === currentUserId ? (
               // Edit Button
-              <Button
+              <button
                 onClick={handleClick}
-                customClassName="p-0 m-0 bg-transparent hover:bg-transparent border-none gap-x-0"
-                title="feature menu"
+                className="p-0 m-0 bg-transparent border-none hover:bg-transparent gap-x-0"
+                aria-label="feature menu"
               >
                 <EllipsisVerticalIcon className="w-5 h-5 text-base-300" />
-              </Button>
+              </button>
             ) : (
               // Creator's avatar
               <div className="overflow-hidden rounded-full">
