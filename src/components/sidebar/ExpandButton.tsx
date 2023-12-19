@@ -2,7 +2,6 @@ import {
   ArrowLeftOnRectangleIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/solid";
-import Button from "@/components/Button";
 
 interface ExpandButtonProps {
   isOpen: boolean;
@@ -11,9 +10,9 @@ interface ExpandButtonProps {
 
 export default function ExpandButton({ isOpen, onClick }: ExpandButtonProps) {
   return (
-    <Button
+    <button
       title="Expand"
-      customClassName="w-[3.125rem] bg-base-200 text-base-300 capitalize hover:bg-base-200 mr-2 border-none"
+      className="w-[3.125rem] bg-base-200 text-base-300 capitalize hover:bg-base-200 mr-2 border-none"
       onClick={() => onClick(!isOpen)}
     >
       {isOpen ? (
@@ -21,6 +20,6 @@ export default function ExpandButton({ isOpen, onClick }: ExpandButtonProps) {
       ) : (
         <ArrowRightOnRectangleIcon className="h-6" />
       )}
-    </Button>
+    </button>
   );
 }

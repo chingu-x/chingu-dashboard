@@ -2,7 +2,7 @@ import { EnvelopeIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "@/components/ButtonCVA";
+import Button from "@/components/Button";
 
 const meta = {
   title: "Components/Text Buttons",

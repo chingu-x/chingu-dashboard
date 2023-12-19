@@ -2,7 +2,6 @@ import { ArrowRightCircleIcon } from "@heroicons/react/20/solid";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { VoyagePageProperty } from "./Sidebar";
-import Button from "@/components/Button";
 
 interface VoyagePageButtonProps {
   element: VoyagePageProperty;
@@ -41,9 +40,9 @@ export default function VoyagePageButton({
   return (
     <li className="h-7">
       <Link href={isVoyageStarted ? element.link : "#"}>
-        <Button
+        <button
           title={element.name}
-          customClassName={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${
+          className={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${
             isVoyageStarted ? "pl-11" : "pl-6 pointer-events-none"
           } text-neutral-focus capitalize border-none relative`}
           onMouseEnter={() => setHoveredButton(element.link)}
@@ -52,7 +51,7 @@ export default function VoyagePageButton({
         >
           {showIcon(element.link)}
           {element.name}
-        </Button>
+        </button>
       </Link>
     </li>
   );
