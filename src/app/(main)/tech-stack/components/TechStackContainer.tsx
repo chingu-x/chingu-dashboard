@@ -1,15 +1,24 @@
 import TechStackCard from "./TechStackCard";
-import { techStack } from "./fixtures/TechStack";
+import { getTechStack } from "@/api/techStackService/techStackService";
 
-export default function TechStackContainer() {
+export const currentUser = {
+  id: "3eca1a73-01aa-448c-8410-dce17ff08938",
+  teamId: 17,
+};
+
+export default async function TechStackContainer() {
+  // Get data on the server
+  const data = await getTechStack(currentUser.teamId);
+
   return (
     <div className="card bg-secondary-content p-10 w-full">
       <ul className="grid grid-cols-2 min-[1920px]:grid-cols-3 gap-10 place-items-center">
-        {Object.keys(techStack).map((cardType) => (
-          <li key={cardType}>
+        {data.map((techObject) => (
+          <li key={techObject.name}>
             <TechStackCard
-              title={cardType}
-              data={techStack[cardType as keyof typeof techStack]}
+              title={techObject.name}
+              data={techObject.teamTechStackItems}
+              id={techObject.id}
             />
           </li>
         ))}
