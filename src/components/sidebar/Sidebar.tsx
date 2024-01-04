@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type React from "react";
 import { usePathname } from "next/navigation";
 import {
@@ -106,15 +106,18 @@ export default function Sidebar() {
   const [selectedButton, setSelectedButton] = useState<string>(currentPath);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
-  const handlePageClick = (element: PageProperty | string) => {
-    if (typeof element === "string") {
-      setSelectedButton(element);
-    } else if (element.name === MainPages.myVoyage) {
-      setIsOpenSidebar(true);
-    } else {
-      setSelectedButton(element.link);
-    }
-  };
+  const handlePageClick = useCallback(
+    (element: PageProperty | string) => {
+      if (typeof element === "string") {
+        setSelectedButton(element);
+      } else if (element.name === MainPages.myVoyage) {
+        setIsOpenSidebar(true);
+      } else {
+        setSelectedButton(element.link);
+      }
+    },
+    [setSelectedButton, setIsOpenSidebar],
+  );
 
   return (
     <aside
@@ -154,7 +157,7 @@ export default function Sidebar() {
           </ul>
         )}
       </ul>
-      <div className="flex flex-col items-end justify-start border-t border-neutral-content">
+      <div className="flex flex-col items-end justify-start border-t border-neutral-content min-h-[80px]">
         <ExpandButton isOpen={isOpenSidebar} onClick={setIsOpenSidebar} />
       </div>
     </aside>

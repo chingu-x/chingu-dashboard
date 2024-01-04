@@ -13,7 +13,7 @@ interface NavbarProps {
 
 export default function Navbar({ isAuthPage = false }: NavbarProps) {
   return (
-    <nav className="navbar bg-base-100">
+    <nav className="navbar flex bg-base-100 h-[75px]">
       <div className="flex-1 pl-2">
         <ChinguMenu />
       </div>

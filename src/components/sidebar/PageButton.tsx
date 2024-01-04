@@ -51,7 +51,7 @@ export default function PageButton({
           data-tip={element.name}
           customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
             element.link,
-          )} ${element.marginBottom}`}
+          )} ${element.marginBottom} flex items-center`}
           onMouseEnter={() => setHoveredButton(element.name)}
           onMouseLeave={() => setHoveredButton(null)}
           onClick={() => onClick(element)}
