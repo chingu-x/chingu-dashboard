@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MainPages, PageProperty, voyagePages } from "./Sidebar";
-import Button from "@/components/Button";
 
 interface PageButtonProps {
   element: PageProperty;
@@ -46,10 +45,10 @@ export default function PageButton({
             : ""
         }
       >
-        <Button
-          title={element.name}
+        <button
+          type="button"
           data-tip={element.name}
-          customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
+          className={`${buttonStyles} ${getButtonBackgroundStyle(
             element.link,
           )} ${element.marginBottom}`}
           onMouseEnter={() => setHoveredButton(element.name)}
@@ -58,7 +57,7 @@ export default function PageButton({
         >
           {element.icon}
           {getButtonText(element.name)}
-        </Button>
+        </button>
       </Link>
     </li>
   );

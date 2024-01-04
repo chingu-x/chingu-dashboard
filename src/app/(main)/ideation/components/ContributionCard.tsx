@@ -23,10 +23,7 @@ function ContributionCard({
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
         <Badge data={contributed_by} />
         {own_idea ? (
-          <Button
-            title="Vote"
-            customClassName="w-full btn-secondary text-base-300 capitalize"
-          >
+          <Button variant="secondary" className="w-full">
             Edit Project
           </Button>
         ) : null}
