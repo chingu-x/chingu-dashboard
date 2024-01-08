@@ -1,10 +1,11 @@
-import { validateTextInput } from "@/helpers/form/validateInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Decorator } from "@storybook/react";
+import { Decorator, StoryContext, StoryFn } from "@storybook/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const RHFWrapper: Decorator = (Story, context) => {
+import { validateTextInput } from "@/helpers/form/validateInput";
+
+function RHFWrapper(Story: StoryFn, context: StoryContext) {
   const validationSchema = z.object({
     textInput: validateTextInput({
       inputName: "Text Input",
@@ -15,7 +16,9 @@ const RHFWrapper: Decorator = (Story, context) => {
     resolver: zodResolver(validationSchema),
   });
 
-  Object.assign(context.args, {
+  const { args } = context;
+
+  Object.assign(args, {
     register: { ...register("textInput") },
     errors: {},
     id: "textInput",
@@ -23,6 +26,6 @@ const RHFWrapper: Decorator = (Story, context) => {
   });
 
   return <Story {...context} />;
-};
+}
 
 export default RHFWrapper;
