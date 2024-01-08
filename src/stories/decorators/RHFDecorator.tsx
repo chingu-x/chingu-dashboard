@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Decorator, StoryContext, StoryFn } from "@storybook/react";
+import { StoryContext, StoryFn } from "@storybook/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
