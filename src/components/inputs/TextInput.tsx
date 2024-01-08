@@ -2,10 +2,11 @@
 
 import { ChangeEvent, useState } from "react";
 import { FieldErrors, UseFormRegisterReturn } from "react-hook-form";
+import { cn } from "@/lib/utils";
 
 import FieldMessage from "./FieldMessage";
 
-interface TextInputProps {
+export interface TextInputProps {
   id: string;
   label?: string;
   placeholder: string;
@@ -23,6 +24,7 @@ export default function TextInput({
   errors,
   suggestion,
   maxLength,
+  ...props
 }: TextInputProps) {
   const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
 
@@ -38,8 +40,8 @@ export default function TextInput({
   }
 
   return (
-    <div className="w-full pr-2 ml-1 form-control">
-      <label htmlFor={id} className="p-0 label">
+    <div className="w-full pr-2 ml-1">
+      <label htmlFor={id} className="p-0">
         {label && (
           <span className="text-base font-medium capitalize label-text text-base-300">
             {label}
@@ -50,6 +52,7 @@ export default function TextInput({
         id={id}
         type="text"
         placeholder={placeholder}
+        aria-describedby={`${id}-error`}
         {...register}
         onChange={(e) => {
           // call react-hook-form onChange
@@ -57,13 +60,15 @@ export default function TextInput({
           // call your handler
           handleOnChange(e);
         }}
-        className={`w-full my-2 text-base shadow-transparent shadow-[0px_0px_0px_3px] input input-bordered bg-base-200 text-neutral-focus ${
+        className={`w-full my-2 text-base outline-none rounded-lg border px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus ${
           errors[id]
             ? "border-error focus-visible:shadow-error/30"
             : "border-neutral/40 focus-visible:shadow-neutral/30"
         }`}
+        {...props}
       />
       <FieldMessage
+        id={`${id}-error`}
         errorMessage={errors[id]?.message as string}
         suggestionMessage={errors[id]?.message ? "" : currentSuggestion}
       />
