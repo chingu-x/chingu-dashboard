@@ -34,7 +34,7 @@ export default function Textarea({
     if (textAreaRef !== null && textAreaRef.current !== null) {
       textAreaRef.current.style.height = `${Math.max(
         textAreaRef.current.scrollHeight + 2,
-        0,
+        0
       )}px`;
     }
   }, []);
@@ -45,7 +45,7 @@ export default function Textarea({
     e.target.style.height = e.target.style.minHeight = "auto";
     e.target.style.minHeight = `${Math.min(
       e.target.scrollHeight + 2,
-      parseInt(e.target.style.maxHeight),
+      parseInt(e.target.style.maxHeight)
     )}px`;
     e.target.style.height = `${Math.max(e.target.scrollHeight + 2, 0)}px`;
 
@@ -89,6 +89,7 @@ export default function Textarea({
         }`}
       />
       <FieldMessage
+        id={`${id}-error`}
         errorMessage={errors[id]?.message as string}
         suggestionMessage={errors[id]?.message ? "" : currentSuggestion}
       />
