@@ -39,7 +39,9 @@ const meta = {
 
 export default meta;
 
-const Template = (args: TextInputProps) => <TextInput {...args} />;
+function Template(args: TextInputProps) {
+  return <TextInput {...args} />;
+}
 
 export const Default = {
   ...Template,
