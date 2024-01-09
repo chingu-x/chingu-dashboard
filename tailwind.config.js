@@ -1,11 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ["class", '[data-theme="dark"]'],
   content: [
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
+      screens: {
+        "3xl": "1920px",
+      },
       colors: {
         primary: "rgb(var(--primary) / <alpha-value>)",
         "primary-focus": "rgb(var(--primary-focus) / <alpha-value>)",
