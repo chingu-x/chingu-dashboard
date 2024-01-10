@@ -1,7 +1,7 @@
 import type { Meta } from "@storybook/react";
 
 import TextInput, { TextInputProps } from "@/components/inputs/TextInput";
-import RHFWrapper from "@/stories/decorators/RHFDecorator";
+import RHFWrapper from "@/stories/decorators/RHFWrapper";
 
 const meta = {
   title: "Components/Inputs/Text Input",
@@ -13,26 +13,25 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     id: {
-      description: "What is an input's id?",
+      description: "The input id.",
+      control: "text",
     },
     label: {
-      description: "What is an input's label? (optional)",
+      description: "The input label (optional).",
+      control: "text",
+      defaultValue: { summary: "" },
     },
     placeholder: {
-      description: "What is an input's placeholder?",
-    },
-    register: {
-      description:
-        "Register an input to use React Hook Form. Example: `{...register('textInput')}`. `register` comes from useForm() hook.",
-    },
-    errors: {
-      description: "Example: `{errors}`. `errors` comes from useForm() hook.",
+      description: "The input placeholder.",
+      control: "text",
     },
     suggestion: {
-      description: "Add a short suggestion (optional)",
+      description: "Add a short suggestion (optional).",
+      control: "text",
+      defaultValue: { summary: "" },
     },
     maxLength: {
-      description: "Add maximum length(optional)",
+      description: "Add maximum length(optional).",
     },
   },
 } satisfies Meta<typeof TextInput>;
@@ -50,7 +49,7 @@ export const Default = {
 export const WithLabel = {
   ...Template,
   args: {
-    label: "Label",
+    label: "label",
   },
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, ElementRef, useEffect, useRef, useState } from "react";
-import { FieldErrors, UseFormRegisterReturn } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 import FieldMessage from "./FieldMessage";
 
@@ -9,8 +9,6 @@ interface TextareaProps {
   id: string;
   label: string;
   placeholder: string;
-  register: UseFormRegisterReturn;
-  errors: FieldErrors;
   suggestion?: string;
   maxLength?: number;
 }
@@ -19,13 +17,15 @@ export default function Textarea({
   id,
   label,
   placeholder,
-  register,
-  errors,
   suggestion,
   maxLength,
 }: TextareaProps) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
   const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
-  const { ref, ...rest } = register;
+  const { ref, ...rest } = register(id);
   const textAreaRef = useRef<ElementRef<"textarea"> | null>(null);
 
   // Set Textarea height to fit the placeholder content
@@ -34,7 +34,7 @@ export default function Textarea({
     if (textAreaRef !== null && textAreaRef.current !== null) {
       textAreaRef.current.style.height = `${Math.max(
         textAreaRef.current.scrollHeight + 2,
-        0,
+        0
       )}px`;
     }
   }, []);
@@ -45,7 +45,7 @@ export default function Textarea({
     e.target.style.height = e.target.style.minHeight = "auto";
     e.target.style.minHeight = `${Math.min(
       e.target.scrollHeight + 2,
-      parseInt(e.target.style.maxHeight),
+      parseInt(e.target.style.maxHeight)
     )}px`;
     e.target.style.height = `${Math.max(e.target.scrollHeight + 2, 0)}px`;
 
@@ -78,7 +78,7 @@ export default function Textarea({
         {...rest}
         onChange={(e) => {
           // call react-hook-form onChange
-          void register.onChange(e);
+          void register(id).onChange(e);
           // call your handler
           handleOnChange(e);
         }}
