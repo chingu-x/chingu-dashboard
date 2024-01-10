@@ -4,8 +4,9 @@ import { ChangeEvent, ElementRef, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import FieldMessage from "./FieldMessage";
+import { cn } from "@/lib/utils";
 
-interface TextareaProps {
+export interface TextareaProps {
   id: string;
   label: string;
   placeholder: string;
@@ -37,7 +38,7 @@ export default function Textarea({
         0
       )}px`;
     }
-  }, []);
+  }, [textAreaRef]);
 
   function handleOnChange(e: ChangeEvent<HTMLTextAreaElement>) {
     // Make Textarea expand or shrink vertically to fit the content
@@ -61,9 +62,9 @@ export default function Textarea({
   }
 
   return (
-    <div className="w-full pr-2 ml-1 form-control">
-      <label htmlFor={id} className="p-0 label">
-        <span className="text-base font-medium capitalize label-text text-base-300">
+    <div className="w-full pr-2 ml-1">
+      <label htmlFor={id}>
+        <span className="text-base font-medium capitalize text-base-300">
           {label}
         </span>
       </label>
@@ -82,14 +83,15 @@ export default function Textarea({
           // call your handler
           handleOnChange(e);
         }}
-        className={`textarea textarea-bordered leading-5 resize-none w-full py-[10px] px-[14px] my-2 text-base shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus focus-visible:ring-0 focus-visible:bg-base-200 placeholder-base placeholder:leading-5 ${
+        className={cn(
+          "leading-5 resize-none outline-none px-3.5 py-2.5 rounded-lg border w-full my-2 text-base shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus focus-visible:ring-0 focus-visible:bg-base-200 placeholder-base placeholder:leading-5 placeholder:capitalize",
           errors[id]
             ? "border-error focus-visible:shadow-error/30"
             : "border-neutral/40 focus-visible:shadow-neutral/30"
-        }`}
+        )}
       />
       <FieldMessage
-        id={`${id}-error`}
+        id={`${id}-message`}
         errorMessage={errors[id]?.message as string}
         suggestionMessage={errors[id]?.message ? "" : currentSuggestion}
       />

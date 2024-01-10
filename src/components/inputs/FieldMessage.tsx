@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
   QuestionMarkCircleIcon,
   ExclamationCircleIcon,
@@ -17,11 +18,12 @@ export default function FieldMessage({
   suggestionMessage,
 }: FieldMessageProps) {
   return (
-    <div id={id} aria-live="polite" aria-atomic="true" className="p-0 label">
+    <div id={id} aria-live="polite" aria-atomic="true">
       <span
-        className={`flex items-center h-4 gap-1 text-[13px] label-text-alt font-medium ${
+        className={cn(
+          "flex items-center h-4 gap-1 text-[13px] font-medium",
           errorMessage ? "text-error" : "text-base-300"
-        }`}
+        )}
       >
         {errorMessage && (
           <>
