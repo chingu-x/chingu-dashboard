@@ -77,7 +77,7 @@ export default function FeatureModal() {
     // TODO: temp
     handleClose();
     dispatch(
-      onOpen({ context: "warning", message: "Your feature has been deleted" })
+      onOpen({ context: "warning", message: "Your feature has been deleted" }),
     );
   };
 
