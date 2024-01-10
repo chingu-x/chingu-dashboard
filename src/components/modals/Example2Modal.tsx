@@ -43,7 +43,7 @@ export default function Example2Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      })
+      }),
     );
     handleClose();
   };
