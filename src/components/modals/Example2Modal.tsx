@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -31,14 +31,11 @@ export default function Example2Modal() {
 
   const isModalOpen = isOpen && type === "example2";
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<ValidationSchema>({
+  const methods = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
+
+  const { reset, handleSubmit } = methods;
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
@@ -46,7 +43,7 @@ export default function Example2Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      }),
+      })
     );
     handleClose();
   };
@@ -59,43 +56,43 @@ export default function Example2Modal() {
   return (
     <Modal isOpen={isModalOpen} title="add feature" onClose={handleClose}>
       {/* FORM */}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col overflow-hidden"
-      >
-        {/* BODY WITHOUT VERTICAL SCROLL*/}
-        <div className="flex flex-col gap-4">
-          <TextInput
-            id="suggestion"
-            placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
-            suggestion="Tip: keep it short and sweet"
-            maxLength={30}
-          />
-        </div>
-        {/* BUTTONS */}
-        <div className="flex flex-1 gap-5 pt-8">
-          <Button
-            variant="neutral"
-            size="lg"
-            aria-label="go back"
-            onClick={() => {}}
-            className="w-full"
-          >
-            Go back
-          </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            aria-label="submit"
-            className="w-full"
-          >
-            Submit
-          </Button>
-        </div>
-      </form>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col overflow-hidden"
+        >
+          {/* BODY WITHOUT VERTICAL SCROLL*/}
+          <div className="flex flex-col gap-4">
+            <TextInput
+              id="suggestion"
+              placeholder="What is your tech stack suggestion?"
+              suggestion="Tip: keep it short and sweet"
+              maxLength={30}
+            />
+          </div>
+          {/* BUTTONS */}
+          <div className="flex flex-1 gap-5 pt-8">
+            <Button
+              variant="neutral"
+              size="lg"
+              aria-label="go back"
+              onClick={() => {}}
+              className="w-full"
+            >
+              Go back
+            </Button>
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              aria-label="submit"
+              className="w-full"
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
+      </FormProvider>
     </Modal>
   );
 }

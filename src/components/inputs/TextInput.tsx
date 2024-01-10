@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { FieldErrors, UseFormRegisterReturn } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 import FieldMessage from "./FieldMessage";
 
@@ -9,8 +9,6 @@ export interface TextInputProps {
   id: string;
   label?: string;
   placeholder: string;
-  register: UseFormRegisterReturn;
-  errors: FieldErrors;
   suggestion?: string;
   maxLength?: number;
 }
@@ -19,12 +17,14 @@ export default function TextInput({
   id,
   label,
   placeholder,
-  register,
-  errors,
   suggestion,
   maxLength,
   ...props
 }: TextInputProps) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
   const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
 
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
@@ -52,14 +52,14 @@ export default function TextInput({
         type="text"
         placeholder={placeholder}
         aria-describedby={`${id}-error`}
-        {...register}
+        {...register(id)}
         onChange={(e) => {
           // call react-hook-form onChange
-          void register.onChange(e);
+          void register(id).onChange(e);
           // call your handler
           handleOnChange(e);
         }}
-        className={`w-full my-2 text-base outline-none rounded-lg border px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus ${
+        className={`w-full my-2 text-base outline-none rounded-lg border px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus placeholder:capitalize ${
           errors[id]
             ? "border-error focus-visible:shadow-error/30"
             : "border-neutral/40 focus-visible:shadow-neutral/30"
