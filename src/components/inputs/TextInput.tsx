@@ -3,9 +3,9 @@
 import { ChangeEvent, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { cn } from "@/lib/utils";
-
 import FieldMessage from "./FieldMessage";
+
+import { cn } from "@/lib/utils";
 
 export interface TextInputProps {
   id: string;
@@ -66,7 +66,7 @@ export default function TextInput({
           "w-full my-2 text-base outline-none rounded-lg border px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus placeholder:capitalize",
           errors[id]
             ? "border-error focus-visible:shadow-error/30"
-            : "border-neutral/40 focus-visible:shadow-neutral/30"
+            : "border-neutral/40 focus-visible:shadow-neutral/30",
         )}
         {...props}
       />
