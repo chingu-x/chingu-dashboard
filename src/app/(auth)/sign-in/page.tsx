@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button";
@@ -18,10 +18,7 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function Component() {
-  const {
-    register,
-    formState: { errors },
-  } = useForm<ValidationSchema>({
+  const methods = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
 
@@ -30,43 +27,31 @@ export default function Component() {
       <h2 className="text-3xl font-extrabold text-center text-gray-900">
         Login
       </h2>
-      <form className="space-y-6">
-        <div>
-          <label
-            className="text-sm font-medium text-gray-700"
-            htmlFor="username"
-          >
-            Username
-          </label>
-          <TextInput
-            id="suggestion"
-            placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
-            suggestion="Tip: keep it short and sweet"
-            maxLength={30}
-          />
-        </div>
-        <div>
-          <label
-            className="text-sm font-medium text-gray-700"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <TextInput
-            id="suggestion"
-            placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
-            suggestion="Tip: keep it short and sweet"
-            maxLength={30}
-          />
-        </div>
-        <Button size="lg" className="w-full" type="submit">
-          Sign in
-        </Button>
-      </form>
+      <FormProvider {...methods}>
+        <form className="space-y-6">
+          <div>
+            <TextInput
+              id="suggestion"
+              label="username"
+              placeholder="What is your tech stack suggestion?"
+              suggestion="Tip: keep it short and sweet"
+              maxLength={30}
+            />
+          </div>
+          <div>
+            <TextInput
+              id="suggestion"
+              label="password"
+              placeholder="What is your tech stack suggestion?"
+              suggestion="Tip: keep it short and sweet"
+              maxLength={30}
+            />
+          </div>
+          <Button size="lg" className="w-full" type="submit">
+            Sign in
+          </Button>
+        </form>
+      </FormProvider>
     </div>
   );
 }
