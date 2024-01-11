@@ -35,12 +35,7 @@ export default function AvatarContainer() {
           </div>
         </>
       ) : (
-        <Button
-          title="Login"
-          type="button"
-          customClassName="btn-primary text-base-300 capitalize"
-          onClick={handleClick}
-        >
+        <Button title="Login" type="button" onClick={handleClick}>
           Log In
         </Button>
       )}
