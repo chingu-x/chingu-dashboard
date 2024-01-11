@@ -5,10 +5,6 @@ import { clientSignIn } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { getUser } from "@/api/authService";
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
-
 export default function AuthProvider() {
   const dispatch = useAppDispatch();
 
