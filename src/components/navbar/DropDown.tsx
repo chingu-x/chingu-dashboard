@@ -1,9 +1,9 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import DropDownLink from "./DropDownLink";
 import Button from "@/components/Button";
-import { serverSignOut } from "@/app/(main)/user/actions";
 import { useAppDispatch } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
+import { serverSignOut } from "@/api/authService";
 
 export default function DropDown({ name }: { name: string }) {
   const dispatch = useAppDispatch();

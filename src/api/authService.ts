@@ -17,9 +17,16 @@ export async function serverSignIn() {
         }),
       }
     );
-    const data = await res.json();
 
-    const cookie = res.headers.getSetCookie();
+    await res.json();
+
+    const a: Headers = res.headers;
+
+    a.getSetCookie() as string[];
+
+    const cookie = res.headers.getSetCookie() as string[];
+
+    console.log(cookie);
 
     cookies().set({
       name: "access_token",
@@ -28,8 +35,6 @@ export async function serverSignIn() {
       path: "/",
       secure: true,
     });
-
-    return data;
   } catch (error) {}
 }
 

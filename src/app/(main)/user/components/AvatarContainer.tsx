@@ -1,6 +1,5 @@
 "use client";
 
-import { getUser, serverSignIn } from "@/app/(main)/user/actions";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
@@ -8,6 +7,7 @@ import DropDown from "@/components/navbar/DropDown";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getUserState } from "@/store/features/user/userSlice";
+import { getUser, serverSignIn } from "@/api/authService";
 
 const name = "Yorick";
 const notificationCount = 4;
