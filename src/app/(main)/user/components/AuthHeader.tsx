@@ -12,7 +12,7 @@ import { getUser, serverSignIn } from "@/api/authService";
 const name = "Yorick";
 const notificationCount = 4;
 
-export default function AvatarContainer() {
+export default function AuthHeader() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
