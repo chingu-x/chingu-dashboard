@@ -1,4 +1,4 @@
-import AvatarContainer from "./user/components/AvatarContainer";
+import AuthHeader from "./user/components/AuthHeader";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
@@ -14,7 +14,7 @@ export default function Layout({ children }: LayoutProps) {
         <>
           <ModeToggle />
           <>
-            <AvatarContainer />
+            <AuthHeader />
           </>
         </>
       </Navbar>

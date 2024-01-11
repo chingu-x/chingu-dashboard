@@ -21,13 +21,14 @@ export async function serverSignIn() {
     await res.json();
 
     const cookie = res.headers.getSetCookie();
-
-    console.log(cookie);
+    const token = cookie[0].split("; ")[0].split("access_token=")[1];
+    const maxAge = cookie[0].split("; ")[1].split("=")[1];
 
     cookies().set({
       name: "access_token",
-      value: `${cookie[0].split("; ")[0].split("access_token=")[1]}`,
+      value: token,
       httpOnly: true,
+      maxAge: +maxAge,
       path: "/",
       secure: true,
     });
