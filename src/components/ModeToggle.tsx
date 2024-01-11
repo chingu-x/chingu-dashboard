@@ -38,15 +38,7 @@ export default function ModeToggle() {
   };
 
   return (
-<<<<<<< HEAD
-    <label
-      className={`relative cursor-pointer flex justify-center items-center ${
-        isAuthPage ? "mr-10" : ""
-      }`}
-    >
-=======
     <label className={"swap swap-rotate"}>
->>>>>>> 675b6a90641e24e9b340d738bb0336bdd7e946b3
       <input
         className="invisible w-0 h-0"
         data-testid="mode-toggle"
