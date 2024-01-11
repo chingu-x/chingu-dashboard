@@ -13,7 +13,6 @@ export default function AuthProvider() {
       try {
         const user = await getUser();
         if (user) {
-          console.log(user);
           dispatch(clientSignIn());
         }
       } catch (error) {
