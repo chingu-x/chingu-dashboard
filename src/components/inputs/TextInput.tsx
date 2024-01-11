@@ -11,6 +11,7 @@ export interface TextInputProps {
   id: string;
   label?: string;
   placeholder: string;
+  disabled?: boolean;
   suggestion?: string;
   maxLength?: number;
 }
@@ -19,9 +20,9 @@ export default function TextInput({
   id,
   label,
   placeholder,
+  disabled = false,
   suggestion,
   maxLength,
-  ...props
 }: TextInputProps) {
   const {
     register,
@@ -63,12 +64,12 @@ export default function TextInput({
           handleOnChange(e);
         }}
         className={cn(
-          "w-full my-2 text-base outline-none rounded-lg border px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus",
+          "w-full my-2 text-base outline-none rounded-lg border px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus disabled:cursor-not-allowed",
           errors[id]
             ? "border-error focus-visible:shadow-error/30"
             : "border-neutral/40 focus-visible:shadow-neutral/30",
         )}
-        {...props}
+        disabled={disabled}
       />
       <FieldMessage
         id={`${id}-message`}

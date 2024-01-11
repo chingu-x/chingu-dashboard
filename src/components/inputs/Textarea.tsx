@@ -4,12 +4,14 @@ import { ChangeEvent, ElementRef, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import FieldMessage from "./FieldMessage";
+
 import { cn } from "@/lib/utils";
 
 export interface TextareaProps {
   id: string;
   label: string;
   placeholder: string;
+  disabled?: boolean;
   suggestion?: string;
   maxLength?: number;
 }
@@ -18,6 +20,7 @@ export default function Textarea({
   id,
   label,
   placeholder,
+  disabled = false,
   suggestion,
   maxLength,
 }: TextareaProps) {
@@ -84,11 +87,12 @@ export default function Textarea({
           handleOnChange(e);
         }}
         className={cn(
-          "leading-5 resize-none outline-none px-3.5 py-2.5 rounded-lg border w-full my-2 text-base shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus focus-visible:ring-0 focus-visible:bg-base-200 placeholder-base placeholder:leading-5",
+          "leading-5 resize-none outline-none px-3.5 py-2.5 rounded-lg border w-full my-2 text-base shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus focus-visible:ring-0 focus-visible:bg-base-200 placeholder-base placeholder:leading-5 disabled:cursor-not-allowed",
           errors[id]
             ? "border-error focus-visible:shadow-error/30"
             : "border-neutral/40 focus-visible:shadow-neutral/30",
         )}
+        disabled={disabled}
       />
       <FieldMessage
         id={`${id}-message`}

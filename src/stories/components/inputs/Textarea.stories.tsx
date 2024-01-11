@@ -24,6 +24,10 @@ const meta = {
       description: "The input placeholder.",
       control: "text",
     },
+    disabled: {
+      description: "By default set to false. Optional.",
+      control: "boolean",
+    },
     suggestion: {
       description: "Add a short suggestion (optional).",
       control: "text",
