@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 import { User } from "@/store/features/user/userSlice";
 
-export async function serverSignIn() {
+export async function serverSignIn(): Promise<void> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
@@ -36,7 +36,7 @@ export async function serverSignIn() {
   } catch (error) {}
 }
 
-export async function serverSignOut() {
+export async function serverSignOut(): Promise<void> {
   try {
     return await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/logout`,
@@ -51,7 +51,7 @@ export async function serverSignOut() {
   }
 }
 
-export async function getUser() {
+export async function getUser(): Promise<User | undefined> {
   const token = cookies().get("access_token")?.value || "";
 
   if (!token) return;
