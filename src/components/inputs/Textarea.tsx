@@ -46,7 +46,7 @@ export default function Textarea({
   function handleOnChange(e: ChangeEvent<HTMLTextAreaElement>) {
     // Make Textarea expand or shrink vertically to fit the content
     // The 2 corresponds to the 2 1px borders (top and bottom):
-    e.target.style.height = e.target.style.minHeight = "auto";
+    // e.target.style.height = e.target.style.minHeight = "auto";
     e.target.style.minHeight = `${Math.min(
       e.target.scrollHeight + 2,
       parseInt(e.target.style.maxHeight),
