@@ -73,7 +73,7 @@ const button = cva(
       size: "md",
       outline: false,
     },
-  },
+  }
 );
 
 export interface ButtonProps
