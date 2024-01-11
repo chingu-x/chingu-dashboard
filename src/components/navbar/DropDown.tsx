@@ -27,12 +27,7 @@ export default function DropDown({ name }: { name: string }) {
       >
         <DropDownLink title="Link 1" />
         <DropDownLink title="404???" href="/hello404" />
-        <Button
-          title="signout"
-          type="button"
-          customClassName="bg-base-100 border-none capitalize font-semibold text-base-300 hover:text-base-300 duration-200 hover:bg-neutral-content"
-          onClick={handleClick}
-        >
+        <Button title="signout" type="button" onClick={handleClick}>
           Sign Out
         </Button>
       </ul>
