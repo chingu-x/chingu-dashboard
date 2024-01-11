@@ -1,5 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
+import { User } from "@/store/features/user/userSlice";
 
 export async function serverSignIn() {
   try {
@@ -68,5 +69,5 @@ export async function getUser() {
     throw new Error(res.statusText);
   }
 
-  return await res.json();
+  return (await res.json()) as User;
 }

@@ -21,7 +21,10 @@ export default function AuthHeader() {
     const user = await getUser();
     console.log(user);
     dispatch(clientSignIn());
-    dispatch(getUserState(user));
+
+    if (user) {
+      dispatch(getUserState(user));
+    }
   }
 
   return (
