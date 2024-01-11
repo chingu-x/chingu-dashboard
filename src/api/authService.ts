@@ -20,11 +20,7 @@ export async function serverSignIn() {
 
     await res.json();
 
-    const a: Headers = res.headers;
-
-    a.getSetCookie() as string[];
-
-    const cookie = res.headers.getSetCookie() as string[];
+    const cookie = res.headers.getSetCookie();
 
     console.log(cookie);
 
