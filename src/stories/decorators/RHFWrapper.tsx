@@ -21,7 +21,7 @@ function RHFWrapper(Story: StoryFn, context: StoryContext) {
 
   Object.assign(args, {
     id: "example",
-    placeholder: "placeholder",
+    placeholder: "Placeholder",
   });
 
   return (
