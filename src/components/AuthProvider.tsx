@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { getUser } from "@/app/(main)/user/actions";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
+import { getUser } from "@/api/authService";
 
 interface AuthProviderProps {
   children: React.ReactNode;
