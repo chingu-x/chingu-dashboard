@@ -108,20 +108,17 @@ export default function FeatureModal() {
         {/* BUTTONS */}
         <div className="flex flex-col gap-5 pt-8">
           <Button
+            size="lg"
             type="submit"
-            title={isEditing ? "update feature" : "submit"}
             disabled={!isDirty || !isValid || isSubmitting}
-            customClassName="flex-1 text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus disabled:bg-primary disabled:hover:bg-primary-focus disabled:text-neutral-focus disabled:cursor-not-allowed disabled:hover:cursor-not-allowed"
           >
             {isEditing ? "update feature" : "submit"}
           </Button>
           {isEditing && (
             <Button
+              size="lg"
+              variant="error"
               onClick={deleteAlertIsVisible ? onDeleteConfirmed : onDelete}
-              title={
-                deleteAlertIsVisible ? "confirm deletion" : "delete feture"
-              }
-              customClassName="text-base border-none font-semibold capitalize bg-error-content text-base-300 hover:bg-error"
             >
               <TrashIcon className="w-4 h-4" />
               {deleteAlertIsVisible ? "confirm deletion" : "delete feature"}
