@@ -5,9 +5,9 @@ import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
 import { clientSignIn } from "@/store/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getUserState } from "@/store/features/user/userSlice";
 import { getUser, serverSignIn } from "@/api/authService";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const name = "Yorick";
 const notificationCount = 4;

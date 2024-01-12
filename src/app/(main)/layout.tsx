@@ -1,7 +1,7 @@
-import AuthHeader from "./user/components/AuthHeader";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
+import AuthHeader from "@/components/navbar/AuthHeader";
 
 interface LayoutProps {
   children: React.ReactNode;
