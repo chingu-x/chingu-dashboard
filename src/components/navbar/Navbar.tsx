@@ -13,11 +13,11 @@ interface NavbarProps {
 
 export default function Navbar({ isAuthPage = false }: NavbarProps) {
   return (
-    <nav className="navbar bg-base-100">
-      <div className="flex-1 pl-2">
+    <nav className="flex navbar bg-base-100">
+      <div className="flex flex-1 items-center pl-2">
         <ChinguMenu />
       </div>
-      <div className="flex gap-x-10">
+      <div className="flex items-center gap-x-10">
         <ModeToggle isAuthPage={isAuthPage} />
         {!isAuthPage ? (
           <>
