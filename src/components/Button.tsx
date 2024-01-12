@@ -85,6 +85,7 @@ export default function Button({
   variant,
   size,
   outline,
+  children,
   ...props
 }: ButtonProps) {
   return (
@@ -92,6 +93,8 @@ export default function Button({
       type="button"
       className={cn(button({ variant, size, outline, className }))}
       {...props}
-    />
+    >
+      {children}
+    </button>
   );
 }
