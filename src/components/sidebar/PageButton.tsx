@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MainPages, PageProperty, voyagePages } from "./Sidebar";
+import Button from "../Button";
 
 interface PageButtonProps {
   element: PageProperty;
@@ -45,7 +46,7 @@ export default function PageButton({
             : ""
         }
       >
-        <button
+        <Button
           type="button"
           data-tip={element.name}
           className={`${buttonStyles} ${getButtonBackgroundStyle(
@@ -57,7 +58,7 @@ export default function PageButton({
         >
           {element.icon}
           {getButtonText(element.name)}
-        </button>
+        </Button>
       </Link>
     </li>
   );
