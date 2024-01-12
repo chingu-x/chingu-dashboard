@@ -122,22 +122,25 @@ export default function Sidebar() {
         isOpenSidebar ? "w-[18.438rem]" : "w-[5.813rem]"
       } text-center bg-base-200 flex flex-col justify-between border-r border-neutral-content shadow-[4px_4px_4px_0] shadow-neutral-focus/5`}
     >
-      <ul
+      <div
         className={`flex flex-col ${
           isOpenSidebar ? "items-start pl-10" : "items-center"
         } pt-6`}
       >
-        {pagesProperties.map((element) => (
-          <PageButton
-            key={element.name}
-            element={element}
-            onClick={handlePageClick}
-            selectedButton={selectedButton}
-            isOpen={isOpenSidebar}
-            link={element.link}
-            setHoveredButton={setHoveredButton}
-          />
-        ))}
+        <ul className="flex flex-col gap-4">
+          {pagesProperties.map((element) => (
+            <PageButton
+              key={element.name}
+              element={element}
+              onClick={handlePageClick}
+              selectedButton={selectedButton}
+              isOpen={isOpenSidebar}
+              link={element.link}
+              setHoveredButton={setHoveredButton}
+            />
+          ))}
+        </ul>
+
         {isOpenSidebar && (
           <ul className="flex flex-col items-center">
             {voyagePages.map((element) => (
@@ -153,7 +156,7 @@ export default function Sidebar() {
             ))}
           </ul>
         )}
-      </ul>
+      </div>
       <div className="flex flex-col items-end justify-start border-t border-neutral-content">
         <ExpandButton isOpen={isOpenSidebar} onClick={setIsOpenSidebar} />
       </div>

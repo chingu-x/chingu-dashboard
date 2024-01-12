@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MainPages, PageProperty, voyagePages } from "./Sidebar";
+import Tooltip from "../Tooltip";
 
 interface PageButtonProps {
   element: PageProperty;
@@ -36,7 +37,7 @@ export default function PageButton({
   const getButtonText = (page: string) => (isOpen ? page : "");
 
   return (
-    <li>
+    <li className="border border-blue-500 flex">
       <Link
         href={element.name !== MainPages.myVoyage ? link : ""}
         className={
@@ -49,16 +50,20 @@ export default function PageButton({
           type="button"
           data-tip={element.name}
           className={`${buttonStyles} ${getButtonBackgroundStyle(
-            element.link,
+            element.link
           )} ${element.marginBottom}`}
           onMouseEnter={() => setHoveredButton(element.name)}
           onMouseLeave={() => setHoveredButton(null)}
           onClick={() => onClick(element)}
         >
           {element.icon}
+          {/* Tooltip start here: */}
           {getButtonText(element.name)}
         </button>
       </Link>
+      <Tooltip content={getButtonText(element.name)} position="right">
+        {getButtonText(element.name)}
+      </Tooltip>
     </li>
   );
 }
