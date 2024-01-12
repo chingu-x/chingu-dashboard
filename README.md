@@ -4,7 +4,7 @@ This project was generated with yarn, to start using it, just install the projec
 yarn
 ```
 
-Create a `.env` file at the root of your project using the variables listed in Trello..
+Create a `.env` file at the root of your project using the variables listed in Trello.
 
 To run the development server: 
 
