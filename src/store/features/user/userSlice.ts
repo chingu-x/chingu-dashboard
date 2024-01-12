@@ -3,8 +3,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 interface VoyageTeamMembers {
   id: number;
   voyageTeamId: number;
-  voyageTeam: object;
-  voyageRole: object;
+  voyageTeam: {
+    name: string;
+  };
+  voyageRole: {
+    name: string;
+  };
 }
 
 export interface User {
