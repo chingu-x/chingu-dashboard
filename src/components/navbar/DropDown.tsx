@@ -3,7 +3,7 @@ import DropDownLink from "./DropDownLink";
 import Button from "@/components/Button";
 import { useAppDispatch } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
-import { serverSignOut } from "@/api/authService";
+import { serverSignOut } from "@/app/(auth)/authService";
 
 export default function DropDown({ name }: { name: string }) {
   const dispatch = useAppDispatch();

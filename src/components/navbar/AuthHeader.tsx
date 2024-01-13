@@ -6,7 +6,7 @@ import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { getUserState } from "@/store/features/user/userSlice";
-import { getUser, serverSignIn } from "@/api/authService";
+import { getUser, serverSignIn } from "@/app/(auth)/authService";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const name = "Yorick";
