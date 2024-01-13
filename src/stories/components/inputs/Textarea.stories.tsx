@@ -1,11 +1,9 @@
-import type { Meta } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import Textarea, { TextareaProps } from "@/components/inputs/Textarea";
-import RHFWrapper from "@/stories/decorators/RHFWrapper";
+import Textarea from "@/components/inputs/Textarea";
 
 const meta = {
   title: "Components/Inputs/Textarea",
-  decorators: [RHFWrapper],
   component: Textarea,
   parameters: {
     layout: "centered",
@@ -13,57 +11,73 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     id: {
-      description: "The input id.",
+      description: "The textarea id.",
       control: "text",
     },
     label: {
-      description: "The input label.",
+      description: "The textarea label (optional).",
       control: "text",
     },
     placeholder: {
-      description: "The input placeholder.",
+      description: "The textarea placeholder.",
       control: "text",
-    },
-    disabled: {
-      description: "By default set to false. Optional.",
-      control: "boolean",
     },
     suggestion: {
       description: "Add a short suggestion (optional).",
       control: "text",
-      defaultValue: { summary: "" },
     },
     maxLength: {
       description: "Add maximum length(optional).",
+    },
+    errorMessage: {
+      description: "Error message (optional).",
     },
   },
 } satisfies Meta<typeof Textarea>;
 
 export default meta;
+type Story = StoryObj<typeof meta>;
 
-function Template(args: TextareaProps) {
-  return <Textarea {...args} />;
-}
+const BaseTemplate: Story = {
+  args: {
+    id: "textarea",
+    placeholder: "Placeholder",
+  },
+  render: ({ ...args }) => <Textarea {...args} />,
+};
 
 export const Default = {
-  ...Template,
+  ...BaseTemplate,
+};
+
+export const WithLabel = {
+  ...BaseTemplate,
   args: {
+    ...BaseTemplate.args,
     label: "label",
   },
 };
 
 export const WithSuggestion = {
-  ...Template,
+  ...BaseTemplate,
   args: {
-    label: "label",
+    ...BaseTemplate.args,
     suggestion: "Tip: keep it short and sweet",
   },
 };
 
 export const WithMaxLength = {
-  ...Template,
+  ...BaseTemplate,
   args: {
-    label: "label",
+    ...BaseTemplate.args,
     maxLength: 10,
+  },
+};
+
+export const WithErrorMessage = {
+  ...BaseTemplate,
+  args: {
+    ...BaseTemplate.args,
+    errorMessage: "Required",
   },
 };
