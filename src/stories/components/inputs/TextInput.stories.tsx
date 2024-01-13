@@ -1,11 +1,9 @@
-import type { Meta } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import TextInput, { TextInputProps } from "@/components/inputs/TextInput";
-import RHFWrapper from "@/stories/decorators/RHFWrapper";
+import TextInput from "@/components/inputs/TextInput";
 
 const meta = {
   title: "Components/Inputs/Text Input",
-  decorators: [RHFWrapper],
   component: TextInput,
   parameters: {
     layout: "centered",
@@ -19,7 +17,6 @@ const meta = {
     label: {
       description: "The input label (optional).",
       control: "text",
-      defaultValue: { summary: "" },
     },
     placeholder: {
       description: "The input placeholder.",
@@ -28,41 +25,59 @@ const meta = {
     suggestion: {
       description: "Add a short suggestion (optional).",
       control: "text",
-      defaultValue: { summary: "" },
     },
     maxLength: {
-      description: "Add maximum length(optional).",
+      description: "Add maximum length (optional).",
+    },
+    errorMessage: {
+      description: "Error message (optional).",
     },
   },
 } satisfies Meta<typeof TextInput>;
 
 export default meta;
+type Story = StoryObj<typeof meta>;
 
-function Template(args: TextInputProps) {
-  return <TextInput {...args} />;
-}
+const BaseTemplate: Story = {
+  args: {
+    id: "textInput",
+    placeholder: "Placeholder",
+  },
+  render: ({ ...args }) => <TextInput {...args} />,
+};
 
 export const Default = {
-  ...Template,
+  ...BaseTemplate,
 };
 
 export const WithLabel = {
-  ...Template,
+  ...BaseTemplate,
   args: {
+    ...BaseTemplate.args,
     label: "label",
   },
 };
 
 export const WithSuggestion = {
-  ...Template,
+  ...BaseTemplate,
   args: {
+    ...BaseTemplate.args,
     suggestion: "Tip: keep it short and sweet",
   },
 };
 
 export const WithMaxLength = {
-  ...Template,
+  ...BaseTemplate,
   args: {
+    ...BaseTemplate.args,
     maxLength: 10,
+  },
+};
+
+export const WithErrorMessage = {
+  ...BaseTemplate,
+  args: {
+    ...BaseTemplate.args,
+    errorMessage: "Required",
   },
 };

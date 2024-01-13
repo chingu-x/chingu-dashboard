@@ -1,6 +1,6 @@
 "use client";
 
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button";
@@ -8,17 +8,24 @@ import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 
 const validationSchema = z.object({
-  suggestion: validateTextInput({
-    inputName: "Suggestion",
+  email: validateTextInput({
+    inputName: "Email",
     required: true,
-    maxLen: 30,
+    isEmail: true,
+  }),
+  password: validateTextInput({
+    inputName: "Password",
+    required: true,
   }),
 });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function Component() {
-  const methods = useForm<ValidationSchema>({
+  const {
+    register,
+    formState: { errors },
+  } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
 
@@ -27,31 +34,29 @@ export default function Component() {
       <h2 className="text-3xl font-extrabold text-center text-gray-900">
         Login
       </h2>
-      <FormProvider {...methods}>
-        <form className="space-y-6">
-          <div>
-            <TextInput
-              id="suggestion"
-              label="username"
-              placeholder="What is your tech stack suggestion?"
-              suggestion="Tip: keep it short and sweet"
-              maxLength={30}
-            />
-          </div>
-          <div>
-            <TextInput
-              id="suggestion"
-              label="password"
-              placeholder="What is your tech stack suggestion?"
-              suggestion="Tip: keep it short and sweet"
-              maxLength={30}
-            />
-          </div>
-          <Button size="lg" className="w-full" type="submit">
-            Sign in
-          </Button>
-        </form>
-      </FormProvider>
+      <form className="space-y-6">
+        <div>
+          <TextInput
+            id="email"
+            label="email"
+            placeholder="Enter your email"
+            {...register("email")}
+            errorMessage={errors?.["email"]?.message}
+          />
+        </div>
+        <div>
+          <TextInput
+            id="password"
+            label="password"
+            placeholder="Enter your password"
+            {...register("password")}
+            errorMessage={errors?.["password"]?.message}
+          />
+        </div>
+        <Button size="lg" className="w-full" type="submit">
+          Sign in
+        </Button>
+      </form>
     </div>
   );
 }

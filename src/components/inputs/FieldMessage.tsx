@@ -4,6 +4,7 @@ import {
   QuestionMarkCircleIcon,
   ExclamationCircleIcon,
 } from "@heroicons/react/20/solid";
+
 import { cn } from "@/lib/utils";
 
 interface FieldMessageProps {
@@ -21,8 +22,8 @@ export default function FieldMessage({
     <div id={id} aria-live="polite" aria-atomic="true">
       <span
         className={cn(
-          "flex items-center h-4 gap-1 text-[13px] font-medium",
-          errorMessage ? "text-error" : "text-base-300",
+          "flex items-center h-4 gap-1 text-[13px] font-medium text-base-300",
+          errorMessage && "text-error",
         )}
       >
         {errorMessage && (
