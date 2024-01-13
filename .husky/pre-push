@@ -3,4 +3,5 @@
 
 yarn prettier
 yarn lint
+yarn build
 yarn cypress
