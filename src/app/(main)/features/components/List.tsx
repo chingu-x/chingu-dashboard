@@ -74,9 +74,10 @@ export default function List({ id, title, features, currentUser }: ListProps) {
         <div className="card-actions">
           {/* Similiar to tech stack button, need to be a shared component */}
           <Button
+            variant="secondary"
+            size="lg"
+            className="justify-start w-full"
             onClick={handleClick}
-            title={`add ${title}`}
-            customClassName="capitalize w-full py-[14px] px-[22px] text-xs font-semibold text-base-300 bg-secondary border-transparent flex justify-start items-center hover:bg-secondary hover:border-transparent"
           >
             <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
             Add Feature
