@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Button from "../Button";
 import { MainPages, PageProperty, voyagePages } from "./Sidebar";
+import Button from "@/components/Button";
 
 interface PageButtonProps {
   element: PageProperty;
