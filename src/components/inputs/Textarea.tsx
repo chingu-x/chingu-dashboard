@@ -74,7 +74,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     return (
       <div className="w-full pr-2 ml-1">
-        {label && <Label id={id} label={label} />}
+        {label && <Label htmlFor={id}>{label}</Label>}
         <textarea
           id={id}
           rows={1}
@@ -94,7 +94,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           )}
           {...props}
           onChange={(e) => {
-            // call react-hook-form onChange
+            // call onChange which can be passed as prop
             if (props.onChange) void props.onChange(e);
             // call your handler
             handleOnChange(e);

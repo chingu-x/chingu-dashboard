@@ -46,7 +46,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
 
     return (
       <div className="w-full pr-2 ml-1">
-        {label && <Label id={id} label={label} />}
+        {label && <Label htmlFor={id}>{label}</Label>}
         <input
           id={id}
           type="text"
@@ -60,7 +60,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           ref={ref}
           {...props}
           onChange={(e) => {
-            // call react-hook-form onChange
+            // call onChange which can be passed as prop
             if (props.onChange) void props.onChange(e);
             // call your handler
             handleOnChange(e);

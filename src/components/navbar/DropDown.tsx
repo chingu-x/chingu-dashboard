@@ -1,7 +1,18 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import DropDownLink from "./DropDownLink";
+import Button from "@/components/Button";
+import { useAppDispatch } from "@/store/hooks";
+import { clientSignOut } from "@/store/features/auth/authSlice";
+import { serverSignOut } from "@/app/(auth)/authService";
 
 export default function DropDown({ name }: { name: string }) {
+  const dispatch = useAppDispatch();
+
+  async function handleClick() {
+    await serverSignOut();
+    dispatch(clientSignOut());
+  }
+
   return (
     <div className="dropdown py-0 mx-2 dropdown-bottom">
       <label
@@ -16,6 +27,9 @@ export default function DropDown({ name }: { name: string }) {
       >
         <DropDownLink title="Link 1" />
         <DropDownLink title="404???" href="/hello404" />
+        <Button title="signout" type="button" onClick={handleClick}>
+          Sign Out
+        </Button>
       </ul>
     </div>
   );
