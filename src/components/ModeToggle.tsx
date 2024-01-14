@@ -6,11 +6,7 @@ import { AnimatePresence, Variants, motion } from "framer-motion";
 
 import { SunIcon, MoonIcon } from "@heroicons/react/20/solid";
 
-interface ModeToggleProps {
-  isAuthPage: boolean;
-}
-
-export default function ModeToggle({ isAuthPage }: ModeToggleProps) {
+export default function ModeToggle() {
   const [mounted, setMounted] = useState(false);
   const { setTheme, theme, resolvedTheme } = useTheme();
 
@@ -42,11 +38,7 @@ export default function ModeToggle({ isAuthPage }: ModeToggleProps) {
   };
 
   return (
-    <label
-      className={`relative cursor-pointer flex justify-center items-center ${
-        isAuthPage ? "mr-10" : ""
-      }`}
-    >
+    <label className={"swap swap-rotate"}>
       <input
         className="invisible w-0 h-0"
         data-testid="mode-toggle"
