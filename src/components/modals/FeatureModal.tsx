@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TrashIcon } from "@heroicons/react/20/solid";
@@ -34,16 +34,15 @@ export default function FeatureModal() {
 
   const isModalOpen = isOpen && type === "feature";
 
-  const methods = useForm<ValidationSchema>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isDirty, isValid },
+    reset,
+  } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
-
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitting, isDirty, isValid },
-  } = methods;
 
   useEffect(() => {
     // TODO: populating data if editing
@@ -77,7 +76,7 @@ export default function FeatureModal() {
     // TODO: temp
     handleClose();
     dispatch(
-      onOpen({ context: "warning", message: "Your feature has been deleted" }),
+      onOpen({ context: "warning", message: "Your feature has been deleted" })
     );
   };
 
@@ -88,45 +87,45 @@ export default function FeatureModal() {
       onClose={handleClose}
     >
       {/* FORM */}
-      <FormProvider {...methods}>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col overflow-hidden"
-        >
-          {/* BODY WITHOUT VERTICAL SCROLL*/}
-          <div className="flex flex-col gap-4">
-            {deleteAlertIsVisible && (
-              <Alert context="error" message={"You cannot undo this action"} />
-            )}
-            <TextInput
-              id="feature"
-              placeholder="What is your feature suggestion?"
-              suggestion={isEditing ? "" : "Tip: keep it short and sweet"}
-              maxLength={50}
-            />
-          </div>
-          {/* BUTTONS */}
-          <div className="flex flex-col gap-5 pt-8">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col overflow-hidden"
+      >
+        {/* BODY WITHOUT VERTICAL SCROLL*/}
+        <div className="flex flex-col gap-4">
+          {deleteAlertIsVisible && (
+            <Alert context="error" message={"You cannot undo this action"} />
+          )}
+          <TextInput
+            id="feature"
+            placeholder="What is your feature suggestion?"
+            suggestion={isEditing ? "" : "Tip: keep it short and sweet"}
+            maxLength={50}
+            {...register("feature")}
+            errorMessage={errors?.["feature"]?.message}
+          />
+        </div>
+        {/* BUTTONS */}
+        <div className="flex flex-col gap-5 pt-8">
+          <Button
+            size="lg"
+            type="submit"
+            disabled={!isDirty || !isValid || isSubmitting}
+          >
+            {isEditing ? "update feature" : "submit"}
+          </Button>
+          {isEditing && (
             <Button
               size="lg"
-              type="submit"
-              disabled={!isDirty || !isValid || isSubmitting}
+              variant="error"
+              onClick={deleteAlertIsVisible ? onDeleteConfirmed : onDelete}
             >
-              {isEditing ? "update feature" : "submit"}
+              <TrashIcon className="w-4 h-4" />
+              {deleteAlertIsVisible ? "confirm deletion" : "delete feature"}
             </Button>
-            {isEditing && (
-              <Button
-                size="lg"
-                variant="error"
-                onClick={deleteAlertIsVisible ? onDeleteConfirmed : onDelete}
-              >
-                <TrashIcon className="w-4 h-4" />
-                {deleteAlertIsVisible ? "confirm deletion" : "delete feature"}
-              </Button>
-            )}
-          </div>
-        </form>
-      </FormProvider>
+          )}
+        </div>
+      </form>
     </Modal>
   );
 }
