@@ -87,8 +87,7 @@
 
 .tooltip {
   position: relative;
-  text-decoration: underline dotted;
-  cursor: help;
+  cursor: pointer;
 }
 
 .tooltip-content {
