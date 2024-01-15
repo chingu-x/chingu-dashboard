@@ -56,14 +56,13 @@ export default function PageButton({
           onMouseLeave={() => setHoveredButton(null)}
           onClick={() => onClick(element)}
         >
-          {element.icon}
-          {/* Tooltip start here: */}
-          {getButtonText(element.name)}
+          {/* {element.icon} */}
+          {/* {getButtonText(element.name)} */}
+          <Tooltip content={getButtonText(element.name)} position="right">
+            {element.icon}
+          </Tooltip>
         </button>
       </Link>
-      <Tooltip content={getButtonText(element.name)} position="right">
-        {getButtonText(element.name)}
-      </Tooltip>
     </li>
   );
 }
