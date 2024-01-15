@@ -1,13 +1,3 @@
-// interface TooltipProps {
-//   content: string;
-// }
-
-// function Tooltip({ content }: TooltipProps) {
-//   return <div className="p-2 border border-red-500 h-min">{content}</div>;
-// }
-
-// export default Tooltip;
-
 import React from "react";
 import PropTypes from "prop-types";
 
