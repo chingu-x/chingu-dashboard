@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface VoyageTeamMembers {
+export interface VoyageTeamMembers {
   id: number;
   voyageTeamId: number;
   voyageTeam: {

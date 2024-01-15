@@ -12,6 +12,9 @@ import {
 import PageButton from "./PageButton";
 import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
+import { useAppSelector } from "@/store/hooks";
+import { VoyageTeamMembers } from "@/store/features/user/userSlice";
+import { RootState } from "@/store/store";
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -95,16 +98,23 @@ const pagesProperties: PageProperty[] = [
   },
 ];
 
-//-- Mocked fake data just for testing purpose --//
-const isVoyageStarted: boolean = true;
-//-- --//
-
 export default function Sidebar() {
   const currentPath = usePathname();
 
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(true);
   const [selectedButton, setSelectedButton] = useState<string>(currentPath);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+
+  const { isAuthenticated } = useAppSelector(
+    (state: RootState): { isAuthenticated: boolean } => state.auth,
+  );
+  const { voyageTeamMembers } = useAppSelector(
+    (state: RootState): { voyageTeamMembers: VoyageTeamMembers[] } =>
+      state.user,
+  );
+
+  const isVoyageStarted: boolean =
+    isAuthenticated && !!voyageTeamMembers[0]?.id;
 
   const handlePageClick = useCallback(
     (element: PageProperty | string) => {

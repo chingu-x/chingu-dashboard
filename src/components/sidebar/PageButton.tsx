@@ -39,7 +39,7 @@ export default function PageButton({
   return (
     <li>
       <Link
-        href={element.name !== MainPages.myVoyage ? link : ""}
+        href={element.name !== MainPages.myVoyage ? link : "#"}
         className={
           element.name === MainPages.myVoyage && isOpen
             ? "cursor-default pointer-events-none"
