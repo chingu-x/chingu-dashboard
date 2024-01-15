@@ -2,6 +2,8 @@ import { ArrowRightCircleIcon } from "@heroicons/react/20/solid";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { VoyagePageProperty } from "./Sidebar";
+import { useAppSelector } from "@/store/hooks";
+import { VoyageTeamMembers } from "@/store/features/user/userSlice";
 
 interface VoyagePageButtonProps {
   element: VoyagePageProperty;
