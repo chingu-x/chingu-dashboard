@@ -12,6 +12,9 @@ interface PageButtonProps {
   setHoveredButton: (element: string | null) => void;
 }
 
+const paragraph =
+  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.";
+
 export default function PageButton({
   element,
   onClick,
@@ -49,16 +52,18 @@ export default function PageButton({
         <button
           type="button"
           data-tip={element.name}
-          className={`${buttonStyles} ${getButtonBackgroundStyle(
-            element.link
-          )} ${element.marginBottom}`}
+          // className={`${buttonStyles} ${getButtonBackgroundStyle(
+          //   element.link
+          // )} ${element.marginBottom}`}
           onMouseEnter={() => setHoveredButton(element.name)}
           onMouseLeave={() => setHoveredButton(null)}
           onClick={() => onClick(element)}
         >
-          {/* {element.icon} */}
-          {/* {getButtonText(element.name)} */}
-          <Tooltip content={getButtonText(element.name)} position="right">
+          <Tooltip
+            content={getButtonText(element.name)}
+            position="right"
+            toolTipWidth="small"
+          >
             {element.icon}
           </Tooltip>
         </button>
