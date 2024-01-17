@@ -8,12 +8,10 @@ interface TooltipProps {
   toolTipWidth: "small" | "medium" | "large";
 }
 
-// ${hovered ? "opacity-100 visible" : " opacity-0 hidden"}
-
 // TODO:
 // configure tooltip width on tailwind global for custom uses
+// configure tooltip to have a position on tailwind global
 // light / dark mode
-// create arrow tip
 
 const Tooltip = ({
   content,
@@ -30,8 +28,9 @@ const Tooltip = ({
     >
       {children}
       <div
-        className={`absolute transition-opacity duration-300 z-[2]
-        text-white bg-neutral-content bg-black rounded-md p-2 transform 
+        className={`absolute transition ease-in-out duration-300 z-[2]
+        ${hovered ? "opacity-100" : "opacity-0"}
+        text-white bg-neutral-content bg-black rounded-md p-2 transform after:absolute after:content-[''] after:border-neutral-content after:border-[7px] after:border-solid
         ${
           toolTipWidth === "small"
             ? "w-[120px]"
@@ -42,17 +41,17 @@ const Tooltip = ({
         
         ${
           position === "top" || position === "bottom"
-            ? "-translate-x-1/2"
-            : "-translate-y-1/2"
+            ? "-translate-x-1/2 after:border-x-transparent after:-translate-x-1/2 after:left-1/2"
+            : "-translate-y-1/2 after:border-y-transparent after:-translate-y-1/2 after:top-1/2"
         }
         ${
           position === "top"
-            ? "bottom-full left-1/2"
+            ? "bottom-[150%] left-1/2 after:top-full after:border-b-transparent"
             : position === "bottom"
-              ? "top-full left-1/2"
+              ? "top-[150%] left-1/2 after:bottom-full after:border-t-transparent"
               : position === "right"
-                ? "top-1/2 left-full"
-                : "top-1/2 right-full"
+                ? "top-1/2 left-[150%] after:right-full after:border-l-transparent"
+                : "top-1/2 right-[150%] after:left-full after:border-r-transparent"
         }`}
       >
         {content}
