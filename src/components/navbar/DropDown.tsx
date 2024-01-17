@@ -8,6 +8,7 @@ import { clientSignOut } from "@/store/features/auth/authSlice";
 import { serverSignOut } from "@/app/(auth)/authService";
 
 export default function DropDown({ name }: { name: string }) {
+  const dispatch = useAppDispatch();
   const menuRef = useRef<HTMLUListElement>(null);
   const [ isOpen, setIsOpen ] = useState(false);
   const closed = "hidden";
@@ -35,7 +36,6 @@ export default function DropDown({ name }: { name: string }) {
     };
   },[isOpen])
 
-  const dispatch = useAppDispatch();
 
   async function handleClick() {
     await serverSignOut();
