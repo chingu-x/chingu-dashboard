@@ -2,6 +2,7 @@ import { withThemeByDataAttribute } from "@storybook/addon-themes";
 import "../src/app/globals.css";
 
 import type { Preview } from "@storybook/react";
+import "../src/app/globals.css";
 
 export const preview: Preview = {
   parameters: {
