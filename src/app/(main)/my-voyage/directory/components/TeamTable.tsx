@@ -9,7 +9,7 @@ export default function TeamTable() {
   return (
     <div className="hidden w-full min-[1920px]:block">
       <table
-        className={`table px-6 pb-10 border-separate border-none bg-secondary-content text-base-300 pt-7 ${styles["table"]}`}
+        className={`table px-6 pb-10 border-separate border-none bg-secondary-content text-base-300 pt-7 ${styles.table}`}
       >
         {/* head */}
         <thead className="mb-10 text-xl font-semibold text-base-300">
