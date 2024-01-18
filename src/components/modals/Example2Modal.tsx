@@ -30,7 +30,6 @@ export default function Example2Modal() {
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "example2";
-
   const {
     register,
     handleSubmit,
@@ -68,10 +67,10 @@ export default function Example2Modal() {
           <TextInput
             id="suggestion"
             placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
+            {...register("suggestion")}
+            errorMessage={errors?.suggestion?.message}
           />
         </div>
         {/* BUTTONS */}
