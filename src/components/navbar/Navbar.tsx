@@ -7,10 +7,10 @@ interface NavbarProps {
 export default function Navbar({ children }: NavbarProps) {
   return (
     <nav className="flex navbar bg-base-100 p-2">
-      <div className="flex flex-1 items-center pl-2">
+      <div className="flex flex-1 sm:pl-2 sm:flex-row">
         <ChinguMenu />
       </div>
-      <div className="flex items-center gap-x-10">
+      <div className="flex items-center space-x-2 sm:gap-x-10 ">
         {children}
       </div>
     </nav>
