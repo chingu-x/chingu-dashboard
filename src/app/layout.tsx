@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import StoreProvider from "@/components/StoreProvider";
 import ThemeProvider from "@/components/ThemeProvider";
-import ModalProvider from "@/components/ModalProvider";
 import ToastProvider from "@/components/ToastProvider";
 import AuthProvider from "@/components/AuthProvider";
 
@@ -30,12 +29,11 @@ export default function RootLayout({
       className={`${inter.className} bg-base-content`}
       suppressHydrationWarning
     >
-      <body className="overflow-hidden">
+      <body className="relative overflow-hidden">
         <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
           <StoreProvider>
             <AuthProvider />
             <ToastProvider />
-            <ModalProvider />
             {children}
           </StoreProvider>
         </ThemeProvider>

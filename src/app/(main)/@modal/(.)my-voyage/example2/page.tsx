@@ -1,19 +1,17 @@
 "use client";
 
-import { useCallback } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import Button from "@/components/Button";
-import Modal from "@/components/modals/Modal";
-import TextInput from "@/components/inputs/TextInput";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
-
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { onClose } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
+import { useAppDispatch } from "@/store/hooks";
+
+import InterceptingModal from "@/components/modals/Modal";
+import TextInput from "@/components/inputs/TextInput";
+import Button from "@/components/Button";
 
 const validationSchema = z.object({
   suggestion: validateTextInput({
@@ -23,18 +21,16 @@ const validationSchema = z.object({
   }),
 });
 
-export type ValidationSchema = z.infer<typeof validationSchema>;
+type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function Example2Modal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+export default function Example1InterceptingModal() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const isModalOpen = isOpen && type === "example2";
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
@@ -47,16 +43,16 @@ export default function Example2Modal() {
         message: "Your information has been updated",
       }),
     );
-    handleClose();
+
+    // Close modal, a timer is for exit animation
+    const timer = setTimeout(() => {
+      router.back();
+    }, 450);
+    return () => clearTimeout(timer);
   };
 
-  const handleClose = useCallback(() => {
-    reset();
-    dispatch(onClose());
-  }, [dispatch, reset]);
-
   return (
-    <Modal isOpen={isModalOpen} title="add feature" onClose={handleClose}>
+    <InterceptingModal title="Intercepting Modal">
       {/* FORM */}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -70,7 +66,7 @@ export default function Example2Modal() {
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
             {...register("suggestion")}
-            errorMessage={errors?.["suggestion"]?.message}
+            errorMessage={errors?.suggestion?.message}
           />
         </div>
         {/* BUTTONS */}
@@ -95,6 +91,6 @@ export default function Example2Modal() {
           </Button>
         </div>
       </form>
-    </Modal>
+    </InterceptingModal>
   );
 }

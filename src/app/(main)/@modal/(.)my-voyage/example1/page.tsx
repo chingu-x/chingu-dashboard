@@ -1,22 +1,20 @@
 "use client";
 
-import { useCallback } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import * as z from "zod";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+
 import { TrashIcon } from "@heroicons/react/20/solid";
 
-import Button from "@/components/Button";
-import Modal from "@/components/modals/Modal";
+import { validateTextInput } from "@/helpers/form/validateInput";
+import { onOpen } from "@/store/features/toast/toastSlice";
+import { useAppDispatch } from "@/store/hooks";
+
+import InterceptingModal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
-
-import { validateTextInput } from "@/helpers/form/validateInput";
-
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { onClose } from "@/store/features/modal/modalSlice";
-import { onOpen } from "@/store/features/toast/toastSlice";
+import Button from "@/components/Button";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -44,41 +42,36 @@ const validationSchema = z.object({
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function Example1Modal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+export default function Example1InterceptingModal() {
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  const isModalOpen = isOpen && type === "example1";
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
-    dispatch(onClose());
-    router.refresh();
     dispatch(
       onOpen({
         context: "success",
         message: "Your information has been updated",
       }),
     );
+
+    // Close modal, a timer is for exit animation
+    const timer = setTimeout(() => {
+      router.back();
+    }, 450);
+    return () => clearTimeout(timer);
   };
 
-  const handleClose = useCallback(() => {
-    reset();
-    dispatch(onClose());
-  }, [dispatch, reset]);
-
   return (
-    <Modal isOpen={isModalOpen} title="create project" onClose={handleClose}>
+    <InterceptingModal title="Intercepting Modal">
       {/* FORM */}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -93,7 +86,7 @@ export default function Example1Modal() {
               placeholder="Enter you voyage project idea"
               maxLength={30}
               {...register("title")}
-              errorMessage={errors?.["title"]?.message}
+              errorMessage={errors?.title?.message}
             />
             <Textarea
               id="projectIdea"
@@ -101,7 +94,7 @@ export default function Example1Modal() {
               placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
               maxLength={50}
               {...register("projectIdea")}
-              errorMessage={errors?.["projectIdea"]?.message}
+              errorMessage={errors?.projectIdea?.message}
             />
             <Textarea
               id="visionStatement"
@@ -109,14 +102,14 @@ export default function Example1Modal() {
               placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
               maxLength={50}
               {...register("visionStatement")}
-              errorMessage={errors?.["visionStatement"]?.message}
+              errorMessage={errors?.visionStatement?.message}
             />
             <TextInput
               id="email"
               label="email"
               placeholder="Enter your email"
               {...register("email")}
-              errorMessage={errors?.["email"]?.message}
+              errorMessage={errors?.email?.message}
             />
           </div>
         </div>
@@ -137,6 +130,6 @@ export default function Example1Modal() {
           </Button>
         </div>
       </form>
-    </Modal>
+    </InterceptingModal>
   );
 }

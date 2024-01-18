@@ -1,22 +1,41 @@
+// TODO: createPortal creates indent errors, need fixing in future
+/* eslint-disable indent */
+
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, Variants, motion } from "framer-motion";
+
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
 interface ModalProps {
-  isOpen: boolean;
   title: string;
-  onClose: () => void;
   children: React.ReactNode;
 }
 
-export default function Modal({
-  isOpen,
-  title,
-  children,
-  onClose,
-}: ModalProps) {
+export default function Modal({ title, children }: ModalProps) {
+  const router = useRouter();
+  const ref = useRef<Element | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    ref.current = document.querySelector<HTMLElement>("#portal");
+    setMounted(true);
+    setIsOpen(true);
+  }, []);
+
+  function onClose() {
+    // Close modal, a timer is for exit animation
+    setIsOpen(false);
+    const timer = setTimeout(() => {
+      router.back();
+    }, 450);
+    return () => clearTimeout(timer);
+  }
+
   // Use ESC to close the modal
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -69,40 +88,47 @@ export default function Modal({
     },
   };
 
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.dialog
-          key="overlay"
-          variants={overlayVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          className="fixed z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto overlay bg-base-300/25"
-          open={isOpen}
-          onClick={onClose}
-        >
-          <motion.div
-            key="modal-box"
-            variants={modalBoxVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            onClick={(e) => e.stopPropagation()}
-            className="rounded-2xl bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden p-10 max-h-[calc(100vh-5em)]"
-          >
-            {/* HEADER */}
-            <div className="flex items-center justify-between pb-8">
-              <h3 className="text-xl font-semibold capitalize">{title}</h3>
-              <button type="button" aria-label="close modal" onClick={onClose}>
-                <XMarkIcon className="w-6 h-6 fill-current" />
-              </button>
-            </div>
-            {/* CONTENT */}
-            {children}
-          </motion.div>
-        </motion.dialog>
-      )}
-    </AnimatePresence>
-  );
+  return mounted && ref.current
+    ? createPortal(
+        <AnimatePresence>
+          {isOpen && (
+            <motion.dialog
+              key="overlay"
+              variants={overlayVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="absolute z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto overlay bg-base-300/25"
+              open={isOpen}
+              onClick={onClose}
+            >
+              <motion.div
+                key="modal-box"
+                variants={modalBoxVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                onClick={(e) => e.stopPropagation()}
+                className="rounded-2xl bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden p-10 max-h-[calc(100vh-5em)]"
+              >
+                {/* HEADER */}
+                <div className="flex items-center justify-between pb-8">
+                  <h3 className="text-xl font-semibold capitalize">{title}</h3>
+                  <button
+                    onClick={onClose}
+                    type="button"
+                    aria-label="close modal"
+                  >
+                    <XMarkIcon className="w-6 h-6 fill-current" />
+                  </button>
+                </div>
+                {/* CONTENT */}
+                {children}
+              </motion.div>
+            </motion.dialog>
+          )}
+        </AnimatePresence>,
+        ref.current,
+      )
+    : null;
 }

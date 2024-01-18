@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Droppable,
   DroppableProvided,
@@ -9,9 +10,6 @@ import {
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Feature } from "./fixtures/Features";
 import Card from "./Card";
-
-import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
 
 import Button from "@/components/Button";
 
@@ -26,15 +24,6 @@ interface ListProps {
 }
 
 export default function List({ id, title, features, currentUser }: ListProps) {
-  const dispatch = useAppDispatch();
-
-  function handleClick() {
-    dispatch(
-      onOpen({
-        type: "feature",
-      }),
-    );
-  }
   return (
     <div className="w-full px-8 py-10 font-semibold card bg-secondary-content rounded-2xl text-base-300">
       <div className="p-0 card-body gap-y-6">
@@ -73,15 +62,16 @@ export default function List({ id, title, features, currentUser }: ListProps) {
         </Droppable>
         <div className="card-actions">
           {/* Similiar to tech stack button, need to be a shared component */}
-          <Button
-            variant="secondary"
-            size="lg"
-            className="justify-start w-full"
-            onClick={handleClick}
-          >
-            <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
-            Add Feature
-          </Button>
+          <Link href="/my-voyage/features/add-feature">
+            <Button
+              variant="secondary"
+              size="lg"
+              className="justify-start w-full"
+            >
+              <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
+              Add Feature
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

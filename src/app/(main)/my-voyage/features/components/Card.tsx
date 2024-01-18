@@ -1,13 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Draggable, DraggableProvided } from "@hello-pangea/dnd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 import { Feature } from "./fixtures/Features";
-
-import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
 
 interface CardProps {
   feature: Feature;
@@ -16,18 +14,8 @@ interface CardProps {
 }
 
 export default function Card({ feature, currentUserId, index }: CardProps) {
-  const dispatch = useAppDispatch();
   const userFullName =
     feature.addedBy.member.firstName + " " + feature.addedBy.member.lastName;
-
-  function handleClick() {
-    dispatch(
-      onOpen({
-        type: "feature",
-        isEditing: true,
-      }),
-    );
-  }
 
   return (
     <Draggable draggableId={feature.id.toString()} index={index}>
@@ -49,14 +37,15 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
             </div>
             {feature.addedBy.member.id === currentUserId ? (
               // Edit Button
-              <button
-                type="button"
-                onClick={handleClick}
-                className="p-0 m-0 bg-transparent border-none hover:bg-transparent gap-x-0"
-                aria-label="feature menu"
-              >
-                <EllipsisVerticalIcon className="w-5 h-5 text-base-300" />
-              </button>
+              <Link href="/my-voyage/features/edit-feature">
+                <button
+                  type="button"
+                  className="p-0 m-0 bg-transparent border-none hover:bg-transparent gap-x-0"
+                  aria-label="feature menu"
+                >
+                  <EllipsisVerticalIcon className="w-5 h-5 text-base-300" />
+                </button>
+              </Link>
             ) : (
               // Creator's avatar
               <div className="overflow-hidden rounded-full">
