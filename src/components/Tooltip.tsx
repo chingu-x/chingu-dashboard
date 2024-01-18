@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 interface TooltipProps {
   content: string;
+  supportText?: string;
   position: "top" | "bottom" | "left" | "right";
   children: any;
   toolTipWidth: "small" | "medium" | "large";
@@ -12,9 +13,11 @@ interface TooltipProps {
 // configure tooltip width on tailwind global for custom uses
 // configure tooltip to have a position on tailwind global
 // light / dark mode
+// style to add support text
 
 const Tooltip = ({
   content,
+  supportText,
   position,
   children,
   toolTipWidth,
@@ -54,7 +57,8 @@ const Tooltip = ({
                 : "top-1/2 right-[150%] after:left-full after:border-r-transparent"
         }`}
       >
-        {content}
+        <div>{content}</div>
+        {supportText && <div>{supportText}</div>}
       </div>
     </div>
   );
