@@ -62,7 +62,7 @@ export default function PageButton({
           <Tooltip
             content={getButtonText(element.name)}
             position="right"
-            toolTipWidth="small"
+            tooltipWidth="small"
           >
             {element.icon}
           </Tooltip>
