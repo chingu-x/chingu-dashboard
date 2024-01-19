@@ -61,12 +61,10 @@ export default function PageButton({
         >
           <Tooltip
             content={getButtonText(element.name)}
-            supportText="one GIANT word LKSDNFLKSFJKLSJFLDSJFKDSJLFSDJKLJFLKSDJFKLSDJF"
             position="right"
             toolTipWidth="small"
           >
             {element.icon}
-            {/* {"one GIANT word LKSDNFLKSFJKLSJFLDSJFKDSJLFSDJKLJFLKSDJFKLSDJF"} */}
           </Tooltip>
         </button>
       </Link>
