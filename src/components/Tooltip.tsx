@@ -6,23 +6,20 @@ interface TooltipProps {
   supportText?: string;
   position: "top" | "bottom" | "left" | "right";
   children: any;
-  toolTipWidth: "small" | "medium" | "large";
+  tooltipWidth: "small" | "medium" | "large";
 }
-
-// TODO:
-// light / dark mode
 
 const Tooltip = ({
   content,
   supportText,
   position,
   children,
-  toolTipWidth,
+  tooltipWidth,
 }: TooltipProps) => {
   const [hovered, setHovered] = useState(false);
   return (
     <div
-      className={`relative cursor-pointer border border-red-500`}
+      className="relative cursor-pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -31,13 +28,13 @@ const Tooltip = ({
         className={`absolute transition ease-in-out duration-300 z-[2] break-all 
         ${supportText && "text-left"}
         ${hovered ? "opacity-100" : "opacity-0"}
-        text-white bg-neutral-content bg-black rounded-md py-2 px-3 transform after:absolute after:content-[''] after:border-neutral-content after:border-[7px] after:border-solid
+        text-base-300 bg-base-100 rounded-lg py-2 px-3 after:absolute after:content-[''] after:border-base-100 after:border-8 after:border-solid
         ${
           supportText
             ? "w-[320px]"
-            : toolTipWidth === "small"
+            : tooltipWidth === "small"
               ? "w-[138px]"
-              : toolTipWidth === "medium"
+              : tooltipWidth === "medium"
                 ? "w-[164px]"
                 : "w-[169px]"
         }
