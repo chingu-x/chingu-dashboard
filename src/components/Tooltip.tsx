@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 interface TooltipProps {
   content: string;
   supportText?: string;
-  position: "top" | "bottom" | "left" | "right";
+  position: "none" | "top" | "bottom" | "left" | "right";
   children: any;
   toolTipWidth: "small" | "medium" | "large";
 }
@@ -32,14 +32,17 @@ const Tooltip = ({
       {children}
       <div
         className={`absolute transition ease-in-out duration-300 z-[2]
+        break-all ${supportText && "text-left"}
         ${hovered ? "opacity-100" : "opacity-0"}
-        text-white bg-neutral-content bg-black rounded-md p-2 transform after:absolute after:content-[''] after:border-neutral-content after:border-[7px] after:border-solid
+        text-white bg-neutral-content bg-black rounded-md px-3 py-3 transform after:absolute after:content-[''] after:border-neutral-content after:border-[7px] after:border-solid
         ${
-          toolTipWidth === "small"
-            ? "w-[120px]"
-            : toolTipWidth === "medium"
-              ? "w-[160px]"
-              : "w-[300px]"
+          supportText
+            ? "w-[320px]"
+            : toolTipWidth === "small"
+              ? "w-[138px]"
+              : toolTipWidth === "medium"
+                ? "w-[164px]"
+                : "w-[169px]"
         }
         
         ${
