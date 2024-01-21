@@ -52,13 +52,13 @@ function ResetPasswordModalContainer({
           id="email"
           label="email"
           placeholder="Enter Your Email"
-          register={register("email")}
-          errors={errors}
+          {...register("email")}
+          errorMessage={errors?.email?.message}
         />
         <Button
           type="submit"
           title="submit"
-          customClassName="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus mb-3 mt-2"
+          className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus mb-3 mt-2"
         >
           Send reset link
         </Button>

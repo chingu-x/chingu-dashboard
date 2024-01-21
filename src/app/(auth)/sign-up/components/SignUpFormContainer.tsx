@@ -52,15 +52,15 @@ function SignUpFormContainer({
             id="email"
             label="email"
             placeholder="Enter Your Email"
-            register={register("email")}
-            errors={errors}
+            {...register("email")}
+            errorMessage={errors?.email?.message}
           />
           <TextInput
             id="password"
             label="password"
             placeholder="Enter Your Password"
-            register={{ ...register("password") }}
-            errors={errors}
+            {...register("password")}
+            errorMessage={errors?.password?.message}
             maxLength={30}
           />
         </div>
@@ -69,7 +69,7 @@ function SignUpFormContainer({
         <Button
           type="submit"
           title="submit"
-          customClassName="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+          className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
         >
           Join Now
         </Button>
