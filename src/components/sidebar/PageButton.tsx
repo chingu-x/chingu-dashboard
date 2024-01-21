@@ -24,8 +24,8 @@ export default function PageButton({
   const buttonStyles = `${
     isOpen
       ? "w-[14.375rem] flex justify-start pl-6"
-      : "w-[3.125rem] tooltip hover:tooltip-open tooltip-right before:bg-base-100 before:text-base-300 after:border-r-base-100 overflow:false px-0"
-  } h-[3.125rem] text-base-300 capitalize border-none hover:bg-base-100 active:bg-neutral-content focus:bg-neutral-content focus:text-base-300`;
+      : "w-[3.125rem] tooltip hover:tooltip-open tooltip-right overflow:false px-0"
+  }`;
 
   const getButtonBackgroundStyle = (page: string) =>
     (selectedButton === page && selectedButton === currentPath) ||
@@ -48,6 +48,8 @@ export default function PageButton({
       >
         <Button
           type="button"
+          size="lg"
+          variant="neutral"
           data-tip={element.name}
           className={`${buttonStyles} ${getButtonBackgroundStyle(
             element.link,

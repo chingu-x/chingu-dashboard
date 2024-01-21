@@ -108,13 +108,8 @@ export default function Sidebar() {
   const { isAuthenticated } = useAppSelector(
     (state: RootState): { isAuthenticated: boolean } => state.auth,
   );
-  const { voyageTeamMembers } = useAppSelector(
-    (state: RootState): { voyageTeamMembers: VoyageTeamMembers[] } =>
-      state.user,
-  );
 
-  const isVoyageStarted: boolean =
-    isAuthenticated && !!voyageTeamMembers[0]?.id;
+  const isVoyageStarted: boolean = isAuthenticated;
 
   const handlePageClick = useCallback(
     (element: PageProperty | string) => {
