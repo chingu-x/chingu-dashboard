@@ -1,4 +1,4 @@
-import SocialLoginButtonsContainer from "./SocialLoginButtonsContainer";
+import SocialLoginButtonsContainer from "@/components/socialLoginButtonsContainer/SocialLoginButtonsContainer";
 import SignInFormContainer from "./SignInFormContainer";
 import Alert from "@/components/Alert";
 
@@ -36,7 +36,6 @@ function SignInBlock({ handleResetPasswordModal }: SignInBlockProps) {
           handleResetPasswordModal={handleResetPasswordModal}
         />
       </div>
-      ;
     </>
   );
 }
