@@ -22,14 +22,14 @@ export default function VoyagePageButton({
 }: VoyagePageButtonProps) {
   const showIcon = (element: string) => {
     if (!isVoyageStarted) {
-      return <LockClosedIcon className="h-[1.125rem]" />;
+      return <LockClosedIcon className="h-[1.125rem] self-center mr-1" />;
     } else if (
       isVoyageStarted &&
       (hoveredButton === element || selectedButton === element)
     ) {
       return (
         <>
-          <div className="absolute left-[1.4rem]">
+          <div className="absolute left-[1.4rem] top-[3px]">
             <ArrowRightCircleIcon className="h-[1.125rem] text-primary" />
           </div>
         </>
