@@ -48,7 +48,7 @@ function ConfirmationMailModalContainer() {
       <Button
         type="button"
         title="Resend Email"
-        customClassName="text-base gap-x-0 border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100 w-full"
+        className="text-base gap-x-0 border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100 w-full"
       >
         Resend Email
       </Button>
