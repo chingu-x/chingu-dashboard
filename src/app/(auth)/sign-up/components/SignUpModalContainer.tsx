@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import SocialLoginButtonsContainer from "./SocialLoginButtonsContainer";
+import SocialLoginButtonsContainer from "@/components/socialLoginButtonsContainer/SocialLoginButtonsContainer";
 import SignUpFormContainer from "./SignUpFormContainer";
 import ConfirmationMailModalContainer from "./ConfirmationMailModalContainer";
 import Alert from "@/components/Alert";
