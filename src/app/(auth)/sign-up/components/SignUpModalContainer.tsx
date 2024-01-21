@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import SocialLoginButtonsContainer from "@/components/socialLoginButtonsContainer/SocialLoginButtonsContainer";
 import SignUpFormContainer from "./SignUpFormContainer";
 import ConfirmationMailModalContainer from "./ConfirmationMailModalContainer";
+import SocialLoginButtonsContainer from "@/components/socialLoginButtonsContainer/SocialLoginButtonsContainer";
 import Alert from "@/components/Alert";
 
 // Mocked value that will be removed when we will have setup the authentication from the backend
