@@ -56,6 +56,7 @@ function SignInFormContainer({
             errorMessage={errors?.email?.message}
           />
           <TextInput
+            type="password"
             id="password"
             label="password"
             placeholder="Enter Your Password"
