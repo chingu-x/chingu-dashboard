@@ -13,7 +13,6 @@ import PageButton from "./PageButton";
 import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
 import { useAppSelector } from "@/store/hooks";
-import { VoyageTeamMembers } from "@/store/features/user/userSlice";
 import { RootState } from "@/store/store";
 
 export enum MainPages {
