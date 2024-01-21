@@ -21,7 +21,7 @@ const validationSchema = z.object({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function Component() {
+export default function SignInPage() {
   const {
     register,
     formState: { errors },
@@ -29,7 +29,6 @@ export default function Component() {
     resolver: zodResolver(validationSchema),
   });
 
-export default function SignInPage() {
   return (
     <div className="w-full max-w-md px-8 py-6 space-y-6 bg-white shadow-md rounded-xl">
       <h2 className="text-3xl font-extrabold text-center text-gray-900">
