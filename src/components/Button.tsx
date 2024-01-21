@@ -34,10 +34,10 @@ const button = cva(
           "disabled:bg-accent-focus",
         ],
         neutral: [
-          "bg-base-100",
+          "bg-base-200",
           "border-base-100",
-          "hover:bg-neutral-content",
-          "focus:bg-neutral-focus",
+          "hover:bg-base-100",
+          "focus:bg-neutral-content",
           "disabled:text-neutral-focus",
           "disabled:bg-neutral-content",
         ],
@@ -73,7 +73,7 @@ const button = cva(
       size: "md",
       outline: false,
     },
-  },
+  }
 );
 
 export interface ButtonProps
