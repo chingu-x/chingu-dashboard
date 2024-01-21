@@ -1,5 +1,5 @@
-import SocialLoginButtonsContainer from "@/components/socialLoginButtonsContainer/SocialLoginButtonsContainer";
 import SignInFormContainer from "./SignInFormContainer";
+import SocialLoginButtonsContainer from "@/components/socialLoginButtonsContainer/SocialLoginButtonsContainer";
 import Alert from "@/components/Alert";
 
 interface SignInBlockProps {
