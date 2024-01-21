@@ -5,6 +5,7 @@ import StoreProvider from "@/components/StoreProvider";
 import ThemeProvider from "@/components/ThemeProvider";
 import ModalProvider from "@/components/ModalProvider";
 import ToastProvider from "@/components/ToastProvider";
+import AuthProvider from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Chingu Dashboard",
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body className="overflow-hidden">
         <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
           <StoreProvider>
+            <AuthProvider />
             <ToastProvider />
             <ModalProvider />
             {children}

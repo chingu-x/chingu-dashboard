@@ -99,10 +99,10 @@ export default function FeatureModal() {
           <TextInput
             id="feature"
             placeholder="What is your feature suggestion?"
-            register={{ ...register("feature") }}
-            errors={errors}
             suggestion={isEditing ? "" : "Tip: keep it short and sweet"}
             maxLength={50}
+            {...register("feature")}
+            errorMessage={errors?.feature?.message}
           />
         </div>
         {/* BUTTONS */}
