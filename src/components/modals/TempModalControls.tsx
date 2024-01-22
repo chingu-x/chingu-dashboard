@@ -1,8 +1,8 @@
 "use client";
 
 import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
 import Button from "@/components/Button";
+import { onOpen } from "@/store/features/modal/modalSlice";
 
 export default function TempModalControls() {
   const dispatch = useAppDispatch();
