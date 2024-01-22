@@ -8,7 +8,7 @@ interface TeamCardProps {
 
 export default function TeamCard({ teamMember, currentUserId }: TeamCardProps) {
   return (
-    <div className="box-border flex flex-col items-center p-10 card bg-secondary-content">
+    <div className="box-border flex flex-col items-center p-10 bg-secondary-content rounded-2xl">
       <ul className="flex flex-col gap-6 min-w-[400px]">
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Name</span>
@@ -23,16 +23,8 @@ export default function TeamCard({ teamMember, currentUserId }: TeamCardProps) {
           <EditCell teamMember={teamMember} currentUserId={currentUserId} />
         </li>
         <li className="grid grid-cols-2 gap-6">
-          <span className="font-semibold">Location</span>
-          <span>{teamMember.location}</span>
-        </li>
-        <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Timezone</span>
           <span>{teamMember.timeZone}</span>
-        </li>
-        <li className="grid grid-cols-2 gap-6">
-          <span className="font-semibold">Email</span>
-          <span>{teamMember.email}</span>
         </li>
         <li className="grid grid-cols-2 gap-6">
           <span className="font-semibold">Position</span>
