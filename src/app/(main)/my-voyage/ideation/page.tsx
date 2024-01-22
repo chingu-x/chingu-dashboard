@@ -1,5 +1,6 @@
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
-import IdeationClientComponentWrapper from "./components/IdeationClientComponentWrapper";
+import IdeationClientComponentWrapper from "@/app/ideation/components/IdeationClientComponentWrapper";
+
 import Banner from "@/components/banner/Banner";
 
 // const USERID = "e7a6262d-c596-44ac-9a50-373bcff1e155";
