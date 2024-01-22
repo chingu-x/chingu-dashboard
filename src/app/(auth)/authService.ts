@@ -1,4 +1,5 @@
 "use server";
+
 import { cookies } from "next/headers";
 import { User } from "@/store/features/user/userSlice";
 
@@ -20,21 +21,20 @@ export async function serverSignIn(): Promise<ServerSignInResponse> {
         password: "password",
       }),
       cache: "no-store",
-    },
+    }
   );
 
   if (!res.ok) {
     throw new Error(res.statusText);
   }
 
-  const cookie = res.headers.getSetCookie()[0];
-
-  const token = cookie.split("access_token=")[1].split("; ")[0];
-  const maxAge = cookie.split("access_token=")[1].split("; ")[1].split("=")[1];
+  const accessToken = res.headers.getSetCookie()[0].split("access_token=")[1];
+  const tokenValue = accessToken.split("; ")[0];
+  const maxAge = accessToken.split("; ")[1].split("=")[1];
 
   cookies().set({
     name: "access_token",
-    value: token,
+    value: tokenValue,
     httpOnly: true,
     maxAge: +maxAge,
     path: "/",
@@ -50,7 +50,7 @@ export async function serverSignOut(): Promise<void> {
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/logout`,
       {
         method: "POST",
-      },
+      }
     ).then(() => {
       cookies().delete("access_token");
     });
@@ -70,7 +70,7 @@ export async function getUser(): Promise<User | undefined> {
       headers: {
         Cookie: `access_token=${token}`,
       },
-    },
+    }
   );
 
   if (!res.ok) {
