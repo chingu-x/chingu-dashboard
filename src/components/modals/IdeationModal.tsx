@@ -13,7 +13,7 @@ import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
@@ -38,10 +38,10 @@ const validationSchema = z.object({
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function IdeationModal() {
-  const { isOpen, type, mode } = useAppSelector((state) => state.modal);
+  // const { isOpen, type, mode } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
 
-  const isModalOpen = isOpen && type === "ideation";
+  // const isModalOpen = isOpen && type === "ideation";
 
   const {
     register,

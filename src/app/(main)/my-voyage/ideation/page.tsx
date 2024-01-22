@@ -1,5 +1,5 @@
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
-import IdeationClientComponentWrapper from "@/app/ideation/components/IdeationClientComponentWrapper";
+import IdeationClientComponentWrapper from "@/app/(main)/my-voyage/ideation/components/IdeationClientComponentWrapper";
 
 import Banner from "@/components/banner/Banner";
 
