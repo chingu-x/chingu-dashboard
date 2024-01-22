@@ -2,25 +2,26 @@
 
 import { useAppDispatch } from "@/store/hooks";
 import { onOpen } from "@/store/features/modal/modalSlice";
+import Button from "@/components/Button";
 
 export default function TempModalControls() {
   const dispatch = useAppDispatch();
   return (
     <div className="flex flex-col p-6 gap-y-4">
-      <button
+      <Button
+        size="lg"
         type="button"
-        onClick={() => dispatch(onOpen({ type: "example1", mode: "" }))}
-        className="border-none btn bg-primary"
+        onClick={() => dispatch(onOpen({ type: "example1" }))}
       >
         Modal 1
-      </button>
-      <button
+      </Button>
+      <Button
+        size="lg"
         type="button"
-        onClick={() => dispatch(onOpen({ type: "example2", mode: "" }))}
-        className="border-none btn bg-primary"
+        onClick={() => dispatch(onOpen({ type: "example2" }))}
       >
         Modal 2
-      </button>
+      </Button>
     </div>
   );
 }

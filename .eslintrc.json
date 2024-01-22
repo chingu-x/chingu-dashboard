@@ -15,7 +15,8 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "next/core-web-vitals",
-    "prettier"
+    "prettier",
+    "plugin:storybook/recommended"
   ],
   "settings": {
     "import/resolver:": {
@@ -97,6 +98,8 @@
           "attributes": false
         }
       }
-    ]
+    ],
+    "dot-notation": "off",
+    "@typescript-eslint/dot-notation": "error"
   }
 }

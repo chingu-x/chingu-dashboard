@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import StoreProvider from "@/components/StoreProvider";
 import ThemeProvider from "@/components/ThemeProvider";
-import Sidebar from "@/components/sidebar/Sidebar";
-import Navbar from "@/components/navbar/Navbar";
+import ToastProvider from "@/components/ToastProvider";
+import AuthProvider from "@/components/AuthProvider";
 import ModalProvider from "@/components/ModalProvider";
 
 export const metadata: Metadata = {
@@ -30,22 +30,14 @@ export default function RootLayout({
       className={`${inter.className} bg-base-content`}
       suppressHydrationWarning
     >
-      <body>
+      <body className="overflow-hidden">
         <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
-          <div className="flex flex-col h-screen">
-            <Navbar />
-            <StoreProvider>
-              <div className="flex flex-1 overflow-hidden">
-                <ModalProvider />
-                <Sidebar />
-                <main className="flex flex-col items-center flex-1 w-full p-10 overflow-y-auto">
-                  <div className="flex flex-col max-w-[1353px] gap-y-9">
-                    {children}
-                  </div>
-                </main>
-              </div>
-            </StoreProvider>
-          </div>
+          <StoreProvider>
+            <AuthProvider />
+            <ToastProvider />
+            <ModalProvider />
+            {children}
+          </StoreProvider>
         </ThemeProvider>
       </body>
     </html>

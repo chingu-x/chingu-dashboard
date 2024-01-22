@@ -44,27 +44,27 @@ export type PageProperty = {
 export const voyagePages: VoyagePageProperty[] = [
   {
     name: VoyagePages.directory,
-    link: "/directory",
+    link: "/my-voyage/directory",
   },
   {
     name: VoyagePages.techStack,
-    link: "/tech-stack",
+    link: "/my-voyage/tech-stack",
   },
   {
     name: VoyagePages.ideation,
-    link: "/ideation",
+    link: "/my-voyage/ideation",
   },
   {
     name: VoyagePages.features,
-    link: "/features",
+    link: "/my-voyage/features",
   },
   {
     name: VoyagePages.sprints,
-    link: "/sprints",
+    link: "/my-voyage/sprints",
   },
   {
     name: VoyagePages.resources,
-    link: "/voyage-resources",
+    link: "/my-voyage/voyage-resources",
   },
 ];
 
@@ -118,7 +118,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`overflow-y-auto ${
+      className={`${
         isOpenSidebar ? "w-[18.438rem]" : "w-[5.813rem]"
       } text-center bg-base-200 flex flex-col justify-between border-r border-neutral-content shadow-[4px_4px_4px_0] shadow-neutral-focus/5`}
     >
