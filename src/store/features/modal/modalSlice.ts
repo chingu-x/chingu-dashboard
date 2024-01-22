@@ -1,22 +1,22 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export type ModalType = "example1" | "example2" | "ideation";
+export type ModalType = "example1" | "example2" | "feature";
 
 interface ModalState {
   type: ModalType | null;
   isOpen: boolean;
-  mode: string | null;
+  isEditing?: boolean;
 }
 
 interface ModalActionPayload {
   type: ModalType;
-  mode: string;
+  isEditing?: boolean;
 }
 
 const initialState: ModalState = {
   type: null,
   isOpen: false,
-  mode: null,
+  isEditing: false,
 };
 
 export const modalSlice = createSlice({
@@ -26,12 +26,12 @@ export const modalSlice = createSlice({
     onOpen: (state, action: PayloadAction<ModalActionPayload>) => {
       state.isOpen = true;
       state.type = action.payload.type;
-      state.mode = action.payload.mode;
+      state.isEditing = action.payload.isEditing;
     },
     onClose: (state) => {
       state.isOpen = false;
       state.type = null;
-      state.mode = null;
+      state.isEditing = false;
     },
   },
 });

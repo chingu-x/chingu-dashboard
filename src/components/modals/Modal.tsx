@@ -37,18 +37,21 @@ export default function Modal({
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-    // eslint-disable-next-line
-  }, []);
+  }, [onClose]);
 
   if (!isOpen) {
     return null;
   }
 
   return (
-    <dialog className="modal bg-base-300/25" open={showModal} onClick={onClose}>
+    <dialog
+      className="fixed z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto overlay bg-base-300/25"
+      open={showModal}
+      onClick={onClose}
+    >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="modal-box bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden p-10"
+        className="rounded-2xl bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden p-10"
       >
         {/* HEADER */}
         <div className="flex items-center justify-between pb-8">

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MainPages, PageProperty, voyagePages } from "./Sidebar";
-import Button from "@/components/Button";
 
 interface PageButtonProps {
   element: PageProperty;
@@ -22,7 +21,9 @@ export default function PageButton({
 }: PageButtonProps) {
   const currentPath = usePathname();
   const buttonStyles = `${
-    isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem]"
+    isOpen
+      ? "w-[14.375rem] flex justify-start pl-6"
+      : "w-[3.125rem] tooltip hover:tooltip-open tooltip-right before:bg-base-100 before:text-base-300 after:border-r-base-100 overflow:false"
   } h-[3.125rem] text-base-300 capitalize border-none hover:bg-base-100`;
 
   const getButtonBackgroundStyle = (page: string) =>
@@ -44,9 +45,10 @@ export default function PageButton({
             : ""
         }
       >
-        <Button
-          title={element.name}
-          customClassName={`${buttonStyles} ${getButtonBackgroundStyle(
+        <button
+          type="button"
+          data-tip={element.name}
+          className={`${buttonStyles} ${getButtonBackgroundStyle(
             element.link,
           )} ${element.marginBottom}`}
           onMouseEnter={() => setHoveredButton(element.name)}
@@ -55,7 +57,7 @@ export default function PageButton({
         >
           {element.icon}
           {getButtonText(element.name)}
-        </Button>
+        </button>
       </Link>
     </li>
   );

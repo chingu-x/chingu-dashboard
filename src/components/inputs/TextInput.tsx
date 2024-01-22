@@ -1,72 +1,81 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
-import { FieldErrors, UseFormRegisterReturn } from "react-hook-form";
+import React, { ChangeEvent, useState } from "react";
 
+import Label from "./Label";
 import FieldMessage from "./FieldMessage";
 
-interface TextInputProps {
+import { cn } from "@/lib/utils";
+
+export interface TextInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label?: string;
   placeholder: string;
-  register: UseFormRegisterReturn;
-  errors: FieldErrors;
   suggestion?: string;
   maxLength?: number;
+  errorMessage?: string | undefined;
 }
 
-export default function TextInput({
-  id,
-  label,
-  placeholder,
-  register,
-  errors,
-  suggestion,
-  maxLength,
-}: TextInputProps) {
-  const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
+const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
+  (
+    {
+      id,
+      label,
+      placeholder,
+      suggestion,
+      maxLength,
+      errorMessage,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
 
-  function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-    if (!maxLength) return;
+    function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
+      if (!maxLength) return;
 
-    const currentLength = e.target.value.length;
-    if (currentLength > 0) {
-      setCurrentSuggestion(`Character length ${currentLength}/${maxLength}`);
-    } else {
-      setCurrentSuggestion(suggestion);
+      const currentLength = e.target.value.length;
+      if (currentLength > 0) {
+        setCurrentSuggestion(`Character length ${currentLength}/${maxLength}`);
+      } else {
+        setCurrentSuggestion(suggestion);
+      }
     }
-  }
 
-  return (
-    <div className="w-full pr-2 ml-1 form-control">
-      <label htmlFor={id} className="p-0 label">
-        {label && (
-          <span className="text-base font-medium capitalize label-text text-base-300">
-            {label}
-          </span>
-        )}
-      </label>
-      <input
-        id={id}
-        type="text"
-        placeholder={placeholder}
-        {...register}
-        onChange={(e) => {
-          // call react-hook-form onChange
-          void register.onChange(e);
-          // call your handler
-          handleOnChange(e);
-        }}
-        className={`w-full my-2 text-base shadow-transparent shadow-[0px_0px_0px_3px] input input-bordered bg-base-200 text-neutral-focus ${
-          errors[id]
-            ? "border-error focus-visible:shadow-error/30"
-            : "border-neutral/40 focus-visible:shadow-neutral/30"
-        }`}
-      />
-      <FieldMessage
-        errorMessage={errors[id]?.message as string}
-        suggestionMessage={errors[id]?.message ? "" : currentSuggestion}
-      />
-    </div>
-  );
-}
+    return (
+      <div className="w-full pr-2 ml-1">
+        {label && <Label htmlFor={id}>{label}</Label>}
+        <input
+          id={id}
+          type="text"
+          placeholder={placeholder}
+          aria-describedby={`${id}-message`}
+          className={cn(
+            "w-full my-2 text-base outline-none rounded-lg border px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus disabled:cursor-not-allowed border-neutral/40 focus-visible:shadow-neutral/30",
+            errorMessage && "border-error focus-visible:shadow-error/30",
+            className,
+          )}
+          ref={ref}
+          {...props}
+          onChange={(e) => {
+            // call onChange which can be passed as prop
+            if (props.onChange) void props.onChange(e);
+            // call your handler
+            handleOnChange(e);
+          }}
+        />
+        <FieldMessage
+          id={`${id}-message`}
+          errorMessage={errorMessage && errorMessage}
+          suggestionMessage={errorMessage ? "" : currentSuggestion}
+        />
+      </div>
+    );
+  },
+);
+
+TextInput.displayName = "TextInput";
+
+export default TextInput;
