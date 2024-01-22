@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import StoreProvider from "@/components/StoreProvider";
 import ThemeProvider from "@/components/ThemeProvider";
-import ModalProvider from "@/components/ModalProvider";
 import ToastProvider from "@/components/ToastProvider";
 import AuthProvider from "@/components/AuthProvider";
+import ModalProvider from "@/components/ModalProvider";
 
 export const metadata: Metadata = {
   title: "Chingu Dashboard",

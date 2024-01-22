@@ -1,27 +1,35 @@
 import ContributionCard from "./ContributionCard";
 import VoteCard from "./VoteCard";
-import type { Ideation } from "./fixtures/ideation";
+// import type { Ideation } from "./fixtures/ideation";
+import {
+  ProjectIdeaVotes,
+  VoyageMember,
+} from "@/store/features/ideation/ideationSlice";
+
+interface IdeationContainerProps {
+  title: string;
+  project_idea: string;
+  vision_statement: string;
+  users: ProjectIdeaVotes[];
+  contributed_by: {
+    member: VoyageMember;
+  };
+}
 
 function IdeationContainer({
   title,
   project_idea,
   vision_statement,
   users,
-  voted,
-  own_idea,
   contributed_by,
-}: Ideation) {
+}: IdeationContainerProps) {
   return (
     <div className="card w-full bg-base-200 flex flex-row items-start p-10 gap-x-20">
       <div className="flex flex-col justify-between gap-y-[24px] min-[1920px]:hidden">
-        <VoteCard users={users} voted={voted} />
-        <ContributionCard own_idea={own_idea} contributed_by={contributed_by} />
+        <VoteCard users={users} />
+        <ContributionCard contributed_by={contributed_by} />
       </div>
-      <VoteCard
-        users={users}
-        voted={voted}
-        className="hidden min-[1920px]:block"
-      />
+      <VoteCard users={users} className="hidden min-[1920px]:block" />
       <section className="card-body gap-y-7 p-0 w-[1000px] h-[377px] overflow-y-auto pr-5">
         <h2 className="text-xl font-semibold text-base-300">{title}</h2>
         <h3 className="text-base text-neutral-focus font-semibold">
@@ -36,7 +44,6 @@ function IdeationContainer({
         </p>
       </section>
       <ContributionCard
-        own_idea={own_idea}
         contributed_by={contributed_by}
         className="hidden min-[1920px]:block"
       />

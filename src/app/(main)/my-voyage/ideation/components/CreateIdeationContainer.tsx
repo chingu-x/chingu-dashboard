@@ -1,7 +1,13 @@
+"use client";
+
 import VoteDescriptionCard from "./VoteDescriptionCard";
 import Button from "@/components/Button";
+// import { useAppDispatch } from "@/store/hooks";
+// import { onOpen } from "@/store/features/modal/modalSlice";
 
 function CreateIdeationContainer() {
+  // const dispatch = useAppDispatch();
+
   return (
     <div className="card w-full min-h-[190px] max-[1919px]:min-h-[280px] bg-base-100 flex flex-row items-center px-10">
       <div className="flex flex-col justify-between h-full py-10 min-[1920px]:hidden">
