@@ -1,17 +1,14 @@
-import Button from "@/components/Button";
 import Badge from "@/components/Badge";
+import { VoyageMember } from "@/store/features/ideation/ideationSlice";
 
 interface ContributionCardProps {
-  own_idea: boolean;
   contributed_by: {
-    name: string;
-    avatar?: string;
+    member: VoyageMember;
   };
   className?: string;
 }
 
 function ContributionCard({
-  own_idea,
   contributed_by,
   className,
 }: ContributionCardProps) {
@@ -21,12 +18,13 @@ function ContributionCard({
     >
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
-        <Badge data={contributed_by} />
+        <Badge data={contributed_by.member} />
+        {/* <Badge data={contributed_by} />
         {own_idea ? (
           <Button variant="secondary" className="w-full">
             Edit Project
           </Button>
-        ) : null}
+        ) : null} */}
       </section>
     </div>
   );
