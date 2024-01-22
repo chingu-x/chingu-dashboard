@@ -18,16 +18,13 @@ function ContributionCard({
     >
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
-<<<<<<< HEAD:src/app/ideation/components/ContributionCard.tsx
         <Badge data={contributed_by.member} />
-=======
-        <Badge data={contributed_by} />
+        {/* <Badge data={contributed_by} />
         {own_idea ? (
           <Button variant="secondary" className="w-full">
             Edit Project
           </Button>
-        ) : null}
->>>>>>> c884e4f52381f98dab70da681daf7e3b8982ead5:src/app/(main)/my-voyage/ideation/components/ContributionCard.tsx
+        ) : null} */}
       </section>
     </div>
   );

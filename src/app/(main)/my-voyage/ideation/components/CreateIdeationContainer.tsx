@@ -2,11 +2,11 @@
 
 import VoteDescriptionCard from "./VoteDescriptionCard";
 import Button from "@/components/Button";
-import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
+// import { useAppDispatch } from "@/store/hooks";
+// import { onOpen } from "@/store/features/modal/modalSlice";
 
 function CreateIdeationContainer() {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   return (
     <div className="card w-full min-h-[190px] max-[1919px]:min-h-[280px] bg-base-100 flex flex-row items-center px-10">
@@ -28,15 +28,8 @@ function CreateIdeationContainer() {
         </p>
       </section>
       <Button
-<<<<<<< HEAD:src/app/ideation/components/CreateIdeationContainer.tsx
-        title="Create Project"
-        type="button"
-        onClick={() => dispatch(onOpen({ type: "ideation", mode: "create" }))}
-        customClassName="max-w-[200px] w-full btn-primary text-base-300 capitalize hidden min-[1920px]:block"
-=======
         size="lg"
         className="max-w-[200px] w-full hidden min-[1920px]:block"
->>>>>>> c884e4f52381f98dab70da681daf7e3b8982ead5:src/app/(main)/my-voyage/ideation/components/CreateIdeationContainer.tsx
       >
         Create Project
       </Button>
