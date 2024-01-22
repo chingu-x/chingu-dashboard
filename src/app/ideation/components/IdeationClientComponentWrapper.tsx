@@ -24,10 +24,8 @@ function IdeationClientComponentWrapper() {
       dispatch(fetchIdeations(data));
       dispatch(setLoading(false));
     }
-    
+
     fetchData().catch((err) => console.log(err));
-
-
   }, [dispatch]);
 
   return (
