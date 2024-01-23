@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type React from "react";
 import { usePathname } from "next/navigation";
 import {
@@ -105,10 +105,14 @@ export default function Sidebar() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const { isAuthenticated } = useAppSelector(
-    (state: RootState): { isAuthenticated: boolean } => state.auth,
+    (state: RootState): { isAuthenticated: boolean } => state.auth
   );
 
   const isVoyageStarted: boolean = isAuthenticated;
+
+  useEffect(() => {
+    setSelectedButton(currentPath);
+  }, [currentPath]);
 
   const handlePageClick = useCallback(
     (element: PageProperty | string) => {
@@ -120,7 +124,7 @@ export default function Sidebar() {
         setSelectedButton(element.link);
       }
     },
-    [setSelectedButton, setIsOpenSidebar],
+    [setSelectedButton, setIsOpenSidebar]
   );
 
   return (
