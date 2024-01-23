@@ -33,7 +33,7 @@ export default function AuthHeader() {
           <Bell notificationCount={notificationCount} />
           <div className="flex flex-row items-center px-2 ml-6">
             <Avatar image="/img/avatar.png" height={34} width={34} />
-            <DropDown name={name} />
+            <DropDown name={name} openState={false}/>
           </div>
         </>
       ) : (
