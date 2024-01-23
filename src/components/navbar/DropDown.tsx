@@ -7,10 +7,10 @@ import { useAppDispatch } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 import { serverSignOut } from "@/app/(auth)/authService";
 
-export default function DropDown({ name }: { name: string }) {
+export default function DropDown({ name, openState }: { name: string, openState:boolean }) {
   const dispatch = useAppDispatch();
   const menuRef = useRef<HTMLUListElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(openState);
   const closed = "hidden";
   const open ="absolute z-[1] p-2 mt-2 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
 
