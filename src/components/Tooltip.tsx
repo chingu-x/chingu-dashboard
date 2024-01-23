@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 interface TooltipProps {
   content: string;
   supportText?: string;
-  position: "top" | "bottom" | "left" | "right";
+  // position: "top" | "bottom" | "left" | "right";
+  position: any;
   children: any;
-  tooltipWidth: "small" | "medium" | "large";
+  // tooltipWidth: "small" | "medium" | "large";
+  tooltipWidth: any;
 }
 
 const Tooltip = ({
@@ -63,8 +65,11 @@ const Tooltip = ({
 
 Tooltip.propTypes = {
   content: PropTypes.string.isRequired,
-  position: PropTypes.oneOf(["top", "bottom", "right", "left"]).isRequired,
+  // position: PropTypes.oneOf(["top", "bottom", "right", "left"]).isRequired,
+  position: PropTypes.any.isRequired,
   children: PropTypes.any.isRequired,
+  supportText: PropTypes.string.isRequired,
+  tooltipWidth: PropTypes.number,
 };
 
 export default Tooltip;
