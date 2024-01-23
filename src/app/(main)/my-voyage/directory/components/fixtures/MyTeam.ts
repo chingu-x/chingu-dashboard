@@ -3,9 +3,7 @@ export interface TeamMember {
   name: string;
   discordId: string;
   averageHour: number;
-  location: string;
   timeZone: string;
-  email: string;
   position: string;
 }
 
@@ -15,9 +13,7 @@ export const teamMembers: TeamMember[] = [
     name: "Danney Trieu",
     discordId: "danneytrieuwork#2558",
     averageHour: 0,
-    location: "Denver, CO, USA",
-    timeZone: "MDT",
-    email: "danney@gmail.com",
+    timeZone: "7:00 (UTC +2)",
     position: "Product Owner",
   },
   {
@@ -25,9 +21,7 @@ export const teamMembers: TeamMember[] = [
     name: "Jane Morez",
     discordId: "Jan_morez#2341",
     averageHour: 0,
-    location: "Las Vegas, NY, USA",
-    timeZone: "PDT",
-    email: "jane@gmail.com",
+    timeZone: "4:00 (UTC +3)",
     position: "Back-end Developer",
   },
   {
@@ -35,9 +29,7 @@ export const teamMembers: TeamMember[] = [
     name: "Kayla Montre",
     discordId: "KaylaMon#5678",
     averageHour: 12,
-    location: "Las Vegas, NY, USA",
-    timeZone: "PDT",
-    email: "kayla@gmail.com",
+    timeZone: "6:00 (UTC +4)",
     position: "UX/UI Designer",
   },
   {
@@ -45,9 +37,7 @@ export const teamMembers: TeamMember[] = [
     name: "Jackson Pez",
     discordId: "jackson#2558",
     averageHour: 10,
-    location: "Denver, CO, USA",
-    timeZone: "MDT",
-    email: "jackson@gmail.com",
+    timeZone: "14:00 (UTC +11)",
     position: "Front-end Developer",
   },
 ];
