@@ -3,7 +3,6 @@ import Tooltip from "@/components/Tooltip";
 
 const meta = {
   title: "Components/Tooltip",
-  //   position is not string type??
   component: Tooltip,
   parameters: {
     layout: "centered",
@@ -20,11 +19,13 @@ const meta = {
     },
     position: {
       description: "Where to place the tooltip",
-      control: { type: "select", options: ["top", "bottom", "left", "right"] },
+      options: ["top", "bottom", "left", "right"],
+      control: { type: "radio" },
     },
     tooltipWidth: {
       description: "Width of tooltip",
-      control: { type: "select", options: ["small", "medium", "large"] },
+      options: ["small", "medium", "large"],
+      control: { type: "radio" },
     },
     children: {
       description: "What is the tooltip referring to",

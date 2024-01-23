@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
+type Position = "top" | "bottom" | "left" | "right";
+type TooltipWidth = "small" | "medium" | "large";
+
 interface TooltipProps {
   content: string;
   supportText?: string;
-  // position: "top" | "bottom" | "left" | "right";
-  position: any;
+  position: Position;
   children: any;
-  // tooltipWidth: "small" | "medium" | "large";
-  tooltipWidth: any;
+  tooltipWidth: TooltipWidth;
 }
 
 const Tooltip = ({
@@ -69,7 +70,8 @@ Tooltip.propTypes = {
   position: PropTypes.any.isRequired,
   children: PropTypes.any.isRequired,
   supportText: PropTypes.string.isRequired,
-  tooltipWidth: PropTypes.number,
+  // position: PropTypes.oneOf(["top", "bottom", "right", "left"]).isRequired,
+  tooltipWidth: PropTypes.any.isRequired,
 };
 
 export default Tooltip;
