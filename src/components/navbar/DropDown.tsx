@@ -1,20 +1,28 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import DropDownLink from "./DropDownLink";
 import Button from "@/components/Button";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 import { serverSignOut } from "@/app/(auth)/authService";
-import DropDownLink from "./DropDownLink";
 
-
-export default function DropDown({ name, openState }: { name: string, openState:boolean }) {
+export default function DropDown({
+  name,
+  openState,
+}: {
+  name: string;
+  openState: boolean;
+}) {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(openState);
-  const currentVoyage  = useAppSelector((state) =>state.user.voyageTeamMembers[0]?.voyageTeam.name)
+  const currentVoyage = useAppSelector(
+    (state) => state.user.voyageTeamMembers[0]?.voyageTeam.name,
+  );
   const menuRef = useRef<HTMLUListElement>(null);
   const closed = "hidden";
-  const open ="absolute z-[1] p-2 mt-2 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
+  const open =
+    "absolute z-[1] p-2 mt-2 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -54,7 +62,7 @@ export default function DropDown({ name, openState }: { name: string, openState:
       </label>
       <ul tabIndex={0} className={isOpen ? open : closed} ref={menuRef}>
         {/**Check if user is on voyage. If so, display voyage name/link*/}
-        {currentVoyage &&  <DropDownLink title={currentVoyage} />}
+        {currentVoyage && <DropDownLink title={currentVoyage} />}
         <DropDownLink title="404???" href="/hello404" />
         <Button title="signout" type="button" onClick={handleClick}>
           Sign Out
