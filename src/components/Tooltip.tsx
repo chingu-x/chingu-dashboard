@@ -32,8 +32,6 @@ export default function Tooltip({
     nonSupportTextWidth = "w-[169px]";
   }
 
-  const supportTextDisplay = supportText ? "text-left" : "text-center";
-  const widthConfig = supportText ? "w-[320px]" : nonSupportTextWidth;
   const tooltipPositionStyling =
     position === "top" || position === "bottom"
       ? "-translate-x-1/2 after:border-x-transparent after:-translate-x-1/2 after:left-1/2"
@@ -49,9 +47,9 @@ export default function Tooltip({
       <div
         className={cn(
           "absolute transition shadow-md ease-in-out duration-300 z-[2] break-all",
-          supportTextDisplay,
+          supportText ? "text-left" : "text-center",
           hovered ? "opacity-100" : "opacity-0",
-          widthConfig,
+          supportText ? "w-[320px]" : nonSupportTextWidth,
           "text-base-300 bg-base-100 rounded-lg py-2 px-3 after:absolute after:content-[''] after:border-base-100 after:border-8 after:border-solid",
           tooltipPositionStyling,
           position === "top" &&
