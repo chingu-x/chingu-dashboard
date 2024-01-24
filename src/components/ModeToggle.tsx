@@ -38,7 +38,7 @@ export default function ModeToggle() {
   };
 
   return (
-    <label className={"swap swap-rotate flex items-center"}>
+    <label className="cursor-pointer">
       <input
         className="invisible w-0 h-0"
         data-testid="mode-toggle"

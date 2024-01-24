@@ -8,10 +8,14 @@ import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 
 const validationSchema = z.object({
-  suggestion: validateTextInput({
-    inputName: "Suggestion",
+  email: validateTextInput({
+    inputName: "Email",
     required: true,
-    maxLen: 30,
+    isEmail: true,
+  }),
+  password: validateTextInput({
+    inputName: "Password",
+    required: true,
   }),
 });
 
@@ -32,35 +36,21 @@ export default function Component() {
       </h2>
       <form className="space-y-6">
         <div>
-          <label
-            className="text-sm font-medium text-gray-700"
-            htmlFor="username"
-          >
-            Username
-          </label>
           <TextInput
-            id="suggestion"
-            placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
-            suggestion="Tip: keep it short and sweet"
-            maxLength={30}
+            id="email"
+            label="email"
+            placeholder="Enter your email"
+            {...register("email")}
+            errorMessage={errors?.email?.message}
           />
         </div>
         <div>
-          <label
-            className="text-sm font-medium text-gray-700"
-            htmlFor="password"
-          >
-            Password
-          </label>
           <TextInput
-            id="suggestion"
-            placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
-            suggestion="Tip: keep it short and sweet"
-            maxLength={30}
+            id="password"
+            label="password"
+            placeholder="Enter your password"
+            {...register("password")}
+            errorMessage={errors?.password?.message}
           />
         </div>
         <Button size="lg" className="w-full" type="submit">
