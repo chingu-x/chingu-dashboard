@@ -29,7 +29,7 @@ const meta = {
     },
     children: {
       description: "What is the tooltip referring to",
-      control: "any",
+      control: "text",
     },
   },
 } satisfies Meta<typeof Tooltip>;
