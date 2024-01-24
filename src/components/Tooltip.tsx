@@ -28,8 +28,8 @@ const Tooltip = ({
     >
       {children}
       <div
-        className={`absolute transition ease-in-out duration-300 z-[2] break-all 
-        ${supportText && "text-left"}
+        className={`absolute transition shadow-md ease-in-out duration-300 z-[2] break-all 
+        ${supportText ? "text-left" : "text-center"}
         ${hovered ? "opacity-100" : "opacity-0"}
         text-base-300 bg-base-100 rounded-lg py-2 px-3 after:absolute after:content-[''] after:border-base-100 after:border-8 after:border-solid
         ${
@@ -57,7 +57,7 @@ const Tooltip = ({
                 : "top-1/2 right-full -translate-x-3 after:left-full after:border-r-transparent"
         }`}
       >
-        <div className={`${supportText && "pb-2"}`}>{content}</div>
+        <div className={`${supportText && "mb-2"}`}>{content}</div>
         {supportText && <div>{supportText}</div>}
       </div>
     </div>
