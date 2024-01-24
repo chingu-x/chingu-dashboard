@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 type Position = "top" | "bottom" | "left" | "right";
 type TooltipWidth = "small" | "medium" | "large";
 
-interface TooltipProps {
+export interface TooltipProps {
   content: string;
   supportText?: string;
   position: Position;
@@ -66,12 +66,12 @@ const Tooltip = ({
 
 Tooltip.propTypes = {
   content: PropTypes.string.isRequired,
-  // position: PropTypes.oneOf(["top", "bottom", "right", "left"]).isRequired,
-  position: PropTypes.any.isRequired,
+  position: PropTypes.oneOf(["top", "bottom", "right", "left"] as Position[])
+    .isRequired,
   children: PropTypes.any.isRequired,
-  supportText: PropTypes.string.isRequired,
-  // position: PropTypes.oneOf(["top", "bottom", "right", "left"]).isRequired,
-  tooltipWidth: PropTypes.any.isRequired,
+  supportText: PropTypes.string,
+  tooltipWidth: PropTypes.oneOf(["small", "medium", "large"] as TooltipWidth[])
+    .isRequired,
 };
 
 export default Tooltip;
