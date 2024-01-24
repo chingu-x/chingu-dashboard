@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MainPages, PageProperty, voyagePages } from "./Sidebar";
-import Tooltip from "../Tooltip";
+import Tooltip from "@/components/Tooltip";
 
 interface PageButtonProps {
   element: PageProperty;
@@ -11,9 +11,6 @@ interface PageButtonProps {
   link: string;
   setHoveredButton: (element: string | null) => void;
 }
-
-const paragraph =
-  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.";
 
 export default function PageButton({
   element,
@@ -52,9 +49,9 @@ export default function PageButton({
         <button
           type="button"
           data-tip={element.name}
-          // className={`${buttonStyles} ${getButtonBackgroundStyle(
-          //   element.link
-          // )} ${element.marginBottom}`}
+          className={`${buttonStyles} ${getButtonBackgroundStyle(
+            element.link,
+          )} ${element.marginBottom}`}
           onMouseEnter={() => setHoveredButton(element.name)}
           onMouseLeave={() => setHoveredButton(null)}
           onClick={() => onClick(element)}
