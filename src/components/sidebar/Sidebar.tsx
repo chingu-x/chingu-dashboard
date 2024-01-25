@@ -105,7 +105,7 @@ export default function Sidebar() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const { isAuthenticated } = useAppSelector(
-    (state: RootState): { isAuthenticated: boolean } => state.auth,
+    (state: RootState): { isAuthenticated: boolean } => state.auth
   );
 
   const isVoyageStarted: boolean = isAuthenticated;
@@ -116,15 +116,13 @@ export default function Sidebar() {
 
   const handlePageClick = useCallback(
     (element: PageProperty | string) => {
-      if (typeof element === "string") {
-        setSelectedButton(element);
-      } else if (element.name === MainPages.myVoyage) {
+      if (typeof element !== "string" && element.name === MainPages.myVoyage) {
         setIsOpenSidebar(true);
-      } else {
+      } else if (typeof element !== "string") {
         setSelectedButton(element.link);
       }
     },
-    [setSelectedButton, setIsOpenSidebar],
+    [setSelectedButton, setIsOpenSidebar]
   );
 
   return (
