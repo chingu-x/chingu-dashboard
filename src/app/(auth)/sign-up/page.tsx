@@ -41,7 +41,7 @@ export default function Component() {
             label="email"
             placeholder="Enter your email"
             {...register("email")}
-            errorMessage={errors?.["email"]?.message}
+            errorMessage={errors?.email?.message}
           />
         </div>
         <div>
@@ -50,7 +50,7 @@ export default function Component() {
             label="password"
             placeholder="Enter your password"
             {...register("password")}
-            errorMessage={errors?.["password"]?.message}
+            errorMessage={errors?.password?.message}
           />
         </div>
         <Button size="lg" className="w-full" type="submit">

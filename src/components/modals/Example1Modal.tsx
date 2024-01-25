@@ -93,7 +93,7 @@ export default function Example1Modal() {
               placeholder="Enter you voyage project idea"
               maxLength={30}
               {...register("title")}
-              errorMessage={errors?.["title"]?.message}
+              errorMessage={errors?.title?.message}
             />
             <Textarea
               id="projectIdea"
@@ -101,7 +101,7 @@ export default function Example1Modal() {
               placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
               maxLength={50}
               {...register("projectIdea")}
-              errorMessage={errors?.["projectIdea"]?.message}
+              errorMessage={errors?.projectIdea?.message}
             />
             <Textarea
               id="visionStatement"
@@ -109,14 +109,14 @@ export default function Example1Modal() {
               placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
               maxLength={50}
               {...register("visionStatement")}
-              errorMessage={errors?.["visionStatement"]?.message}
+              errorMessage={errors?.visionStatement?.message}
             />
             <TextInput
               id="email"
               label="email"
               placeholder="Enter your email"
               {...register("email")}
-              errorMessage={errors?.["email"]?.message}
+              errorMessage={errors?.email?.message}
             />
           </div>
         </div>

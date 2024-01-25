@@ -102,7 +102,7 @@ export default function FeatureModal() {
             suggestion={isEditing ? "" : "Tip: keep it short and sweet"}
             maxLength={50}
             {...register("feature")}
-            errorMessage={errors?.["feature"]?.message}
+            errorMessage={errors?.feature?.message}
           />
         </div>
         {/* BUTTONS */}
