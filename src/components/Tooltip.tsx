@@ -1,5 +1,6 @@
+"use client";
+
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { cn } from "@/lib/utils";
 
 type Position = "top" | "bottom" | "left" | "right";
@@ -68,13 +69,3 @@ export default function Tooltip({
     </div>
   );
 }
-
-Tooltip.propTypes = {
-  content: PropTypes.string.isRequired,
-  position: PropTypes.oneOf(["top", "bottom", "right", "left"] as Position[])
-    .isRequired,
-  children: PropTypes.any.isRequired,
-  supportText: PropTypes.string,
-  tooltipWidth: PropTypes.oneOf(["small", "medium", "large"] as TooltipWidth[])
-    .isRequired,
-};

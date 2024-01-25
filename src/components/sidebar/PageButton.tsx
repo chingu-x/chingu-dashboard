@@ -37,7 +37,7 @@ export default function PageButton({
   const getButtonText = (page: string) => (isOpen ? page : "");
 
   return (
-    <li className="border border-blue-500 flex">
+    <li>
       <Link
         href={element.name !== MainPages.myVoyage ? link : ""}
         className={
@@ -46,24 +46,25 @@ export default function PageButton({
             : ""
         }
       >
-        <button
-          type="button"
-          data-tip={element.name}
-          className={`${buttonStyles} ${getButtonBackgroundStyle(
-            element.link,
-          )} ${element.marginBottom}`}
-          onMouseEnter={() => setHoveredButton(element.name)}
-          onMouseLeave={() => setHoveredButton(null)}
-          onClick={() => onClick(element)}
+        <Tooltip
+          content={getButtonText(element.name)}
+          position="right"
+          tooltipWidth="small"
         >
-          <Tooltip
-            content={getButtonText(element.name)}
-            position="right"
-            tooltipWidth="small"
+          <button
+            type="button"
+            data-tip={element.name}
+            className={`${buttonStyles} ${getButtonBackgroundStyle(
+              element.link
+            )} ${element.marginBottom}`}
+            onMouseEnter={() => setHoveredButton(element.name)}
+            onMouseLeave={() => setHoveredButton(null)}
+            onClick={() => onClick(element)}
           >
             {element.icon}
-          </Tooltip>
-        </button>
+            {getButtonText(element.name)}
+          </button>
+        </Tooltip>
       </Link>
     </li>
   );
