@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MainPages, PageProperty, voyagePages } from "./Sidebar";
+import Tooltip from "@/components/Tooltip";
 
 interface PageButtonProps {
   element: PageProperty;
@@ -55,7 +56,14 @@ export default function PageButton({
           onMouseLeave={() => setHoveredButton(null)}
           onClick={() => onClick(element)}
         >
-          {element.icon}
+          <Tooltip
+            content={element.name}
+            position="right"
+            tooltipWidth="small"
+            isDisplay={!isOpen}
+          >
+            {element.icon}
+          </Tooltip>
           {getButtonText(element.name)}
         </button>
       </Link>
