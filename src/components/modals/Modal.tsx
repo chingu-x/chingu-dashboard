@@ -40,7 +40,7 @@ export default function Modal({
     exit: {
       opacity: 0,
       transition: {
-        delay: 0.15,
+        delay: 0.25,
       },
     },
   };
@@ -56,7 +56,7 @@ export default function Modal({
       transition: {
         ease: "easeOut",
         duration: 0.15,
-        delay: 0.15,
+        delay: 0.2,
       },
     },
     exit: {
