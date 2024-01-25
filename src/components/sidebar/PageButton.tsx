@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { MainPages, PageProperty, voyagePages } from "./Sidebar";
 import Button from "@/components/Button";
 import Tooltip from "@/components/Tooltip";
