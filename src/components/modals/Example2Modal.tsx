@@ -70,7 +70,7 @@ export default function Example2Modal() {
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
             {...register("suggestion")}
-            errorMessage={errors?.["suggestion"]?.message}
+            errorMessage={errors?.suggestion?.message}
           />
         </div>
         {/* BUTTONS */}

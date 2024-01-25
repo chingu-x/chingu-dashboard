@@ -98,6 +98,8 @@
           "attributes": false
         }
       }
-    ]
+    ],
+    "dot-notation": "off",
+    "@typescript-eslint/dot-notation": "error"
   }
 }
