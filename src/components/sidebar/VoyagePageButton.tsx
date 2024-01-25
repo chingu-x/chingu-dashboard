@@ -1,11 +1,11 @@
 import { ArrowRightCircleIcon } from "@heroicons/react/20/solid";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { VoyagePageProperty } from "./Sidebar";
+import { PageProperty, VoyagePageProperty } from "./Sidebar";
 
 interface VoyagePageButtonProps {
   element: VoyagePageProperty;
-  onClick: (element: string) => void;
+  onClick: (element: string | PageProperty) => void;
   hoveredButton: string | null;
   selectedButton: string;
   isVoyageStarted: boolean;

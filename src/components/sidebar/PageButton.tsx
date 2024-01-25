@@ -5,7 +5,7 @@ import Tooltip from "@/components/Tooltip";
 
 interface PageButtonProps {
   element: PageProperty;
-  onClick: (element: string | PageProperty) => void;
+  onClick: (element: PageProperty) => void;
   selectedButton: string;
   isOpen: boolean;
   link: string;
