@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 
 type Position = "top" | "bottom" | "left" | "right";
@@ -10,7 +10,7 @@ export interface TooltipProps {
   content: string;
   supportText?: string;
   position: Position;
-  children: any;
+  children: React.ReactNode;
   tooltipWidth: TooltipWidth;
   isDisplay: boolean;
 }
