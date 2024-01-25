@@ -31,6 +31,9 @@ const meta = {
       description: "What is the tooltip referring to",
       control: "text",
     },
+    isDisplay: {
+      description: "When to show the tooltip",
+    },
   },
 } satisfies Meta<typeof Tooltip>;
 
@@ -43,6 +46,7 @@ const BaseTemplate: Story = {
     position: "right",
     tooltipWidth: "small",
     children: "Hover here",
+    isDisplay: true,
   },
 };
 

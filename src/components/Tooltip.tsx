@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 type Position = "top" | "bottom" | "left" | "right";
@@ -10,8 +10,9 @@ export interface TooltipProps {
   content: string;
   supportText?: string;
   position: Position;
-  children: React.ReactNode;
+  children: any;
   tooltipWidth: TooltipWidth;
+  isDisplay: boolean;
 }
 
 export default function Tooltip({
@@ -20,6 +21,7 @@ export default function Tooltip({
   position,
   children,
   tooltipWidth,
+  isDisplay,
 }: TooltipProps) {
   const [hovered, setHovered] = useState(false);
 
@@ -33,11 +35,6 @@ export default function Tooltip({
     nonSupportTextWidth = "w-[169px]";
   }
 
-  const tooltipPositionStyling =
-    position === "top" || position === "bottom"
-      ? "-translate-x-1/2 after:border-x-transparent after:-translate-x-1/2 after:left-1/2"
-      : "-translate-y-1/2 after:border-y-transparent after:-translate-y-1/2 after:top-1/2";
-
   return (
     <div
       className="relative cursor-pointer"
@@ -50,9 +47,12 @@ export default function Tooltip({
           "absolute transition shadow-md ease-in-out duration-300 z-[2] break-all",
           supportText ? "text-left" : "text-center",
           hovered ? "opacity-100" : "opacity-0",
+          !isDisplay && "hidden",
           supportText ? "w-[320px]" : nonSupportTextWidth,
           "text-base-300 bg-base-100 rounded-lg py-2 px-3 after:absolute after:content-[''] after:border-base-100 after:border-8 after:border-solid",
-          tooltipPositionStyling,
+          position === "top" || position === "bottom"
+            ? "-translate-x-1/2 after:border-x-transparent after:-translate-x-1/2 after:left-1/2"
+            : "-translate-y-1/2 after:border-y-transparent after:-translate-y-1/2 after:top-1/2",
           position === "top" &&
             "bottom-full left-1/2 -translate-y-3 after:top-full after:border-b-transparent",
           position === "bottom" &&

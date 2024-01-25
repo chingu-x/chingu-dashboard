@@ -46,25 +46,26 @@ export default function PageButton({
             : ""
         }
       >
-        <Tooltip
-          content={getButtonText(element.name)}
-          position="right"
-          tooltipWidth="small"
+        <button
+          type="button"
+          data-tip={element.name}
+          className={`${buttonStyles} ${getButtonBackgroundStyle(
+            element.link
+          )} ${element.marginBottom}`}
+          onMouseEnter={() => setHoveredButton(element.name)}
+          onMouseLeave={() => setHoveredButton(null)}
+          onClick={() => onClick(element)}
         >
-          <button
-            type="button"
-            data-tip={element.name}
-            className={`${buttonStyles} ${getButtonBackgroundStyle(
-              element.link
-            )} ${element.marginBottom}`}
-            onMouseEnter={() => setHoveredButton(element.name)}
-            onMouseLeave={() => setHoveredButton(null)}
-            onClick={() => onClick(element)}
+          <Tooltip
+            content={element.name}
+            position="right"
+            tooltipWidth="small"
+            isDisplay={!isOpen}
           >
             {element.icon}
-            {getButtonText(element.name)}
-          </button>
-        </Tooltip>
+          </Tooltip>
+          {getButtonText(element.name)}
+        </button>
       </Link>
     </li>
   );
