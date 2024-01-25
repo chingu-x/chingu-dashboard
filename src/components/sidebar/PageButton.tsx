@@ -21,13 +21,12 @@ export default function PageButton({
   link,
   setHoveredButton,
 }: PageButtonProps) {
-  const currentPath = usePathname();
   const buttonStyles = `${
     isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem] px-0"
   }`;
 
   const getButtonBackgroundStyle = (page: string) =>
-    (selectedButton === page && selectedButton === currentPath) ||
+    selectedButton === page ||
     (page === "" &&
       voyagePages.some((voyagePage) => voyagePage.link === selectedButton))
       ? "bg-neutral-content"
