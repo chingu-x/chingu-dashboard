@@ -2,6 +2,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MainPages, PageProperty, voyagePages } from "./Sidebar";
 import Button from "@/components/Button";
+import Tooltip from "@/components/Tooltip";
 
 interface PageButtonProps {
   element: PageProperty;
@@ -52,13 +53,20 @@ export default function PageButton({
           variant="neutral"
           data-tip={element.name}
           className={`${buttonStyles} ${getButtonBackgroundStyle(
-            element.link,
+            element.link
           )} ${element.marginBottom} flex items-center`}
           onMouseEnter={() => setHoveredButton(element.name)}
           onMouseLeave={() => setHoveredButton(null)}
           onClick={() => onClick(element)}
         >
-          {element.icon}
+          <Tooltip
+            content={element.name}
+            position="right"
+            tooltipWidth="small"
+            isDisplay={!isOpen}
+          >
+            {element.icon}
+          </Tooltip>
           {getButtonText(element.name)}
         </Button>
       </Link>
