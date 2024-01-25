@@ -23,9 +23,7 @@ export default function PageButton({
 }: PageButtonProps) {
   const currentPath = usePathname();
   const buttonStyles = `${
-    isOpen
-      ? "w-[14.375rem] flex justify-start pl-6"
-      : "w-[3.125rem] tooltip hover:tooltip-open tooltip-right overflow:false px-0"
+    isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem] px-0"
   }`;
 
   const getButtonBackgroundStyle = (page: string) =>
