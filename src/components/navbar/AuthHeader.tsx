@@ -19,9 +19,9 @@ export default function AuthHeader() {
   async function handleClick() {
     await serverSignIn();
     const user = await getUser();
-    dispatch(clientSignIn());
 
     if (user) {
+      dispatch(clientSignIn());
       dispatch(getUserState(user));
     }
   }

@@ -8,15 +8,13 @@ interface TeamRowProps {
 
 export default function TeamRow({ teamMember, currentUserId }: TeamRowProps) {
   return (
-    <tr>
+    <tr className="[&>*]:py-1">
       <td>{teamMember.name}</td>
       <td>{teamMember.discordId}</td>
       <td>
         <EditCell teamMember={teamMember} currentUserId={currentUserId} />
       </td>
-      <td>{teamMember.location}</td>
       <td>{teamMember.timeZone}</td>
-      <td>{teamMember.email}</td>
       <td>{teamMember.position}</td>
     </tr>
   );
