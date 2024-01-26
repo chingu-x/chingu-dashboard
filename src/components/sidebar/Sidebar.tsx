@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
 import { usePathname } from "next/navigation";
 import {
@@ -14,6 +14,7 @@ import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
 import { useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
+import { VoyageTeamMember } from "@/store/features/user/userSlice";
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -107,8 +108,19 @@ export default function Sidebar() {
   const { isAuthenticated } = useAppSelector(
     (state: RootState): { isAuthenticated: boolean } => state.auth
   );
+  const { voyageTeamMembers } = useAppSelector(
+    (state: RootState) => state.user
+  );
 
-  const isVoyageStarted: boolean = isAuthenticated;
+  const isActive = useMemo(() => {
+    if (voyageTeamMembers.length === 0) {
+      return false;
+    }
+    const lastVoyageTeamMember: VoyageTeamMember =
+      voyageTeamMembers[voyageTeamMembers.length - 1];
+    return lastVoyageTeamMember?.voyageTeam?.voyage?.status?.name === "Active";
+  }, [voyageTeamMembers]);
+  const isVoyageStarted: boolean = isAuthenticated && isActive;
 
   useEffect(() => {
     setSelectedButton(currentPath);
