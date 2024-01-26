@@ -1,14 +1,46 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
 import Sidebar from "@/components/sidebar/Sidebar";
+import userReducer from "@/store/features/user/userSlice";
+import authReducer from "@/store/features/auth/authSlice";
+
+const mockStore = configureStore({
+  reducer: {
+    user: userReducer,
+    auth: authReducer,
+  },
+  preloadedState: {
+    auth: {
+      isAuthenticated: true,
+    },
+    user: {
+      voyageTeamMembers: [
+        {
+          // @ts-expect-error - This is a mock object
+          voyageTeam: {
+            voyage: {
+              status: {
+                name: "Active",
+              },
+            },
+          },
+        },
+      ],
+    },
+  },
+});
 
 const meta: Meta<typeof Sidebar> = {
   title: "Example/Sidebar",
   component: Sidebar,
   decorators: [
     (Story) => (
-      <div style={{ height: 700 }}>
-        <Story />
-      </div>
+      <Provider store={mockStore}>
+        <div style={{ height: 700 }}>
+          <Story />
+        </div>
+      </Provider>
     ),
   ],
   parameters: {
