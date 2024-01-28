@@ -37,7 +37,7 @@ const button = cva(
           "bg-base-200",
           "border-base-100",
           "hover:bg-base-100",
-          "focus:bg-neutral-content",
+          "active:bg-neutral-content",
           "disabled:text-neutral-focus",
           "disabled:bg-neutral-content",
         ],
@@ -73,7 +73,7 @@ const button = cva(
       size: "md",
       outline: false,
     },
-  },
+  }
 );
 
 export interface ButtonProps
