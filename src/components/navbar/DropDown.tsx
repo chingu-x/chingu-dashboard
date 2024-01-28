@@ -22,12 +22,11 @@ export default function DropDown({
   const menuRef = useRef<HTMLUListElement>(null);
   const closed = "hidden";
   const open =
-    "absolute z-[1] p-2 mt-2 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
+    "absolute z-[1] w-36 p-2 [&>*]:mt-2 mt-2 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
   //--------------------------------------------------------------------------------------
   //'closeMenu' handleClickOutside' and 'useEffect' allow user to
   //close menu on clicking anywhere but the menu.
@@ -52,19 +51,36 @@ export default function DropDown({
   }
 
   return (
-    <div className="relative py-0 mx-2 ">
+    <div className="relative py-0 mx-2">
       <label
         tabIndex={0}
         className="flex btn m-0 p-0 bg-transparent border-none hover:border-none hover:bg-transparent text-base-300"
         onClick={toggleMenu}
       >
-        {name} <ChevronDownIcon className="w-4 text-base-300" />
+        {name} 
+        <ChevronDownIcon className="w-4 text-base-300" />
       </label>
-      <ul tabIndex={0} className={isOpen ? open : closed} ref={menuRef}>
-        {/**Check if user is on voyage. If so, display voyage name/link*/}
-        {currentVoyage && <DropDownLink title={currentVoyage} />}
-        <DropDownLink title="404???" href="/hello404" />
-        <Button title="signout" type="button" onClick={handleClick}>
+      <ul 
+        tabIndex={0} 
+        className={isOpen ? open : closed} 
+        ref={menuRef}
+      >
+        <li 
+          className="bg-secondary-content text-xs p-2 rounded-lg "
+        >
+          My Status:
+          {/**Check if user is on voyage. If so, display voyage name/link*/}
+          {currentVoyage && <DropDownLink title={currentVoyage} />}
+          {!currentVoyage && <DropDownLink title={"Please join a voyage to see your status information."}/>}
+        </li>
+        <DropDownLink title="Settings" href="/hello404" />
+        <Button 
+          title="signout" 
+          type="button" 
+          onClick={handleClick}
+          variant="link"
+          size={"lg"}
+        >
           Sign Out
         </Button>
       </ul>
