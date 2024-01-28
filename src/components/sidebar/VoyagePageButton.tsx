@@ -43,7 +43,7 @@ export default function VoyagePageButton({
         <button
           type="button"
           className={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${
-            isVoyageStarted ? "pl-11" : "pl-6 pointer-events-none"
+            isVoyageStarted ? "pl-11" : "pl-6"
           } text-neutral-focus capitalize border-none relative`}
           onMouseEnter={() => setHoveredButton(element.link)}
           onMouseLeave={() => setHoveredButton(null)}
