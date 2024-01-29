@@ -106,20 +106,21 @@ export default function Sidebar() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const { isAuthenticated } = useAppSelector(
-    (state: RootState): { isAuthenticated: boolean } => state.auth,
+    (state: RootState): { isAuthenticated: boolean } => state.auth
   );
   const { voyageTeamMembers } = useAppSelector(
-    (state: RootState) => state.user,
+    (state: RootState) => state.user
   );
 
   const isActive = useMemo(() => {
     if (voyageTeamMembers.length === 0) {
       return false;
     }
-    const lastVoyageTeamMember: VoyageTeamMember =
-      voyageTeamMembers[voyageTeamMembers.length - 1];
-    return lastVoyageTeamMember?.voyageTeam?.voyage?.status?.name === "Active";
+    return voyageTeamMembers.some(
+      (member) => member.voyageTeam.voyage.status.name === "Active"
+    );
   }, [voyageTeamMembers]);
+
   const isVoyageStarted: boolean = isAuthenticated && isActive;
 
   useEffect(() => {
@@ -134,7 +135,7 @@ export default function Sidebar() {
         setSelectedButton(element.link);
       }
     },
-    [setSelectedButton, setIsOpenSidebar],
+    [setSelectedButton, setIsOpenSidebar]
   );
 
   return (
