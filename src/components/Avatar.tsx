@@ -1,7 +1,7 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface AvatarProps {
-  image?: string;
+  image?: string | StaticImageData;
   width: number;
   height: number;
 }

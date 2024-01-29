@@ -1,7 +1,11 @@
 import { Provider } from "react-redux";
 import type { Meta, StoryObj } from "@storybook/react";
 import { NoNotifications, FewNotifications } from "./Bell.stories";
-import { MenuOpenedNoVoyage, MenuClosed, MenuOpenedWithVoyage } from "./DropDown.stories";
+import {
+  MenuOpenedNoVoyage,
+  MenuClosed,
+  MenuOpenedWithVoyage,
+} from "./DropDown.stories";
 import { store } from "@/store/store";
 import avatarImage from "@/stories/assets/avatar.png";
 import ThemeProvider from "@/components/ThemeProvider";
@@ -37,7 +41,7 @@ const BaseTemplate: Story = {
 */
 
 export const LoggedOut: Story = {
-  args:{
+  args: {
     children: [
       <ThemeProvider key="ThemeProvider">
         <ModeToggle />
@@ -45,54 +49,54 @@ export const LoggedOut: Story = {
       <Button key="Button" title="Login" type="button">
         Log In
       </Button>,
-    ]
-  }
+    ],
+  },
 };
 export const NotificationsEmpty: Story = {
-  args:{
+  args: {
     children: [
       <ThemeProvider key="ThemeProvider">
         <ModeToggle />
       </ThemeProvider>,
-      <Bell key="Bell" {...NoNotifications.args}/>,
-      <Avatar key="Avatar" image={avatarImage} width={24} height={24}/>,
-      <DropDown  key="DropDown" {...MenuClosed.args}/>
-    ]
-  }
+      <Bell key="Bell" {...NoNotifications.args} />,
+      <Avatar key="Avatar" image={avatarImage} width={24} height={24} />,
+      <DropDown key="DropDown" {...MenuClosed.args} />,
+    ],
+  },
 };
 export const NotificationsUnread: Story = {
-  args:{
+  args: {
     children: [
       <ThemeProvider key="ThemeProvider">
         <ModeToggle />
       </ThemeProvider>,
-      <Bell key="Bell" {...FewNotifications.args}/>,
-      <Avatar key="Avatar" image={avatarImage}  width={24} height={24}/>,
-      <DropDown key="DropDown" {...MenuClosed.args}/>
-    ]
-  }
+      <Bell key="Bell" {...FewNotifications.args} />,
+      <Avatar key="Avatar" image={avatarImage} width={24} height={24} />,
+      <DropDown key="DropDown" {...MenuClosed.args} />,
+    ],
+  },
 };
 export const MenuOpenNoVoyage: Story = {
-  args:{
+  args: {
     children: [
       <ThemeProvider key="ThemeProvider">
         <ModeToggle />
       </ThemeProvider>,
-      <Bell key="Bell" {...FewNotifications.args}/>,
-      <Avatar key="Avatar"  image={avatarImage} width={24} height={24}/>,
-      <DropDown key="DropDown" {...MenuOpenedNoVoyage.args}/>
-    ]
-  }
+      <Bell key="Bell" {...FewNotifications.args} />,
+      <Avatar key="Avatar" image={avatarImage} width={24} height={24} />,
+      <DropDown key="DropDown" {...MenuOpenedNoVoyage.args} />,
+    ],
+  },
 };
 export const MenuOpenWithVoyage: Story = {
-  args:{
+  args: {
     children: [
       <ThemeProvider key="ThemeProvider">
         <ModeToggle />
       </ThemeProvider>,
-      <Bell key="Bell" {...FewNotifications.args}/>,
-      <Avatar key="Avatar" image={avatarImage} width={24} height={24}/>,
-      <DropDown key="DropDown" {...MenuOpenedWithVoyage.args}/>
-    ]
-  }
+      <Bell key="Bell" {...FewNotifications.args} />,
+      <Avatar key="Avatar" image={avatarImage} width={24} height={24} />,
+      <DropDown key="DropDown" {...MenuOpenedWithVoyage.args} />,
+    ],
+  },
 };
