@@ -11,9 +11,9 @@ export default function DropDown({
   name,
   openState,
 }: {
-  name: string;
-  openState: boolean;
-}) {
+  name?: string;
+  openState?: boolean;
+}) { 
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(openState);
   const currentVoyage = useAppSelector(
@@ -57,26 +57,24 @@ export default function DropDown({
         className="flex btn m-0 p-0 bg-transparent border-none hover:border-none hover:bg-transparent text-base-300"
         onClick={toggleMenu}
       >
-        {name} 
+        {name}
         <ChevronDownIcon className="w-4 text-base-300" />
       </label>
-      <ul 
-        tabIndex={0} 
-        className={isOpen ? open : closed} 
-        ref={menuRef}
-      >
-        <li 
-          className="bg-secondary-content text-xs p-2 rounded-lg "
-        >
+      <ul tabIndex={0} className={isOpen ? open : closed} ref={menuRef}>
+        <li className="bg-secondary-content text-xs p-2 rounded-lg ">
           My Status:
           {/**Check if user is on voyage. If so, display voyage name/link*/}
           {currentVoyage && <DropDownLink title={currentVoyage} />}
-          {!currentVoyage && <DropDownLink title={"Please join a voyage to see your status information."}/>}
+          {!currentVoyage && (
+            <DropDownLink
+              title={"Please join a voyage to see your status information."}
+            />
+          )}
         </li>
         <DropDownLink title="Settings" href="/hello404" />
-        <Button 
-          title="signout" 
-          type="button" 
+        <Button
+          title="signout"
+          type="button"
           onClick={handleClick}
           variant="link"
           size={"lg"}

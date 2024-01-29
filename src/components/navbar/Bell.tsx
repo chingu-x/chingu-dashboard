@@ -3,7 +3,7 @@ import { BellIcon } from "@heroicons/react/20/solid";
 export default function Bell({
   notificationCount,
 }: {
-  notificationCount: number;
+  notificationCount: number | undefined;
 }) {
   return (
     <div className="relative">

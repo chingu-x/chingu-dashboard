@@ -51,4 +51,3 @@ export const ManyNotifications = {
     notificationCount: 444,
   },
 };
-
