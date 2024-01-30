@@ -1,8 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
+import { getCookie } from "@/utils/getCookie";
+import { GET } from "@/utils/requests";
 
 interface AddIdeationVoteProps {
   teamId: number;
@@ -28,18 +29,8 @@ export interface IdeationVoteResponse {
 
 export async function fetchProjectIdeas({ teamId }: FetchIdeationsProps) {
   revalidatePath("/ideation");
-
-  const token = cookies().get("access_token")?.value || "";
-  if (!token) return;
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/voyages/${teamId}/ideations`,
-    {
-      headers: {
-        Cookie: `access_token=${token}`,
-      },
-    }
-  );
+  const token = getCookie();
+  const res = await GET(`api/v1/voyages/${teamId}/ideations`, token);
 
   const data = (await res.json()) as IdeationData[];
 
