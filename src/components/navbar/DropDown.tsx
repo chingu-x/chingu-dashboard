@@ -58,12 +58,9 @@ export default function DropDown({
       <ul tabIndex={0} className={isOpen ? open : closed} ref={menuRef}>
         <li className="bg-secondary-content text-xs p-2 rounded-lg ">
           My Status:
-          {currentVoyage && <DropDownLink title={currentVoyage} />}
-          {!currentVoyage && (
-            <DropDownLink
+          {currentVoyage? <DropDownLink title={currentVoyage} /> : <DropDownLink
               title={"Please join a voyage to see your status information."}
-            />
-          )}
+            />}
         </li>
         <DropDownLink title="Settings" href="/hello404" />
         <Button
