@@ -20,7 +20,7 @@ export default function DropDown({
   const menuRef = useRef<HTMLUListElement>(null);
   const closed = "hidden";
   const open =
-    "absolute z-[1] w-36 p-2 [&>*]:mt-2 mt-2 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
+    "absolute z-[1] w-44 p-4 [&>*]:mt-2 mt-6 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -55,12 +55,22 @@ export default function DropDown({
       >
         <ChevronDownIcon className="w-4 text-base-300 cursor-pointer" />
       </label>
-      <ul tabIndex={0} className={isOpen ? open : closed} ref={menuRef}>
-        <li className="bg-secondary-content text-xs p-2 rounded-lg ">
-          My Status:
-          {currentVoyage? <DropDownLink title={currentVoyage} /> : <DropDownLink
-              title={"Please join a voyage to see your status information."}
-            />}
+      <ul 
+        tabIndex={0} 
+        className={isOpen ? open : closed} 
+        ref={menuRef}
+      >
+        <li className="bg-secondary-content text-xs p-2 [&>*]:m-1 rounded-lg ">
+          <p className="text-neutral text-xs">
+            My Status:
+          </p>
+          {currentVoyage? 
+          <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
+            {currentVoyage}
+          </p> : 
+          <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
+            Please join a voyage to see your status information.
+          </p>}
         </li>
         <DropDownLink title="Settings" href="/hello404" />
         <Button
@@ -69,6 +79,7 @@ export default function DropDown({
           onClick={handleClick}
           variant="link"
           size={"lg"}
+          className="hover:bg-neutral-content hover:text-base-300 w-full flex justify-start p-2 m-0"
         >
           Sign Out
         </Button>
