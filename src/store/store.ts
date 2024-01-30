@@ -3,6 +3,7 @@ import counterReducer from "./features/counter/counterSlice";
 import modalReducer from "./features/modal/modalSlice";
 import toastReducer from "./features/toast/toastSlice";
 import authReducer from "./features/auth/authSlice";
+import ideationReducer from "./features/ideation/ideationSlice";
 import userReducer from "./features/user/userSlice";
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
     toast: toastReducer,
     auth: authReducer,
     user: userReducer,
+    ideation: ideationReducer,
   },
 });
 

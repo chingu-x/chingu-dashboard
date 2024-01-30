@@ -1,14 +1,27 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface VoyageTeamMembers {
+interface VoyageStatus {
+  name: string;
+}
+
+interface Voyage {
+  status: VoyageStatus;
+}
+
+interface VoyageTeam {
+  name: string;
+  voyage: Voyage;
+}
+
+interface VoyageRole {
+  name: string;
+}
+
+interface VoyageTeamMember {
   id: number;
   voyageTeamId: number;
-  voyageTeam: {
-    name: string;
-  };
-  voyageRole: {
-    name: string;
-  };
+  voyageTeam: VoyageTeam;
+  voyageRole: VoyageRole;
 }
 
 export interface User {
@@ -22,7 +35,7 @@ export interface User {
   linkedinId: string;
   email: string;
   timezone: string;
-  voyageTeamMembers: VoyageTeamMembers[];
+  voyageTeamMembers: VoyageTeamMember[];
 }
 
 const initialState: User = {

@@ -3,11 +3,13 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 // import { useAppSelector } from "@/store/hooks";
-import { fetchProjectIdeas } from "@/api/ideationService";
+import { fetchProjectIdeas } from "@/app/(main)/my-voyage/ideation/ideationService";
 import {
   fetchIdeations,
   setLoading,
+  IdeationData,
 } from "@/store/features/ideation/ideationSlice";
+import { useAppSelector } from "@/store/hooks";
 // import IdeationContainer from "@/app/(main)/my-voyage/ideation/components/IdeationContainer";
 // import { ideation } from "./fixtures/ideation";
 
@@ -16,17 +18,27 @@ const TEAMID = 1;
 function IdeationClientComponentWrapper() {
   // const { projectIdeas, loading } = useAppSelector((state) => state.ideation);
   const dispatch = useDispatch();
+  const user = useAppSelector((state) => state.user);
+  const currentVoyageTeam = user.voyageTeamMembers.find(
+    (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
+  );
+  const teamId = currentVoyageTeam?.voyageTeamId;
 
   useEffect(() => {
     async function fetchData() {
       dispatch(setLoading(true));
-      const data = await fetchProjectIdeas({ teamId: TEAMID });
+      let data = [] as IdeationData[];
+
+      if (teamId) {
+        data = await fetchProjectIdeas({ teamId });
+      }
+
       dispatch(fetchIdeations(data));
       dispatch(setLoading(false));
     }
 
     fetchData().catch((err) => console.log(err));
-  }, [dispatch]);
+  }, [dispatch, teamId]);
 
   return (
     <>
