@@ -37,7 +37,7 @@ const button = cva(
           "bg-base-200",
           "border-base-100",
           "hover:bg-base-100",
-          "active:bg-neutral-focus",
+          "active:bg-neutral-content",
           "disabled:text-neutral-focus",
           "disabled:bg-neutral-content",
         ],
@@ -85,6 +85,7 @@ export default function Button({
   variant,
   size,
   outline,
+  children,
   ...props
 }: ButtonProps) {
   return (
@@ -92,6 +93,8 @@ export default function Button({
       type="button"
       className={cn(button({ variant, size, outline, className }))}
       {...props}
-    />
+    >
+      {children}
+    </button>
   );
 }
