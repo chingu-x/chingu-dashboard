@@ -8,10 +8,8 @@ import { clientSignOut } from "@/store/features/auth/authSlice";
 import { serverSignOut } from "@/app/(auth)/authService";
 
 export default function DropDown({
-  name,
   openState,
 }: {
-  name?: string;
   openState?: boolean;
 }) { 
   const dispatch = useAppDispatch();
@@ -55,8 +53,7 @@ export default function DropDown({
         className="flex btn m-0 p-0 bg-transparent border-none hover:border-none hover:bg-transparent text-base-300"
         onClick={toggleMenu}
       >
-        {name}
-        <ChevronDownIcon className="w-4 text-base-300" />
+        <ChevronDownIcon className="w-4 text-base-300 cursor-pointer" />
       </label>
       <ul tabIndex={0} className={isOpen ? open : closed} ref={menuRef}>
         <li className="bg-secondary-content text-xs p-2 rounded-lg ">
