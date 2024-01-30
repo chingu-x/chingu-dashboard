@@ -2,6 +2,8 @@
 
 import { cookies } from "next/headers";
 import { User } from "@/store/features/user/userSlice";
+import { getCookie } from "@/utils/getCookie";
+import { GET } from "@/utils/requests";
 
 interface ServerSignInResponse {
   message: string;
@@ -59,23 +61,7 @@ export async function serverSignOut(): Promise<void> {
   }
 }
 
-export async function getUser(): Promise<User | undefined> {
-  const token = cookies().get("access_token")?.value || "";
-
-  if (!token) return;
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/me`,
-    {
-      headers: {
-        Cookie: `access_token=${token}`,
-      },
-    }
-  );
-
-  if (!res.ok) {
-    throw new Error(res.statusText);
-  }
-
-  return (await res.json()) as User;
+export async function getUser(): Promise<User> {
+  const token = getCookie();
+  return await GET<User>("api/v1/users/me", token);
 }

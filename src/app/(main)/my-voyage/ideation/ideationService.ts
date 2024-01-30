@@ -27,7 +27,9 @@ export interface IdeationVoteResponse {
   };
 }
 
-export async function fetchProjectIdeas({ teamId }: FetchIdeationsProps) {
+export async function fetchProjectIdeas({
+  teamId,
+}: FetchIdeationsProps): Promise<IdeationData[]> {
   revalidatePath("/ideation");
   const token = getCookie();
   return await GET<IdeationData[]>(`api/v1/voyages/${teamId}/ideations`, token);

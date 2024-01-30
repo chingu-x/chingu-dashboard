@@ -13,10 +13,8 @@ export default function AuthProvider() {
     const getAuthStatus = async () => {
       try {
         const user = await getUser();
-        if (user) {
-          dispatch(clientSignIn());
-          dispatch(getUserState(user));
-        }
+        dispatch(clientSignIn());
+        dispatch(getUserState(user));
       } catch (error) {
         console.log(error);
       }
