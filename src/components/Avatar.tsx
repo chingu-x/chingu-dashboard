@@ -12,7 +12,7 @@ export default function Avatar({
   height = 24,
 }: AvatarProps) {
   return (
-    <div className="px-0 rounded-full cursor-pointer">
+    <div className="border border-1 border-neutral px-0 rounded-full cursor-pointer">
       <Image
         alt="avatar"
         src={
