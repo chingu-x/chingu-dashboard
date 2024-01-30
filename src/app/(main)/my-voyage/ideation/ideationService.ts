@@ -30,11 +30,7 @@ export interface IdeationVoteResponse {
 export async function fetchProjectIdeas({ teamId }: FetchIdeationsProps) {
   revalidatePath("/ideation");
   const token = getCookie();
-  const res = await GET(`api/v1/voyages/${teamId}/ideations`, token);
-
-  const data = (await res.json()) as IdeationData[];
-
-  return data;
+  return await GET<IdeationData[]>(`api/v1/voyages/${teamId}/ideations`, token);
 }
 
 export async function addIdeationVote({
