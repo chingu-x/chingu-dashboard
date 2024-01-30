@@ -27,9 +27,7 @@ export default function DropDown({
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  //--------------------------------------------------------------------------------------
-  //'closeMenu' handleClickOutside' and 'useEffect' allow user to
-  //close menu on clicking anywhere but the menu.
+  
   const closeMenu = () => {
     setIsOpen(false);
   };
@@ -44,7 +42,7 @@ export default function DropDown({
       document.removeEventListener("click", handleClickOutside);
     };
   }, [isOpen]);
-  //-------------------------------------------------------------------------------------
+  
   async function handleClick() {
     await serverSignOut();
     dispatch(clientSignOut());
@@ -63,7 +61,6 @@ export default function DropDown({
       <ul tabIndex={0} className={isOpen ? open : closed} ref={menuRef}>
         <li className="bg-secondary-content text-xs p-2 rounded-lg ">
           My Status:
-          {/**Check if user is on voyage. If so, display voyage name/link*/}
           {currentVoyage && <DropDownLink title={currentVoyage} />}
           {!currentVoyage && (
             <DropDownLink
