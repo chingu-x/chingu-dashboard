@@ -13,8 +13,7 @@ const notificationCount = 4;
 export default function AuthHeader() {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
-  const { firstName } = useAppSelector((state) => state.user);
-
+  const { avatar } = useAppSelector((state) => state.user);
   async function handleClick() {
     await serverSignIn();
     const user = await getUser();
@@ -30,8 +29,8 @@ export default function AuthHeader() {
         <>
           <Bell notificationCount={notificationCount} />
           <div className="flex flex-row items-center px-2 ml-6">
-            <Avatar image="/img/avatar.png" height={34} width={34} />
-            <DropDown name={firstName} openState={false} />
+            <Avatar image={avatar} height={34} width={34} />
+            <DropDown openState={false} />
           </div>
         </>
       ) : (
