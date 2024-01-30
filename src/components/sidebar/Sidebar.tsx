@@ -14,7 +14,6 @@ import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
 import { useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
 
 export enum MainPages {
   dashboard = "Dashboard",

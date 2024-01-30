@@ -41,7 +41,7 @@ export default function VoyagePageButton({
     <li className="h-7">
       <Link
         href={isVoyageStarted ? element.link : "#"}
-        className={!isVoyageStarted ? "pointer-events-none" : ""}
+        className={isVoyageStarted ? "" : "pointer-events-none"}
       >
         <button
           type="button"
