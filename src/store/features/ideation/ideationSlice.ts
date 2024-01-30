@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IdeationVoteResponse } from "@/api/ideationService";
+import { IdeationVoteResponse } from "@/app/(main)/my-voyage/ideation/ideationService";
 
 export interface VoyageMember {
   id: string;

@@ -60,7 +60,7 @@ export default function Tooltip({
           position === "right" &&
             "top-1/2 left-full translate-x-3 after:right-full after:border-l-transparent",
           position === "left" &&
-            "top-1/2 right-full -translate-x-3 after:left-full after:border-r-transparent"
+            "top-1/2 right-full -translate-x-3 after:left-full after:border-r-transparent",
         )}
       >
         <div className={`${supportText && "mb-2"}`}>{content}</div>

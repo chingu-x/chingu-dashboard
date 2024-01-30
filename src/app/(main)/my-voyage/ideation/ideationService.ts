@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
 
 interface AddIdeationVoteProps {
@@ -8,7 +9,7 @@ interface AddIdeationVoteProps {
   ideationId: number;
 }
 
-interface FetchIdeationsProps {
+export interface FetchIdeationsProps {
   teamId: number;
 }
 
@@ -28,8 +29,16 @@ export interface IdeationVoteResponse {
 export async function fetchProjectIdeas({ teamId }: FetchIdeationsProps) {
   revalidatePath("/ideation");
 
+  const token = cookies().get("access_token")?.value || "";
+  if (!token) return;
+
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams/${teamId}/ideations`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/voyages/${teamId}/ideations`,
+    {
+      headers: {
+        Cookie: `access_token=${token}`,
+      },
+    }
   );
 
   const data = (await res.json()) as IdeationData[];
@@ -53,7 +62,7 @@ export async function addIdeationVote({
         body: JSON.stringify({
           userId: "1bbd9ddb-f4b3-4e88-b2d8-fec82f653feb",
         }),
-      },
+      }
     );
 
     revalidatePath("/ideation");
