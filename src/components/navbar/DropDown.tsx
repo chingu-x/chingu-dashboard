@@ -14,9 +14,9 @@ export default function DropDown({
 }) { 
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(openState);
-  const currentVoyage = useAppSelector(
-    (state) => state.user.voyageTeamMembers[0]?.voyageTeam.name,
-  );
+  const allVoyages = useAppSelector((state) => state.user.voyageTeamMembers) ?? []
+  const activeVoyage = allVoyages.find((item) => item.voyageTeam.voyage.status.name==="Active")
+  const currentVoyage = activeVoyage?.voyageTeam.name ?? "Please join a voyage to see your status information.";
   const menuRef = useRef<HTMLUListElement>(null);
   const closed = "hidden";
   const open =
@@ -25,7 +25,6 @@ export default function DropDown({
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  
   const closeMenu = () => {
     setIsOpen(false);
   };
@@ -69,7 +68,7 @@ export default function DropDown({
             {currentVoyage}
           </p> : 
           <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
-            Please join a voyage to see your status information.
+            {currentVoyage}
           </p>}
         </li>
         <DropDownLink title="Settings" href="/hello404" />
