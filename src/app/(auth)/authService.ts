@@ -19,7 +19,7 @@ export async function serverSignIn(): Promise<ServerSignInResponse> {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: "jessica.williamson@gmail.com",
+        email: "l.castro@outlook.com",
         password: "password",
       }),
       cache: "no-store",
