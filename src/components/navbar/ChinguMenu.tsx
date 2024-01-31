@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import chinguLogo from "@/../public/img/chingu_logo.png";
+import chinguLogo from "@/public/img/chingu_logo.png";
 
 export default function ChinguMenu() {
   return (
