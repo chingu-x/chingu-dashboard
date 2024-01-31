@@ -9,7 +9,7 @@ function CreateIdeationContainer() {
   // const dispatch = useAppDispatch();
 
   return (
-    <div className="card w-full min-h-[190px] max-[1919px]:min-h-[280px] bg-base-100 flex flex-row items-center px-10">
+    <div className="card w-[80%] 3xl:w-full min-h-[190px] max-[1919px]:min-h-[280px] bg-base-100 flex flex-row items-center px-10 rounded-2xl">
       <div className="flex flex-col justify-between h-full py-10 min-[1920px]:hidden">
         <VoteDescriptionCard />
         <Button size="lg" className="max-[1920px]:w-[160px]">
