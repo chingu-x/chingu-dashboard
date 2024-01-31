@@ -14,7 +14,7 @@ export default function DropDown({
 }) { 
   const dispatch = useAppDispatch();
   const allVoyages = useAppSelector((state) => state.user.voyageTeamMembers);
-  const activeVoyage = allVoyages?.find((item) => item.voyageTeam.voyage.status.name==="Active")
+  const activeVoyage = allVoyages?.find((item) => item.voyageTeam.voyage.status.name === "Active");
   const currentVoyage = activeVoyage?.voyageTeam.name ?? "Please join a voyage to see your status information.";
   const closed = "hidden";
   const open =
@@ -41,13 +41,13 @@ export default function DropDown({
           <p className="text-neutral text-xs">
             My Status:
           </p>
-          {currentVoyage? 
-          <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
-            {currentVoyage}
-          </p> : 
-          <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
-            {currentVoyage}
-          </p>}
+          {currentVoyage ? 
+            <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
+              {currentVoyage}
+            </p> : 
+            <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
+              {currentVoyage}
+            </p>}
         </li>
         <DropDownLink title="Settings" href="/hello404" />
         <Button
