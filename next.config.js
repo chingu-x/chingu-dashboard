@@ -15,7 +15,7 @@ const nextConfig = {
                 hostname: "gravatar.com"
             }
         ]
-    }
+    },
 };
 
 module.exports = nextConfig;
