@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState , useRef} from "react";
+import { useEffect, useState , useRef } from "react";
 import { getUser, serverSignIn } from "@/app/(auth)/authService";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { getUserState } from "@/store/features/user/userSlice";
@@ -15,7 +15,7 @@ export default function AuthHeader() {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { avatar } = useAppSelector((state) => state.user);
-  const [ isMenuOpen, setIsMenuOpen ] = useState(false)
+  const [ isMenuOpen, setIsMenuOpen ] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   
   async function handleClick() {
@@ -28,7 +28,7 @@ export default function AuthHeader() {
   }
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
+    setIsMenuOpen(!isMenuOpen);
   };
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -43,7 +43,7 @@ export default function AuthHeader() {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [isMenuOpen]);
+  });
   
   return (
     <>
