@@ -18,20 +18,17 @@ type Story = StoryObj<typeof DropDown>;
 
 export const MenuOpenedNoVoyage: Story = {
   args: {
-    name: "First-Name",
     openState: true,
   },
 };
 export const MenuOpenedWithVoyage: Story = {
   //need to set up mock store/provider ???
   args: {
-    name: "First-Name",
     openState: true,
   },
 };
 export const MenuClosed: Story = {
   args: {
-    name: "First-Name",
     openState: false,
   },
 };
