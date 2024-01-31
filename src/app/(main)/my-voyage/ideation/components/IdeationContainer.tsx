@@ -24,7 +24,7 @@ function IdeationContainer({
   contributed_by,
 }: IdeationContainerProps) {
   return (
-    <div className="card w-[80%] 3xl:w-full bg-base-200 flex flex-row items-start p-10 gap-x-20">
+    <div className="card w-[80%] 3xl:w-full bg-base-200 flex flex-row items-start p-10 gap-x-20 rounded-2xl">
       <div className="flex flex-col justify-between gap-y-[24px] min-[1920px]:hidden">
         <VoteCard users={users} />
         <ContributionCard contributed_by={contributed_by} />
