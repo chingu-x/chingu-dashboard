@@ -23,7 +23,10 @@ export default function DropDown({
   async function handleClick() {
     await serverSignOut();
     dispatch(clientSignOut());
-  }
+  };
+  const handleDropDownClick = (event: React.MouseEvent<HTMLUListElement>) => {
+    event.stopPropagation();
+  };
 
   return (
     <div className="relative py-0 mx-2">
@@ -35,7 +38,8 @@ export default function DropDown({
       </label>
       <ul 
         tabIndex={0} 
-        className={openState ? open : closed} 
+        className={openState ? open : closed}
+        onClick={handleDropDownClick}
       >
         <li className="bg-secondary-content text-xs p-2 [&>*]:m-1 rounded-lg ">
           <p className="text-neutral text-xs">
