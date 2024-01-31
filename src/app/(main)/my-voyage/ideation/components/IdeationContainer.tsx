@@ -16,7 +16,7 @@ interface IdeationContainerProps {
   };
 }
 
-function IdeationContainer({
+export default function IdeationContainer({
   title,
   project_idea,
   vision_statement,
@@ -50,5 +50,3 @@ function IdeationContainer({
     </div>
   );
 }
-
-export default IdeationContainer;
