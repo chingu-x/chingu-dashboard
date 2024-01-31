@@ -1,6 +1,5 @@
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationClientComponentWrapper from "./components/IdeationClientComponentWrapper";
-
 import Banner from "@/components/banner/Banner";
 
 function IdeationPage() {
