@@ -1,11 +1,23 @@
+import { Suspense } from "react";
 import CreateIdeationContainer from "./components/CreateIdeationContainer";
-import IdeationClientComponentWrapper from "@/app/(main)/my-voyage/ideation/components/IdeationClientComponentWrapper";
+import IdeationComponentWrapper from "./components/IdeationComponentWrapper";
+// import IdeationClientComponentWrapper from "@/app/(main)/my-voyage/ideation/components/IdeationClientComponentWrapper";
 
 import Banner from "@/components/banner/Banner";
+import Spinner from "@/components/Spinner";
+// import { getUser } from "@/app/(auth)/authService";
 
 // const USERID = "e7a6262d-c596-44ac-9a50-373bcff1e155";
 
-function IdeationPage() {
+export default function IdeationPage() {
+  // const user = await getUser();
+
+  // const currentVoyageTeam = user.voyageTeamMembers.find(
+  //   (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
+  // );
+
+  // console.log("page 1", user);
+
   return (
     <>
       <Banner
@@ -17,10 +29,10 @@ function IdeationPage() {
       />
       <div className="flex flex-col items-center gap-y-10">
         <CreateIdeationContainer />
-        <IdeationClientComponentWrapper />
+        <Suspense fallback={<Spinner />}>
+          <IdeationComponentWrapper />
+        </Suspense>
       </div>
     </>
   );
 }
-
-export default IdeationPage;
