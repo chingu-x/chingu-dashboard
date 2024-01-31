@@ -6,7 +6,7 @@ interface NavbarProps {
 
 export default function Navbar({ children }: NavbarProps) {
   return (
-    <nav className="flex flex bg-base-100 p-2 h-[75px]">
+    <nav className="flex flex bg-base-100 p-2 h-[65px]">
       <div className="flex flex-1 sm:pl-2 sm:flex-row">
         <ChinguMenu />
       </div>
