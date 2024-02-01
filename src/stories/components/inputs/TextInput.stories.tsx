@@ -41,7 +41,7 @@ const meta = {
       description:
         "Provide an icon for an input group (if `inputGroup` is provided, becomes `required`).",
       control: { type: "boolean" },
-      mapping: { false: "", true: <EnvelopeIcon /> },
+      mapping: { false: undefined, true: <EnvelopeIcon /> },
     },
   },
 } satisfies Meta<typeof TextInput>;
