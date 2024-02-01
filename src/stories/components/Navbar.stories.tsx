@@ -19,7 +19,11 @@ import Avatar from "@/components/Avatar";
 const meta = {
   title: "Components/Navbar",
   component: Navbar,
-  decorators: [(story) => <Provider store={store}>{story()} </Provider>],
+  decorators: [(story) => 
+    <div style={{ height: 300 }}>
+      <Provider store={store}>{story()} </Provider>
+    </div>
+  ],
   tags: ["autodocs"],
 } satisfies Meta<typeof Navbar>;
 

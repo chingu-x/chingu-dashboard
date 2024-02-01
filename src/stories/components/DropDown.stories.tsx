@@ -10,7 +10,10 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  decorators: [(story) => <Provider store={store}>{story()}</Provider>],
+  decorators: [(story) => 
+    <div style={{ height: 300 }}>
+      <Provider store={store}>{story()}</Provider>
+    </div>],
 } satisfies Meta<typeof DropDown>;
 
 export default meta;
@@ -24,7 +27,7 @@ export const MenuOpenedNoVoyage: Story = {
 export const MenuOpenedWithVoyage: Story = {
   args: {
     openState: true,
-    placeHolderVoyage:"v47-tier2-team-4"
+    placeHolderVoyage: "v47-tier2-team-4",
   },
 };
 export const MenuClosed: Story = {
