@@ -17,9 +17,11 @@ interface CommonTextInputProps
   errorMessage?: string | undefined;
 }
 
+type InputGroup = "left" | "right" | "left-transparent" | "right-transparent";
+
 type ConditionalTextInputProps =
   | {
-      inputGroup: "left" | "right" | "left-transparent" | "right-transparent";
+      inputGroup: InputGroup;
       inputGroupIcon: JSX.Element;
     }
   | {
@@ -47,7 +49,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
 
@@ -79,7 +81,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               inputGroup === "right" && "pr-[56px] ",
               inputGroup === "left-transparent" && "pl-[42px]",
               inputGroup === "right-transparent" && "pr-[42px]",
-              className
+              className,
             )}
             ref={ref}
             {...props}
@@ -93,16 +95,16 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           {inputGroup && inputGroupIcon && (
             <div
               className={cn(
-                "h-full py-3 transition absolute peer-hover:[&>*]:text-base-300 peer-focus-visible:[&>*]:text-base-300 peer-disabled:peer-hover:[&>*]:text-neutral peer-disabled:peer-focus-visible:[&>*]:text-neutral [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5 [&>*]:text-neutral",
+                "h-[calc(100%-4px)] py-3 transition absolute peer-hover:[&>*]:text-base-300 peer-focus-visible:[&>*]:text-base-300 peer-disabled:peer-hover:[&>*]:text-neutral peer-disabled:peer-focus-visible:[&>*]:text-neutral [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5 [&>*]:text-neutral",
                 (inputGroup === "left" || inputGroup === "left-transparent") &&
-                  "top-1/2 -translate-y-1/2 left-0",
+                  "top-1/2 -translate-y-1/2 left-[2px]",
                 (inputGroup === "right" ||
                   inputGroup === "right-transparent") &&
-                  "top-1/2 -translate-y-1/2 right-0",
+                  "top-1/2 -translate-y-1/2 right-[2px]",
                 (inputGroup === "left" || inputGroup === "right") &&
                   "bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 peer-hover:[&>*]:text-base-200 peer-focus-visible:[&>*]:text-base-200 peer-disabled:peer-hover:[&>*]:text-base-200 peer-disabled:peer-focus-visible:[&>*]:text-base-200",
                 inputGroup === "left" && "rounded-l-md",
-                inputGroup === "right" && "rounded-r-md"
+                inputGroup === "right" && "rounded-r-md",
               )}
             >
               {inputGroupIcon}
@@ -116,7 +118,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         />
       </div>
     );
-  }
+  },
 );
 
 TextInput.displayName = "TextInput";
