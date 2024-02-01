@@ -3,13 +3,15 @@ import CreateIdeationContainer from "./components/CreateIdeationContainer";
 import IdeationComponentWrapper from "./components/IdeationComponentWrapper";
 // import IdeationClientComponentWrapper from "@/app/(main)/my-voyage/ideation/components/IdeationClientComponentWrapper";
 
+import Preloader from "./components/Preloader";
+import { fetchProjectIdeas } from "./ideationService";
 import Banner from "@/components/banner/Banner";
 import Spinner from "@/components/Spinner";
 // import { getUser } from "@/app/(auth)/authService";
 
 // const USERID = "e7a6262d-c596-44ac-9a50-373bcff1e155";
 
-export default function IdeationPage() {
+export default async function IdeationPage() {
   // const user = await getUser();
 
   // const currentVoyageTeam = user.voyageTeamMembers.find(
@@ -17,6 +19,8 @@ export default function IdeationPage() {
   // );
 
   // console.log("page 1", user);
+
+  await fetchProjectIdeas({ teamId: 2 });
 
   return (
     <>

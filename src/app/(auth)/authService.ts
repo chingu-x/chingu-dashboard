@@ -22,6 +22,7 @@ export async function serverSignIn(): Promise<ServerSignInResponse> {
         email: "l.castro@outlook.com",
         password: "password",
       }),
+      credentials: "include",
       cache: "no-store",
     }
   );
@@ -63,5 +64,5 @@ export async function serverSignOut(): Promise<void> {
 
 export async function getUser(): Promise<User> {
   const token = getCookie();
-  return await GET<User>("api/v1/users/me", token);
+  return await GET<User>("api/v1/users/me", token, "no-store");
 }
