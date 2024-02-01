@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import TextInput from "@/components/inputs/TextInput";
 
 const meta = {
@@ -31,6 +32,14 @@ const meta = {
     },
     errorMessage: {
       description: "Error message (optional).",
+    },
+    inputGroup: {
+      description:
+        "Choose inputGroup (if `inputGroupIcon` is provided, becomes `required`).",
+    },
+    inputGroupIcon: {
+      description:
+        "Provide an icon for an input group (if `inputGroup` is provided, becomes `required`).",
     },
   },
 } satisfies Meta<typeof TextInput>;
@@ -79,5 +88,41 @@ export const WithErrorMessage = {
   args: {
     ...BaseTemplate.args,
     errorMessage: "Required",
+  },
+};
+
+export const LeftInputGroup = {
+  ...BaseTemplate,
+  args: {
+    ...BaseTemplate.args,
+    inputGroup: "left",
+    inputGroupIcon: <EnvelopeIcon />,
+  },
+};
+
+export const TransparentLeftInputGroup = {
+  ...BaseTemplate,
+  args: {
+    ...BaseTemplate.args,
+    inputGroup: "left-transparent",
+    inputGroupIcon: <EnvelopeIcon />,
+  },
+};
+
+export const RightInputGroup = {
+  ...BaseTemplate,
+  args: {
+    ...BaseTemplate.args,
+    inputGroup: "right",
+    inputGroupIcon: <EnvelopeIcon />,
+  },
+};
+
+export const TransparentRightInputGroup = {
+  ...BaseTemplate,
+  args: {
+    ...BaseTemplate.args,
+    inputGroup: "right-transparent",
+    inputGroupIcon: <EnvelopeIcon />,
   },
 };
