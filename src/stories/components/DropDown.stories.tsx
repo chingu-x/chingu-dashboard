@@ -22,9 +22,9 @@ export const MenuOpenedNoVoyage: Story = {
   },
 };
 export const MenuOpenedWithVoyage: Story = {
-  //need to set up mock store/provider ???
   args: {
     openState: true,
+    placeHolderVoyage:"v47-tier2-team-4"
   },
 };
 export const MenuClosed: Story = {

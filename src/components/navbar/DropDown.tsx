@@ -9,13 +9,15 @@ import { serverSignOut } from "@/app/(auth)/authService";
 
 export default function DropDown({
   openState,
+  placeHolderVoyage,
 }: {
   openState?: boolean;
+  placeHolderVoyage?: string
 }) { 
   const dispatch = useAppDispatch();
   const allVoyages = useAppSelector((state) => state.user.voyageTeamMembers);
   const activeVoyage = allVoyages?.find((item) => item.voyageTeam.voyage.status.name === "Active");
-  const currentVoyage = activeVoyage?.voyageTeam.name ?? "Please join a voyage to see your status information.";
+  const currentVoyage = placeHolderVoyage ?? activeVoyage?.voyageTeam.name ?? "Please join a voyage to see your status information.";
   const closed = "hidden";
   const open =
     "absolute z-[1] w-44 p-4 [&>*]:mt-2 mt-6 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
