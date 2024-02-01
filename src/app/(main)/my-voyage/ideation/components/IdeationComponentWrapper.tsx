@@ -11,8 +11,6 @@ export default async function IdeationComponentWrapper() {
   const currentVoyageTeam = user.voyageTeamMembers.find(
     (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
   );
-
-  console.log("page 1", user);
   const teamId = currentVoyageTeam?.voyageTeamId;
 
   if (teamId) {

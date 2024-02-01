@@ -5,7 +5,7 @@ import {
   IdeationData,
   fetchIdeations,
 } from "@/store/features/ideation/ideationSlice";
-import { store } from "@/store/store";
+import { useAppDispatch } from "@/store/hooks";
 
 interface PreloaderProps {
   data: IdeationData[];
@@ -13,9 +13,10 @@ interface PreloaderProps {
 
 function Preloader({ data }: PreloaderProps) {
   const [isMounted, setIsMounted] = useState(false);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    store.dispatch(fetchIdeations(data));
+    dispatch(fetchIdeations(data));
     setIsMounted(true);
 
     // eslint-disable-next-line
