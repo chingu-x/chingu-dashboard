@@ -1,7 +1,6 @@
 "use client";
 
 import useDispatchClientStore from "@/hooks/useDispatchClientStore";
-import { increment } from "@/store/features/counter/counterSlice";
 import {
   IdeationData,
   fetchIdeations,
