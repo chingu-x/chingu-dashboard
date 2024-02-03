@@ -7,10 +7,13 @@ type ActionWithPayload<T> = (
   payload: T
 ) => AnyAction | { payload: T; type: string };
 
+type HasPayload<X> = X extends ActionWithPayload<infer Y> ? Y : null;
+
 interface UseDispatchClientStorePropsWithoutPayload<
   X extends ActionWithoutPayload,
 > {
   action: X;
+  payload?: null;
 }
 
 interface UseDispatchClientStorePropsWithPayload<
@@ -21,22 +24,21 @@ interface UseDispatchClientStorePropsWithPayload<
   payload: Y;
 }
 
-type UseDispatchClientStoreProps<
-  X extends ActionWithoutPayload | ActionWithPayload<Y>,
-  Y,
-> = X extends ActionWithPayload<Y>
-  ? UseDispatchClientStorePropsWithPayload<X, Y>
-  : UseDispatchClientStorePropsWithoutPayload<X>;
+type UseDispatchClientStoreProps<X, Y> = X extends ActionWithoutPayload
+  ? UseDispatchClientStorePropsWithoutPayload<X>
+  : X extends ActionWithPayload<Y>
+    ? UseDispatchClientStorePropsWithPayload<X, Y>
+    : never;
 
 export default function useDispatchClientStore<
   X extends ActionWithoutPayload | ActionWithPayload<Y>,
-  Y = null,
+  Y = HasPayload<X>,
 >({ action, payload }: UseDispatchClientStoreProps<X, Y>) {
   const [isMounted, setIsMounted] = useState(false);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (payload !== undefined) {
+    if (payload !== undefined && payload !== null) {
       dispatch(action(payload));
     } else {
       dispatch((action as ActionWithoutPayload)());
