@@ -5,12 +5,18 @@ import EmailCheckModalContainer from "./EmailCheckModalContainer";
 import ResetPasswordModalContainer from "./ResetPasswordModalContainer";
 import SignInBlock from "./SignInBlock";
 import NewPasswordModalContainer from "./NewPasswordModalContainer";
+import ResetCompletedModalContainer from "./ResetCompletedModalContainer";
 
 function SignInModalContainer() {
   const [showResetPasswordModal, setShowResetPasswordModal] =
     useState<boolean>(false);
   const [showEmailCheckModal, setShowEmailCheckModal] =
     useState<boolean>(false);
+  const [showResetCompletedModal, setShowResetCompletedModal] =
+    useState<boolean>(false);
+
+  // TODO: This state must be handled from the server
+  const [showNewPassword, setShowNewPassword] = useState<boolean>(true);
 
   const handleResetPasswordModal = () => {
     setShowResetPasswordModal(true);
@@ -20,8 +26,15 @@ function SignInModalContainer() {
     setShowEmailCheckModal(true);
   };
 
-  // TODO: Remove this mocked value when we will have setup the authentication from the backend
-  const showNewPassword = false;
+  const handleNewPasswordModal = () => {
+    setShowResetCompletedModal(true);
+    setShowResetPasswordModal(false);
+    setShowNewPassword(false);
+  };
+
+  const handleResetConfirmedModal = () => {
+    setShowResetCompletedModal(false);
+  };
 
   return (
     <>
@@ -31,10 +44,18 @@ function SignInModalContainer() {
         />
       )}
       {!showNewPassword && showEmailCheckModal && <EmailCheckModalContainer />}
-      {!showNewPassword && !showResetPasswordModal && !showEmailCheckModal && (
-        <SignInBlock handleResetPasswordModal={handleResetPasswordModal} />
+      {!showNewPassword &&
+        !showResetPasswordModal &&
+        !showEmailCheckModal &&
+        !showResetCompletedModal && (
+          <SignInBlock handleResetPasswordModal={handleResetPasswordModal} />
+        )}
+      {showNewPassword && !showResetCompletedModal && (
+        <NewPasswordModalContainer onClick={handleNewPasswordModal} />
       )}
-      {showNewPassword && <NewPasswordModalContainer />}
+      {showResetCompletedModal && !showNewPassword && (
+        <ResetCompletedModalContainer onClick={handleResetConfirmedModal} />
+      )}
     </>
   );
 }
