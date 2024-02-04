@@ -15,7 +15,14 @@ const validationSchema = z.object({
 });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
-function NewPasswordModalContainer() {
+
+type NewPasswordModalContainerProps = {
+  onClick: () => void;
+};
+
+function NewPasswordModalContainer({
+  onClick,
+}: NewPasswordModalContainerProps) {
   const {
     register,
     formState: { errors },
@@ -58,6 +65,7 @@ function NewPasswordModalContainer() {
             type="submit"
             title="submit"
             className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+            onClick={onClick}
           >
             Update New Password
           </Button>
