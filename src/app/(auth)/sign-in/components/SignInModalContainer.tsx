@@ -8,52 +8,49 @@ import NewPasswordModalContainer from "./NewPasswordModalContainer";
 import ResetCompletedModalContainer from "./ResetCompletedModalContainer";
 
 function SignInModalContainer() {
-  const [showResetPasswordModal, setShowResetPasswordModal] =
-    useState<boolean>(false);
-  const [showEmailCheckModal, setShowEmailCheckModal] =
-    useState<boolean>(false);
-  const [showResetCompletedModal, setShowResetCompletedModal] =
-    useState<boolean>(false);
+  enum ModalState {
+    SignIn,
+    ResetPassword,
+    EmailCheck,
+    NewPassword,
+    ResetCompleted,
+  }
 
-  // TODO: This state must be handled from the server
-  const [showNewPassword, setShowNewPassword] = useState<boolean>(true);
+  const [modalState, setModalState] = useState<ModalState>(
+    ModalState.NewPassword,
+  );
 
   const handleResetPasswordModal = () => {
-    setShowResetPasswordModal(true);
+    setModalState(ModalState.ResetPassword);
   };
 
   const handleEmailCheckModal = () => {
-    setShowEmailCheckModal(true);
+    setModalState(ModalState.EmailCheck);
   };
 
   const handleNewPasswordModal = () => {
-    setShowResetCompletedModal(true);
-    setShowResetPasswordModal(false);
-    setShowNewPassword(false);
+    setModalState(ModalState.ResetCompleted);
   };
 
   const handleResetConfirmedModal = () => {
-    setShowResetCompletedModal(false);
+    setModalState(ModalState.SignIn);
   };
 
   return (
     <>
-      {!showNewPassword && showResetPasswordModal && !showEmailCheckModal && (
+      {modalState === ModalState.ResetPassword && (
         <ResetPasswordModalContainer
           handleEmailCheckModal={handleEmailCheckModal}
         />
       )}
-      {!showNewPassword && showEmailCheckModal && <EmailCheckModalContainer />}
-      {!showNewPassword &&
-        !showResetPasswordModal &&
-        !showEmailCheckModal &&
-        !showResetCompletedModal && (
-          <SignInBlock handleResetPasswordModal={handleResetPasswordModal} />
-        )}
-      {showNewPassword && !showResetCompletedModal && (
+      {modalState === ModalState.EmailCheck && <EmailCheckModalContainer />}
+      {modalState === ModalState.SignIn && (
+        <SignInBlock handleResetPasswordModal={handleResetPasswordModal} />
+      )}
+      {modalState === ModalState.NewPassword && (
         <NewPasswordModalContainer onClick={handleNewPasswordModal} />
       )}
-      {showResetCompletedModal && !showNewPassword && (
+      {modalState === ModalState.ResetCompleted && (
         <ResetCompletedModalContainer onClick={handleResetConfirmedModal} />
       )}
     </>

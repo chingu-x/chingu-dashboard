@@ -33,6 +33,7 @@ function NewPasswordModalContainer({
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
+    onClick();
   };
 
   return (
@@ -65,7 +66,6 @@ function NewPasswordModalContainer({
             type="submit"
             title="submit"
             className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
-            onClick={onClick}
           >
             Update New Password
           </Button>
