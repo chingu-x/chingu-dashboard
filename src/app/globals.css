@@ -82,3 +82,10 @@
 [data-theme='light'] [data-hide-on-theme='light'] {
   display: none;
 }
+
+/* a fix for a textarea placeholder missing bottom padding for Safari  */
+@supports (-webkit-hyphens:none) {
+    textarea::placeholder {
+        padding-bottom: 8px;
+    }
+}
