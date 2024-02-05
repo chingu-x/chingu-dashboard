@@ -15,14 +15,15 @@ export interface StepperProps {
 export default function Stepper({ styleType = "chip" }: StepperProps) {
   return (
     // TODO: figure out parent width
-    <div className="w-[800px]">
+    <div className="w-[1000px]">
       <ul className="flex">
         {steps.map((step, idx) => {
           return (
             <li
-              className="flex flex-1 border border-yellow-500 last:flex-none
-              last:after:content-none
-              after:content-[''] after:h-[10px] after:bg-yellow-500 after:w-full
+              className="flex flex-1 last:flex-none relative
+              last:after:content-none after:absolute
+              after:content-[''] after:h-[8px] after:bg-base-100 after:w-full
+              after:translate-y-full after:-z-10 after:left-1
             "
             >
               <div
