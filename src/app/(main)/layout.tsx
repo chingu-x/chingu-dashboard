@@ -20,8 +20,8 @@ export default function Layout({ children }: LayoutProps) {
       </Navbar>
       <div className="relative flex flex-1 overflow-hidden">
         <Sidebar />
-        <main className="flex flex-col items-center flex-1 w-full p-10 overflow-y-auto">
-          <div className="flex flex-col max-w-[1353px] gap-y-9">{children}</div>
+        <main className="flex flex-1 flex-col items-center w-full p-10 overflow-y-auto">
+          <div className="gap-y-9 max-w-[1353px] w-full">{children}</div>
         </main>
       </div>
     </div>
