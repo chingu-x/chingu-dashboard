@@ -61,6 +61,7 @@ export const ideationSlice = createSlice({
         }
       });
     },
+    removeVote: (state, action) => {},
   },
 });
 
