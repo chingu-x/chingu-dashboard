@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 //  - setting the width for the stepper: do we want to specify the width or base it off parent's width
 //  - variant colors for stepper button
 
-type StepperStyle = "chip" | "indicators";
+type StepperStyle = "chips" | "indicators";
 type StepperStatus = "completed" | "current" | "remaining";
 
 export interface SteppersItem {
@@ -59,7 +59,7 @@ export default function Stepper({
               <Button
                 onClick={onClickEvent}
                 className={`text-center rounded-full ${
-                  styleType === "chip" ? "w-[100px] h-[24px]" : "w-[45px]"
+                  styleType === "chips" ? "w-[100px] h-[24px]" : "w-[45px]"
                 }`}
                 variant={buttonVariant}
               >
