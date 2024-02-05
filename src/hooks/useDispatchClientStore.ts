@@ -4,7 +4,7 @@ import { useAppDispatch } from "@/store/hooks";
 
 type ActionWithoutPayload = () => AnyAction;
 type ActionWithPayload<T> = (
-  payload: T
+  payload: T,
 ) => AnyAction | { payload: T; type: string };
 
 type HasPayload<X> = X extends ActionWithPayload<infer Y> ? Y : null;

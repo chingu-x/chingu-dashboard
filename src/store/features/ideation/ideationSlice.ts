@@ -25,6 +25,7 @@ export interface IdeationData {
   description: string;
   vision: string;
   createdAt: Date;
+  updatedAt: Date;
   contributedBy: {
     member: VoyageMember;
   };

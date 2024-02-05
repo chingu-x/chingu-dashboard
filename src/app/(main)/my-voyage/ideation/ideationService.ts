@@ -42,22 +42,26 @@ export async function addIdeationVote({
   teamId,
   ideationId,
 }: AddIdeationVoteProps) {
+  const token = getCookie();
+
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams/${teamId}/ideations/${ideationId}/ideation-votes`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
       {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          Cookie: `access_token=${token}`,
         },
         body: JSON.stringify({
-          userId: "1bbd9ddb-f4b3-4e88-b2d8-fec82f653feb",
+          teamId,
+          ideationId,
         }),
       }
     );
 
-    revalidatePath("/ideation");
+    revalidatePath("/my-voyage/ideation");
 
     return (await res.json()) as IdeationVoteResponse;
   } catch (error) {

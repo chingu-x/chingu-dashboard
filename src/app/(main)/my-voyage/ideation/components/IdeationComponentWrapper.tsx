@@ -28,11 +28,13 @@ export default async function IdeationComponentWrapper() {
       {projectIdeas.map((projectIdea) => (
         <IdeationContainer
           key={projectIdea.id}
+          projectIdeaId={projectIdea.id}
           title={projectIdea.title}
           project_idea={projectIdea.description}
           vision_statement={projectIdea.vision}
           users={projectIdea.projectIdeaVotes}
           contributed_by={projectIdea.contributedBy}
+          teamId={teamId}
         />
       ))}
     </>
