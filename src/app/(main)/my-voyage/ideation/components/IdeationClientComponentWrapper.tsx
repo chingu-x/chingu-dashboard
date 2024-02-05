@@ -19,7 +19,7 @@ function IdeationClientComponentWrapper() {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const currentVoyageTeam = user.voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
+    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
   );
   const teamId = currentVoyageTeam?.voyageTeamId;
 

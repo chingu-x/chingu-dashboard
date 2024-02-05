@@ -1,44 +1,46 @@
 "use client";
 
-// import { useCallback, useEffect, useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
 import Avatar from "@/components/Avatar";
-// import Button from "@/components/Button";
+import Button from "@/components/Button";
 import {
   ProjectIdeaVotes,
-  // addVote,
+  addVote,
 } from "@/store/features/ideation/ideationSlice";
-// import { addIdeationVote } from "@/api/ideationService";
-
-// const USERID = "1bbd9ddb-f4b3-4e88-b2d8-fec82f653feb";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addIdeationVote } from "@/app/(main)/my-voyage/ideation/ideationService";
 
 interface VoteCardProps {
+  projectIdeaId: number;
   users: ProjectIdeaVotes[];
   className?: string;
+  teamId: number;
 }
 
-function VoteCard({ users, className }: VoteCardProps) {
-  // const [currentUserVoted, setCurrentUserVoted] = useState(false);
-  // const dispatch = useDispatch();
+function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
+  const [currentUserVoted, setCurrentUserVoted] = useState(false);
+  const { id } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
-  // async function addProjectVote() {
-  //   const data = await addIdeationVote({ teamId: 1, ideationId: 1 });
+  async function addProjectVote() {
+    const data = await addIdeationVote({ teamId, ideationId: projectIdeaId });
+    dispatch(addVote(data));
 
-  //   dispatch(addVote(data));
-  // }
+    console.log("clicked");
+  }
 
-  // const getVoteUsers = useCallback(
-  //   () => users.map((user) => user.votedBy.member.id),
-  //   [users]
-  // );
+  const getVoteUsers = useCallback(
+    () => users.map((user) => user.votedBy.member.id),
+    [users]
+  );
 
-  // useEffect(() => {
-  //   if (getVoteUsers().includes(USERID) === true) {
-  //     setCurrentUserVoted(true);
-  //   } else {
-  //     setCurrentUserVoted(false);
-  //   }
-  // }, [getVoteUsers]);
+  useEffect(() => {
+    if (getVoteUsers().includes(id) === true) {
+      setCurrentUserVoted(true);
+    } else {
+      setCurrentUserVoted(false);
+    }
+  }, [id, getVoteUsers]);
 
   return (
     <div
@@ -59,9 +61,16 @@ function VoteCard({ users, className }: VoteCardProps) {
             />
           ))}
         </div>
-        {/* <Button className="w-full" disabled={voted}>
-          {voted ? "Voted" : "Vote"}
-        </Button> */}
+        <Button
+          type="submit"
+          size="lg"
+          variant="primary"
+          className="w-full"
+          disabled={currentUserVoted}
+          onClick={addProjectVote}
+        >
+          {currentUserVoted ? "Voted" : "Vote"}
+        </Button>
       </section>
     </div>
   );
