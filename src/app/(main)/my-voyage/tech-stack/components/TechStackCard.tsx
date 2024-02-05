@@ -1,6 +1,6 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import type { TechItem } from "./fixtures/TechStack";
-import Avatar from "@/components/Avatar";
+import AvatarGroup from "./AvatarGroup";
 import Button from "@/components/Button";
 
 interface TechStackCardProps {
@@ -24,15 +24,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               key={element.id}
             >
               {element.value}
-              <div className="absolute -space-x-2 avatar-group left-28">
-                {element.users.map((user) => (
-                  <Avatar
-                    key={`${element.id}-${user}`}
-                    width={24}
-                    height={24}
-                  />
-                ))}
-              </div>
+              <AvatarGroup data={element.users}/>
               <button
                 type="button"
                 className="capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 bg-primary-content border-transparent mr-4 rounded-[32px] hover:bg-primary hover:border-transparent gap-x-0"
