@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import Button from "@/components/Button";
-import { ButtonProps } from "@/components/Button";
+import Button, { ButtonProps } from "@/components/Button";
+import { cn } from "@/lib/utils";
 
 // TODO FOR LATER REFACTOR:
 //  - setting the width for the stepper: do we want to specify the width or base it off parent's width
@@ -15,6 +15,7 @@ export interface SteppersItem {
   indicator: string | React.JSX.Element;
   status: StepperStatus;
   onClickEvent: () => void;
+  name: string;
 }
 
 export interface StepperProps {
@@ -31,8 +32,8 @@ export default function Stepper({
   return (
     <div className={`${stepperWidth}`}>
       <div className="flex">
-        {steppers.map((step, idx) => {
-          const { indicator, status, onClickEvent } = step;
+        {steppers.map((step) => {
+          const { indicator, status, onClickEvent, name } = step;
 
           //   the indicatorDisplay logic is to show the check icon for completion
           //   if the indicator is an icon instead of a number
@@ -47,17 +48,13 @@ export default function Stepper({
 
           return (
             <div
-              key={idx}
-              className={`flex flex-1 last:flex-none relative
-              last:after:contents-none after:absolute
-              after:content-[''] after:h-[7px]
-              ${
+              key={name}
+              className={cn(
+                "flex flex-1 last:flex-none relative last:after:contents-none after:absolute after:content-[''] after:h-[7px] after:w-full after:top-1/2 after:-translate-y-1/2 after:-z-10",
                 status === "completed"
                   ? "after:bg-primary"
                   : "after:bg-base-100"
-              }
-              after:w-full after:top-1/2 after:-translate-y-1/2 after:-z-10
-            `}
+              )}
             >
               <Button
                 onClick={onClickEvent}
