@@ -1,3 +1,4 @@
+import Link from "next/link";
 import VoteDescriptionCard from "./VoteDescriptionCard";
 import Button from "@/components/Button";
 // import { useAppDispatch } from "@/store/hooks";
@@ -8,11 +9,13 @@ function CreateIdeationContainer() {
 
   return (
     <div className="card w-[1050px] 3xl:w-full min-h-[190px] max-[1919px]:min-h-[280px] bg-base-100 flex flex-row items-center px-10 rounded-2xl">
-      <div className="flex flex-col justify-between h-full py-10 min-[1920px]:hidden">
+      <div className="flex flex-col gap-y-6 justify-between h-full py-10 min-[1920px]:hidden">
         <VoteDescriptionCard />
-        <Button size="lg" className="max-[1920px]:w-[160px]">
-          Create Project
-        </Button>
+        <Link href="/my-voyage/ideation/new">
+          <Button size="lg" className="max-[1920px]:w-[160px]">
+            Create Project
+          </Button>
+        </Link>
       </div>
       <VoteDescriptionCard className="hidden min-[1920px]:block" />
       <section className="px-20 card-body gap-y-7">
