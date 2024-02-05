@@ -1,62 +1,46 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "@/store/features/user/userSlice";
+import userReducer, { User } from "@/store/features/user/userSlice";
 import authReducer from "@/store/features/auth/authSlice";
 
-const initialState = {
-  id: "",
-  firstName: "",
-  lastName: "",
-  countryCode: "",
-  discordId: "",
-  githubId: "",
-  twitterId: "",
-  linkedinId: "",
-  email: "",
-  timezone: "",
-  avatar:"",
-};
-  
-const user1 = {
-  initialState,
+const user1: Partial<User> = {
   voyageTeamMembers: [
     {
-      id:1,
-      voyageTeamId:1,
+      id: 1,
+      voyageTeamId: 1,
       voyageTeam: {
-        name:"Team 43-tier3-V42",
-        voyage:{
-          status:{
-            name:"Active"
-          }
-        }
+        name: "Team 43-tier3-V42",
+        voyage: {
+          status: {
+            name: "Active",
+          },
+        },
       },
-      voyageRole:{
-        name:"Developer"
+      voyageRole: {
+        name: "Developer",
       },
-    }
-  ]
+    },
+  ],
 };
-const user2 = {
-  initialState,
+const user2: Partial<User> = {
   voyageTeamMembers: [
     {
-      id:1,
-      voyageTeamId:1,
+      id: 1,
+      voyageTeamId: 1,
       voyageTeam: {
-        name:"Team 43-tier3-V42",
-        voyage:{
-          status:{
-            name:"Closed"
-          }
-        }
+        name: "Team 43-tier3-V42",
+        voyage: {
+          status: {
+            name: "Closed",
+          },
+        },
       },
-      voyageRole:{
-        name:"Developer"
+      voyageRole: {
+        name: "Developer",
       },
-    }
-  ]
+    },
+  ],
 };
-  
+
 export const mockStoreVoyage = configureStore({
   reducer: {
     user: userReducer,
@@ -66,9 +50,8 @@ export const mockStoreVoyage = configureStore({
     auth: {
       isAuthenticated: true,
     },
-    //@ts-expect-error - This is a mock object
-    user: user1
-  }
+    user: user1 as User,
+  },
 });
 export const mockStoreNoVoyage = configureStore({
   reducer: {
@@ -79,7 +62,6 @@ export const mockStoreNoVoyage = configureStore({
     auth: {
       isAuthenticated: true,
     },
-    //@ts-expect-error - This is a mock object
-    user: user2
-  }
+    user: user2 as User,
+  },
 });
