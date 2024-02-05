@@ -1,5 +1,3 @@
-"use client";
-
 import ContributionCard from "./ContributionCard";
 import VoteCard from "./VoteCard";
 // import type { Ideation } from "./fixtures/ideation";

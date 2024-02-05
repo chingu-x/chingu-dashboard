@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getCookie } from "@/utils/getCookie";
-import { GET } from "@/utils/requests";
+import { GET, POST } from "@/utils/requests";
 
 interface IdeationVoteProps {
   teamId: number;
@@ -36,36 +36,19 @@ export async function fetchProjectIdeas({
 export async function addIdeationVote({
   teamId,
   ideationId,
-}: IdeationVoteProps) {
+}: IdeationVoteProps): Promise<IdeationVoteResponse> {
   const token = getCookie();
 
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Cookie: `access_token=${token}`,
-        },
-        body: JSON.stringify({
-          teamId,
-          ideationId,
-        }),
-      }
-    );
+  const data = await POST<IdeationVoteProps, IdeationVoteResponse>(
+    `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+    token,
+    { teamId, ideationId },
+    "default"
+  );
 
-    revalidatePath("/my-voyage/ideation");
+  revalidatePath("/my-voyage/ideation");
 
-    return (await res.json()) as IdeationVoteResponse;
-  } catch (error) {
-    let message;
-
-    if (error instanceof Error) message = error.message;
-    else message = String(error);
-    throw Error(message);
-  }
+  return data;
 }
 
 export async function removeIdeationVote({
