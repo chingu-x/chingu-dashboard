@@ -1,20 +1,16 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TrashIcon } from "@heroicons/react/20/solid";
-
+// import { TrashIcon } from "@heroicons/react/20/solid";
 import Button from "@/components/Button";
-import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 
-import { useAppDispatch } from "@/store/hooks";
-import { onClose } from "@/store/features/modal/modalSlice";
+// import { useAppDispatch } from "@/store/hooks";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -38,28 +34,18 @@ const validationSchema = z.object({
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function IdeationModal() {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
-    reset,
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => console.log(data);
-
-  const handleClose = useCallback(() => {
-    reset({
-      title: "",
-      projectIdea: "",
-      visionStatement: "",
-    });
-    dispatch(onClose());
-  }, [dispatch, reset]);
 
   //   useEffect(() => {
   //     if (mode === "edit") {
