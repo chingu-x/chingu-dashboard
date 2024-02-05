@@ -1,8 +1,6 @@
 import { Provider } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
 import type { Meta, StoryObj } from "@storybook/react";
 import { FewNotifications } from "./Bell.stories";
-import userReducer from "@/store/features/user/userSlice";
 import avatarImage from "@/stories/assets/avatar.png";
 import ThemeProvider from "@/components/ThemeProvider";
 import Navbar from "@/components/navbar/Navbar";
@@ -11,82 +9,7 @@ import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
 import Button from "@/components/Button";
 import Avatar from "@/components/Avatar";
-
-//Perhaps move mockStore and mockState to separte file
-const initialState = {
-  id: "",
-  firstName: "",
-  lastName: "",
-  countryCode: "",
-  discordId: "",
-  githubId: "",
-  twitterId: "",
-  linkedinId: "",
-  email: "",
-  timezone: "",
-  avatar:"",
-};
-
-const user1 = {
-  initialState,
-  voyageTeamMembers: [
-    {
-      id:1,
-      voyageTeamId:1,
-      voyageTeam: {
-        name:"Team 43-tier3-V42",
-        voyage:{
-          status:{
-            name:"Active"
-          }
-        }
-      },
-      voyageRole:{
-        name:"Developer"
-      },
-    }
-  ]
-};
-const user2 = {
-  initialState,
-  voyageTeamMembers: [
-    {
-      id:1,
-      voyageTeamId:1,
-      voyageTeam: {
-        name:"Team 43-tier3-V42",
-        voyage:{
-          status:{
-            name:"Closed"
-          }
-        }
-      },
-      voyageRole:{
-        name:"Developer"
-      },
-    }
-  ]
-};
-
-const mockStore = configureStore({
-  reducer: {
-    user: userReducer,
-  },
-  preloadedState: {    
-    //@ts-expect-error - This is a mock object
-    user: user1
-  }
-});
-const mockStore2 = configureStore({
-  reducer: {
-    user: userReducer,
-  },
-  
-  preloadedState: {
-    //@ts-expect-error - This is a mock object
-    user: user2
-  }
-});
+import { mockStoreVoyage, mockStoreNoVoyage } from "@/stories/DropDownStore";
 
 const meta = {
   title: "Components/Navbar",
@@ -109,7 +32,6 @@ export const LoggedOut: Story = {
       </Button>,
     ]
   },
-
 };
 
 export const MenuOpenNoVoyage: Story = {
@@ -125,7 +47,7 @@ export const MenuOpenNoVoyage: Story = {
   },
   decorators:[
     (Story) => (
-      <Provider store={mockStore2}>
+      <Provider store={mockStoreNoVoyage}>
         <div style={{ height: 300 }}>
           <Story/>
         </div>
@@ -147,7 +69,7 @@ export const MenuOpenedOnVoyage: Story = {
   },
   decorators:[
     (Story) => (
-      <Provider store={mockStore}>
+      <Provider store={mockStoreVoyage}>
         <div style={{ height: 300 }}>
           <Story/>
         </div>
