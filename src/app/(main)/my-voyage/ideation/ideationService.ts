@@ -5,7 +5,7 @@ import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getCookie } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 
-interface AddIdeationVoteProps {
+interface IdeationVoteProps {
   teamId: number;
   ideationId: number;
 }
@@ -20,11 +20,6 @@ export interface IdeationVoteResponse {
   projectIdeaId: number;
   createdAt: Date;
   updatedAt: Date;
-  votedBy: {
-    member: {
-      avatar: string;
-    };
-  };
 }
 
 export async function fetchProjectIdeas({
@@ -34,14 +29,14 @@ export async function fetchProjectIdeas({
   return await GET<IdeationData[]>(
     `api/v1/voyages/${teamId}/ideations`,
     token,
-    "force-cache",
+    "force-cache"
   );
 }
 
 export async function addIdeationVote({
   teamId,
   ideationId,
-}: AddIdeationVoteProps) {
+}: IdeationVoteProps) {
   const token = getCookie();
 
   try {
@@ -58,7 +53,7 @@ export async function addIdeationVote({
           teamId,
           ideationId,
         }),
-      },
+      }
     );
 
     revalidatePath("/my-voyage/ideation");
@@ -71,4 +66,31 @@ export async function addIdeationVote({
     else message = String(error);
     throw Error(message);
   }
+}
+
+export async function removeIdeationVote({
+  teamId,
+  ideationId,
+}: IdeationVoteProps) {
+  const token = getCookie();
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+    {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Cookie: `access_token=${token}`,
+      },
+      body: JSON.stringify({
+        teamId,
+        ideationId,
+      }),
+    }
+  );
+
+  revalidatePath("/my-voyage/ideation");
+
+  return (await res.json()) as IdeationVoteResponse;
 }

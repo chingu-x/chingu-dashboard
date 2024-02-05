@@ -8,7 +8,10 @@ import {
   addVote,
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { addIdeationVote } from "@/app/(main)/my-voyage/ideation/ideationService";
+import {
+  addIdeationVote,
+  removeIdeationVote,
+} from "@/app/(main)/my-voyage/ideation/ideationService";
 
 interface VoteCardProps {
   projectIdeaId: number;
@@ -22,16 +25,18 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const { id } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
-  async function addProjectVote() {
-    const data = await addIdeationVote({ teamId, ideationId: projectIdeaId });
-    dispatch(addVote(data));
-
-    console.log("clicked");
+  async function handleVote() {
+    if (currentUserVoted) {
+      await removeIdeationVote({ teamId, ideationId: projectIdeaId });
+    } else {
+      await addIdeationVote({ teamId, ideationId: projectIdeaId });
+      // dispatch(addVote(data));
+    }
   }
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users],
+    [users]
   );
 
   useEffect(() => {
@@ -66,10 +71,9 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
           size="lg"
           variant="primary"
           className="w-full"
-          disabled={currentUserVoted}
-          onClick={addProjectVote}
+          onClick={handleVote}
         >
-          {currentUserVoted ? "Voted" : "Vote"}
+          {currentUserVoted ? "Remove Vote" : "Add Vote"}
         </Button>
       </section>
     </div>
