@@ -1,7 +1,7 @@
 export async function GET<T>(
   url: string,
   token: string,
-  cache: RequestCache | undefined,
+  cache: RequestCache
 ): Promise<T> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     headers: {
@@ -15,4 +15,27 @@ export async function GET<T>(
   }
 
   return (await res.json()) as T;
+}
+
+export async function POST<X, Y>(
+  url: string,
+  token: string,
+  payload: X,
+  cache: RequestCache
+): Promise<Y> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `access_token=${token}`,
+    },
+    body: JSON.stringify({ payload }),
+    cache,
+  });
+
+  if (!res.ok) {
+    throw new Error(res.statusText);
+  }
+
+  return (await res.json()) as Y;
 }

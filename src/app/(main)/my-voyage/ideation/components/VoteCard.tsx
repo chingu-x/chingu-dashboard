@@ -29,8 +29,8 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
     if (currentUserVoted) {
       await removeIdeationVote({ teamId, ideationId: projectIdeaId });
     } else {
-      await addIdeationVote({ teamId, ideationId: projectIdeaId });
-      // dispatch(addVote(data));
+      const data = await addIdeationVote({ teamId, ideationId: projectIdeaId });
+      dispatch(addVote(data));
     }
   }
 
