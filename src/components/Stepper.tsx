@@ -4,6 +4,10 @@ import React from "react";
 import Button from "@/components/Button";
 import { ButtonProps } from "@/components/Button";
 
+// TODO FOR LATER REFACTOR:
+//  - setting the width for the stepper: do we want to specify the width or base it off parent's width
+//  - variant colors for stepper button
+
 type StepperStyle = "chip" | "indicators";
 type StepperStatus = "completed" | "current" | "remaining";
 
@@ -30,13 +34,14 @@ export default function Stepper({
         {steppers.map((step, idx) => {
           const { indicator, status, onClickEvent } = step;
 
+          //   the indicatorDisplay logic is to show the check icon for completion
+          //   if the indicator is an icon instead of a number
           const indicatorDisplay =
             typeof indicator !== "string" && status === "completed"
               ? "checked"
               : indicator;
 
           let buttonVariant: ButtonProps["variant"] = "accent";
-
           if (status === "current") buttonVariant = "secondary";
           if (status === "completed") buttonVariant = "primary";
 
