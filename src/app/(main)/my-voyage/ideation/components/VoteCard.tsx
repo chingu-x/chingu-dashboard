@@ -31,7 +31,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users]
+    [users],
   );
 
   useEffect(() => {
