@@ -1,7 +1,7 @@
 export async function GET<T>(
   url: string,
   token: string,
-  cache: RequestCache | undefined
+  cache: RequestCache | undefined,
 ): Promise<T> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     headers: {

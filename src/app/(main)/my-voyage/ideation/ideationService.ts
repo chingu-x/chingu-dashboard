@@ -34,7 +34,7 @@ export async function fetchProjectIdeas({
   return await GET<IdeationData[]>(
     `api/v1/voyages/${teamId}/ideations`,
     token,
-    "force-cache"
+    "force-cache",
   );
 }
 
@@ -58,7 +58,7 @@ export async function addIdeationVote({
           teamId,
           ideationId,
         }),
-      }
+      },
     );
 
     revalidatePath("/my-voyage/ideation");
