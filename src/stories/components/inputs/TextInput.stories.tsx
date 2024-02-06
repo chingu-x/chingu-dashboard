@@ -37,11 +37,15 @@ const meta = {
       description:
         "Choose inputGroup (if `inputGroupIcon` is provided, becomes `required`).",
     },
-    inputGroupIcon: {
+    inputGroupContent: {
       description:
         "Provide an icon for an input group (if `inputGroup` is provided, becomes `required`).",
       control: { type: "boolean" },
       mapping: { false: undefined, true: <EnvelopeIcon /> },
+    },
+    inputGroupAction: {
+      description: "inputGroupAction function",
+      control: "function",
     },
   },
 } satisfies Meta<typeof TextInput>;
@@ -108,5 +112,6 @@ export const RightInputGroup = {
     ...BaseTemplate.args,
     inputGroup: "right",
     inputGroupIcon: <EnvelopeIcon />,
+    inputGroupAction: () => {},
   },
 };
