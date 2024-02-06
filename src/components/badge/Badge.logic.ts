@@ -75,17 +75,26 @@ export const useBadgeLogic = (size: Size) => {
     lg: AVATAR_SIZES.lg,
   };
 
+  const sizeToAvatarClass = {
+    sm: "mr-[4px]",
+    md: "mr-[5px]",
+    lg: "mr-[6px]",
+  };
+
   const getIconClass = (size: Size, sizeToIcon: SizeToIconType): string =>
     size ? sizeToIcon[size] : sizeToIcon.md;
   const getH2Class = (size: Size): string =>
     size ? sizeToH2[size] : sizeToH2.md;
   const getAvatarDimension = (size: Size): number =>
     size ? sizeToAvatarDimension[size] : sizeToAvatarDimension.md;
+  const getAvatarClass = (size: Size): string =>
+    size ? sizeToAvatarClass[size] : sizeToAvatarClass.md;
 
   return {
     iconLeftClass: getIconClass(size, sizeToLeftIcon),
     iconRightClass: getIconClass(size, sizeToRightIcon),
     h2Class: getH2Class(size),
     avatarDimension: getAvatarDimension(size),
+    avatarClass: getAvatarClass(size),
   };
 };
