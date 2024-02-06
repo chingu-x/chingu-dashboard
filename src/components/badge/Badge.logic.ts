@@ -2,6 +2,12 @@ import { VariantProps, cva } from "class-variance-authority";
 
 type Size = "sm" | "md" | "lg" | null | undefined;
 
+type SizeToIconType = {
+  sm: string;
+  md: string;
+  lg: string;
+};
+
 interface BadgeBaseProps {
   title: string;
   className?: string;
@@ -45,10 +51,16 @@ export const AVATAR_SIZES = {
   lg: 18,
 };
 export const useBadgeLogic = (size: Size) => {
-  const sizeToIcon = {
-    sm: "w-[12px]",
-    md: "w-[17px]",
-    lg: "w-[22px]",
+  const sizeToLeftIcon = {
+    sm: "w-[12px] mr-[6px]",
+    md: "w-[17px] mr-[8px]",
+    lg: "w-[22px] mr-[9px]",
+  };
+
+  const sizeToRightIcon = {
+    sm: "w-[12px] ml-[6px]",
+    md: "w-[17px] ml-[8px]",
+    lg: "w-[22px] ml-[9px]",
   };
 
   const sizeToH2 = {
@@ -63,7 +75,7 @@ export const useBadgeLogic = (size: Size) => {
     lg: AVATAR_SIZES.lg,
   };
 
-  const getIconClass = (size: Size): string =>
+  const getIconClass = (size: Size, sizeToIcon: SizeToIconType): string =>
     size ? sizeToIcon[size] : sizeToIcon.md;
   const getH2Class = (size: Size): string =>
     size ? sizeToH2[size] : sizeToH2.md;
@@ -71,7 +83,8 @@ export const useBadgeLogic = (size: Size) => {
     size ? sizeToAvatarDimension[size] : sizeToAvatarDimension.md;
 
   return {
-    iconClass: getIconClass(size),
+    iconLeftClass: getIconClass(size, sizeToLeftIcon),
+    iconRightClass: getIconClass(size, sizeToRightIcon),
     h2Class: getH2Class(size),
     avatarDimension: getAvatarDimension(size),
   };
