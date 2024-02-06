@@ -3,7 +3,7 @@ import {
   addIdeationVote,
   IdeationVoteProps,
   removeIdeationVote,
-} from "@/app/(main)/my-voyage/ideation/ideationService";
+} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 export interface VoyageMember {
   id: string;
@@ -42,6 +42,10 @@ interface IdeationState {
   errors: object;
 }
 
+interface RemoveVoteActionPayload extends IdeationVoteProps {
+  id: string;
+}
+
 const initialState: IdeationState = {
   loading: false,
   projectIdeas: [],
@@ -50,15 +54,18 @@ const initialState: IdeationState = {
 
 export const addVote = createAsyncThunk(
   "ideation/addVote",
-  async (payload: IdeationVoteProps) => {
-    await addIdeationVote(payload);
-  }
+  async (payload: IdeationVoteProps) => await addIdeationVote(payload)
 );
 
 export const removeVote = createAsyncThunk(
   "ideation/removeVote",
-  async (payload: IdeationVoteProps) => {
-    await removeIdeationVote(payload);
+  async (payload: RemoveVoteActionPayload) => {
+    const { teamId, ideationId, id } = payload;
+    const res = await removeIdeationVote({ teamId, ideationId });
+
+    const userId = id;
+
+    return { ...res, userId };
   }
 );
 
@@ -87,8 +94,13 @@ export const ideationSlice = createSlice({
       state.loading = true;
       state.errors = {};
     });
-    builder.addCase(addVote.fulfilled, (state) => {
+    builder.addCase(addVote.fulfilled, (state, action) => {
       state.loading = true;
+      state.projectIdeas.map((projectIdea) => {
+        if (projectIdea.id === action.payload.projectIdeaId) {
+          projectIdea.projectIdeaVotes.push(action.payload as ProjectIdeaVotes);
+        }
+      });
       state.errors = {};
     });
     // builder.addCase(addVote.rejected, (state, action: PayloadAction<{}>) => {
@@ -99,8 +111,18 @@ export const ideationSlice = createSlice({
       state.loading = true;
       state.errors = {};
     });
-    builder.addCase(removeVote.fulfilled, (state) => {
+    builder.addCase(removeVote.fulfilled, (state, action) => {
       state.loading = true;
+      state.projectIdeas.map((projectIdea) => {
+        if (projectIdea.id === action.payload.projectIdeaId) {
+          const updatedProjectIdeaVotes = projectIdea.projectIdeaVotes.filter(
+            (projectIdea) =>
+              projectIdea.votedBy.member.id !== action.payload.userId
+          );
+
+          projectIdea.projectIdeaVotes = updatedProjectIdeaVotes;
+        }
+      });
       state.errors = {};
     });
   },
