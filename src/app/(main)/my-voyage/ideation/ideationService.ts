@@ -5,7 +5,7 @@ import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getCookie } from "@/utils/getCookie";
 import { GET, POST } from "@/utils/requests";
 
-interface IdeationVoteProps {
+export interface IdeationVoteProps {
   teamId: number;
   ideationId: number;
 }

@@ -1,5 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IdeationVoteResponse } from "@/app/(main)/my-voyage/ideation/ideationService";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  addIdeationVote,
+  IdeationVoteProps,
+} from "@/app/(main)/my-voyage/ideation/ideationService";
 
 export interface VoyageMember {
   id: string;
@@ -35,36 +38,66 @@ export interface IdeationData {
 interface IdeationState {
   loading: boolean;
   projectIdeas: IdeationData[];
-  errors: object | null;
+  errors: object;
 }
 
 const initialState: IdeationState = {
   loading: false,
   projectIdeas: [],
-  errors: null,
+  errors: {},
 };
+
+export const addVote = createAsyncThunk(
+  "ideation/addVote",
+  async (payload: IdeationVoteProps) => {
+    await addIdeationVote(payload);
+  }
+);
 
 export const ideationSlice = createSlice({
   name: "ideation",
   initialState,
   reducers: {
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
     fetchIdeations: (state, action: PayloadAction<IdeationData[]>) => {
       state.projectIdeas = action.payload;
+      state.loading = false;
     },
-    addVote: (state, action: PayloadAction<IdeationVoteResponse>) => {
-      state.projectIdeas.map((projectIdea) => {
-        if (projectIdea.id === action.payload.projectIdeaId) {
-          projectIdea.projectIdeaVotes.push(action.payload as ProjectIdeaVotes);
-        }
-      });
-    },
-    removeVote: (state, action) => {},
+    // setLoading: (state) => {
+    //   state.loading = true;
+    // },
+    // addVote: (state, action: PayloadAction<IdeationVoteResponse>) => {
+    //   state.projectIdeas.map((projectIdea) => {
+    //     if (projectIdea.id === action.payload.projectIdeaId) {
+    //       projectIdea.projectIdeaVotes.push(action.payload as ProjectIdeaVotes);
+    //     }
+    //   });
+    // },
+    // removeVote: (state, action) => {},
+  },
+  extraReducers(builder) {
+    builder.addCase(addVote.pending, (state) => {
+      state.loading = true;
+      state.errors = {};
+    });
+    builder.addCase(addVote.fulfilled, (state) => {
+      state.loading = true;
+      state.errors = {};
+    });
+    // builder.addCase(addVote.rejected, (state, action: PayloadAction<{}>) => {
+    //   state.loading = false;
+    //   state.errors = action.error;
+    // });
+    builder.addCase(addVote.pending, (state) => {
+      state.loading = true;
+      state.errors = {};
+    });
+    builder.addCase(addVote.fulfilled, (state) => {
+      state.loading = true;
+      state.errors = {};
+    });
   },
 });
 
-export const { fetchIdeations, addVote, setLoading } = ideationSlice.actions;
+export const { fetchIdeations } = ideationSlice.actions;
 
 export default ideationSlice.reducer;

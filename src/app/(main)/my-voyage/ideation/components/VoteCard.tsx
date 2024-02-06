@@ -6,12 +6,14 @@ import Button from "@/components/Button";
 import {
   ProjectIdeaVotes,
   addVote,
+  setLoadingFalse,
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
-  addIdeationVote,
+  // addIdeationVote,
   removeIdeationVote,
 } from "@/app/(main)/my-voyage/ideation/ideationService";
+import Spinner from "@/components/Spinner";
 
 interface VoteCardProps {
   projectIdeaId: number;
@@ -21,16 +23,19 @@ interface VoteCardProps {
 }
 
 function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
-  const [currentUserVoted, setCurrentUserVoted] = useState(false);
+  const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
+    null
+  );
   const { id } = useAppSelector((state) => state.user);
+  const { loading } = useAppSelector((state) => state.ideation);
   const dispatch = useAppDispatch();
 
   async function handleVote() {
     if (currentUserVoted) {
       await removeIdeationVote({ teamId, ideationId: projectIdeaId });
     } else {
-      const data = await addIdeationVote({ teamId, ideationId: projectIdeaId });
-      dispatch(addVote(data));
+      // const data = await addIdeationVote({ teamId, ideationId: projectIdeaId });
+      void dispatch(addVote({ teamId, ideationId: projectIdeaId }));
     }
   }
 
@@ -38,6 +43,18 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
     () => users.map((user) => user.votedBy.member.id),
     [users]
   );
+
+  function buttonContent() {
+    if (loading) {
+      return <Spinner />;
+    }
+
+    if (currentUserVoted) {
+      return "Remove Vote";
+    } else {
+      return "Add Vote";
+    }
+  }
 
   useEffect(() => {
     if (getVoteUsers().includes(id) === true) {
@@ -66,15 +83,17 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
             />
           ))}
         </div>
-        <Button
-          type="submit"
-          size="lg"
-          variant="primary"
-          className="w-full"
-          onClick={handleVote}
-        >
-          {currentUserVoted ? "Remove Vote" : "Add Vote"}
-        </Button>
+        {currentUserVoted !== null ? (
+          <Button
+            type="submit"
+            size="lg"
+            variant="primary"
+            className="w-full"
+            onClick={handleVote}
+          >
+            {buttonContent()}
+          </Button>
+        ) : null}
       </section>
     </div>
   );
