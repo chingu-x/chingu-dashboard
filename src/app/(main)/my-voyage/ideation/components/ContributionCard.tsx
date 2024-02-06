@@ -21,7 +21,10 @@ function ContributionCard({
     >
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
-        <Badge data={contributed_by} />
+        <Badge
+          title={contributed_by.name}
+          avatarUrlImage={contributed_by.avatar}
+        />
         {own_idea ? (
           <Button variant="secondary" className="w-full">
             Edit Project

@@ -10,14 +10,14 @@ function Badge({
   className,
   LeftIcon,
   RightIcon,
-  isAvatarBadge,
+  isAvatarBadge, //NOTE - this is a boolean that you can use to show avatars without available images
   avatarUrlImage,
 }: BadgeProps) {
   const { avatarDimension, h2Class, iconClass } = useBadgeLogic(size);
 
   return (
     <div className={cn(badge({ variant, size, className }))}>
-      {isAvatarBadge ? (
+      {isAvatarBadge || avatarUrlImage ? (
         <Avatar
           image={avatarUrlImage}
           width={avatarDimension ?? AVATAR_SIZES.md}
