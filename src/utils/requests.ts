@@ -1,7 +1,7 @@
 export async function GET<T>(
   url: string,
   token: string,
-  cache: RequestCache,
+  cache: RequestCache
 ): Promise<T> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     headers: {
@@ -21,7 +21,7 @@ export async function POST<X, Y>(
   url: string,
   token: string,
   payload: X,
-  cache: RequestCache,
+  cache: RequestCache
 ): Promise<Y> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     method: "POST",

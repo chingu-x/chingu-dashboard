@@ -11,7 +11,7 @@ export default function Spinner({
 }: SpinnerProps) {
   return (
     <svg
-      className={`animate-spin -ml-1 mr-3 h-5 w-5 ${color} ${extraClasses}`}
+      className={`animate-spin h-5 w-5 ${color} ${extraClasses}`}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

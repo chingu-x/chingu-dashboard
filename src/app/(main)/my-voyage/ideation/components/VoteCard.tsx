@@ -6,13 +6,9 @@ import Button from "@/components/Button";
 import {
   ProjectIdeaVotes,
   addVote,
-  setLoadingFalse,
+  removeVote,
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  // addIdeationVote,
-  removeIdeationVote,
-} from "@/app/(main)/my-voyage/ideation/ideationService";
 import Spinner from "@/components/Spinner";
 
 interface VoteCardProps {
@@ -30,9 +26,9 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const { loading } = useAppSelector((state) => state.ideation);
   const dispatch = useAppDispatch();
 
-  async function handleVote() {
+  function handleVote() {
     if (currentUserVoted) {
-      await removeIdeationVote({ teamId, ideationId: projectIdeaId });
+      void dispatch(removeVote({ teamId, ideationId: projectIdeaId }));
     } else {
       // const data = await addIdeationVote({ teamId, ideationId: projectIdeaId });
       void dispatch(addVote({ teamId, ideationId: projectIdeaId }));
