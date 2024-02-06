@@ -50,7 +50,7 @@ const initialState: User = {
   linkedinId: "",
   email: "",
   timezone: "",
-  avatar:"",
+  avatar: "",
   voyageTeamMembers: [],
 };
 
