@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { AnimatePresence, Variants, motion } from "framer-motion";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
 interface ModalProps {
@@ -16,16 +17,6 @@ export default function Modal({
   children,
   onClose,
 }: ModalProps) {
-  const [showModal, setShowModal] = useState(isOpen);
-
-  // To keep DaisyUI modal animation
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowModal(isOpen);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [isOpen]);
-
   // Use ESC to close the modal
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -37,28 +28,81 @@ export default function Modal({
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-  }, []);
+  }, [onClose]);
 
-  if (!isOpen) {
-    return null;
-  }
+  const overlayVariants: Variants = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        delay: 0.25,
+      },
+    },
+  };
+
+  const modalBoxVariants: Variants = {
+    initial: {
+      opacity: 0,
+      scale: 0.75,
+    },
+    animate: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        ease: "easeOut",
+        duration: 0.15,
+        delay: 0.2,
+      },
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.75,
+      transition: {
+        ease: "easeIn",
+        duration: 0.15,
+      },
+    },
+  };
 
   return (
-    <dialog className="modal bg-base-300/25" open={showModal} onClick={onClose}>
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="modal-box bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden p-10"
-      >
-        {/* HEADER */}
-        <div className="flex items-center justify-between pb-8">
-          <h3 className="text-xl font-semibold capitalize">{title}</h3>
-          <button type="button" aria-label="close modal" onClick={onClose}>
-            <XMarkIcon className="w-6 h-6 fill-current" />
-          </button>
-        </div>
-        {/* CONTENT */}
-        {children}
-      </div>
-    </dialog>
+    <AnimatePresence>
+      {isOpen && (
+        <motion.dialog
+          key="overlay"
+          variants={overlayVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="fixed z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto overlay bg-base-300/25"
+          open={isOpen}
+          onClick={onClose}
+        >
+          <motion.div
+            key="modal-box"
+            variants={modalBoxVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            onClick={(e) => e.stopPropagation()}
+            className="rounded-2xl bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden p-10 max-h-[calc(100vh-5em)]"
+          >
+            {/* HEADER */}
+            <div className="flex items-center justify-between pb-8">
+              <h3 className="text-xl font-semibold capitalize">{title}</h3>
+              <button type="button" aria-label="close modal" onClick={onClose}>
+                <XMarkIcon className="w-6 h-6 fill-current" />
+              </button>
+            </div>
+            {/* CONTENT */}
+            {children}
+          </motion.div>
+        </motion.dialog>
+      )}
+    </AnimatePresence>
   );
 }

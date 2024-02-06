@@ -8,10 +8,14 @@ import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 
 const validationSchema = z.object({
-  suggestion: validateTextInput({
-    inputName: "Suggestion",
+  email: validateTextInput({
+    inputName: "Email",
     required: true,
-    maxLen: 30,
+    isEmail: true,
+  }),
+  password: validateTextInput({
+    inputName: "Password",
+    required: true,
   }),
 });
 
@@ -26,49 +30,31 @@ export default function Component() {
   });
 
   return (
-    <div className="w-full max-w-md px-8 py-6 bg-white rounded-xl shadow-md space-y-6">
-      <h2 className="text-center text-3xl font-extrabold text-gray-900">
+    <div className="w-full max-w-md px-8 py-6 space-y-6 bg-white shadow-md rounded-xl">
+      <h2 className="text-3xl font-extrabold text-center text-gray-900">
         Login
       </h2>
       <form className="space-y-6">
         <div>
-          <label
-            className="text-sm font-medium text-gray-700"
-            htmlFor="username"
-          >
-            Username
-          </label>
           <TextInput
-            id="suggestion"
-            placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
-            suggestion="Tip: keep it short and sweet"
-            maxLength={30}
+            id="email"
+            label="email"
+            placeholder="Enter your email"
+            {...register("email")}
+            errorMessage={errors?.email?.message}
           />
         </div>
         <div>
-          <label
-            className="text-sm font-medium text-gray-700"
-            htmlFor="password"
-          >
-            Password
-          </label>
           <TextInput
-            id="suggestion"
-            placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
-            suggestion="Tip: keep it short and sweet"
-            maxLength={30}
+            id="password"
+            label="password"
+            placeholder="Enter your password"
+            {...register("password")}
+            errorMessage={errors?.password?.message}
           />
         </div>
-        <Button
-          title="title"
-          className="w-full bg-blue-500 text-white rounded-md py-2"
-          type="submit"
-        >
-          Login
+        <Button size="lg" className="w-full" type="submit">
+          Sign in
         </Button>
       </form>
     </div>

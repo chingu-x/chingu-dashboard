@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TrashIcon } from "@heroicons/react/20/solid";
 
-import { Button } from "@/components/ButtonCVA";
+import Button from "@/components/Button";
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
@@ -75,7 +75,7 @@ export default function Example1Modal() {
   const handleClose = useCallback(() => {
     reset();
     dispatch(onClose());
-  }, [dispatch]);
+  }, [dispatch, reset]);
 
   return (
     <Modal isOpen={isModalOpen} title="create project" onClose={handleClose}>
@@ -91,32 +91,32 @@ export default function Example1Modal() {
               id="title"
               label="title"
               placeholder="Enter you voyage project idea"
-              register={{ ...register("title") }}
-              errors={errors}
               maxLength={30}
+              {...register("title")}
+              errorMessage={errors?.title?.message}
             />
             <Textarea
               id="projectIdea"
               label="project idea"
               placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
-              register={{ ...register("projectIdea") }}
-              errors={errors}
               maxLength={50}
+              {...register("projectIdea")}
+              errorMessage={errors?.projectIdea?.message}
             />
             <Textarea
               id="visionStatement"
               label="vision statement"
               placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
-              register={{ ...register("visionStatement") }}
-              errors={errors}
               maxLength={50}
+              {...register("visionStatement")}
+              errorMessage={errors?.visionStatement?.message}
             />
             <TextInput
               id="email"
               label="email"
               placeholder="Enter your email"
-              register={register("email")}
-              errors={errors}
+              {...register("email")}
+              errorMessage={errors?.email?.message}
             />
           </div>
         </div>

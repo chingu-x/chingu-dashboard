@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Button } from "@/components/ButtonCVA";
+import Button from "@/components/Button";
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
 
@@ -30,7 +30,6 @@ export default function Example2Modal() {
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "example2";
-
   const {
     register,
     handleSubmit,
@@ -54,7 +53,7 @@ export default function Example2Modal() {
   const handleClose = useCallback(() => {
     reset();
     dispatch(onClose());
-  }, [dispatch]);
+  }, [dispatch, reset]);
 
   return (
     <Modal isOpen={isModalOpen} title="add feature" onClose={handleClose}>
@@ -68,10 +67,10 @@ export default function Example2Modal() {
           <TextInput
             id="suggestion"
             placeholder="What is your tech stack suggestion?"
-            register={{ ...register("suggestion") }}
-            errors={errors}
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
+            {...register("suggestion")}
+            errorMessage={errors?.suggestion?.message}
           />
         </div>
         {/* BUTTONS */}
