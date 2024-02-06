@@ -36,6 +36,7 @@ const meta = {
     inputGroup: {
       description:
         "Choose inputGroup (if `inputGroupIcon` is provided, becomes `required`).",
+      options: ["left", "right", undefined],
     },
     inputGroupContent: {
       description:
@@ -102,16 +103,26 @@ export const LeftInputGroup = {
   args: {
     ...BaseTemplate.args,
     inputGroup: "left",
-    inputGroupIcon: <EnvelopeIcon />,
+    inputGroupContent: <EnvelopeIcon />,
   },
 };
 
-export const RightInputGroup = {
+export const RightInputGroupWuthIcon = {
   ...BaseTemplate,
   args: {
     ...BaseTemplate.args,
     inputGroup: "right",
-    inputGroupIcon: <EnvelopeIcon />,
+    inputGroupContent: <EnvelopeIcon />,
+    inputGroupAction: () => {},
+  },
+};
+
+export const RightInputGroupWithText = {
+  ...BaseTemplate,
+  args: {
+    ...BaseTemplate.args,
+    inputGroup: "right",
+    inputGroupContent: "Save",
     inputGroupAction: () => {},
   },
 };
