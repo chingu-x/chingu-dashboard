@@ -10,7 +10,7 @@ function Badge({
   className,
   LeftIcon,
   RightIcon,
-  isAvatarBadge, //NOTE - this is a boolean that you can use to show avatars without available images
+  isAvatarBadge, // NOTE - this is a boolean that you can use to show avatars without available images
   avatarUrlImage,
 }: BadgeProps) {
   const { avatarDimension, h2Class, iconLeftClass, iconRightClass } =
