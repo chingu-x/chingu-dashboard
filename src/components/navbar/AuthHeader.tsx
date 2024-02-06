@@ -1,39 +1,62 @@
 "use client";
-
+import { useEffect, useState, useRef } from "react";
+import { getUser, serverSignIn } from "@/app/(auth)/authService";
+import { clientSignIn } from "@/store/features/auth/authSlice";
+import { getUserState } from "@/store/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
-import { clientSignIn } from "@/store/features/auth/authSlice";
-import { getUserState } from "@/store/features/user/userSlice";
-import { getUser, serverSignIn } from "@/app/(auth)/authService";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-const name = "Yorick";
 const notificationCount = 4;
 
 export default function AuthHeader() {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { avatar } = useAppSelector((state) => state.user);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   async function handleClick() {
     await serverSignIn();
     const user = await getUser();
-
     if (user) {
       dispatch(clientSignIn());
       dispatch(getUserState(user));
     }
   }
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+  const handleClickOutside = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      closeMenu();
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  });
+
   return (
     <>
       {isAuthenticated ? (
         <>
           <Bell notificationCount={notificationCount} />
-          <div className="flex flex-row items-center px-2 ml-6">
-            <Avatar image="/img/avatar.png" height={34} width={34} />
-            <DropDown name={name} />
+          <div
+            ref={menuRef}
+            onClick={toggleMenu}
+            className="flex items-center px-2"
+          >
+            <Avatar image={avatar} height={34} width={34} />
+            <DropDown openState={isMenuOpen} />
           </div>
         </>
       ) : (
