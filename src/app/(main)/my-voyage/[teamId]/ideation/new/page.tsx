@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { TrashIcon } from "@heroicons/react/20/solid";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
@@ -36,7 +36,10 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function AddIdeationPage() {
   const router = useRouter();
+  const params = useParams<{ teamId: string }>();
   // const dispatch = useAppDispatch();
+
+  console.log(params);
 
   const {
     register,
