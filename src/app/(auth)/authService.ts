@@ -24,7 +24,7 @@ export async function serverSignIn(): Promise<ServerSignInResponse> {
       }),
       credentials: "include",
       cache: "no-store",
-    },
+    }
   );
 
   if (!res.ok) {
@@ -53,7 +53,7 @@ export async function serverSignOut(): Promise<void> {
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/logout`,
       {
         method: "POST",
-      },
+      }
     ).then(() => {
       cookies().delete("access_token");
     });

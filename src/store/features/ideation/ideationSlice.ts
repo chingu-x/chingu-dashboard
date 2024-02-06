@@ -2,6 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   addIdeationVote,
   IdeationVoteProps,
+  removeIdeationVote,
 } from "@/app/(main)/my-voyage/ideation/ideationService";
 
 export interface VoyageMember {
@@ -54,6 +55,13 @@ export const addVote = createAsyncThunk(
   }
 );
 
+export const removeVote = createAsyncThunk(
+  "ideation/removeVote",
+  async (payload: IdeationVoteProps) => {
+    await removeIdeationVote(payload);
+  }
+);
+
 export const ideationSlice = createSlice({
   name: "ideation",
   initialState,
@@ -87,11 +95,11 @@ export const ideationSlice = createSlice({
     //   state.loading = false;
     //   state.errors = action.error;
     // });
-    builder.addCase(addVote.pending, (state) => {
+    builder.addCase(removeVote.pending, (state) => {
       state.loading = true;
       state.errors = {};
     });
-    builder.addCase(addVote.fulfilled, (state) => {
+    builder.addCase(removeVote.fulfilled, (state) => {
       state.loading = true;
       state.errors = {};
     });
