@@ -17,7 +17,7 @@ interface CommonTextInputProps
   errorMessage?: string | undefined;
 }
 
-type InputGroup = "left" | "right" | "left-transparent" | "right-transparent";
+type InputGroup = "left" | "right";
 
 type ConditionalTextInputProps =
   | {
@@ -79,12 +79,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
               inputGroup === "left" && inputGroupIcon && "pl-[56px]",
               inputGroup === "right" && inputGroupIcon && "pr-[56px] ",
-              inputGroup === "left-transparent" &&
-                inputGroupIcon &&
-                "pl-[42px]",
-              inputGroup === "right-transparent" &&
-                inputGroupIcon &&
-                "pr-[42px]",
               className,
             )}
             ref={ref}
@@ -99,16 +93,9 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           {inputGroup && inputGroupIcon && (
             <div
               className={cn(
-                "h-[calc(100%-4px)] py-3 transition absolute peer-hover:[&>*]:text-base-300 peer-focus-visible:[&>*]:text-base-300 peer-disabled:peer-hover:[&>*]:text-neutral peer-disabled:peer-focus-visible:[&>*]:text-neutral [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5 [&>*]:text-neutral",
-                (inputGroup === "left" || inputGroup === "left-transparent") &&
-                  "top-1/2 -translate-y-1/2 left-[2px]",
-                (inputGroup === "right" ||
-                  inputGroup === "right-transparent") &&
-                  "top-1/2 -translate-y-1/2 right-[2px]",
-                (inputGroup === "left" || inputGroup === "right") &&
-                  "bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 peer-hover:[&>*]:text-base-200 peer-focus-visible:[&>*]:text-base-200 peer-disabled:peer-hover:[&>*]:text-base-200 peer-disabled:peer-focus-visible:[&>*]:text-base-200",
-                inputGroup === "left" && "rounded-l-md",
-                inputGroup === "right" && "rounded-r-md",
+                "top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 peer-hover:[&>*]:text-base-200 peer-focus-visible:[&>*]:text-base-200 peer-disabled:peer-hover:[&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute peer-disabled:peer-focus-visible:[&>*]:text-neutral [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5",
+                inputGroup === "left" && "left-[2px] rounded-l-md",
+                inputGroup === "right" && "right-[2px] rounded-r-md",
               )}
             >
               {inputGroupIcon}

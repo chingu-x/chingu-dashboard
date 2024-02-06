@@ -102,29 +102,11 @@ export const LeftInputGroup = {
   },
 };
 
-export const TransparentLeftInputGroup = {
-  ...BaseTemplate,
-  args: {
-    ...BaseTemplate.args,
-    inputGroup: "left-transparent",
-    inputGroupIcon: <EnvelopeIcon />,
-  },
-};
-
 export const RightInputGroup = {
   ...BaseTemplate,
   args: {
     ...BaseTemplate.args,
     inputGroup: "right",
-    inputGroupIcon: <EnvelopeIcon />,
-  },
-};
-
-export const TransparentRightInputGroup = {
-  ...BaseTemplate,
-  args: {
-    ...BaseTemplate.args,
-    inputGroup: "right-transparent",
     inputGroupIcon: <EnvelopeIcon />,
   },
 };
