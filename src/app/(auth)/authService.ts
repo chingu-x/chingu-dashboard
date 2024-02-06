@@ -66,3 +66,26 @@ export async function getUser(): Promise<User> {
   const token = getCookie();
   return await GET<User>("api/v1/users/me", token, "no-store");
 }
+
+// type AsyncFunction<T> = () => Promise<T>;
+
+// async function handleAsync<T>(
+//   asyncFn: AsyncFunction<T>
+// ): Promise<[T | null, Error | null]> {
+//   try {
+//     const result = await asyncFn();
+//     return [result, null];
+//   } catch (error) {
+//     console.error(error);
+//     return [null, error as Error];
+//   }
+// }
+
+// export async function getUser(): Promise<[User | null, Error | null]> {
+//   const token = getCookie();
+
+//   const getUserAsync = async () =>
+//     GET<User>("api/v1/users/me", token, "no-store");
+
+//   return handleAsync(getUserAsync);
+// }

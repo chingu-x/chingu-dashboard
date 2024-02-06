@@ -5,6 +5,16 @@ import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getCookie } from "@/utils/getCookie";
 import { GET, POST } from "@/utils/requests";
 
+interface AddIdeationProps extends AddIdeationBody {
+  teamId: number;
+}
+
+interface AddIdeationBody {
+  title: string;
+  description: string;
+  vision: string;
+}
+
 export interface IdeationVoteProps {
   teamId: number;
   ideationId: number;
@@ -12,6 +22,16 @@ export interface IdeationVoteProps {
 
 export interface FetchIdeationsProps {
   teamId: number;
+}
+
+export interface AddIdeationResponse {
+  id: number;
+  voyageTeamMemberId: number;
+  title: string;
+  description: string;
+  vision: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface IdeationVoteResponse {
@@ -31,6 +51,26 @@ export async function fetchProjectIdeas({
     token,
     "force-cache"
   );
+}
+
+export async function addIdeation({
+  teamId,
+  title,
+  description,
+  vision,
+}: AddIdeationProps): Promise<AddIdeationResponse> {
+  const token = getCookie();
+
+  const data = await POST<AddIdeationBody, AddIdeationResponse>(
+    `api/v1/voyages/${teamId}/ideations`,
+    token,
+    { title, description, vision },
+    "default"
+  );
+
+  revalidatePath("/my-voyage/ideation");
+
+  return data;
 }
 
 export async function addIdeationVote({

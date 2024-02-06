@@ -43,33 +43,6 @@ export type PageProperty = {
   link: string;
 };
 
-export const voyagePages: VoyagePageProperty[] = [
-  {
-    name: VoyagePages.directory,
-    link: "/my-voyage/directory",
-  },
-  {
-    name: VoyagePages.techStack,
-    link: "/my-voyage/tech-stack",
-  },
-  {
-    name: VoyagePages.ideation,
-    link: "/my-voyage/ideation",
-  },
-  {
-    name: VoyagePages.features,
-    link: "/my-voyage/features",
-  },
-  {
-    name: VoyagePages.sprints,
-    link: "/my-voyage/sprints",
-  },
-  {
-    name: VoyagePages.resources,
-    link: "/my-voyage/voyage-resources",
-  },
-];
-
 const pagesProperties: PageProperty[] = [
   {
     name: MainPages.dashboard,
@@ -105,10 +78,10 @@ export default function Sidebar() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const { isAuthenticated } = useAppSelector(
-    (state: RootState): { isAuthenticated: boolean } => state.auth,
+    (state: RootState): { isAuthenticated: boolean } => state.auth
   );
   const { voyageTeamMembers } = useAppSelector(
-    (state: RootState) => state.user,
+    (state: RootState) => state.user
   );
 
   const isActive = useMemo(() => {
@@ -116,11 +89,44 @@ export default function Sidebar() {
       return false;
     }
     return voyageTeamMembers.some(
-      (member) => member.voyageTeam.voyage.status.name === "Active",
+      (member) => member.voyageTeam.voyage.status.name === "Active"
     );
   }, [voyageTeamMembers]);
 
   const isVoyageStarted: boolean = isAuthenticated && isActive;
+
+  const currentVoyageTeam = voyageTeamMembers.find(
+    (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
+  );
+
+  const teamId = currentVoyageTeam?.voyageTeamId;
+
+  const voyagePages: VoyagePageProperty[] = [
+    {
+      name: VoyagePages.directory,
+      link: "/my-voyage/directory",
+    },
+    {
+      name: VoyagePages.techStack,
+      link: "/my-voyage/tech-stack",
+    },
+    {
+      name: VoyagePages.ideation,
+      link: `/my-voyage/${teamId}/ideation`,
+    },
+    {
+      name: VoyagePages.features,
+      link: "/my-voyage/features",
+    },
+    {
+      name: VoyagePages.sprints,
+      link: "/my-voyage/sprints",
+    },
+    {
+      name: VoyagePages.resources,
+      link: "/my-voyage/voyage-resources",
+    },
+  ];
 
   useEffect(() => {
     setSelectedButton(currentPath);
@@ -134,7 +140,7 @@ export default function Sidebar() {
         setSelectedButton(element.link);
       }
     },
-    [setSelectedButton, setIsOpenSidebar],
+    [setSelectedButton, setIsOpenSidebar]
   );
 
   return (
@@ -157,6 +163,7 @@ export default function Sidebar() {
             isOpen={isOpenSidebar}
             link={element.link}
             setHoveredButton={setHoveredButton}
+            voyagePages={voyagePages}
           />
         ))}
         {isOpenSidebar && (

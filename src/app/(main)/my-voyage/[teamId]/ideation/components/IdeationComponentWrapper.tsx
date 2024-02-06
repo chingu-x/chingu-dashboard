@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import IdeationContainer from "./IdeationContainer";
 import Preloader from "./Preloader";
 import { getUser } from "@/app/(auth)/authService";
-import { fetchProjectIdeas } from "@/app/(main)/my-voyage/ideation/ideationService";
+import { fetchProjectIdeas } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
 // import { ideation } from "./fixtures/ideation";
 

@@ -34,7 +34,7 @@ const validationSchema = z.object({
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function IdeationModal() {
+export default function AddIdeationPage() {
   const router = useRouter();
   // const dispatch = useAppDispatch();
 
