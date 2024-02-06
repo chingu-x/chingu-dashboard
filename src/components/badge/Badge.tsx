@@ -13,7 +13,8 @@ function Badge({
   isAvatarBadge, //NOTE - this is a boolean that you can use to show avatars without available images
   avatarUrlImage,
 }: BadgeProps) {
-  const { avatarDimension, h2Class, iconClass } = useBadgeLogic(size);
+  const { avatarDimension, h2Class, iconLeftClass, iconRightClass } =
+    useBadgeLogic(size);
 
   return (
     <div className={cn(badge({ variant, size, className }))}>
@@ -24,9 +25,9 @@ function Badge({
           height={avatarDimension ?? AVATAR_SIZES.md}
         />
       ) : null}
-      {LeftIcon && <LeftIcon className={iconClass} />}
+      {LeftIcon && <LeftIcon className={iconLeftClass} />}
       <h2 className={h2Class}>{title}</h2>
-      {RightIcon && <RightIcon className={iconClass} />}
+      {RightIcon && <RightIcon className={iconRightClass} />}
     </div>
   );
 }
