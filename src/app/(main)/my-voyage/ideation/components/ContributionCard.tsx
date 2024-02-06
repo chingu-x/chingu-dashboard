@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import Badge from "@/components/Badge";
+import Badge from "@/components/badge/Badge";
 
 interface ContributionCardProps {
   own_idea: boolean;
