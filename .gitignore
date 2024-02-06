@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+.yarn/unplugged
+.yarn/install-state.gz
 
 # testing
 /coverage
@@ -35,3 +37,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# vscode settings
+.vscode/settings.json

@@ -22,7 +22,7 @@ export default function ToastProvider() {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [isToastOpen]);
+  }, [isToastOpen, dispatch]);
 
   const toastVariants: Variants = {
     hidden: {

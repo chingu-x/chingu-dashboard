@@ -2,6 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+        --primary: 64 147 109; /* #40936D */
+        --primary-focus: 50 115 85; /* #327355 */
+        --primary-content: 196 222 210; /* #C4DED2 */
+        --secondary: 163 206 233; /* #A3CEE9 */
+        --secondary-focus: 177 198 212; /* #B1C6D4 */
+        --secondary-content: 218 234 242; /* #DAEAF2 */
+        --accent: 166 153 141; /* #A6998D */
+        --accent-focus: 134 128 121; /* #868079 */
+        --accent-content: 217 213 208; /* #D9D5D0 */
+        --neutral: 107 114 128; /* #6B7280 */
+        --neutral-focus: 76 81 91; /* #4C515B */
+        --neutral-content: 156 161 170; /* #9CA1AA */
+        --info: 143 196 229; /* #8FC4E5 */
+        --info-content: 220 237 247; /* #DCEDF7 */
+        --success: 20 184 166; /* #14B8A6 */
+        --success-content: 182 233 227; /* #B6E9E3 */
+        --warning: 255 172 12; /* #FFAC0C */
+        --warning-content: 255 229 180; /* #FFE5B4 */
+        --error: 230 98 75; /* #E6624B */
+        --error-content: 247 206 199; /* #F7CEC7 */
+        --base-100: 209 211 216; /* #D1D3D8 */
+        --base-200: 245 245 245; /* #F5F5F5 */
+        --base-300: 22 23 26; /* #16171A */
+        --base-content: 238 239 240; /* #EEEFF0 */
+  }
+  
+  [data-theme='dark'] {
+    --primary: 64 147 109; /* #40936D */
+    --primary-focus: 95 142 108; /* #5F8E6C */
+    --primary-content: 57 71 65; /* #394741 */
+    --secondary: 68 114 141; /* #44728D */
+    --secondary-focus: 94 115 135; /* #5E7387 */
+    --secondary-content: 54 68 77; /* #36444D */
+    --accent: 97 101 102; /* #616566 */
+    --accent-focus: 107 106 108; /* #6B6A6C */
+    --accent-content: 63 63 64; /* -#3F3F40 */
+    --neutral: 107 114 128; /* #6B7280 */
+    --neutral-focus: 160 165 174; /* #A0A5AE */
+    --neutral-content: 59 63 70; /* #3B3F46 */
+    --info: 132 181 212; /* #84B5D4 */
+    --info-content: 102 139 163; /* #668BA3 */
+    --success: 67 198 184; /* #43C6B8 */
+    --success-content: 14 131 118; /* #0E8376 */
+    --warning: 255 189 61; /* #FFBD3D */
+    --warning-content: 181 122 9; /* #B57A09 */
+    --error: 235 129 111; /* #EB816F */
+    --error-content: 163 70 53; /*#A34635 */
+    --base-100: 76 81 91; /* #4C515B */
+    --base-200: 22 23 26; /* #16171A */
+    --base-300: 245 245 245; /* #F5F5F5 */
+    --base-content: 45 48 54; /* #2D3036 */
+}
+}
 
 ::-webkit-scrollbar {
     width: 4px;
@@ -26,4 +81,11 @@
 [data-theme='dark'] [data-hide-on-theme='dark'],
 [data-theme='light'] [data-hide-on-theme='light'] {
   display: none;
+}
+
+/* a fix for a textarea placeholder missing bottom padding for Safari  */
+@supports (-webkit-hyphens:none) {
+    textarea::placeholder {
+        padding-bottom: 8px;
+    }
 }

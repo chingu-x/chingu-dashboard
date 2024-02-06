@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
 import { usePathname } from "next/navigation";
 import {
@@ -12,6 +12,8 @@ import {
 import PageButton from "./PageButton";
 import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
+import { useAppSelector } from "@/store/hooks";
+import { RootState } from "@/store/store";
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -44,27 +46,27 @@ export type PageProperty = {
 export const voyagePages: VoyagePageProperty[] = [
   {
     name: VoyagePages.directory,
-    link: "/directory",
+    link: "/my-voyage/directory",
   },
   {
     name: VoyagePages.techStack,
-    link: "/tech-stack",
+    link: "/my-voyage/tech-stack",
   },
   {
     name: VoyagePages.ideation,
-    link: "/ideation",
+    link: "/my-voyage/ideation",
   },
   {
     name: VoyagePages.features,
-    link: "/features",
+    link: "/my-voyage/features",
   },
   {
     name: VoyagePages.sprints,
-    link: "/sprints",
+    link: "/my-voyage/sprints",
   },
   {
     name: VoyagePages.resources,
-    link: "/voyage-resources",
+    link: "/my-voyage/voyage-resources",
   },
 ];
 
@@ -95,10 +97,6 @@ const pagesProperties: PageProperty[] = [
   },
 ];
 
-//-- Mocked fake data just for testing purpose --//
-const isVoyageStarted: boolean = true;
-//-- --//
-
 export default function Sidebar() {
   const currentPath = usePathname();
 
@@ -106,21 +104,44 @@ export default function Sidebar() {
   const [selectedButton, setSelectedButton] = useState<string>(currentPath);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
-  const handlePageClick = (element: PageProperty | string) => {
-    if (typeof element === "string") {
-      setSelectedButton(element);
-    } else if (element.name === MainPages.myVoyage) {
-      setIsOpenSidebar(true);
-    } else {
-      setSelectedButton(element.link);
+  const { isAuthenticated } = useAppSelector(
+    (state: RootState): { isAuthenticated: boolean } => state.auth,
+  );
+  const { voyageTeamMembers } = useAppSelector(
+    (state: RootState) => state.user,
+  );
+
+  const isActive = useMemo(() => {
+    if (voyageTeamMembers.length === 0) {
+      return false;
     }
-  };
+    return voyageTeamMembers.some(
+      (member) => member.voyageTeam.voyage.status.name === "Active",
+    );
+  }, [voyageTeamMembers]);
+
+  const isVoyageStarted: boolean = isAuthenticated && isActive;
+
+  useEffect(() => {
+    setSelectedButton(currentPath);
+  }, [currentPath]);
+
+  const handlePageClick = useCallback(
+    (element: PageProperty | string) => {
+      if (typeof element !== "string" && element.name === MainPages.myVoyage) {
+        setIsOpenSidebar(true);
+      } else if (typeof element !== "string") {
+        setSelectedButton(element.link);
+      }
+    },
+    [setSelectedButton, setIsOpenSidebar],
+  );
 
   return (
     <aside
       className={`${
         isOpenSidebar ? "w-[18.438rem]" : "w-[5.813rem]"
-      } text-center bg-base-200 flex flex-col justify-between border-r border-neutral-content shadow-[4px_4px_4px_0] shadow-neutral-focus/5`}
+      } text-center bg-base-200 flex flex-col justify-between border-r border-neutral-content shadow-[4px_4px_4px_0] shadow-neutral-focus/5 h-full`}
     >
       <ul
         className={`flex flex-col ${
@@ -154,7 +175,7 @@ export default function Sidebar() {
           </ul>
         )}
       </ul>
-      <div className="flex flex-col items-end justify-start border-t border-neutral-content">
+      <div className="flex flex-col items-end justify-start border-t border-neutral-content min-h-[80px] pt-4 pr-6">
         <ExpandButton isOpen={isOpenSidebar} onClick={setIsOpenSidebar} />
       </div>
     </aside>

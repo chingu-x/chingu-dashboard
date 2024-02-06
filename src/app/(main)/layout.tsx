@@ -1,5 +1,7 @@
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
+import ModeToggle from "@/components/ModeToggle";
+import AuthHeader from "@/components/navbar/AuthHeader";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -8,7 +10,14 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <div className="flex flex-col h-screen w-screen">
-      <Navbar isAuthPage={false} />
+      <Navbar>
+        <>
+          <ModeToggle />
+          <>
+            <AuthHeader />
+          </>
+        </>
+      </Navbar>
       <div className="relative flex flex-1 overflow-hidden">
         <Sidebar />
         <main className="flex flex-col items-center flex-1 w-full p-10 overflow-y-auto">
