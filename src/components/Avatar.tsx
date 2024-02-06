@@ -2,17 +2,19 @@ import Image from "next/image";
 
 interface AvatarProps {
   image?: string;
+  customClassName?: string;
   width: number;
   height: number;
 }
 
 export default function Avatar({
   image,
+  customClassName,
   width = 24,
   height = 24,
 }: AvatarProps) {
   return (
-    <div className="px-0 pointer-events-none rounded-full">
+    <div className={`px-0 pointer-events-none rounded-full ${customClassName}`}>
       <Image
         alt="avatar"
         src={
