@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import VoteDescriptionCard from "./VoteDescriptionCard";
 import Button from "@/components/Button";
 // import { useAppDispatch } from "@/store/hooks";
@@ -6,12 +9,13 @@ import Button from "@/components/Button";
 
 function CreateIdeationContainer() {
   // const dispatch = useAppDispatch();
+  const { teamId } = useParams<{ teamId: string }>();
 
   return (
     <div className="card w-[1050px] 3xl:w-full min-h-[190px] max-[1919px]:min-h-[280px] bg-base-100 flex flex-row items-center px-10 rounded-2xl">
       <div className="flex flex-col gap-y-6 justify-between h-full py-10 min-[1920px]:hidden">
         <VoteDescriptionCard />
-        <Link href="/my-voyage/ideation/new">
+        <Link href={`/my-voyage/${teamId}/ideation/new`}>
           <Button size="lg" className="max-[1920px]:w-[160px]">
             Create Project
           </Button>

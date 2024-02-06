@@ -99,7 +99,7 @@ export default function Sidebar() {
     (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
   );
 
-  const teamId = currentVoyageTeam?.voyageTeamId;
+  const teamId = currentVoyageTeam?.voyageTeamId.toString();
 
   const voyagePages: VoyagePageProperty[] = [
     {
