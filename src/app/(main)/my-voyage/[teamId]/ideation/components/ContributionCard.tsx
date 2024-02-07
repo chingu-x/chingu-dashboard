@@ -1,6 +1,8 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import Badge from "@/components/Badge";
 import Button from "@/components/Button";
 import { VoyageMember } from "@/store/features/ideation/ideationSlice";
@@ -21,7 +23,13 @@ function ContributionCard({
 }: ContributionCardProps) {
   const { teamId } = useParams<{ teamId: string }>();
   const { id } = useAppSelector((state) => state.user);
-  const router = useRouter();
+  const [ownVote, setOwnVote] = useState(false);
+
+  useEffect(() => {
+    if (contributed_by.member.id === id) {
+      setOwnVote(true);
+    }
+  }, [contributed_by, id]);
 
   return (
     <div
@@ -30,16 +38,12 @@ function ContributionCard({
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
         <Badge data={contributed_by.member} />
-        {contributed_by.member.id === id ? (
-          <Button
-            variant="secondary"
-            className="w-full"
-            onClick={() =>
-              router.push(`/my-voyage/${teamId}/ideation/${projectIdeaId}/edit`)
-            }
-          >
-            Edit Project
-          </Button>
+        {ownVote ? (
+          <Link href={`/my-voyage/${teamId}/ideation/${projectIdeaId}/edit`}>
+            <Button variant="secondary" className="w-full">
+              Edit Project
+            </Button>
+          </Link>
         ) : null}
       </section>
     </div>
