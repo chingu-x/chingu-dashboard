@@ -1,7 +1,7 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface AvatarProps {
-  image?: string;
+  image?: string | StaticImageData;
   width: number;
   height: number;
 }
@@ -12,7 +12,7 @@ export default function Avatar({
   height = 24,
 }: AvatarProps) {
   return (
-    <div className="px-0 pointer-events-none rounded-full">
+    <div className="border border-1 border-neutral px-0 rounded-full cursor-pointer">
       <Image
         alt="avatar"
         src={
