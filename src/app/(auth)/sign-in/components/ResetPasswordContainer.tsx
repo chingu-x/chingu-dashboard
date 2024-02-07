@@ -20,7 +20,7 @@ interface ResetPasswordModalContainerProps {
   handleEmailCheckModal: () => void;
 }
 
-function ResetPasswordModalContainer({
+function ResetPasswordContainer({
   handleEmailCheckModal,
 }: ResetPasswordModalContainerProps) {
   const {
@@ -73,4 +73,4 @@ function ResetPasswordModalContainer({
   );
 }
 
-export default ResetPasswordModalContainer;
+export default ResetPasswordContainer;

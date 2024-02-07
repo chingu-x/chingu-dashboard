@@ -20,9 +20,7 @@ type NewPasswordModalContainerProps = {
   onClick: () => void;
 };
 
-function NewPasswordModalContainer({
-  onClick,
-}: NewPasswordModalContainerProps) {
+function NewPasswordContainer({ onClick }: NewPasswordModalContainerProps) {
   const {
     register,
     formState: { errors },
@@ -75,4 +73,4 @@ function NewPasswordModalContainer({
   );
 }
 
-export default NewPasswordModalContainer;
+export default NewPasswordContainer;
