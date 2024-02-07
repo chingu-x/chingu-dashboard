@@ -12,10 +12,14 @@ import Textarea from "@/components/inputs/Textarea";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
-  IdeationData,
+  type IdeationData,
   addNewIdeation,
 } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
+import {
+  EditIdeation,
+  type EditIdeationProps,
+} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -50,7 +54,7 @@ export default function IdeationForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid, dirtyFields },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
@@ -58,8 +62,31 @@ export default function IdeationForm() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const teamId = +params.teamId;
-    const payload = { ...data, teamId };
-    await dispatch(addNewIdeation(payload));
+
+    if (editMode) {
+      const ideationId = +params.ideationId;
+      const payload = { ...data, teamId, ideationId };
+
+      interface MyObject extends EditIdeationProps {
+        [key: string]: unknown;
+      }
+
+      const filteredData: MyObject = {
+        teamId,
+        ideationId,
+      };
+
+      for (const key in dirtyFields) {
+        if (dirtyFields.hasOwnProperty(key)) {
+          filteredData[key] = (data as { [key: string]: string })[key];
+        }
+      }
+
+      await EditIdeation(filteredData);
+    } else {
+      const payload = { ...data, teamId };
+      await dispatch(addNewIdeation(payload));
+    }
 
     router.replace(`/my-voyage/${teamId}/ideation`);
   };
@@ -112,10 +139,11 @@ export default function IdeationForm() {
         <TextInput
           id="title"
           label="title"
-          placeholder="Enter you voyage project idea"
+          placeholder="Enter your voyage project idea"
           {...register("title")}
           errorMessage={errors.title?.message}
           maxLength={50}
+          defaultValue={ideationData?.title ?? "Enter your voyage project idea"}
         />
         <Textarea
           id="description"
