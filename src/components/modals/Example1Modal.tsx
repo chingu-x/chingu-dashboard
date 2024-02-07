@@ -68,7 +68,7 @@ export default function Example1Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      }),
+      })
     );
   };
 
@@ -90,6 +90,7 @@ export default function Example1Modal() {
             <TextInput
               id="title"
               label="title"
+              defaultValue=""
               placeholder="Enter you voyage project idea"
               maxLength={30}
               {...register("title")}
@@ -98,6 +99,7 @@ export default function Example1Modal() {
             <Textarea
               id="projectIdea"
               label="project idea"
+              defaultValue=""
               placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
               maxLength={50}
               {...register("projectIdea")}
@@ -106,6 +108,7 @@ export default function Example1Modal() {
             <Textarea
               id="visionStatement"
               label="vision statement"
+              defaultValue=""
               placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
               maxLength={50}
               {...register("visionStatement")}
@@ -114,6 +117,7 @@ export default function Example1Modal() {
             <TextInput
               id="email"
               label="email"
+              defaultValue=""
               placeholder="Enter your email"
               {...register("email")}
               errorMessage={errors?.email?.message}
