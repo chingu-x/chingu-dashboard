@@ -18,6 +18,7 @@ export interface TextareaProps
   id: string;
   label?: string;
   placeholder: string;
+  defaultValue: string;
   suggestion?: string;
   maxLength?: number;
   errorMessage?: string | undefined;
@@ -29,13 +30,14 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       id,
       label,
       placeholder,
+      defaultValue,
       suggestion,
       maxLength,
       errorMessage,
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const textAreaRef = useRef<ElementRef<"textarea"> | null>(null);
@@ -46,7 +48,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       if (textAreaRef !== null && textAreaRef.current !== null) {
         textAreaRef.current.style.height = `${Math.max(
           textAreaRef.current.scrollHeight + 2,
-          0,
+          0
         )}px`;
       }
     }, [textAreaRef]);
@@ -57,7 +59,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       e.target.style.height = e.target.style.minHeight = "auto";
       e.target.style.minHeight = `${Math.min(
         e.target.scrollHeight + 2,
-        parseInt(e.target.style.maxHeight),
+        parseInt(e.target.style.maxHeight)
       )}px`;
       e.target.style.height = `${Math.max(e.target.scrollHeight + 2, 0)}px`;
 
@@ -87,11 +89,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             textAreaRef.current = e;
           }}
           placeholder={placeholder}
+          defaultValue={defaultValue}
           aria-describedby={`${id}-message`}
           className={cn(
             "leading-5 resize-none outline-none px-3.5 py-2.5 rounded-lg border w-full my-2 text-base shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus focus-visible:ring-0 focus-visible:bg-base-200 placeholder-base placeholder:leading-5 disabled:cursor-not-allowed border-neutral/40 focus-visible:shadow-neutral/30",
             errorMessage && "border-error focus-visible:shadow-error/30",
-            className,
+            className
           )}
           {...props}
           onChange={(e) => {
@@ -108,7 +111,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         />
       </div>
     );
-  },
+  }
 );
 
 Textarea.displayName = "Textarea";

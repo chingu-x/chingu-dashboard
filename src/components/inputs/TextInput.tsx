@@ -11,6 +11,7 @@ export interface TextInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label?: string;
+  placeholder: string;
   defaultValue: string;
   suggestion?: string;
   maxLength?: number;
@@ -22,6 +23,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     {
       id,
       label,
+      placeholder,
       defaultValue,
       suggestion,
       maxLength,
@@ -50,6 +52,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         <input
           id={id}
           type="text"
+          placeholder={placeholder}
           defaultValue={defaultValue}
           aria-describedby={`${id}-message`}
           className={cn(
