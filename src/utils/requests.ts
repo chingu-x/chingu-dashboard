@@ -20,8 +20,8 @@ export async function GET<T>(
 export async function POST<X, Y>(
   url: string,
   token: string,
-  payload: X,
-  cache: RequestCache
+  cache: RequestCache,
+  payload?: X
 ): Promise<Y> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     method: "POST",
@@ -29,7 +29,7 @@ export async function POST<X, Y>(
       "Content-Type": "application/json",
       Cookie: `access_token=${token}`,
     },
-    body: JSON.stringify({ payload }),
+    body: JSON.stringify(payload),
     cache,
   });
 
