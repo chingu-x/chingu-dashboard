@@ -90,7 +90,8 @@ export const ideationSlice = createSlice({
       state.loading = true;
       state.errors = {};
     });
-    builder.addCase(addNewIdeation.fulfilled, (state) => {
+    builder.addCase(addNewIdeation.fulfilled, (state, action) => {
+      state.projectIdeas.push(action.payload as unknown as IdeationData);
       state.errors = {};
     });
     builder.addCase(addVote.pending, (state) => {
