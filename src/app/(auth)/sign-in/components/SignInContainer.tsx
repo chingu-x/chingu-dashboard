@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import ResetPasswordModalContainer from "./ResetPasswordContainer";
+import ResetPasswordContainer from "./ResetPasswordContainer";
 import SignInBlock from "./SignInBlock";
-import NewPasswordModalContainer from "./NewPasswordContainer";
-import ResetCompletedModalContainer from "./ResetCompletedContainer";
+import NewPasswordContainer from "./NewPasswordContainer";
+import ResetCompletedContainer from "./ResetCompletedContainer";
 import EmailCheckContainer from "./EmailCheckContainer";
 
 function SignInContainer() {
@@ -39,17 +39,17 @@ function SignInContainer() {
   return (
     <>
       {containerState === ContainerState.ResetPassword && (
-        <ResetPasswordModalContainer handleEmailCheckModal={handleEmailCheck} />
+        <ResetPasswordContainer handleEmailCheck={handleEmailCheck} />
       )}
       {containerState === ContainerState.EmailCheck && <EmailCheckContainer />}
       {containerState === ContainerState.SignIn && (
-        <SignInBlock handleResetPasswordModal={handleResetPassword} />
+        <SignInBlock handleResetPassword={handleResetPassword} />
       )}
       {containerState === ContainerState.NewPassword && (
-        <NewPasswordModalContainer onClick={handleNewPassword} />
+        <NewPasswordContainer onClick={handleNewPassword} />
       )}
       {containerState === ContainerState.ResetCompleted && (
-        <ResetCompletedModalContainer onClick={handleResetConfirmed} />
+        <ResetCompletedContainer onClick={handleResetConfirmed} />
       )}
     </>
   );

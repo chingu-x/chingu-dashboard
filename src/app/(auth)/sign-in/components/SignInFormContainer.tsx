@@ -23,11 +23,11 @@ const validationSchema = z.object({
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 interface SignInFormContainerProps {
-  handleResetPasswordModal: () => void;
+  handleResetPassword: () => void;
 }
 
 function SignInFormContainer({
-  handleResetPasswordModal,
+  handleResetPassword,
 }: SignInFormContainerProps) {
   const {
     register,
@@ -65,7 +65,7 @@ function SignInFormContainer({
             maxLength={30}
           />
           <div
-            onClick={handleResetPasswordModal}
+            onClick={handleResetPassword}
             className="cursor-pointer font-medium text-xs text-base-300 ml-1 mt-1"
           >
             Forgot your password?

@@ -2,10 +2,10 @@ import SignInFormContainer from "./SignInFormContainer";
 import SocialLoginButtonsContainer from "@/components/socialLoginButtonsContainer/SocialLoginButtonsContainer";
 
 interface SignInBlockProps {
-  handleResetPasswordModal: () => void;
+  handleResetPassword: () => void;
 }
 
-function SignInBlock({ handleResetPasswordModal }: SignInBlockProps) {
+function SignInBlock({ handleResetPassword }: SignInBlockProps) {
   return (
     <>
       <div className="w-[400px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 p-6">
@@ -20,9 +20,7 @@ function SignInBlock({ handleResetPasswordModal }: SignInBlockProps) {
             <hr className="flex-grow border-neutral-content w-11/12" />
           </div>
         </div>
-        <SignInFormContainer
-          handleResetPasswordModal={handleResetPasswordModal}
-        />
+        <SignInFormContainer handleResetPassword={handleResetPassword} />
       </div>
     </>
   );
