@@ -15,7 +15,7 @@ interface AddIdeationBody {
   vision: string;
 }
 
-interface EditIdeationProps extends EditIdeationBody {
+export interface EditIdeationProps extends EditIdeationBody {
   teamId: number;
   ideationId: number;
 }
