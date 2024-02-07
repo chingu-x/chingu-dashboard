@@ -39,6 +39,7 @@ export default function Component() {
           <TextInput
             id="email"
             label="email"
+            defaultValue=""
             placeholder="Enter your email"
             {...register("email")}
             errorMessage={errors?.email?.message}
@@ -48,6 +49,7 @@ export default function Component() {
           <TextInput
             id="password"
             label="password"
+            defaultValue=""
             placeholder="Enter your password"
             {...register("password")}
             errorMessage={errors?.password?.message}
