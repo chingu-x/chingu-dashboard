@@ -45,7 +45,7 @@ export default function Example2Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      }),
+      })
     );
     handleClose();
   };
@@ -67,6 +67,7 @@ export default function Example2Modal() {
           <TextInput
             id="suggestion"
             placeholder="What is your tech stack suggestion?"
+            defaultValue=""
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
             {...register("suggestion")}
