@@ -5,7 +5,7 @@ type ResetCompletedModalContainerProps = {
   onClick: () => void;
 };
 
-function ResetCompletedModalContainer({
+function ResetCompletedContainer({
   onClick,
 }: ResetCompletedModalContainerProps) {
   return (
@@ -51,4 +51,4 @@ function ResetCompletedModalContainer({
   );
 }
 
-export default ResetCompletedModalContainer;
+export default ResetCompletedContainer;

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Button from "@/components/Button";
 
-function EmailCheckModalContainer() {
+function EmailCheckContainer() {
   return (
     <div className="flex flex-col items-center w-[400px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 px-6 py-9">
       <p className="text-base-300 text-2xl text-center mb-[26px] font-medium">
@@ -57,4 +57,4 @@ function EmailCheckModalContainer() {
   );
 }
 
-export default EmailCheckModalContainer;
+export default EmailCheckContainer;

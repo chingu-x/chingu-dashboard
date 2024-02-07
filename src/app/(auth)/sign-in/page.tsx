@@ -1,5 +1,5 @@
 import BannerContainer from "./components/BannerContainer";
-import SignInModalContainer from "./components/SignInModalContainer";
+import SignInModalContainer from "./components/SignInContainer";
 
 export default function SignInPage() {
   return (
