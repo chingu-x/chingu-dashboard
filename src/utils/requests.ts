@@ -39,3 +39,26 @@ export async function POST<X, Y>(
 
   return (await res.json()) as Y;
 }
+
+export async function PATCH<X, Y>(
+  url: string,
+  token: string,
+  cache: RequestCache,
+  payload: X
+): Promise<Y> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `access_token=${token}`,
+    },
+    body: JSON.stringify(payload),
+    cache,
+  });
+
+  if (!res.ok) {
+    throw new Error(res.statusText);
+  }
+
+  return (await res.json()) as Y;
+}

@@ -43,7 +43,7 @@ export default function IdeationForm() {
   const params = useParams<{ teamId: string; ideationId: string }>();
   const { loading, projectIdeas } = useAppSelector((state) => state.ideation);
   const dispatch = useAppDispatch();
-  // const [editMode, setEditMode] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
 
   const {
@@ -65,15 +65,17 @@ export default function IdeationForm() {
   };
 
   useEffect(() => {
-    // if (params.ideationId) {
-    const ideation = projectIdeas.find(
-      (project) => project.id === +params.ideationId
-    );
+    if (params.ideationId) {
+      const ideation = projectIdeas.find(
+        (project) => project.id === +params.ideationId
+      );
 
-    setIdeationData(ideation);
-    // setEditMode(true);
-    // }
+      setIdeationData(ideation);
+      setEditMode(true);
+    }
   }, [params.ideationId, projectIdeas]);
+
+  // TODO: clear persisted redux state when component unmounts
 
   useEffect(() => {
     reset({
@@ -83,15 +85,15 @@ export default function IdeationForm() {
     });
   }, [ideationData, reset]);
 
-  // function renderButtonContent() {
-  //   if (loading) {
-  //     return <Spinner />;
-  //   } else if (editMode) {
-  //     return "Edit Project Idea";
-  //   } else {
-  //     return "Add Project Idea";
-  //   }
-  // }
+  function renderButtonContent() {
+    if (loading) {
+      return <Spinner />;
+    } else if (editMode) {
+      return "Edit Project Idea";
+    } else {
+      return "Add Project Idea";
+    }
+  }
 
   return (
     <div className="flex flex-col items-center">
@@ -101,7 +103,7 @@ export default function IdeationForm() {
       >
         <div className="flex flex-col gap-y-4">
           <h1 className="text-base-300 text-3xl font-bold">
-            Edit Project Idea
+            {editMode ? "Edit Project Idea" : "Add Project Idea"}
           </h1>
           <p className="text-base-300 text-lg font-medium">
             Share your project idea with the team.
@@ -136,7 +138,7 @@ export default function IdeationForm() {
           size="lg"
           variant="primary"
         >
-          Edit Project Idea
+          {renderButtonContent()}
         </Button>
         <Button
           type="button"
