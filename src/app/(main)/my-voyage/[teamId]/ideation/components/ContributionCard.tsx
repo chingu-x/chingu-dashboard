@@ -1,7 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import Badge from "@/components/Badge";
 import Button from "@/components/Button";
 import { VoyageMember } from "@/store/features/ideation/ideationSlice";
@@ -22,6 +21,7 @@ function ContributionCard({
 }: ContributionCardProps) {
   const { teamId } = useParams<{ teamId: string }>();
   const { id } = useAppSelector((state) => state.user);
+  const router = useRouter();
 
   return (
     <div
@@ -31,11 +31,15 @@ function ContributionCard({
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
         <Badge data={contributed_by.member} />
         {contributed_by.member.id === id ? (
-          <Link href={`/my-voyage/${teamId}/ideation/${projectIdeaId}/edit`}>
-            <Button variant="secondary" className="w-full">
-              Edit Project
-            </Button>
-          </Link>
+          <Button
+            variant="secondary"
+            className="w-full"
+            onClick={() =>
+              router.push(`/my-voyage/${teamId}/ideation/${projectIdeaId}/edit`)
+            }
+          >
+            Edit Project
+          </Button>
         ) : null}
       </section>
     </div>
