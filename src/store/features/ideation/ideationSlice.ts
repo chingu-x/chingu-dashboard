@@ -1,9 +1,15 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  type PayloadAction,
+  createAsyncThunk,
+  createSlice,
+} from "@reduxjs/toolkit";
 import {
   addIdeation,
-  AddIdeationProps,
+  type AddIdeationProps,
   addIdeationVote,
-  IdeationVoteProps,
+  editIdeation,
+  type EditIdeationProps,
+  type IdeationVoteProps,
   removeIdeationVote,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
@@ -59,6 +65,11 @@ export const addNewIdeation = createAsyncThunk(
   async (payload: AddIdeationProps) => await addIdeation(payload)
 );
 
+export const editIdeationThunk = createAsyncThunk(
+  "ideation/editIdeation",
+  async (payload: EditIdeationProps) => await editIdeation(payload)
+);
+
 export const addVote = createAsyncThunk(
   "ideation/addVote",
   async (payload: IdeationVoteProps) => await addIdeationVote(payload)
@@ -92,6 +103,13 @@ export const ideationSlice = createSlice({
     });
     builder.addCase(addNewIdeation.fulfilled, (state, action) => {
       state.projectIdeas.push(action.payload as unknown as IdeationData);
+      state.errors = {};
+    });
+    builder.addCase(editIdeationThunk.pending, (state) => {
+      state.loading = true;
+      state.errors = {};
+    });
+    builder.addCase(editIdeationThunk.fulfilled, (state) => {
       state.errors = {};
     });
     builder.addCase(addVote.pending, (state) => {
