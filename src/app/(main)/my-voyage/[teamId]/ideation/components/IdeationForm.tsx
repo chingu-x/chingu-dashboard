@@ -3,7 +3,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { TrashIcon } from "@heroicons/react/20/solid";
+import { TrashIcon } from "@heroicons/react/20/solid";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Button from "@/components/Button";
@@ -140,6 +140,18 @@ export default function IdeationForm() {
         >
           {renderButtonContent()}
         </Button>
+        {editMode && (
+          <Button
+            type="button"
+            size="lg"
+            variant="error"
+            onClick={() => {}}
+            title="delete"
+          >
+            <TrashIcon className="w-4 h-4" />
+            Delete Project
+          </Button>
+        )}
         <Button
           type="button"
           title="cancel"
@@ -149,16 +161,6 @@ export default function IdeationForm() {
         >
           Cancel
         </Button>
-        {/* {mode === "edit" && (
-          <Button
-            onClick={() => {}}
-            title="delete"
-            customClassName="text-base border-none font-semibold capitalize bg-error-content text-base-300 hover:bg-error"
-          >
-            <TrashIcon className="w-4 h-4" />
-            Delete Project
-          </Button>
-        )} */}
       </form>
     </div>
   );
