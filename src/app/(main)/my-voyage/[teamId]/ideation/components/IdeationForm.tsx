@@ -5,12 +5,16 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { TrashIcon } from "@heroicons/react/20/solid";
 import { useParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { addNewIdeation } from "@/store/features/ideation/ideationSlice";
+import {
+  IdeationData,
+  addNewIdeation,
+} from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
@@ -34,15 +38,18 @@ const validationSchema = z.object({
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function AddIdeationPage() {
+export default function IdeationForm() {
   const router = useRouter();
-  const params = useParams<{ teamId: string }>();
-  const { loading } = useAppSelector((state) => state.ideation);
+  const params = useParams<{ teamId: string; ideationId: string }>();
+  const { loading, projectIdeas } = useAppSelector((state) => state.ideation);
   const dispatch = useAppDispatch();
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [ideationData, setIdeationData] = useState<IdeationData>();
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
@@ -57,25 +64,47 @@ export default function AddIdeationPage() {
     router.replace(`/my-voyage/${teamId}/ideation`);
   };
 
-  //   useEffect(() => {
-  //     if (mode === "edit") {
-  //       reset({
-  //         title: "some project title",
-  //         projectIdea: "some project idea",
-  //         visionStatement: "some vision statement",
-  //       });
-  //     }
-  //   }, [mode, reset]);
+  useEffect(() => {
+    if (params.ideationId) {
+      const ideation = projectIdeas.find(
+        (project) => project.id === +params.ideationId
+      );
+
+      setIdeationData(ideation);
+      setEditMode(true);
+    }
+  }, [params.ideationId, projectIdeas]);
+
+  useEffect(() => {
+    if (editMode) {
+      reset({
+        title: ideationData?.title,
+        description: ideationData?.description,
+        vision: ideationData?.vision,
+      });
+    }
+  }, [editMode, ideationData, reset]);
+
+  function renderButtonContent() {
+    if (loading) {
+      return <Spinner />;
+    } else if (editMode) {
+      return "Edit Project Idea";
+    } else {
+      return "Add Project Idea";
+    }
+  }
 
   return (
     <div className="flex flex-col items-center">
-      <div></div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-full max-w-[1000px] gap-y-10"
       >
         <div className="flex flex-col gap-y-4">
-          <h1 className="text-base-300 text-3xl font-bold">Add Project Idea</h1>
+          <h1 className="text-base-300 text-3xl font-bold">
+            {editMode ? "Edit Project Idea" : "Add Project Idea"}
+          </h1>
           <p className="text-base-300 text-lg font-medium">
             Share your project idea with the team.
           </p>
@@ -109,7 +138,7 @@ export default function AddIdeationPage() {
           size="lg"
           variant="primary"
         >
-          {loading ? <Spinner /> : <>Add Project Idea</>}
+          {renderButtonContent()}
         </Button>
         <Button
           type="button"
