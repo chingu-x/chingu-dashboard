@@ -82,7 +82,7 @@ export async function addIdeation({
   return data;
 }
 
-export async function EditIdeation({
+export async function editIdeation({
   teamId,
   ideationId,
   title,

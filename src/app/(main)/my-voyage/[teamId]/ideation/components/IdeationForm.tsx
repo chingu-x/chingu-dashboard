@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   type IdeationData,
   addNewIdeation,
+  editIdeationThunk,
 } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
 import {
@@ -81,7 +82,7 @@ export default function IdeationForm() {
         }
       }
 
-      await EditIdeation(filteredData);
+      await dispatch(editIdeationThunk(filteredData));
     } else {
       const payload = { ...data, teamId };
       await dispatch(addNewIdeation(payload));
