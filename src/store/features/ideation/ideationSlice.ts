@@ -1,5 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  addIdeation,
+  AddIdeationProps,
   addIdeationVote,
   IdeationVoteProps,
   removeIdeationVote,
@@ -52,6 +54,11 @@ const initialState: IdeationState = {
   errors: {},
 };
 
+export const addNewIdeation = createAsyncThunk(
+  "ideation/addIdeation",
+  async (payload: AddIdeationProps) => await addIdeation(payload)
+);
+
 export const addVote = createAsyncThunk(
   "ideation/addVote",
   async (payload: IdeationVoteProps) => await addIdeationVote(payload)
@@ -77,19 +84,15 @@ export const ideationSlice = createSlice({
       state.projectIdeas = action.payload;
       state.loading = false;
     },
-    // setLoading: (state) => {
-    //   state.loading = true;
-    // },
-    // addVote: (state, action: PayloadAction<IdeationVoteResponse>) => {
-    //   state.projectIdeas.map((projectIdea) => {
-    //     if (projectIdea.id === action.payload.projectIdeaId) {
-    //       projectIdea.projectIdeaVotes.push(action.payload as ProjectIdeaVotes);
-    //     }
-    //   });
-    // },
-    // removeVote: (state, action) => {},
   },
   extraReducers(builder) {
+    builder.addCase(addNewIdeation.pending, (state) => {
+      state.loading = true;
+      state.errors = {};
+    });
+    builder.addCase(addNewIdeation.fulfilled, (state) => {
+      state.errors = {};
+    });
     builder.addCase(addVote.pending, (state) => {
       state.loading = true;
       state.errors = {};

@@ -5,7 +5,7 @@ import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getCookie } from "@/utils/getCookie";
 import { GET, POST } from "@/utils/requests";
 
-interface AddIdeationProps extends AddIdeationBody {
+export interface AddIdeationProps extends AddIdeationBody {
   teamId: number;
 }
 
@@ -64,11 +64,11 @@ export async function addIdeation({
   const data = await POST<AddIdeationBody, AddIdeationResponse>(
     `api/v1/voyages/${teamId}/ideations`,
     token,
-    { title, description, vision },
-    "default"
+    "default",
+    { title, description, vision }
   );
 
-  revalidatePath("/my-voyage/ideation");
+  revalidatePath(`/my-voyage/${teamId}/ideation`);
 
   return data;
 }
@@ -79,14 +79,13 @@ export async function addIdeationVote({
 }: IdeationVoteProps): Promise<IdeationVoteResponse> {
   const token = getCookie();
 
-  const data = await POST<IdeationVoteProps, IdeationVoteResponse>(
+  const data = await POST<undefined, IdeationVoteResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
     token,
-    { teamId, ideationId },
     "default"
   );
 
-  revalidatePath("/my-voyage/ideation");
+  revalidatePath(`/my-voyage/${teamId}/ideation`);
 
   return data;
 }
@@ -113,7 +112,7 @@ export async function removeIdeationVote({
     }
   );
 
-  revalidatePath("/my-voyage/ideation");
+  revalidatePath(`/my-voyage/${teamId}/ideation`);
 
   return (await res.json()) as IdeationVoteResponse;
 }

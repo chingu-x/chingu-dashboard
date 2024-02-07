@@ -10,6 +10,9 @@ import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addNewIdeation } from "@/store/features/ideation/ideationSlice";
+import Spinner from "@/components/Spinner";
 
 // import { useAppDispatch } from "@/store/hooks";
 
@@ -20,12 +23,12 @@ const validationSchema = z.object({
     minLen: 10,
     maxLen: 50,
   }),
-  projectIdea: validateTextInput({
-    inputName: "Project idea",
+  description: validateTextInput({
+    inputName: "Description",
     required: true,
     minLen: 10,
   }),
-  visionStatement: validateTextInput({
+  vision: validateTextInput({
     inputName: "Vision statement",
     required: true,
     minLen: 10,
@@ -37,9 +40,8 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function AddIdeationPage() {
   const router = useRouter();
   const params = useParams<{ teamId: string }>();
-  // const dispatch = useAppDispatch();
-
-  console.log(params);
+  const { loading } = useAppSelector((state) => state.ideation);
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -50,7 +52,13 @@ export default function AddIdeationPage() {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    const teamId = +params.teamId;
+    const payload = { ...data, teamId };
+    await dispatch(addNewIdeation(payload));
+
+    router.replace(`/my-voyage/${teamId}/ideation`);
+  };
 
   //   useEffect(() => {
   //     if (mode === "edit") {
@@ -84,27 +92,27 @@ export default function AddIdeationPage() {
           maxLength={50}
         />
         <Textarea
-          id="projectIdea"
-          label="project idea"
+          id="description"
+          label="description"
           placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
-          {...register("projectIdea")}
-          errorMessage={errors.projectIdea?.message}
+          {...register("description")}
+          errorMessage={errors.description?.message}
         />
         <Textarea
           id="visionStatement"
           label="vision statement"
           placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
-          {...register("visionStatement")}
-          errorMessage={errors.visionStatement?.message}
+          {...register("vision")}
+          errorMessage={errors.vision?.message}
         />
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid}
+          disabled={!isDirty || !isValid || loading}
           size="lg"
           variant="primary"
         >
-          Add Project Idea
+          {loading ? <Spinner /> : <>Add Project Idea</>}
         </Button>
         <Button
           type="button"
