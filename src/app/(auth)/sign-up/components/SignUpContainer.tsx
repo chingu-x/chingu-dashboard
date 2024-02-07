@@ -4,10 +4,6 @@ import { useState } from "react";
 import SignUpFormContainer from "./SignUpFormContainer";
 import ConfirmationMailContainer from "./ConfirmationMailContainer";
 import SocialLoginButtonsContainer from "@/components/socialLoginButtonsContainer/SocialLoginButtonsContainer";
-import Alert from "@/components/Alert";
-
-// Mocked value that will be removed when we will have setup the authentication from the backend
-const showAlert = true;
 
 function SignUpContainer() {
   const [showConfirmationContainer, setShowConfirmationContainer] =
@@ -26,14 +22,6 @@ function SignUpContainer() {
           <p className="text-base-300 text-2xl text-center mt-2.5 mb-[26px] font-medium">
             Welcome to Chingu
           </p>
-          {showAlert && (
-            <div className="mb-8">
-              <Alert
-                context="error"
-                message={"Login failed. Invalid email and/or password."}
-              />
-            </div>
-          )}
           <div className="flex flex-col items-center">
             <SocialLoginButtonsContainer />
             <div className="flex items-center mt-6 mb-8 w-full">
