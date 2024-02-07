@@ -31,7 +31,10 @@ export default function IdeationContainer({
     <div className="card w-[1056px] 3xl:w-full bg-base-200 flex flex-row items-start p-10 gap-x-20 rounded-2xl max-h-[420px]">
       <div className="flex flex-col justify-between gap-y-[24px] min-[1920px]:hidden">
         <VoteCard teamId={teamId} projectIdeaId={projectIdeaId} users={users} />
-        <ContributionCard contributed_by={contributed_by} />
+        <ContributionCard
+          projectIdeaId={projectIdeaId}
+          contributed_by={contributed_by}
+        />
       </div>
       <VoteCard
         teamId={teamId}
@@ -53,6 +56,7 @@ export default function IdeationContainer({
         </p>
       </section>
       <ContributionCard
+        projectIdeaId={projectIdeaId}
         contributed_by={contributed_by}
         className="hidden min-[1920px]:block"
       />
