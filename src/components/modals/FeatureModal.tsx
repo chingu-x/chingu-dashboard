@@ -76,7 +76,7 @@ export default function FeatureModal() {
     // TODO: temp
     handleClose();
     dispatch(
-      onOpen({ context: "warning", message: "Your feature has been deleted" }),
+      onOpen({ context: "warning", message: "Your feature has been deleted" })
     );
   };
 
@@ -99,6 +99,7 @@ export default function FeatureModal() {
           <TextInput
             id="feature"
             placeholder="What is your feature suggestion?"
+            defaultValue=""
             suggestion={isEditing ? "" : "Tip: keep it short and sweet"}
             maxLength={50}
             {...register("feature")}
