@@ -1,7 +1,7 @@
 export async function GET<T>(
   url: string,
   token: string,
-  cache: RequestCache
+  cache: RequestCache,
 ): Promise<T> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     headers: {
@@ -21,7 +21,7 @@ export async function POST<X, Y>(
   url: string,
   token: string,
   cache: RequestCache,
-  payload?: X
+  payload?: X,
 ): Promise<Y> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     method: "POST",
@@ -44,7 +44,7 @@ export async function PATCH<X, Y>(
   url: string,
   token: string,
   cache: RequestCache,
-  payload: X
+  payload: X,
 ): Promise<Y> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     method: "PATCH",

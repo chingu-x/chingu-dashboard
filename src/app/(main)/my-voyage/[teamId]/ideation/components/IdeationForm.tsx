@@ -17,10 +17,7 @@ import {
   editIdeationThunk,
 } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
-import {
-  EditIdeation,
-  type EditIdeationProps,
-} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import { type EditIdeationProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 const validationSchema = z.object({
   title: validateTextInput({
