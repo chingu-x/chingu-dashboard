@@ -35,6 +35,7 @@ export interface User {
   linkedinId: string;
   email: string;
   timezone: string;
+  avatar: string;
   voyageTeamMembers: VoyageTeamMember[];
 }
 
@@ -49,6 +50,7 @@ const initialState: User = {
   linkedinId: "",
   email: "",
   timezone: "",
+  avatar: "",
   voyageTeamMembers: [],
 };
 
