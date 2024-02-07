@@ -65,7 +65,6 @@ export default function IdeationForm() {
 
     if (editMode) {
       const ideationId = +params.ideationId;
-      const payload = { ...data, teamId, ideationId };
 
       interface MyObject extends EditIdeationProps {
         [key: string]: unknown;
@@ -115,11 +114,9 @@ export default function IdeationForm() {
   function renderButtonContent() {
     if (loading) {
       return <Spinner />;
-    } else if (editMode) {
-      return "Edit Project Idea";
-    } else {
-      return "Add Project Idea";
     }
+
+    return editMode ? "Edit Project Idea" : "Add Project Idea";
   }
 
   return (
@@ -143,7 +140,7 @@ export default function IdeationForm() {
           {...register("title")}
           errorMessage={errors.title?.message}
           maxLength={50}
-          defaultValue={ideationData?.title ?? "Enter your voyage project idea"}
+          defaultValue={ideationData?.title ?? ""}
         />
         <Textarea
           id="description"
@@ -151,6 +148,7 @@ export default function IdeationForm() {
           placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
           {...register("description")}
           errorMessage={errors.description?.message}
+          defaultValue={ideationData?.description ?? ""}
         />
         <Textarea
           id="visionStatement"
@@ -158,6 +156,7 @@ export default function IdeationForm() {
           placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
           {...register("vision")}
           errorMessage={errors.vision?.message}
+          defaultValue={ideationData?.vision ?? ""}
         />
         <Button
           type="submit"
