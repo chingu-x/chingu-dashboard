@@ -16,13 +16,13 @@ const validationSchema = z.object({
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
-interface ResetPasswordModalContainerProps {
-  handleEmailCheckModal: () => void;
+interface ResetPasswordContainerProps {
+  handleEmailCheck: () => void;
 }
 
 function ResetPasswordContainer({
-  handleEmailCheckModal,
-}: ResetPasswordModalContainerProps) {
+  handleEmailCheck,
+}: ResetPasswordContainerProps) {
   const {
     register,
     formState: { errors },
@@ -33,7 +33,7 @@ function ResetPasswordContainer({
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
-    handleEmailCheckModal();
+    handleEmailCheck();
   };
 
   return (

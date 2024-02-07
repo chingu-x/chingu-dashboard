@@ -22,11 +22,11 @@ const validationSchema = z.object({
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 interface SignUpFormContainerProps {
-  handleConfirmationModal: () => void;
+  handleConfirmationContainer: () => void;
 }
 
 function SignUpFormContainer({
-  handleConfirmationModal,
+  handleConfirmationContainer,
 }: SignUpFormContainerProps) {
   const {
     register,
@@ -38,7 +38,7 @@ function SignUpFormContainer({
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
-    handleConfirmationModal();
+    handleConfirmationContainer();
   };
 
   return (

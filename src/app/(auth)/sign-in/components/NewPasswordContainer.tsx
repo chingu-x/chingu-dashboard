@@ -16,11 +16,11 @@ const validationSchema = z.object({
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
-type NewPasswordModalContainerProps = {
+type NewPasswordContainerProps = {
   onClick: () => void;
 };
 
-function NewPasswordContainer({ onClick }: NewPasswordModalContainerProps) {
+function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   const {
     register,
     formState: { errors },

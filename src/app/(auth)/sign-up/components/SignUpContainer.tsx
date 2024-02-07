@@ -2,25 +2,25 @@
 
 import { useState } from "react";
 import SignUpFormContainer from "./SignUpFormContainer";
-import ConfirmationMailModalContainer from "./ConfirmationMailModalContainer";
+import ConfirmationMailContainer from "./ConfirmationMailContainer";
 import SocialLoginButtonsContainer from "@/components/socialLoginButtonsContainer/SocialLoginButtonsContainer";
 import Alert from "@/components/Alert";
 
 // Mocked value that will be removed when we will have setup the authentication from the backend
 const showAlert = true;
 
-function SignUpModalContainer() {
-  const [showConfirmationModal, setShowConfirmationModal] =
+function SignUpContainer() {
+  const [showConfirmationContainer, setShowConfirmationContainer] =
     useState<boolean>(false);
 
-  const handleConfirmationModal = () => {
-    setShowConfirmationModal(true);
+  const handleConfirmationContainer = () => {
+    setShowConfirmationContainer(true);
   };
 
   return (
     <>
-      {showConfirmationModal ? (
-        <ConfirmationMailModalContainer />
+      {showConfirmationContainer ? (
+        <ConfirmationMailContainer />
       ) : (
         <div className="w-[400px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 p-6">
           <p className="text-base-300 text-2xl text-center mt-2.5 mb-[26px] font-medium">
@@ -43,7 +43,7 @@ function SignUpModalContainer() {
             </div>
           </div>
           <SignUpFormContainer
-            handleConfirmationModal={handleConfirmationModal}
+            handleConfirmationContainer={handleConfirmationContainer}
           />
         </div>
       )}
@@ -51,4 +51,4 @@ function SignUpModalContainer() {
   );
 }
 
-export default SignUpModalContainer;
+export default SignUpContainer;
