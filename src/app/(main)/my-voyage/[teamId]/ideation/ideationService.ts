@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getCookie } from "@/utils/getCookie";
-import { GET, POST } from "@/utils/requests";
+import { GET, PATCH, POST } from "@/utils/requests";
 
 export interface AddIdeationProps extends AddIdeationBody {
   teamId: number;
@@ -14,6 +14,13 @@ interface AddIdeationBody {
   description: string;
   vision: string;
 }
+
+interface EditIdeationProps extends EditIdeationBody {
+  teamId: number;
+  ideationId: number;
+}
+
+interface EditIdeationBody extends Partial<AddIdeationBody> {}
 
 export interface IdeationVoteProps {
   teamId: number;
@@ -33,6 +40,8 @@ export interface AddIdeationResponse {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface EditIdeationResponse extends AddIdeationResponse {}
 
 export interface IdeationVoteResponse {
   id: number;
@@ -63,6 +72,27 @@ export async function addIdeation({
 
   const data = await POST<AddIdeationBody, AddIdeationResponse>(
     `api/v1/voyages/${teamId}/ideations`,
+    token,
+    "default",
+    { title, description, vision }
+  );
+
+  revalidatePath(`/my-voyage/${teamId}/ideation`);
+
+  return data;
+}
+
+export async function EditIdeation({
+  teamId,
+  ideationId,
+  title,
+  description,
+  vision,
+}: EditIdeationProps): Promise<EditIdeationResponse> {
+  const token = getCookie();
+
+  const data = await PATCH<EditIdeationBody, EditIdeationResponse>(
+    `api/v1/voyages/${teamId}/ideations/${ideationId}`,
     token,
     "default",
     { title, description, vision }
