@@ -42,6 +42,7 @@ const BaseTemplate: Story = {
   args: {
     id: "textarea",
     placeholder: "Placeholder",
+    defaultValue: "",
   },
   render: ({ ...args }) => <Textarea {...args} />,
 };
