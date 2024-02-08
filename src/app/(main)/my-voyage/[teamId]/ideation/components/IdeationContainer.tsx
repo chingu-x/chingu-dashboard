@@ -46,6 +46,7 @@ export default function IdeationContainer({
       <ContributionCard
         projectIdeaId={projectIdeaId}
         contributed_by={contributed_by}
+        className="row-span-2 3xl:row-auto"
       />
     </div>
   );
