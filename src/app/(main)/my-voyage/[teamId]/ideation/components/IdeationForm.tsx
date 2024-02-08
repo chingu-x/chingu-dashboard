@@ -19,6 +19,7 @@ import {
 } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
 import { type EditIdeationProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import useThunk from "@/hooks/useThunk";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -45,11 +46,12 @@ export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
   const { loading, projectIdeas } = useAppSelector((state) => state.ideation);
+  const teamId = +params.teamId;
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
-
-  const teamId = +params.teamId;
+  const [editIdeationFunc, editIdeationLoading, , editIdeationError] =
+    useThunk(editIdeationThunk);
 
   const {
     register,
@@ -80,13 +82,15 @@ export default function IdeationForm() {
         }
       }
 
+      // editIdeationFunc(filteredData);
+
       await dispatch(editIdeationThunk(filteredData));
     } else {
       const payload = { ...data, teamId };
       await dispatch(addNewIdeation(payload));
     }
 
-    router.replace(`/my-voyage/${teamId}/ideation`);
+    if (!editIdeationError) router.replace(`/my-voyage/${teamId}/ideation`);
   };
 
   async function handleDelete() {
@@ -100,7 +104,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
@@ -119,9 +123,11 @@ export default function IdeationForm() {
   }, [ideationData, reset]);
 
   function renderButtonContent() {
-    if (loading) {
+    if (editIdeationLoading) {
       return <Spinner />;
     }
+
+    if (editIdeationError) return editIdeationError;
 
     return editMode ? "Edit Project Idea" : "Add Project Idea";
   }
