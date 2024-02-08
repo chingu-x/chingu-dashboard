@@ -1,6 +1,6 @@
 "use client";
 
-import useDispatchClientStore from "@/hooks/useDispatchClientStore";
+import useSyncDispatch from "@/hooks/useSyncDispatch";
 import {
   IdeationData,
   fetchIdeations,
@@ -11,7 +11,7 @@ interface PreloaderProps {
 }
 
 function Preloader({ payload }: PreloaderProps) {
-  useDispatchClientStore<typeof fetchIdeations>({
+  useSyncDispatch<typeof fetchIdeations>({
     action: fetchIdeations,
     payload,
   });

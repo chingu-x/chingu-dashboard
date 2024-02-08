@@ -3,53 +3,53 @@
 import { revalidatePath } from "next/cache";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getCookie } from "@/utils/getCookie";
-import { GET, PATCH, POST } from "@/utils/requests";
+import { DELETE, GET, PATCH, POST } from "@/utils/requests";
 
-export interface AddIdeationProps extends AddIdeationBody {
+interface IdeationProps {
   teamId: number;
+  ideationId: number;
 }
 
-interface AddIdeationBody {
+type AddIdeationType = Pick<IdeationProps, "teamId">;
+
+export interface AddIdeationProps extends AddIdeationType, IdeationBody {}
+
+interface IdeationBody {
   title: string;
   description: string;
   vision: string;
 }
 
-export interface EditIdeationProps extends EditIdeationBody {
-  teamId: number;
-  ideationId: number;
-}
-
+interface AddIdeationBody extends IdeationBody {}
 interface EditIdeationBody extends Partial<AddIdeationBody> {}
 
-export interface IdeationVoteProps {
-  teamId: number;
-  ideationId: number;
-}
+export interface EditIdeationProps extends EditIdeationBody, IdeationProps {}
 
-export interface FetchIdeationsProps {
-  teamId: number;
-}
+export interface IdeationVoteProps extends IdeationProps {}
 
-export interface AddIdeationResponse {
+export type FetchIdeationsProps = Pick<IdeationProps, "teamId">;
+
+interface IdeationResponse {
   id: number;
   voyageTeamMemberId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface AddIdeationResponse extends IdeationResponse {
   title: string;
   description: string;
   vision: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface EditIdeationResponse extends AddIdeationResponse {}
+export interface DeleteIdeationResponse extends AddIdeationResponse {}
 
-export interface IdeationVoteResponse {
-  id: number;
-  voyageTeamMemberId: number;
+export interface IdeationVoteResponse extends IdeationResponse {
   projectIdeaId: number;
-  createdAt: Date;
-  updatedAt: Date;
 }
+
+export interface DeleteIdeationProps extends IdeationProps {}
 
 export async function fetchProjectIdeas({
   teamId,
@@ -58,7 +58,7 @@ export async function fetchProjectIdeas({
   return await GET<IdeationData[]>(
     `api/v1/voyages/${teamId}/ideations`,
     token,
-    "force-cache",
+    "force-cache"
   );
 }
 
@@ -74,7 +74,7 @@ export async function addIdeation({
     `api/v1/voyages/${teamId}/ideations`,
     token,
     "default",
-    { title, description, vision },
+    { title, description, vision }
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -95,7 +95,24 @@ export async function editIdeation({
     `api/v1/voyages/${teamId}/ideations/${ideationId}`,
     token,
     "default",
-    { title, description, vision },
+    { title, description, vision }
+  );
+
+  revalidatePath(`/my-voyage/${teamId}/ideation`);
+
+  return data;
+}
+
+export async function deleteIdeation({
+  teamId,
+  ideationId,
+}: DeleteIdeationProps): Promise<DeleteIdeationResponse> {
+  const token = getCookie();
+
+  const data = await DELETE<DeleteIdeationResponse>(
+    `api/v1/voyages/${teamId}/ideations/${ideationId}`,
+    token,
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -112,7 +129,7 @@ export async function addIdeationVote({
   const data = await POST<undefined, IdeationVoteResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
     token,
-    "default",
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -139,7 +156,7 @@ export async function removeIdeationVote({
         teamId,
         ideationId,
       }),
-    },
+    }
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);

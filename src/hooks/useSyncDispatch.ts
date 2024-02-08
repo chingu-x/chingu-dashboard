@@ -4,36 +4,31 @@ import { useAppDispatch } from "@/store/hooks";
 
 type ActionWithoutPayload = () => AnyAction;
 type ActionWithPayload<T> = (
-  payload: T,
+  payload: T
 ) => AnyAction | { payload: T; type: string };
 
 type HasPayload<X> = X extends ActionWithPayload<infer Y> ? Y : null;
 
-interface UseDispatchClientStorePropsWithoutPayload<
-  X extends ActionWithoutPayload,
-> {
+interface UseSyncDispatchPropsWithoutPayload<X extends ActionWithoutPayload> {
   action: X;
   payload?: null;
 }
 
-interface UseDispatchClientStorePropsWithPayload<
-  X extends ActionWithPayload<Y>,
-  Y,
-> {
+interface UseSyncDispatchPropsWithPayload<X extends ActionWithPayload<Y>, Y> {
   action: X;
   payload: Y;
 }
 
-type UseDispatchClientStoreProps<X, Y> = X extends ActionWithoutPayload
-  ? UseDispatchClientStorePropsWithoutPayload<X>
+type UseSyncDispatchProps<X, Y> = X extends ActionWithoutPayload
+  ? UseSyncDispatchPropsWithoutPayload<X>
   : X extends ActionWithPayload<Y>
-    ? UseDispatchClientStorePropsWithPayload<X, Y>
+    ? UseSyncDispatchPropsWithPayload<X, Y>
     : never;
 
-export default function useDispatchClientStore<
+export default function useSyncDispatch<
   X extends ActionWithoutPayload | ActionWithPayload<Y>,
   Y = HasPayload<X>,
->({ action, payload }: UseDispatchClientStoreProps<X, Y>) {
+>({ action, payload }: UseSyncDispatchProps<X, Y>) {
   const [isMounted, setIsMounted] = useState(false);
   const dispatch = useAppDispatch();
 
