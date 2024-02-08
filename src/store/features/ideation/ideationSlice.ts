@@ -11,6 +11,8 @@ import {
   type EditIdeationProps,
   type IdeationVoteProps,
   removeIdeationVote,
+  DeleteIdeationProps,
+  deleteIdeation,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 export interface VoyageMember {
@@ -70,6 +72,11 @@ export const editIdeationThunk = createAsyncThunk(
   async (payload: EditIdeationProps) => await editIdeation(payload)
 );
 
+export const deleteIdeationThunk = createAsyncThunk(
+  "ideation/deleteIdeation",
+  async (payload: DeleteIdeationProps) => await deleteIdeation(payload)
+);
+
 export const addVote = createAsyncThunk(
   "ideation/addVote",
   async (payload: IdeationVoteProps) => await addIdeationVote(payload)
@@ -110,6 +117,13 @@ export const ideationSlice = createSlice({
       state.errors = {};
     });
     builder.addCase(editIdeationThunk.fulfilled, (state) => {
+      state.errors = {};
+    });
+    builder.addCase(deleteIdeationThunk.pending, (state) => {
+      state.loading = true;
+      state.errors = {};
+    });
+    builder.addCase(deleteIdeationThunk.fulfilled, (state) => {
       state.errors = {};
     });
     builder.addCase(addVote.pending, (state) => {

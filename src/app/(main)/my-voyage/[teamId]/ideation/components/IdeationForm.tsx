@@ -15,12 +15,10 @@ import {
   type IdeationData,
   addNewIdeation,
   editIdeationThunk,
+  deleteIdeationThunk,
 } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
-import {
-  deleteIdeation,
-  type EditIdeationProps,
-} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import { type EditIdeationProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -94,7 +92,7 @@ export default function IdeationForm() {
   async function handleDelete() {
     const ideationId = +params.ideationId;
 
-    await deleteIdeation({ teamId, ideationId });
+    await dispatch(deleteIdeationThunk({ teamId, ideationId }));
 
     router.replace(`/my-voyage/${teamId}/ideation`);
   }
@@ -126,6 +124,19 @@ export default function IdeationForm() {
     }
 
     return editMode ? "Edit Project Idea" : "Add Project Idea";
+  }
+
+  function renderDeleteButtonContent() {
+    if (loading) {
+      return <Spinner />;
+    }
+
+    return (
+      <>
+        <TrashIcon className="w-4 h-4" />
+        Delete Project
+      </>
+    );
   }
 
   return (
@@ -176,16 +187,17 @@ export default function IdeationForm() {
         >
           {renderButtonContent()}
         </Button>
-        <Button
-          type="button"
-          size="lg"
-          variant="error"
-          onClick={handleDelete}
-          title="delete"
-        >
-          <TrashIcon className="w-4 h-4" />
-          Delete Project
-        </Button>
+        {editMode && (
+          <Button
+            type="button"
+            size="lg"
+            variant="error"
+            onClick={handleDelete}
+            title="delete"
+          >
+            {renderDeleteButtonContent()}
+          </Button>
+        )}
         <Button
           type="button"
           title="cancel"
