@@ -8,6 +8,7 @@ import authReducer from "./features/auth/authSlice";
 import ideationReducer from "./features/ideation/ideationSlice";
 import userReducer from "./features/user/userSlice";
 
+// todo: only persist projectIdea state
 const persistConfig = {
   key: "root",
   storage,

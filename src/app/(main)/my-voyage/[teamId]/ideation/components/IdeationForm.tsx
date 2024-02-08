@@ -17,7 +17,10 @@ import {
   editIdeationThunk,
 } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
-import { type EditIdeationProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import {
+  deleteIdeation,
+  type EditIdeationProps,
+} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -48,6 +51,8 @@ export default function IdeationForm() {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
 
+  const teamId = +params.teamId;
+
   const {
     register,
     handleSubmit,
@@ -59,8 +64,6 @@ export default function IdeationForm() {
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    const teamId = +params.teamId;
-
     if (editMode) {
       const ideationId = +params.ideationId;
 
@@ -88,10 +91,18 @@ export default function IdeationForm() {
     router.replace(`/my-voyage/${teamId}/ideation`);
   };
 
+  async function handleDelete() {
+    const ideationId = +params.ideationId;
+
+    await deleteIdeation({ teamId, ideationId });
+
+    router.replace(`/my-voyage/${teamId}/ideation`);
+  }
+
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
@@ -169,7 +180,7 @@ export default function IdeationForm() {
           type="button"
           size="lg"
           variant="error"
-          onClick={() => {}}
+          onClick={handleDelete}
           title="delete"
         >
           <TrashIcon className="w-4 h-4" />
