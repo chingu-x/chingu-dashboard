@@ -58,7 +58,7 @@ export async function fetchProjectIdeas({
   return await GET<IdeationData[]>(
     `api/v1/voyages/${teamId}/ideations`,
     token,
-    "force-cache"
+    "force-cache",
   );
 }
 
@@ -74,7 +74,7 @@ export async function addIdeation({
     `api/v1/voyages/${teamId}/ideations`,
     token,
     "default",
-    { title, description, vision }
+    { title, description, vision },
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -95,7 +95,7 @@ export async function editIdeation({
     `api/v1/voyages/${teamId}/ideations/${ideationId}`,
     token,
     "default",
-    { title, description, vision }
+    { title, description, vision },
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -112,7 +112,7 @@ export async function deleteIdeation({
   const data = await DELETE<DeleteIdeationResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}`,
     token,
-    "default"
+    "default",
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -129,7 +129,7 @@ export async function addIdeationVote({
   const data = await POST<undefined, IdeationVoteResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
     token,
-    "default"
+    "default",
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -156,7 +156,7 @@ export async function removeIdeationVote({
         teamId,
         ideationId,
       }),
-    }
+    },
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);

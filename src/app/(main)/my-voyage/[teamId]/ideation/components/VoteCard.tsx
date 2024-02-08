@@ -10,6 +10,7 @@ import {
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
+import { cn } from "@/lib/utils";
 
 interface VoteCardProps {
   projectIdeaId: number;
@@ -60,9 +61,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   }, [id, getVoteUsers]);
 
   return (
-    <div
-      className={`card max-w-[200px] max-[1919px]:min-w-[160px] w-full h-fit bg-primary-content rounded-lg ${className}`}
-    >
+    <div className={cn("w-full bg-primary-content rounded-lg", className)}>
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-3xl font-semibold text-base-300">{users.length}</h1>
         <h2 className="text-xl font-semibold text-base-300">{`Vote${

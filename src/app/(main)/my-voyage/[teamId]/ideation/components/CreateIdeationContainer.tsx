@@ -12,17 +12,9 @@ function CreateIdeationContainer() {
   const { teamId } = useParams<{ teamId: string }>();
 
   return (
-    <div className="card w-[1050px] 3xl:w-full min-h-[190px] max-[1919px]:min-h-[280px] bg-base-100 flex flex-row items-center px-10 rounded-2xl">
-      <div className="flex flex-col gap-y-6 justify-between h-full py-10 min-[1920px]:hidden">
-        <VoteDescriptionCard />
-        <Link href={`/my-voyage/${teamId}/ideation/new`}>
-          <Button size="lg" className="max-[1920px]:w-[160px]">
-            Create Project
-          </Button>
-        </Link>
-      </div>
-      <VoteDescriptionCard className="hidden min-[1920px]:block" />
-      <section className="px-20 card-body gap-y-7">
+    <div className="grid grid-cols-[160px_1fr] 3xl:grid-cols-[200px_1fr_200px] items-center justify-items-center gap-y-7 3xl:gap-x-[110px] 2xl:gap-x-20 gap-x-10 w-full p-10 bg-base-100 rounded-2xl">
+      <VoteDescriptionCard />
+      <section className="w-full row-span-2 gap-y-7 3xl:row-auto">
         <h2 className="text-xl font-semibold text-base-300">
           What is your Voyage project idea & vision?
         </h2>
@@ -32,12 +24,11 @@ function CreateIdeationContainer() {
           bring to users.
         </p>
       </section>
-      <Button
-        size="lg"
-        className="max-w-[200px] w-full hidden min-[1920px]:block"
-      >
-        Create Project
-      </Button>
+      <Link href={`/my-voyage/${teamId}/ideation/new`} className="w-full">
+        <Button size="lg" className="w-full">
+          Create Project
+        </Button>
+      </Link>
     </div>
   );
 }
