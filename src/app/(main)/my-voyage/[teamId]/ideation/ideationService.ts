@@ -58,7 +58,7 @@ export async function fetchProjectIdeas({
   return await GET<IdeationData[]>(
     `api/v1/voyages/${teamId}/ideations`,
     token,
-    "force-cache",
+    "force-cache"
   );
 }
 
@@ -74,7 +74,7 @@ export async function addIdeation({
     `api/v1/voyages/${teamId}/ideations`,
     token,
     "default",
-    { title, description, vision },
+    { title, description, vision }
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -91,16 +91,20 @@ export async function editIdeation({
 }: EditIdeationProps): Promise<EditIdeationResponse> {
   const token = getCookie();
 
-  const data = await PATCH<EditIdeationBody, EditIdeationResponse>(
-    `api/v1/voyages/${teamId}/ideations/${ideationId}`,
-    token,
-    "default",
-    { title, description, vision },
-  );
+  try {
+    const data = await PATCH<EditIdeationBody, EditIdeationResponse>(
+      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
+      token,
+      "default",
+      { title, description, vision }
+    );
 
-  revalidatePath(`/my-voyage/${teamId}/ideation`);
+    revalidatePath(`/my-voyage/${teamId}/ideation`);
 
-  return data;
+    return data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function deleteIdeation({
@@ -112,7 +116,7 @@ export async function deleteIdeation({
   const data = await DELETE<DeleteIdeationResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}`,
     token,
-    "default",
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -129,7 +133,7 @@ export async function addIdeationVote({
   const data = await POST<undefined, IdeationVoteResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
     token,
-    "default",
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -156,7 +160,7 @@ export async function removeIdeationVote({
         teamId,
         ideationId,
       }),
-    },
+    }
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);

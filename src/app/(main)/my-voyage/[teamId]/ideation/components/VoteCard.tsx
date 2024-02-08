@@ -7,10 +7,12 @@ import {
   ProjectIdeaVotes,
   addVote,
   removeVote,
+  setLoadingFalse,
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
+import useThunk from "@/hooks/useThunk";
 
 interface VoteCardProps {
   projectIdeaId: number;
@@ -21,27 +23,32 @@ interface VoteCardProps {
 
 function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
-    null,
+    null
   );
   const { id } = useAppSelector((state) => state.user);
-  const { loading } = useAppSelector((state) => state.ideation);
+  const { loading, projectIdeas } = useAppSelector((state) => state.ideation);
   const dispatch = useAppDispatch();
+  const [addVoteAction, addVoteLoading, , addVoteError] = useThunk(addVote);
+
+  useEffect(() => {
+    dispatch(setLoadingFalse());
+  }, [projectIdeas]);
 
   function handleVote() {
     if (currentUserVoted) {
       void dispatch(removeVote({ teamId, ideationId: projectIdeaId, id }));
     } else {
-      void dispatch(addVote({ teamId, ideationId: projectIdeaId }));
+      addVoteAction({ teamId, ideationId: projectIdeaId });
     }
   }
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users],
+    [users]
   );
 
   function buttonContent() {
-    if (loading) {
+    if (addVoteLoading || loading) {
       return <Spinner />;
     }
 

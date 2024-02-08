@@ -49,7 +49,7 @@ export interface IdeationData {
 interface IdeationState {
   loading: boolean;
   projectIdeas: IdeationData[];
-  errors: object;
+  serverError: object;
 }
 
 interface RemoveVoteActionPayload extends IdeationVoteProps {
@@ -59,27 +59,27 @@ interface RemoveVoteActionPayload extends IdeationVoteProps {
 const initialState: IdeationState = {
   loading: false,
   projectIdeas: [],
-  errors: {},
+  serverError: {},
 };
 
 export const addNewIdeation = createAsyncThunk(
   "ideation/addIdeation",
-  async (payload: AddIdeationProps) => await addIdeation(payload),
+  async (payload: AddIdeationProps) => await addIdeation(payload)
 );
 
 export const editIdeationThunk = createAsyncThunk(
   "ideation/editIdeation",
-  async (payload: EditIdeationProps) => await editIdeation(payload),
+  async (payload: EditIdeationProps) => await editIdeation(payload)
 );
 
 export const deleteIdeationThunk = createAsyncThunk(
   "ideation/deleteIdeation",
-  async (payload: DeleteIdeationProps) => await deleteIdeation(payload),
+  async (payload: DeleteIdeationProps) => await deleteIdeation(payload)
 );
 
 export const addVote = createAsyncThunk(
   "ideation/addVote",
-  async (payload: IdeationVoteProps) => await addIdeationVote(payload),
+  async (payload: IdeationVoteProps) => await addIdeationVote(payload)
 );
 
 export const removeVote = createAsyncThunk(
@@ -91,7 +91,7 @@ export const removeVote = createAsyncThunk(
     const userId = id;
 
     return { ...res, userId };
-  },
+  }
 );
 
 export const ideationSlice = createSlice({
@@ -100,35 +100,41 @@ export const ideationSlice = createSlice({
   reducers: {
     fetchIdeations: (state, action: PayloadAction<IdeationData[]>) => {
       state.projectIdeas = action.payload;
+      state.loading = true;
+    },
+    setLoadingFalse: (state) => {
       state.loading = false;
     },
   },
   extraReducers(builder) {
     builder.addCase(addNewIdeation.pending, (state) => {
       state.loading = true;
-      state.errors = {};
+      state.serverError = {};
     });
     builder.addCase(addNewIdeation.fulfilled, (state, action) => {
       state.projectIdeas.push(action.payload as unknown as IdeationData);
-      state.errors = {};
+      state.serverError = {};
     });
-    builder.addCase(editIdeationThunk.pending, (state) => {
-      state.loading = true;
-      state.errors = {};
-    });
-    builder.addCase(editIdeationThunk.fulfilled, (state) => {
-      state.errors = {};
+    // builder.addCase(editIdeationThunk.pending, (state) => {
+    //   state.loading = true;
+    //   state.serverError = {};
+    // });
+    // builder.addCase(editIdeationThunk.fulfilled, (state) => {
+    //   state.serverError = {};
+    // });
+    builder.addCase(editIdeationThunk.rejected, (state, action) => {
+      state.serverError = action.error;
     });
     builder.addCase(deleteIdeationThunk.pending, (state) => {
       state.loading = true;
-      state.errors = {};
+      state.serverError = {};
     });
     builder.addCase(deleteIdeationThunk.fulfilled, (state) => {
-      state.errors = {};
+      state.serverError = {};
     });
     builder.addCase(addVote.pending, (state) => {
       state.loading = true;
-      state.errors = {};
+      state.serverError = {};
     });
     builder.addCase(addVote.fulfilled, (state, action) => {
       state.loading = true;
@@ -137,15 +143,15 @@ export const ideationSlice = createSlice({
           projectIdea.projectIdeaVotes.push(action.payload as ProjectIdeaVotes);
         }
       });
-      state.errors = {};
+      state.serverError = {};
     });
     // builder.addCase(addVote.rejected, (state, action: PayloadAction<{}>) => {
     //   state.loading = false;
-    //   state.errors = action.error;
+    //   state.serverError = action.error;
     // });
     builder.addCase(removeVote.pending, (state) => {
       state.loading = true;
-      state.errors = {};
+      state.serverError = {};
     });
     builder.addCase(removeVote.fulfilled, (state, action) => {
       state.loading = true;
@@ -153,17 +159,17 @@ export const ideationSlice = createSlice({
         if (projectIdea.id === action.payload.projectIdeaId) {
           const updatedProjectIdeaVotes = projectIdea.projectIdeaVotes.filter(
             (projectIdea) =>
-              projectIdea.votedBy.member.id !== action.payload.userId,
+              projectIdea.votedBy.member.id !== action.payload.userId
           );
 
           projectIdea.projectIdeaVotes = updatedProjectIdeaVotes;
         }
       });
-      state.errors = {};
+      state.serverError = {};
     });
   },
 });
 
-export const { fetchIdeations } = ideationSlice.actions;
+export const { fetchIdeations, setLoadingFalse } = ideationSlice.actions;
 
 export default ideationSlice.reducer;
