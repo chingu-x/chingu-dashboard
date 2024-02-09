@@ -7,11 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 import { serverSignOut } from "@/app/(auth)/authService";
 
-export default function DropDown({
-  openState,
-}: {
-  openState?: boolean;
-}) {
+export default function DropDown({ openState }: { openState?: boolean }) {
   const dispatch = useAppDispatch();
   const allVoyages = useAppSelector((state) => state.user.voyageTeamMembers);
   const activeVoyage = allVoyages?.find(
