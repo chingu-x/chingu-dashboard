@@ -45,14 +45,24 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
-  const { loading, editLoading, projectIdeas } = useAppSelector(
+  const { loading, projectIdeas, editLoading } = useAppSelector(
     (state) => state.ideation
   );
   const teamId = +params.teamId;
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
-  const [, , , editIdeationError] = useThunk(editIdeationThunk);
+  const {
+    // runThunk: editThunk,
+    // isLoading: editLoading,
+    // error: editError,
+  } = useThunk(editIdeationThunk);
+  const {
+    runThunk: deleteThunk,
+    isLoading: deleteLoading,
+    // setIsLoading: setDeleteLoading,
+    // error: deleteError,
+  } = useThunk(deleteIdeationThunk);
 
   const {
     register,
@@ -83,19 +93,22 @@ export default function IdeationForm() {
         }
       }
 
+      // editThunk(filteredData);
+
       await dispatch(editIdeationThunk(filteredData));
     } else {
       const payload = { ...data, teamId };
       await dispatch(addNewIdeation(payload));
     }
 
-    if (!editIdeationError) router.replace(`/my-voyage/${teamId}/ideation`);
+    router.replace(`/my-voyage/${teamId}/ideation`);
   };
 
-  async function handleDelete() {
+  function handleDelete() {
     const ideationId = +params.ideationId;
 
-    await dispatch(deleteIdeationThunk({ teamId, ideationId }));
+    deleteThunk({ teamId, ideationId });
+    // await dispatch(deleteIdeationThunk({ teamId, ideationId }));
 
     router.replace(`/my-voyage/${teamId}/ideation`);
   }
@@ -126,13 +139,13 @@ export default function IdeationForm() {
       return <Spinner />;
     }
 
-    if (editIdeationError) return editIdeationError;
+    // if (editError) return editError;
 
     return editMode ? "Edit Project Idea" : "Add Project Idea";
   }
 
   function renderDeleteButtonContent() {
-    if (loading) {
+    if (deleteLoading) {
       return <Spinner />;
     }
 

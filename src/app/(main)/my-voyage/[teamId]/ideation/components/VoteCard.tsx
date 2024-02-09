@@ -8,7 +8,7 @@ import {
   addVote,
   removeVote,
 } from "@/store/features/ideation/ideationSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useThunk from "@/hooks/useThunk";
@@ -26,14 +26,25 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   );
   const { id } = useAppSelector((state) => state.user);
   const { loading } = useAppSelector((state) => state.ideation);
-  const dispatch = useAppDispatch();
-  const [addVoteAction, addVoteLoading, ,] = useThunk(addVote);
+  // const dispatch = useAppDispatch();
+  const {
+    runThunk: addVoteThunk,
+    isLoading: addVoteLoading,
+    // error: editError,
+  } = useThunk(addVote);
+  const {
+    runThunk: removeVoteThunk,
+    isLoading: removeVoteLoading,
+    // error: editError,
+  } = useThunk(removeVote);
 
   function handleVote() {
     if (currentUserVoted) {
-      void dispatch(removeVote({ teamId, ideationId: projectIdeaId, id }));
+      removeVoteThunk({ teamId, ideationId: projectIdeaId, id });
+      // void dispatch(removeVote({ teamId, ideationId: projectIdeaId, id }));
     } else {
-      addVoteAction({ teamId, ideationId: projectIdeaId });
+      // addVoteAction({ teamId, ideationId: projectIdeaId });
+      addVoteThunk({ teamId, ideationId: projectIdeaId });
     }
   }
 
@@ -43,7 +54,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   );
 
   function buttonContent() {
-    if (addVoteLoading || loading) {
+    if (addVoteLoading || removeVoteLoading || loading) {
       return <Spinner />;
     }
 
