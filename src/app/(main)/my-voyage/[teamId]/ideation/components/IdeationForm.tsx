@@ -45,13 +45,14 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
-  const { loading, projectIdeas } = useAppSelector((state) => state.ideation);
+  const { loading, editLoading, projectIdeas } = useAppSelector(
+    (state) => state.ideation
+  );
   const teamId = +params.teamId;
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
-  const [editIdeationFunc, editIdeationLoading, , editIdeationError] =
-    useThunk(editIdeationThunk);
+  const [, , , editIdeationError] = useThunk(editIdeationThunk);
 
   const {
     register,
@@ -81,8 +82,6 @@ export default function IdeationForm() {
           filteredData[key] = (data as { [key: string]: string })[key];
         }
       }
-
-      // editIdeationFunc(filteredData);
 
       await dispatch(editIdeationThunk(filteredData));
     } else {
@@ -123,7 +122,7 @@ export default function IdeationForm() {
   }, [ideationData, reset]);
 
   function renderButtonContent() {
-    if (editIdeationLoading) {
+    if (loading || editLoading) {
       return <Spinner />;
     }
 

@@ -1,23 +1,25 @@
-import { useEffect, useState } from "react";
-import { AnyAction } from "@reduxjs/toolkit";
+import { useEffect } from "react";
+import { ActionCreatorWithoutPayload, AnyAction } from "@reduxjs/toolkit";
 import { useAppDispatch } from "@/store/hooks";
 
 type ActionWithoutPayload = () => AnyAction;
 type ActionWithPayload<T> = (
-  payload: T,
+  payload: T
 ) => AnyAction | { payload: T; type: string };
 
 type HasPayload<X> = X extends ActionWithPayload<infer Y> ? Y : null;
 
-interface UseSyncDispatchPropsWithoutPayload<X extends ActionWithoutPayload> {
+type UseSyncDispatchPropsWithoutPayload<X extends ActionWithoutPayload> = {
   action: X;
   payload?: null;
-}
+  loadAction?: ActionCreatorWithoutPayload;
+};
 
-interface UseSyncDispatchPropsWithPayload<X extends ActionWithPayload<Y>, Y> {
+type UseSyncDispatchPropsWithPayload<X extends ActionWithPayload<Y>, Y> = {
   action: X;
   payload: Y;
-}
+  loadAction?: ActionCreatorWithoutPayload;
+};
 
 type UseSyncDispatchProps<X, Y> = X extends ActionWithoutPayload
   ? UseSyncDispatchPropsWithoutPayload<X>
@@ -28,21 +30,20 @@ type UseSyncDispatchProps<X, Y> = X extends ActionWithoutPayload
 export default function useSyncDispatch<
   X extends ActionWithoutPayload | ActionWithPayload<Y>,
   Y = HasPayload<X>,
->({ action, payload }: UseSyncDispatchProps<X, Y>) {
-  const [isMounted, setIsMounted] = useState(false);
+>({ action, payload, loadAction }: UseSyncDispatchProps<X, Y>) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (payload !== undefined && payload !== null) {
       dispatch(action(payload));
+
+      if (loadAction) {
+        dispatch(loadAction());
+      }
     } else {
       dispatch((action as ActionWithoutPayload)());
     }
-
-    setIsMounted(true);
-  }, [dispatch, action, payload]);
-
-  if (!isMounted) return null;
+  }, [dispatch, action, payload, loadAction]);
 
   return null;
 }

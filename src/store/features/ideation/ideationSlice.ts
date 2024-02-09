@@ -48,6 +48,7 @@ export interface IdeationData {
 
 interface IdeationState {
   loading: boolean;
+  editLoading: boolean;
   projectIdeas: IdeationData[];
   serverError: object;
 }
@@ -58,6 +59,7 @@ interface RemoveVoteActionPayload extends IdeationVoteProps {
 
 const initialState: IdeationState = {
   loading: false,
+  editLoading: false,
   projectIdeas: [],
   serverError: {},
 };
@@ -115,13 +117,15 @@ export const ideationSlice = createSlice({
       state.projectIdeas.push(action.payload as unknown as IdeationData);
       state.serverError = {};
     });
-    // builder.addCase(editIdeationThunk.pending, (state) => {
-    //   state.loading = true;
-    //   state.serverError = {};
-    // });
-    // builder.addCase(editIdeationThunk.fulfilled, (state) => {
-    //   state.serverError = {};
-    // });
+    builder.addCase(editIdeationThunk.pending, (state) => {
+      state.loading = true;
+      state.editLoading = true;
+      state.serverError = {};
+    });
+    builder.addCase(editIdeationThunk.fulfilled, (state) => {
+      state.editLoading = false;
+      state.serverError = {};
+    });
     builder.addCase(editIdeationThunk.rejected, (state, action) => {
       state.serverError = action.error;
     });

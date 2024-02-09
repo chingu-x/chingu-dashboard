@@ -3,11 +3,11 @@ import { SetStateAction, useCallback, useState, Dispatch } from "react";
 import { useAppDispatch } from "@/store/hooks";
 
 type AsyncThunkActionCreator<R, T> = (
-  args: T
+  args: T,
 ) => AsyncThunkAction<R, T, object>;
 
 export default function useThunk<R, T>(
-  thunk: AsyncThunkActionCreator<R, T>
+  thunk: AsyncThunkActionCreator<R, T>,
 ): [
   AsyncThunkActionCreator<R, T>,
   boolean,
@@ -29,7 +29,7 @@ export default function useThunk<R, T>(
         })
         .finally(() => setIsLoading(false));
     },
-    [dispatch, thunk]
+    [dispatch, thunk],
   ) as unknown as AsyncThunkActionCreator<R, T>;
 
   return [runThunk, isLoading, setIsLoading, error];

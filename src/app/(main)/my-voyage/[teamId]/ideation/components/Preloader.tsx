@@ -4,6 +4,7 @@ import useSyncDispatch from "@/hooks/useSyncDispatch";
 import {
   IdeationData,
   fetchIdeations,
+  setLoadingFalse,
 } from "@/store/features/ideation/ideationSlice";
 
 interface PreloaderProps {
@@ -13,6 +14,7 @@ interface PreloaderProps {
 function Preloader({ payload }: PreloaderProps) {
   useSyncDispatch<typeof fetchIdeations>({
     action: fetchIdeations,
+    loadAction: setLoadingFalse,
     payload,
   });
 

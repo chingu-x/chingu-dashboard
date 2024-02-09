@@ -7,7 +7,6 @@ import {
   ProjectIdeaVotes,
   addVote,
   removeVote,
-  setLoadingFalse,
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
@@ -26,13 +25,9 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
     null
   );
   const { id } = useAppSelector((state) => state.user);
-  const { loading, projectIdeas } = useAppSelector((state) => state.ideation);
+  const { loading } = useAppSelector((state) => state.ideation);
   const dispatch = useAppDispatch();
-  const [addVoteAction, addVoteLoading, , addVoteError] = useThunk(addVote);
-
-  useEffect(() => {
-    dispatch(setLoadingFalse());
-  }, [projectIdeas]);
+  const [addVoteAction, addVoteLoading, ,] = useThunk(addVote);
 
   function handleVote() {
     if (currentUserVoted) {
