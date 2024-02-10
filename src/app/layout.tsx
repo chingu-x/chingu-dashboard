@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import StoreProvider from "@/components/StoreProvider";
 import ThemeProvider from "@/components/ThemeProvider";
 import ToastProvider from "@/components/ToastProvider";
-import AuthProvider from "@/components/AuthProvider";
 import ModalProvider from "@/components/ModalProvider";
 
 export const metadata: Metadata = {
@@ -33,7 +32,6 @@ export default function RootLayout({
       <body className="overflow-hidden">
         <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
           <StoreProvider>
-            <AuthProvider />
             <ToastProvider />
             <ModalProvider />
             {children}

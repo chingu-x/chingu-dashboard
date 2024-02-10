@@ -1,9 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getCookie } from "@/utils/getCookie";
-import { DELETE, GET, PATCH, POST } from "@/utils/requests";
+import { DELETE, PATCH, POST } from "@/utils/requests";
 
 interface IdeationProps {
   teamId: number;
@@ -51,17 +50,6 @@ export interface IdeationVoteResponse extends IdeationResponse {
 
 export interface DeleteIdeationProps extends IdeationProps {}
 
-export async function fetchProjectIdeas({
-  teamId,
-}: FetchIdeationsProps): Promise<IdeationData[]> {
-  const token = getCookie();
-  return await GET<IdeationData[]>(
-    `api/v1/voyages/${teamId}/ideations`,
-    token,
-    "force-cache",
-  );
-}
-
 export async function addIdeation({
   teamId,
   title,
@@ -74,7 +62,7 @@ export async function addIdeation({
     `api/v1/voyages/${teamId}/ideations`,
     token,
     "default",
-    { title, description, vision },
+    { title, description, vision }
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -96,7 +84,7 @@ export async function editIdeation({
       `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
-      { title, description, vision },
+      { title, description, vision }
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -116,7 +104,7 @@ export async function deleteIdeation({
   const data = await DELETE<DeleteIdeationResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}`,
     token,
-    "default",
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -133,7 +121,7 @@ export async function addIdeationVote({
   const data = await POST<undefined, IdeationVoteResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
     token,
-    "default",
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -160,7 +148,7 @@ export async function removeIdeationVote({
         teamId,
         ideationId,
       }),
-    },
+    }
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);

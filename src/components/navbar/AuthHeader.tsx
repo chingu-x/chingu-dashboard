@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { getUser, serverSignIn } from "@/app/(auth)/authService";
+import { serverSignIn } from "@/app/(auth)/authService";
 import { clientSignIn } from "@/store/features/auth/authSlice";
-import { getUserState } from "@/store/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
@@ -20,11 +19,10 @@ export default function AuthHeader() {
 
   async function handleClick() {
     await serverSignIn();
-    const user = await getUser();
-    if (user) {
-      dispatch(clientSignIn());
-      dispatch(getUserState(user));
-    }
+    // if (user) {
+    dispatch(clientSignIn());
+    // dispatch(getUserState(user));
+    // }
   }
 
   const toggleMenu = () => {

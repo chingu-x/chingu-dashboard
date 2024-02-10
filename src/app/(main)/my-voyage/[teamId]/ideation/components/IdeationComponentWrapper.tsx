@@ -1,18 +1,41 @@
 import { redirect } from "next/navigation";
 import IdeationContainer from "./IdeationContainer";
 import Preloader from "./Preloader";
-import { getUser } from "@/app/(auth)/authService";
-import { fetchProjectIdeas } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import { getUser } from "@/utils/getUser";
+import { FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
+import { getCookie } from "@/utils/getCookie";
+import { GET } from "@/utils/requests";
 // import { ideation } from "./fixtures/ideation";
+
+export async function fetchProjectIdeas({
+  teamId,
+}: FetchIdeationsProps): Promise<IdeationData[]> {
+  const token = getCookie();
+  return await GET<IdeationData[]>(
+    `api/v1/voyages/${teamId}/ideation`,
+    token,
+    "force-cache"
+  );
+}
 
 export default async function IdeationComponentWrapper() {
   let projectIdeas = [] as IdeationData[];
-  const user = await getUser();
+  let user;
+  let currentVoyageTeam;
 
-  const currentVoyageTeam = user.voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-  );
+  try {
+    user = await getUser();
+    currentVoyageTeam = user.voyageTeamMembers.find(
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
+    );
+  } catch (error) {
+    if ((error as Error).toString().includes("401")) {
+      redirect("/");
+    }
+
+    throw error;
+  }
 
   const teamId = currentVoyageTeam?.voyageTeamId;
 

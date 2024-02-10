@@ -66,22 +66,22 @@ const initialState: IdeationState = {
 
 export const addNewIdeation = createAsyncThunk(
   "ideation/addIdeation",
-  async (payload: AddIdeationProps) => await addIdeation(payload)
+  async (payload: AddIdeationProps) => await addIdeation(payload),
 );
 
 export const editIdeationThunk = createAsyncThunk(
   "ideation/editIdeation",
-  async (payload: EditIdeationProps) => await editIdeation(payload)
+  async (payload: EditIdeationProps) => await editIdeation(payload),
 );
 
 export const deleteIdeationThunk = createAsyncThunk(
   "ideation/deleteIdeation",
-  async (payload: DeleteIdeationProps) => await deleteIdeation(payload)
+  async (payload: DeleteIdeationProps) => await deleteIdeation(payload),
 );
 
 export const addVote = createAsyncThunk(
   "ideation/addVote",
-  async (payload: IdeationVoteProps) => await addIdeationVote(payload)
+  async (payload: IdeationVoteProps) => await addIdeationVote(payload),
 );
 
 export const removeVote = createAsyncThunk(
@@ -93,7 +93,7 @@ export const removeVote = createAsyncThunk(
     const userId = id;
 
     return { ...res, userId };
-  }
+  },
 );
 
 export const ideationSlice = createSlice({
@@ -163,7 +163,7 @@ export const ideationSlice = createSlice({
         if (projectIdea.id === action.payload.projectIdeaId) {
           const updatedProjectIdeaVotes = projectIdea.projectIdeaVotes.filter(
             (projectIdea) =>
-              projectIdea.votedBy.member.id !== action.payload.userId
+              projectIdea.votedBy.member.id !== action.payload.userId,
           );
 
           projectIdea.projectIdeaVotes = updatedProjectIdeaVotes;
