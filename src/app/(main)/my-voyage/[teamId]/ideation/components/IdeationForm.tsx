@@ -46,7 +46,7 @@ export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
   const { loading, projectIdeas, editLoading } = useAppSelector(
-    (state) => state.ideation
+    (state) => state.ideation,
   );
   const teamId = +params.teamId;
   const dispatch = useAppDispatch();
@@ -116,7 +116,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId
+        (project) => project.id === +params.ideationId,
       );
 
       setIdeationData(ideation);
