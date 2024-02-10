@@ -35,6 +35,7 @@ module.exports = {
         "base-200": "rgb(var(--base-200) / <alpha-value>)",
         "base-300": "rgb(var(--base-300) / <alpha-value>)",
         "base-content": "rgb(var(--base-content) / <alpha-value>)",
+        overlay: "var(--overlay)",
       },
     },
   },
