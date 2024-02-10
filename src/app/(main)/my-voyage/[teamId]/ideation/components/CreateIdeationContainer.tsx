@@ -12,7 +12,7 @@ function CreateIdeationContainer() {
   const { teamId } = useParams<{ teamId: string }>();
 
   return (
-    <div className="grid grid-cols-[160px_1fr] 3xl:grid-cols-[200px_1fr_200px] items-center justify-items-center gap-y-7 3xl:gap-x-[110px] 2xl:gap-x-20 gap-x-10 w-full p-10 bg-base-100 rounded-2xl">
+    <div className="grid grid-cols-[180px_1fr] 3xl:grid-cols-[200px_1fr_200px] items-center justify-items-center gap-y-7 3xl:gap-x-[110px] 2xl:gap-x-20 gap-x-10 w-full p-10 bg-base-100 rounded-2xl">
       <VoteDescriptionCard />
       <section className="w-full row-span-2 gap-y-7 3xl:row-auto">
         <h2 className="text-xl font-semibold text-base-300">

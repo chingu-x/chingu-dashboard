@@ -38,7 +38,10 @@ function ContributionCard({
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
         <Badge data={contributed_by.member} />
         {ownVote ? (
-          <Link href={`/my-voyage/${teamId}/ideation/${projectIdeaId}/edit`}>
+          <Link
+            href={`/my-voyage/${teamId}/ideation/${projectIdeaId}/edit`}
+            className="w-full"
+          >
             <Button variant="secondary" className="w-full">
               Edit Project
             </Button>
