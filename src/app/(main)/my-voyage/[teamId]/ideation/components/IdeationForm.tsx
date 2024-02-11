@@ -20,6 +20,7 @@ import {
 import Spinner from "@/components/Spinner";
 import { type EditIdeationProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import useThunk from "@/hooks/useThunk";
+import { persistor } from "@/store/store";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -46,7 +47,7 @@ export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
   const { loading, projectIdeas, editLoading } = useAppSelector(
-    (state) => state.ideation,
+    (state) => state.ideation
   );
   const teamId = +params.teamId;
   const dispatch = useAppDispatch();
@@ -116,7 +117,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
@@ -125,6 +126,13 @@ export default function IdeationForm() {
   }, [params.ideationId, projectIdeas]);
 
   // TODO: clear persisted redux state when component unmounts
+  useEffect(
+    () => () => {
+      void persistor.purge();
+      console.log("unmounted");
+    },
+    []
+  );
 
   useEffect(() => {
     reset({
