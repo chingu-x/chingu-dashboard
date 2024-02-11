@@ -9,24 +9,13 @@ interface IdeationProps {
   ideationId: number;
 }
 
-type AddIdeationType = Pick<IdeationProps, "teamId">;
-
-export interface AddIdeationProps extends AddIdeationType, IdeationBody {}
-
 interface IdeationBody {
   title: string;
   description: string;
   vision: string;
 }
 
-interface AddIdeationBody extends IdeationBody {}
-interface EditIdeationBody extends Partial<AddIdeationBody> {}
-
-export interface EditIdeationProps extends EditIdeationBody, IdeationProps {}
-
-export interface IdeationVoteProps extends IdeationProps {}
-
-export type FetchIdeationsProps = Pick<IdeationProps, "teamId">;
+type AddIdeationType = Pick<IdeationProps, "teamId">;
 
 interface IdeationResponse {
   id: number;
@@ -35,20 +24,27 @@ interface IdeationResponse {
   updatedAt: Date;
 }
 
+interface AddIdeationBody extends IdeationBody {}
+interface EditIdeationBody extends Partial<AddIdeationBody> {}
+
+export interface AddIdeationProps extends AddIdeationType, IdeationBody {}
+export interface EditIdeationProps extends EditIdeationBody, IdeationProps {}
+export interface DeleteIdeationProps extends IdeationProps {}
+
+export interface IdeationVoteProps extends IdeationProps {}
+export type FetchIdeationsProps = Pick<IdeationProps, "teamId">;
+
 export interface AddIdeationResponse extends IdeationResponse {
   title: string;
   description: string;
   vision: string;
 }
-
 export interface EditIdeationResponse extends AddIdeationResponse {}
 export interface DeleteIdeationResponse extends AddIdeationResponse {}
 
 export interface IdeationVoteResponse extends IdeationResponse {
   projectIdeaId: number;
 }
-
-export interface DeleteIdeationProps extends IdeationProps {}
 
 export async function addIdeation({
   teamId,
@@ -62,7 +58,7 @@ export async function addIdeation({
     `api/v1/voyages/${teamId}/ideations`,
     token,
     "default",
-    { title, description, vision },
+    { title, description, vision }
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -84,7 +80,7 @@ export async function editIdeation({
       `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
-      { title, description, vision },
+      { title, description, vision }
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -104,7 +100,7 @@ export async function deleteIdeation({
   const data = await DELETE<DeleteIdeationResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}`,
     token,
-    "default",
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -121,7 +117,7 @@ export async function addIdeationVote({
   const data = await POST<undefined, IdeationVoteResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
     token,
-    "default",
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -148,7 +144,7 @@ export async function removeIdeationVote({
         teamId,
         ideationId,
       }),
-    },
+    }
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
