@@ -131,23 +131,13 @@ export async function removeIdeationVote({
 }: IdeationVoteProps) {
   const token = getCookie();
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
-    {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Cookie: `access_token=${token}`,
-      },
-      body: JSON.stringify({
-        teamId,
-        ideationId,
-      }),
-    }
+  const data = await DELETE<DeleteIdeationResponse>(
+    `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+    token,
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
 
-  return (await res.json()) as IdeationVoteResponse;
+  return data;
 }
