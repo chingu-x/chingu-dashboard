@@ -8,7 +8,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { editIdeation } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 type AsyncThunkActionCreator<R, T> = (
-  args: T
+  args: T,
 ) => AsyncThunkAction<R, T, object>;
 
 type ThunkHookResult<R, T> = {
@@ -31,7 +31,7 @@ export default function useAction(action: any) {
 
       if (data.error) setError(data.error);
     },
-    [action]
+    [action],
   );
 
   return { runAction, isLoading, setIsLoading, error, setError };

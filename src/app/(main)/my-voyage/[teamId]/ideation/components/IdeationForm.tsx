@@ -64,7 +64,6 @@ export default function IdeationForm() {
     runAction: editIdeationAction,
     isLoading: editLoading,
     error: editError,
-    setError: setEditError,
   } = useAction(editIdeation);
   const {
     runThunk: deleteThunk,
@@ -102,31 +101,21 @@ export default function IdeationForm() {
         }
       }
 
-      // const res = await editIdeation(filteredData);
-      // console.log(res);
-
-      // editThunk(filteredData);
-
-      // await dispatch(editIdeationThunk(filteredData));
       await editIdeationAction(filteredData);
+    } else {
+      const payload = { ...data, teamId };
+      await dispatch(addNewIdeation(payload));
     }
-    // else {
-    //   const payload = { ...data, teamId };
-    //   await dispatch(addNewIdeation(payload));
-    // }
 
-    // if (!editError) {
-    //   router.replace(`/my-voyage/${teamId}/ideation`);
-    // }
-
-    // dispatch(onOpen({ type: "error" }));
+    if (!editError) {
+      router.replace(`/my-voyage/${teamId}/ideation`);
+    }
   };
 
   function handleDelete() {
     const ideationId = +params.ideationId;
 
     deleteThunk({ teamId, ideationId });
-    // await dispatch(deleteIdeationThunk({ teamId, ideationId }));
 
     router.replace(`/my-voyage/${teamId}/ideation`);
   }
@@ -146,7 +135,7 @@ export default function IdeationForm() {
     if (editError) {
       dispatch(onOpen({ type: "error" }));
     }
-  }, [dispatch, editError, router, teamId]);
+  }, [dispatch, editError]);
 
   useEffect(() => {
     reset({
