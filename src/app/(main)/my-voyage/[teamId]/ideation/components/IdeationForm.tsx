@@ -24,6 +24,7 @@ import {
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import useThunk from "@/hooks/useThunk";
 import useAction from "@/hooks/useAction";
+import { onOpen } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -49,7 +50,7 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
-  const { loading, projectIdeas } = useAppSelector((state) => state.ideation);
+  const { projectIdeas } = useAppSelector((state) => state.ideation);
   const teamId = +params.teamId;
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -63,6 +64,7 @@ export default function IdeationForm() {
     runAction: editIdeationAction,
     isLoading: editLoading,
     error: editError,
+    setError: setEditError,
   } = useAction(editIdeation);
   const {
     runThunk: deleteThunk,
@@ -107,14 +109,17 @@ export default function IdeationForm() {
 
       // await dispatch(editIdeationThunk(filteredData));
       await editIdeationAction(filteredData);
-
-      console.log(editError);
-    } else {
-      const payload = { ...data, teamId };
-      await dispatch(addNewIdeation(payload));
     }
+    // else {
+    //   const payload = { ...data, teamId };
+    //   await dispatch(addNewIdeation(payload));
+    // }
 
-    // router.replace(`/my-voyage/${teamId}/ideation`);
+    // if (!editError) {
+    //   router.replace(`/my-voyage/${teamId}/ideation`);
+    // }
+
+    // dispatch(onOpen({ type: "error" }));
   };
 
   function handleDelete() {
@@ -138,6 +143,12 @@ export default function IdeationForm() {
   }, [params.ideationId, projectIdeas]);
 
   useEffect(() => {
+    if (editError) {
+      dispatch(onOpen({ type: "error" }));
+    }
+  }, [dispatch, editError, router, teamId]);
+
+  useEffect(() => {
     reset({
       title: ideationData?.title,
       description: ideationData?.description,
@@ -149,8 +160,6 @@ export default function IdeationForm() {
     if (editLoading) {
       return <Spinner />;
     }
-
-    // if (editError) return editError;
 
     return editMode ? "Edit Project Idea" : "Add Project Idea";
   }
@@ -211,7 +220,7 @@ export default function IdeationForm() {
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid || loading}
+          disabled={!isDirty || !isValid || editLoading}
           size="lg"
           variant="primary"
         >
