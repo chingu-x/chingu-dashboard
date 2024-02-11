@@ -18,7 +18,7 @@ export default async function Layout({ children }: LayoutProps) {
 
   return (
     <div className="flex flex-col w-screen h-screen">
-       {user && <AuthProvider user={user} />}
+      {user && <AuthProvider user={user} />}
       <Navbar>
         <>
           <ModeToggle />
