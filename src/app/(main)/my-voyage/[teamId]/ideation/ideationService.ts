@@ -131,7 +131,7 @@ export async function removeIdeationVote({
 }: IdeationVoteProps) {
   const token = getCookie();
 
-  const data = await DELETE<DeleteIdeationResponse>(
+  const data = await DELETE<IdeationVoteResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
     token,
     "default"
