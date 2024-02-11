@@ -13,7 +13,7 @@ export async function fetchProjectIdeas({
 }: FetchIdeationsProps): Promise<IdeationData[]> {
   const token = getCookie();
   return await GET<IdeationData[]>(
-    `api/v1/voyages/${teamId}/ideation`,
+    `api/v1/voyages/${teamId}/ideations`,
     token,
     "force-cache"
   );
