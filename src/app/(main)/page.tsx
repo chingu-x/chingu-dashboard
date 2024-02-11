@@ -1,8 +1,9 @@
 // replace with dashboard page when that's completed
 
 import Image from 'next/image';
-import Button from '@/components/Button';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
+import Button from '@/components/Button';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -17,22 +18,42 @@ export default function Home() {
             </p>
           </div>
           <div>
-            <Button variant="neutral" className="w-full justify-between">
-              🚀 Understand the Voyage Process
-              <ArrowRightIcon className="w-5 h-5" />
-            </Button>
-            <Button variant="neutral" className="w-full justify-between">
-              📜 Review the Chingu Agile Methodology
-              <ArrowRightIcon className="w-5 h-5" />
-            </Button>
-            <Button variant="neutral" className="w-full justify-between">
-              🤔 Start thinking about project ideas & the technical stack
-              <ArrowRightIcon className="w-5 h-5" />
-            </Button>
-            <Button variant="neutral" className="w-full justify-between">
-              🙋 Do you have questions about Chingu or the Voyage process?
-              <ArrowRightIcon className="w-5 h-5" />
-            </Button>
+            <Link
+              href="https://github.com/chingu-voyages/voyage-template/issues/11"
+              target="_blank"
+            >
+              <Button variant="neutral" className="w-full justify-between">
+                🚀 Understand the Voyage Process
+                <ArrowRightIcon className="w-5 h-5" />
+              </Button>
+            </Link>
+            <Link
+              href="https://github.com/chingu-voyages/voyage-template/issues/2"
+              target="_blank"
+            >
+              <Button variant="neutral" className="w-full justify-between">
+                📜 Review the Chingu Agile Methodology
+                <ArrowRightIcon className="w-5 h-5" />
+              </Button>
+            </Link>
+            <Link
+              href="https://github.com/chingu-voyages/voyage-template/issues/3"
+              target="_blank"
+            >
+              <Button variant="neutral" className="w-full justify-between">
+                🤔 Start thinking about project ideas & the technical stack
+                <ArrowRightIcon className="w-5 h-5" />
+              </Button>
+            </Link>
+            <Link
+              href="https://github.com/chingu-voyages/voyage-template/issues/4"
+              target="_blank"
+            >
+              <Button variant="neutral" className="w-full justify-between">
+                🙋 Do you have questions about Chingu or the Voyage process?
+                <ArrowRightIcon className="w-5 h-5" />
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="bg-base-200 rounded-2xl py-6 flex flex-col gap-y-4">
@@ -57,7 +78,7 @@ export default function Home() {
         </div>
         <div
           data-hide-on-theme="light"
-          className="flex h-full w-full relative shrink-0"
+          className="flex h-[437px] w-full relative shrink-0"
         >
           <Image
             src="/img/pre_voyage_dark.png"
