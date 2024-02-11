@@ -42,7 +42,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const textAreaRef = useRef<ElementRef<"textarea"> | null>(null);
 
-    // Set Textarea height to fit the placeholder content
+    // Set Textarea height to fit the content on first load
     useEffect(() => {
       // The 2 corresponds to the 2 1px borders (top and bottom):
       if (textAreaRef !== null && textAreaRef.current !== null) {
@@ -51,7 +51,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           0,
         )}px`;
       }
-    }, [textAreaRef]);
+    }, [textAreaRef?.current?.innerHTML]);
 
     function handleOnChange(e: ChangeEvent<HTMLTextAreaElement>) {
       // Make Textarea expand or shrink vertically to fit the content
