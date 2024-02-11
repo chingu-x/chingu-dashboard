@@ -26,13 +26,10 @@ export default function useAction(action: any) {
   const runAction = useCallback(
     async (arg: any) => {
       setIsLoading(true);
-      try {
-        const data = await action(arg);
 
-        if (data.error) setError(data.error);
-      } finally {
-        setIsLoading(false);
-      }
+      const data = await action(arg);
+
+      if (data.error) setError(data.error);
     },
     [action]
   );
