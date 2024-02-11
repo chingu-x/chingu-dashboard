@@ -18,9 +18,12 @@ import {
   deleteIdeationThunk,
 } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
-import { type EditIdeationProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import {
+  editIdeation,
+  type EditIdeationProps,
+} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import useThunk from "@/hooks/useThunk";
-import { persistor } from "@/store/store";
+import useAction from "@/hooks/useAction";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -46,9 +49,7 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
-  const { loading, projectIdeas, editLoading } = useAppSelector(
-    (state) => state.ideation
-  );
+  const { loading, projectIdeas } = useAppSelector((state) => state.ideation);
   const teamId = +params.teamId;
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -58,6 +59,11 @@ export default function IdeationForm() {
     // isLoading: editLoading,
     // error: editError,
   } = useThunk(editIdeationThunk);
+  const {
+    runAction: editIdeationAction,
+    isLoading: editLoading,
+    error: editError,
+  } = useAction(editIdeation);
   const {
     runThunk: deleteThunk,
     isLoading: deleteLoading,
@@ -94,15 +100,21 @@ export default function IdeationForm() {
         }
       }
 
+      // const res = await editIdeation(filteredData);
+      // console.log(res);
+
       // editThunk(filteredData);
 
-      await dispatch(editIdeationThunk(filteredData));
+      // await dispatch(editIdeationThunk(filteredData));
+      await editIdeationAction(filteredData);
+
+      console.log(editError);
     } else {
       const payload = { ...data, teamId };
       await dispatch(addNewIdeation(payload));
     }
 
-    router.replace(`/my-voyage/${teamId}/ideation`);
+    // router.replace(`/my-voyage/${teamId}/ideation`);
   };
 
   function handleDelete() {
@@ -125,15 +137,6 @@ export default function IdeationForm() {
     }
   }, [params.ideationId, projectIdeas]);
 
-  // TODO: clear persisted redux state when component unmounts
-  useEffect(
-    () => () => {
-      void persistor.purge();
-      console.log("unmounted");
-    },
-    []
-  );
-
   useEffect(() => {
     reset({
       title: ideationData?.title,
@@ -143,7 +146,7 @@ export default function IdeationForm() {
   }, [ideationData, reset]);
 
   function renderButtonContent() {
-    if (loading || editLoading) {
+    if (editLoading) {
       return <Spinner />;
     }
 
@@ -167,6 +170,7 @@ export default function IdeationForm() {
 
   return (
     <div className="flex flex-col items-center">
+      {editError}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-full max-w-[1000px] gap-y-10"

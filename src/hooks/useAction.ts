@@ -1,8 +1,11 @@
+/* eslint-disable */
+
 "use client";
 
 import { SerializedError, AsyncThunkAction } from "@reduxjs/toolkit";
 import { SetStateAction, useCallback, useState, Dispatch } from "react";
 import { useAppDispatch } from "@/store/hooks";
+import { editIdeation } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 type AsyncThunkActionCreator<R, T> = (
   args: T
@@ -16,26 +19,23 @@ type ThunkHookResult<R, T> = {
   setError: Dispatch<SetStateAction<string | undefined>>;
 };
 
-export default function useThunk<R, T>(
-  thunk: AsyncThunkActionCreator<R, T>
-): ThunkHookResult<R, T> {
+export default function useAction(action: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
-  const dispatch = useAppDispatch();
 
-  const runThunk = useCallback(
-    (arg: T) => {
+  const runAction = useCallback(
+    async (arg: any) => {
       setIsLoading(true);
-      dispatch(thunk(arg))
-        .unwrap()
-        .catch((err: SerializedError) => {
-          console.log(err.message);
-          setError(err.message);
-        })
-        .finally(() => setIsLoading(false));
-    },
-    [dispatch, thunk]
-  ) as unknown as AsyncThunkActionCreator<R, T>;
+      try {
+        const data = await action(arg);
 
-  return { runThunk, isLoading, setIsLoading, error, setError };
+        if (data.error) setError(data.error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [action]
+  );
+
+  return { runAction, isLoading, setIsLoading, error, setError };
 }
