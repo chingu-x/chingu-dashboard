@@ -73,7 +73,19 @@ export const addNewIdeation = createAsyncThunk(
 
 export const editIdeationThunk = createAsyncThunk(
   "ideation/editIdeation",
-  async (payload: EditIdeationProps) => await editIdeation(payload)
+  async (payload: EditIdeationProps) => {
+    await editIdeation(payload);
+    try {
+      const response = await editIdeation(payload);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      } else {
+        return "An unknown error occurred";
+      }
+    }
+  }
 );
 
 export const deleteIdeationThunk = createAsyncThunk(
@@ -113,7 +125,6 @@ export const ideationSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(PURGE, () => {
       void storage.removeItem("persist:root");
-      return initialState;
     });
     builder.addCase(addNewIdeation.pending, (state) => {
       state.loading = true;
