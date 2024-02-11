@@ -54,6 +54,7 @@ export default function IdeationForm() {
   const teamId = +params.teamId;
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
   const {
     // runThunk: editThunk,
@@ -101,14 +102,11 @@ export default function IdeationForm() {
         }
       }
 
+      setIsSubmitted(true);
       await editIdeationAction(filteredData);
     } else {
       const payload = { ...data, teamId };
       await dispatch(addNewIdeation(payload));
-    }
-
-    if (!editError) {
-      router.replace(`/my-voyage/${teamId}/ideation`);
     }
   };
 
@@ -132,10 +130,20 @@ export default function IdeationForm() {
   }, [params.ideationId, projectIdeas]);
 
   useEffect(() => {
-    if (editError) {
-      dispatch(onOpen({ type: "error" }));
+    if (isSubmitted) {
+      {
+        if (editError) {
+          {
+            dispatch(onOpen({ type: "error" }));
+          }
+        } else {
+          {
+            // router.replace(`/my-voyage/${teamId}/ideation`);
+          }
+        }
+      }
     }
-  }, [dispatch, editError]);
+  }, [dispatch, editError, router, teamId, editLoading, isSubmitted]);
 
   useEffect(() => {
     reset({
