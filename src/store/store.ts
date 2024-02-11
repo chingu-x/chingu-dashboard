@@ -1,12 +1,29 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import counterReducer from "./features/counter/counterSlice";
 import modalReducer from "./features/modal/modalSlice";
 import toastReducer from "./features/toast/toastSlice";
 import authReducer from "./features/auth/authSlice";
 import ideationReducer from "./features/ideation/ideationSlice";
 import userReducer from "./features/user/userSlice";
+
+const createNoopStorage = () => ({
+  getItem() {
+    return Promise.resolve(null);
+  },
+  setItem(_key: string, value: string) {
+    return Promise.resolve(value);
+  },
+  removeItem() {
+    return Promise.resolve();
+  },
+});
+
+const storage =
+  typeof window !== "undefined"
+    ? createWebStorage("local")
+    : createNoopStorage();
 
 // todo: only persist projectIdea state
 const persistConfig = {
@@ -28,6 +45,11 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: (MiddlewareArray) =>
+    MiddlewareArray({
+      serializableCheck: false,
+      thunk: true,
+    }),
 });
 
 export const persistor = persistStore(store);

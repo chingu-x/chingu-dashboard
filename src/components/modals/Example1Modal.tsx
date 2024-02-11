@@ -68,7 +68,7 @@ export default function Example1Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      }),
+      })
     );
   };
 
