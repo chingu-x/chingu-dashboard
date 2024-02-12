@@ -20,22 +20,22 @@ interface CommonTextInputProps
 type ConditionalTextInputProps =
   | {
       inputGroup: "left";
-      inputGroupContent: JSX.Element;
+      inputGroupIcon: JSX.Element;
       inputGroupAction?: never;
     }
   | {
       inputGroup: "right";
-      inputGroupContent: JSX.Element | string;
-      inputGroupAction: () => void;
+      inputGroupIcon: JSX.Element;
+      inputGroupAction?: () => void;
     }
   | {
       inputGroup?: never;
-      inputGroupContent?: undefined;
+      inputGroupIcon?: undefined;
       inputGroupAction?: never;
     }
   | {
       inputGroup?: undefined;
-      inputGroupContent?: never;
+      inputGroupIcon?: never;
       inputGroupAction?: never;
     };
 
@@ -51,12 +51,11 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       maxLength,
       errorMessage,
       inputGroup,
-      inputGroupContent,
-      inputGroupAction,
+      inputGroupIcon,
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
 
@@ -84,9 +83,9 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               "transition border-2 peer w-full outline-none rounded-lg px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus disabled:cursor-not-allowed border-neutral/40 hover:border-neutral-focus focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:hover:border-neutral/40",
               errorMessage &&
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
-              inputGroup === "left" && inputGroupContent && "pl-[56px]",
-              inputGroup === "right" && inputGroupContent && "pr-[56px] ",
-              className,
+              inputGroup === "left" && inputGroupIcon && "pl-[56px]",
+              inputGroup === "right" && inputGroupIcon && "pr-[56px] ",
+              className
             )}
             ref={ref}
             {...props}
@@ -97,27 +96,16 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               handleOnChange(e);
             }}
           />
-          {inputGroup === "left" && inputGroupContent && (
+          {inputGroup && inputGroupIcon && (
             <div
               className={cn(
-                "left-[2px] rounded-l-md flex justify-center items-center top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5",
+                "top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 peer-hover:[&>*]:text-base-200 peer-focus-visible:[&>*]:text-base-200 peer-disabled:peer-hover:[&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute peer-disabled:peer-focus-visible:[&>*]:text-neutral [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5",
+                inputGroup === "left" && "left-[2px] rounded-l-md",
+                inputGroup === "right" && "right-[2px] rounded-r-md"
               )}
             >
-              {inputGroupContent}
+              {inputGroupIcon}
             </div>
-          )}
-          {inputGroup === "right" && inputGroupContent && (
-            <button
-              type="button"
-              onClick={inputGroupAction}
-              className={cn(
-                "right-[2px] rounded-r-md flex justify-center items-center top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5",
-                typeof inputGroupContent === "string" &&
-                  "text-base p-[10px] text-base-200 font-semibold",
-              )}
-            >
-              {inputGroupContent}
-            </button>
           )}
         </div>
         <FieldMessage
@@ -127,7 +115,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         />
       </div>
     );
-  },
+  }
 );
 
 TextInput.displayName = "TextInput";

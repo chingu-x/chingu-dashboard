@@ -36,17 +36,12 @@ const meta = {
     inputGroup: {
       description:
         "Choose inputGroup (if `inputGroupIcon` is provided, becomes `required`).",
-      options: ["left", "right", undefined],
     },
-    inputGroupContent: {
+    inputGroupIcon: {
       description:
         "Provide an icon for an input group (if `inputGroup` is provided, becomes `required`).",
       control: { type: "boolean" },
       mapping: { false: undefined, true: <EnvelopeIcon /> },
-    },
-    inputGroupAction: {
-      description: "inputGroupAction function",
-      control: "function",
     },
   },
 } satisfies Meta<typeof TextInput>;
@@ -103,26 +98,15 @@ export const LeftInputGroup = {
   args: {
     ...BaseTemplate.args,
     inputGroup: "left",
-    inputGroupContent: <EnvelopeIcon />,
+    inputGroupIcon: <EnvelopeIcon />,
   },
 };
 
-export const RightInputGroupWuthIcon = {
+export const RightInputGroup = {
   ...BaseTemplate,
   args: {
     ...BaseTemplate.args,
     inputGroup: "right",
-    inputGroupContent: <EnvelopeIcon />,
-    inputGroupAction: () => {},
-  },
-};
-
-export const RightInputGroupWithText = {
-  ...BaseTemplate,
-  args: {
-    ...BaseTemplate.args,
-    inputGroup: "right",
-    inputGroupContent: "Save",
-    inputGroupAction: () => {},
+    inputGroupIcon: <EnvelopeIcon />,
   },
 };
