@@ -4,6 +4,10 @@ import { revalidatePath } from "next/cache";
 import { getCookie } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 
+export interface AppError {
+  error: string;
+}
+
 interface IdeationProps {
   teamId: number;
   ideationId: number;
@@ -72,7 +76,7 @@ export async function editIdeation({
   title,
   description,
   vision,
-}: EditIdeationProps): Promise<EditIdeationResponse | { error: string }> {
+}: EditIdeationProps): Promise<EditIdeationResponse | AppError> {
   const token = getCookie();
 
   try {
