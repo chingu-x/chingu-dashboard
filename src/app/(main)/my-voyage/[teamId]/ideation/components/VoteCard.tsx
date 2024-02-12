@@ -27,7 +27,7 @@ interface VoteCardProps {
 
 function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
-    null
+    null,
   );
   const { id } = useAppSelector((state) => state.user);
   const { loading } = useAppSelector((state) => state.ideation);
@@ -73,14 +73,14 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
           }
 
           setAddIdeationVoteLoading(false);
-        }
+        },
       );
     }
   }
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users]
+    [users],
   );
 
   function handleClose() {

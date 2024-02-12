@@ -14,7 +14,7 @@ interface UseActionResult<T, X> {
 }
 
 export default function useAction<T, X>(
-  action: ActionType<T, X>
+  action: ActionType<T, X>,
 ): UseActionResult<T, X> {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -29,7 +29,7 @@ export default function useAction<T, X>(
 
       return data;
     },
-    [action]
+    [action],
   );
 
   return { runAction, isLoading, setIsLoading, error, setError };

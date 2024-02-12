@@ -1,7 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import counterReducer from "./features/counter/counterSlice";
 import modalReducer from "./features/modal/modalSlice";
 import toastReducer from "./features/toast/toastSlice";
 import authReducer from "./features/auth/authSlice";
@@ -32,7 +31,6 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  counter: counterReducer,
   modal: modalReducer,
   toast: toastReducer,
   auth: authReducer,
