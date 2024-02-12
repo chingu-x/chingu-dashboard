@@ -109,16 +109,6 @@ export default function IdeationForm() {
       } else {
         router.push(`/my-voyage/${teamId}/ideation`);
       }
-
-      // await editIdeationAction(filteredData).then((res) => {
-      //   if ((res as AppError).error) {
-      //     setError((res as AppError).error);
-      //     setIsOpen(true);
-      //     setEditIdeationLoading(false);
-      //   } else {
-      //     router.push(`/my-voyage/${teamId}/ideation`);
-      //   }
-      // });
     } else {
       const payload = { ...data, teamId };
       await addIdeationAction(payload).then((res) => {
