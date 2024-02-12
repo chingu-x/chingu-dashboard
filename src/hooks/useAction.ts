@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { AppError } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import { AppError } from "@/types/types";
 
 type ActionType<T, X> = (arg: T) => Promise<X | AppError>;
 
@@ -14,7 +14,7 @@ interface UseActionResult<T, X> {
 }
 
 export default function useAction<T, X>(
-  action: ActionType<T, X>,
+  action: ActionType<T, X>
 ): UseActionResult<T, X> {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -29,7 +29,7 @@ export default function useAction<T, X>(
 
       return data;
     },
-    [action],
+    [action]
   );
 
   return { runAction, isLoading, setIsLoading, error, setError };
