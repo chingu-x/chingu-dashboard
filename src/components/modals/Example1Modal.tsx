@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TrashIcon } from "@heroicons/react/20/solid";
 
-import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/Button";
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
@@ -93,27 +92,6 @@ export default function Example1Modal() {
               label="title"
               placeholder="Enter you voyage project idea"
               maxLength={30}
-              {...register("title")}
-              errorMessage={errors?.title?.message}
-            />
-            <TextInput
-              id="title"
-              label="title"
-              placeholder="Enter you voyage project idea"
-              maxLength={30}
-              inputGroup="left"
-              inputGroupIcon={<EnvelopeIcon />}
-              {...register("title")}
-              errorMessage={errors?.title?.message}
-            />
-            <TextInput
-              id="title"
-              label="title"
-              placeholder="Enter you voyage project idea"
-              maxLength={30}
-              inputGroup="right"
-              inputGroupIcon={<EnvelopeIcon />}
-              inputGroupAction={() => console.log("gfgf")}
               {...register("title")}
               errorMessage={errors?.title?.message}
             />
