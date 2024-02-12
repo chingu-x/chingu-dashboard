@@ -5,7 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import Button from "@/components/Button";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
 
@@ -69,30 +70,14 @@ export default function Example2Modal() {
             placeholder="What is your tech stack suggestion?"
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
+            inputGroup="right"
+            inputGroupIcon={<PlusCircleIcon />}
+            submitButtonText="Save"
+            submitButtonVariant="secondary"
+            resetAction={() => reset()}
             {...register("suggestion")}
             errorMessage={errors?.suggestion?.message}
           />
-        </div>
-        {/* BUTTONS */}
-        <div className="flex flex-1 gap-5 pt-8">
-          <Button
-            variant="neutral"
-            size="lg"
-            aria-label="go back"
-            onClick={() => {}}
-            className="w-full"
-          >
-            Go back
-          </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            aria-label="submit"
-            className="w-full"
-          >
-            Submit
-          </Button>
         </div>
       </form>
     </Modal>

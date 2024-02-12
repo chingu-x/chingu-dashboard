@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { EnvelopeIcon } from "@heroicons/react/24/outline";
+import { FormEvent } from "react";
+import { EnvelopeIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import TextInput from "@/components/inputs/TextInput";
 
 const meta = {
@@ -43,6 +44,15 @@ const meta = {
       control: { type: "boolean" },
       mapping: { false: undefined, true: <EnvelopeIcon /> },
     },
+    submitButtonVariant: {
+      description: "Choose a submit button variant.",
+    },
+    submitButtonText: {
+      description: "A submit button text.",
+    },
+    resetAction: {
+      description: "An action to clear an input.",
+    },
   },
 } satisfies Meta<typeof TextInput>;
 
@@ -50,6 +60,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const BaseTemplate: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: 300 }}>
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     id: "textInput",
     placeholder: "Placeholder",
@@ -102,11 +119,55 @@ export const LeftInputGroup = {
   },
 };
 
-export const RightInputGroup = {
-  ...BaseTemplate,
+const RightInputGroupTemplate: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: 300 }}>
+        <Story />
+      </div>
+    ),
+  ],
   args: {
-    ...BaseTemplate.args,
+    id: "textInput",
+    placeholder: "Placeholder",
     inputGroup: "right",
-    inputGroupIcon: <EnvelopeIcon />,
+    inputGroupIcon: <PlusCircleIcon />,
+    submitButtonVariant: "primary",
+    submitButtonText: "Save",
+    resetAction: () => {},
+  },
+  render: ({ ...args }) => {
+    const onSubmit = (e: FormEvent) => {
+      e.preventDefault();
+    };
+    return (
+      <form onSubmit={onSubmit}>
+        <TextInput {...args} />
+      </form>
+    );
+  },
+};
+
+export const RightInputGroupWithPrimarySubmitButton = {
+  ...RightInputGroupTemplate,
+  args: {
+    ...RightInputGroupTemplate.args,
+    submitButtonVariant: "primary",
+  },
+};
+
+export const RightInputGroupWithSecondarySubmitButton = {
+  ...RightInputGroupTemplate,
+  args: {
+    ...RightInputGroupTemplate.args,
+    submitButtonVariant: "secondary",
+  },
+};
+
+export const RightInputGroupWithNeutralSubmitButton = {
+  ...RightInputGroupTemplate,
+  args: {
+    ...RightInputGroupTemplate.args,
+    submitButtonVariant: "neutral",
   },
 };
