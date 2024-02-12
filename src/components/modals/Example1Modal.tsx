@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TrashIcon } from "@heroicons/react/20/solid";
 
+import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/Button";
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
@@ -17,7 +18,6 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
-import { EnvelopeIcon } from "@heroicons/react/24/outline";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -69,7 +69,7 @@ export default function Example1Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      })
+      }),
     );
   };
 
