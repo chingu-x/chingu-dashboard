@@ -21,6 +21,7 @@ import {
   editIdeation,
   type EditIdeationProps,
   addIdeation,
+  deleteIdeation,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import useAction from "@/hooks/useAction";
 import ErrorModal from "@/components/modals/ErrorModal";
@@ -60,14 +61,20 @@ export default function IdeationForm() {
   const [ideationData, setIdeationData] = useState<IdeationData>();
   const {
     runAction: editIdeationAction,
-    isLoading: editLoading,
-    setIsLoading: setEditLoading,
+    isLoading: editIdeationLoading,
+    setIsLoading: setEditIdeationLoading,
   } = useAction(editIdeation);
+
   const {
     runAction: addIdeationAction,
-    isLoading: addLoading,
-    setIsLoading: setAddLoading,
+    isLoading: addIdeationLoading,
+    setIsLoading: setAddIdeationLoading,
   } = useAction(addIdeation);
+  const {
+    runAction: deleteIdeationAction,
+    isLoading: deleteIdeationLoading,
+    setIsLoading: setDeleteIdeationLoading,
+  } = useAction(deleteIdeation);
 
   const {
     register,
@@ -102,7 +109,7 @@ export default function IdeationForm() {
         if ((res as AppError).error) {
           setError((res as AppError).error);
           setIsOpen(true);
-          setEditLoading(false);
+          setEditIdeationLoading(false);
         } else {
           router.push(`/my-voyage/${teamId}/ideation`);
         }
@@ -113,7 +120,7 @@ export default function IdeationForm() {
         if ((res as AppError).error) {
           setError((res as AppError).error);
           setIsOpen(true);
-          setAddLoading(false);
+          setAddIdeationLoading(false);
         } else {
           router.push(`/my-voyage/${teamId}/ideation`);
         }
@@ -126,12 +133,18 @@ export default function IdeationForm() {
     setError(undefined);
   }
 
-  function handleDelete() {
+  async function handleDelete() {
     const ideationId = +params.ideationId;
 
-    deleteThunk({ teamId, ideationId });
-
-    router.replace(`/my-voyage/${teamId}/ideation`);
+    await deleteIdeationAction({ teamId, ideationId }).then((res) => {
+      if ((res as AppError).error) {
+        setError((res as AppError).error);
+        setIsOpen(true);
+        setDeleteIdeationLoading(false);
+      } else {
+        router.push(`/my-voyage/${teamId}/ideation`);
+      }
+    });
   }
 
   useEffect(() => {
@@ -158,7 +171,7 @@ export default function IdeationForm() {
   }, []);
 
   function renderButtonContent() {
-    if (editLoading || addLoading) {
+    if (editIdeationLoading || addIdeationLoading) {
       return <Spinner />;
     }
 
@@ -166,7 +179,7 @@ export default function IdeationForm() {
   }
 
   function renderDeleteButtonContent() {
-    if (deleteLoading) {
+    if (deleteIdeationLoading) {
       return <Spinner />;
     }
 
@@ -226,7 +239,9 @@ export default function IdeationForm() {
           <Button
             type="submit"
             title="submit"
-            disabled={!isDirty || !isValid || editLoading || addLoading}
+            disabled={
+              !isDirty || !isValid || editIdeationLoading || addIdeationLoading
+            }
             size="lg"
             variant="primary"
           >
@@ -239,6 +254,7 @@ export default function IdeationForm() {
               variant="error"
               onClick={handleDelete}
               title="delete"
+              disabled={deleteIdeationLoading}
             >
               {renderDeleteButtonContent()}
             </Button>
