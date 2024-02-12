@@ -21,7 +21,7 @@ import {
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import useAction from "@/hooks/useAction";
 import ErrorModal from "@/components/modals/ErrorModal";
-import { persistor } from "@/store/store";
+// import { persistor } from "@/store/store";
 import { AppError } from "@/types/types";
 
 const validationSchema = z.object({
@@ -161,9 +161,9 @@ export default function IdeationForm() {
     });
   }, [ideationData, reset]);
 
-  useEffect(() => {
-    void persistor.purge();
-  }, []);
+  // useEffect(() => {
+  //   void persistor.purge();
+  // }, []);
 
   function renderButtonContent() {
     if (editIdeationLoading || addIdeationLoading) {
