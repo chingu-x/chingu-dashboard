@@ -132,33 +132,49 @@ export async function deleteIdeation({
 export async function addIdeationVote({
   teamId,
   ideationId,
-}: IdeationVoteProps): Promise<IdeationVoteResponse> {
+}: IdeationVoteProps): Promise<IdeationVoteResponse | AppError> {
   const token = getCookie();
 
-  const data = await POST<undefined, IdeationVoteResponse>(
-    `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
-    token,
-    "default"
-  );
+  try {
+    const data = await POST<undefined, IdeationVoteResponse>(
+      `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+      token,
+      "default"
+    );
 
-  revalidatePath(`/my-voyage/${teamId}/ideation`);
+    revalidatePath(`/my-voyage/${teamId}/ideation`);
 
-  return data;
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message };
+    } else {
+      return { error: "Something went wrong" };
+    }
+  }
 }
 
 export async function removeIdeationVote({
   teamId,
   ideationId,
-}: IdeationVoteProps) {
+}: IdeationVoteProps): Promise<IdeationVoteResponse | AppError> {
   const token = getCookie();
 
-  const data = await DELETE<IdeationVoteResponse>(
-    `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
-    token,
-    "default"
-  );
+  try {
+    const data = await DELETE<IdeationVoteResponse>(
+      `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+      token,
+      "default"
+    );
 
-  revalidatePath(`/my-voyage/${teamId}/ideation`);
+    revalidatePath(`/my-voyage/${teamId}/ideation`);
 
-  return data;
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message };
+    } else {
+      return { error: "Something went wrong" };
+    }
+  }
 }

@@ -10,12 +10,8 @@ import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  type IdeationData,
-  addNewIdeation,
-  deleteIdeationThunk,
-} from "@/store/features/ideation/ideationSlice";
+import { useAppSelector } from "@/store/hooks";
+import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
 import {
   editIdeation,
@@ -51,7 +47,6 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function IdeationForm() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const params = useParams<{ teamId: string; ideationId: string }>();
   const teamId = +params.teamId;
   const { projectIdeas } = useAppSelector((state) => state.ideation);
