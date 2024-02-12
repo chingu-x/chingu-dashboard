@@ -54,17 +54,12 @@ export default function IdeationForm() {
   const teamId = +params.teamId;
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState(undefined);
   const [ideationData, setIdeationData] = useState<IdeationData>();
-  const {
-    // runThunk: editThunk,
-    // isLoading: editLoading,
-    // error: editError,
-  } = useThunk(editIdeationThunk);
   const {
     runAction: editIdeationAction,
     isLoading: editLoading,
-    error: editError,
+    setIsLoading: setEditLoading,
   } = useAction(editIdeation);
   const {
     runThunk: deleteThunk,
@@ -102,8 +97,14 @@ export default function IdeationForm() {
         }
       }
 
-      setIsSubmitted(true);
-      await editIdeationAction(filteredData);
+      await editIdeationAction(filteredData).then((res) => {
+        if (res.error) {
+          dispatch(onOpen({ type: "error" }));
+          setEditLoading(false);
+        } else {
+          router.push(`/my-voyage/${teamId}/ideation`);
+        }
+      });
     } else {
       const payload = { ...data, teamId };
       await dispatch(addNewIdeation(payload));
@@ -128,22 +129,6 @@ export default function IdeationForm() {
       setEditMode(true);
     }
   }, [params.ideationId, projectIdeas]);
-
-  useEffect(() => {
-    if (isSubmitted) {
-      {
-        if (editError) {
-          {
-            dispatch(onOpen({ type: "error" }));
-          }
-        } else {
-          {
-            // router.replace(`/my-voyage/${teamId}/ideation`);
-          }
-        }
-      }
-    }
-  }, [dispatch, editError, router, teamId, editLoading, isSubmitted]);
 
   useEffect(() => {
     reset({
@@ -176,7 +161,7 @@ export default function IdeationForm() {
 
   return (
     <div className="flex flex-col items-center">
-      {editError}
+      {error}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-full max-w-[1000px] gap-y-10"

@@ -8,8 +8,6 @@ export default function useAction(action: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
 
-  console.log(error);
-
   const runAction = useCallback(
     async (arg: any) => {
       setIsLoading(true);
@@ -17,6 +15,8 @@ export default function useAction(action: any) {
       const data = await action(arg);
 
       if (data.error) setError(data.error);
+
+      return data;
     },
     [action]
   );
