@@ -16,7 +16,7 @@ function Banner({
   description,
 }: BannerProps) {
   return (
-    <div className="card w-full max-h-[320px] flex flex-row justify-between px-20 py-6 box-border gap-x-10 lg:gap-x-20">
+    <div className="card w-full max-h-[320px] flex flex-row justify-between px-20 box-border gap-x-10 lg:gap-x-20">
       <div
         data-hide-on-theme="dark"
         className="h-[200px] w-[276px] relative shrink-0"
