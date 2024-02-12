@@ -3,10 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getCookie } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
-
-export interface AppError {
-  error: string;
-}
+import { AppError } from "@/types/types";
 
 interface IdeationProps {
   teamId: number;
@@ -55,19 +52,27 @@ export async function addIdeation({
   title,
   description,
   vision,
-}: AddIdeationProps): Promise<AddIdeationResponse> {
+}: AddIdeationProps): Promise<AddIdeationResponse | AppError> {
   const token = getCookie();
 
-  const data = await POST<AddIdeationBody, AddIdeationResponse>(
-    `api/v1/voyages/${teamId}/ideations`,
-    token,
-    "default",
-    { title, description, vision },
-  );
+  try {
+    const data = await POST<AddIdeationBody, AddIdeationResponse>(
+      `api/v1/voyages/${teamId}/ideations`,
+      token,
+      "default",
+      { title, description, vision }
+    );
 
-  revalidatePath(`/my-voyage/${teamId}/ideation`);
+    revalidatePath(`/my-voyage/${teamId}/ideation`);
 
-  return data;
+    return data;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return { error: error.message };
+    } else {
+      return { error: "Something went wrong" };
+    }
+  }
 }
 
 export async function editIdeation({
@@ -81,10 +86,10 @@ export async function editIdeation({
 
   try {
     const data = await PATCH<EditIdeationBody, EditIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideation/${ideationId}`,
+      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
-      { title, description, vision },
+      { title, description, vision }
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -92,7 +97,7 @@ export async function editIdeation({
     return data;
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return { error: `Error: ${error.message}` };
+      return { error: error.message };
     } else {
       return { error: "Something went wrong" };
     }
@@ -108,7 +113,7 @@ export async function deleteIdeation({
   const data = await DELETE<DeleteIdeationResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}`,
     token,
-    "default",
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -125,7 +130,7 @@ export async function addIdeationVote({
   const data = await POST<undefined, IdeationVoteResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
     token,
-    "default",
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -142,7 +147,7 @@ export async function removeIdeationVote({
   const data = await DELETE<IdeationVoteResponse>(
     `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
     token,
-    "default",
+    "default"
   );
 
   revalidatePath(`/my-voyage/${teamId}/ideation`);

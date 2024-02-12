@@ -20,11 +20,12 @@ import Spinner from "@/components/Spinner";
 import {
   editIdeation,
   type EditIdeationProps,
-  AppError,
+  addIdeation,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
-import useThunk from "@/hooks/useThunk";
 import useAction from "@/hooks/useAction";
 import ErrorModal from "@/components/modals/ErrorModal";
+import { persistor } from "@/store/store";
+import { AppError } from "@/types/types";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -55,7 +56,7 @@ export default function IdeationForm() {
   const { projectIdeas } = useAppSelector((state) => state.ideation);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [editError, setEditError] = useState<string | undefined>(undefined);
+  const [error, setError] = useState<string | undefined>(undefined);
   const [ideationData, setIdeationData] = useState<IdeationData>();
   const {
     runAction: editIdeationAction,
@@ -63,11 +64,10 @@ export default function IdeationForm() {
     setIsLoading: setEditLoading,
   } = useAction(editIdeation);
   const {
-    runThunk: deleteThunk,
-    isLoading: deleteLoading,
-    // setIsLoading: setDeleteLoading,
-    // error: deleteError,
-  } = useThunk(deleteIdeationThunk);
+    runAction: addIdeationAction,
+    isLoading: addLoading,
+    setIsLoading: setAddLoading,
+  } = useAction(addIdeation);
 
   const {
     register,
@@ -100,7 +100,7 @@ export default function IdeationForm() {
 
       await editIdeationAction(filteredData).then((res) => {
         if ((res as AppError).error) {
-          setEditError((res as AppError).error);
+          setError((res as AppError).error);
           setIsOpen(true);
           setEditLoading(false);
         } else {
@@ -109,13 +109,21 @@ export default function IdeationForm() {
       });
     } else {
       const payload = { ...data, teamId };
-      await dispatch(addNewIdeation(payload));
+      await addIdeationAction(payload).then((res) => {
+        if ((res as AppError).error) {
+          setError((res as AppError).error);
+          setIsOpen(true);
+          setAddLoading(false);
+        } else {
+          router.push(`/my-voyage/${teamId}/ideation`);
+        }
+      });
     }
   };
 
   function handleClose() {
     setIsOpen(false);
-    setEditError(undefined);
+    setError(undefined);
   }
 
   function handleDelete() {
@@ -129,7 +137,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
@@ -145,8 +153,12 @@ export default function IdeationForm() {
     });
   }, [ideationData, reset]);
 
+  useEffect(() => {
+    void persistor.purge();
+  }, []);
+
   function renderButtonContent() {
-    if (editLoading) {
+    if (editLoading || addLoading) {
       return <Spinner />;
     }
 
@@ -171,7 +183,7 @@ export default function IdeationForm() {
       <ErrorModal
         isOpen={isOpen}
         handleClose={handleClose}
-        errorMessage={editError!}
+        errorMessage={error!}
       />
       <div className="flex flex-col items-center">
         <form
@@ -214,7 +226,7 @@ export default function IdeationForm() {
           <Button
             type="submit"
             title="submit"
-            disabled={!isDirty || !isValid || editLoading}
+            disabled={!isDirty || !isValid || editLoading || addLoading}
             size="lg"
             variant="primary"
           >
