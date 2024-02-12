@@ -4,11 +4,8 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import VoteDescriptionCard from "./VoteDescriptionCard";
 import Button from "@/components/Button";
-// import { useAppDispatch } from "@/store/hooks";
-// import { onOpen } from "@/store/features/modal/modalSlice";
 
 function CreateIdeationContainer() {
-  // const dispatch = useAppDispatch();
   const { teamId } = useParams<{ teamId: string }>();
 
   return (

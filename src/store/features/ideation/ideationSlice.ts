@@ -35,16 +35,12 @@ export interface IdeationData {
 
 interface IdeationState {
   loading: boolean;
-  editLoading: boolean;
   projectIdeas: IdeationData[];
-  serverError: object;
 }
 
 const initialState: IdeationState = {
   loading: false,
-  editLoading: false,
   projectIdeas: [],
-  serverError: {},
 };
 
 export const ideationSlice = createSlice({

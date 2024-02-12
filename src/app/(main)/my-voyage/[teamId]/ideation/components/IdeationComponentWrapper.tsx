@@ -15,27 +15,17 @@ export async function fetchProjectIdeas({
   return await GET<IdeationData[]>(
     `api/v1/voyages/${teamId}/ideations`,
     token,
-    "force-cache",
+    "force-cache"
   );
 }
 
 export default async function IdeationComponentWrapper() {
   let projectIdeas = [] as IdeationData[];
-  let user;
-  let currentVoyageTeam;
 
-  try {
-    user = await getUser();
-    currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-    );
-  } catch (error) {
-    if ((error as Error).toString().includes("401")) {
-      redirect("/");
-    }
-
-    throw error;
-  }
+  const user = await getUser();
+  const currentVoyageTeam = user.voyageTeamMembers.find(
+    (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
+  );
 
   const teamId = currentVoyageTeam?.voyageTeamId;
 

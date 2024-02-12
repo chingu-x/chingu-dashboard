@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { serverSignIn } from "@/app/(auth)/authService";
-import { clientSignIn } from "@/store/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
@@ -11,7 +10,6 @@ import DropDown from "@/components/navbar/DropDown";
 const notificationCount = 4;
 
 export default function AuthHeader() {
-  const dispatch = useAppDispatch();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { avatar } = useAppSelector((state) => state.user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,10 +17,6 @@ export default function AuthHeader() {
 
   async function handleClick() {
     await serverSignIn();
-    // if (user) {
-    dispatch(clientSignIn());
-    // dispatch(getUserState(user));
-    // }
   }
 
   const toggleMenu = () => {

@@ -25,7 +25,6 @@ const storage =
     ? createWebStorage("local")
     : createNoopStorage();
 
-// todo: only persist projectIdea state
 const persistConfig = {
   key: "root",
   storage,
