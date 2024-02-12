@@ -107,18 +107,26 @@ export async function editIdeation({
 export async function deleteIdeation({
   teamId,
   ideationId,
-}: DeleteIdeationProps): Promise<DeleteIdeationResponse> {
+}: DeleteIdeationProps): Promise<DeleteIdeationResponse | AppError> {
   const token = getCookie();
 
-  const data = await DELETE<DeleteIdeationResponse>(
-    `api/v1/voyages/${teamId}/ideations/${ideationId}`,
-    token,
-    "default"
-  );
+  try {
+    const data = await DELETE<DeleteIdeationResponse>(
+      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
+      token,
+      "default"
+    );
 
-  revalidatePath(`/my-voyage/${teamId}/ideation`);
+    revalidatePath(`/my-voyage/${teamId}/ideation`);
 
-  return data;
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message };
+    } else {
+      return { error: "Something went wrong" };
+    }
+  }
 }
 
 export async function addIdeationVote({
