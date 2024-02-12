@@ -17,6 +17,7 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
+import { EnvelopeIcon } from "@heroicons/react/24/outline";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -68,7 +69,7 @@ export default function Example1Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      }),
+      })
     );
   };
 
@@ -92,6 +93,27 @@ export default function Example1Modal() {
               label="title"
               placeholder="Enter you voyage project idea"
               maxLength={30}
+              {...register("title")}
+              errorMessage={errors?.title?.message}
+            />
+            <TextInput
+              id="title"
+              label="title"
+              placeholder="Enter you voyage project idea"
+              maxLength={30}
+              inputGroup="left"
+              inputGroupIcon={<EnvelopeIcon />}
+              {...register("title")}
+              errorMessage={errors?.title?.message}
+            />
+            <TextInput
+              id="title"
+              label="title"
+              placeholder="Enter you voyage project idea"
+              maxLength={30}
+              inputGroup="right"
+              inputGroupIcon={<EnvelopeIcon />}
+              inputGroupAction={() => console.log("gfgf")}
               {...register("title")}
               errorMessage={errors?.title?.message}
             />
