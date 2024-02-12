@@ -5,15 +5,18 @@ export type ModalType = "example1" | "example2" | "feature" | "error";
 interface ModalState {
   type: ModalType | null;
   isOpen: boolean;
+  isEditing?: boolean;
 }
 
 interface ModalActionPayload {
   type: ModalType;
+  isEditing?: boolean;
 }
 
 const initialState: ModalState = {
   type: null,
   isOpen: false,
+  isEditing: false,
 };
 
 export const modalSlice = createSlice({
@@ -23,10 +26,12 @@ export const modalSlice = createSlice({
     onOpen: (state, action: PayloadAction<ModalActionPayload>) => {
       state.isOpen = true;
       state.type = action.payload.type;
+      state.isEditing = action.payload.isEditing;
     },
     onClose: (state) => {
       state.isOpen = false;
       state.type = null;
+      state.isEditing = false;
     },
   },
 });
