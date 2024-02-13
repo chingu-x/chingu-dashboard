@@ -20,9 +20,8 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof Navbar>;
 
-
 export const LoggedOut: Story = {
-  args:{
+  args: {
     children: [
       <ThemeProvider key="ThemeProvider">
         <ModeToggle />
@@ -30,12 +29,12 @@ export const LoggedOut: Story = {
       <Button key="Button" title="Login" type="button">
         Log In
       </Button>,
-    ]
+    ],
   },
 };
 
 export const MenuOpenNoVoyage: Story = {
-  args:{
+  args: {
     children: [
       <ThemeProvider key="ThemeProvider">
         <ModeToggle />
@@ -43,21 +42,21 @@ export const MenuOpenNoVoyage: Story = {
       <Bell key="Bell" {...FewNotifications.args} />,
       <Avatar key="Avatar" image={avatarImage} width={24} height={24} />,
       <DropDown key="DropDown" openState={true} />,
-    ]
+    ],
   },
-  decorators:[
+  decorators: [
     (Story) => (
       <Provider store={mockStoreNoVoyage}>
         <div style={{ height: 300 }}>
-          <Story/>
+          <Story />
         </div>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export const MenuOpenedOnVoyage: Story = {
-  args:{
+  args: {
     children: [
       <ThemeProvider key="ThemeProvider">
         <ModeToggle />
@@ -65,15 +64,15 @@ export const MenuOpenedOnVoyage: Story = {
       <Bell key="Bell" {...FewNotifications.args} />,
       <Avatar key="Avatar" image={avatarImage} width={24} height={24} />,
       <DropDown key="DropDown" openState={true} />,
-    ]
+    ],
   },
-  decorators:[
+  decorators: [
     (Story) => (
       <Provider store={mockStoreVoyage}>
         <div style={{ height: 300 }}>
-          <Story/>
+          <Story />
         </div>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };

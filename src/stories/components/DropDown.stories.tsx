@@ -4,56 +4,55 @@ import DropDown from "@/components/navbar/DropDown";
 import { mockStoreVoyage, mockStoreNoVoyage } from "@/stories/DropDownStore";
 
 const meta: Meta<typeof DropDown> = {
-  title:"Components/DropDown",
+  title: "Components/DropDown",
   component: DropDown,
   decorators: [
     (Story) => (
       <Provider store={mockStoreVoyage}>
-        <Story/>
+        <Story />
       </Provider>
-    )
+    ),
   ],
   parameters: {
-    layout: "centered"
+    layout: "centered",
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-
 export const Closed: Story = {
-  args:{
-    openState: false
-  }
+  args: {
+    openState: false,
+  },
 };
 
 export const OpenWithVoyage: Story = {
   args: {
-    openState: true
+    openState: true,
   },
   decorators: [
     (Story) => (
       <Provider store={mockStoreVoyage}>
         <div style={{ height: 300 }}>
-          <Story/>
+          <Story />
         </div>
       </Provider>
-    )
+    ),
   ],
 };
 
 export const OpenNoVoyage: Story = {
-  args:{
-    openState:true
+  args: {
+    openState: true,
   },
   decorators: [
     (Story) => (
       <Provider store={mockStoreNoVoyage}>
         <div style={{ height: 300 }}>
-          <Story/>
+          <Story />
         </div>
       </Provider>
-    )
+    ),
   ],
-}; 
+};
