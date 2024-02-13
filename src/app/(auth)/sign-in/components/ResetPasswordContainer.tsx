@@ -53,7 +53,6 @@ function ResetPasswordContainer({
           label="email"
           placeholder="Enter Your Email"
           {...register("email")}
-          defaultValue=""
           errorMessage={errors?.email?.message}
         />
         <Button
