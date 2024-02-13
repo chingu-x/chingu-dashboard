@@ -28,28 +28,28 @@ type ConditionalTextInputProps =
       inputGroupIcon: JSX.Element;
       submitButtonText?: never;
       submitButtonVariant?: never;
-      resetAction?: never;
+      clearInputAction?: never;
     }
   | {
       inputGroup: "right";
       inputGroupIcon: JSX.Element;
       submitButtonText: string;
       submitButtonVariant: ButtonVariants;
-      resetAction: () => void;
+      clearInputAction: () => void;
     }
   | {
       inputGroup?: never;
       inputGroupIcon?: undefined;
       submitButtonText?: never;
       submitButtonVariant?: never;
-      resetAction?: never;
+      clearInputAction?: never;
     }
   | {
       inputGroup?: undefined;
       inputGroupIcon?: never;
       submitButtonText?: never;
       submitButtonVariant?: never;
-      resetAction?: never;
+      clearInputAction?: never;
     };
 
 export type TextInputProps = CommonTextInputProps & ConditionalTextInputProps;
@@ -67,7 +67,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       inputGroupIcon,
       submitButtonVariant,
       submitButtonText,
-      resetAction,
+      clearInputAction,
       className,
       type = "text",
       ...props
@@ -108,7 +108,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     }
 
     function clearInput() {
-      resetAction && resetAction();
+      clearInputAction && clearInputAction();
       setIsSubmitButtonVisible(false);
     }
 
@@ -164,7 +164,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               {submitButtonText}
             </Button>
           )}
-          {/* CLEAR INOUT BUTTON */}
+          {/* CLEAR INPUT BUTTON */}
           {isSubmitButtonVisible && (
             // TODO: replace with an Icon Button
             <button

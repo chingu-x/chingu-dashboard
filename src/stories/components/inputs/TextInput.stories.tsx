@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { EnvelopeIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import TextInput from "@/components/inputs/TextInput";
 
@@ -45,13 +45,16 @@ const meta = {
       mapping: { false: undefined, true: <EnvelopeIcon /> },
     },
     submitButtonVariant: {
-      description: "Choose a submit button variant.",
+      description:
+        "Choose a submit button variant (if `inputGroup` equals `right`, becomes `required`).",
     },
     submitButtonText: {
-      description: "A submit button text.",
+      description:
+        "A submit button text (if `inputGroup` equals `right`, becomes `required`).",
     },
-    resetAction: {
-      description: "An action to clear an input.",
+    clearInputAction: {
+      description:
+        "An action to clear an input (if `inputGroup` equals `right`, becomes `required`). If case of react-hook-form, you can pass `{() => reset({ inputId: '' })}`.",
     },
   },
 } satisfies Meta<typeof TextInput>;
@@ -134,15 +137,30 @@ const RightInputGroupTemplate: Story = {
     inputGroupIcon: <PlusCircleIcon />,
     submitButtonVariant: "primary",
     submitButtonText: "Save",
-    resetAction: () => {},
+    clearInputAction: () => {},
   },
   render: ({ ...args }) => {
+    const [value, setValue] = useState("");
     const onSubmit = (e: FormEvent) => {
       e.preventDefault();
     };
+    const clearInput = () => {
+      setValue("");
+    };
     return (
       <form onSubmit={onSubmit}>
-        <TextInput {...args} />
+        <TextInput
+          {...args}
+          id={"textInput"}
+          placeholder={"Placeholder"}
+          inputGroup={"right"}
+          inputGroupIcon={<PlusCircleIcon />}
+          submitButtonVariant={"primary"}
+          submitButtonText={"Save"}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          clearInputAction={() => clearInput()}
+        />
       </form>
     );
   },
