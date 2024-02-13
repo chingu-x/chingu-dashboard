@@ -3,22 +3,18 @@ import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
 import AuthHeader from "@/components/navbar/AuthHeader";
 import { getUser } from "@/utils/getUser";
-import AuthProvider from "@/components/AuthProvider";
+import AuthProvider from "@/components/providers/AuthProvider";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export default async function Layout({ children }: LayoutProps) {
-  let user;
-
-  try {
-    user = await getUser();
-  } catch (error) {}
+  const [user, error] = await getUser();
 
   return (
     <div className="flex flex-col w-screen h-screen">
-      {user && <AuthProvider user={user} />}
+      {user && <AuthProvider user={user} error={error} />}
       <Navbar>
         <>
           <ModeToggle />

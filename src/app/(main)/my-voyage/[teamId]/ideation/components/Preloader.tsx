@@ -1,22 +1,25 @@
 "use client";
 
-import useSyncDispatch from "@/hooks/useSyncDispatch";
 import {
   IdeationData,
   fetchIdeations,
   setLoadingFalse,
 } from "@/store/features/ideation/ideationSlice";
+import { useAppDispatch } from "@/store/hooks";
 
-interface PreloaderProps {
+export interface PreloaderProps {
   payload: IdeationData[];
+  error?: string;
 }
 
-function Preloader({ payload }: PreloaderProps) {
-  useSyncDispatch<typeof fetchIdeations>({
-    action: fetchIdeations,
-    loadAction: setLoadingFalse,
-    payload,
-  });
+// todo: make preloader reusable
+function Preloader({ payload, error }: PreloaderProps) {
+  const dispatch = useAppDispatch();
+
+  if (!error) {
+    dispatch(fetchIdeations(payload));
+    dispatch(setLoadingFalse());
+  }
 
   return null;
 }
