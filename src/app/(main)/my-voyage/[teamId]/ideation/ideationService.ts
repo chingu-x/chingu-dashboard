@@ -62,7 +62,7 @@ export async function addIdeation({
       `api/v1/voyages/${teamId}/ideations`,
       token,
       "default",
-      { title, description, vision }
+      { title, description, vision },
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -91,7 +91,7 @@ export async function editIdeation({
       `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
-      { title, description, vision }
+      { title, description, vision },
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -116,7 +116,7 @@ export async function deleteIdeation({
     const data = await DELETE<DeleteIdeationResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
-      "default"
+      "default",
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -141,7 +141,7 @@ export async function addIdeationVote({
     const data = await POST<undefined, IdeationVoteResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
-      "default"
+      "default",
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -166,7 +166,7 @@ export async function removeIdeationVote({
     const data = await DELETE<IdeationVoteResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
-      "default"
+      "default",
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
