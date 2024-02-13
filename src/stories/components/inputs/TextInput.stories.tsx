@@ -139,7 +139,7 @@ const RightInputGroupTemplate: Story = {
     submitButtonText: "Save",
     clearInputAction: () => {},
   },
-  render: ({ ...args }) => {
+  render: function Render(args) {
     const [value, setValue] = useState("");
     const onSubmit = (e: FormEvent) => {
       e.preventDefault();
