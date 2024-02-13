@@ -23,7 +23,7 @@ function CreateIdeationContainer() {
       </section>
       <Link href={`/my-voyage/${teamId}/ideation/new`} className="w-full">
         <Button size="lg" className="w-full">
-          Create Project
+          Add Project Idea
         </Button>
       </Link>
     </div>

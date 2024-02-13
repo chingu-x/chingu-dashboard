@@ -47,6 +47,8 @@ const validationSchema = z.object({
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
+// todo: add confirmation modal when user cancels or goes back
+
 export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
@@ -147,7 +149,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
@@ -172,7 +174,7 @@ export default function IdeationForm() {
       return <Spinner />;
     }
 
-    return editMode ? "Edit Project Idea" : "Add Project Idea";
+    return editMode ? "Save Changes" : "Save";
   }
 
   function renderDeleteButtonContent() {
