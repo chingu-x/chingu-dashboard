@@ -21,7 +21,7 @@ export async function fetchProjectIdeas({
   return await GET<IdeationData[]>(
     `api/v1/voyages/${teamId}/ideations`,
     token,
-    "force-cache"
+    "force-cache",
   );
 }
 
@@ -33,7 +33,7 @@ export default async function IdeationComponentWrapper() {
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
     );
   }
 

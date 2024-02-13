@@ -1,6 +1,7 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { PURGE } from "redux-persist";
+import { clientSignOut } from "@/store/features/auth/authSlice";
 
 export interface VoyageMember {
   id: string;
@@ -62,6 +63,7 @@ export const ideationSlice = createSlice({
     builder.addCase(PURGE, () => {
       void storage.removeItem("persist:root");
     });
+    builder.addCase(clientSignOut, () => initialState);
   },
 });
 

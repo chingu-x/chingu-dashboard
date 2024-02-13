@@ -64,6 +64,9 @@ export const userSlice = createSlice({
       ...action.payload,
     }),
   },
+  extraReducers(builder) {
+    builder.addCase(clientSignOut, () => initialState);
+  },
 });
 
 export const { getUserState } = userSlice.actions;
