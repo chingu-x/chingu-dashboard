@@ -2,6 +2,7 @@
 
 import React, { ChangeEvent, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
 import Label from "./Label";
 import FieldMessage from "./FieldMessage";
@@ -68,12 +69,18 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       submitButtonText,
       resetAction,
       className,
+      type = "text",
       ...props
     },
     ref,
   ) => {
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const [isSubmitButtonVisible, setIsSubmitButtonVisible] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+    function toggleShowPassword() {
+      setShowPassword(!showPassword);
+    }
 
     function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
       // Max length suggestion message
@@ -106,14 +113,14 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     }
 
     return (
-      <div className="w-full pr-2 ml-1">
+      <div className="relative w-full pr-2 ml-1">
         {label && <Label htmlFor={id}>{label}</Label>}
         <div
           className={cn("relative my-2", isSubmitButtonVisible && "pr-[48px]")}
         >
           <input
             id={id}
-            type="text"
+            type={showPassword ? "text" : type}
             placeholder={placeholder}
             aria-describedby={`${id}-message`}
             className={cn(
@@ -133,6 +140,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               handleOnChange(e);
             }}
           />
+          {/* FIXED INPUT GROUP */}
           {inputGroup && inputGroupIcon && (
             <div
               className={cn(
@@ -145,6 +153,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               {inputGroupIcon}
             </div>
           )}
+          {/* SUBMIT BUTTON */}
           {isSubmitButtonVisible && (
             <Button
               type="submit"
@@ -155,6 +164,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               {submitButtonText}
             </Button>
           )}
+          {/* CLEAR INOUT BUTTON */}
           {isSubmitButtonVisible && (
             // TODO: replace with an Icon Button
             <button
@@ -164,6 +174,19 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             >
               <XMarkIcon className="w-5 h-5 text-base-300" />
             </button>
+          )}
+          {/* SHOW/HIDE PASSWORD TOGGLE */}
+          {type === "password" && (
+            <div
+              onClick={toggleShowPassword}
+              className="absolute inset-y-0 right-0 flex items-center px-5 cursor-pointer"
+            >
+              {showPassword ? (
+                <EyeIcon className="h-5" />
+              ) : (
+                <EyeSlashIcon className="h-5" />
+              )}
+            </div>
           )}
         </div>
         <FieldMessage

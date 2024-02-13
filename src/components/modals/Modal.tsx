@@ -78,7 +78,7 @@ export default function Modal({
           initial="initial"
           animate="animate"
           exit="exit"
-          className="fixed z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto overlay bg-base-300/25"
+          className="fixed z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-overlay"
           open={isOpen}
           onClick={onClose}
         >
