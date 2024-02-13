@@ -4,7 +4,7 @@ type AsyncFunction<T> = (args) => Promise<T>;
 
 export async function handleAsync<T>(
   asyncFn: AsyncFunction<T>,
-  args?
+  args?,
 ): Promise<[T | null, AppError | null]> {
   try {
     const result = await asyncFn(args);
