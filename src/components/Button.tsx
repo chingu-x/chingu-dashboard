@@ -10,32 +10,29 @@ const button = cva(
       variant: {
         primary: [
           "bg-primary",
-          "border-primary",
-          "hover:bg-primary-content",
-          "active:text-base-200",
-          "active:bg-primary-focus",
+          "text-base-200",
+          "hover:bg-primary-focus",
+          "active:text-base-300",
+          "active:bg-primary-content",
           "disabled:text-neutral-content",
           "disabled:bg-primary-focus",
         ],
         secondary: [
           "bg-secondary",
-          "border-secondary",
-          "hover:bg-secondary-content",
-          "active:bg-secondary-focus",
+          "hover:bg-secondary-focus",
+          "active:bg-secondary-content",
           "disabled:text-neutral-focus",
           "disabled:bg-secondary-focus",
         ],
         accent: [
           "bg-accent",
-          "border-accent",
-          "hover:bg-accent-content",
-          "active:bg-accent-focus",
+          "hover:bg-accent-focus",
+          "active:bg-accent-content",
           "disabled:text-neutral-focus",
           "disabled:bg-accent-focus",
         ],
         neutral: [
           "bg-base-200",
-          "border-base-100",
           "hover:bg-base-100",
           "active:bg-neutral-content",
           "disabled:text-neutral-focus",
@@ -43,7 +40,6 @@ const button = cva(
         ],
         error: [
           "bg-error-content",
-          "border-error-content",
           "hover:bg-error",
           "active:bg-error",
           "disabled:text-neutral-focus",
@@ -54,6 +50,15 @@ const button = cva(
           "child:text-base-300",
           "hover:child:text-neutral-focus",
         ],
+        outline: [
+          "text-base-300",
+          "bg-base-200",
+          "border-primary",
+          "hover:bg-primary-content",
+          "active:bg-primary",
+          "disabled:bg-base-100",
+          "disabled:text-neutral",
+        ],
       },
       size: {
         sm: ["text-[13px]", "py-2.5", "px-[18px]"],
@@ -62,16 +67,11 @@ const button = cva(
         xl: ["text-base", "py-4", "px-6"],
         xxl: ["text-xl", "py-[18px]", "px-[26px]"],
       },
-      outline: {
-        true: ["bg-transparent", "disabled:bg-base-100"],
-        false: ["border-transparent"],
-      },
     },
-    compoundVariants: [{ variant: "primary", size: "md", outline: false }],
+    compoundVariants: [{ variant: "primary", size: "md" }],
     defaultVariants: {
       variant: "primary",
       size: "md",
-      outline: false,
     },
   },
 );
@@ -84,14 +84,13 @@ export default function Button({
   className,
   variant,
   size,
-  outline,
   children,
   ...props
 }: ButtonProps) {
   return (
     <button
       type="button"
-      className={cn(button({ variant, size, outline, className }))}
+      className={cn(button({ variant, size, className }))}
       {...props}
     >
       {children}
