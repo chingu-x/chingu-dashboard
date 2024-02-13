@@ -1,9 +1,9 @@
 // replace with dashboard page when that's completed
 
-import Image from 'next/image';
-import { ArrowRightIcon } from '@heroicons/react/24/solid';
-import Button from '@/components/Button';
-import Link from 'next/link';
+import Image from "next/image";
+import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import Button from "@/components/Button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -60,7 +60,9 @@ export default function Home() {
           <p className="text-center">
             Need support? Let’s get you back on track!
           </p>
-          <Button className="self-center">Get Help</Button>
+          <Button className="self-center" variant="outline">
+            Get Help
+          </Button>
         </div>
       </div>
       <div className="bg-base-200 rounded-2xl flex flex-col flex-grow-1 w-full">
@@ -72,7 +74,7 @@ export default function Home() {
             src="/img/pre_voyage_light.png"
             alt="Light pre Voyage image"
             fill={true}
-            style={{ objectFit: 'contain' }}
+            style={{ objectFit: "contain" }}
             priority={true}
           />
         </div>
@@ -84,7 +86,7 @@ export default function Home() {
             src="/img/pre_voyage_dark.png"
             alt="Light pre Voyage image"
             fill={true}
-            style={{ objectFit: 'contain' }}
+            style={{ objectFit: "contain" }}
             priority={true}
           />
         </div>
