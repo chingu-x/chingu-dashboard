@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
@@ -17,6 +17,11 @@ import { onClose } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
 
 const validationSchema = z.object({
+  email: validateTextInput({
+    inputName: "Email",
+    required: true,
+    isEmail: true,
+  }),
   suggestion: validateTextInput({
     inputName: "Suggestion",
     required: true,
@@ -66,6 +71,14 @@ export default function Example2Modal() {
         {/* BODY WITHOUT VERTICAL SCROLL*/}
         <div className="flex flex-col gap-4">
           <TextInput
+            id="email"
+            placeholder="What is your email?"
+            inputGroup="left"
+            inputGroupIcon={<EnvelopeIcon />}
+            {...register("email")}
+            errorMessage={errors?.email?.message}
+          />
+          <TextInput
             id="suggestion"
             placeholder="What is your tech stack suggestion?"
             suggestion="Tip: keep it short and sweet"
@@ -74,7 +87,7 @@ export default function Example2Modal() {
             inputGroupIcon={<PlusCircleIcon />}
             submitButtonText="Save"
             submitButtonVariant="secondary"
-            resetAction={() => reset()}
+            clearInputAction={() => reset({ suggestion: "" })}
             {...register("suggestion")}
             errorMessage={errors?.suggestion?.message}
           />
