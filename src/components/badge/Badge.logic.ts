@@ -2,21 +2,9 @@ import { VariantProps, cva } from "class-variance-authority";
 
 type Size = "sm" | "md" | "lg" | null | undefined;
 
-type SizeToIconType = {
-  sm: string;
-  md: string;
-  lg: string;
-};
-
 interface BadgeBaseProps {
   title: string;
   className?: string;
-  LeftIcon?: React.ForwardRefExoticComponent<
-    React.SVGProps<SVGSVGElement> & React.RefAttributes<SVGSVGElement>
-  >;
-  RightIcon?: React.ForwardRefExoticComponent<
-    React.SVGProps<SVGSVGElement> & React.RefAttributes<SVGSVGElement>
-  >;
   isAvatarBadge?: boolean;
   avatarUrlImage?: string;
 }
@@ -51,18 +39,6 @@ export const AVATAR_SIZES = {
   lg: 18,
 };
 export const useBadgeLogic = (size: Size) => {
-  const sizeToLeftIcon = {
-    sm: "w-[12px] mr-[6px]",
-    md: "w-[17px] mr-[8px]",
-    lg: "w-[22px] mr-[9px]",
-  };
-
-  const sizeToRightIcon = {
-    sm: "w-[12px] ml-[6px]",
-    md: "w-[17px] ml-[8px]",
-    lg: "w-[22px] ml-[9px]",
-  };
-
   const sizeToH2 = {
     sm: "text-[13px] font-medium",
     md: "text-base font-medium",
@@ -81,8 +57,6 @@ export const useBadgeLogic = (size: Size) => {
     lg: "mr-[6px]",
   };
 
-  const getIconClass = (size: Size, sizeToIcon: SizeToIconType): string =>
-    size ? sizeToIcon[size] : sizeToIcon.md;
   const getH2Class = (size: Size): string =>
     size ? sizeToH2[size] : sizeToH2.md;
   const getAvatarDimension = (size: Size): number =>
@@ -91,8 +65,6 @@ export const useBadgeLogic = (size: Size) => {
     size ? sizeToAvatarClass[size] : sizeToAvatarClass.md;
 
   return {
-    iconLeftClass: getIconClass(size, sizeToLeftIcon),
-    iconRightClass: getIconClass(size, sizeToRightIcon),
     h2Class: getH2Class(size),
     avatarDimension: getAvatarDimension(size),
     avatarClass: getAvatarClass(size),
