@@ -35,6 +35,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
+  const [voteChanged, setVoteChanged] = useState(false);
 
   const {
     runAction: addIdeationVoteAction,
@@ -61,6 +62,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
           setRemoveIdeationVoteLoading(false);
         }
 
+        setVoteChanged(true);
         setRemoveIdeationVoteLoading(false);
       });
     } else {
@@ -73,6 +75,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
             setAddIdeationVoteLoading(false);
           }
 
+          setVoteChanged(true);
           setAddIdeationVoteLoading(false);
         }
       );
@@ -87,10 +90,17 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   function handleClose() {
     setIsOpen(false);
     setError(undefined);
+    setAddIdeationVoteLoading(false);
+    setRemoveIdeationVoteLoading(false);
+    setVoteChanged(false);
   }
 
   function buttonContent() {
-    if (addIdeationVoteLoading || removeIdeationVoteLoading || loading) {
+    if (
+      addIdeationVoteLoading ||
+      removeIdeationVoteLoading ||
+      (loading && voteChanged)
+    ) {
       return <Spinner />;
     }
 
@@ -100,6 +110,12 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       return "Add Vote";
     }
   }
+
+  useEffect(() => {
+    if (voteChanged && !loading) {
+      setVoteChanged(false);
+    }
+  }, [voteChanged, loading]);
 
   useEffect(() => {
     if (getVoteUsers().includes(id) === true) {
