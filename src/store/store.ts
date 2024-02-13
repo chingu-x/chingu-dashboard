@@ -45,7 +45,6 @@ export const store = configureStore({
   middleware: (MiddlewareArray) =>
     MiddlewareArray({
       serializableCheck: false,
-      thunk: true,
     }),
   devTools: process.env.NODE_ENV === "development" ? true : false,
 });
