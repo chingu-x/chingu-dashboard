@@ -16,18 +16,21 @@ const meta = {
       description: "What background color to use?",
       defaultValue: { summary: "primary" },
       control: "select",
-      options: ["primary", "secondary", "accent", "neutral", "error", "link"],
+      options: [
+        "primary",
+        "secondary",
+        "accent",
+        "neutral",
+        "error",
+        "link",
+        "outline",
+      ],
     },
     size: {
       description: "How large should the button be?",
       defaultValue: { summary: "md" },
       control: "select",
       options: ["sm", "md", "lg", "xl", "xxl"],
-    },
-    outline: {
-      description: "Do you want it to be an outline button?",
-      defaultValue: { summary: false },
-      control: "boolean",
     },
     disabled: {
       description: "Is it disabled?",
@@ -93,5 +96,12 @@ export const Link = {
   ...BaseTemplate,
   args: {
     variant: "link",
+  },
+};
+
+export const Outline = {
+  ...BaseTemplate,
+  args: {
+    variant: "outline",
   },
 };
