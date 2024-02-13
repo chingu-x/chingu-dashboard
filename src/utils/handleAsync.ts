@@ -1,14 +1,17 @@
-type AsyncFunction<T> = () => Promise<T>;
+import { AppError } from "@/types/types";
+
+type AsyncFunction<T> = (args) => Promise<T>;
 
 export async function handleAsync<T>(
   asyncFn: AsyncFunction<T>,
-): Promise<[T | null, Error | null]> {
+  args?
+): Promise<[T | null, AppError | null]> {
   try {
-    const result = await asyncFn();
+    const result = await asyncFn(args);
     return [result, null];
   } catch (error) {
     if (error instanceof Error) {
-      return [null, error];
+      return [null, { message: error.message }];
     } else {
       throw error;
     }

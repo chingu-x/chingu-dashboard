@@ -1,9 +1,10 @@
 import { getCookie } from "./getCookie";
 import { handleAsync } from "./handleAsync";
 import { GET } from "./requests";
+import { AppError } from "@/types/types";
 import { User } from "@/store/features/user/userSlice";
 
-export function getUser(): Promise<[User | null, Error | null]> {
+export function getUser(): Promise<[User | null, AppError | null]> {
   const token = getCookie();
 
   const getUserAsync = async () =>

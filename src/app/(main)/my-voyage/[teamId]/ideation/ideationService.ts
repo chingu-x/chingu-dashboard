@@ -70,9 +70,9 @@ export async function addIdeation({
     return data;
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return { error: error.message };
+      return error;
     } else {
-      return { error: "Something went wrong" };
+      return { message: "Something went wrong" };
     }
   }
 }

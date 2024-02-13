@@ -7,6 +7,7 @@ import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
 import { clientSignIn } from "@/store/features/auth/authSlice";
+import ErrorModal from "@/components/modals/ErrorModal";
 
 const notificationCount = 4;
 
@@ -14,12 +15,25 @@ export default function AuthHeader() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { avatar } = useAppSelector((state) => state.user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
   const menuRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 
   async function handleClick() {
-    await serverSignIn();
-    dispatch(clientSignIn());
+    const [res, error] = await serverSignIn();
+
+    if (res) {
+      dispatch(clientSignIn());
+    } else {
+      setError(error?.message);
+      setIsModalOpen(true);
+    }
+  }
+
+  function handleClose() {
+    setError(undefined);
+    setIsModalOpen(false);
   }
 
   const toggleMenu = () => {
@@ -42,6 +56,11 @@ export default function AuthHeader() {
 
   return (
     <>
+      <ErrorModal
+        isOpen={isModalOpen}
+        handleClose={handleClose}
+        errorMessage={error!}
+      />
       {isAuthenticated ? (
         <>
           <Bell notificationCount={notificationCount} />
