@@ -2,6 +2,7 @@
 
 import React, { ChangeEvent, useState } from "react";
 
+import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import Label from "./Label";
 import FieldMessage from "./FieldMessage";
 
@@ -15,6 +16,7 @@ export interface TextInputProps
   suggestion?: string;
   maxLength?: number;
   errorMessage?: string | undefined;
+  type?: string;
 }
 
 const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
@@ -27,11 +29,17 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       maxLength,
       errorMessage,
       className,
+      type = "text",
       ...props
     },
     ref,
   ) => {
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
+    const [showPassword, setShowPassword] = useState(false);
+
+    function toggleShowPassword() {
+      setShowPassword(!showPassword);
+    }
 
     function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
       if (!maxLength) return;
@@ -45,11 +53,11 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     }
 
     return (
-      <div className="w-full pr-2 ml-1">
+      <div className="w-full pr-2 ml-1 relative">
         {label && <Label htmlFor={id}>{label}</Label>}
         <input
           id={id}
-          type="text"
+          type={showPassword ? "text" : type}
           placeholder={placeholder}
           aria-describedby={`${id}-message`}
           className={cn(
@@ -66,6 +74,18 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             handleOnChange(e);
           }}
         />
+        {type === "password" && (
+          <div
+            onClick={toggleShowPassword}
+            className="absolute inset-y-0 right-0 pr-5 pt-2 flex items-center cursor-pointer"
+          >
+            {showPassword ? (
+              <EyeIcon className="h-5" />
+            ) : (
+              <EyeSlashIcon className="h-5" />
+            )}
+          </div>
+        )}
         <FieldMessage
           id={`${id}-message`}
           errorMessage={errorMessage && errorMessage}
