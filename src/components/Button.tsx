@@ -46,12 +46,13 @@ const button = cva(
           "disabled:bg-error",
         ],
         link: [
-          "hover:text-neutral-focus",
+          "text-neutral-focus",
+          "hover:text-base-300",
+          "disabled:text-neutral-content",
           "child:text-base-300",
           "hover:child:text-neutral-focus",
         ],
         outline: [
-          "text-base-300",
           "bg-base-200",
           "border-primary",
           "hover:bg-primary-content",
@@ -73,7 +74,7 @@ const button = cva(
       variant: "primary",
       size: "md",
     },
-  },
+  }
 );
 
 export interface ButtonProps
