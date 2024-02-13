@@ -21,7 +21,7 @@ export async function serverSignIn(): Promise<ServerSignInResponse> {
       }),
       credentials: "include",
       cache: "no-store",
-    },
+    }
   );
 
   if (!res.ok) {
@@ -50,7 +50,7 @@ export async function serverSignOut(): Promise<void> {
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/logout`,
       {
         method: "POST",
-      },
+      }
     ).then(() => {
       cookies().delete("access_token");
     });
@@ -58,26 +58,3 @@ export async function serverSignOut(): Promise<void> {
     throw error;
   }
 }
-
-// type AsyncFunction<T> = () => Promise<T>;
-
-// async function handleAsync<T>(
-//   asyncFn: AsyncFunction<T>
-// ): Promise<[T | null, Error | null]> {
-//   try {
-//     const result = await asyncFn();
-//     return [result, null];
-//   } catch (error) {
-//     console.error(error);
-//     return [null, error as Error];
-//   }
-// }
-
-// export async function getUser(): Promise<[User | null, Error | null]> {
-//   const token = getCookie();
-
-//   const getUserAsync = async () =>
-//     GET<User>("api/v1/users/me", token, "no-store");
-
-//   return handleAsync(getUserAsync);
-// }

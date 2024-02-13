@@ -6,20 +6,23 @@ import { useAppDispatch } from "@/store/hooks";
 import { User, getUserState } from "@/store/features/user/userSlice";
 
 interface AuthProviderProps {
-  user: User;
+  user: User | null;
+  error: Error | null;
 }
 
-export default function AuthProvider({ user }: AuthProviderProps) {
+export default function AuthProvider({ user, error }: AuthProviderProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (user) {
       dispatch(clientSignIn());
       dispatch(getUserState(user));
-    } else {
+    }
+
+    if (error) {
       dispatch(clientSignOut());
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, error]);
 
   return null;
 }
