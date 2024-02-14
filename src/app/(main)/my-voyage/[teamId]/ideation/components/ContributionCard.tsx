@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Badge from "@/components/Badge";
+import Badge from "@/components/badge/Badge";
 import Button from "@/components/Button";
 import { VoyageMember } from "@/store/features/ideation/ideationSlice";
 import { useAppSelector } from "@/store/hooks";
@@ -36,7 +36,10 @@ function ContributionCard({
     <div className={cn("w-full bg-secondary-content rounded-lg", className)}>
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
-        <Badge data={contributed_by.member} />
+        <Badge
+          title={contributed_by.member.firstName}
+          avatarUrlImage={contributed_by.member.avatar}
+        />
         {ownVote ? (
           <Link
             href={`/my-voyage/${teamId}/ideation/${projectIdeaId}/edit`}
