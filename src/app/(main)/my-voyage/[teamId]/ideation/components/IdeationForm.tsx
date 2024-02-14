@@ -1,7 +1,5 @@
 "use client";
 
-// todo: refactor server action hooks
-
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import * as z from "zod";
@@ -24,7 +22,6 @@ import {
 import useAction from "@/hooks/useAction";
 import ErrorModal from "@/components/modals/ErrorModal";
 import { persistor } from "@/store/store";
-import { AppError } from "@/types/types";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -58,6 +55,7 @@ export default function IdeationForm() {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [ideationData, setIdeationData] = useState<IdeationData>();
+
   const {
     runAction: editIdeationAction,
     isLoading: editIdeationLoading,

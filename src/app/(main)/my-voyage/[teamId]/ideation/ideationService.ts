@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { AppError } from "@/types/types";
-import { handleAsync } from "@/utils/handleAsync";
+import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 
 interface IdeationProps {
   teamId: number;
@@ -55,7 +55,7 @@ export async function addIdeation({
   title,
   description,
   vision,
-}: AddIdeationProps): Promise<[AddIdeationResponse | null, AppError | null]> {
+}: AddIdeationProps): Promise<AsyncActionResponse<AddIdeationResponse>> {
   const token = getAccessToken();
 
   const addIdeationAsync = () =>
