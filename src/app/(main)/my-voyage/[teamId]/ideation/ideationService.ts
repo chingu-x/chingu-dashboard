@@ -1,11 +1,8 @@
 "use server";
 
-// todo: refactor to use handleasync function
-
 import { revalidatePath } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
-import { AppError } from "@/types/types";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 
 interface IdeationProps {
@@ -147,24 +144,21 @@ export async function addIdeationVote({
 export async function removeIdeationVote({
   teamId,
   ideationId,
-}: IdeationVoteProps): Promise<IdeationVoteResponse | AppError> {
+}: IdeationVoteProps): Promise<AsyncActionResponse<IdeationVoteResponse>> {
   const token = getAccessToken();
 
-  try {
-    const data = await DELETE<IdeationVoteResponse>(
+  const removeIdeationVoteAsync = () =>
+    DELETE<IdeationVoteResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
       "default"
     );
 
-    revalidatePath(`/my-voyage/${teamId}/ideation`);
+  const [res, error] = await handleAsync(removeIdeationVoteAsync);
 
-    return data;
-  } catch (error) {
-    if (error instanceof Error) {
-      return { error: error.message };
-    } else {
-      return { error: "Something went wrong" };
-    }
+  if (res) {
+    revalidatePath(`/my-voyage/${teamId}/ideation`);
   }
+
+  return [res, error];
 }
