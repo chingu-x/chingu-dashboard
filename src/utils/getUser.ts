@@ -7,8 +7,7 @@ import { User } from "@/store/features/user/userSlice";
 export function getUser(): Promise<[User | null, AppError | null]> {
   const token = getAccessToken();
 
-  const getUserAsync = async () =>
-    GET<User>("api/v1/users/me", token, "no-store");
+  const getUserAsync = () => GET<User>("api/v1/users/me", token, "no-store");
 
   return handleAsync(getUserAsync);
 }

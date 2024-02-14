@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { AppError } from "@/types/types";
+import { handleAsync } from "@/utils/handleAsync";
 
 interface IdeationProps {
   teamId: number;
@@ -54,27 +55,24 @@ export async function addIdeation({
   title,
   description,
   vision,
-}: AddIdeationProps): Promise<AddIdeationResponse | AppError> {
+}: AddIdeationProps): Promise<[AddIdeationResponse | null, AppError | null]> {
   const token = getAccessToken();
 
-  try {
-    const data = await POST<AddIdeationBody, AddIdeationResponse>(
+  const addIdeationAsync = () =>
+    POST<AddIdeationBody, AddIdeationResponse>(
       `api/v1/voyages/${teamId}/ideations`,
       token,
       "default",
-      { title, description, vision },
+      { title, description, vision }
     );
 
-    revalidatePath(`/my-voyage/${teamId}/ideation`);
+  const [res, error] = await handleAsync(addIdeationAsync);
 
-    return data;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return error;
-    } else {
-      return { message: "Something went wrong" };
-    }
+  if (res) {
+    revalidatePath(`/my-voyage/${teamId}/ideation`);
   }
+
+  return [res, error];
 }
 
 export async function editIdeation({
@@ -91,7 +89,7 @@ export async function editIdeation({
       `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
-      { title, description, vision },
+      { title, description, vision }
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -116,7 +114,7 @@ export async function deleteIdeation({
     const data = await DELETE<DeleteIdeationResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
-      "default",
+      "default"
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -141,7 +139,7 @@ export async function addIdeationVote({
     const data = await POST<undefined, IdeationVoteResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
-      "default",
+      "default"
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);
@@ -166,7 +164,7 @@ export async function removeIdeationVote({
     const data = await DELETE<IdeationVoteResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
-      "default",
+      "default"
     );
 
     revalidatePath(`/my-voyage/${teamId}/ideation`);

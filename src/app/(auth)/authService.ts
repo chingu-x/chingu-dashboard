@@ -37,14 +37,13 @@ export async function serverSignOut(): Promise<
       `${accesstoken}; ${refreshToken}`,
       "default"
     );
-
     
-  const res = await handleAsync(signOutSuccessOrFail);
     
   cookies().delete("access_token");
   cookies().delete("refresh_token");
-
-  return res;
+    
+  return handleAsync(signOutSuccessOrFail);
+  
 }
 
 /////////////////////////////////////////////////////////////////////////////

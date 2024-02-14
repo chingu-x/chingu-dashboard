@@ -3,24 +3,24 @@
 import { useCallback, useState } from "react";
 import { AppError } from "@/types/types";
 
-type ActionType<T, X> = (arg: T) => Promise<X | AppError>;
+type ActionType<X, Y> = (arg: X) => Promise<[Y | null, AppError | null]>;
 
-interface UseActionResult<T, X> {
-  runAction: (arg: T) => Promise<X | AppError>;
+interface UseActionResult<X, Y> {
+  runAction: ActionType<X, Y>;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
   error: string | undefined;
   setError: (error: string | undefined) => void;
 }
 // todo: refactor to use handleasync function
-export default function useAction<T, X>(
-  action: ActionType<T, X>,
-): UseActionResult<T, X> {
+export default function useAction<X, Y>(
+  action: ActionType<X, Y>
+): UseActionResult<X, Y> {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
 
   const runAction = useCallback(
-    async (arg: T) => {
+    async (arg: X) => {
       setIsLoading(true);
 
       const data = await action(arg);
@@ -29,7 +29,7 @@ export default function useAction<T, X>(
 
       return data;
     },
-    [action],
+    [action]
   );
 
   return { runAction, isLoading, setIsLoading, error, setError };
