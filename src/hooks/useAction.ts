@@ -13,7 +13,7 @@ interface UseActionResult<X, Y> {
   setError: (error: string | undefined) => void;
 }
 export default function useAction<X, Y>(
-  action: ActionType<X, Y>
+  action: ActionType<X, Y>,
 ): UseActionResult<X, Y> {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -24,7 +24,7 @@ export default function useAction<X, Y>(
 
       return await action(arg);
     },
-    [action]
+    [action],
   );
 
   return { runAction, isLoading, setIsLoading, error, setError };

@@ -104,26 +104,24 @@ export async function editIdeation({
 export async function deleteIdeation({
   teamId,
   ideationId,
-}: DeleteIdeationProps): Promise<DeleteIdeationResponse | AppError> {
+}: DeleteIdeationProps): Promise<
+  [DeleteIdeationResponse | null, AppError | null]
+> {
   const token = getAccessToken();
-
-  try {
-    const data = await DELETE<DeleteIdeationResponse>(
+  const deleteIdeationAsync = () =>
+    DELETE<DeleteIdeationResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default"
     );
 
-    revalidatePath(`/my-voyage/${teamId}/ideation`);
+  const [res, error] = await handleAsync(deleteIdeationAsync);
 
-    return data;
-  } catch (error) {
-    if (error instanceof Error) {
-      return { error: error.message };
-    } else {
-      return { error: "Something went wrong" };
-    }
+  if (res) {
+    revalidatePath(`/my-voyage/${teamId}/ideation`);
   }
+
+  return [res, error];
 }
 
 export async function addIdeationVote({

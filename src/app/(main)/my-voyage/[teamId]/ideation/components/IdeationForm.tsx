@@ -136,15 +136,15 @@ export default function IdeationForm() {
   async function handleDelete() {
     const ideationId = +params.ideationId;
 
-    await deleteIdeationAction({ teamId, ideationId }).then((res) => {
-      if ((res as AppError).error) {
-        setError((res as AppError).error);
-        setIsOpen(true);
-        setDeleteIdeationLoading(false);
-      } else {
-        router.push(`/my-voyage/${teamId}/ideation`);
-      }
-    });
+    const [res, error] = await deleteIdeationAction({ teamId, ideationId });
+
+    if (res) {
+      router.push(`/my-voyage/${teamId}/ideation`);
+    } else {
+      setError(error?.message);
+      setIsOpen(true);
+      setDeleteIdeationLoading(false);
+    }
   }
 
   useEffect(() => {
