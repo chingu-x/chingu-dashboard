@@ -6,7 +6,7 @@ export async function GET<T>(
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
       headers: {
-        Cookie: `access_token=${token}`,
+        Cookie: token,
       },
       cache,
     });
@@ -32,7 +32,7 @@ export async function POST<X, Y>(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Cookie: `access_token=${token}`,
+        Cookie: token,
       },
       body: JSON.stringify(payload),
       cache,

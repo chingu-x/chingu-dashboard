@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { handleAsync } from "@/utils/handleAsync";
 import { AppError } from "@/types/types";
-import { getCookie } from "@/utils/getCookie";
+import { getCookie, getRefreshToken } from "@/utils/getCookie";
 import { POST } from "@/utils/requests";
 
 interface AuthResponse {
@@ -28,19 +28,26 @@ export async function serverSignIn(): Promise<
 // prettier causing issues here with eslint rules
 export async function serverSignOut(): Promise<
   [ServerSignOutResponse | null, AppError | null]> {
-  const token = getCookie();
+  const accesstoken = getCookie();
+  const refreshToken = getRefreshToken();
 
   const signOutSuccessOrFail = async () =>
     POST<undefined, ServerSignOutResponse>(
       "api/v1/auth/logout",
-      token,
+      `${accesstoken}; ${refreshToken}`,
       "default"
     );
 
-  cookies().delete("access_token");
+    
+  const res = await handleAsync(signOutSuccessOrFail);
+    
+  // cookies().delete("access_token");
+  // cookies().delete("refresh_token");
 
-  return handleAsync(signOutSuccessOrFail);
+  return res;
 }
+
+/////////////////////////////////////////////////////////////////////////////
 
 async function asyncSignIn(): Promise<ServerSignInResponse> {
   try {
@@ -66,14 +73,28 @@ async function asyncSignIn(): Promise<ServerSignInResponse> {
     }
 
     const accessToken = res.headers.getSetCookie()[0].split("access_token=")[1];
-    const tokenValue = accessToken.split("; ")[0];
-    const maxAge = accessToken.split("; ")[1].split("=")[1];
+    const refreshToken = res.headers
+      .getSetCookie()[1]
+      .split("refresh_token=")[1];
+    const accessTokenValue = accessToken.split("; ")[0];
+    const accessTokenMaxAge = accessToken.split("; ")[1].split("=")[1];
+    const refreshTokenValue = refreshToken.split(";")[0];
+    const refreshTokenMaxAge = refreshToken.split("; ")[1].split("=")[1];
 
     cookies().set({
       name: "access_token",
-      value: tokenValue,
+      value: accessTokenValue,
       httpOnly: true,
-      maxAge: +maxAge,
+      maxAge: +accessTokenMaxAge,
+      path: "/",
+      secure: true,
+    });
+
+    cookies().set({
+      name: "refresh_token",
+      value: refreshTokenValue,
+      httpOnly: true,
+      maxAge: +refreshTokenMaxAge,
       path: "/",
       secure: true,
     });

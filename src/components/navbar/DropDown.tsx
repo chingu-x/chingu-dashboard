@@ -11,7 +11,7 @@ export default function DropDown({ openState }: { openState?: boolean }) {
   const dispatch = useAppDispatch();
   const allVoyages = useAppSelector((state) => state.user.voyageTeamMembers);
   const activeVoyage = allVoyages?.find(
-    (item) => item.voyageTeam.voyage.status.name === "Active",
+    (item) => item.voyageTeam.voyage.status.name === "Active"
   );
   const currentVoyage =
     activeVoyage?.voyageTeam.name ??
@@ -21,7 +21,10 @@ export default function DropDown({ openState }: { openState?: boolean }) {
     "absolute z-[1] w-44 p-4 [&>*]:mt-2 mt-6 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
 
   async function handleClick() {
-    await serverSignOut();
+    const [res, error] = await serverSignOut();
+
+    console.log("res", res);
+    console.log("error", error);
     dispatch(clientSignOut());
   }
   const handleDropDownClick = (event: React.MouseEvent<HTMLUListElement>) => {
