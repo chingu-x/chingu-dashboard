@@ -1,11 +1,12 @@
 import { AppError } from "@/types/types";
 
 type AsyncFunction<X, Y> = (args?: X) => Promise<Y>;
+export type AsyncActionResponse<Y> = [Y | null, AppError | null];
 
 export async function handleAsync<X, Y>(
   asyncFn: AsyncFunction<X, Y>,
-  args?: X,
-): Promise<[Y | null, AppError | null]> {
+  args?: X
+): Promise<AsyncActionResponse<Y>> {
   try {
     const result = await asyncFn(args);
     return [result, null];
