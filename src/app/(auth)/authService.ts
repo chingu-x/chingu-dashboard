@@ -3,10 +3,16 @@
 import { cookies } from "next/headers";
 import { handleAsync } from "@/utils/handleAsync";
 import { AppError } from "@/types/types";
+import { getCookie } from "@/utils/getCookie";
+import { POST } from "@/utils/requests";
 
-interface ServerSignInResponse {
+interface AuthResponse {
   message: string;
 }
+
+interface ServerSignInResponse extends AuthResponse {}
+
+interface ServerSignOutResponse extends AuthResponse {}
 
 // prettier-ignore
 // prettier causing issues here with eslint rules
@@ -18,25 +24,28 @@ export async function serverSignIn(): Promise<
   return handleAsync(userOrError);
 }
 
-export async function serverSignOut(): Promise<void> {
-  try {
-    return await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/logout`,
-      {
-        method: "POST",
-      },
-    ).then(() => {
-      cookies().delete("access_token");
-    });
-  } catch (error) {
-    throw error;
-  }
+// prettier-ignore
+// prettier causing issues here with eslint rules
+export async function serverSignOut(): Promise<
+  [ServerSignOutResponse | null, AppError | null]> {
+  const token = getCookie();
+
+  const signOutSuccessOrFail = async () =>
+    POST<undefined, ServerSignOutResponse>(
+      "api/v1/auth/logout",
+      token,
+      "default"
+    );
+
+  cookies().delete("access_token");
+
+  return handleAsync(signOutSuccessOrFail);
 }
 
 async function asyncSignIn(): Promise<ServerSignInResponse> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/aut/login`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
       {
         method: "POST",
         headers: {
@@ -49,7 +58,7 @@ async function asyncSignIn(): Promise<ServerSignInResponse> {
         }),
         credentials: "include",
         cache: "no-store",
-      },
+      }
     );
 
     if (!res.ok) {
