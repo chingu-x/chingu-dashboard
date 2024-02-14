@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
-import { AppError } from "@/types/types";
 import {
   ProjectIdeaVotes,
   setLoadingTrue,
@@ -52,19 +51,19 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   async function handleVote() {
     if (currentUserVoted) {
       dispatch(setLoadingTrue());
-      await removeIdeationVoteAction({
+
+      const [, error] = await removeIdeationVoteAction({
         teamId,
         ideationId: projectIdeaId,
-      }).then((res) => {
-        if ((res as AppError).error) {
-          setError((res as AppError).error);
-          setIsOpen(true);
-          setRemoveIdeationVoteLoading(false);
-        }
-
-        setVoteChanged(true);
-        setRemoveIdeationVoteLoading(false);
       });
+
+      if (error) {
+        setIsOpen(true);
+        setRemoveIdeationVoteLoading(false);
+      }
+
+      setVoteChanged(true);
+      setRemoveIdeationVoteLoading(false);
     } else {
       dispatch(setLoadingTrue());
       const [, error] = await addIdeationVoteAction({
