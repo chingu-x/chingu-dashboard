@@ -115,15 +115,16 @@ export default function IdeationForm() {
       }
     } else {
       const payload = { ...data, teamId };
-      await addIdeationAction(payload).then((res) => {
-        if ((res as AppError).error) {
-          setError((res as AppError).error);
-          setIsOpen(true);
-          setAddIdeationLoading(false);
-        } else {
-          router.push(`/my-voyage/${teamId}/ideation`);
-        }
-      });
+
+      const [res, error] = await addIdeationAction(payload);
+
+      if (res) {
+        router.push(`/my-voyage/${teamId}/ideation`);
+      } else {
+        setError(error?.message);
+        setIsOpen(true);
+        setAddIdeationLoading(false);
+      }
     }
   };
 
