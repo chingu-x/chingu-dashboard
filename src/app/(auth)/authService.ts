@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { handleAsync } from "@/utils/handleAsync";
 import { AppError } from "@/types/types";
-import { getCookie, getRefreshToken } from "@/utils/getCookie";
+import { getAccessToken, getRefreshToken } from "@/utils/getCookie";
 import { POST } from "@/utils/requests";
 
 interface AuthResponse {
@@ -28,7 +28,7 @@ export async function serverSignIn(): Promise<
 // prettier causing issues here with eslint rules
 export async function serverSignOut(): Promise<
   [ServerSignOutResponse | null, AppError | null]> {
-  const accesstoken = getCookie();
+  const accesstoken = getAccessToken();
   const refreshToken = getRefreshToken();
 
   const signOutSuccessOrFail = async () =>
@@ -41,8 +41,8 @@ export async function serverSignOut(): Promise<
     
   const res = await handleAsync(signOutSuccessOrFail);
     
-  // cookies().delete("access_token");
-  // cookies().delete("refresh_token");
+  cookies().delete("access_token");
+  cookies().delete("refresh_token");
 
   return res;
 }
