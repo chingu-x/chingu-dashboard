@@ -81,27 +81,24 @@ export async function editIdeation({
   title,
   description,
   vision,
-}: EditIdeationProps): Promise<EditIdeationResponse | AppError> {
+}: EditIdeationProps): Promise<[EditIdeationResponse | null, AppError | null]> {
   const token = getAccessToken();
 
-  try {
-    const data = await PATCH<EditIdeationBody, EditIdeationResponse>(
+  const editIdeationAsync = () =>
+    PATCH<EditIdeationBody, EditIdeationResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
       { title, description, vision }
     );
 
-    revalidatePath(`/my-voyage/${teamId}/ideation`);
+  const [res, error] = await handleAsync(editIdeationAsync);
 
-    return data;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return { error: error.message };
-    } else {
-      return { message: "Something went wrong" };
-    }
+  if (res) {
+    revalidatePath(`/my-voyage/${teamId}/ideation`);
   }
+
+  return [res, error];
 }
 
 export async function deleteIdeation({

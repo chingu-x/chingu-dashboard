@@ -104,14 +104,14 @@ export default function IdeationForm() {
         }
       }
 
-      const res = await editIdeationAction(filteredData);
+      const [res, error] = await editIdeationAction(filteredData);
 
-      if ((res as AppError).error) {
-        setError((res as AppError).error);
+      if (res) {
+        router.push(`/my-voyage/${teamId}/ideation`);
+      } else {
+        setError(error?.message);
         setIsOpen(true);
         setEditIdeationLoading(false);
-      } else {
-        router.push(`/my-voyage/${teamId}/ideation`);
       }
     } else {
       const payload = { ...data, teamId };

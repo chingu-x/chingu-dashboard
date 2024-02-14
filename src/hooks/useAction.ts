@@ -12,7 +12,6 @@ interface UseActionResult<X, Y> {
   error: string | undefined;
   setError: (error: string | undefined) => void;
 }
-// todo: refactor to use handleasync function
 export default function useAction<X, Y>(
   action: ActionType<X, Y>
 ): UseActionResult<X, Y> {
@@ -23,11 +22,7 @@ export default function useAction<X, Y>(
     async (arg: X) => {
       setIsLoading(true);
 
-      const data = await action(arg);
-
-      if ((data as AppError).error) setError((data as AppError).error);
-
-      return data;
+      return await action(arg);
     },
     [action]
   );
