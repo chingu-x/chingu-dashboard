@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 import IdeationForm from "@/app/(main)/my-voyage/[teamId]/ideation/components/IdeationForm";
-import { getCookie } from "@/utils/getCookie";
+import { getAccessToken } from "@/utils/getCookie";
 
 export default function AddIdeationPage() {
-  const cookie = getCookie();
+  const cookie = getAccessToken();
 
   if (!cookie) redirect("/");
 

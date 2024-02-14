@@ -3,7 +3,7 @@
 // todo: refactor to use handleasync function
 
 import { revalidatePath } from "next/cache";
-import { getCookie } from "@/utils/getCookie";
+import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { AppError } from "@/types/types";
 
@@ -55,7 +55,7 @@ export async function addIdeation({
   description,
   vision,
 }: AddIdeationProps): Promise<AddIdeationResponse | AppError> {
-  const token = getCookie();
+  const token = getAccessToken();
 
   try {
     const data = await POST<AddIdeationBody, AddIdeationResponse>(
@@ -84,7 +84,7 @@ export async function editIdeation({
   description,
   vision,
 }: EditIdeationProps): Promise<EditIdeationResponse | AppError> {
-  const token = getCookie();
+  const token = getAccessToken();
 
   try {
     const data = await PATCH<EditIdeationBody, EditIdeationResponse>(
@@ -110,7 +110,7 @@ export async function deleteIdeation({
   teamId,
   ideationId,
 }: DeleteIdeationProps): Promise<DeleteIdeationResponse | AppError> {
-  const token = getCookie();
+  const token = getAccessToken();
 
   try {
     const data = await DELETE<DeleteIdeationResponse>(
@@ -135,7 +135,7 @@ export async function addIdeationVote({
   teamId,
   ideationId,
 }: IdeationVoteProps): Promise<IdeationVoteResponse | AppError> {
-  const token = getCookie();
+  const token = getAccessToken();
 
   try {
     const data = await POST<undefined, IdeationVoteResponse>(
@@ -160,7 +160,7 @@ export async function removeIdeationVote({
   teamId,
   ideationId,
 }: IdeationVoteProps): Promise<IdeationVoteResponse | AppError> {
-  const token = getCookie();
+  const token = getAccessToken();
 
   try {
     const data = await DELETE<IdeationVoteResponse>(

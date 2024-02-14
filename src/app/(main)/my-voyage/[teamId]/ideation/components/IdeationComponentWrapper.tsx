@@ -5,7 +5,7 @@ import CreateIdeationContainer from "./CreateIdeationContainer";
 import { getUser } from "@/utils/getUser";
 import { FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
-import { getCookie } from "@/utils/getCookie";
+import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import Banner from "@/components/banner/Banner";
 // import { ideation } from "./fixtures/ideation";
@@ -17,7 +17,7 @@ import Banner from "@/components/banner/Banner";
 export async function fetchProjectIdeas({
   teamId,
 }: FetchIdeationsProps): Promise<IdeationData[]> {
-  const token = getCookie();
+  const token = getAccessToken();
   return await GET<IdeationData[]>(
     `api/v1/voyages/${teamId}/ideations`,
     token,
