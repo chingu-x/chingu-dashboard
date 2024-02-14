@@ -1,7 +1,7 @@
 export async function GET<T>(
   url: string,
   token: string,
-  cache: RequestCache,
+  cache: RequestCache
 ): Promise<T> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
@@ -25,30 +25,34 @@ export async function POST<X, Y>(
   url: string,
   token: string,
   cache: RequestCache,
-  payload?: X,
+  payload?: X
 ): Promise<Y> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Cookie: `access_token=${token}`,
-    },
-    body: JSON.stringify(payload),
-    cache,
-  });
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `access_token=${token}`,
+      },
+      body: JSON.stringify(payload),
+      cache,
+    });
 
-  if (!res.ok) {
-    throw new Error(res.statusText);
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    }
+
+    return (await res.json()) as Y;
+  } catch (error) {
+    throw error;
   }
-
-  return (await res.json()) as Y;
 }
 
 export async function PATCH<X, Y>(
   url: string,
   token: string,
   cache: RequestCache,
-  payload: X,
+  payload: X
 ): Promise<Y> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     method: "PATCH",
@@ -70,7 +74,7 @@ export async function PATCH<X, Y>(
 export async function DELETE<X>(
   url: string,
   token: string,
-  cache: RequestCache,
+  cache: RequestCache
 ): Promise<X> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     method: "DELETE",
