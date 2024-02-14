@@ -128,15 +128,20 @@ export async function addIdeationVote({
 }: IdeationVoteProps): Promise<AsyncActionResponse<IdeationVoteResponse>> {
   const token = getAccessToken();
 
-  const data = await POST<undefined, IdeationVoteResponse>(
-    `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
-    token,
-    "default"
-  );
+  const addIdeationVoteAsync = () =>
+    POST<undefined, IdeationVoteResponse>(
+      `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+      token,
+      "default"
+    );
 
-  revalidatePath(`/my-voyage/${teamId}/ideation`);
+  const [res, error] = await handleAsync(addIdeationVoteAsync);
 
-  return data;
+  if (res) {
+    revalidatePath(`/my-voyage/${teamId}/ideation`);
+  }
+
+  return [res, error];
 }
 
 export async function removeIdeationVote({

@@ -28,7 +28,7 @@ interface VoteCardProps {
 // todo: add delete confirmation modal
 function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
-    null,
+    null
   );
   const { id } = useAppSelector((state) => state.user);
   const { loading } = useAppSelector((state) => state.ideation);
@@ -67,24 +67,24 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       });
     } else {
       dispatch(setLoadingTrue());
-      await addIdeationVoteAction({ teamId, ideationId: projectIdeaId }).then(
-        (res) => {
-          if ((res as AppError).error) {
-            setError((res as AppError).error);
-            setIsOpen(true);
-            setAddIdeationVoteLoading(false);
-          }
+      const [, error] = await addIdeationVoteAction({
+        teamId,
+        ideationId: projectIdeaId,
+      });
 
-          setVoteChanged(true);
-          setAddIdeationVoteLoading(false);
-        },
-      );
+      if (error) {
+        setIsOpen(true);
+        setAddIdeationVoteLoading(false);
+      }
+
+      setVoteChanged(true);
+      setAddIdeationVoteLoading(false);
     }
   }
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users],
+    [users]
   );
 
   function handleClose() {
