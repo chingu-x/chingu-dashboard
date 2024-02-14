@@ -59,7 +59,6 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
       if (error) {
         setIsOpen(true);
-        setRemoveIdeationVoteLoading(false);
       }
 
       setVoteChanged(true);
@@ -73,7 +72,6 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
       if (error) {
         setIsOpen(true);
-        setAddIdeationVoteLoading(false);
       }
 
       setVoteChanged(true);
