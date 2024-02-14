@@ -81,7 +81,7 @@ export async function editIdeation({
   title,
   description,
   vision,
-}: EditIdeationProps): Promise<[EditIdeationResponse | null, AppError | null]> {
+}: EditIdeationProps): Promise<AsyncActionResponse<EditIdeationResponse>> {
   const token = getAccessToken();
 
   const editIdeationAsync = () =>
@@ -104,9 +104,7 @@ export async function editIdeation({
 export async function deleteIdeation({
   teamId,
   ideationId,
-}: DeleteIdeationProps): Promise<
-  [DeleteIdeationResponse | null, AppError | null]
-> {
+}: DeleteIdeationProps): Promise<AsyncActionResponse<DeleteIdeationResponse>> {
   const token = getAccessToken();
   const deleteIdeationAsync = () =>
     DELETE<DeleteIdeationResponse>(
@@ -127,26 +125,18 @@ export async function deleteIdeation({
 export async function addIdeationVote({
   teamId,
   ideationId,
-}: IdeationVoteProps): Promise<IdeationVoteResponse | AppError> {
+}: IdeationVoteProps): Promise<AsyncActionResponse<IdeationVoteResponse>> {
   const token = getAccessToken();
 
-  try {
-    const data = await POST<undefined, IdeationVoteResponse>(
-      `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
-      token,
-      "default"
-    );
+  const data = await POST<undefined, IdeationVoteResponse>(
+    `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+    token,
+    "default"
+  );
 
-    revalidatePath(`/my-voyage/${teamId}/ideation`);
+  revalidatePath(`/my-voyage/${teamId}/ideation`);
 
-    return data;
-  } catch (error) {
-    if (error instanceof Error) {
-      return { error: error.message };
-    } else {
-      return { error: "Something went wrong" };
-    }
-  }
+  return data;
 }
 
 export async function removeIdeationVote({

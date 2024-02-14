@@ -1,10 +1,9 @@
 import { getAccessToken } from "./getCookie";
-import { handleAsync } from "./handleAsync";
+import { AsyncActionResponse, handleAsync } from "./handleAsync";
 import { GET } from "./requests";
-import { AppError } from "@/types/types";
 import { User } from "@/store/features/user/userSlice";
 
-export function getUser(): Promise<[User | null, AppError | null]> {
+export function getUser(): Promise<AsyncActionResponse<User>> {
   const token = getAccessToken();
 
   const getUserAsync = () => GET<User>("api/v1/users/me", token, "no-store");

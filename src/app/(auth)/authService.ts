@@ -1,8 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { handleAsync } from "@/utils/handleAsync";
-import { AppError } from "@/types/types";
+import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { getAccessToken, getRefreshToken } from "@/utils/getCookie";
 import { POST } from "@/utils/requests";
 
@@ -17,7 +16,7 @@ interface ServerSignOutResponse extends AuthResponse {}
 // prettier-ignore
 // prettier causing issues here with eslint rules
 export async function serverSignIn(): Promise<
-  [ServerSignInResponse | null, AppError | null]
+  AsyncActionResponse<ServerSignInResponse>
   > {
   const userOrError = async () => asyncSignIn();
 
@@ -27,9 +26,10 @@ export async function serverSignIn(): Promise<
 // prettier-ignore
 // prettier causing issues here with eslint rules
 export async function serverSignOut(): Promise<
-  [ServerSignOutResponse | null, AppError | null]> {
+   AsyncActionResponse<ServerSignOutResponse>> {
   const accesstoken = getAccessToken();
   const refreshToken = getRefreshToken();
+ 
 
   const signOutSuccessOrFail = async () =>
     POST<undefined, ServerSignOutResponse>(
@@ -64,7 +64,7 @@ async function asyncSignIn(): Promise<ServerSignInResponse> {
         }),
         credentials: "include",
         cache: "no-store",
-      }
+      },
     );
 
     if (!res.ok) {
