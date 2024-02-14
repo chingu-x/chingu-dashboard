@@ -3,11 +3,11 @@ import Avatar from "@/components/Avatar";
 import myAvatar from "@/public/img/avatar.png"; //temp until BE has data equal to fixtures/TechStacks.ts
 
 interface AvatarGroupProps {
-    data : TechItem["users"]
-};
+  data: TechItem["users"];
+}
 
-export default function AvatarGroup ( { data }: AvatarGroupProps) {
-  return(
+export default function AvatarGroup({ data }: AvatarGroupProps) {
+  return (
     <div className="absolute flex -space-x-2 avatar-group left-28">
       {/**<Avatar /> image property will need to point at the 
       * avatar property on each user in array of users (the data passed into <AvatarGroup/>).
@@ -23,13 +23,8 @@ export default function AvatarGroup ( { data }: AvatarGroupProps) {
         ))
       */}
       {data.map((index) => (
-        <Avatar
-          key={index}
-          image={myAvatar}
-          width={24}
-          height={24}
-        />
+        <Avatar key={index} image={myAvatar} width={24} height={24} />
       ))}
     </div>
   );
-};
+}

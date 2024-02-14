@@ -24,7 +24,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               key={element.id}
             >
               {element.value}
-              <AvatarGroup data={element.users}/>
+              <AvatarGroup data={element.users} />
               <button
                 type="button"
                 className="capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 bg-primary-content border-transparent mr-4 rounded-[32px] hover:bg-primary hover:border-transparent gap-x-0"
