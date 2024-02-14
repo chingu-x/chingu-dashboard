@@ -59,7 +59,7 @@ export async function PATCH<X, Y>(
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Cookie: `access_token=${token}`,
+        Cookie: token,
       },
       body: JSON.stringify(payload),
       cache,
@@ -85,7 +85,7 @@ export async function DELETE<X>(
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Cookie: `access_token=${token}`,
+        Cookie: token,
       },
       cache,
     });
