@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import routePaths from "@/utils/routePaths";
 
 interface IdeationProps {
   teamId: number;
@@ -66,7 +67,7 @@ export async function addIdeation({
   const [res, error] = await handleAsync(addIdeationAsync);
 
   if (res) {
-    revalidatePath(`/my-voyage/${teamId}/ideation`);
+    revalidatePath(routePaths.ideationPage(teamId.toString()));
   }
 
   return [res, error];
@@ -92,7 +93,7 @@ export async function editIdeation({
   const [res, error] = await handleAsync(editIdeationAsync);
 
   if (res) {
-    revalidatePath(`/my-voyage/${teamId}/ideation`);
+    revalidatePath(routePaths.ideationPage(teamId.toString()));
   }
 
   return [res, error];
@@ -113,7 +114,7 @@ export async function deleteIdeation({
   const [res, error] = await handleAsync(deleteIdeationAsync);
 
   if (res) {
-    revalidatePath(`/my-voyage/${teamId}/ideation`);
+    revalidatePath(routePaths.ideationPage(teamId.toString()));
   }
 
   return [res, error];
@@ -135,7 +136,7 @@ export async function addIdeationVote({
   const [res, error] = await handleAsync(addIdeationVoteAsync);
 
   if (res) {
-    revalidatePath(`/my-voyage/${teamId}/ideation`);
+    revalidatePath(routePaths.ideationPage(teamId.toString()));
   }
 
   return [res, error];
@@ -157,7 +158,7 @@ export async function removeIdeationVote({
   const [res, error] = await handleAsync(removeIdeationVoteAsync);
 
   if (res) {
-    revalidatePath(`/my-voyage/${teamId}/ideation`);
+    revalidatePath(routePaths.ideationPage(teamId.toString()));
   }
 
   return [res, error];

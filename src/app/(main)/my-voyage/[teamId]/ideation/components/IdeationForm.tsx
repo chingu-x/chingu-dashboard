@@ -22,6 +22,7 @@ import {
 import useServerAction from "@/hooks/useServerAction";
 import { persistor } from "@/store/store";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import routePaths from "@/utils/routePaths";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -104,7 +105,7 @@ export default function IdeationForm() {
       const [res, error] = await editIdeationAction(filteredData);
 
       if (res) {
-        router.push(`/my-voyage/${teamId}/ideation`);
+        router.push(routePaths.ideationPage(teamId.toString()));
       } else {
         dispatch(onOpenModal({ type: "error", content: error?.message }));
         setEditIdeationLoading(false);
@@ -115,7 +116,7 @@ export default function IdeationForm() {
       const [res, error] = await addIdeationAction(payload);
 
       if (res) {
-        router.push(`/my-voyage/${teamId}/ideation`);
+        router.push(routePaths.ideationPage(teamId.toString()));
       } else {
         dispatch(onOpenModal({ type: "error", content: error?.message }));
         setAddIdeationLoading(false);
@@ -129,7 +130,7 @@ export default function IdeationForm() {
     const [res, error] = await deleteIdeationAction({ teamId, ideationId });
 
     if (res) {
-      router.push(`/my-voyage/${teamId}/ideation`);
+      router.push(routePaths.ideationPage(teamId.toString()));
     } else {
       dispatch(onOpenModal({ type: "error", content: error?.message }));
       setDeleteIdeationLoading(false);
@@ -139,7 +140,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
