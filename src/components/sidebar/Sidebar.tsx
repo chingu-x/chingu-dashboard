@@ -79,10 +79,10 @@ export default function Sidebar() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const { isAuthenticated } = useAppSelector(
-    (state: RootState): { isAuthenticated: boolean } => state.auth,
+    (state: RootState): { isAuthenticated: boolean } => state.auth
   );
   const { voyageTeamMembers } = useAppSelector(
-    (state: RootState) => state.user,
+    (state: RootState) => state.user
   );
 
   const isActive = useMemo(() => {
@@ -90,14 +90,14 @@ export default function Sidebar() {
       return false;
     }
     return voyageTeamMembers.some(
-      (member) => member.voyageTeam.voyage.status.name === "Active",
+      (member) => member.voyageTeam.voyage.status.name === "Active"
     );
   }, [voyageTeamMembers]);
 
   const isVoyageStarted: boolean = isAuthenticated && isActive;
 
   const currentVoyageTeam = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+    (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
   );
 
   const teamId = currentVoyageTeam?.voyageTeamId.toString();
@@ -105,11 +105,11 @@ export default function Sidebar() {
   const voyagePages: VoyagePageProperty[] = [
     {
       name: VoyagePages.directory,
-      link: "/my-voyage/directory",
+      link: routePaths.directoryPage(teamId!),
     },
     {
       name: VoyagePages.techStack,
-      link: "/my-voyage/tech-stack",
+      link: routePaths.techStackPage(teamId!),
     },
     {
       name: VoyagePages.ideation,
@@ -117,15 +117,15 @@ export default function Sidebar() {
     },
     {
       name: VoyagePages.features,
-      link: "/my-voyage/features",
+      link: routePaths.featuresPage(teamId!),
     },
     {
       name: VoyagePages.sprints,
-      link: "/my-voyage/sprints",
+      link: routePaths.sprintsPage(teamId!),
     },
     {
       name: VoyagePages.resources,
-      link: "/my-voyage/voyage-resources",
+      link: routePaths.voyageResourcesPage(teamId!),
     },
   ];
 
@@ -141,7 +141,7 @@ export default function Sidebar() {
         setSelectedButton(element.link);
       }
     },
-    [setSelectedButton, setIsOpenSidebar],
+    [setSelectedButton, setIsOpenSidebar]
   );
 
   return (

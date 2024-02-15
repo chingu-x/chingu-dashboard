@@ -1,5 +1,4 @@
 // Add all routes being used in the project here
-// todo: add routes here
 
 const routePaths = {
   dashboardPage() {
@@ -7,6 +6,15 @@ const routePaths = {
   },
   signIn() {
     return "/sign-in";
+  },
+  signOut() {
+    return "/sign-out";
+  },
+  directoryPage(teamId: string) {
+    return `/my-voyage/${teamId}/directory`;
+  },
+  techStackPage(teamId: string) {
+    return `/my-voyage/${teamId}/tech-stack`;
   },
   ideationPage(teamId: string) {
     return `/my-voyage/${teamId}/ideation`;
@@ -16,6 +24,15 @@ const routePaths = {
   },
   editIdeationPage(teamId: string, ideationId: string) {
     return `/my-voyage/${teamId}/ideation/${ideationId}/edit`;
+  },
+  featuresPage(teamId: string) {
+    return `/my-voyage/${teamId}/features`;
+  },
+  sprintsPage(teamId: string) {
+    return `/my-voyage/${teamId}/sprints`;
+  },
+  voyageResourcesPage(teamId: string) {
+    return `/my-voyage/${teamId}/voyage-resources`;
   },
 };
 
