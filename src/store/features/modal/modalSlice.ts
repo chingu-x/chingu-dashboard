@@ -10,6 +10,7 @@ interface ModalState {
 
 interface ModalActionPayload {
   type: ModalType;
+  content?: string;
   isEditing?: boolean;
 }
 
@@ -28,9 +29,9 @@ export const modalSlice = createSlice({
       state.type = action.payload.type;
       state.isEditing = action.payload.isEditing;
     },
-    onClose: (state) => {
+    onClose: (state, action: PayloadAction<ModalActionPayload>) => {
       state.isOpen = false;
-      state.type = null;
+      state.type = action.payload.type;
       state.isEditing = false;
     },
   },

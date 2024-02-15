@@ -11,14 +11,16 @@ export default function TempModalControls() {
       <Button
         size="lg"
         type="button"
-        onClick={() => dispatch(onOpen({ type: "example1" }))}
+        onClick={() => dispatch(onOpen({ type: "example1", content: "error" }))}
       >
         Modal 1
       </Button>
       <Button
         size="lg"
         type="button"
-        onClick={() => dispatch(onOpen({ type: "example2" }))}
+        onClick={() =>
+          dispatch(onOpen({ type: "example2", content: "example" }))
+        }
       >
         Modal 2
       </Button>

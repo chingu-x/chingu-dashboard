@@ -26,7 +26,7 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function Example2Modal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "example2";
@@ -45,14 +45,14 @@ export default function Example2Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      }),
+      })
     );
     handleClose();
   };
 
   const handleClose = useCallback(() => {
     reset();
-    dispatch(onClose());
+    dispatch(onClose({ type: "example2" }));
   }, [dispatch, reset]);
 
   return (
