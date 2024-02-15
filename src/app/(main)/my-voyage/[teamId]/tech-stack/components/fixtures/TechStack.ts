@@ -1,4 +1,4 @@
-import { CardType } from "@/app/(main)/my-voyage/tech-stack/components/types/types";
+import { CardType } from "@/app/(main)/my-voyage/[teamId]/tech-stack/components/types/types";
 
 export interface TechItem {
   id: number;
