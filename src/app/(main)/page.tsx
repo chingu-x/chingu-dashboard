@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
-import Button from "@/components/Button";
 import Link from "next/link";
+import Button from "@/components/Button";
 
 export default function Home() {
   return (
@@ -11,8 +11,10 @@ export default function Home() {
       <div className="flex flex-col gap-y-6 flex-grow-1">
         <div className="w-full h-[350] p-6 bg-base-200 rounded-2xl">
           <div>
-            <p>Before your Voyage starts...</p>
-            <p>
+            <p className="text-[25px] font-semibold	">
+              Before your Voyage starts...
+            </p>
+            <p className="font-medium	text-base">
               Explore Chingu's Knowledge Hub to prepare for your Voyage with
               information on tools, Agile, Scrum, Git, Teamwork, and more.
             </p>
@@ -57,7 +59,7 @@ export default function Home() {
           </div>
         </div>
         <div className="bg-base-200 rounded-2xl py-6 flex flex-col gap-y-4">
-          <p className="text-center">
+          <p className="text-center font-medium	text-base">
             Need support? Let’s get you back on track!
           </p>
           <Button className="self-center" variant="outline">
@@ -90,8 +92,10 @@ export default function Home() {
             priority={true}
           />
         </div>
-        <p className="text-center">Are you ready?</p>
-        <p className="text-center">Your Voyage starts on May 2, 2024.</p>
+        <p className="text-center text-[25px] font-semibold">Are you ready?</p>
+        <p className="text-center text-base font-medium	">
+          Your Voyage starts on May 2, 2024.
+        </p>
       </div>
     </div>
   );
