@@ -54,30 +54,21 @@ export default function AuthHeader() {
     };
   });
 
-  return (
+  return isAuthenticated ? (
     <>
-      <ErrorModal
-        isOpen={isModalOpen}
-        handleClose={handleClose}
-        errorMessage={error!}
-      />
-      {isAuthenticated ? (
-        <>
-          <Bell notificationCount={notificationCount} />
-          <div
-            ref={menuRef}
-            onClick={toggleMenu}
-            className="flex items-center px-2"
-          >
-            <Avatar image={avatar} height={34} width={34} />
-            <DropDown openState={isMenuOpen} />
-          </div>
-        </>
-      ) : (
-        <Button title="Login" type="button" onClick={handleClick}>
-          Log In
-        </Button>
-      )}
+      <Bell notificationCount={notificationCount} />
+      <div
+        ref={menuRef}
+        onClick={toggleMenu}
+        className="flex items-center px-2"
+      >
+        <Avatar image={avatar} height={34} width={34} />
+        <DropDown openState={isMenuOpen} />
+      </div>
     </>
+  ) : (
+    <Button title="Login" type="button" onClick={handleClick}>
+      Log In
+    </Button>
   );
 }
