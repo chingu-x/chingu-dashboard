@@ -30,7 +30,15 @@ export async function fetchProjectIdeas({
   return await handleAsync(fetchProjectIdeasAsync);
 }
 
-export default async function IdeationComponentWrapper() {
+interface IdeationComponentWrapperProps {
+  params: {
+    teamId: string;
+  };
+}
+
+export default async function IdeationComponentWrapper({
+  params,
+}: IdeationComponentWrapperProps) {
   let projectIdeas: IdeationData[] | null;
   let currentVoyageTeam;
 
@@ -51,7 +59,7 @@ export default async function IdeationComponentWrapper() {
     );
   }
 
-  const teamId = currentVoyageTeam?.voyageTeamId;
+  const teamId = currentVoyageTeam?.voyageTeamId && +params.teamId;
 
   if (teamId) {
     const [res, error] = await fetchProjectIdeas({ teamId });
