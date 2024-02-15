@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import { VoyageMember } from "@/store/features/ideation/ideationSlice";
 import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
+import routePaths from "@/utils/routePaths";
 
 interface ContributionCardProps {
   contributed_by: {
@@ -42,7 +43,7 @@ function ContributionCard({
         />
         {ownVote ? (
           <Link
-            href={`/my-voyage/${teamId}/ideation/${projectIdeaId}/edit`}
+            href={routePaths.editIdeationPage(teamId, projectIdeaId.toString())}
             className="w-full"
           >
             <Button variant="secondary" className="w-full">

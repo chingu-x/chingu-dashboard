@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import VoteDescriptionCard from "./VoteDescriptionCard";
 import Button from "@/components/Button";
+import routePaths from "@/utils/routePaths";
 
 function CreateIdeationContainer() {
   const { teamId } = useParams<{ teamId: string }>();
@@ -21,7 +22,7 @@ function CreateIdeationContainer() {
           bring to users.
         </p>
       </section>
-      <Link href={`/my-voyage/${teamId}/ideation/new`} className="w-full">
+      <Link href={routePaths.addIdeationPage(teamId)} className="w-full">
         <Button size="lg" className="w-full">
           Add Project Idea
         </Button>
