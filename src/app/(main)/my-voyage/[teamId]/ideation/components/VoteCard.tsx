@@ -8,7 +8,6 @@ import {
   setLoadingTrue,
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import ErrorModal from "@/components/modals/ErrorModal";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useAction from "@/hooks/useAction";
@@ -16,6 +15,7 @@ import {
   addIdeationVote,
   removeIdeationVote,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import { onOpen } from "@/store/features/modal/modalSlice";
 
 interface VoteCardProps {
   projectIdeaId: number;
@@ -32,8 +32,6 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const { id } = useAppSelector((state) => state.user);
   const { loading } = useAppSelector((state) => state.ideation);
   const dispatch = useAppDispatch();
-  const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
   const [voteChanged, setVoteChanged] = useState(false);
 
   const {
@@ -58,7 +56,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       });
 
       if (error) {
-        setIsOpen(true);
+        dispatch(onOpen({ type: "error", content: error?.message }));
       }
 
       setVoteChanged(true);

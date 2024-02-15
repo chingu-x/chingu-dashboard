@@ -21,7 +21,7 @@ import {
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import useAction from "@/hooks/useAction";
 import { persistor } from "@/store/store";
-import { onOpen } from "@/store/features/modal/modalSlice";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -106,8 +106,7 @@ export default function IdeationForm() {
       if (res) {
         router.push(`/my-voyage/${teamId}/ideation`);
       } else {
-        setError(error?.message);
-        setIsOpen(true);
+        dispatch(onOpenModal({ type: "error", content: error?.message }));
         setEditIdeationLoading(false);
       }
     } else {
@@ -118,16 +117,11 @@ export default function IdeationForm() {
       if (res) {
         router.push(`/my-voyage/${teamId}/ideation`);
       } else {
-        dispatch(onOpen({ type: "error", content: error?.message }));
+        dispatch(onOpenModal({ type: "error", content: error?.message }));
         setAddIdeationLoading(false);
       }
     }
   };
-
-  // function handleClose() {
-  //   setIsOpen(false);
-  //   setError(undefined);
-  // }
 
   async function handleDelete() {
     const ideationId = +params.ideationId;
@@ -137,8 +131,7 @@ export default function IdeationForm() {
     if (res) {
       router.push(`/my-voyage/${teamId}/ideation`);
     } else {
-      setError(error?.message);
-      setIsOpen(true);
+      dispatch(onOpenModal({ type: "error", content: error?.message }));
       setDeleteIdeationLoading(false);
     }
   }

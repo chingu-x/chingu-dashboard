@@ -57,7 +57,7 @@ export async function addIdeation({
 
   const addIdeationAsync = () =>
     POST<AddIdeationBody, AddIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideation`,
+      `api/v1/voyages/${teamId}/ideations`,
       token,
       "default",
       { title, description, vision }
