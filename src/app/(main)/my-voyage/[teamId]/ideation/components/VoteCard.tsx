@@ -10,7 +10,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
-import useAction from "@/hooks/useAction";
+import useServerAction from "@/hooks/useServerAction";
 import {
   addIdeationVote,
   removeIdeationVote,
@@ -39,13 +39,13 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
     runAction: addIdeationVoteAction,
     isLoading: addIdeationVoteLoading,
     setIsLoading: setAddIdeationVoteLoading,
-  } = useAction(addIdeationVote);
+  } = useServerAction(addIdeationVote);
 
   const {
     runAction: removeIdeationVoteAction,
     isLoading: removeIdeationVoteLoading,
     setIsLoading: setRemoveIdeationVoteLoading,
-  } = useAction(removeIdeationVote);
+  } = useServerAction(removeIdeationVote);
 
   async function handleVote() {
     if (currentUserVoted) {

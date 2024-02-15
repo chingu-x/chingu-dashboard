@@ -19,7 +19,7 @@ import {
   addIdeation,
   deleteIdeation,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
-import useAction from "@/hooks/useAction";
+import useServerAction from "@/hooks/useServerAction";
 import { persistor } from "@/store/store";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
@@ -59,18 +59,18 @@ export default function IdeationForm() {
     runAction: editIdeationAction,
     isLoading: editIdeationLoading,
     setIsLoading: setEditIdeationLoading,
-  } = useAction(editIdeation);
+  } = useServerAction(editIdeation);
 
   const {
     runAction: addIdeationAction,
     isLoading: addIdeationLoading,
     setIsLoading: setAddIdeationLoading,
-  } = useAction(addIdeation);
+  } = useServerAction(addIdeation);
   const {
     runAction: deleteIdeationAction,
     isLoading: deleteIdeationLoading,
     setIsLoading: setDeleteIdeationLoading,
-  } = useAction(deleteIdeation);
+  } = useServerAction(deleteIdeation);
 
   const {
     register,
@@ -139,7 +139,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);

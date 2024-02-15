@@ -8,6 +8,7 @@ import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import Banner from "@/components/banner/Banner";
+import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 // import { ideation } from "./fixtures/ideation";
 
 // If user is not logged in, nav should be updated to reflect signed out state
@@ -16,32 +17,35 @@ import Banner from "@/components/banner/Banner";
 // to dashboard page
 export async function fetchProjectIdeas({
   teamId,
-}: FetchIdeationsProps): Promise<IdeationData[]> {
+}: FetchIdeationsProps): Promise<AsyncActionResponse<IdeationData[]>> {
   const token = getAccessToken();
 
-  return await GET<IdeationData[]>(
-    `api/v1/voyages/${teamId}/ideations`,
-    token,
-    "force-cache",
-  );
+  const fetchProjectIdeasAsync = () =>
+    GET<IdeationData[]>(
+      `api/v1/voyages/${teamId}/ideations`,
+      token,
+      "force-cache"
+    );
+
+  return await handleAsync(fetchProjectIdeasAsync);
 }
 
 export default async function IdeationComponentWrapper() {
-  let projectIdeas = [] as IdeationData[];
+  let projectIdeas: IdeationData[] | null;
   let currentVoyageTeam;
 
   const [user, error] = await getUser();
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
     );
   }
 
   if (error) {
     return (
       <>
-        <Preloader payload={projectIdeas} error={error.message} />
+        <Preloader payload={[]} error={error.message} />
         {`Error: ${error.message}`}
       </>
     );
@@ -50,7 +54,15 @@ export default async function IdeationComponentWrapper() {
   const teamId = currentVoyageTeam?.voyageTeamId;
 
   if (teamId) {
-    projectIdeas = await fetchProjectIdeas({ teamId });
+    const [res, error] = await fetchProjectIdeas({ teamId });
+
+    if (res) {
+      projectIdeas = res;
+    }
+
+    if (error) {
+      return <>{`Error: ${error.message}`}</>;
+    }
   } else {
     redirect("/");
   }
@@ -69,8 +81,8 @@ export default async function IdeationComponentWrapper() {
       />
       <div className="flex flex-col items-center gap-y-10">
         <CreateIdeationContainer />
-        <Preloader payload={projectIdeas} />
-        {projectIdeas.map((projectIdea) => (
+        <Preloader payload={projectIdeas!} />
+        {projectIdeas!.map((projectIdea) => (
           <IdeationContainer
             key={projectIdea.id}
             projectIdeaId={projectIdea.id}

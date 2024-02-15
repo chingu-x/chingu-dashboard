@@ -8,7 +8,7 @@ import {
 import { useAppDispatch } from "@/store/hooks";
 
 export interface PreloaderProps {
-  payload: IdeationData[];
+  payload: IdeationData[] | [];
   error?: string;
 }
 
