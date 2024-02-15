@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
+import routePaths from "@/utils/routePaths";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -83,7 +84,7 @@ function SignInFormContainer({
           Sign in
         </Button>
         <Link
-          href={"/sign-up"}
+          href={routePaths.signUp()}
           className="font-semibold text-xs text-base-300 ml-1 self-center mb-[10px]"
         >
           Don’t have an account? Sign up for an account now
