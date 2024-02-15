@@ -10,6 +10,9 @@ const routePaths = {
   signOut() {
     return "/sign-out";
   },
+  signUp() {
+    return "/sign-up";
+  },
   directoryPage(teamId: string) {
     return `/my-voyage/${teamId}/directory`;
   },
