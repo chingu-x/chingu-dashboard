@@ -1,14 +1,13 @@
 import { AppError } from "@/types/types";
 
-type AsyncFunction<X, Y> = (args?: X) => Promise<Y>;
-export type AsyncActionResponse<Y> = [Y | null, AppError | null];
+type AsyncFunction<X> = () => Promise<X>;
+export type AsyncActionResponse<X> = [X | null, AppError | null];
 
-export async function handleAsync<X, Y>(
-  asyncFn: AsyncFunction<X, Y>,
-  args?: X,
-): Promise<AsyncActionResponse<Y>> {
+export async function handleAsync<X>(
+  asyncFn: AsyncFunction<X>
+): Promise<AsyncActionResponse<X>> {
   try {
-    const result = await asyncFn(args);
+    const result = await asyncFn();
     return [result, null];
   } catch (error) {
     if (error instanceof Error) {

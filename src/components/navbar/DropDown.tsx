@@ -12,7 +12,7 @@ export default function DropDown({ openState }: { openState?: boolean }) {
   const dispatch = useAppDispatch();
   const allVoyages = useAppSelector((state) => state.user.voyageTeamMembers);
   const activeVoyage = allVoyages?.find(
-    (item) => item.voyageTeam.voyage.status.name === "Active"
+    (item) => item.voyageTeam.voyage.status.name === "Active",
   );
   const currentVoyage =
     activeVoyage?.voyageTeam.name ??
