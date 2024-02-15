@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import Button from "@/components/Button";
 import Modal from "@/components/modals/Modal";
-import { onClose } from "@/store/features/modal/modalSlice";
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function ErrorModal() {
@@ -14,7 +14,7 @@ export default function ErrorModal() {
   const isModalOpen = isOpen && type === "error";
 
   const handleClose = useCallback(() => {
-    dispatch(onClose({ type: "error" }));
+    dispatch(onCloseModal({ type: "error" }));
   }, [dispatch]);
 
   return (

@@ -13,7 +13,7 @@ import Alert from "@/components/Alert";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 
-import { onClose } from "@/store/features/modal/modalSlice";
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
@@ -56,7 +56,7 @@ export default function FeatureModal() {
   const handleClose = useCallback(() => {
     reset({ feature: "" });
     setDeleteAlertIsVisible(false);
-    dispatch(onClose({ type: "feature" }));
+    dispatch(onCloseModal({ type: "feature" }));
   }, [dispatch, reset]);
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {

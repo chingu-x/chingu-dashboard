@@ -24,12 +24,12 @@ export const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    onOpen: (state, action: PayloadAction<ModalActionPayload>) => {
+    onOpenModal: (state, action: PayloadAction<ModalActionPayload>) => {
       state.isOpen = true;
       state.type = action.payload.type;
       state.isEditing = action.payload.isEditing;
     },
-    onClose: (state, action: PayloadAction<ModalActionPayload>) => {
+    onCloseModal: (state, action: PayloadAction<ModalActionPayload>) => {
       state.isOpen = false;
       state.type = action.payload.type;
       state.isEditing = false;
@@ -37,6 +37,6 @@ export const modalSlice = createSlice({
   },
 });
 
-export const { onOpen, onClose } = modalSlice.actions;
+export const { onOpenModal, onCloseModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { onClose, onOpen } from "./modalSlice";
+import { onOpenModal, onCloseModal } from "./modalSlice";
 
 interface ModalState {
   error: string;
@@ -14,12 +14,12 @@ export const errorModalSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(onOpen, (state, action) => {
+    builder.addCase(onOpenModal, (state, action) => {
       if (action.payload.type === "error") {
         state.error = action.payload.content!;
       }
     });
-    builder.addCase(onClose, (state, action) => {
+    builder.addCase(onCloseModal, (state, action) => {
       if (action.payload.type === "error") {
         state.error = "";
       }
