@@ -11,7 +11,7 @@ import { Feature } from "./fixtures/Features";
 import Card from "./Card";
 
 import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 import Button from "@/components/Button";
 
@@ -30,9 +30,9 @@ export default function List({ id, title, features, currentUser }: ListProps) {
 
   function handleClick() {
     dispatch(
-      onOpen({
+      onOpenModal({
         type: "feature",
-      }),
+      })
     );
   }
   return (

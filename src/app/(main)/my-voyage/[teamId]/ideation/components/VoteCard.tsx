@@ -15,7 +15,7 @@ import {
   addIdeationVote,
   removeIdeationVote,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
-import { onOpen } from "@/store/features/modal/modalSlice";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface VoteCardProps {
   projectIdeaId: number;
@@ -31,6 +31,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   );
   const { id } = useAppSelector((state) => state.user);
   const { loading } = useAppSelector((state) => state.ideation);
+  const { isOpen } = useAppSelector((state) => state.modal.baseModal);
   const dispatch = useAppDispatch();
   const [voteChanged, setVoteChanged] = useState(false);
 
@@ -56,7 +57,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       });
 
       if (error) {
-        dispatch(onOpen({ type: "error", content: error?.message }));
+        dispatch(onOpenModal({ type: "error", content: error?.message }));
       }
 
       setVoteChanged(true);
@@ -69,7 +70,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       });
 
       if (error) {
-        setIsOpen(true);
+        dispatch(onOpenModal({ type: "error", content: error?.message }));
       }
 
       setVoteChanged(true);
@@ -81,14 +82,6 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
     () => users.map((user) => user.votedBy.member.id),
     [users]
   );
-
-  function handleClose() {
-    setIsOpen(false);
-    setError(undefined);
-    setAddIdeationVoteLoading(false);
-    setRemoveIdeationVoteLoading(false);
-    setVoteChanged(false);
-  }
 
   function buttonContent() {
     if (
@@ -105,6 +98,14 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       return "Add Vote";
     }
   }
+
+  useEffect(() => {
+    if (isOpen === false) {
+      setAddIdeationVoteLoading(false);
+      setRemoveIdeationVoteLoading(false);
+      setVoteChanged(false);
+    }
+  }, [isOpen, setAddIdeationVoteLoading, setRemoveIdeationVoteLoading]);
 
   useEffect(() => {
     if (voteChanged && !loading) {
