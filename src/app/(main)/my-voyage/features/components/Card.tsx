@@ -7,7 +7,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { Feature } from "./fixtures/Features";
 
 import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface CardProps {
   feature: Feature;
@@ -22,10 +22,10 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
 
   function handleClick() {
     dispatch(
-      onOpen({
+      onOpenModal({
         type: "feature",
         isEditing: true,
-      }),
+      })
     );
   }
 

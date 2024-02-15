@@ -1,21 +1,18 @@
 "use client";
 
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
 import DropDownLink from "./DropDownLink";
 import Button from "@/components/Button";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 import { serverSignOut } from "@/app/(auth)/authService";
-import ErrorModal from "@/components/modals/ErrorModal";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 export default function DropDown({ openState }: { openState?: boolean }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
   const dispatch = useAppDispatch();
   const allVoyages = useAppSelector((state) => state.user.voyageTeamMembers);
   const activeVoyage = allVoyages?.find(
-    (item) => item.voyageTeam.voyage.status.name === "Active",
+    (item) => item.voyageTeam.voyage.status.name === "Active"
   );
   const currentVoyage =
     activeVoyage?.voyageTeam.name ??
@@ -30,14 +27,8 @@ export default function DropDown({ openState }: { openState?: boolean }) {
     if (res) {
       dispatch(clientSignOut());
     } else {
-      setError(error?.message);
-      setIsModalOpen(true);
+      dispatch(onOpenModal({ type: "error", content: error?.message }));
     }
-  }
-
-  function handleClose() {
-    setError(undefined);
-    setIsModalOpen(false);
   }
 
   const handleDropDownClick = (event: React.MouseEvent<HTMLUListElement>) => {
@@ -60,11 +51,11 @@ export default function DropDown({ openState }: { openState?: boolean }) {
         <li className="bg-secondary-content text-xs p-2 [&>*]:m-1 rounded-lg ">
           <p className="text-neutral text-xs">My Status:</p>
           {currentVoyage ? (
-            <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
+            <p className="border-[1px] border-transparent font-semibold text-base-300">
               {currentVoyage}
             </p>
           ) : (
-            <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
+            <p className="border-[1px] border-transparent font-semibold text-base-300">
               {currentVoyage}
             </p>
           )}
