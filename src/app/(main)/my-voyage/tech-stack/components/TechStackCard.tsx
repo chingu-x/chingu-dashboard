@@ -28,11 +28,11 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               {element.value}
               <AvatarGroup>
                 {element.users.map((user) => (
-                  <Avatar 
+                  <Avatar
                     key={user}
                     /*TO DO: replace image={myAvatar} with {user.avatar} or {user}
                     ...depending on data schema.*/
-                    image={myAvatar} 
+                    image={myAvatar}
                     width={24}
                     height={24}
                   />
