@@ -1,7 +1,7 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import type { TechItem } from "./fixtures/TechStack";
 import myAvatar from "@/public/img/avatar.png";
-import AvatarGroup from "../../../../../components/AvatarGroup";
+import AvatarGroup from "@/components/AvatarGroup";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 
@@ -27,9 +27,9 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
             >
               {element.value}
               <AvatarGroup>
-                {element.users.map((user, index) =>(
+                {element.users.map((user) => (
                   <Avatar 
-                    key={index}
+                    key={user}
                     /*TO DO: replace image={myAvatar} with {user.avatar} or {user}
                     ...depending on data schema.*/
                     image={myAvatar} 
