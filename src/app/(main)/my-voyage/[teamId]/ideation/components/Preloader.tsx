@@ -3,23 +3,19 @@
 import {
   IdeationData,
   fetchIdeations,
-  setLoadingFalse,
+  setProjectIdeasLoadingFalse,
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch } from "@/store/hooks";
 
 export interface PreloaderProps {
-  payload: IdeationData[] | [];
-  error?: string;
+  payload: IdeationData[];
 }
 
-// todo: make preloader reusable
-function Preloader({ payload, error }: PreloaderProps) {
+function Preloader({ payload }: PreloaderProps) {
   const dispatch = useAppDispatch();
 
-  if (!error) {
-    dispatch(fetchIdeations(payload));
-    dispatch(setLoadingFalse());
-  }
+  dispatch(fetchIdeations(payload));
+  dispatch(setProjectIdeasLoadingFalse());
 
   return null;
 }

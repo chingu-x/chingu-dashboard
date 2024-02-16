@@ -52,10 +52,10 @@ export const ideationSlice = createSlice({
       state.projectIdeas = action.payload;
       state.loading = true;
     },
-    setLoadingTrue: (state) => {
+    setProjectIdeasLoadingTrue: (state) => {
       state.loading = true;
     },
-    setLoadingFalse: (state) => {
+    setProjectIdeasLoadingFalse: (state) => {
       state.loading = false;
     },
   },
@@ -67,7 +67,10 @@ export const ideationSlice = createSlice({
   },
 });
 
-export const { fetchIdeations, setLoadingTrue, setLoadingFalse } =
-  ideationSlice.actions;
+export const {
+  fetchIdeations,
+  setProjectIdeasLoadingTrue,
+  setProjectIdeasLoadingFalse,
+} = ideationSlice.actions;
 
 export default ideationSlice.reducer;
