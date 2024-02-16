@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import AvatarGroup from "@/app/(main)/my-voyage/tech-stack/components/AvatarGroup";
+import AvatarGroup from "@/components/AvatarGroup";
+import Avatar from "@/components/Avatar";
+import myAvatar from "@/public/img/avatar.png";
+
+const placeholder = "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg";
 
 const meta = {
   title: "Components/AvatarGroup",
@@ -8,30 +12,6 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  argTypes: {
-    data: {
-      description: "Number of users grouped together (after voting etc...)",
-      defaultValue: { summary: ["x"] },
-      control: "select",
-      options: [
-        ["user"],
-        ["user", "user"],
-        ["user", "user", "user", "user", "user", "user"],
-        [
-          "user",
-          "user",
-          "user",
-          "user",
-          "user",
-          "user",
-          "user",
-          "user",
-          "user",
-          "user",
-        ],
-      ],
-    },
-  },
   decorators: [
     (Story) => (
       <div style={{ width: "500px", height: "80px" }}>
@@ -44,18 +24,56 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof AvatarGroup>;
 
-export const SingleMember: Story = {
-  args: {
-    data: ["x"],
-  },
-};
 export const AFewMembers: Story = {
-  args: {
-    data: ["x", "x", "x", "x"],
-  },
+  args:{
+    children:[
+      <Avatar key={1}image={myAvatar} width={24} height={24} />,
+      <Avatar key={2}image={myAvatar} width={24} height={24} />,
+      <Avatar key={3}image={myAvatar} width={24} height={24} />,
+    ]
+  }
+};
+export const SingleMember: Story = {
+  args:{
+    children:[
+      <Avatar key={1} image={myAvatar} width={24} height={24} />,
+    ]
+  }
 };
 export const ManyMembers: Story = {
-  args: {
-    data: ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x"],
-  },
+  args:{
+    children:[
+      <Avatar key={1} image={myAvatar} width={24} height={24} />,
+      <Avatar key={2} image={myAvatar} width={24} height={24} />,
+      <Avatar key={3} image={myAvatar} width={24} height={24} />,
+      <Avatar key={4} image={myAvatar} width={24} height={24} />,
+      <Avatar key={5} image={myAvatar} width={24} height={24} />,
+      <Avatar key={6} image={myAvatar} width={24} height={24} />,
+      <Avatar key={7} image={myAvatar} width={24} height={24} />,
+    ]
+  }
+};
+export const Placeholder: Story = {
+  args:{
+    children:[
+      <Avatar key={1} image={placeholder} width={24} height={24} />
+    ]
+  }
+};
+export const AlternativeImage: Story = {
+  args:{
+    children:[
+      <Avatar key={1} image={""} width={24} height={24} />
+    ]
+  }
+};
+export const MixedImages: Story = {
+  args:{
+    children:[
+      <Avatar key={1} image={myAvatar} width={24} height={24} />,
+      <Avatar key={2} image={placeholder} width={24} height={24} />,
+      <Avatar key={3} image={""} width={24} height={24} />,
+      <Avatar key={4} image={myAvatar} width={24} height={24} />
+    ]
+  }
 };
