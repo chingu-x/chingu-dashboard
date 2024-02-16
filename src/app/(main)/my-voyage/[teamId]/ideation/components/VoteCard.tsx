@@ -5,7 +5,7 @@ import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import {
   ProjectIdeaVotes,
-  setLoadingTrue,
+  setProjectIdeasLoadingTrue,
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
@@ -27,7 +27,7 @@ interface VoteCardProps {
 // todo: add delete confirmation modal
 function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
-    null,
+    null
   );
   const { id } = useAppSelector((state) => state.user);
   const { loading } = useAppSelector((state) => state.ideation);
@@ -49,7 +49,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
   async function handleVote() {
     if (currentUserVoted) {
-      dispatch(setLoadingTrue());
+      dispatch(setProjectIdeasLoadingTrue());
 
       const [, error] = await removeIdeationVoteAction({
         teamId,
@@ -63,7 +63,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       setVoteChanged(true);
       setRemoveIdeationVoteLoading(false);
     } else {
-      dispatch(setLoadingTrue());
+      dispatch(setProjectIdeasLoadingTrue());
       const [, error] = await addIdeationVoteAction({
         teamId,
         ideationId: projectIdeaId,
@@ -80,7 +80,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users],
+    [users]
   );
 
   function buttonContent() {

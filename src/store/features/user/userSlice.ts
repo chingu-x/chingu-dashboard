@@ -18,7 +18,7 @@ interface VoyageRole {
   name: string;
 }
 
-interface VoyageTeamMember {
+export interface VoyageTeamMember {
   id: number;
   voyageTeamId: number;
   voyageTeam: VoyageTeam;
