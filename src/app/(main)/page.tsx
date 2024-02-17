@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-row gap-x-6">
-      <div className="flex flex-col gap-y-6 flex-grow-1">
+      <div className="flex flex-col gap-y-6 flex-grow-1 w-full">
         <div className="w-full h-[350] p-6 bg-base-200 rounded-2xl">
           <div>
             <p className="text-[25px] font-semibold	">
@@ -97,7 +97,7 @@ export default function Home() {
           </Button>
         </div>
       </div>
-      <div className="bg-base-200 rounded-2xl flex flex-col flex-grow-1 w-full">
+      <div className="bg-base-200 rounded-2xl flex flex-col flex-grow-1 w-full pt-[70px] pb-6 pl-[80px] pr-[80px]">
         <div
           data-hide-on-theme="dark"
           className="flex h-[437px] w-full relative shrink-0"
