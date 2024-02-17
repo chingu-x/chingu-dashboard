@@ -8,10 +8,14 @@ interface ModalState {
   isEditing?: boolean;
 }
 
-interface ModalActionPayload {
+interface ModalOpenActionPayload {
   type: ModalType;
-  content?: string;
+  content: string;
   isEditing?: boolean;
+}
+
+interface ModalCloseActionPayload {
+  type: ModalType;
 }
 
 const initialState: ModalState = {
@@ -24,12 +28,12 @@ export const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    onOpenModal: (state, action: PayloadAction<ModalActionPayload>) => {
+    onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
       state.isOpen = true;
       state.type = action.payload.type;
       state.isEditing = action.payload.isEditing;
     },
-    onCloseModal: (state, action: PayloadAction<ModalActionPayload>) => {
+    onCloseModal: (state, action: PayloadAction<ModalCloseActionPayload>) => {
       state.isOpen = false;
       state.type = action.payload.type;
       state.isEditing = false;
