@@ -9,7 +9,7 @@ export default function EmptyState() {
       >
         <Image
           src="/img/sprints_empty_light.png"
-          alt="Light login image"
+          alt="Empty sprint image"
           fill={true}
           style={{ objectFit: "contain" }}
           priority={true}
@@ -21,7 +21,7 @@ export default function EmptyState() {
       >
         <Image
           src="/img/sprints_empty_light.png"
-          alt="Dark login image"
+          alt="Empty sprint image"
           fill={true}
           style={{ objectFit: "contain" }}
           priority={true}
