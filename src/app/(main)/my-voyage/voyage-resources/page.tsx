@@ -1,7 +1,16 @@
+"use client";
+import { useState } from "react";
 import ResourceInput from "./components/ResourceInput";
+import SortingButton from "./components/SortingButton";
 import Banner from "@/components/banner/Banner";
 
 export default function ResourcesPage() {
+  const [ byNewest, setByNewest ] = useState(true);
+
+  const handleClick = () => {
+    setByNewest(!byNewest);
+  };
+
   return  (
     <>
       <Banner
@@ -12,7 +21,10 @@ export default function ResourcesPage() {
         title="Resources"
         description="This resources page is your secret weapon for this voyage! Take a look at what your team is sharing or share your own resources for this voyage. Go ahead and be the first to post a new resource for you and your peers!"
       />
-      <ResourceInput />
+      <div className="flex  items-center">
+        <ResourceInput />
+        <SortingButton onClick={handleClick} type={byNewest}/>
+      </div>
     </>
   );
 }
