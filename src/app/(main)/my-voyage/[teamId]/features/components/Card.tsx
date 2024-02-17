@@ -26,7 +26,7 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
         type: "feature",
         content: "",
         isEditing: true,
-      })
+      }),
     );
   }
 

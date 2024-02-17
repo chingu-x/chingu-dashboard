@@ -162,9 +162,14 @@ export default function IdeationForm() {
     });
   }, [ideationData, reset]);
 
-  useEffect(() => {
-    void persistor.purge();
-  }, []);
+  // purge won't work as expected in dev with strict mode enabled. Works
+  // as intended in prod
+  useEffect(
+    () => () => {
+      void persistor.purge();
+    },
+    []
+  );
 
   function renderButtonContent() {
     if (editIdeationLoading || addIdeationLoading) {
