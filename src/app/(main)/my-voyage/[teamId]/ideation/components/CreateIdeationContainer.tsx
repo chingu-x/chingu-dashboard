@@ -1,14 +1,7 @@
-"use client";
-
-import Link from "next/link";
-import { useParams } from "next/navigation";
 import VoteDescriptionCard from "./VoteDescriptionCard";
-import Button from "@/components/Button";
-import routePaths from "@/utils/routePaths";
+import AddProjectIdeaButton from "./AddProjectIdeaButton";
 
 function CreateIdeationContainer() {
-  const { teamId } = useParams<{ teamId: string }>();
-
   return (
     <div className="grid grid-cols-[180px_1fr] 3xl:grid-cols-[200px_1fr_200px] items-center justify-items-center gap-y-7 3xl:gap-x-[110px] 2xl:gap-x-20 gap-x-10 w-full p-10 bg-base-100 rounded-2xl">
       <VoteDescriptionCard />
@@ -22,11 +15,7 @@ function CreateIdeationContainer() {
           bring to users.
         </p>
       </section>
-      <Link href={routePaths.addIdeationPage(teamId)} className="w-full">
-        <Button size="lg" className="w-full">
-          Add Project Idea
-        </Button>
-      </Link>
+      <AddProjectIdeaButton />
     </div>
   );
 }
