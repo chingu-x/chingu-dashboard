@@ -23,8 +23,10 @@ export default function AuthHeader() {
 
     if (res) {
       dispatch(clientSignIn());
-    } else {
-      dispatch(onOpenModal({ type: "error", content: error?.message }));
+    }
+
+    if (error) {
+      dispatch(onOpenModal({ type: "error", content: error.message }));
     }
   }
 

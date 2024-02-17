@@ -32,7 +32,8 @@ export default function List({ id, title, features, currentUser }: ListProps) {
     dispatch(
       onOpenModal({
         type: "feature",
-      }),
+        content: "",
+      })
     );
   }
   return (

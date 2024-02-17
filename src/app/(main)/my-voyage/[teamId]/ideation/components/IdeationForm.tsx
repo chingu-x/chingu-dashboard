@@ -106,8 +106,10 @@ export default function IdeationForm() {
 
       if (res) {
         router.push(routePaths.ideationPage(teamId.toString()));
-      } else {
-        dispatch(onOpenModal({ type: "error", content: error?.message }));
+      }
+
+      if (error) {
+        dispatch(onOpenModal({ type: "error", content: error.message }));
         setEditIdeationLoading(false);
       }
     } else {
@@ -117,8 +119,10 @@ export default function IdeationForm() {
 
       if (res) {
         router.push(routePaths.ideationPage(teamId.toString()));
-      } else {
-        dispatch(onOpenModal({ type: "error", content: error?.message }));
+      }
+
+      if (error) {
+        dispatch(onOpenModal({ type: "error", content: error.message }));
         setAddIdeationLoading(false);
       }
     }
@@ -131,8 +135,10 @@ export default function IdeationForm() {
 
     if (res) {
       router.push(routePaths.ideationPage(teamId.toString()));
-    } else {
-      dispatch(onOpenModal({ type: "error", content: error?.message }));
+    }
+
+    if (error) {
+      dispatch(onOpenModal({ type: "error", content: error.message }));
       setDeleteIdeationLoading(false);
     }
   }
@@ -140,7 +146,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);

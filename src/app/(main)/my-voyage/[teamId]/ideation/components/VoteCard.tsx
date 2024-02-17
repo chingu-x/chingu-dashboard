@@ -57,7 +57,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       });
 
       if (error) {
-        dispatch(onOpenModal({ type: "error", content: error?.message }));
+        dispatch(onOpenModal({ type: "error", content: error.message }));
       }
 
       setVoteChanged(true);
@@ -70,7 +70,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       });
 
       if (error) {
-        dispatch(onOpenModal({ type: "error", content: error?.message }));
+        dispatch(onOpenModal({ type: "error", content: error.message }));
       }
 
       setVoteChanged(true);
