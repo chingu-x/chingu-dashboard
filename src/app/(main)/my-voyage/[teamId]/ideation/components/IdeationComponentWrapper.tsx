@@ -51,6 +51,10 @@ export default async function IdeationComponentWrapper({
     );
   }
 
+  if (error) {
+    return `Error: ${error?.message}`;
+  }
+
   const teamId = currentVoyageTeam?.voyageTeamId && +params.teamId;
 
   if (teamId) {
@@ -58,10 +62,8 @@ export default async function IdeationComponentWrapper({
 
     if (res) {
       projectIdeas = res;
-    }
-
-    if (error) {
-      return <>{`Error: ${error.message}`}</>;
+    } else {
+      return <>{`Error: ${error?.message}`}</>;
     }
   } else {
     redirect("/");
@@ -70,9 +72,7 @@ export default async function IdeationComponentWrapper({
   // todo: add image when project ideas is empty
   // todo: adjust styles (colors)
 
-  return error ? (
-    `Error: ${error.message}`
-  ) : (
+  return (
     <>
       <Banner
         imageLight="/img/ideation_banner_light.png"
