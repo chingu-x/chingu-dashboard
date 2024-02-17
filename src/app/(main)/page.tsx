@@ -1,11 +1,17 @@
 // replace with dashboard page when that's completed
 
+"use client";
+
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Button from "@/components/Button";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpen } from "@/store/features/modal/modalSlice";
 
 export default function Home() {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="flex flex-row gap-x-6">
       <div className="flex flex-col gap-y-6 flex-grow-1">
@@ -15,8 +21,8 @@ export default function Home() {
               Before your Voyage starts...
             </p>
             <p className="font-medium	text-base">
-              Explore Chingu's Knowledge Hub to prepare for your Voyage with
-              information on tools, Agile, Scrum, Git, Teamwork, and more.
+              Explore Chingu&apos;s Knowledge Hub to prepare for your Voyage
+              with information on tools, Agile, Scrum, Git, Teamwork, and more.
             </p>
           </div>
           <div className="mt-6 flex flex-col gap-y-6">
@@ -82,7 +88,11 @@ export default function Home() {
           <p className="text-center font-medium	text-base">
             Need support? Let’s get you back on track!
           </p>
-          <Button className="self-center" variant="outline">
+          <Button
+            className="self-center"
+            variant="outline"
+            onClick={() => dispatch(onOpen({ type: "gettingHelp" }))}
+          >
             Get Help
           </Button>
         </div>
