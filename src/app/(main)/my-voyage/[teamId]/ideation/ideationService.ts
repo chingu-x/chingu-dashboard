@@ -1,10 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import routePaths from "@/utils/routePaths";
+import { CacheTag } from "@/utils/cacheTag";
 
 interface IdeationProps {
   teamId: number;
@@ -67,7 +67,7 @@ export async function addIdeation({
   const [res, error] = await handleAsync(addIdeationAsync);
 
   if (res) {
-    revalidatePath(routePaths.ideationPage(teamId.toString()));
+    revalidateTag(CacheTag.ideation);
   }
 
   return [res, error];
@@ -93,7 +93,7 @@ export async function editIdeation({
   const [res, error] = await handleAsync(editIdeationAsync);
 
   if (res) {
-    revalidatePath(routePaths.ideationPage(teamId.toString()));
+    revalidateTag(CacheTag.ideation);
   }
 
   return [res, error];
@@ -114,7 +114,7 @@ export async function deleteIdeation({
   const [res, error] = await handleAsync(deleteIdeationAsync);
 
   if (res) {
-    revalidatePath(routePaths.ideationPage(teamId.toString()));
+    revalidateTag(CacheTag.ideation);
   }
 
   return [res, error];
@@ -136,7 +136,7 @@ export async function addIdeationVote({
   const [res, error] = await handleAsync(addIdeationVoteAsync);
 
   if (res) {
-    revalidatePath(routePaths.ideationPage(teamId.toString()));
+    revalidateTag(CacheTag.ideation);
   }
 
   return [res, error];
@@ -158,7 +158,7 @@ export async function removeIdeationVote({
   const [res, error] = await handleAsync(removeIdeationVoteAsync);
 
   if (res) {
-    revalidatePath(routePaths.ideationPage(teamId.toString()));
+    revalidateTag(CacheTag.ideation);
   }
 
   return [res, error];
