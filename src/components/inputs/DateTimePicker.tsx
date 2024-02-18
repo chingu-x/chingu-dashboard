@@ -2,7 +2,7 @@
 
 import React from "react";
 import DatePicker, { ReactDatePickerProps } from "react-datepicker";
-import { CalendarIcon } from "@heroicons/react/24/outline";
+import { CalendarDaysIcon, CalendarIcon } from "@heroicons/react/24/outline";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -36,7 +36,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
         />
         {/* FIXED LEFT INPUT GROUP */}
         <div className="top-1/2 -translate-y-1/2 left-[2px] rounded-l-md bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 peer-hover:[&>*]:text-base-200 peer-focus-visible:[&>*]:text-base-200 peer-disabled:peer-hover:[&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute peer-disabled:peer-focus-visible:[&>*]:text-neutral [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5">
-          <CalendarIcon />
+          <CalendarDaysIcon />
         </div>
       </div>
     </div>
