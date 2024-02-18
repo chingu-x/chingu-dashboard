@@ -2,7 +2,7 @@
 
 import React from "react";
 import DatePicker, { ReactDatePickerProps } from "react-datepicker";
-import { CalendarDaysIcon, CalendarIcon } from "@heroicons/react/24/outline";
+import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 
 import "react-datepicker/dist/react-datepicker.css";
 
