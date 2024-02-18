@@ -10,6 +10,7 @@ import { GET } from "@/utils/requests";
 import Banner from "@/components/banner/Banner";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { VoyageTeamMember } from "@/store/features/user/userSlice";
+import { CacheTag } from "@/utils/cacheTag";
 // import { ideation } from "./fixtures/ideation";
 
 // If user is not logged in, nav should be updated to reflect signed out state
@@ -25,7 +26,8 @@ export async function fetchProjectIdeas({
     GET<IdeationData[]>(
       `api/v1/voyages/${teamId}/ideations`,
       token,
-      "force-cache"
+      "force-cache",
+      CacheTag.ideation
     );
 
   return await handleAsync(fetchProjectIdeasAsync);
