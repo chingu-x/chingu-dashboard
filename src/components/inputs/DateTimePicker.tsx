@@ -29,7 +29,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
           className={cn(
             "transition border-2 peer w-full outline-none rounded-lg px-3.5 py-2.5 pl-[56px] shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus disabled:cursor-not-allowed border-neutral/40 hover:border-neutral-focus focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:hover:border-neutral/40",
             errorMessage && "border-error focus-visible:shadow-error/30",
-            className
+            className,
           )}
           ref={ref}
           {...props}
@@ -40,7 +40,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
         </div>
       </div>
     </div>
-  )
+  ),
 );
 
 CustomInput.displayName = "CustomInput";
@@ -64,7 +64,7 @@ const DateTimePicker = React.forwardRef<DatePicker, DatePickerInputProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const filterPassedTime = (time: Date) => {
       const currentDate = new Date();
@@ -81,6 +81,8 @@ const DateTimePicker = React.forwardRef<DatePicker, DatePickerInputProps>(
           filterTime={filterPassedTime}
           dateFormat="MMMM d, yyyy h:mm aa"
           timeIntervals={15}
+          popperClassName="ml-1"
+          popperPlacement="bottom-start"
           customInput={
             <CustomInput
               id={id}
@@ -99,7 +101,7 @@ const DateTimePicker = React.forwardRef<DatePicker, DatePickerInputProps>(
         />
       </div>
     );
-  }
+  },
 );
 
 DateTimePicker.displayName = "DateTimePicker";
