@@ -3,6 +3,7 @@ import { useState } from "react";
 import ResourceInput from "./components/ResourceInput";
 import SortingButton from "./components/SortingButton";
 import ResourceCard from "./components/ResourceCard";
+import { resources } from "./components/fixtures/resources";
 import Banner from "@/components/banner/Banner";
 
 export default function ResourcesPage() {
@@ -26,7 +27,10 @@ export default function ResourcesPage() {
         <ResourceInput />
         <SortingButton onClick={handleClick} type={byNewest} />
       </div>
-      <ResourceCard />
+      {resources.map((item) =>(
+        <ResourceCard title={item.title} owner={item.owner} date={item.date} />
+      ))}
+      
     </>
   );
 }
