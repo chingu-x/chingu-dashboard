@@ -1,4 +1,5 @@
 // import EmptyState from "./components/EmptyState";
+import Agenda from "./components/Agenda";
 import MeetingOverview from "./components/MeetingOverview";
 import SprintActions from "./components/SprintActions";
 import Banner from "@/components/banner/Banner";
@@ -16,6 +17,7 @@ export default function SprintsPage() {
       <SprintActions />
       {/* <EmptyState /> */}
       <MeetingOverview />
+      <Agenda />
     </div>
   );
 }
