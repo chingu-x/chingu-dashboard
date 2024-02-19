@@ -37,41 +37,37 @@ export default function Stepper({
         {steppers.map((step) => {
           const { icon, status, onClickEvent, name } = step;
 
-          //   the indicatorDisplay logic is to show the check icon for completion
-          //   if the indicator is an icon instead of a number
-          // const indicatorDisplay =
-          //   typeof indicator !== "string" && status === "completed"
-          //     ? "checked"
-          //     : indicator;
-
-          // REDO: change color variant
-          let buttonVariant: ButtonProps["variant"] = "accent";
-          if (status === "current") buttonVariant = "primary";
-          if (status === "completed") buttonVariant = "secondary";
+          let chipBgColor: string = "bg-neutral";
+          if (status === "current") chipBgColor = "bg-primary-content";
+          if (status === "completed") chipBgColor = "bg-success-content";
 
           return (
             <div
               key={name}
               className={cn(
                 "flex flex-1 last:flex-none relative last:after:contents-none after:absolute after:content-[''] after:h-[7px] after:w-full after:top-1/2 after:-translate-y-1/2 after:-z-10",
-                status === "completed"
-                  ? "after:bg-primary"
-                  : "after:bg-base-100"
+                "after:bg-base-100"
               )}
             >
-              <Button
-                onClick={onClickEvent}
-                className={cn(
-                  "text-center",
-                  styleType === "icons" && "flex",
-                  styleType === "chips" && "w-[100px] h-[24px]"
-                )}
-                variant={buttonVariant}
-              >
-                <div>{styleType === "icons" && icon}</div>
-                <span>{name}</span>
-                <ArrowRightIcon className="h-[18px] w-[18px]" />
-              </Button>
+              {styleType === "icons" ? (
+                <Button
+                  onClick={onClickEvent}
+                  className={cn("text-center", styleType === "icons" && "flex")}
+                  variant={status === "completed" ? "secondary" : "neutral"}
+                >
+                  <div>{icon}</div>
+                  <span>{name}</span>
+                  <ArrowRightIcon className="h-[18px] w-[18px]" />
+                </Button>
+              ) : (
+                <div
+                  className={cn(
+                    "text-center w-[100px] h-[18px] rounded-full",
+                    status === "current" && "border-2 border-neutral h-[20px]",
+                    chipBgColor
+                  )}
+                ></div>
+              )}
             </div>
           );
         })}
