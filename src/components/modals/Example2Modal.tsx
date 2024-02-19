@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button";
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
+import DateTimePicker from "@/components/inputs/DateTimePicker";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 
@@ -21,6 +22,7 @@ const validationSchema = z.object({
     required: true,
     maxLen: 30,
   }),
+  date: z.date(),
 });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
@@ -33,11 +35,23 @@ export default function Example2Modal() {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
     reset,
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
+
+  const date = watch("date");
+
+  const setCustomValue = (id: "date", value: Date) => {
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
@@ -71,6 +85,15 @@ export default function Example2Modal() {
             maxLength={30}
             {...register("suggestion")}
             errorMessage={errors?.suggestion?.message}
+          />
+          <DateTimePicker
+            id="date"
+            placeholder="Select meeting date and time"
+            label="Date & Time"
+            selectedValue={date}
+            {...register("date")}
+            errorMessage={errors?.date?.message}
+            onChange={(value: Date) => setCustomValue("date", value)}
           />
         </div>
         {/* BUTTONS */}
