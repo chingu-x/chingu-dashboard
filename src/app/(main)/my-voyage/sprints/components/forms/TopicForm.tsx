@@ -28,8 +28,6 @@ export default function TopicForm() {
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
