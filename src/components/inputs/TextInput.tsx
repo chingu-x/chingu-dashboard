@@ -85,7 +85,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       type = "text",
       ...props
     },
-    ref,
+    ref
   ) => {
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const [isSubmitButtonVisible, setIsSubmitButtonVisible] = useState(false);
@@ -101,7 +101,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         const currentLength = e.target.value.length;
         if (currentLength > 0) {
           setCurrentSuggestion(
-            `Character length ${currentLength}/${maxLength}`,
+            `Character length ${currentLength}/${maxLength}`
           );
         } else {
           setCurrentSuggestion(suggestion);
@@ -144,7 +144,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
               inputGroup === "left" && inputGroupContent && "pl-[56px]",
               inputGroup === "right" && inputGroupContent && "pr-[56px]",
-              className,
+              className
             )}
             ref={ref}
             {...props}
@@ -170,8 +170,8 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               className={cn(
                 "right-[2px] rounded-r-md flex justify-center items-center top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5",
                 typeof inputGroupContent === "string" &&
-                  "text-base p-[10px] text-base-200 font-semibold",
-                isSubmitButtonVisible && "hidden",
+                  "text-[13px] p-[10px] text-base-200 font-semibold",
+                isSubmitButtonVisible && "hidden"
               )}
             >
               {inputGroupContent}
@@ -220,7 +220,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         />
       </div>
     );
-  },
+  }
 );
 
 TextInput.displayName = "TextInput";

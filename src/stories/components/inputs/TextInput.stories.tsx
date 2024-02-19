@@ -36,25 +36,27 @@ const meta = {
     },
     inputGroup: {
       description:
-        "Choose inputGroup (if `inputGroupIcon` is provided, becomes `required`).",
+        "Choose inputGroup (if `inputGroupContent` is provided, becomes `required`).",
     },
-    inputGroupIcon: {
+    inputGroupContent: {
       description:
         "Provide an icon for an input group (if `inputGroup` is provided, becomes `required`).",
       control: { type: "boolean" },
       mapping: { false: undefined, true: <EnvelopeIcon /> },
     },
-    submitButtonVariant: {
+    inputGroupAction: {
       description:
-        "Choose a submit button variant (if `inputGroup` equals `right`, becomes `required`).",
+        "An action to be called when a right input group is clicked. If case of react-hook-form if you just want to set focus on the input when the input group is clicked, just pass `{() => setFocus('inputId')}`.",
+    },
+    submitButtonVariant: {
+      description: "Choose a submit button variant.",
     },
     submitButtonText: {
-      description:
-        "A submit button text (if `inputGroup` equals `right`, becomes `required`).",
+      description: "A submit button text.",
     },
     clearInputAction: {
       description:
-        "An action to clear an input (if `inputGroup` equals `right`, becomes `required`). If case of react-hook-form, you can pass `{() => reset({ inputId: '' })}`.",
+        "An action to clear an input. If case of react-hook-form, you can pass `{() => reset({ inputId: '' })}`.",
     },
   },
 } satisfies Meta<typeof TextInput>;
@@ -118,11 +120,11 @@ export const LeftInputGroup = {
   args: {
     ...BaseTemplate.args,
     inputGroup: "left",
-    inputGroupIcon: <EnvelopeIcon />,
+    inputGroupContent: <EnvelopeIcon />,
   },
 };
 
-const RightInputGroupTemplate: Story = {
+export const RightInputGroupWithIcon: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 300 }}>
@@ -134,7 +136,56 @@ const RightInputGroupTemplate: Story = {
     id: "textInput",
     placeholder: "Placeholder",
     inputGroup: "right",
-    inputGroupIcon: <PlusCircleIcon />,
+    inputGroupContent: <PlusCircleIcon />,
+    inputGroupAction: () => {},
+  },
+  render: function Render(args) {
+    return (
+      <form>
+        <TextInput {...args} />
+      </form>
+    );
+  },
+};
+
+export const RightInputGroupWithText: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: 300 }}>
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    id: "textInput",
+    placeholder: "Placeholder",
+    inputGroup: "right",
+    inputGroupContent: "Submit",
+    inputGroupAction: () => {},
+  },
+  render: function Render(args) {
+    return (
+      <form>
+        <TextInput {...args} />
+      </form>
+    );
+  },
+};
+
+export const EditableRightInputGroupWithSaveButton: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: 300 }}>
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    id: "textInput",
+    placeholder: "Placeholder",
+    inputGroup: "right",
+    inputGroupContent: <PlusCircleIcon />,
+    inputGroupAction: () => {},
     submitButtonVariant: "primary",
     submitButtonText: "Save",
     clearInputAction: () => {},
@@ -151,41 +202,18 @@ const RightInputGroupTemplate: Story = {
       <form onSubmit={onSubmit}>
         <TextInput
           {...args}
-          id={"textInput"}
-          placeholder={"Placeholder"}
-          inputGroup={"right"}
-          inputGroupIcon={<PlusCircleIcon />}
-          submitButtonVariant={"primary"}
-          submitButtonText={"Save"}
+          id="textInput"
+          placeholder="Placeholder"
+          inputGroup="right"
+          inputGroupContent={<PlusCircleIcon />}
+          inputGroupAction={() => {}}
+          submitButtonVariant="primary"
+          submitButtonText="Save"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           clearInputAction={() => clearInput()}
         />
       </form>
     );
-  },
-};
-
-export const RightInputGroupWithPrimarySubmitButton = {
-  ...RightInputGroupTemplate,
-  args: {
-    ...RightInputGroupTemplate.args,
-    submitButtonVariant: "primary",
-  },
-};
-
-export const RightInputGroupWithSecondarySubmitButton = {
-  ...RightInputGroupTemplate,
-  args: {
-    ...RightInputGroupTemplate.args,
-    submitButtonVariant: "secondary",
-  },
-};
-
-export const RightInputGroupWithNeutralSubmitButton = {
-  ...RightInputGroupTemplate,
-  args: {
-    ...RightInputGroupTemplate.args,
-    submitButtonVariant: "neutral",
   },
 };
