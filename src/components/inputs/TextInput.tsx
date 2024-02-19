@@ -25,28 +25,40 @@ type ButtonVariants = "primary" | "secondary" | "neutral";
 type ConditionalTextInputProps =
   | {
       inputGroup: "left";
-      inputGroupIcon: JSX.Element;
+      inputGroupContent: JSX.Element;
+      inputGroupAction?: never;
       submitButtonText?: never;
       submitButtonVariant?: never;
       clearInputAction?: never;
     }
   | {
       inputGroup: "right";
-      inputGroupIcon: JSX.Element;
+      inputGroupContent: JSX.Element | string;
+      inputGroupAction: () => void;
+      submitButtonText?: never;
+      submitButtonVariant?: never;
+      clearInputAction?: never;
+    }
+  | {
+      inputGroup: "right";
+      inputGroupContent: JSX.Element | string;
+      inputGroupAction: () => void;
       submitButtonText: string;
       submitButtonVariant: ButtonVariants;
       clearInputAction: () => void;
     }
   | {
       inputGroup?: never;
-      inputGroupIcon?: undefined;
+      inputGroupContent?: undefined;
+      inputGroupAction?: never;
       submitButtonText?: never;
       submitButtonVariant?: never;
       clearInputAction?: never;
     }
   | {
       inputGroup?: undefined;
-      inputGroupIcon?: never;
+      inputGroupContent?: never;
+      inputGroupAction?: never;
       submitButtonText?: never;
       submitButtonVariant?: never;
       clearInputAction?: never;
@@ -64,7 +76,8 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       maxLength,
       errorMessage,
       inputGroup,
-      inputGroupIcon,
+      inputGroupContent,
+      inputGroupAction,
       submitButtonVariant,
       submitButtonText,
       clearInputAction,
@@ -95,7 +108,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         }
       }
 
-      // Submit button
+      // Submit button toggle
       if (
         submitButtonText &&
         submitButtonVariant &&
@@ -108,8 +121,10 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     }
 
     function clearInput() {
-      clearInputAction && clearInputAction();
-      setIsSubmitButtonVisible(false);
+      if (clearInputAction) {
+        clearInputAction();
+        setIsSubmitButtonVisible(false);
+      }
     }
 
     return (
@@ -127,8 +142,8 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               "transition border-2 peer w-full outline-none rounded-lg px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus disabled:cursor-not-allowed border-neutral/40 hover:border-neutral-focus focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:hover:border-neutral/40",
               errorMessage &&
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
-              inputGroup === "left" && inputGroupIcon && "pl-[56px]",
-              inputGroup === "right" && inputGroupIcon && "pr-[56px]",
+              inputGroup === "left" && inputGroupContent && "pl-[56px]",
+              inputGroup === "right" && inputGroupContent && "pr-[56px]",
               className,
             )}
             ref={ref}
@@ -141,17 +156,26 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             }}
           />
           {/* FIXED INPUT GROUP */}
-          {inputGroup && inputGroupIcon && (
-            <div
+          {/* LEFT */}
+          {inputGroup === "left" && inputGroupContent && (
+            <div className="left-[2px] rounded-l-md flex justify-center items-center top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5">
+              {inputGroupContent}
+            </div>
+          )}
+          {/* RIGHT */}
+          {inputGroup === "right" && inputGroupContent && (
+            <button
+              type="button"
+              onClick={inputGroupAction}
               className={cn(
-                "top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 peer-hover:[&>*]:text-base-200 peer-focus-visible:[&>*]:text-base-200 peer-disabled:peer-hover:[&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute peer-disabled:peer-focus-visible:[&>*]:text-neutral [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5",
-                inputGroup === "left" && "left-[2px] rounded-l-md",
-                inputGroup === "right" && "right-[2px] rounded-r-md",
-                inputGroup === "right" && isSubmitButtonVisible && "hidden",
+                "right-[2px] rounded-r-md flex justify-center items-center top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5",
+                typeof inputGroupContent === "string" &&
+                  "text-base p-[10px] text-base-200 font-semibold",
+                isSubmitButtonVisible && "hidden",
               )}
             >
-              {inputGroupIcon}
-            </div>
+              {inputGroupContent}
+            </button>
           )}
           {/* SUBMIT BUTTON */}
           {isSubmitButtonVisible && (
