@@ -40,7 +40,7 @@ const meta = {
     },
     inputGroupContent: {
       description:
-        "Provide an icon for an input group (if `inputGroup` is provided, becomes `required`).",
+        "Provide an icon or a text for an input group (if `inputGroup` is provided, becomes `required`).",
       control: { type: "boolean" },
       mapping: { false: undefined, true: <EnvelopeIcon /> },
     },
