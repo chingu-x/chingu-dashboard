@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 import {
   CalendarIcon,
   DocumentCheckIcon,
@@ -16,9 +16,11 @@ export default function SprintActions() {
       <Button variant="primary" size="lg">
         <DocumentCheckIcon className="h-[18px] w-[18px]" /> Submit Check-in
       </Button>
-      <Button variant="outline" size="lg">
-        <CalendarIcon className="h-[18px] w-[18px]" /> Create Meeting
-      </Button>
+      <Link href="/my-voyage/sprints/create-meeting">
+        <Button variant="outline" size="lg">
+          <CalendarIcon className="h-[18px] w-[18px]" /> Create Meeting
+        </Button>
+      </Link>
     </div>
   );
 }
