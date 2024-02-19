@@ -185,7 +185,6 @@ export const EditableRightInputGroupWithSaveButton: Story = {
     placeholder: "Placeholder",
     inputGroup: "right",
     inputGroupContent: <PlusCircleIcon />,
-    inputGroupAction: () => {},
     submitButtonVariant: "primary",
     submitButtonText: "Save",
     clearInputAction: () => {},
@@ -206,7 +205,7 @@ export const EditableRightInputGroupWithSaveButton: Story = {
           placeholder="Placeholder"
           inputGroup="right"
           inputGroupContent={<PlusCircleIcon />}
-          inputGroupAction={() => {}}
+          inputGroupAction={undefined}
           submitButtonVariant="primary"
           submitButtonText="Save"
           value={value}

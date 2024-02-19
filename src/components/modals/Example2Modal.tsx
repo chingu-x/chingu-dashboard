@@ -56,7 +56,7 @@ export default function Example2Modal() {
       onOpen({
         context: "success",
         message: "Your information has been updated",
-      }),
+      })
     );
     handleClose();
   };
@@ -90,9 +90,6 @@ export default function Example2Modal() {
             maxLength={30}
             inputGroup="right"
             inputGroupContent={<PlusCircleIcon />}
-            inputGroupAction={() => {
-              setFocus("suggestion");
-            }}
             submitButtonText="Save"
             submitButtonVariant="secondary"
             clearInputAction={() => reset({ suggestion: "" })}
