@@ -109,7 +109,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       }
     }
 
-    function handleOnFocus(e: FocusEvent<HTMLInputElement, Element>) {
+    function handleOnFocus() {
       // Submit button toggle
       if (submitButtonText && submitButtonVariant) {
         setIsSubmitButtonVisible(true);
@@ -154,7 +154,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               // call onFocus which can be passed as prop
               if (props.onFocus) void props.onFocus(e);
               // call your handler
-              handleOnFocus(e);
+              handleOnFocus();
             }}
           />
           {/* FIXED INPUT GROUP */}
