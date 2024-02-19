@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, FocusEvent } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
@@ -85,7 +85,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       type = "text",
       ...props
     },
-    ref,
+    ref
   ) => {
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const [isSubmitButtonVisible, setIsSubmitButtonVisible] = useState(false);
@@ -101,22 +101,18 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         const currentLength = e.target.value.length;
         if (currentLength > 0) {
           setCurrentSuggestion(
-            `Character length ${currentLength}/${maxLength}`,
+            `Character length ${currentLength}/${maxLength}`
           );
         } else {
           setCurrentSuggestion(suggestion);
         }
       }
+    }
 
+    function handleOnFocus(e: FocusEvent<HTMLInputElement, Element>) {
       // Submit button toggle
-      if (
-        submitButtonText &&
-        submitButtonVariant &&
-        e.target.value.length > 0
-      ) {
+      if (submitButtonText && submitButtonVariant) {
         setIsSubmitButtonVisible(true);
-      } else {
-        setIsSubmitButtonVisible(false);
       }
     }
 
@@ -144,7 +140,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
               inputGroup === "left" && inputGroupContent && "pl-[56px]",
               inputGroup === "right" && inputGroupContent && "pr-[56px]",
-              className,
+              className
             )}
             ref={ref}
             {...props}
@@ -153,6 +149,12 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               if (props.onChange) void props.onChange(e);
               // call your handler
               handleOnChange(e);
+            }}
+            onFocus={(e) => {
+              // call onFocus which can be passed as prop
+              if (props.onFocus) void props.onFocus(e);
+              // call your handler
+              handleOnFocus(e);
             }}
           />
           {/* FIXED INPUT GROUP */}
@@ -171,7 +173,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                 "right-[2px] rounded-r-md flex justify-center items-center top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5",
                 typeof inputGroupContent === "string" &&
                   "text-[13px] p-[10px] text-base-200 font-semibold",
-                isSubmitButtonVisible && "hidden",
+                isSubmitButtonVisible && "hidden"
               )}
             >
               {inputGroupContent}
@@ -220,7 +222,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         />
       </div>
     );
-  },
+  }
 );
 
 TextInput.displayName = "TextInput";
