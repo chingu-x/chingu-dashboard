@@ -5,13 +5,19 @@ import SortingButton from "./components/SortingButton";
 import ResourceCard from "./components/ResourceCard";
 import { resources } from "./components/fixtures/resources";
 import Banner from "@/components/banner/Banner";
+import Modal from "@/components/modals/Modal";
+import Button from "@/components/Button";
 
 export default function ResourcesPage() {
-  const [byNewest, setByNewest] = useState(true);
+  const [ byNewest, setByNewest ] = useState(true);
+  const [ deleteModal, setDeleteModal ] = useState(true);
 
   const handleClick = () => {
     setByNewest(!byNewest);
   };
+  const onClose= () => {
+    setDeleteModal(!deleteModal);
+  }
 
   return (
     <>
@@ -28,9 +34,20 @@ export default function ResourcesPage() {
         <SortingButton onClick={handleClick} type={byNewest} />
       </div>
       {resources.map((item) =>(
-        <ResourceCard title={item.title} owner={item.owner} date={item.date} />
+        <ResourceCard key={item.id} id={item.id} title={item.title} owner={item.owner} date={item.date} />
       ))}
-      
+      <Modal isOpen={deleteModal} title="Confirm Deletion?" onClose={onClose}>{
+        <>
+        <div className="bg-base-200 p-1 mb-4">
+          <p className="font-bold">Are you sure you want to delete the resource you shared that is named:</p>
+          <p>Title of resource</p>
+        </div>
+        <div className="flex justify-between w-full h-16">
+          <Button size="lg" variant="neutral" className="w-3/6 m-1">Go Back</Button>
+          <Button size="lg" variant="error" className="w-3/6 m-1">Delete</Button>
+        </div>
+        </>
+      }</Modal>
     </>
   );
 }
