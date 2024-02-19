@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState, FocusEvent } from "react";
+import React, { ChangeEvent, useState, useRef, ElementRef } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
@@ -42,7 +42,7 @@ type ConditionalTextInputProps =
   | {
       inputGroup: "right";
       inputGroupContent: JSX.Element | string;
-      inputGroupAction: () => void;
+      inputGroupAction?: never;
       submitButtonText: string;
       submitButtonVariant: ButtonVariants;
       clearInputAction: () => void;
@@ -87,6 +87,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     },
     ref
   ) => {
+    const textInputRef = useRef<ElementRef<"input"> | null>(null);
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const [isSubmitButtonVisible, setIsSubmitButtonVisible] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -107,6 +108,10 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           setCurrentSuggestion(suggestion);
         }
       }
+    }
+
+    function setFocus() {
+      textInputRef.current?.focus();
     }
 
     function handleOnFocus() {
@@ -142,7 +147,14 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               inputGroup === "right" && inputGroupContent && "pr-[56px]",
               className
             )}
-            ref={ref}
+            ref={(e) => {
+              if (typeof ref === "function") {
+                ref(e);
+              } else if (ref) {
+                ref.current = e;
+              }
+              textInputRef.current = e;
+            }}
             {...props}
             onChange={(e) => {
               // call onChange which can be passed as prop
@@ -150,12 +162,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               // call your handler
               handleOnChange(e);
             }}
-            onFocus={(e) => {
-              // call onFocus which can be passed as prop
-              if (props.onFocus) void props.onFocus(e);
-              // call your handler
-              handleOnFocus();
-            }}
+            onFocus={handleOnFocus}
           />
           {/* FIXED INPUT GROUP */}
           {/* LEFT */}
@@ -168,7 +175,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           {inputGroup === "right" && inputGroupContent && (
             <button
               type="button"
-              onClick={inputGroupAction}
+              onClick={inputGroupAction ? inputGroupAction : setFocus}
               className={cn(
                 "right-[2px] rounded-r-md flex justify-center items-center top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5",
                 typeof inputGroupContent === "string" &&
