@@ -27,6 +27,10 @@ const validationSchema = z.object({
     required: true,
     maxLen: 30,
   }),
+  techStack: validateTextInput({
+    inputName: "Teck Stack",
+    required: true,
+  }),
 });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
@@ -41,6 +45,7 @@ export default function Example2Modal() {
     handleSubmit,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
@@ -74,7 +79,7 @@ export default function Example2Modal() {
             id="email"
             placeholder="What is your email?"
             inputGroup="left"
-            inputGroupIcon={<EnvelopeIcon />}
+            inputGroupContent={<EnvelopeIcon />}
             {...register("email")}
             errorMessage={errors?.email?.message}
           />
@@ -84,12 +89,26 @@ export default function Example2Modal() {
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
             inputGroup="right"
-            inputGroupIcon={<PlusCircleIcon />}
+            inputGroupContent={<PlusCircleIcon />}
+            inputGroupAction={() => {
+              setFocus("suggestion");
+            }}
             submitButtonText="Save"
             submitButtonVariant="secondary"
             clearInputAction={() => reset({ suggestion: "" })}
             {...register("suggestion")}
             errorMessage={errors?.suggestion?.message}
+          />
+          <TextInput
+            id="techStack"
+            placeholder="Add Tech Stack"
+            inputGroup="right"
+            inputGroupContent={<PlusCircleIcon />}
+            inputGroupAction={() => {
+              setFocus("techStack");
+            }}
+            {...register("techStack")}
+            errorMessage={errors?.techStack?.message}
           />
         </div>
       </form>
