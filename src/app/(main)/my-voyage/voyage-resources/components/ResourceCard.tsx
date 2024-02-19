@@ -2,12 +2,15 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/20/solid";
 
 interface ResourceCardProps {
+  id:number;
   title: string;
   owner: string;
   date: string;
+  onClick: (selected:any) => void;
 }
 
-export default function ResourceCard ({title, owner, date}:ResourceCardProps) {
+export default function ResourceCard ({id, title, owner, date, onClick}:ResourceCardProps) {
+
   return (
     <div className="flex items-center justify-between h-20 p-4 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
       <ArrowTopRightOnSquareIcon className="w-8 h-8 stroke-1 hover:stroke-2"/>
@@ -18,7 +21,9 @@ export default function ResourceCard ({title, owner, date}:ResourceCardProps) {
           <div>Added: {date}</div>
         </div>
       </div>
-      <div className="w-10 h-10 hover:bg-base-100 flex justify-center items-center rounded-full">
+      <div className="w-10 h-10 hover:bg-base-100 flex justify-center items-center rounded-full" onClick={onClick}>
+        {/**clicking trash "grabs" the id and 
+         * sends it back up to page which opens delete modal with id "attached" */}
         <TrashIcon className="w-6 h-6"/>
       </div>
     </div>
