@@ -1,4 +1,5 @@
-import EmptyState from "./components/EmptyState";
+// import EmptyState from "./components/EmptyState";
+import MeetingOverview from "./components/MeetingOverview";
 import SprintActions from "./components/SprintActions";
 import Banner from "@/components/banner/Banner";
 
@@ -13,7 +14,8 @@ export default function SprintsPage() {
         description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
       />
       <SprintActions />
-      <EmptyState />
+      {/* <EmptyState /> */}
+      <MeetingOverview />
     </div>
   );
 }
