@@ -2,7 +2,7 @@ export async function GET<T>(
   url: string,
   token: string,
   cache: RequestCache,
-  tags?: string
+  tags?: string,
 ): Promise<T> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
@@ -29,7 +29,7 @@ export async function POST<X, Y>(
   url: string,
   token: string,
   cache: RequestCache,
-  payload?: X
+  payload?: X,
 ): Promise<Y> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
@@ -56,7 +56,7 @@ export async function PATCH<X, Y>(
   url: string,
   token: string,
   cache: RequestCache,
-  payload: X
+  payload: X,
 ): Promise<Y> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
@@ -82,7 +82,7 @@ export async function PATCH<X, Y>(
 export async function DELETE<X>(
   url: string,
   token: string,
-  cache: RequestCache
+  cache: RequestCache,
 ): Promise<X> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {

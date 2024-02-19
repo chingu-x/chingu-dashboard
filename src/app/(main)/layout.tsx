@@ -3,7 +3,7 @@ import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
 import AuthHeader from "@/components/navbar/AuthHeader";
 import { getUser } from "@/utils/getUser";
-import AuthProvider from "@/components/providers/AuthProvider";
+import AuthProvider from "@/app/(auth)/AuthProvider";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ export default async function Layout({ children }: LayoutProps) {
 
   return (
     <div className="flex flex-col w-screen h-screen">
-      {user && <AuthProvider user={user} error={error} />}
+      <AuthProvider user={user} error={error} />
       <Navbar>
         <>
           <ModeToggle />

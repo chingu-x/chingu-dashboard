@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import IdeationContainer from "./IdeationContainer";
-import Preloader from "./Preloader";
+import IdeationProvider from "./IdeationProvider";
 import CreateIdeationContainer from "./CreateIdeationContainer";
 import { getUser } from "@/utils/getUser";
 import { FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
@@ -65,7 +65,7 @@ export default async function IdeationComponentWrapper({
     if (res) {
       projectIdeas = res;
     } else {
-      return <>{`Error: ${error?.message}`}</>;
+      return `Error: ${error?.message}`;
     }
   } else {
     redirect("/");
@@ -85,7 +85,7 @@ export default async function IdeationComponentWrapper({
       />
       <div className="flex flex-col items-center gap-y-10">
         <CreateIdeationContainer />
-        <Preloader payload={projectIdeas} />
+        <IdeationProvider payload={projectIdeas} />
         {projectIdeas.map((projectIdea) => (
           <IdeationContainer
             key={projectIdea.id}

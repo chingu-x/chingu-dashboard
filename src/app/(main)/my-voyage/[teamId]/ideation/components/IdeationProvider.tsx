@@ -7,11 +7,11 @@ import {
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch } from "@/store/hooks";
 
-export interface PreloaderProps {
+export interface IdeationProviderProps {
   payload: IdeationData[];
 }
 
-function Preloader({ payload }: PreloaderProps) {
+export default function IdeationProvider({ payload }: IdeationProviderProps) {
   const dispatch = useAppDispatch();
 
   dispatch(fetchIdeations(payload));
@@ -19,5 +19,3 @@ function Preloader({ payload }: PreloaderProps) {
 
   return null;
 }
-
-export default Preloader;
