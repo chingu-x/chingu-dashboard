@@ -2,19 +2,20 @@
 import { useState } from "react";
 import ResourceInput from "./components/ResourceInput";
 import SortingButton from "./components/SortingButton";
+import ResourceCard from "./components/ResourceCard";
 import Banner from "@/components/banner/Banner";
 
 export default function ResourcesPage() {
-  const [ byNewest, setByNewest ] = useState(true);
+  const [byNewest, setByNewest] = useState(true);
 
   const handleClick = () => {
     setByNewest(!byNewest);
   };
 
-  return  (
+  return (
     <>
       <Banner
-      //replace tech_stack pngs with resource page png's
+        //replace tech_stack pngs with resource page png's
         imageLight="/img/tech_stack_banner_light.png"
         imageDark="/img/tech_stack_banner_dark.png"
         alt="resources_banner"
@@ -23,8 +24,9 @@ export default function ResourcesPage() {
       />
       <div className="flex  items-center">
         <ResourceInput />
-        <SortingButton onClick={handleClick} type={byNewest}/>
+        <SortingButton onClick={handleClick} type={byNewest} />
       </div>
+      <ResourceCard />
     </>
   );
 }
