@@ -94,45 +94,53 @@
 
 /* React DateTime Picker styles */
 .react-datepicker {
-border-radius: 8px !important;
-overflow: hidden !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
 }
 
 .react-datepicker {
-border: 2px solid rgba(107, 114, 128, 0.4) !important;
-box-shadow: 0px 0px 0px 3px rgba(107, 114, 128, 0.3) !important;
+  background-color: #F5F5F5 !important;
+  border: 2px solid rgba(107, 114, 128, 0.4) !important;
+  /* box-shadow: 0px 0px 0px 3px rgba(107, 114, 128, 0.3) !important; */
 }
 
 [data-theme='dark'] .react-datepicker {
-border: 2px solid rgba(107, 114, 128, 0.4) !important;
-box-shadow: 0px 0px 0px 3px rgba(107, 114, 128, 0.3) !important;
+  background-color: #16171A !important;
+  border: 2px solid rgba(107, 114, 128, 0.4) !important;
+  /* box-shadow: 0px 0px 0px 3px rgba(107, 114, 128, 0.3) !important; */
+}
+
+.react-datepicker-popper {
+  top: 12px !important;
 }
 
 .react-datepicker__navigation-icon::before {
-    border-color: #6B7280 !important;
+  border-color: #6B7280 !important;
 }
 
 [data-theme='dark'] .react-datepicker__navigation-icon::before {
-    border-color: #6B7280 !important; 
+  border-color: #6B7280 !important; 
 }
 
-.react-datepicker,
 .react-datepicker__month-container, 
 .react-datepicker__header, 
 .react-datepicker__time-container, 
 .react-datepicker__header,
 .react-datepicker__time-box  {
-    background-color: #F5F5F5 !important;
-    border: none !important;
+  background-color: #F5F5F5 !important;
+  border: none !important;
 }
 
-[data-theme='dark'] .react-datepicker,
+.react-datepicker__month-container {
+  border-right: 1px solid rgba(107, 114, 128, 0.4) !important;
+}
+
 [data-theme='dark'] .react-datepicker__month-container, 
 [data-theme='dark'] .react-datepicker__header, 
 [data-theme='dark'] .react-datepicker__time-container,
 [data-theme='dark'] .react-datepicker__header,
 [data-theme='dark'] .react-datepicker__time-box  {
-    background-color: #16171A !important;
+  background-color: #16171A !important;
 }
 
 .react-datepicker__day,
@@ -185,12 +193,12 @@ box-shadow: 0px 0px 0px 3px rgba(107, 114, 128, 0.3) !important;
 
 .react-datepicker__time-list-item--disabled,
 .react-datepicker__time-list-item--disabled:hover {
-    background: none !important;
-    color: #E3E5EB !important;
+  background: none !important;
+  color: #E3E5EB !important;
 }
 
 [data-theme='dark'] .react-datepicker__time-list-item--disabled {
-    color: #383B43 !important;
+  color: #383B43 !important;
 }
 
 .react-datepicker__triangle {
