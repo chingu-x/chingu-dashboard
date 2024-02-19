@@ -23,6 +23,11 @@ export default function ResourcesPage() {
     setSelectedResource({id, title});
     setDeleteModal(true)
   }
+  const deleteResource = (event:any) => {
+    //Todo:
+    //replace with delete req. to be.
+    event.preventDefault()
+  }
   return (
     <>
       <Banner
@@ -46,18 +51,20 @@ export default function ResourcesPage() {
 
 
       <Modal isOpen={deleteModal} title="Confirm Deletion?" onClose={onClose}>{
-        <>
-        {/**change to form */}
-        <div className="bg-base-200 p-1 mb-4">
-          <p className="font-bold">Are you sure you want to delete the resource you shared that is named:</p>
-          <p>{selectedResource.title}</p>
-        </div>
-        <div className="flex justify-between w-full h-16">
-          <Button size="lg" variant="neutral" className="w-3/6 m-1">Go Back</Button>
-          <Button size="lg" variant="error" className="w-3/6 m-1">Delete</Button>
-        </div>
-        </>
+        <form>
+          <div className="bg-base-200 p-1 mb-4">
+            <p className="font-bold">Are you sure you want to delete the resource you shared that is named:</p>
+            <p>{selectedResource.title}</p>
+          </div>
+          <div className="flex justify-between w-full h-16">
+            <Button size="lg" variant="neutral" onClick={onClose} className="w-3/6 m-1">Go Back</Button>
+            <Button type="submit" size="lg" variant="error" onSubmit={deleteResource} className="w-3/6 m-1">Delete</Button>
+          </div>
+        </form>
       }</Modal>
+
+      
+
       {/**add view modal as well */}
       {/**Create parent stateful 'client' component ???*/}
     </>
