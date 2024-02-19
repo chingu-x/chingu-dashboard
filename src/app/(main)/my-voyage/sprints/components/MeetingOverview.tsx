@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-import Button from "@/components/Button";
 import {
   ArrowUpRightIcon,
   CalendarDaysIcon,
   ClockIcon,
 } from "@heroicons/react/24/outline";
+import Button from "@/components/Button";
 
 export default function MeetingOverview() {
   return (
