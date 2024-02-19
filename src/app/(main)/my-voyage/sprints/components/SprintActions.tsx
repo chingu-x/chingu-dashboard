@@ -9,7 +9,7 @@ import Button from "@/components/Button";
 
 export default function SprintActions() {
   return (
-    <div className="flex justify-between p-5 bg-base-100 rounded-2xl">
+    <div className="flex justify-between p-5 shadow-md bg-base-200 rounded-2xl">
       <Button variant="secondary" size="lg">
         <RocketLaunchIcon className="h-[18px] w-[18px]" /> Submit Voyage
       </Button>

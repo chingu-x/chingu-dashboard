@@ -38,13 +38,14 @@ export default function TopicForm() {
   };
 
   return (
+    // TODO: Create some general form wrapper component
     <div className="flex flex-col items-center w-full bg-base-200 rounded-2xl">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-4 max-w-[650px] p-10 w-full"
       >
         <div className="flex flex-col mb-6 gap-y-4">
-          <h1 className="text-3xl font-bold text-base-300">Add Agenda Topic</h1>
+          <h2 className="text-3xl font-bold text-base-300">Add Agenda Topic</h2>
           <p className="text-lg font-medium text-base-300">
             What would you like to address during the meeting?
           </p>
