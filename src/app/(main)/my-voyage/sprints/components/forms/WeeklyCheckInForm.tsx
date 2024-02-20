@@ -4,14 +4,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import FormBanner from "./FormBanner";
+import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
-import DateTimePicker from "@/components/inputs/DateTimePicker";
-import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
-import FormBanner from "./FormBanner";
-import Label from "@/components/inputs/Label";
 
 const validationSchema = z.object({
   achievements: validateTextInput({
@@ -64,7 +62,7 @@ export default function MeetingForm() {
         {/* Achievements */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
           <div className="max-w-[650px] w-full">
-            <Label htmlFor="achievements" className="font-semibold">
+            <Label htmlFor="achievements" className="font-semibold normal-case">
               Please share any personal or team achievements this week here.
               (ex. held a meeting, teammate got a job, had a pair programming
               session, learned a valuable team lesson, solved a challenging
@@ -83,9 +81,12 @@ export default function MeetingForm() {
         {/* Voyage Guide Feedback */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
           <div className="max-w-[650px] w-full">
-            <Label htmlFor="voyageGuideFeedback" className="font-semibold">
+            <Label
+              htmlFor="voyageGuideFeedback"
+              className="font-semibold normal-case"
+            >
               If a Product Owner has been assigned to your team do you have feed
-              back to share with us about how that's working?
+              back to share with us about how that&apos;s working?
             </Label>
             <Textarea
               id="voyageGuideFeedback"
@@ -100,9 +101,12 @@ export default function MeetingForm() {
         {/* Product Owner Feedback */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
           <div className="max-w-[650px] w-full">
-            <Label htmlFor="productOwnerFeedback" className="font-semibold">
+            <Label
+              htmlFor="productOwnerFeedback"
+              className="font-semibold normal-case"
+            >
               If a Product Owner has been assigned to your team do you have feed
-              back to share with us about how that's working?
+              back to share with us about how that&apos;s working?
             </Label>
             <Textarea
               id="productOwnerFeedback"
@@ -117,8 +121,11 @@ export default function MeetingForm() {
         {/* Personal Project Showcase */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
           <div className="max-w-[650px] w-full">
-            <Label htmlFor="personalProjectShowcase" className="font-semibold">
-              Do you have any personal projects you've built that we can
+            <Label
+              htmlFor="personalProjectShowcase"
+              className="font-semibold normal-case"
+            >
+              Do you have any personal projects you&apos;ve built that we can
               showcase in the Weekly Update? (these can be from anytime in your
               coding history! We want to showcase it!)
             </Label>
@@ -135,7 +142,7 @@ export default function MeetingForm() {
         {/* Extra comment */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
           <div className="max-w-[650px] w-full">
-            <Label htmlFor="extraComment" className="font-semibold">
+            <Label htmlFor="extraComment" className="font-semibold normal-case">
               Please provide any extra other comments, concerns, lessons
               learned, something you want to learn, etc. here. The more the
               better since this helps us find ways to support teams & improve
