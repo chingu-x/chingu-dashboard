@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   ClipboardDocumentListIcon,
   PlusIcon,
@@ -12,9 +13,11 @@ export default function Agenda() {
           <ClipboardDocumentListIcon className="h-[30px] w-[30px]" />
           Agenda
         </h3>
-        <Button className="gap-x-[60px] w-[230px] justify-between" size="lg">
-          Add topic <PlusIcon className="w-[20px] h-[20px]" />
-        </Button>
+        <Link href="/my-voyage/sprints/add-topic">
+          <Button className="gap-x-[60px] w-[230px] justify-between" size="lg">
+            Add topic <PlusIcon className="w-[20px] h-[20px]" />
+          </Button>
+        </Link>
       </div>
       <div className="flex flex-col p-5 rounded-lg bg-base-100 gap-y-4">
         <h4 className="py-2 text-xl font-medium">Contribute to the agenda!</h4>
