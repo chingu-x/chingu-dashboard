@@ -32,7 +32,7 @@ export default function MeetingOverview() {
       </div>
       <Link href="/" className="w-full">
         <Button
-          className="justify-between w-full bg-primary-content text-base-300"
+          className="justify-between w-full bg-primary-content text-base-300 hover:text-base-200 "
           size="lg"
         >
           Start meeting <ArrowUpRightIcon className="w-[20px] h-[20px]" />
