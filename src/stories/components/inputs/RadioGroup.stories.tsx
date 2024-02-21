@@ -76,7 +76,7 @@ const BaseTemplate: Story = {
         <div
           className={cn(
             "w-full grid grid-cols-[150px_1fr] px-4 items-center justify-between",
-            args.titleRight && "grid-cols-[130px_1fr_130px]"
+            args.titleRight && "grid-cols-[130px_1fr_130px]",
           )}
         >
           <span></span>

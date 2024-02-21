@@ -17,7 +17,7 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
     <div
       className={cn(
         "relative flex items-center w-full gap-x-4",
-        altLayout && "w-auto"
+        altLayout && "w-auto",
       )}
     >
       <Label
@@ -36,7 +36,7 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
         {!altLayout && label}
       </Label>
     </div>
-  )
+  ),
 );
 
 RadioGroupItem.displayName = "RadioGroupItem";
@@ -55,7 +55,7 @@ const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
           <div
             className={cn(
               "w-full bg-neutral-content px-4 py-[23px] grid grid-cols-[150px_1fr] gap-x-4 items-center justify-between rounded-lg",
-              titleRight && "grid-cols-[130px_1fr_130px] bg-base-100"
+              titleRight && "grid-cols-[130px_1fr_130px] bg-base-100",
             )}
           >
             <span className="text-base font-medium text-base-300">
@@ -98,7 +98,7 @@ const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
         </div>
       );
     }
-  }
+  },
 );
 
 RadioGroup.displayName = "RadioGroup";
