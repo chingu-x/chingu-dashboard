@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import {
   ProjectIdeaVotes,
@@ -16,6 +15,8 @@ import {
   removeIdeationVote,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import AvatarGroup from "@/components/avatar/AvatarGroup";
+import Avatar from "@/components/avatar/Avatar";
 
 interface VoteCardProps {
   projectIdeaId: number;
@@ -27,7 +28,7 @@ interface VoteCardProps {
 // todo: add delete confirmation modal
 function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
-    null,
+    null
   );
   const { id } = useAppSelector((state) => state.user);
   const { loading } = useAppSelector((state) => state.ideation);
@@ -80,7 +81,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users],
+    [users]
   );
 
   function buttonContent() {
@@ -128,7 +129,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
         <h2 className="text-xl font-semibold text-base-300">{`Vote${
           users.length > 1 ? "s" : ""
         }`}</h2>
-        <div className="w-full -space-x-2 avatar-group">
+        <AvatarGroup>
           {users.map((user) => (
             <Avatar
               width={24}
@@ -137,7 +138,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
               image={user.votedBy.member.avatar}
             />
           ))}
-        </div>
+        </AvatarGroup>
         {currentUserVoted !== null ? (
           <Button
             type="submit"
