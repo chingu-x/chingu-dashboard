@@ -10,8 +10,36 @@ import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
+import RadioGroup from "@/components/inputs/RadioGroup";
+
+const communicationOptions = [
+  {
+    id: "no_communication",
+    value: "no_communication",
+    label: "I didn't communicate with my team",
+  },
+  {
+    id: "team_channel_only",
+    value: "team_channel_only",
+    label: "Only in Team Channel",
+  },
+  {
+    id: "team_meetings_only",
+    value: "team_meetings_only",
+    label: "Only in Team Meeting(s)",
+  },
+  {
+    id: "team_channel_meetings",
+    value: "team_channel_meetings",
+    label: "Team Channel + Team Meeting(s)",
+  },
+];
 
 const validationSchema = z.object({
+  communication: validateTextInput({
+    inputName: "Communication",
+    required: true,
+  }),
   achievements: validateTextInput({
     inputName: "Achievements",
     required: true,
@@ -59,6 +87,18 @@ export default function MeetingForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-full gap-y-10"
       >
+        {/* Communication */}
+        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
+            <Label className="font-semibold normal-case">
+              How did you communicate with your team this past week?
+            </Label>
+            <RadioGroup
+              options={communicationOptions}
+              {...register("communication")}
+            />
+          </div>
+        </div>
         {/* Achievements */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
           <div className="max-w-[650px] w-full">
