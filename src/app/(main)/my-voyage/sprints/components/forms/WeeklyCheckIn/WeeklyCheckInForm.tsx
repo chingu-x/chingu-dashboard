@@ -4,40 +4,41 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import FormBanner from "./FormBanner";
+import {
+  communicationOptions,
+  learningTimeOptions,
+  onMyOwnTimeOptions,
+  pairProgrammingTimeOptions,
+  teamTimeOptions,
+} from "./radioGroupData";
+
+import FormBanner from "@/app/(main)/my-voyage/sprints/components/forms/FormBanner";
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
-
-import { validateTextInput } from "@/helpers/form/validateInput";
 import RadioGroup from "@/components/inputs/RadioGroup";
 
-const communicationOptions = [
-  {
-    id: "no_communication",
-    value: "no_communication",
-    label: "I didn't communicate with my team",
-  },
-  {
-    id: "team_channel_only",
-    value: "team_channel_only",
-    label: "Only in Team Channel",
-  },
-  {
-    id: "team_meetings_only",
-    value: "team_meetings_only",
-    label: "Only in Team Meeting(s)",
-  },
-  {
-    id: "team_channel_meetings",
-    value: "team_channel_meetings",
-    label: "Team Channel + Team Meeting(s)",
-  },
-];
+import { validateTextInput } from "@/helpers/form/validateInput";
 
 const validationSchema = z.object({
   communication: validateTextInput({
     inputName: "Communication",
+    required: true,
+  }),
+  pairProgrammingTime: validateTextInput({
+    inputName: "Pair Programming Time",
+    required: true,
+  }),
+  onMyOwnTime: validateTextInput({
+    inputName: "On My Own Time",
+    required: true,
+  }),
+  learningTime: validateTextInput({
+    inputName: "Learning&research Time",
+    required: true,
+  }),
+  teamTime: validateTextInput({
+    inputName: "Team activities Time",
     required: true,
   }),
   achievements: validateTextInput({
@@ -97,6 +98,54 @@ export default function MeetingForm() {
               options={communicationOptions}
               {...register("communication")}
             />
+          </div>
+        </div>
+        {/* Time Distribution */}
+        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
+            <Label className="font-semibold normal-case">
+              How did you spend time on your project this week?
+            </Label>
+            {/* TOP LABELS */}
+            <div className="flex flex-col gap-y-5">
+              <div className="w-full grid grid-cols-[150px_1fr] gap-x-4 items-center justify-between">
+                <span></span>
+                <div className="flex justify-between pl-6 pr-4">
+                  {pairProgrammingTimeOptions.map(({ label }) => (
+                    <span
+                      key={label}
+                      className="text-base font-medium text-base-300"
+                    >
+                      {label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              {/* PAIR PROGRAMMING */}
+              <RadioGroup
+                title="Pair programming"
+                options={pairProgrammingTimeOptions}
+                {...register("pairProgrammingTime")}
+              />
+              {/* ON MY OWN */}
+              <RadioGroup
+                title="On my own"
+                options={onMyOwnTimeOptions}
+                {...register("onMyOwnTime")}
+              />
+              {/* LEARNING & RESEARCH */}
+              <RadioGroup
+                title="On my own"
+                options={learningTimeOptions}
+                {...register("learningTime")}
+              />
+              {/* TEAM ACTIVITIES TIME */}
+              <RadioGroup
+                title="On my own"
+                options={teamTimeOptions}
+                {...register("teamTime")}
+              />
+            </div>
           </div>
         </div>
         {/* Achievements */}
