@@ -1,8 +1,8 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import type { TechItem } from "./fixtures/TechStack";
 import myAvatar from "@/public/img/avatar.png";
-import AvatarGroup from "@/components/AvatarGroup";
-import Avatar from "@/components/Avatar";
+import AvatarGroup from "@/components/avatar/AvatarGroup";
+import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 
 interface TechStackCardProps {
@@ -22,7 +22,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <ul className="text-base-300">
           {data.map((element) => (
             <li
-              className="text-base mb-5 last:mb-0 flex grid grid-cols-3 items-center"
+              className="text-base mb-5 last:mb-0 grid grid-cols-3 items-center"
               key={element.id}
             >
               {element.value}
