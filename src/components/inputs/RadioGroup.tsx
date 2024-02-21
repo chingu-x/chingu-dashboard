@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 interface RadioGroupItemProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  label: string;
+  label: string | JSX.Element;
   altLayout?: boolean;
 }
 

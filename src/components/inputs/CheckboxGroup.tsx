@@ -8,7 +8,7 @@ import Label from "./Label";
 interface CheckboxGroupItemProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  label: string;
+  label: string | JSX.Element;
 }
 
 const CheckboxGroupItem = React.forwardRef<

@@ -6,12 +6,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   communicationOptions,
+  contributionOptions,
+  deployToProductionOptions,
   learningTimeOptions,
   onMyOwnTimeOptions,
   pairProgrammingTimeOptions,
+  teamProgress,
   teamTimeOptions,
 } from "./radioGroupData";
-import { topicsCoveredOptions } from "./checkboxGroupData";
+import { TeamMembersOptions, topicsCoveredOptions } from "./checkboxGroupData";
 
 import FormBanner from "@/app/(main)/my-voyage/sprints/components/forms/FormBanner";
 import Label from "@/components/inputs/Label";
@@ -25,6 +28,14 @@ import CheckboxGroup from "@/components/inputs/CheckboxGroup";
 const validationSchema = z.object({
   communication: validateTextInput({
     inputName: "Communication",
+    required: true,
+  }),
+  contribution: validateTextInput({
+    inputName: "Contribution",
+    required: true,
+  }),
+  teamProgress: validateTextInput({
+    inputName: "Team Progress",
     required: true,
   }),
   pairProgrammingTime: validateTextInput({
@@ -45,6 +56,11 @@ const validationSchema = z.object({
   }),
   // TODO: update validation
   topicsCovered: z.string().array().min(1),
+  deployToProduction: validateTextInput({
+    inputName: "Deploy to production",
+    required: true,
+  }),
+  notActive: z.string().array(),
   achievements: validateTextInput({
     inputName: "Achievements",
     required: true,
@@ -102,6 +118,27 @@ export default function MeetingForm() {
               options={communicationOptions}
               {...register("communication")}
             />
+          </div>
+        </div>
+        {/* Contribution */}
+        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
+            <Label className="font-semibold normal-case">
+              Did you contribute to the project for your team this past week?
+            </Label>
+            <RadioGroup
+              options={contributionOptions}
+              {...register("contribution")}
+            />
+          </div>
+        </div>
+        {/* Team Progress */}
+        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
+            <Label className="font-semibold normal-case">
+              How would you rate your team's progress right now?
+            </Label>
+            <RadioGroup options={teamProgress} {...register("teamProgress")} />
           </div>
         </div>
         {/* Time Distribution */}
@@ -162,6 +199,31 @@ export default function MeetingForm() {
             <CheckboxGroup
               options={topicsCoveredOptions}
               {...register("topicsCovered")}
+            />
+          </div>
+        </div>
+        {/* Deploy to production */}
+        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
+            <Label className="font-semibold normal-case">
+              Did you deploy to Production at the end of this Sprint?
+            </Label>
+            <RadioGroup
+              options={deployToProductionOptions}
+              {...register("deployToProduction")}
+            />
+          </div>
+        </div>
+        {/* Not Active Users */}
+        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
+            <Label className="font-semibold normal-case">
+              Is there anyone on your team who has not been active? If yes,
+              please select the user. If no, move onto the next question.
+            </Label>
+            <CheckboxGroup
+              options={TeamMembersOptions}
+              {...register("notActive")}
             />
           </div>
         </div>
