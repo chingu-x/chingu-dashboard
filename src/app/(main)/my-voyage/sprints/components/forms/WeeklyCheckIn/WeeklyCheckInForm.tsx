@@ -85,7 +85,7 @@ const validationSchema = z.object({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function MeetingForm() {
+export default function WeeklyCheckingForm() {
   const {
     register,
     handleSubmit,
@@ -163,25 +163,25 @@ export default function MeetingForm() {
               </div>
               {/* PAIR PROGRAMMING */}
               <RadioGroup
-                title="Pair programming"
+                titleLeft="Pair programming"
                 options={pairProgrammingTimeOptions}
                 {...register("pairProgrammingTime")}
               />
               {/* ON MY OWN */}
               <RadioGroup
-                title="On my own"
+                titleLeft="On my own"
                 options={onMyOwnTimeOptions}
                 {...register("onMyOwnTime")}
               />
               {/* LEARNING & RESEARCH */}
               <RadioGroup
-                title="Learning & research"
+                titleLeft="Learning & research"
                 options={learningTimeOptions}
                 {...register("learningTime")}
               />
               {/* TEAM ACTIVITIES TIME */}
               <RadioGroup
-                title="Team activities (eg. meetings, debugging, etc.)"
+                titleLeft="Team activities (eg. meetings, debugging, etc.)"
                 options={teamTimeOptions}
                 {...register("teamTime")}
               />
