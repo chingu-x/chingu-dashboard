@@ -7,14 +7,15 @@ interface ResourceCardProps {
   owner: string;
   date: string;
   onClick: (selected:any) => void;
+  viewResource: (selected:any) => void;
 }
 
-export default function ResourceCard ({id, title, owner, date, onClick}:ResourceCardProps) {
+export default function ResourceCard ({id, title, owner, date, onClick, viewResource}:ResourceCardProps) {
 
   return (
-    <div className="flex items-center justify-between h-20 p-4 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
-      <ArrowTopRightOnSquareIcon className="w-8 h-8 stroke-1 hover:stroke-2"/>
-      <div className="flex flex-col justify-center w-3/4">
+    <div  className="[&>*]:cursor-pointer flex items-center justify-start h-20 p-4 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
+      <ArrowTopRightOnSquareIcon onClick={viewResource} className="w-8 h-8 stroke-1 hover:stroke-2" />
+      <div onClick={viewResource} className="flex flex-col justify-center w-full">
         <h1 className="text-xl font-bold truncate">{title}</h1>
         <div className="flex [&>*]:mr-8">
           <div>Shared by {owner}</div>
@@ -22,8 +23,6 @@ export default function ResourceCard ({id, title, owner, date, onClick}:Resource
         </div>
       </div>
       <div className="w-10 h-10 hover:bg-base-100 flex justify-center items-center rounded-full" onClick={onClick}>
-        {/**clicking trash "grabs" the id and 
-         * sends it back up to page which opens delete modal with id "attached" */}
         <TrashIcon className="w-6 h-6"/>
       </div>
     </div>

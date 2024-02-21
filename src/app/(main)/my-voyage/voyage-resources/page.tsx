@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactHTMLElement, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import ResourceInput from "./components/ResourceInput";
 import SortingButton from "./components/SortingButton";
@@ -15,7 +15,7 @@ export default function ResourcesPage() {
   const [ viewModal, setViewModal ] = useState(true);
   const [selectedResource, setSelectedResource ] = useState({id:5, title:"A Title", link:"https://www.mozilla.org/en-US/"});
 
-  const handleClick = () => {
+  const sort = () => {
     setByNewest(!byNewest);
   };
   const closeDeleteModal= () => {
@@ -28,9 +28,14 @@ export default function ResourcesPage() {
     setSelectedResource({id, title, link});
     setDeleteModal(true)
   }
-  const deleteResource = (event:any) => {
+  const viewResource = (id:number, title:string, link:string) => {
+    setSelectedResource({id, title, link});
+    setViewModal(true)
+  }
+
+  const confirmDelete = (event:any) => {
     //Todo:
-    //replace with delete req. to be.
+    //replace with delete req. to BE.
     event.preventDefault()
   }
   return (
@@ -46,12 +51,19 @@ export default function ResourcesPage() {
       
       <div className="flex  items-center">
         <ResourceInput />
-        <SortingButton onClick={handleClick} type={byNewest} />
+        <SortingButton onClick={sort} type={byNewest} />
       </div>
 
 
       {resources.map((item) =>(
-        <ResourceCard key={item.id} onClick={() => selectResource(item.id,item.title, item.link) }id={item.id} title={item.title} owner={item.owner} date={item.date} />
+        <ResourceCard 
+          key={item.id} 
+          onClick={() => selectResource(item.id,item.title, item.link) }
+          viewResource={() => viewResource(item.id,item.title, item.link)}
+          id={item.id} 
+          title={item.title} 
+          owner={item.owner} 
+          date={item.date} />
       ))}
 
 
@@ -62,7 +74,7 @@ export default function ResourcesPage() {
           </ModalSection>         
           <div className="flex justify-between w-full h-16">
             <Button size="lg" variant="neutral" onClick={closeDeleteModal} className="w-3/6 m-1">Go Back</Button>
-            <Button type="submit" size="lg" variant="error" onSubmit={deleteResource} className="w-3/6 m-1">Delete</Button>
+            <Button type="submit" size="lg" variant="error" onSubmit={confirmDelete} className="w-3/6 m-1">Delete</Button>
           </div>
         </form>
       }</Modal>
@@ -95,7 +107,7 @@ export default function ResourcesPage() {
           </ModalSection>          
           <div className="flex justify-between w-full h-16">
             <Button size="lg" variant="neutral" onClick={closeViewModal} className="w-3/6 m-1">Go Back</Button>
-            <Button type="submit" size="lg" variant="primary" onSubmit={deleteResource} className="w-3/6 m-1">Continue</Button>
+            <Button type="submit" size="lg" variant="primary"  className="w-3/6 m-1">Continue</Button>
           </div>
         </form>
       }</Modal>
