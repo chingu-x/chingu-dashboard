@@ -3,5 +3,5 @@ interface AvatarGroupProps {
 }
 
 export default function AvatarGroup({ children }: AvatarGroupProps) {
-  return <div className="absolute flex -space-x-2 left-28">{children}</div>;
+  return <div className="flex -space-x-2 left-28">{children}</div>;
 }
