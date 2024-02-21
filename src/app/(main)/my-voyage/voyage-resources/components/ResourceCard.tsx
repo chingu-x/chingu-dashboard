@@ -6,12 +6,11 @@ interface ResourceCardProps {
   title: string;
   owner: string;
   date: string;
-  onClick: (selected:any) => void;
+  deleteResource: (selected:any) => void;
   viewResource: (selected:any) => void;
 }
 
-export default function ResourceCard ({id, title, owner, date, onClick, viewResource}:ResourceCardProps) {
-
+export default function ResourceCard ({id, title, owner, date, deleteResource, viewResource}:ResourceCardProps) {
   return (
     <div  className="[&>*]:cursor-pointer flex items-center justify-start h-20 p-4 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
       <ArrowTopRightOnSquareIcon onClick={viewResource} className="w-8 h-8 stroke-1 hover:stroke-2" />
@@ -22,7 +21,7 @@ export default function ResourceCard ({id, title, owner, date, onClick, viewReso
           <div>Added: {date}</div>
         </div>
       </div>
-      <div className="w-10 h-10 hover:bg-base-100 flex justify-center items-center rounded-full" onClick={onClick}>
+      <div className="w-10 h-10 hover:bg-base-100 flex justify-center items-center rounded-full" onClick={deleteResource}>
         <TrashIcon className="w-6 h-6"/>
       </div>
     </div>
