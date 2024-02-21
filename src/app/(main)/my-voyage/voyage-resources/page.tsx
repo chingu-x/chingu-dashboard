@@ -54,7 +54,8 @@ export default function ResourcesPage() {
           viewResource={() => viewResource(item.id,item.title, item.link)}
           id={item.id} 
           title={item.title} 
-          owner={item.owner} 
+          badge={item.badge}
+          currentUser={item.currentUser}
           date={item.date} />
       ))}
       <DeleteModal
