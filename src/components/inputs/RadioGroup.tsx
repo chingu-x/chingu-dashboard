@@ -7,13 +7,12 @@ import { cn } from "@/lib/utils";
 interface RadioGroupItemProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  value: string;
   label: string;
   altLayout?: boolean;
 }
 
 const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
-  ({ id, value, label, altLayout, ...props }, ref) => (
+  ({ id, label, altLayout, ...props }, ref) => (
     <div
       className={cn(
         "relative flex items-center w-full gap-x-4",
@@ -22,7 +21,6 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
     >
       <input
         id={id}
-        value={value}
         type="radio"
         ref={ref}
         {...props}
@@ -54,11 +52,10 @@ const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
           <div className="w-full bg-neutral-content px-4 py-[23px] grid grid-cols-[150px_1fr] gap-x-4 items-center justify-between rounded-lg">
             <span className="text-base font-medium text-base-300">{title}</span>
             <div className="flex justify-between px-6">
-              {options.map(({ id, value, label }) => (
+              {options.map(({ id, label }) => (
                 <RadioGroupItem
                   key={id}
                   id={id}
-                  value={value}
                   label={label}
                   {...props}
                   ref={ref}
@@ -72,11 +69,10 @@ const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
     } else {
       return (
         <div className="flex flex-col gap-y-5">
-          {options.map(({ id, value, label }) => (
+          {options.map(({ id, label }) => (
             <RadioGroupItem
               key={id}
               id={id}
-              value={value}
               label={label}
               {...props}
               ref={ref}
