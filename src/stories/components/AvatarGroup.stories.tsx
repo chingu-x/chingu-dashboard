@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import AvatarGroup from "@/components/AvatarGroup";
-import Avatar from "@/components/Avatar";
+import AvatarGroup from "@/components/avatar/AvatarGroup";
+import Avatar from "@/components/avatar/Avatar";
 import myAvatar from "@/public/img/avatar.png";
 
 const placeholder =
