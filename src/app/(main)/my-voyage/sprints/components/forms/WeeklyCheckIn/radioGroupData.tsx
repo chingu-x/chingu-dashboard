@@ -1,3 +1,5 @@
+import RocketLaunchIcon from "@heroicons/react/24/solid/RocketLaunchIcon";
+
 export const communicationOptions = [
   {
     id: "no_communication",
@@ -18,6 +20,62 @@ export const communicationOptions = [
     id: "team_channel_meetings",
     value: "team_channel_meetings",
     label: "Team Channel + Team Meeting(s)",
+  },
+];
+
+export const contributionOptions = [
+  {
+    id: "on_my_own",
+    value: "on_my_own",
+    label: "Yes, worked on my own",
+  },
+  {
+    id: "another_teammate",
+    value: "another_teammate",
+    label: "Yes, worked with another teammate",
+  },
+  {
+    id: "both",
+    value: "both",
+    label: "Yes, worked on my own + with another teammate",
+  },
+  {
+    id: "none",
+    value: "none",
+    label: "No, I didn't work on the project this past week",
+  },
+];
+
+export const teamProgress = [
+  {
+    id: "good",
+    value: "good",
+    label: (
+      <span className="flex items-center gap-x-4">
+        <RocketLaunchIcon className="w-6 h-5 text-success" />
+        We have had a good start!
+      </span>
+    ),
+  },
+  {
+    id: "nervous",
+    value: "nervous",
+    label: (
+      <span className="flex items-center gap-x-4">
+        <RocketLaunchIcon className="w-6 h-5 text-warning" />
+        I&apos;m nervous we won&apos;t finish.
+      </span>
+    ),
+  },
+  {
+    id: "not_good",
+    value: "not_good",
+    label: (
+      <span className="flex items-center gap-x-4">
+        <RocketLaunchIcon className="w-6 h-5 text-error" />
+        It doesn&apos;t look good right now
+      </span>
+    ),
   },
 ];
 
@@ -110,5 +168,18 @@ export const teamTimeOptions = [
     id: "team_8+",
     value: "team_8+",
     label: "8+ hrs.",
+  },
+];
+
+export const deployToProductionOptions = [
+  {
+    id: "yes",
+    value: "yes",
+    label: "Yes",
+  },
+  {
+    id: "no",
+    value: "no",
+    label: "No",
   },
 ];
