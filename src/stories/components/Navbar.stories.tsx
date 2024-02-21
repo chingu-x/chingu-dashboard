@@ -8,7 +8,7 @@ import ModeToggle from "@/components/ModeToggle";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
 import Button from "@/components/Button";
-import Avatar from "@/components/Avatar";
+import Avatar from "@/components/avatar/Avatar";
 import { mockStoreVoyage, mockStoreNoVoyage } from "@/stories/DropDownStore";
 
 const meta = {

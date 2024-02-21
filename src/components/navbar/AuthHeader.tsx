@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import { serverSignIn } from "@/app/(auth)/authService";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import Avatar from "@/components/Avatar";
+import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
