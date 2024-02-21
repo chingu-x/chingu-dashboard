@@ -1,6 +1,6 @@
 import { AVATAR_SIZES, useBadgeLogic, badge } from "./Badge.logic";
 import type { BadgeProps } from "./Badge.logic";
-import Avatar from "@/components/Avatar";
+import Avatar from "@/components/avatar/Avatar";
 import { cn } from "@/lib/utils";
 
 function Badge({

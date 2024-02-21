@@ -1,4 +1,5 @@
-import Avatar from "@/components/Avatar";
+import Avatar from "@/components/avatar/Avatar";
+import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Button from "@/components/Button";
 
 interface VoteCardProps {
@@ -17,11 +18,11 @@ function VoteCard({ users, voted, className }: VoteCardProps) {
         <h2 className="text-xl font-semibold text-base-300">{`Vote${
           users.length > 1 ? "s" : ""
         }`}</h2>
-        <div className="w-full -space-x-2 avatar-group">
+        <AvatarGroup>
           {users.map((user) => (
             <Avatar width={24} height={24} key={user} />
           ))}
-        </div>
+        </AvatarGroup>
         <Button className="w-full" disabled={voted}>
           {voted ? "Voted" : "Vote"}
         </Button>
