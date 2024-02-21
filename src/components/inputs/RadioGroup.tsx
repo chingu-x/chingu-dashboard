@@ -20,12 +20,20 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
         altLayout && "w-auto",
       )}
     >
-      <input id={id} value={value} type="radio" ref={ref} {...props} />
+      <input
+        id={id}
+        value={value}
+        type="radio"
+        ref={ref}
+        {...props}
+        className="hidden peer"
+      />
       <Label
         htmlFor={id}
-        className={`text-neutral-focus ${altLayout && "w-0 h-0 opacity-0"}`}
+        className="flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4"
       >
-        {label}
+        <span className="inline-block w-6 h-6 border rounded-full bg-base-200 border-neutral/40"></span>
+        {!altLayout && label}
       </Label>
     </div>
   ),
