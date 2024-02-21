@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { CheckIcon } from "@heroicons/react/24/outline";
+
 import Label from "./Label";
 
 interface CheckboxGroupItemProps
@@ -14,11 +16,21 @@ const CheckboxGroupItem = React.forwardRef<
   CheckboxGroupItemProps
 >(({ id, value, label, ...props }, ref) => (
   <div className="relative flex items-center w-full gap-x-4">
-    <input id={id} value={value} type="checkbox" ref={ref} {...props} />
     <Label
       htmlFor={id}
       className="flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4"
     >
+      <input
+        id={id}
+        value={value}
+        type="checkbox"
+        ref={ref}
+        {...props}
+        className="hidden peer"
+      />
+      <span className="flex items-center justify-center w-6 h-6 border rounded bg-base-200 border-neutral/40 transition-all [&>*]:hidden peer-checked:[&>*]:block">
+        <CheckIcon className="hidden checkbox-icon text-base-300" />
+      </span>
       {label}
     </Label>
   </div>
