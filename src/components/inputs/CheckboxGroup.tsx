@@ -9,6 +9,7 @@ interface CheckboxGroupItemProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label: string | JSX.Element;
+  value: string;
 }
 
 const CheckboxGroupItem = React.forwardRef<
@@ -56,7 +57,7 @@ const CheckboxGroup = React.forwardRef<HTMLInputElement, CheckboxGroupProps>(
         />
       ))}
     </div>
-  ),
+  )
 );
 
 CheckboxGroup.displayName = "CheckboxGroup";
