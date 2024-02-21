@@ -16,7 +16,7 @@ import {
 } from "./radioGroupData";
 import { TeamMembersOptions, topicsCoveredOptions } from "./checkboxGroupData";
 
-import FormBanner from "@/app/(main)/my-voyage/sprints/components/forms/FormBanner";
+import BaseFormPage from "@/app/(main)/my-voyage/sprints/components/forms/BaseFormPage";
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
@@ -99,11 +99,10 @@ export default function MeetingForm() {
   };
 
   return (
-    <div className="flex flex-col w-full gap-y-10">
-      <FormBanner
-        title="Sprint #n Check-in"
-        description="The weekly Chingu Check-in is how we support you and your team. It is also how we identify teams and individuals who need help. So, please make sure you submit this every week."
-      />
+    <BaseFormPage
+      title="Sprint #n Check-in"
+      description="The weekly Chingu Check-in is how we support you and your team. It is also how we identify teams and individuals who need help. So, please make sure you submit this every week."
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-full gap-y-10"
@@ -336,6 +335,6 @@ export default function MeetingForm() {
           Submit Check In
         </Button>
       </form>
-    </div>
+    </BaseFormPage>
   );
 }
