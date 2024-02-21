@@ -135,7 +135,7 @@ export default function WeeklyCheckingForm() {
         <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl">
           <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label className="font-semibold normal-case">
-              How would you rate your team's progress right now?
+              How would you rate your team&apos;s progress right now?
             </Label>
             <RadioGroup options={teamProgress} {...register("teamProgress")} />
           </div>

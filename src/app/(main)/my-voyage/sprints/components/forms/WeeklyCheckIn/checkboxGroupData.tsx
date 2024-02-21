@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export const topicsCoveredOptions = [
   {
     id: "no_meeting",
@@ -33,9 +35,12 @@ export const TeamMembersOptions = [
     value: "1",
     label: (
       <span className="flex items-center gap-x-2">
-        <img
-          className="w-4 h-4 rounded-full"
+        <Image
+          width={16}
+          height={16}
+          className="rounded-full"
           src="https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=wavatar&r=x"
+          alt="Joso"
         />
         Joso
       </span>
@@ -46,9 +51,12 @@ export const TeamMembersOptions = [
     value: "2",
     label: (
       <span className="flex items-center gap-x-2">
-        <img
+        <Image
+          width={16}
+          height={16}
           className="w-4 h-4 rounded-full"
           src="https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=monsterid&r=x"
+          alt="Larry"
         />
         Larry
       </span>
@@ -59,9 +67,12 @@ export const TeamMembersOptions = [
     value: "3",
     label: (
       <span className="flex items-center gap-x-2">
-        <img
+        <Image
+          width={16}
+          height={16}
           className="w-4 h-4 rounded-full"
           src="https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=identicon&r=x"
+          alt="Leonardo"
         />
         Leonardo
       </span>
@@ -72,9 +83,12 @@ export const TeamMembersOptions = [
     value: "4",
     label: (
       <span className="flex items-center gap-x-2">
-        <img
+        <Image
+          width={16}
+          height={16}
           className="w-4 h-4 rounded-full"
           src="https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=robohash&r=x"
+          alt="Jessica"
         />
         Jessica
       </span>

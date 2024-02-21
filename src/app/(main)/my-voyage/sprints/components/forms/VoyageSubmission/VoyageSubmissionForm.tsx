@@ -13,7 +13,6 @@ import Textarea from "@/components/inputs/Textarea";
 import RadioGroup from "@/components/inputs/RadioGroup";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
-import CheckboxGroup from "@/components/inputs/CheckboxGroup";
 import TextInput from "@/components/inputs/TextInput";
 
 const validationSchema = z.object({
@@ -200,8 +199,8 @@ export default function VoyageSubmissionForm() {
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
           <div className="max-w-[650px] w-full">
             <Label htmlFor="extraComment" className="font-semibold normal-case">
-              Is there anything else you'd like to share or comment on regarding
-              your experience?
+              Is there anything else you&apos;d like to share or comment on
+              regarding your experience?
             </Label>
             <Textarea
               id="extraComment"
