@@ -21,6 +21,7 @@ const validationSchema = z.object({
     inputName: "Description",
     required: true,
   }),
+  // TODO: update validation
   meetingDateTime: z.date(),
   meetingLink: validateTextInput({
     inputName: "Meeting Link",

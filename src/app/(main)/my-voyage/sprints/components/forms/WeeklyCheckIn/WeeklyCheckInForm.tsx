@@ -11,6 +11,7 @@ import {
   pairProgrammingTimeOptions,
   teamTimeOptions,
 } from "./radioGroupData";
+import { topicsCoveredOptions } from "./checkboxGroupData";
 
 import FormBanner from "@/app/(main)/my-voyage/sprints/components/forms/FormBanner";
 import Label from "@/components/inputs/Label";
@@ -19,6 +20,7 @@ import Textarea from "@/components/inputs/Textarea";
 import RadioGroup from "@/components/inputs/RadioGroup";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
+import CheckboxGroup from "@/components/inputs/CheckboxGroup";
 
 const validationSchema = z.object({
   communication: validateTextInput({
@@ -41,6 +43,8 @@ const validationSchema = z.object({
     inputName: "Team activities Time",
     required: true,
   }),
+  // TODO: update validation
+  topicsCovered: z.string().array().min(1),
   achievements: validateTextInput({
     inputName: "Achievements",
     required: true,
@@ -146,6 +150,19 @@ export default function MeetingForm() {
                 {...register("teamTime")}
               />
             </div>
+          </div>
+        </div>
+        {/* Topics Covered */}
+        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
+            <Label className="font-semibold normal-case">
+              What topics did your meetings cover this week? (Select all that
+              apply)
+            </Label>
+            <CheckboxGroup
+              options={topicsCoveredOptions}
+              {...register("topicsCovered")}
+            />
           </div>
         </div>
         {/* Achievements */}
