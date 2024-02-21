@@ -1,5 +1,5 @@
 
-export const resources =[
+export const resources = [
   {
     id:0,
     title:"Short Title.",

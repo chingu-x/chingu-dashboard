@@ -12,27 +12,26 @@ export default function ResourcesPage() {
   const [ byNewest, setByNewest ] = useState(true);
   const [ deleteModalState, setDeleteModalState ] = useState(false);
   const [ viewModalState, setViewModalState ] = useState(false);
-  const [selectedResource, setSelectedResource ] = useState({id:5, title:"A Title", link:"https://www.mozilla.org/en-US/"});
+  const [selectedResource, setSelectedResource ] = useState({ id:5, title:"A Title", link:"https://www.mozilla.org/en-US/" });
 
   const sort = () => {
     setByNewest(!byNewest);
   };
-  const closeDeleteModal= () => {
+  const closeDeleteModal = () => {
     setDeleteModalState(!deleteModalState);
-  }
+  };
   const closeViewModal = () => {
-    setViewModalState(!viewModalState)
-  }
+    setViewModalState(!viewModalState);
+  };
   const deleteResource = (id:number, title:string, link:string) => {
-    setSelectedResource({id, title, link});
-    setDeleteModalState(true)
-  }
+    setSelectedResource({ id, title, link });
+    setDeleteModalState(true);
+  };
   const viewResource = (id:number, title:string, link:string) => {
-    setSelectedResource({id, title, link});
-    setViewModalState(true)
-  }
+    setSelectedResource({ id, title, link });
+    setViewModalState(true);
+  };
  
-
   return (
     <>
       <Banner
@@ -47,16 +46,16 @@ export default function ResourcesPage() {
         <ResourceInput />
         <SortingButton onClick={sort} type={byNewest} />
       </div>
-      {resources.map((item) =>(
+      {resources.map((item) => (
         <ResourceCard 
           key={item.id} 
           deleteResource={() => deleteResource(item.id,item.title, item.link) }
           viewResource={() => viewResource(item.id,item.title, item.link)}
-          id={item.id} 
           title={item.title} 
           badge={item.badge}
           currentUser={item.currentUser}
-          date={item.date} />
+          date={item.date} 
+        />
       ))}
       <DeleteModal
         selectedResource={selectedResource}
@@ -70,4 +69,4 @@ export default function ResourcesPage() {
       />
     </>
   );
-}
+};
