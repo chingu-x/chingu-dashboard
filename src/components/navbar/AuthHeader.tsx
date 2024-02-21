@@ -4,7 +4,7 @@ import { getUser, serverSignIn } from "@/app/(auth)/authService";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { getUserState } from "@/store/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import Avatar from "@/components/Avatar";
+import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
