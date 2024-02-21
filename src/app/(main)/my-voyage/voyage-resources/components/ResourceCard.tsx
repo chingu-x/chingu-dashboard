@@ -14,7 +14,7 @@ export default function ResourceCard ({id, title, owner, date, deleteResource, v
   return (
     <div  className="[&>*]:cursor-pointer flex items-center justify-start h-20 p-4 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
       <ArrowTopRightOnSquareIcon onClick={viewResource} className="w-8 h-8 stroke-1 hover:stroke-2" />
-      <div onClick={viewResource} className="flex flex-col justify-center w-full">
+      <div onClick={viewResource} className="flex flex-col justify-center p-2 w-full">
         <h1 className="text-xl font-bold truncate">{title}</h1>
         <div className="flex [&>*]:mr-8">
           <div>Shared by {owner}</div>
