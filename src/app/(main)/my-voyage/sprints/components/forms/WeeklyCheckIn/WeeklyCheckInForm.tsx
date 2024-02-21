@@ -135,13 +135,13 @@ export default function MeetingForm() {
               />
               {/* LEARNING & RESEARCH */}
               <RadioGroup
-                title="On my own"
+                title="Learning & research"
                 options={learningTimeOptions}
                 {...register("learningTime")}
               />
               {/* TEAM ACTIVITIES TIME */}
               <RadioGroup
-                title="On my own"
+                title="Team activities (eg. meetings, debugging, etc.)"
                 options={teamTimeOptions}
                 {...register("teamTime")}
               />
