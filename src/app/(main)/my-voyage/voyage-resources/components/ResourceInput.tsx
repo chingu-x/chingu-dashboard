@@ -2,9 +2,9 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 
-//Input group will replace the TextInputs in this form
 
 export default function ResourceInput() {
+  //TODO: Input group/link will replace the TextInputs in this form.
   return (
     <form className="flex items-center bg-base-200 rounded-xl shadow-lg p-1 w-5/6">
       <div className=" flex flex-col w-3/4 m-4">
