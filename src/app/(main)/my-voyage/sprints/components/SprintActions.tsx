@@ -13,10 +13,12 @@ export default function SprintActions() {
   return (
     <div className="flex justify-between p-5 shadow-md bg-base-200 rounded-2xl">
       {/* TODO: add animated variant to Button.tsx */}
-      <Button variant="secondary" size="lg" className="group">
-        <RocketLaunchIcon className="h-[18px] w-[18px]" /> Submit Voyage
-        <ArrowRightIcon className="h-[18px] w-0 group-hover:w-[18px] transition-all" />
-      </Button>
+      <Link href="/my-voyage/sprints/voyage-submission">
+        <Button variant="secondary" size="lg" className="group">
+          <RocketLaunchIcon className="h-[18px] w-[18px]" /> Submit Voyage
+          <ArrowRightIcon className="h-[18px] w-0 group-hover:w-[18px] transition-all" />
+        </Button>
+      </Link>
       <Link href="/my-voyage/sprints/weekly-checkin">
         <Button variant="primary" size="lg" className="group">
           <DocumentCheckIcon className="h-[18px] w-[18px]" /> Submit Check-in
