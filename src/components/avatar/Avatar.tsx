@@ -15,7 +15,7 @@ export default function Avatar({
 }: AvatarProps) {
   return (
     <div
-      className={`border border-1 border-neutral px-0 rounded-full cursor-pointer ${customClassName}`}
+      className={`border border-1 border-neutral px-0 rounded-full cursor-pointer overflow-hidden ${customClassName}`}
     >
       <Image
         alt="avatar"
