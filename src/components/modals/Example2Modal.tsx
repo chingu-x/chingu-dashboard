@@ -45,7 +45,6 @@ export default function Example2Modal() {
     handleSubmit,
     formState: { errors },
     reset,
-    setFocus,
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
@@ -78,7 +77,6 @@ export default function Example2Modal() {
           <TextInput
             id="email"
             placeholder="What is your email?"
-            inputGroup="left"
             inputGroupContent={<EnvelopeIcon />}
             {...register("email")}
             errorMessage={errors?.email?.message}
@@ -88,10 +86,7 @@ export default function Example2Modal() {
             placeholder="What is your tech stack suggestion?"
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
-            inputGroup="right"
-            inputGroupContent={<PlusCircleIcon />}
-            submitButtonText="Save"
-            submitButtonVariant="secondary"
+            submitButtonText="Add"
             clearInputAction={() => reset({ suggestion: "" })}
             {...register("suggestion")}
             errorMessage={errors?.suggestion?.message}
@@ -99,11 +94,9 @@ export default function Example2Modal() {
           <TextInput
             id="techStack"
             placeholder="Add Tech Stack"
-            inputGroup="right"
             inputGroupContent={<PlusCircleIcon />}
-            inputGroupAction={() => {
-              setFocus("techStack");
-            }}
+            submitButtonText="Save"
+            clearInputAction={() => reset({ techStack: "" })}
             {...register("techStack")}
             errorMessage={errors?.techStack?.message}
           />
