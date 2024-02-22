@@ -34,22 +34,11 @@ const meta = {
     errorMessage: {
       description: "Error message (optional).",
     },
-    inputGroup: {
-      description:
-        "Choose inputGroup (if `inputGroupContent` is provided, becomes `required`).",
-    },
     inputGroupContent: {
       description:
         "Provide an icon or a text for an input group (if `inputGroup` is provided, becomes `required`).",
       control: { type: "boolean" },
       mapping: { false: undefined, true: <EnvelopeIcon /> },
-    },
-    inputGroupAction: {
-      description:
-        "An action to be called when a right input group is clicked. If case of react-hook-form if you just want to set focus on the input when the input group is clicked, just pass `{() => setFocus('inputId')}`.",
-    },
-    submitButtonVariant: {
-      description: "Choose a submit button variant.",
     },
     submitButtonText: {
       description: "A submit button text.",
@@ -115,16 +104,15 @@ export const WithErrorMessage = {
   },
 };
 
-export const LeftInputGroup = {
+export const InputGroup = {
   ...BaseTemplate,
   args: {
     ...BaseTemplate.args,
-    inputGroup: "left",
     inputGroupContent: <EnvelopeIcon />,
   },
 };
 
-export const RightInputGroupWithIcon: Story = {
+export const InputWithSaveButton: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 300 }}>
@@ -135,57 +123,6 @@ export const RightInputGroupWithIcon: Story = {
   args: {
     id: "textInput",
     placeholder: "Placeholder",
-    inputGroup: "right",
-    inputGroupContent: <PlusCircleIcon />,
-    inputGroupAction: () => {},
-  },
-  render: function Render(args) {
-    return (
-      <form>
-        <TextInput {...args} />
-      </form>
-    );
-  },
-};
-
-export const RightInputGroupWithText: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ width: 300 }}>
-        <Story />
-      </div>
-    ),
-  ],
-  args: {
-    id: "textInput",
-    placeholder: "Placeholder",
-    inputGroup: "right",
-    inputGroupContent: "Submit",
-    inputGroupAction: () => {},
-  },
-  render: function Render(args) {
-    return (
-      <form>
-        <TextInput {...args} />
-      </form>
-    );
-  },
-};
-
-export const EditableRightInputGroupWithSaveButton: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ width: 300 }}>
-        <Story />
-      </div>
-    ),
-  ],
-  args: {
-    id: "textInput",
-    placeholder: "Placeholder",
-    inputGroup: "right",
-    inputGroupContent: <PlusCircleIcon />,
-    submitButtonVariant: "primary",
     submitButtonText: "Save",
     clearInputAction: () => {},
   },
@@ -203,10 +140,46 @@ export const EditableRightInputGroupWithSaveButton: Story = {
           {...args}
           id="textInput"
           placeholder="Placeholder"
-          inputGroup="right"
+          submitButtonText="Save"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          clearInputAction={() => clearInput()}
+        />
+      </form>
+    );
+  },
+};
+
+export const InputGroupWithSaveButton: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: 300 }}>
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    id: "textInput",
+    placeholder: "Placeholder",
+    inputGroupContent: <PlusCircleIcon />,
+    submitButtonText: "Save",
+    clearInputAction: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState("");
+    const onSubmit = (e: FormEvent) => {
+      e.preventDefault();
+    };
+    const clearInput = () => {
+      setValue("");
+    };
+    return (
+      <form onSubmit={onSubmit}>
+        <TextInput
+          {...args}
+          id="textInput"
+          placeholder="Placeholder"
           inputGroupContent={<PlusCircleIcon />}
-          inputGroupAction={undefined}
-          submitButtonVariant="primary"
           submitButtonText="Save"
           value={value}
           onChange={(e) => setValue(e.target.value)}
