@@ -25,6 +25,9 @@ import RadioGroup from "@/components/inputs/RadioGroup";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import CheckboxGroup from "@/components/inputs/CheckboxGroup";
 
+import { useAppDispatch } from "@/store/hooks";
+import { onOpen } from "@/store/features/modal/modalSlice";
+
 const validationSchema = z.object({
   communication: validateTextInput({
     inputName: "Communication",
@@ -86,6 +89,7 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function WeeklyCheckingForm() {
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -96,6 +100,7 @@ export default function WeeklyCheckingForm() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
+    dispatch(onOpen({ type: "checkInSuccess" }));
   };
 
   return (
