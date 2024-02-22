@@ -58,6 +58,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     ref,
   ) => {
     const textInputRef = useRef<ElementRef<"input"> | null>(null);
+    const [isClearButtonVisible, setIsClearButtonVisible] = useState(false);
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -77,18 +78,28 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           setCurrentSuggestion(suggestion);
         }
       }
+
+      // Clear button toggle
+      if (submitButtonText && e.target.value.length > 0) {
+        setIsClearButtonVisible(true);
+      } else {
+        setIsClearButtonVisible(false);
+      }
     }
 
     function clearInput() {
       if (clearInputAction) {
         clearInputAction();
+        setIsClearButtonVisible(false);
       }
     }
 
     return (
       <div className="relative w-full pr-2 ml-1">
         {label && <Label htmlFor={id}>{label}</Label>}
-        <div className={cn("relative my-2", submitButtonText && "pr-[48px]")}>
+        <div
+          className={cn("relative my-2", isClearButtonVisible && "pr-[48px]")}
+        >
           <input
             id={id}
             type={showPassword ? "text" : type}
@@ -99,7 +110,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               errorMessage &&
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
               inputGroupContent && "pl-[56px]",
-              submitButtonText && "pr-[70px]",
+              submitButtonText && "pr-[72px]",
               className,
             )}
             ref={(e) => {
@@ -130,13 +141,16 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               type="submit"
               variant="neutral"
               size="sm"
-              className="absolute top-1/2 -translate-y-1/2 right-[50px] h-[calc(100%-4px)] rounded-[6.2px]"
+              className={cn(
+                "absolute top-1/2 -translate-y-1/2 right-[2px] h-[calc(100%-4px)] rounded-[6.2px]",
+                isClearButtonVisible && "right-[50px]",
+              )}
             >
               {submitButtonText}
             </Button>
           )}
           {/* CLEAR INPUT BUTTON */}
-          {submitButtonText && (
+          {submitButtonText && isClearButtonVisible && (
             // TODO: replace with an Icon Button
             <button
               type="button"
