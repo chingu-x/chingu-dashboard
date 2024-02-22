@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 // import Lottie from "react-lottie";
-import { useTheme } from "next-themes";
+// import { useTheme } from "next-themes";
 // import checkmarkLight from "@/public/lotties/checkmark_light.json";
 // import checkmarkDark from "@/public/lotties/checkmark_dark.json";
 
@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
 
 export default function CheckInSuccessModal() {
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
   const { isOpen, type } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
 
@@ -22,13 +22,13 @@ export default function CheckInSuccessModal() {
     dispatch(onClose());
   }, [dispatch]);
 
-  const checkmarkOptions = {
-    loop: false,
-    autoplay: true,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+  // const checkmarkOptions = {
+  //   loop: false,
+  //   autoplay: true,
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
 
   return (
     <Modal isOpen={isModalOpen} title="" onClose={handleClose}>

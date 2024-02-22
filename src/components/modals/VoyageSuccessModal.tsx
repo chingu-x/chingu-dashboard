@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 // import Lottie from "react-lottie";
-import { useTheme } from "next-themes";
+// import { useTheme } from "next-themes";
 // import rocketLight from "@/public/lotties/rocket_light.json";
 // import rocketDark from "@/public/lotties/rocket_dark.json";
 // import confetti from "@/public/lotties/confetti.json";
@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
 
 export default function VoyageSuccessModal() {
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
   const { isOpen, type } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
 
@@ -23,20 +23,20 @@ export default function VoyageSuccessModal() {
     dispatch(onClose());
   }, [dispatch]);
 
-  const rocketOptions = {
-    loop: true,
-    autoplay: true,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
-  const confettiOptions = {
-    loop: false,
-    autoplay: true,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+  // const rocketOptions = {
+  //   loop: true,
+  //   autoplay: true,
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
+  // const confettiOptions = {
+  //   loop: false,
+  //   autoplay: true,
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
 
   return (
     <Modal isOpen={isModalOpen} title="" onClose={handleClose}>
