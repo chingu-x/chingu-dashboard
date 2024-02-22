@@ -221,9 +221,9 @@ export default function VoyageSubmissionForm() {
             </Label>
             {/* TOP LABELS */}
             <div className="flex flex-col max-w-[880px] w-full">
-              <div className="w-full grid grid-cols-[130px_1fr_130px] px-[23px] gap-x-4 items-center justify-between">
+              <div className="w-full grid-cols-[80px_1fr_80px] grid xl:grid-cols-[130px_1fr_130px] px-4 gap-x-4 items-center justify-between">
                 <span></span>
-                <div className="flex justify-between px-6">
+                <div className="flex justify-between px-3 xl:pl-8 xl:pr-6">
                   {scaleOptions.map(({ label }) => (
                     <span
                       key={label}
@@ -250,7 +250,7 @@ export default function VoyageSubmissionForm() {
           size="lg"
           variant="primary"
         >
-          Submit Check In
+          Submit Voyage
         </Button>
       </form>
     </BaseFormPage>

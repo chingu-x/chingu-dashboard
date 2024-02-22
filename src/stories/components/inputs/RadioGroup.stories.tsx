@@ -76,11 +76,12 @@ const BaseTemplate: Story = {
         <div
           className={cn(
             "w-full grid grid-cols-[150px_1fr] px-4 items-center justify-between",
-            args.titleRight && "grid-cols-[130px_1fr_130px]",
+            args.titleRight &&
+              "w-full grid-cols-[80px_1fr_80px] grid xl:grid-cols-[130px_1fr_130px] px-4 gap-x-4 items-center justify-between",
           )}
         >
           <span></span>
-          <div className="flex justify-between px-6">
+          <div className="flex justify-between px-1">
             {options.map(({ label }) => (
               <span key={label} className="text-base font-medium text-base-300">
                 {label}
