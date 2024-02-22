@@ -2,7 +2,9 @@
 
 import { useCallback } from "react";
 import Lottie from "react-lottie";
-import checkmark from "@/public/lotties/CheckmarkAnimated.json";
+import { useTheme } from "next-themes";
+import checkmarkLight from "@/public/lotties/checkmark_light.json";
+import checkmarkDark from "@/public/lotties/checkmark_dark.json";
 
 import Modal from "@/components/modals/Modal";
 
@@ -10,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
 
 export default function CheckInSuccessModal() {
+  const { theme } = useTheme();
   const { isOpen, type } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
 
@@ -22,7 +25,6 @@ export default function CheckInSuccessModal() {
   const checkmarkOptions = {
     loop: false,
     autoplay: true,
-    animationData: checkmark,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
@@ -39,8 +41,21 @@ export default function CheckInSuccessModal() {
             Thanks for checking in this week!
           </p>
         </div>
-        <div className="relative flex items-center">
-          <Lottie options={checkmarkOptions} height={220} width={220} />
+        <div className="relative flex items-center justify-center">
+          {theme === "light" && (
+            <Lottie
+              options={{ ...checkmarkOptions, animationData: checkmarkLight }}
+              height={220}
+              width={220}
+            />
+          )}
+          {theme === "dark" && (
+            <Lottie
+              options={{ ...checkmarkOptions, animationData: checkmarkDark }}
+              height={220}
+              width={220}
+            />
+          )}
         </div>
       </div>
     </Modal>
