@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import Button, { ButtonProps } from "@/components/Button";
-import { cn } from "@/lib/utils";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import Button from "@/components/Button";
+import { cn } from "@/lib/utils";
 // TODO FOR LATER REFACTOR:
 //  - setting the width for the stepper: do we want to specify the width or base it off parent's width
 //  - variant colors for stepper button
