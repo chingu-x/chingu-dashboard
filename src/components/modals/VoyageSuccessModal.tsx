@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback } from "react";
-import Lottie from "react-lottie";
+// import Lottie from "react-lottie";
 import { useTheme } from "next-themes";
-import rocketLight from "@/public/lotties/rocket_light.json";
-import rocketDark from "@/public/lotties/rocket_dark.json";
-import confetti from "@/public/lotties/confetti.json";
+// import rocketLight from "@/public/lotties/rocket_light.json";
+// import rocketDark from "@/public/lotties/rocket_dark.json";
+// import confetti from "@/public/lotties/confetti.json";
 
 import Modal from "@/components/modals/Modal";
 
@@ -58,7 +58,7 @@ export default function VoyageSuccessModal() {
           </p>
         </div>
         <div className="relative flex items-center justify-center w-full h-full">
-          {theme === "light" && (
+          {/* {theme === "light" && (
             <Lottie
               options={{ ...rocketOptions, animationData: rocketLight }}
               height={220}
@@ -74,7 +74,7 @@ export default function VoyageSuccessModal() {
           )}
           <div className="absolute top-0 left-0 w-full h-full">
             <Lottie options={{ ...confettiOptions, animationData: confetti }} />
-          </div>
+          </div> */}
         </div>
       </div>
     </Modal>

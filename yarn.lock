@@ -6631,7 +6631,6 @@ __metadata:
     next-themes: "npm:^0.2.1"
     postcss: "npm:8.4.27"
     prettier: "npm:^3.0.1"
-    prop-types: "npm:^15.8.1"
     react: "npm:^18.2.0"
     react-datepicker: "npm:^6.1.0"
     react-dom: "npm:^18.2.0"
