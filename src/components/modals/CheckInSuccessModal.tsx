@@ -1,10 +1,10 @@
 "use client";
 
 import { useCallback } from "react";
-import Lottie from "react-lottie";
+// import Lottie from "react-lottie";
 import { useTheme } from "next-themes";
-import checkmarkLight from "@/public/lotties/checkmark_light.json";
-import checkmarkDark from "@/public/lotties/checkmark_dark.json";
+// import checkmarkLight from "@/public/lotties/checkmark_light.json";
+// import checkmarkDark from "@/public/lotties/checkmark_dark.json";
 
 import Modal from "@/components/modals/Modal";
 
@@ -42,7 +42,7 @@ export default function CheckInSuccessModal() {
           </p>
         </div>
         <div className="relative flex items-center justify-center">
-          {theme === "light" && (
+          {/* {theme === "light" && (
             <Lottie
               options={{ ...checkmarkOptions, animationData: checkmarkLight }}
               height={220}
@@ -55,7 +55,7 @@ export default function CheckInSuccessModal() {
               height={220}
               width={220}
             />
-          )}
+          )} */}
         </div>
       </div>
     </Modal>
