@@ -2,8 +2,10 @@
 
 import { useCallback } from "react";
 import Lottie from "react-lottie";
-import rocket from "@/public/lotties/RocketAnimated.json";
-import confeti from "@/public/lotties/ConfetiAnimated.json";
+import { useTheme } from "next-themes";
+import rocketLight from "@/public/lotties/rocket_light.json";
+import rocketDark from "@/public/lotties/rocket_dark.json";
+import confetti from "@/public/lotties/confetti.json";
 
 import Modal from "@/components/modals/Modal";
 
@@ -11,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onClose } from "@/store/features/modal/modalSlice";
 
 export default function VoyageSuccessModal() {
+  const { theme } = useTheme();
   const { isOpen, type } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
 
@@ -23,15 +26,13 @@ export default function VoyageSuccessModal() {
   const rocketOptions = {
     loop: true,
     autoplay: true,
-    animationData: rocket,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const confetiOptions = {
+  const confettiOptions = {
     loop: false,
     autoplay: true,
-    animationData: confeti,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
@@ -56,10 +57,23 @@ export default function VoyageSuccessModal() {
             Discord community and updating your portfolio.
           </p>
         </div>
-        <div className="relative flex items-center">
-          <Lottie options={rocketOptions} height={220} width={400} />
-          <div className="absolute top-0 left-0">
-            <Lottie options={confetiOptions} height={220} width={400} />
+        <div className="relative flex items-center justify-center w-full h-full">
+          {theme === "light" && (
+            <Lottie
+              options={{ ...rocketOptions, animationData: rocketLight }}
+              height={220}
+              width={400}
+            />
+          )}
+          {theme === "dark" && (
+            <Lottie
+              options={{ ...rocketOptions, animationData: rocketDark }}
+              height={220}
+              width={400}
+            />
+          )}
+          <div className="absolute top-0 left-0 w-full h-full">
+            <Lottie options={{ ...confettiOptions, animationData: confetti }} />
           </div>
         </div>
       </div>

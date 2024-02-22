@@ -4679,7 +4679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*":
+"@types/prop-types@npm:*, @types/prop-types@npm:^15":
   version: 15.7.11
   resolution: "@types/prop-types@npm:15.7.11"
   checksum: e53423cf9d510515ef8b47ff42f4f1b65a7b7b37c8704e2dbfcb9a60defe0c0e1f3cb1acfdeb466bad44ca938d7c79bffdd51b48ffb659df2432169d0b27a132
@@ -6606,6 +6606,7 @@ __metadata:
     "@testing-library/jest-dom": "npm:^5.17.0"
     "@testing-library/react": "npm:^14.0.0"
     "@types/node": "npm:20.4.5"
+    "@types/prop-types": "npm:^15"
     "@types/react": "npm:18.2.18"
     "@types/react-datepicker": "npm:^6"
     "@types/react-dom": "npm:18.2.7"
@@ -6630,6 +6631,7 @@ __metadata:
     next-themes: "npm:^0.2.1"
     postcss: "npm:8.4.27"
     prettier: "npm:^3.0.1"
+    prop-types: "npm:^15.8.1"
     react: "npm:^18.2.0"
     react-datepicker: "npm:^6.1.0"
     react-dom: "npm:^18.2.0"
