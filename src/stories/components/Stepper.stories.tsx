@@ -3,37 +3,31 @@ import Stepper, { SteppersItem } from "@/components/Stepper";
 
 const steppers: SteppersItem[] = [
   {
-    indicator: "1",
     name: "1",
     status: "completed",
     onClickEvent: () => console.log("1"),
   },
   {
-    indicator: "2",
     name: "2",
     status: "completed",
     onClickEvent: () => console.log("2"),
   },
   {
-    indicator: "3",
     name: "3",
     status: "current",
     onClickEvent: () => console.log("3"),
   },
   {
-    indicator: "4",
     name: "4",
     status: "remaining",
     onClickEvent: () => console.log("4"),
   },
   {
-    indicator: "5",
     name: "5",
     status: "remaining",
     onClickEvent: () => console.log("5"),
   },
   {
-    indicator: "6",
     name: "6",
     status: "remaining",
     onClickEvent: () => console.log("6"),
@@ -50,7 +44,7 @@ const meta = {
   argTypes: {
     styleType: {
       description: "What style is the Stepper",
-      options: ["chips", "indicators"],
+      options: ["chips", "icons"],
       control: { type: "radio" },
     },
     stepperWidth: {
@@ -70,7 +64,7 @@ const BaseTemplate: Story = {
   args: {
     steppers: steppers,
     stepperWidth: "w-[1000px]",
-    styleType: "chips",
+    styleType: "icons",
   },
 };
 

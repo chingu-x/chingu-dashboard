@@ -13,10 +13,9 @@ type StepperStyle = "chips" | "icons";
 type StepperStatus = "completed" | "current" | "remaining";
 
 export interface SteppersItem {
-  // icon?: React.JSX.Element;
   icon?: string;
   status: StepperStatus;
-  onClickEvent: () => void;
+  onClickEvent?: () => void;
   name: string;
 }
 
