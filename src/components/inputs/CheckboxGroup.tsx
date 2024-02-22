@@ -9,28 +9,26 @@ interface CheckboxGroupItemProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label: string | JSX.Element;
-  value: string;
 }
 
 const CheckboxGroupItem = React.forwardRef<
   HTMLInputElement,
   CheckboxGroupItemProps
->(({ id, value, label, ...props }, ref) => (
+>(({ id, label, ...props }, ref) => (
   <div className="relative flex items-center w-full gap-x-4">
     <Label
       htmlFor={id}
-      className="flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4"
+      className="flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4 group"
     >
       <input
         id={id}
-        value={value}
         type="checkbox"
         ref={ref}
         {...props}
         className="hidden peer"
       />
-      <span className="flex items-center justify-center w-6 h-6 border rounded bg-base-200 border-neutral/40 transition-all [&>*]:hidden peer-checked:[&>*]:block">
-        <CheckIcon className="hidden checkbox-icon text-base-300" />
+      <span className="flex items-center justify-center w-6 h-6 border rounded bg-base-200 border-neutral/40 transition-all [&>*]:hidden group-hover:bg-base-100 peer-checked:border-base-300 [&>*]:text-base-300 peer-checked:[&>*]:block group-hover:peer-checked:[&>*]:text-neutral-content group-hover:peer-checked:border-neutral-content">
+        <CheckIcon className="hidden transition" />
       </span>
       {label}
     </Label>
@@ -39,7 +37,8 @@ const CheckboxGroupItem = React.forwardRef<
 
 CheckboxGroupItem.displayName = "CheckboxGroupItem";
 
-interface CheckboxGroupProps {
+interface CheckboxGroupProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   options: CheckboxGroupItemProps[];
 }
 

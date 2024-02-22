@@ -8,12 +8,11 @@ interface RadioGroupItemProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label: string | JSX.Element;
-  value: string;
   altLayout?: boolean;
 }
 
 const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
-  ({ id, label, value, altLayout, ...props }, ref) => (
+  ({ id, label, altLayout, ...props }, ref) => (
     <div
       className={cn(
         "relative flex items-center w-full gap-x-4",
@@ -22,17 +21,16 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
     >
       <Label
         htmlFor={id}
-        className="flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4"
+        className="flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4 group"
       >
         <input
           id={id}
-          value={value}
           type="radio"
           ref={ref}
           {...props}
           className="hidden peer"
         />
-        <span className="inline-block w-6 h-6 border rounded-full bg-base-200 border-neutral/40 transition-all [&>*]:hidden peer-checked:shadow-[inset_0_0_0_6px] peer-checked:[&>*]:shadow-color-base-200" />
+        <span className="inline-block w-6 h-6 border rounded-full bg-base-200 border-neutral/40 transition-all group-hover:bg-base-100 group-hover:border group-hover:border-neutral peer-disabled:bg-base-100 peer-checked:border-0 peer-checked:bg-base-200 peer-checked:shadow-[inset_0_0_0_7px] peer-checked:shadow-base-300 group-hover:peer-checked:shadow-neutral peer-disabled:peer-checked:bg-neutral-focus peer-disabled:peer-checked:shadow-neutral" />
         {!altLayout && label}
       </Label>
     </div>
@@ -41,7 +39,7 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
 
 RadioGroupItem.displayName = "RadioGroupItem";
 
-interface RadioGroupProps {
+interface RadioGroupProps extends React.InputHTMLAttributes<HTMLInputElement> {
   options: RadioGroupItemProps[];
   titleLeft?: string;
   titleRight?: string;
@@ -49,18 +47,23 @@ interface RadioGroupProps {
 
 const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
   ({ options, titleLeft, titleRight, ...props }, ref) => {
-    if (titleLeft) {
+    const altLayout = titleLeft && true;
+    // ALT LAYOUT (HORIZONTAL)
+    if (altLayout) {
       return (
         <div className="flex flex-col gap-y-5">
           <div
             className={cn(
-              "w-full bg-neutral-content px-4 py-[23px] grid grid-cols-[150px_1fr] gap-x-4 items-center justify-between rounded-lg",
-              titleRight && "grid-cols-[130px_1fr_130px] bg-base-100",
+              "h-[80px] w-full bg-neutral-content px-4 grid grid-cols-[150px_1fr] gap-x-4 items-center justify-between rounded-lg",
+              titleRight &&
+                "grid-cols-[80px_1fr_80px] px-0 xl:px-4 xl:grid-cols-[130px_1fr_130px] bg-base-100",
             )}
           >
+            {/* LEFT TITLE */}
             <span className="text-base font-medium text-base-300">
               {titleLeft}
             </span>
+            {/* RADIO GROUP */}
             <div className="flex justify-between px-6">
               {options.map(({ id, value, label }) => (
                 <RadioGroupItem
@@ -74,6 +77,7 @@ const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
                 />
               ))}
             </div>
+            {/* RIGHT TITLE */}
             {titleRight && (
               <span className="text-base font-medium text-base-300">
                 {titleRight}
@@ -82,6 +86,7 @@ const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
           </div>
         </div>
       );
+      // SIMPLE LAYOUT (LIST)
     } else {
       return (
         <div className="flex flex-col gap-y-5">
