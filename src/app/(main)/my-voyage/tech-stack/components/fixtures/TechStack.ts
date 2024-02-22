@@ -8,7 +8,11 @@ export interface TechItem {
 
 export const techStack: Record<CardType, TechItem[]> = {
   Frontend: [
-    { id: 1, value: "JavaScript", users: ["Tim", "John"] },
+    {
+      id: 1,
+      value: "JavaScript",
+      users: ["Tim", "John", "", "", "", "", "", ""],
+    }, //quick check to see what large group looks like.
     { id: 2, value: "React", users: ["John"] },
     { id: 3, value: "Vue", users: ["Myke", "Josh", "Jack"] },
     { id: 4, value: "Angular", users: ["John"] },

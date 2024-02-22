@@ -1,6 +1,8 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import type { TechItem } from "./fixtures/TechStack";
-import Avatar from "@/components/Avatar";
+import myAvatar from "@/public/img/avatar.png";
+import AvatarGroup from "@/components/avatar/AvatarGroup";
+import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 
 interface TechStackCardProps {
@@ -20,22 +22,25 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <ul className="text-base-300">
           {data.map((element) => (
             <li
-              className="text-base mb-5 last:mb-0 relative grid grid-cols-[1fr,auto] items-center"
+              className="text-base mb-5 last:mb-0 grid grid-cols-3 items-center"
               key={element.id}
             >
               {element.value}
-              <div className="absolute -space-x-2 avatar-group left-28">
+              <AvatarGroup>
                 {element.users.map((user) => (
                   <Avatar
-                    key={`${element.id}-${user}`}
+                    key={user}
+                    /*TO DO: replace image={myAvatar} with {user.avatar} or {user}
+                    ...depending on data schema.*/
+                    image={myAvatar}
                     width={24}
                     height={24}
                   />
                 ))}
-              </div>
+              </AvatarGroup>
               <button
                 type="button"
-                className="capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 bg-primary-content border-transparent mr-4 rounded-[32px] hover:bg-primary hover:border-transparent gap-x-0"
+                className="capitalize w-[62px] h-[32px] p-0 min-h-full text-xs font-medium text-base-300 bg-primary-content border-transparent mr-4 rounded-[32px] hover:bg-primary hover:border-transparent gap-x-0 place-self-end"
               >
                 Vote
               </button>
