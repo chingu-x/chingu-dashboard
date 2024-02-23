@@ -10,34 +10,17 @@ import Button from "@/components/Button";
 
 import { cn } from "@/lib/utils";
 
-interface CommonTextInputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label?: string;
   placeholder: string;
   suggestion?: string;
   maxLength?: number;
   errorMessage?: string | undefined;
+  inputGroupContent?: JSX.Element;
+  submitButtonText?: string;
+  clearInputAction?: () => void;
 }
-
-type ConditionalTextInputProps =
-  | {
-      inputGroupContent?: JSX.Element;
-      submitButtonText: string;
-      clearInputAction: () => void;
-    }
-  | {
-      inputGroupContent?: JSX.Element;
-      submitButtonText?: undefined;
-      clearInputAction?: never;
-    }
-  | {
-      inputGroupContent?: JSX.Element;
-      submitButtonText?: never;
-      clearInputAction?: undefined;
-    };
-
-export type TextInputProps = CommonTextInputProps & ConditionalTextInputProps;
 
 const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
   (
@@ -55,7 +38,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       type = "text",
       ...props
     },
-    ref,
+    ref
   ) => {
     const textInputRef = useRef<ElementRef<"input"> | null>(null);
     const [isClearButtonVisible, setIsClearButtonVisible] = useState(false);
@@ -72,7 +55,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         const currentLength = e.target.value.length;
         if (currentLength > 0) {
           setCurrentSuggestion(
-            `Character length ${currentLength}/${maxLength}`,
+            `Character length ${currentLength}/${maxLength}`
           );
         } else {
           setCurrentSuggestion(suggestion);
@@ -80,7 +63,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       }
 
       // Clear button toggle
-      if (submitButtonText && e.target.value.length > 0) {
+      if (clearInputAction && e.target.value.length > 0) {
         setIsClearButtonVisible(true);
       } else {
         setIsClearButtonVisible(false);
@@ -96,7 +79,9 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
 
     return (
       <div className="relative w-full pr-2 ml-1">
+        {/* LABEL */}
         {label && <Label htmlFor={id}>{label}</Label>}
+        {/* INPUT */}
         <div
           className={cn("relative my-2", isClearButtonVisible && "pr-[48px]")}
         >
@@ -111,7 +96,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
               inputGroupContent && "pl-[56px]",
               submitButtonText && "pr-[72px]",
-              className,
+              className
             )}
             ref={(e) => {
               if (typeof ref === "function") {
@@ -143,14 +128,14 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               size="sm"
               className={cn(
                 "absolute top-1/2 -translate-y-1/2 right-[2px] h-[calc(100%-4px)] rounded-[6.2px]",
-                isClearButtonVisible && "right-[50px]",
+                isClearButtonVisible && "right-[50px]"
               )}
             >
               {submitButtonText}
             </Button>
           )}
           {/* CLEAR INPUT BUTTON */}
-          {submitButtonText && isClearButtonVisible && (
+          {isClearButtonVisible && (
             // TODO: replace with an Icon Button
             <button
               type="button"
@@ -181,7 +166,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         />
       </div>
     );
-  },
+  }
 );
 
 TextInput.displayName = "TextInput";
