@@ -95,7 +95,6 @@ export default function Example2Modal() {
             id="techStack"
             placeholder="Add Tech Stack"
             inputGroupContent={<PlusCircleIcon />}
-            submitButtonText="Save"
             clearInputAction={() => reset({ techStack: "" })}
             {...register("techStack")}
             errorMessage={errors?.techStack?.message}

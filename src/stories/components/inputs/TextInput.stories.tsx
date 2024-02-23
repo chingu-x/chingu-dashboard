@@ -35,17 +35,16 @@ const meta = {
       description: "Error message (optional).",
     },
     inputGroupContent: {
-      description:
-        "Provide an icon or a text for an input group (if `inputGroup` is provided, becomes `required`).",
+      description: "Provide an icon or a text for an input group (optional).",
       control: { type: "boolean" },
       mapping: { false: undefined, true: <EnvelopeIcon /> },
     },
     submitButtonText: {
-      description: "A submit button text.",
+      description: "A submit button text. (optional)",
     },
     clearInputAction: {
       description:
-        "An action to clear an input. If case of react-hook-form, you can pass `{() => reset({ inputId: '' })}`.",
+        "An action to clear an input. If case of react-hook-form, you can pass `{() => reset({ inputId: '' })}` (optional).",
     },
   },
 } satisfies Meta<typeof TextInput>;
