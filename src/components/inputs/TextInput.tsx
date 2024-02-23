@@ -13,7 +13,7 @@ export interface TextInputProps
   id: string;
   label?: string;
   placeholder: string;
-  defaultValue: string;
+  defaultValue?: string;
   suggestion?: string;
   maxLength?: number;
   errorMessage?: string | undefined;
@@ -34,7 +34,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       type = "text",
       ...props
     },
-    ref,
+    ref
   ) => {
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const [showPassword, setShowPassword] = useState(false);
@@ -66,7 +66,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           className={cn(
             "w-full my-2 text-base outline-none rounded-lg border px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus disabled:cursor-not-allowed border-neutral/40 focus-visible:shadow-neutral/30",
             errorMessage && "border-error focus-visible:shadow-error/30",
-            className,
+            className
           )}
           ref={ref}
           {...props}
@@ -96,7 +96,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         />
       </div>
     );
-  },
+  }
 );
 
 TextInput.displayName = "TextInput";

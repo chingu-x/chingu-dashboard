@@ -30,7 +30,7 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 export default function FeatureModal() {
   const dispatch = useAppDispatch();
   const { isOpen, type, isEditing } = useAppSelector(
-    (state) => state.modal.baseModal,
+    (state) => state.modal.baseModal
   );
   const [deleteAlertIsVisible, setDeleteAlertIsVisible] = useState(false);
 
@@ -78,7 +78,7 @@ export default function FeatureModal() {
     // TODO: temp
     handleClose();
     dispatch(
-      onOpen({ context: "warning", message: "Your feature has been deleted" }),
+      onOpen({ context: "warning", message: "Your feature has been deleted" })
     );
   };
 
@@ -101,7 +101,6 @@ export default function FeatureModal() {
           <TextInput
             id="feature"
             placeholder="What is your feature suggestion?"
-            defaultValue=""
             suggestion={isEditing ? "" : "Tip: keep it short and sweet"}
             maxLength={50}
             {...register("feature")}

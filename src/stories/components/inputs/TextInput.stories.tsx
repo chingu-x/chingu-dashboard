@@ -42,7 +42,6 @@ const BaseTemplate: Story = {
   args: {
     id: "textInput",
     placeholder: "Placeholder",
-    defaultValue: "",
   },
   render: ({ ...args }) => <TextInput {...args} />,
 };
