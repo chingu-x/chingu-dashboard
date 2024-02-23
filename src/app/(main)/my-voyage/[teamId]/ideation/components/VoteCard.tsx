@@ -34,7 +34,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const { loading } = useAppSelector((state) => state.ideation);
   const { isOpen } = useAppSelector((state) => state.modal.baseModal);
   const dispatch = useAppDispatch();
-  const [voteChanged, setVoteChanged] = useState(false);
+  const [voteChanged, setVoteChanged] = useState<boolean>(false);
 
   const {
     runAction: addIdeationVoteAction,

@@ -14,7 +14,7 @@ const notificationCount = 4;
 export default function AuthHeader() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { avatar } = useAppSelector((state) => state.user);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 

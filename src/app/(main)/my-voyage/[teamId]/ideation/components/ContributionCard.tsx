@@ -25,7 +25,7 @@ function ContributionCard({
 }: ContributionCardProps) {
   const { teamId } = useParams<{ teamId: string }>();
   const { id } = useAppSelector((state) => state.user);
-  const [ownVote, setOwnVote] = useState(false);
+  const [ownVote, setOwnVote] = useState<boolean>(false);
 
   useEffect(() => {
     if (contributed_by.member.id === id) {

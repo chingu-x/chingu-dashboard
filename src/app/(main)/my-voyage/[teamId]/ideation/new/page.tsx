@@ -5,7 +5,9 @@ import { getAccessToken } from "@/utils/getCookie";
 export default function AddIdeationPage() {
   const cookie = getAccessToken();
 
-  if (!cookie) redirect("/");
+  if (!cookie) {
+    redirect("/");
+  }
 
   return <IdeationForm />;
 }
