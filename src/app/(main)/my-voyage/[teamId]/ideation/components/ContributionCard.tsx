@@ -26,21 +26,19 @@ function ContributionCard({
   const { teamId } = useParams<{ teamId: string }>();
   const { id } = useAppSelector((state) => state.user);
   const [ownVote, setOwnVote] = useState<boolean>(false);
+  const { member } = contributed_by;
 
   useEffect(() => {
-    if (contributed_by.member.id === id) {
+    if (member.id === id) {
       setOwnVote(true);
     }
-  }, [contributed_by, id]);
+  }, [member, id]);
 
   return (
     <div className={cn("w-full bg-secondary-content rounded-lg", className)}>
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
-        <Badge
-          title={contributed_by.member.firstName}
-          avatarUrlImage={contributed_by.member.avatar}
-        />
+        <Badge title={member.firstName} avatarUrlImage={member.avatar} />
         {ownVote ? (
           <Link
             href={routePaths.editIdeationPage(teamId, projectIdeaId.toString())}
