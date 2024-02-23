@@ -83,7 +83,10 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         {label && <Label htmlFor={id}>{label}</Label>}
         {/* INPUT */}
         <div
-          className={cn("relative my-2", isClearButtonVisible && "pr-[48px]")}
+          className={cn(
+            "group relative my-2",
+            isClearButtonVisible && "pr-[48px]"
+          )}
         >
           <input
             id={id}
@@ -91,7 +94,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             placeholder={placeholder}
             aria-describedby={`${id}-message`}
             className={cn(
-              "transition border-2 peer w-full outline-none rounded-lg px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus disabled:cursor-not-allowed border-neutral/40 hover:border-neutral-focus focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:hover:border-neutral/40",
+              "transition border-2 peer w-full outline-none rounded-lg px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus disabled:cursor-not-allowed border-neutral/40 group-hover:border-neutral-focus group-hover:focus-visible:border-neutral/40 focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:group-hover:border-neutral/40",
               errorMessage &&
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
               inputGroupContent && "pl-[56px]",
@@ -116,7 +119,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           />
           {/* FIXED INPUT GROUP */}
           {inputGroupContent && (
-            <div className="left-[2px] rounded-l-md flex justify-center items-center top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5">
+            <div className="left-[2px] rounded-l-md flex justify-center items-center top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5 hover:peer-disabled:cursor-not-allowed">
               {inputGroupContent}
             </div>
           )}
