@@ -68,7 +68,6 @@ export const WithFormInsideWithoutVerticalScroll = {
           <TextInput
             id="suggestion"
             placeholder="What is your tech stack suggestion?"
-            defaultValue=""
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
           />
@@ -117,14 +116,12 @@ export const WithFormInsideWithVerticalScroll: Story = {
             <TextInput
               id="title"
               label="title"
-              defaultValue=""
               placeholder="Enter you voyage project idea"
               maxLength={30}
             />
             <Textarea
               id="projectIdea"
               label="project idea"
-              defaultValue=""
               placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
               maxLength={50}
             />
@@ -132,14 +129,12 @@ export const WithFormInsideWithVerticalScroll: Story = {
               id="visionStatement"
               label="vision statement"
               placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
-              defaultValue=""
               maxLength={50}
             />
             <TextInput
               id="email"
               label="email"
               placeholder="Enter your email"
-              defaultValue=""
             />
           </div>
         </div>

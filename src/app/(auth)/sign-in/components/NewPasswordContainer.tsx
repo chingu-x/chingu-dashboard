@@ -54,7 +54,6 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
               label="password"
               placeholder="Enter Your Password"
               {...register("password")}
-              defaultValue=""
               errorMessage={errors?.password?.message}
               maxLength={30}
             />

@@ -54,7 +54,6 @@ function SignInFormContainer({
             label="email"
             placeholder="Enter Your Email"
             {...register("email")}
-            defaultValue=""
             errorMessage={errors?.email?.message}
           />
           <TextInput
@@ -63,7 +62,6 @@ function SignInFormContainer({
             label="password"
             placeholder="Enter Your Password"
             {...register("password")}
-            defaultValue=""
             errorMessage={errors?.password?.message}
             maxLength={30}
           />
