@@ -4,6 +4,7 @@ import React from "react";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Button from "@/components/Button";
 import { cn } from "@/lib/utils";
+
 // TODO FOR LATER REFACTOR:
 //  - setting the width for the stepper: do we want to specify the width or base it off parent's width
 //  - variant colors for stepper button
@@ -12,8 +13,14 @@ import { cn } from "@/lib/utils";
 type StepperStyle = "chips" | "icons";
 type StepperStatus = "completed" | "current" | "remaining";
 
+const statusColor = {
+  remaining: "bg-neutral",
+  completed: "bg-success-content",
+  current: "bg-success",
+};
+
 export interface SteppersItem {
-  icon?: string;
+  icon?: React.ReactNode;
   status: StepperStatus;
   onClickEvent?: () => void;
   name: string;
@@ -36,9 +43,9 @@ export default function Stepper({
         {steppers.map((step) => {
           const { icon, status, onClickEvent, name } = step;
 
-          let chipBgColor: string = "bg-neutral";
-          if (status === "current") chipBgColor = "bg-primary-content";
-          if (status === "completed") chipBgColor = "bg-success-content";
+          // let chipBgColor: string = "bg-neutral";
+          // if (status === "current") chipBgColor = "bg-primary-content";
+          // if (status === "completed") chipBgColor = "bg-success-content";
 
           return (
             <div
@@ -51,8 +58,11 @@ export default function Stepper({
               {styleType === "icons" ? (
                 <Button
                   onClick={onClickEvent}
-                  className={cn("text-center", styleType === "icons" && "flex")}
-                  variant={status === "completed" ? "secondary" : "neutral"}
+                  className={cn(
+                    "text-center",
+                    styleType === "icons" && "flex",
+                    statusColor[status]
+                  )}
                 >
                   <div>{icon}</div>
                   <span>{name}</span>
@@ -63,7 +73,7 @@ export default function Stepper({
                   className={cn(
                     "text-center w-[100px] h-[18px] rounded-full",
                     status === "current" && "border-2 border-neutral h-[20px]",
-                    chipBgColor
+                    statusColor[status]
                   )}
                 ></div>
               )}
