@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Button from "@/components/Button";
 import { cn } from "@/lib/utils";
 
@@ -66,7 +65,6 @@ export default function Stepper({
                 >
                   <div>{icon}</div>
                   <span>{name}</span>
-                  <ArrowRightIcon className="h-[18px] w-[18px]" />
                 </Button>
               ) : (
                 <div
