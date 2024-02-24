@@ -42,10 +42,6 @@ export default function Stepper({
         {steppers.map((step) => {
           const { icon, status, onClickEvent, name } = step;
 
-          // let chipBgColor: string = "bg-neutral";
-          // if (status === "current") chipBgColor = "bg-primary-content";
-          // if (status === "completed") chipBgColor = "bg-success-content";
-
           return (
             <div
               key={name}
