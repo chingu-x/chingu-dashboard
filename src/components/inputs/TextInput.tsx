@@ -94,6 +94,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             id={id}
             type={showPassword ? "text" : type}
             placeholder={placeholder}
+            defaultValue={defaultValue}
             aria-describedby={`${id}-message`}
             className={cn(
               "transition border-2 peer w-full outline-none rounded-lg px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus disabled:cursor-not-allowed border-neutral/40 group-hover:border-neutral-focus group-hover:focus-visible:border-neutral/40 focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:group-hover:border-neutral/40",
