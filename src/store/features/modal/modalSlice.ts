@@ -4,6 +4,7 @@ export type ModalType =
   | "example1"
   | "example2"
   | "feature"
+  | "gettingHelp"
   | "checkInSuccess"
   | "voyageSuccess";
 
