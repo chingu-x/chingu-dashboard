@@ -1,4 +1,4 @@
-// import VoyageSubmittedMessage from "./components/forms/VoyageSubmission/VoyageSubmittedMessage";
+// import VoyageSubmittedMessage from "./components/VoyageSubmittedMessage";
 // import EmptyState from "./components/EmptyState";
 import Agenda from "./components/Agenda";
 import MeetingOverview from "./components/MeetingOverview";
