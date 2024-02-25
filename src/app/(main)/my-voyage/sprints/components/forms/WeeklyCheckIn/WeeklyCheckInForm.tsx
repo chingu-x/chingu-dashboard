@@ -58,7 +58,7 @@ const validationSchema = z.object({
     inputName: "Team activities Time",
     required: true,
   }),
-  // TODO: update validation
+  // TODO: update validation for arrays
   topicsCovered: z.string().array().min(1),
   deployToProduction: validateTextInput({
     inputName: "Deploy to production",
