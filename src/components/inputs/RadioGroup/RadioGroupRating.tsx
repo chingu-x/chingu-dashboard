@@ -12,7 +12,7 @@ interface RadioGroupProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
   ({ options, leftTitle, rightTitle, ...props }, ref) => (
     <div className="flex flex-col gap-y-5">
-      <div className="h-[80px] w-full grid gap-x-4 items-center justify-between rounded-lg grid-cols-[80px_1fr_80px] px-0 xl:px-4 xl:grid-cols-[130px_1fr_130px] bg-base-100">
+      <div className="h-[80px] w-full grid gap-x-4 items-center justify-between grid-cols-[80px_1fr_80px] xl:grid-cols-[130px_1fr_130px]">
         {/* LEFT TITLE */}
         <span className="text-base font-medium text-right text-base-300">
           {leftTitle}

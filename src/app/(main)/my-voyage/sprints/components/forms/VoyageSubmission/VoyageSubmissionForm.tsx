@@ -209,21 +209,19 @@ export default function VoyageSubmissionForm() {
           </div>
         </div>
         {/* Scale */}
-        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl">
-          <div className="flex flex-col items-center w-full gap-y-10">
-            <Label className="font-semibold normal-case max-w-[650px] w-full">
-              On a scale of 0-10, how likely are you to suggest Chingu to a
-              friend or colleague?
-            </Label>
-            {/* TOP LABELS */}
-            <div className="flex flex-col max-w-[880px] w-full">
-              <RadioGroupRating
-                leftTitle="Not Likely"
-                rightTitle="Extremely Likely"
-                options={scaleOptions}
-                {...register("scale")}
-              />
-            </div>
+        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl gap-y-10">
+          <Label className="font-semibold normal-case max-w-[650px] w-full">
+            On a scale of 0-10, how likely are you to suggest Chingu to a friend
+            or colleague?
+          </Label>
+          {/* TOP LABELS */}
+          <div className="flex flex-col max-w-[880px] w-full">
+            <RadioGroupRating
+              leftTitle="Not Likely"
+              rightTitle="Extremely Likely"
+              options={scaleOptions}
+              {...register("scale")}
+            />
           </div>
         </div>
         <Button
