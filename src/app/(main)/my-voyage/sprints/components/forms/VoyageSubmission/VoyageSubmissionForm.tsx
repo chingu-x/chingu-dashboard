@@ -10,7 +10,7 @@ import BaseFormPage from "@/app/(main)/my-voyage/sprints/components/forms/BaseFo
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
-import RadioGroup from "@/components/inputs/RadioGroup";
+import RadioGroupRating from "@/components/inputs/RadioGroup/RadioGroupRating";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import TextInput from "@/components/inputs/TextInput";
@@ -226,22 +226,9 @@ export default function VoyageSubmissionForm() {
             </Label>
             {/* TOP LABELS */}
             <div className="flex flex-col max-w-[880px] w-full">
-              <div className="w-full grid-cols-[80px_1fr_80px] grid xl:grid-cols-[130px_1fr_130px] px-4 gap-x-4 items-center justify-between">
-                <span></span>
-                <div className="flex justify-between px-3 xl:pl-8 xl:pr-6">
-                  {scaleOptions.map(({ label }) => (
-                    <span
-                      key={label}
-                      className="text-base font-medium text-base-300"
-                    >
-                      {label}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <RadioGroup
-                titleLeft="Not Likely"
-                titleRight="Extremely Likely"
+              <RadioGroupRating
+                leftTitle="Not Likely"
+                rightTitle="Extremely Likely"
                 options={scaleOptions}
                 {...register("scale")}
               />

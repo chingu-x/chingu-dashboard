@@ -73,7 +73,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     }
 
     return (
-      <div className="w-full">
+      <div className="w-full pr-2 ml-1">
         {label && <Label htmlFor={id}>{label}</Label>}
         <textarea
           id={id}
