@@ -5,8 +5,7 @@ export type ModalType =
   | "example2"
   | "feature"
   | "gettingHelp"
-  | "checkInSuccess"
-  | "voyageSuccess";
+  | "checkInSuccess";
 
 interface ModalState {
   type: ModalType | null;

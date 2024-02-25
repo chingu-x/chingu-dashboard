@@ -7,7 +7,6 @@ import Example2Modal from "./modals/Example2Modal";
 import FeatureModal from "./modals/FeatureModal";
 import GettingHelpModal from "./modals/GettingHelpModal";
 import CheckInSuccessModal from "./modals/CheckInSuccessModal";
-import VoyageSuccessModal from "./modals/VoyageSuccessModal";
 
 export default function ModalProvider() {
   const [isMounted, setIsMounted] = useState(false);
@@ -25,7 +24,6 @@ export default function ModalProvider() {
       <FeatureModal />
       <GettingHelpModal />
       <CheckInSuccessModal />
-      <VoyageSuccessModal />
     </>
   );
 }

@@ -12,7 +12,7 @@ import Button from "@/components/Button";
 export default function SprintActions() {
   return (
     <div className="flex justify-between p-5 shadow-md bg-base-200 rounded-2xl">
-      {/* TODO: add animated variant to Button.tsx */}
+      {/* TODO: add animated variant to Button.tsx ??? */}
       <Link href="/my-voyage/sprints/voyage-submission">
         <Button variant="secondary" size="lg" className="group">
           <RocketLaunchIcon className="h-[18px] w-[18px]" /> Submit Voyage

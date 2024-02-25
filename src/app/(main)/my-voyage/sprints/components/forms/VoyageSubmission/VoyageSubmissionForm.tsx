@@ -3,7 +3,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { LinkIcon } from "@heroicons/react/24/outline";
 import { scaleOptions } from "./radioGroupDate";
 
 import BaseFormPage from "@/app/(main)/my-voyage/sprints/components/forms/BaseFormPage";
@@ -14,10 +14,6 @@ import RadioGroupRating from "@/components/inputs/RadioGroup/RadioGroupRating";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import TextInput from "@/components/inputs/TextInput";
-
-import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
-import { LinkIcon } from "@heroicons/react/24/outline";
 
 const validationSchema = z.object({
   projectName: validateTextInput({
@@ -57,7 +53,6 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function VoyageSubmissionForm() {
-  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -68,7 +63,6 @@ export default function VoyageSubmissionForm() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
-    dispatch(onOpen({ type: "voyageSuccess" }));
   };
 
   return (
