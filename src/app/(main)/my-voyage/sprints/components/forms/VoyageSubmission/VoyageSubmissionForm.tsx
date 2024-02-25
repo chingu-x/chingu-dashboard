@@ -17,6 +17,7 @@ import TextInput from "@/components/inputs/TextInput";
 
 import { useAppDispatch } from "@/store/hooks";
 import { onOpen } from "@/store/features/modal/modalSlice";
+import { LinkIcon } from "@heroicons/react/24/outline";
 
 const validationSchema = z.object({
   projectName: validateTextInput({
@@ -27,6 +28,7 @@ const validationSchema = z.object({
     inputName: "Project Description",
     required: true,
   }),
+  // TODO: update validation for links
   githubRepo: validateTextInput({
     inputName: "Github repo",
     required: true,
@@ -80,7 +82,7 @@ export default function VoyageSubmissionForm() {
       >
         {/* Project Name */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label htmlFor="projectName" className="font-semibold normal-case">
               What is the name of the project?
             </Label>
@@ -89,14 +91,13 @@ export default function VoyageSubmissionForm() {
               placeholder="Your answer"
               {...register("projectName")}
               errorMessage={errors.projectName?.message}
-              className="mt-10"
               rows={2}
             />
           </div>
         </div>
         {/* Project Description */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label
               htmlFor="projectDescription"
               className="font-semibold normal-case"
@@ -108,29 +109,28 @@ export default function VoyageSubmissionForm() {
               placeholder="Your answer"
               {...register("projectDescription")}
               errorMessage={errors.projectDescription?.message}
-              className="mt-10"
               rows={2}
             />
           </div>
         </div>
         {/* Github Repo */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label htmlFor="githubRepo" className="font-semibold normal-case">
               Please link your Github repo:
             </Label>
             <TextInput
               id="githubRepo"
               placeholder="Please provide a link"
+              inputGroupContent={<LinkIcon />}
               {...register("githubRepo")}
               errorMessage={errors.githubRepo?.message}
-              className="mt-10"
             />
           </div>
         </div>
         {/* Deployed Project Link */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label
               htmlFor="deployedProjectLink"
               className="font-semibold normal-case"
@@ -140,15 +140,15 @@ export default function VoyageSubmissionForm() {
             <TextInput
               id="deployedProjectLink"
               placeholder="Please provide a link"
+              inputGroupContent={<LinkIcon />}
               {...register("deployedProjectLink")}
               errorMessage={errors.deployedProjectLink?.message}
-              className="mt-10"
             />
           </div>
         </div>
         {/* Showcase Link*/}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label htmlFor="showcaseLink" className="font-semibold normal-case">
               If you have a project showcase video, please provide the public
               link:
@@ -156,15 +156,15 @@ export default function VoyageSubmissionForm() {
             <TextInput
               id="showcaseLink"
               placeholder="Please provide a link"
+              inputGroupContent={<LinkIcon />}
               {...register("showcaseLink")}
               errorMessage={errors.showcaseLink?.message}
-              className="mt-10"
             />
           </div>
         </div>
         {/* Positive Aspects */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label
               htmlFor="positiveAspects"
               className="font-semibold normal-case"
@@ -176,14 +176,13 @@ export default function VoyageSubmissionForm() {
               placeholder="Your answer"
               {...register("positiveAspects")}
               errorMessage={errors.positiveAspects?.message}
-              className="mt-10"
               rows={2}
             />
           </div>
         </div>
         {/* Challenging Aspects */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label
               htmlFor="challengingAspects"
               className="font-semibold normal-case"
@@ -195,14 +194,13 @@ export default function VoyageSubmissionForm() {
               placeholder="Your answer"
               {...register("challengingAspects")}
               errorMessage={errors.challengingAspects?.message}
-              className="mt-10"
               rows={2}
             />
           </div>
         </div>
         {/* Extra comment */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label htmlFor="extraComment" className="font-semibold normal-case">
               Is there anything else you&apos;d like to share or comment on
               regarding your experience?
@@ -212,7 +210,6 @@ export default function VoyageSubmissionForm() {
               placeholder="Your answer"
               {...register("extraComment")}
               errorMessage={errors.extraComment?.message}
-              className="mt-10"
               rows={2}
             />
           </div>
