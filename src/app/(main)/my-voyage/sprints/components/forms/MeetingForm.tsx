@@ -4,6 +4,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { LinkIcon } from "@heroicons/react/24/outline";
+
 import Button from "@/components/Button";
 import DateTimePicker from "@/components/inputs/DateTimePicker";
 import TextInput from "@/components/inputs/TextInput";
@@ -95,7 +97,8 @@ export default function MeetingForm() {
         />
         <TextInput
           id="meetingLink"
-          label="meetingLink"
+          label="Meeting link"
+          inputGroupContent={<LinkIcon />}
           placeholder="Provide a link to the meeting"
           {...register("meetingLink")}
           errorMessage={errors.meetingLink?.message}
