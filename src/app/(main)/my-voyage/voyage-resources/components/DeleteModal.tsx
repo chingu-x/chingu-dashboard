@@ -13,7 +13,7 @@ export default function DeleteModal ( { selectedResource,viewing,handleClose }: 
     <Modal isOpen={viewing} title="Confirm Deletion?" onClose={handleClose}>
       <form>
         <ModalSection heading="Are you sure you would like to visit this resource?">
-          <p>{selectedResource.title}</p>
+          <p className="text-neutral">{selectedResource.title}</p>
         </ModalSection>         
         <div className="flex justify-between w-full h-16">
           <Button size="lg" variant="neutral" onClick={handleClose} className="w-3/6 m-1">Go Back</Button>

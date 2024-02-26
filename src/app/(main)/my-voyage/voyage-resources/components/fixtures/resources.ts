@@ -34,7 +34,7 @@ export const resources = [
   },
   {
     id:4,
-    title:"A Very Very Very Very Very Very Very Very Very Very Very Very Very Very Long Title",
+    title:"A Very Very Very Very Very Very Very Very Very Very Very Very Very Very Long Title Which Should Truncate and Show Ellipsis.",
     badge: "Badge Component",
     currentUser: true,
     date: new Date().toString(),
