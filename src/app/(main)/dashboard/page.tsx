@@ -1,5 +1,5 @@
 import React from "react";
-import PreVoyageDashboard from "./components/PreVoyageDashboard";
+import PreVoyageDashboard from "./components/pre-voyage-dashboard/PreVoyageDashboard";
 
 function DashboardPage() {
   return <PreVoyageDashboard />;
