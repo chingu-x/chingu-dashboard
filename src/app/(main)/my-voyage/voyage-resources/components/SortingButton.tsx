@@ -10,7 +10,7 @@ export default function SortingButton({ onClick, type }: SortingButtonProps) {
   const ArrowIcon = type ? <ArrowDownIcon /> : <ArrowUpIcon />;
 
   return (
-    <Button onClick={onClick} className="h-1/4 m-1" variant="neutral">
+    <Button onClick={onClick} className="h-1/4 m-1" variant="link">
       {buttonText}
       <div className="w-4 h-4">{ArrowIcon}</div>
     </Button>
