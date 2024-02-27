@@ -13,7 +13,7 @@ import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { onClose } from "@/store/features/modal/modalSlice";
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
 
 const validationSchema = z.object({
@@ -36,7 +36,7 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function Example2Modal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "example2";
@@ -62,7 +62,7 @@ export default function Example2Modal() {
 
   const handleClose = useCallback(() => {
     reset();
-    dispatch(onClose());
+    dispatch(onCloseModal({ type: "example2" }));
   }, [dispatch, reset]);
 
   return (
