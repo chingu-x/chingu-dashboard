@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Stepper, { SteppersItem } from "@/components/Stepper";
 import { EnvelopeIcon } from "@heroicons/react/20/solid";
+import Stepper, { SteppersItem } from "@/components/Stepper";
 
 const steppers: SteppersItem[] = [
   {

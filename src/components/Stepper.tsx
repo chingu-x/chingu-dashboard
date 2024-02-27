@@ -47,7 +47,7 @@ export default function Stepper({
               key={name}
               className={cn(
                 "flex flex-1 last:flex-none relative last:after:contents-none after:absolute after:content-[''] after:h-[7px] after:w-full after:top-1/2 after:-translate-y-1/2 after:-z-10",
-                "after:bg-base-100"
+                "after:bg-base-100",
               )}
             >
               {styleType === "icons" ? (
@@ -56,7 +56,7 @@ export default function Stepper({
                   className={cn(
                     "text-center",
                     styleType === "icons" && "flex",
-                    statusColor[status]
+                    statusColor[status],
                   )}
                 >
                   <div>{icon}</div>
@@ -67,7 +67,7 @@ export default function Stepper({
                   className={cn(
                     "text-center w-[100px] h-[18px] rounded-full",
                     status === "current" && "border-2 border-neutral h-[20px]",
-                    statusColor[status]
+                    statusColor[status],
                   )}
                 ></div>
               )}
