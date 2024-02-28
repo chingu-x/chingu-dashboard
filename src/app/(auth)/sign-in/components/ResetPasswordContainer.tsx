@@ -1,12 +1,12 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import routePaths from "@/utils/routePaths";
-import { resetPassword } from "../../authService";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
+import { resetPasswordRequestEmail } from "../../authService";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -36,7 +36,7 @@ function ResetPasswordContainer({
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
     handleEmailCheck();
-    resetPassword();
+    resetPasswordRequestEmail();
   };
 
   return (

@@ -106,7 +106,7 @@ async function asyncSignIn(): Promise<ServerSignInResponse> {
   }
 }
 
-export async function resetPassword() {
+export async function resetPasswordRequestEmail() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password/request`,
     {
