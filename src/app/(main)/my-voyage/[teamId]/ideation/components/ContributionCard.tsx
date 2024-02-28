@@ -35,7 +35,7 @@ function ContributionCard({
   }, [member, id]);
 
   return (
-    <div className={cn("w-full bg-secondary-content rounded-lg", className)}>
+    <div className={cn("w-full bg-base-100 rounded-lg", className)}>
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
         <Badge title={member.firstName} avatarUrlImage={member.avatar} />
