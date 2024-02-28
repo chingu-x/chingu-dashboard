@@ -43,6 +43,9 @@ const routePaths = {
   createMeeting(teamId: string) {
     return `/my-voyage/${teamId}/sprints/create-meeting`;
   },
+  addTopic(teamId: string) {
+    return `/my-voyage/${teamId}/sprints/add-topic`;
+  },
   voyageResourcesPage(teamId: string) {
     return `/my-voyage/${teamId}/voyage-resources`;
   },
