@@ -11,6 +11,7 @@ import Banner from "@/components/banner/Banner";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { VoyageTeamMember } from "@/store/features/user/userSlice";
 import { CacheTag } from "@/utils/cacheTag";
+import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 // import { ideation } from "./fixtures/ideation";
 
 // If user is not logged in, nav should be updated to reflect signed out state
@@ -76,13 +77,20 @@ export default async function IdeationComponentWrapper({
 
   return (
     <>
-      <Banner
-        imageLight="/img/ideation_banner_light.png"
-        imageDark="/img/ideation_banner_dark.png"
-        alt="ideation_banner"
+      <VoyagePageBannerContainer
         title="Ideation"
-        description="Okay, time to put on your thinking caps and channel your inner creativity! What kind of amazing, mind-blowing project idea do you have that will make SpaceX jealous? Let's hear it!"
-      />
+        description="Okay, time to put on your thinking caps and channel your inner
+          creativity! What kind of amazing, mind-blowing project idea do you
+          have that will make SpaceX jealous? Let's hear it!"
+      >
+        <Banner
+          imageLight="/img/ideation_banner_light.png"
+          imageDark="/img/ideation_banner_dark.png"
+          height="200"
+          width="276"
+          alt="ideation_banner"
+        />
+      </VoyagePageBannerContainer>
       <div className="flex flex-col items-center gap-y-10">
         <CreateIdeationContainer />
         <IdeationProvider payload={projectIdeas} />
