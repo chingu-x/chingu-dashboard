@@ -6,8 +6,8 @@ export default function AuthBannerContainer() {
       <Banner
         imageLight="/img/login_image_light.png"
         imageDark="/img/login_image_dark.png"
-        height="300"
-        width="628"
+        height="[300px]"
+        width="[628px]"
         alt="Login image"
       />
 
