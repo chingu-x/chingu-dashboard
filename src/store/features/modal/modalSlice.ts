@@ -1,20 +1,30 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export type ModalType = "example1" | "example2" | "feature";
+export type ModalType =
+  | "example1"
+  | "example2"
+  | "feature"
+  | "error"
+  | "gettingHelp";
 
 interface ModalState {
-  type: ModalType | null;
+  type: ModalType | undefined;
   isOpen: boolean;
   isEditing?: boolean;
 }
 
-interface ModalActionPayload {
+interface ModalOpenActionPayload {
   type: ModalType;
+  content: string;
   isEditing?: boolean;
 }
 
+interface ModalCloseActionPayload {
+  type?: ModalType;
+}
+
 const initialState: ModalState = {
-  type: null,
+  type: undefined,
   isOpen: false,
   isEditing: false,
 };
@@ -23,19 +33,19 @@ export const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    onOpen: (state, action: PayloadAction<ModalActionPayload>) => {
+    onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
       state.isOpen = true;
       state.type = action.payload.type;
       state.isEditing = action.payload.isEditing;
     },
-    onClose: (state) => {
+    onCloseModal: (state, action: PayloadAction<ModalCloseActionPayload>) => {
+      state.type = action.payload.type;
       state.isOpen = false;
-      state.type = null;
       state.isEditing = false;
     },
   },
 });
 
-export const { onOpen, onClose } = modalSlice.actions;
+export const { onOpenModal, onCloseModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

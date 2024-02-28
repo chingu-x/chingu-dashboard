@@ -12,6 +12,7 @@
     "cypress": "cypress run",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "format:changed": "git diff --name-only --diff-filter=d HEAD | grep -e 'src.*\\.[jt]sx\\?$' -e 'src.*\\.json$' -e 'src.*\\.css$' -e 'src.*\\.md$' | xargs prettier -u --write",
     "postinstall": "husky install"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.46.2",
     "react-redux": "^8.1.2",
+    "redux-persist": "^6.0.0",
     "tailwind-merge": "^2.0.0",
     "zod": "^3.22.2"
   },
