@@ -1,7 +1,7 @@
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface ResourceCardProps {
   title: string;
@@ -15,21 +15,23 @@ export default function ResourceCard ({ title, currentUser, badge, date }:Resour
 
   function openViewModal () {
     dispatch(
-      onOpen({
-        type: "viewResource"
-      })
+      onOpenModal({
+        type: "viewResource",
+        content: ""
+      }),
     );
   };
   const openDeleteModal = () => {
     dispatch(
-      onOpen({
-        type: "deleteResource"
-      })
+      onOpenModal({
+        type: "deleteResource",
+        content:""
+      }),
     );
   };
 
   return (
-    <div  className="group [&>*]:cursor-pointer flex items-center  h-20 w-11/12 p-4 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
+    <div  className="group [&>*]:cursor-pointer flex items-center w-11/12 p-2 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
       <ArrowTopRightOnSquareIcon onClick={openViewModal} className="w-8 h-8 mr-4 stroke-1 group-hover:stroke-2" />
       <div onClick={openViewModal} className="overflow-hidden flex flex-col justify-center p-2 w-full">
         <h1 className="text-xl font-bold w-1/2 truncate">{title}</h1>

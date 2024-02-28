@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ModalSection from "../../app/(main)/my-voyage/voyage-resources/components/ModalSection";
+import ModalSection from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ModalSection";
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
@@ -14,7 +14,7 @@ export default function ViewModal () {
   const data = { title:"title here", href:"link url here" };
 
   const handleClose = () => {  
-    dispatch(onCloseModal( { type:"viewResource"} ));
+    dispatch(onCloseModal( { type:"viewResource" } ));
   };
 
   return(
