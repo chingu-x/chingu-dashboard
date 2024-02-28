@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { TrashIcon } from "@heroicons/react/20/solid";
-import ModalSection from "./ModalSection";
+import ModalSection from "../../app/(main)/my-voyage/voyage-resources/components/ModalSection";
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
 import Alert from "@/components/Alert";
-import { onClose } from "@/store/features/modal/modalSlice";
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function DeleteModal () {
   const dispatch = useAppDispatch();
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
   const [ deleteAlertIsVisible, setDeleteAlertIsVisible ] = useState(false);
   const isModalOpen = isOpen && type === "deleteResource";
 
@@ -18,7 +18,7 @@ export default function DeleteModal () {
   
   const handleClose = () => {
     setDeleteAlertIsVisible(false);
-    dispatch(onClose());
+    dispatch(onCloseModal( { type:"deleteResource"} ));
   };
   const onDelete = () => {
     setDeleteAlertIsVisible(true);

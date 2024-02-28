@@ -1,20 +1,20 @@
 import Link from "next/link";
-import ModalSection from "./ModalSection";
+import ModalSection from "../../app/(main)/my-voyage/voyage-resources/components/ModalSection";
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
-import { onClose } from "@/store/features/modal/modalSlice";
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function ViewModal () {
   const dispatch = useAppDispatch();
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
   const isModalOpen = isOpen && type === "viewResource";
   
   //TODO: replace data with actual data.
   const data = { title:"title here", href:"link url here" };
 
   const handleClose = () => {  
-    dispatch(onClose());
+    dispatch(onCloseModal( { type:"viewResource"} ));
   };
 
   return(
