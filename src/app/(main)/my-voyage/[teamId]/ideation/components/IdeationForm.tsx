@@ -146,7 +146,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
@@ -168,7 +168,7 @@ export default function IdeationForm() {
     () => () => {
       void persistor.purge();
     },
-    [],
+    []
   );
 
   function renderButtonContent() {
@@ -194,7 +194,11 @@ export default function IdeationForm() {
 
   return (
     <div className="">
-      <div className="flex flex-col items-center h-[800px] bg-base-200 mt-10 rounded-2xl">
+      <div
+        className={`flex flex-col items-center ${
+          editMode ? "h-[900px]" : "h-[800px]"
+        } bg-base-200 mt-10 rounded-2xl`}
+      >
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col w-full max-w-[1000px] gap-y-10"
