@@ -1,6 +1,6 @@
 import Banner from "@/components/banner/Banner";
 
-function PreVoyageBanner() {
+export default function PreVoyageBanner() {
   return (
     <div className="bg-base-200 rounded-2xl flex flex-col flex-grow-1 w-full pt-[70px] pb-6 pl-[80px] pr-[80px]">
       <Banner
@@ -17,5 +17,3 @@ function PreVoyageBanner() {
     </div>
   );
 }
-
-export default PreVoyageBanner;
