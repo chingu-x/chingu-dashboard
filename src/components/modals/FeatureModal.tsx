@@ -13,7 +13,7 @@ import Alert from "@/components/Alert";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 
-import { onClose } from "@/store/features/modal/modalSlice";
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
@@ -29,7 +29,9 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function FeatureModal() {
   const dispatch = useAppDispatch();
-  const { isOpen, type, isEditing } = useAppSelector((state) => state.modal);
+  const { isOpen, type, isEditing } = useAppSelector(
+    (state) => state.modal.baseModal,
+  );
   const [deleteAlertIsVisible, setDeleteAlertIsVisible] = useState(false);
 
   const isModalOpen = isOpen && type === "feature";
@@ -54,7 +56,7 @@ export default function FeatureModal() {
   const handleClose = useCallback(() => {
     reset({ feature: "" });
     setDeleteAlertIsVisible(false);
-    dispatch(onClose());
+    dispatch(onCloseModal({ type: "feature" }));
   }, [dispatch, reset]);
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {

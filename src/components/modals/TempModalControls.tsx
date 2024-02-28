@@ -1,8 +1,8 @@
 "use client";
 
 import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
 import Button from "@/components/Button";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 export default function TempModalControls() {
   const dispatch = useAppDispatch();
@@ -11,14 +11,18 @@ export default function TempModalControls() {
       <Button
         size="lg"
         type="button"
-        onClick={() => dispatch(onOpen({ type: "example1" }))}
+        onClick={() =>
+          dispatch(onOpenModal({ type: "example1", content: "error" }))
+        }
       >
         Modal 1
       </Button>
       <Button
         size="lg"
         type="button"
-        onClick={() => dispatch(onOpen({ type: "example2" }))}
+        onClick={() =>
+          dispatch(onOpenModal({ type: "example2", content: "example" }))
+        }
       >
         Modal 2
       </Button>
