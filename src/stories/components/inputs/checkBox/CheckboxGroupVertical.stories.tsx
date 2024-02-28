@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import CheckboxGroup from "@/components/inputs/CheckboxGroup";
+import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
 
 const options = [
   {
@@ -26,8 +26,8 @@ const options = [
 ];
 
 const meta = {
-  title: "Components/Inputs/Checkbox Group",
-  component: CheckboxGroup,
+  title: "Components/Inputs/Checkbox Groups/Vertical Checkbox Group",
+  component: CheckboxGroupVertical,
   parameters: {
     layout: "centered",
   },
@@ -39,7 +39,7 @@ const meta = {
       control: { type: "object" },
     },
   },
-} satisfies Meta<typeof CheckboxGroup>;
+} satisfies Meta<typeof CheckboxGroupVertical>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -57,7 +57,7 @@ const BaseTemplate: Story = {
   args: {
     options: options,
   },
-  render: ({ ...args }) => <CheckboxGroup {...args} />,
+  render: ({ ...args }) => <CheckboxGroupVertical {...args} />,
 };
 
 export const Default = {
