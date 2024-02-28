@@ -13,10 +13,17 @@ interface ModalState {
   isEditing?: boolean;
 }
 
-interface ModalOpenActionPayload {
+export interface ModalOpenActionPayload {
   type: ModalType;
-  content: string;
+  content: ContentPayload;
   isEditing?: boolean;
+}
+
+export interface ContentPayload {
+  title?: string;
+  message?: string;
+  confirmationText?: string;
+  cancelText?: string;
 }
 
 interface ModalCloseActionPayload {
