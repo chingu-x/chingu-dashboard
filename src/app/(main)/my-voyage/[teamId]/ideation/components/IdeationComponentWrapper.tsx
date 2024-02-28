@@ -86,8 +86,8 @@ export default async function IdeationComponentWrapper({
         <Banner
           imageLight="/img/ideation_banner_light.png"
           imageDark="/img/ideation_banner_dark.png"
-          height="200"
-          width="276"
+          height="[200px]"
+          width="[276px]"
           alt="ideation_banner"
         />
       </VoyagePageBannerContainer>
