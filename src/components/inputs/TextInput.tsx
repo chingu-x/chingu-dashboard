@@ -40,7 +40,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       type = "text",
       ...props
     },
-    ref,
+    ref
   ) => {
     const textInputRef = useRef<ElementRef<"input"> | null>(null);
     const [isClearButtonVisible, setIsClearButtonVisible] = useState(false);
@@ -57,7 +57,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         const currentLength = e.target.value.length;
         if (currentLength > 0) {
           setCurrentSuggestion(
-            `Character length ${currentLength}/${maxLength}`,
+            `Character length ${currentLength}/${maxLength}`
           );
         } else {
           setCurrentSuggestion(suggestion);
@@ -80,13 +80,14 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     }
 
     return (
-      <div className="relative w-full">
+      <div className="relative w-full pr-2 ml-1">
+        {/* LABEL */}
         {label && <Label htmlFor={id}>{label}</Label>}
         {/* INPUT */}
         <div
           className={cn(
             "group relative my-2",
-            isClearButtonVisible && "pr-[48px]",
+            isClearButtonVisible && "pr-[48px]"
           )}
         >
           <input
@@ -101,7 +102,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
               inputGroupContent && "pl-[56px]",
               submitButtonText && "pr-[72px]",
-              className,
+              className
             )}
             ref={(e) => {
               if (typeof ref === "function") {
@@ -133,7 +134,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               size="sm"
               className={cn(
                 "absolute top-1/2 -translate-y-1/2 right-[2px] h-[calc(100%-4px)] rounded-[6.2px]",
-                isClearButtonVisible && "right-[50px]",
+                isClearButtonVisible && "right-[50px]"
               )}
             >
               {submitButtonText}
@@ -171,7 +172,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         />
       </div>
     );
-  },
+  }
 );
 
 TextInput.displayName = "TextInput";
