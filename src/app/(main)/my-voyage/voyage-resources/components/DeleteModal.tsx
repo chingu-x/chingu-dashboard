@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TrashIcon } from "@heroicons/react/20/solid";
 import ModalSection from "./ModalSection";
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
@@ -50,6 +51,7 @@ export default function DeleteModal () {
             onClick= {deleteAlertIsVisible ? onDeleteConfirmed :  onDelete }
             className="w-3/6 m-1"
           >
+            <TrashIcon className="w-4 h-4"/>
             {deleteAlertIsVisible ? "Confirm Deletion" : "Delete" }
           </Button>
         </div>
