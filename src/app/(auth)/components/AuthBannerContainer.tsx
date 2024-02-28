@@ -3,13 +3,15 @@ import Banner from "@/components/banner/Banner";
 export default function AuthBannerContainer() {
   return (
     <div className="flex min-h-[486px] flex-col justify-center">
-      <Banner
-        imageLight="/img/login_image_light.png"
-        imageDark="/img/login_image_dark.png"
-        height="[300px]"
-        width="[628px]"
-        alt="Login image"
-      />
+      <div>
+        <Banner
+          imageLight="/img/login_image_light.png"
+          imageDark="/img/login_image_dark.png"
+          height="h-[300px]"
+          width="w-[628px]"
+          alt="Login image"
+        />
+      </div>
 
       <h3 className="text-primary-focus text-2xl text-center mt-[27px] font-semibold">
         Ready to dive in?

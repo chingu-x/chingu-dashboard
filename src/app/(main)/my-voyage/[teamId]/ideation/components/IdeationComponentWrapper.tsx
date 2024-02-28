@@ -28,7 +28,7 @@ export async function fetchProjectIdeas({
       `api/v1/voyages/${teamId}/ideations`,
       token,
       "force-cache",
-      CacheTag.ideation,
+      CacheTag.ideation
     );
 
   return await handleAsync(fetchProjectIdeasAsync);
@@ -50,7 +50,7 @@ export default async function IdeationComponentWrapper({
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
     );
   }
 
@@ -87,8 +87,8 @@ export default async function IdeationComponentWrapper({
           imageLight="/img/ideation_banner_light.png"
           imageDark="/img/ideation_banner_dark.png"
           alt="ideation_banner"
-          height="[200px]"
-          width="[276px]"
+          height="h-[200px]"
+          width="w-[276px]"
         />
       </VoyagePageBannerContainer>
       <div className="flex flex-col items-center gap-y-10">

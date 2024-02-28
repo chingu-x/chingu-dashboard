@@ -13,8 +13,8 @@ export default function DirectoryPage() {
           imageLight="/img/directory_banner_light.png"
           imageDark="/img/directory_banner_dark.png"
           alt="directory_banner"
-          height="[200px]"
-          width="[276px]"
+          height="h-[200px]"
+          width="w-[276px]"
         />
       </VoyagePageBannerContainer>
       <TeamDirectory />
