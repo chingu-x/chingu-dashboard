@@ -15,7 +15,7 @@ import Textarea from "@/components/inputs/Textarea";
 import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { onClose } from "@/store/features/modal/modalSlice";
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
 
 const validationSchema = z.object({
@@ -45,7 +45,7 @@ const validationSchema = z.object({
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function Example1Modal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -62,7 +62,7 @@ export default function Example1Modal() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
-    dispatch(onClose());
+    dispatch(onCloseModal({ type: "example1" }));
     router.refresh();
     dispatch(
       onOpen({
@@ -74,7 +74,7 @@ export default function Example1Modal() {
 
   const handleClose = useCallback(() => {
     reset();
-    dispatch(onClose());
+    dispatch(onCloseModal({ type: "example1" }));
   }, [dispatch, reset]);
 
   return (
