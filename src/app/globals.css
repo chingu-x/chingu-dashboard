@@ -56,7 +56,7 @@
     --base-200: 22 23 26; /* #16171A */
     --base-300: 245 245 245; /* #F5F5F5 */
     --base-content: 45 48 54; /* #2D3036 */
-     --overlay:rgba(245,245,245,0.25); /* #F5F5F5 @ 25%  */
+     --overlay: rgba(245,245,245,0.25); /* #F5F5F5 @ 25%  */
 }
 }
 
@@ -90,6 +90,12 @@
     textarea::placeholder {
         padding-bottom: 8px;
     }
+}
+
+/* to remove the reveal password button (eye) which is added by MS Edge and IE */
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
 }
 
 /* React DateTime Picker styles */
