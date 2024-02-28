@@ -194,9 +194,7 @@ export default function IdeationForm() {
 
   return (
     <div
-      className={`flex flex-col items-center ${
-        editMode ? "h-[900px]" : "h-[800px]"
-      } bg-base-200 mt-10 rounded-2xl`}
+      className="flex flex-col items-center h-[800px] bg-base-200 mt-10 rounded-2xl" 
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -236,18 +234,6 @@ export default function IdeationForm() {
           defaultValue={ideationData?.vision ?? ""}
         />
         <div className="flex w-full gap-x-10">
-          <Button
-            type="submit"
-            title="submit"
-            disabled={
-              !isDirty || !isValid || editIdeationLoading || addIdeationLoading
-            }
-            size="lg"
-            variant="primary"
-            className={`${editMode ? "w-1/2" : "w-full"}`}
-          >
-            {renderButtonContent()}
-          </Button>
           {editMode && (
             <Button
               type="button"
@@ -261,6 +247,18 @@ export default function IdeationForm() {
               {renderDeleteButtonContent()}
             </Button>
           )}
+          <Button
+            type="submit"
+            title="submit"
+            disabled={
+              !isDirty || !isValid || editIdeationLoading || addIdeationLoading
+            }
+            size="lg"
+            variant="primary"
+            className={`${editMode ? "w-1/2" : "w-full"}`}
+          >
+            {renderButtonContent()}
+          </Button>
         </div>
         <Button
           type="button"
