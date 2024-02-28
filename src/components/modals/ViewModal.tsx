@@ -5,29 +5,29 @@ import Button from "@/components/Button";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-export default function ViewModal () {
+export default function ViewModal() {
   const dispatch = useAppDispatch();
   const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
   const isModalOpen = isOpen && type === "viewResource";
-  
-  //TODO: replace data with actual data.
-  const data = { title:"title here", href:"link url here" };
 
-  const handleClose = () => {  
-    dispatch(onCloseModal( { type:"viewResource" } ));
+  //TODO: replace data with actual data.
+  const data = { title: "title here", href: "link url here" };
+
+  const handleClose = () => {
+    dispatch(onCloseModal({ type: "viewResource" }));
   };
 
-  return(
+  return (
     <Modal isOpen={isModalOpen} title="View Resource?" onClose={handleClose}>
       <form>
         <ModalSection heading="Are you sure you would like to visit this resource?">
           <p className="text-neutral">{data.title}</p>
         </ModalSection>
         <ModalSection heading="Are you sure you would like to visit this resource?">
-          <Link 
+          <Link
             className="text-neutral"
             href={data.href}
-            rel="noopener noreferrer" 
+            rel="noopener noreferrer"
             target="_blank"
           >
             {data.href}
@@ -41,23 +41,19 @@ export default function ViewModal () {
           </label>
         </div>
         <div className="flex justify-between w-full h-16">
-          <Button 
-            size="lg" 
-            variant="neutral" 
-            onClick={handleClose} 
+          <Button
+            size="lg"
+            variant="neutral"
+            onClick={handleClose}
             className="w-3/6 m-1"
           >
             Go Back
           </Button>
-          <Button 
-            size="lg" 
-            variant="primary"  
-            className="w-3/6 m-1"
-          >
+          <Button size="lg" variant="primary" className="w-3/6 m-1">
             Continue
           </Button>
         </div>
-      </form>      
+      </form>
     </Modal>
   );
-};
+}

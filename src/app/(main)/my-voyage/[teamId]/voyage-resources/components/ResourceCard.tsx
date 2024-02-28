@@ -10,30 +10,41 @@ interface ResourceCardProps {
   date: string;
 }
 
-export default function ResourceCard ({ title, currentUser, badge, date }:ResourceCardProps) {
+export default function ResourceCard({
+  title,
+  currentUser,
+  badge,
+  date,
+}: ResourceCardProps) {
   const dispatch = useAppDispatch();
 
-  function openViewModal () {
+  function openViewModal() {
     dispatch(
       onOpenModal({
         type: "viewResource",
-        content: ""
+        content: "",
       }),
     );
-  };
+  }
   const openDeleteModal = () => {
     dispatch(
       onOpenModal({
         type: "deleteResource",
-        content:""
+        content: "",
       }),
     );
   };
 
   return (
-    <div  className="group [&>*]:cursor-pointer flex items-center w-11/12 p-2 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
-      <ArrowTopRightOnSquareIcon onClick={openViewModal} className="w-8 h-8 mr-4 stroke-1 group-hover:stroke-2" />
-      <div onClick={openViewModal} className="overflow-hidden flex flex-col justify-center p-2 w-full">
+    <div className="group [&>*]:cursor-pointer flex items-center w-11/12 p-2 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
+      <ArrowTopRightOnSquareIcon
+        onClick={openViewModal}
+        className="w-8 h-8 mr-4 stroke-1 group-hover:stroke-2"
+      />
+      <div
+        onClick={openViewModal}
+        className="overflow-hidden flex flex-col justify-center p-2 w-full"
+      >
         <h1 className="text-xl font-bold w-1/2 truncate">{title}</h1>
         <div className="flex mt-2 [&>*]:mr-8">
           <div>Shared by {badge}</div>
@@ -42,13 +53,13 @@ export default function ResourceCard ({ title, currentUser, badge, date }:Resour
         </div>
       </div>
       {currentUser && (
-        <div 
+        <div
           className="w-10 h-10 hover:bg-base-100 flex justify-center items-center rounded-full"
           onClick={openDeleteModal}
         >
-          <TrashIcon className="w-6 h-6"/>
+          <TrashIcon className="w-6 h-6" />
         </div>
       )}
     </div>
   );
-};
+}

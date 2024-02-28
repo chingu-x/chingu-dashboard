@@ -2,7 +2,6 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 
-
 export default function ResourceInput() {
   //TODO: Input group/link will replace the TextInputs in this form.
   return (
