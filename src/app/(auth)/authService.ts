@@ -1,81 +1,105 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { User } from "@/store/features/user/userSlice";
+import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { getAccessToken, getRefreshToken } from "@/utils/getCookie";
+import { POST } from "@/utils/requests";
 
-interface ServerSignInResponse {
+interface AuthResponse {
   message: string;
 }
 
-export async function serverSignIn(): Promise<ServerSignInResponse> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: "jessica.williamson@gmail.com",
-        password: "password",
-      }),
-      cache: "no-store",
-    },
-  );
+interface ServerSignInResponse extends AuthResponse {}
 
-  if (!res.ok) {
-    throw new Error(res.statusText);
-  }
+interface ServerSignOutResponse extends AuthResponse {}
 
-  const accessToken = res.headers.getSetCookie()[0].split("access_token=")[1];
-  const tokenValue = accessToken.split("; ")[0];
-  const maxAge = accessToken.split("; ")[1].split("=")[1];
+// prettier-ignore
+// prettier causing issues here with eslint rules
+export async function serverSignIn(): Promise<
+  AsyncActionResponse<ServerSignInResponse>
+  > {
+  const userOrError = async () => asyncSignIn();
 
-  cookies().set({
-    name: "access_token",
-    value: tokenValue,
-    httpOnly: true,
-    maxAge: +maxAge,
-    path: "/",
-    secure: true,
-  });
-
-  return (await res.json()) as ServerSignInResponse;
+  return handleAsync(userOrError);
 }
 
-export async function serverSignOut(): Promise<void> {
+// prettier-ignore
+// prettier causing issues here with eslint rules
+export async function serverSignOut(): Promise<
+   AsyncActionResponse<ServerSignOutResponse>> {
+  const accesstoken = getAccessToken();
+  const refreshToken = getRefreshToken();
+ 
+
+  const signOutSuccessOrFail = async () =>
+    POST<undefined, ServerSignOutResponse>(
+      "api/v1/auth/logout",
+      `${accesstoken}; ${refreshToken}`,
+      "default"
+    );
+    
+    
+  cookies().delete("access_token");
+  cookies().delete("refresh_token");
+    
+  return handleAsync(signOutSuccessOrFail);
+  
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+async function asyncSignIn(): Promise<ServerSignInResponse> {
   try {
-    return await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/logout`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
       {
         method: "POST",
-      },
-    ).then(() => {
-      cookies().delete("access_token");
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: "jessica.williamson@gmail.com",
+          password: "password",
+        }),
+        credentials: "include",
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    }
+
+    const accessToken = res.headers.getSetCookie()[0].split("access_token=")[1];
+    const refreshToken = res.headers
+      .getSetCookie()[1]
+      .split("refresh_token=")[1];
+    const accessTokenValue = accessToken.split("; ")[0];
+    const accessTokenMaxAge = accessToken.split("; ")[1].split("=")[1];
+    const refreshTokenValue = refreshToken.split(";")[0];
+    const refreshTokenMaxAge = refreshToken.split("; ")[1].split("=")[1];
+
+    cookies().set({
+      name: "access_token",
+      value: accessTokenValue,
+      httpOnly: true,
+      maxAge: +accessTokenMaxAge,
+      path: "/",
+      secure: true,
     });
+
+    cookies().set({
+      name: "refresh_token",
+      value: refreshTokenValue,
+      httpOnly: true,
+      maxAge: +refreshTokenMaxAge,
+      path: "/",
+      secure: true,
+    });
+
+    return (await res.json()) as ServerSignInResponse;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
-}
-
-export async function getUser(): Promise<User | undefined> {
-  const token = cookies().get("access_token")?.value || "";
-
-  if (!token) return;
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/me`,
-    {
-      headers: {
-        Cookie: `access_token=${token}`,
-      },
-    },
-  );
-
-  if (!res.ok) {
-    throw new Error(res.statusText);
-  }
-
-  return (await res.json()) as User;
 }
