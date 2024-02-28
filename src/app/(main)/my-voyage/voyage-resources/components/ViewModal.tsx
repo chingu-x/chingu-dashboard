@@ -2,28 +2,34 @@ import Link from "next/link";
 import ModalSection from "./ModalSection";
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
+import { onClose } from "@/store/features/modal/modalSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-interface ViewModalProps {
-  selectedResource: { title:string, link:string };
-  viewing:boolean;
-  handleClose: () => void
-}
+export default function ViewModal () {
+  const dispatch = useAppDispatch();
+  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const isModalOpen = isOpen && type === "viewResource";
+  //TODO: replace data with actual data.
+  const data = { title:"title here", href:"link url here" };
 
-export default function ViewModal ({ selectedResource, viewing, handleClose }:ViewModalProps) {
+  const handleClose = () => {  
+    dispatch(onClose());
+  };
+
   return(
-    <Modal isOpen={viewing} title="View Resource?" onClose={handleClose}>      
+    <Modal isOpen={isModalOpen} title="View Resource?" onClose={handleClose}>
       <form>
         <ModalSection heading="Are you sure you would like to visit this resource?">
-          <p className="text-neutral">{selectedResource.title}</p>
+          <p className="text-neutral">{data.title}</p>
         </ModalSection>
         <ModalSection heading="Are you sure you would like to visit this resource?">
           <Link 
             className="text-neutral"
-            href={selectedResource.link} 
+            href={data.href}
             rel="noopener noreferrer" 
             target="_blank"
           >
-            {selectedResource.link}
+            {data.href}
           </Link>
         </ModalSection>
         <div className="p-1 mb-4">
