@@ -23,7 +23,7 @@ const CheckboxGroup = React.forwardRef<HTMLInputElement, CheckboxGroupProps>(
         />
       ))}
     </div>
-  )
+  ),
 );
 
 CheckboxGroup.displayName = "CheckboxGroup";
