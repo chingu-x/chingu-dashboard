@@ -20,7 +20,8 @@ import BaseFormPage from "@/app/(main)/my-voyage/[teamId]/sprints/components/for
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
-import RadioGroup from "@/components/inputs/RadioGroup";
+import RadioGroupVertical from "@/components/inputs/RadioGroup/RadioGroupVertical";
+import RadioGroupHorizontal from "@/components/inputs/RadioGroup/RadioGroupHorizontal";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import CheckboxGroup from "@/components/inputs/CheckboxGroup";
@@ -57,7 +58,7 @@ const validationSchema = z.object({
     inputName: "Team activities Time",
     required: true,
   }),
-  // TODO: update validation
+  // TODO: update validation for arrays
   topicsCovered: z.string().array().min(1),
   deployToProduction: validateTextInput({
     inputName: "Deploy to production",
@@ -118,7 +119,7 @@ export default function WeeklyCheckingForm() {
             <Label className="font-semibold normal-case">
               How did you communicate with your team this past week?
             </Label>
-            <RadioGroup
+            <RadioGroupVertical
               options={communicationOptions}
               {...register("communication")}
             />
@@ -130,7 +131,7 @@ export default function WeeklyCheckingForm() {
             <Label className="font-semibold normal-case">
               Did you contribute to the project for your team this past week?
             </Label>
-            <RadioGroup
+            <RadioGroupVertical
               options={contributionOptions}
               {...register("contribution")}
             />
@@ -142,7 +143,10 @@ export default function WeeklyCheckingForm() {
             <Label className="font-semibold normal-case">
               How would you rate your team&apos;s progress right now?
             </Label>
-            <RadioGroup options={teamProgress} {...register("teamProgress")} />
+            <RadioGroupVertical
+              options={teamProgress}
+              {...register("teamProgress")}
+            />
           </div>
         </div>
         {/* Time Distribution */}
@@ -167,26 +171,26 @@ export default function WeeklyCheckingForm() {
                 </div>
               </div>
               {/* PAIR PROGRAMMING */}
-              <RadioGroup
-                titleLeft="Pair programming"
+              <RadioGroupHorizontal
+                title="Pair programming"
                 options={pairProgrammingTimeOptions}
                 {...register("pairProgrammingTime")}
               />
               {/* ON MY OWN */}
-              <RadioGroup
-                titleLeft="On my own"
+              <RadioGroupHorizontal
+                title="On my own"
                 options={onMyOwnTimeOptions}
                 {...register("onMyOwnTime")}
               />
               {/* LEARNING & RESEARCH */}
-              <RadioGroup
-                titleLeft="Learning & research"
+              <RadioGroupHorizontal
+                title="Learning & research"
                 options={learningTimeOptions}
                 {...register("learningTime")}
               />
               {/* TEAM ACTIVITIES TIME */}
-              <RadioGroup
-                titleLeft="Team activities (eg. meetings, debugging, etc.)"
+              <RadioGroupHorizontal
+                title="Team activities (eg. meetings, debugging, etc.)"
                 options={teamTimeOptions}
                 {...register("teamTime")}
               />
@@ -212,7 +216,7 @@ export default function WeeklyCheckingForm() {
             <Label className="font-semibold normal-case">
               Did you deploy to Production at the end of this Sprint?
             </Label>
-            <RadioGroup
+            <RadioGroupVertical
               options={deployToProductionOptions}
               {...register("deployToProduction")}
             />

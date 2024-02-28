@@ -3,14 +3,14 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { LinkIcon } from "@heroicons/react/24/outline";
 import { scaleOptions } from "./radioGroupDate";
 
 import BaseFormPage from "@/app/(main)/my-voyage/[teamId]/sprints/components/forms/BaseFormPage";
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
-import RadioGroup from "@/components/inputs/RadioGroup";
+import RadioGroupRating from "@/components/inputs/RadioGroup/RadioGroupRating";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import TextInput from "@/components/inputs/TextInput";
@@ -24,6 +24,7 @@ const validationSchema = z.object({
     inputName: "Project Description",
     required: true,
   }),
+  // TODO: update validation for links
   githubRepo: validateTextInput({
     inputName: "Github repo",
     required: true,
@@ -75,7 +76,7 @@ export default function VoyageSubmissionForm() {
       >
         {/* Project Name */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label htmlFor="projectName" className="font-semibold normal-case">
               What is the name of the project?
             </Label>
@@ -84,14 +85,13 @@ export default function VoyageSubmissionForm() {
               placeholder="Your answer"
               {...register("projectName")}
               errorMessage={errors.projectName?.message}
-              className="mt-10"
               rows={2}
             />
           </div>
         </div>
         {/* Project Description */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label
               htmlFor="projectDescription"
               className="font-semibold normal-case"
@@ -103,29 +103,28 @@ export default function VoyageSubmissionForm() {
               placeholder="Your answer"
               {...register("projectDescription")}
               errorMessage={errors.projectDescription?.message}
-              className="mt-10"
               rows={2}
             />
           </div>
         </div>
         {/* Github Repo */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label htmlFor="githubRepo" className="font-semibold normal-case">
               Please link your Github repo:
             </Label>
             <TextInput
               id="githubRepo"
               placeholder="Please provide a link"
+              inputGroupContent={<LinkIcon />}
               {...register("githubRepo")}
               errorMessage={errors.githubRepo?.message}
-              className="mt-10"
             />
           </div>
         </div>
         {/* Deployed Project Link */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label
               htmlFor="deployedProjectLink"
               className="font-semibold normal-case"
@@ -135,15 +134,15 @@ export default function VoyageSubmissionForm() {
             <TextInput
               id="deployedProjectLink"
               placeholder="Please provide a link"
+              inputGroupContent={<LinkIcon />}
               {...register("deployedProjectLink")}
               errorMessage={errors.deployedProjectLink?.message}
-              className="mt-10"
             />
           </div>
         </div>
         {/* Showcase Link*/}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label htmlFor="showcaseLink" className="font-semibold normal-case">
               If you have a project showcase video, please provide the public
               link:
@@ -151,15 +150,15 @@ export default function VoyageSubmissionForm() {
             <TextInput
               id="showcaseLink"
               placeholder="Please provide a link"
+              inputGroupContent={<LinkIcon />}
               {...register("showcaseLink")}
               errorMessage={errors.showcaseLink?.message}
-              className="mt-10"
             />
           </div>
         </div>
         {/* Positive Aspects */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label
               htmlFor="positiveAspects"
               className="font-semibold normal-case"
@@ -171,14 +170,13 @@ export default function VoyageSubmissionForm() {
               placeholder="Your answer"
               {...register("positiveAspects")}
               errorMessage={errors.positiveAspects?.message}
-              className="mt-10"
               rows={2}
             />
           </div>
         </div>
         {/* Challenging Aspects */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label
               htmlFor="challengingAspects"
               className="font-semibold normal-case"
@@ -190,14 +188,13 @@ export default function VoyageSubmissionForm() {
               placeholder="Your answer"
               {...register("challengingAspects")}
               errorMessage={errors.challengingAspects?.message}
-              className="mt-10"
               rows={2}
             />
           </div>
         </div>
         {/* Extra comment */}
         <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full">
+          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
             <Label htmlFor="extraComment" className="font-semibold normal-case">
               Is there anything else you&apos;d like to share or comment on
               regarding your experience?
@@ -207,40 +204,24 @@ export default function VoyageSubmissionForm() {
               placeholder="Your answer"
               {...register("extraComment")}
               errorMessage={errors.extraComment?.message}
-              className="mt-10"
               rows={2}
             />
           </div>
         </div>
         {/* Scale */}
-        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl">
-          <div className="flex flex-col items-center w-full gap-y-10">
-            <Label className="font-semibold normal-case max-w-[650px] w-full">
-              On a scale of 0-10, how likely are you to suggest Chingu to a
-              friend or colleague?
-            </Label>
-            {/* TOP LABELS */}
-            <div className="flex flex-col max-w-[880px] w-full">
-              <div className="w-full grid-cols-[80px_1fr_80px] grid xl:grid-cols-[130px_1fr_130px] px-4 gap-x-4 items-center justify-between">
-                <span></span>
-                <div className="flex justify-between px-3 xl:pl-8 xl:pr-6">
-                  {scaleOptions.map(({ label }) => (
-                    <span
-                      key={label}
-                      className="text-base font-medium text-base-300"
-                    >
-                      {label}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <RadioGroup
-                titleLeft="Not Likely"
-                titleRight="Extremely Likely"
-                options={scaleOptions}
-                {...register("scale")}
-              />
-            </div>
+        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl gap-y-10">
+          <Label className="font-semibold normal-case max-w-[650px] w-full">
+            On a scale of 0-10, how likely are you to suggest Chingu to a friend
+            or colleague?
+          </Label>
+          {/* TOP LABELS */}
+          <div className="flex flex-col max-w-[880px] w-full">
+            <RadioGroupRating
+              leftTitle="Not Likely"
+              rightTitle="Extremely Likely"
+              options={scaleOptions}
+              {...register("scale")}
+            />
           </div>
         </div>
         <Button
