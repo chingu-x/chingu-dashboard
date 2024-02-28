@@ -9,6 +9,7 @@ export default function ViewModal () {
   const dispatch = useAppDispatch();
   const { isOpen, type } = useAppSelector((state) => state.modal);
   const isModalOpen = isOpen && type === "viewResource";
+  
   //TODO: replace data with actual data.
   const data = { title:"title here", href:"link url here" };
 
@@ -40,8 +41,21 @@ export default function ViewModal () {
           </label>
         </div>
         <div className="flex justify-between w-full h-16">
-          <Button size="lg" variant="neutral" onClick={handleClose} className="w-3/6 m-1">Go Back</Button>
-          <Button type="submit" size="lg" variant="primary"  className="w-3/6 m-1">Continue</Button>
+          <Button 
+            size="lg" 
+            variant="neutral" 
+            onClick={handleClose} 
+            className="w-3/6 m-1"
+          >
+            Go Back
+          </Button>
+          <Button 
+            size="lg" 
+            variant="primary"  
+            className="w-3/6 m-1"
+          >
+            Continue
+          </Button>
         </div>
       </form>      
     </Modal>
