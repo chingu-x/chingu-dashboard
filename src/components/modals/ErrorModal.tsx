@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback } from "react";
+import Modal from "./Modal";
 import Button from "@/components/Button";
-import Modal from "@/components/modals/Modal";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 

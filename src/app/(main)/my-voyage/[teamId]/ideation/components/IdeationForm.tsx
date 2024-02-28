@@ -109,7 +109,9 @@ export default function IdeationForm() {
       }
 
       if (error) {
-        dispatch(onOpenModal({ type: "error", content: error.message }));
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } })
+        );
         setEditIdeationLoading(false);
       }
     } else {
@@ -122,7 +124,9 @@ export default function IdeationForm() {
       }
 
       if (error) {
-        dispatch(onOpenModal({ type: "error", content: error.message }));
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } })
+        );
         setAddIdeationLoading(false);
       }
     }
@@ -138,7 +142,9 @@ export default function IdeationForm() {
     }
 
     if (error) {
-      dispatch(onOpenModal({ type: "error", content: error.message }));
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } })
+      );
       setDeleteIdeationLoading(false);
     }
   }
@@ -193,9 +199,7 @@ export default function IdeationForm() {
   }
 
   return (
-    <div
-      className="flex flex-col items-center h-[800px] bg-base-200 mt-10 rounded-2xl" 
-    >
+    <div className="flex flex-col items-center h-[800px] bg-base-200 mt-10 rounded-2xl">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-full max-w-[1000px] gap-y-10"
