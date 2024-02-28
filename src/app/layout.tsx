@@ -1,11 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import StoreProvider from "@/components/StoreProvider";
-import ThemeProvider from "@/components/ThemeProvider";
-import ModalProvider from "@/components/ModalProvider";
-import ToastProvider from "@/components/ToastProvider";
-import AuthProvider from "@/components/AuthProvider";
+import StoreProvider from "@/components/providers/StoreProvider";
+import ThemeProvider from "@/components/providers/ThemeProvider";
+import ToastProvider from "@/components/providers/ToastProvider";
+import ModalProvider from "@/components/providers/ModalProvider";
 
 export const metadata: Metadata = {
   title: "Chingu Dashboard",
@@ -33,7 +32,6 @@ export default function RootLayout({
       <body className="overflow-hidden">
         <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
           <StoreProvider>
-            <AuthProvider />
             <ToastProvider />
             <ModalProvider />
             {children}

@@ -18,6 +18,7 @@ export interface TextareaProps
   id: string;
   label?: string;
   placeholder: string;
+  defaultValue?: string;
   suggestion?: string;
   maxLength?: number;
   errorMessage?: string | undefined;
@@ -29,6 +30,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       id,
       label,
       placeholder,
+      defaultValue,
       suggestion,
       maxLength,
       errorMessage,
@@ -87,6 +89,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             textAreaRef.current = e;
           }}
           placeholder={placeholder}
+          defaultValue={defaultValue}
           aria-describedby={`${id}-message`}
           className={cn(
             "leading-5 resize-none outline-none px-3.5 py-2.5 rounded-lg border w-full my-2 text-base shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus focus-visible:ring-0 focus-visible:bg-base-200 placeholder-base placeholder:leading-5 disabled:cursor-not-allowed border-neutral/40 focus-visible:shadow-neutral/30",

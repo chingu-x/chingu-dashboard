@@ -1,28 +1,29 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { clientSignOut } from "@/store/features/auth/authSlice";
 
-type VoyageStatus = {
+interface VoyageStatus {
   name: string;
-};
+}
 
-type Voyage = {
+interface Voyage {
   status: VoyageStatus;
-};
+}
 
-type VoyageTeam = {
+interface VoyageTeam {
   name: string;
   voyage: Voyage;
-};
+}
 
-type VoyageRole = {
+interface VoyageRole {
   name: string;
-};
+}
 
-export type VoyageTeamMember = {
+export interface VoyageTeamMember {
   id: number;
   voyageTeamId: number;
   voyageTeam: VoyageTeam;
   voyageRole: VoyageRole;
-};
+}
 
 export interface User {
   id: string;
@@ -62,6 +63,9 @@ export const userSlice = createSlice({
       ...state,
       ...action.payload,
     }),
+  },
+  extraReducers(builder) {
+    builder.addCase(clientSignOut, () => initialState);
   },
 });
 

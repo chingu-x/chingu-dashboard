@@ -5,28 +5,38 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import Button from "@/components/Button";
+import { EnvelopeIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
+
 import Modal from "@/components/modals/Modal";
 import TextInput from "@/components/inputs/TextInput";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { onClose } from "@/store/features/modal/modalSlice";
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
 
 const validationSchema = z.object({
+  email: validateTextInput({
+    inputName: "Email",
+    required: true,
+    isEmail: true,
+  }),
   suggestion: validateTextInput({
     inputName: "Suggestion",
     required: true,
     maxLen: 30,
+  }),
+  techStack: validateTextInput({
+    inputName: "Teck Stack",
+    required: true,
   }),
 });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function Example2Modal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "example2";
@@ -52,7 +62,7 @@ export default function Example2Modal() {
 
   const handleClose = useCallback(() => {
     reset();
-    dispatch(onClose());
+    dispatch(onCloseModal({ type: "example2" }));
   }, [dispatch, reset]);
 
   return (
@@ -65,34 +75,30 @@ export default function Example2Modal() {
         {/* BODY WITHOUT VERTICAL SCROLL*/}
         <div className="flex flex-col gap-4">
           <TextInput
+            id="email"
+            placeholder="What is your email?"
+            inputGroupContent={<EnvelopeIcon />}
+            {...register("email")}
+            errorMessage={errors?.email?.message}
+          />
+          <TextInput
             id="suggestion"
             placeholder="What is your tech stack suggestion?"
             suggestion="Tip: keep it short and sweet"
             maxLength={30}
+            submitButtonText="Add"
+            clearInputAction={() => reset({ suggestion: "" })}
             {...register("suggestion")}
             errorMessage={errors?.suggestion?.message}
           />
-        </div>
-        {/* BUTTONS */}
-        <div className="flex flex-1 gap-5 pt-8">
-          <Button
-            variant="neutral"
-            size="lg"
-            aria-label="go back"
-            onClick={() => {}}
-            className="w-full"
-          >
-            Go back
-          </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            aria-label="submit"
-            className="w-full"
-          >
-            Submit
-          </Button>
+          <TextInput
+            id="techStack"
+            placeholder="Add Tech Stack"
+            inputGroupContent={<PlusCircleIcon />}
+            clearInputAction={() => reset({ techStack: "" })}
+            {...register("techStack")}
+            errorMessage={errors?.techStack?.message}
+          />
         </div>
       </form>
     </Modal>
