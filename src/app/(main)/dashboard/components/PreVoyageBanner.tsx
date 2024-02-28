@@ -7,8 +7,8 @@ export default function PreVoyageBanner() {
         imageLight="/img/pre_voyage_light.png"
         imageDark="/img/pre_voyage_dark.png"
         alt="Pre Voyage banner image"
-        height="[437px]"
-        width="full"
+        height="h-[437px]"
+        width="w-full"
       />
       <p className="text-center text-[25px] font-semibold">Are you ready?</p>
       <p className="text-center text-base font-medium	">

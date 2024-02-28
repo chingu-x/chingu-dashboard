@@ -22,8 +22,8 @@ function FeaturesPage() {
           imageLight="/img/features_banner_light.png"
           imageDark="/img/features_banner_dark.png"
           alt="features_banner"
-          height="[200px]"
-          width="[276px]"
+          height="h-[200px]"
+          width="w-[276px]"
         />
       </VoyagePageBannerContainer>
       <FeaturesContainer data={data} currentUser={currentUser} />
