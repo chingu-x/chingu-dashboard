@@ -15,9 +15,6 @@ import RadioGroup from "@/components/inputs/RadioGroup";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import TextInput from "@/components/inputs/TextInput";
 
-import { useAppDispatch } from "@/store/hooks";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
-
 const validationSchema = z.object({
   projectName: validateTextInput({
     inputName: "Project Name",
@@ -55,7 +52,6 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function VoyageSubmissionForm() {
-  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -66,7 +62,6 @@ export default function VoyageSubmissionForm() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
-    dispatch(onOpenModal({ type: "voyageSuccess", content: "" }));
   };
 
   return (
