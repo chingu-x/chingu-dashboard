@@ -7,16 +7,16 @@ import checkmark from "@/public/lotties/CheckmarkAnimated.json";
 import Modal from "@/components/modals/Modal";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { onClose } from "@/store/features/modal/modalSlice";
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 
 export default function CheckInSuccessModal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "checkInSuccess";
 
   const handleClose = useCallback(() => {
-    dispatch(onClose());
+    dispatch(onCloseModal({ type: "checkInSuccess" }));
   }, [dispatch]);
 
   const checkmarkOptions = {

@@ -20,7 +20,7 @@ export interface Meeting {
   agendas: Agenda[];
 }
 
-export const Meeting: Meeting = {
+export const MeetingInfo: Meeting = {
   id: 1,
   sprint: {
     id: 1,
