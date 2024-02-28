@@ -24,7 +24,7 @@ import RadioGroupVertical from "@/components/inputs/RadioGroup/RadioGroupVertica
 import RadioGroupHorizontal from "@/components/inputs/RadioGroup/RadioGroupHorizontal";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
-import CheckboxGroup from "@/components/inputs/CheckboxGroup";
+import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
 
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
@@ -204,7 +204,7 @@ export default function WeeklyCheckingForm() {
               What topics did your meetings cover this week? (Select all that
               apply)
             </Label>
-            <CheckboxGroup
+            <CheckboxGroupVertical
               options={topicsCoveredOptions}
               {...register("topicsCovered")}
             />
@@ -229,7 +229,7 @@ export default function WeeklyCheckingForm() {
               Is there anyone on your team who has not been active? If yes,
               please select the user. If no, move onto the next question.
             </Label>
-            <CheckboxGroup
+            <CheckboxGroupVertical
               options={TeamMembersOptions}
               {...register("notActive")}
             />
