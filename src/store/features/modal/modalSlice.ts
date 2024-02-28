@@ -6,8 +6,7 @@ export type ModalType =
   | "feature"
   | "error"
   | "gettingHelp"
-  | "checkInSuccess"
-  | "voyageSuccess";
+  | "checkInSuccess";
 
 interface ModalState {
   type: ModalType | undefined;

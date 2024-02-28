@@ -16,7 +16,7 @@ import {
 } from "./radioGroupData";
 import { TeamMembersOptions, topicsCoveredOptions } from "./checkboxGroupData";
 
-import BaseFormPage from "@/app/(main)/my-voyage/sprints/components/forms/BaseFormPage";
+import BaseFormPage from "@/app/(main)/my-voyage/[teamId]/sprints/components/forms/BaseFormPage";
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
@@ -26,7 +26,7 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 import CheckboxGroup from "@/components/inputs/CheckboxGroup";
 
 import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   communication: validateTextInput({
@@ -100,7 +100,7 @@ export default function WeeklyCheckingForm() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
-    dispatch(onOpen({ type: "checkInSuccess" }));
+    dispatch(onOpenModal({ type: "checkInSuccess", content: "" }));
   };
 
   return (
