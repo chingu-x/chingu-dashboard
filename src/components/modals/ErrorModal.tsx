@@ -23,7 +23,12 @@ export default function ErrorModal() {
         <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[90px]">
           <div className="flex flex-col gap-4">{error}</div>
           <div className="flex flex-col gap-5 pt-8">
-            <Button size="lg" type="button" onClick={handleClose}>
+            <Button
+              size="lg"
+              variant="neutral"
+              type="button"
+              onClick={handleClose}
+            >
               Close
             </Button>
           </div>
