@@ -25,7 +25,7 @@ function Banner({ imageLight, imageDark, alt, height, width }: BannerProps) {
       </div>
       <div
         data-hide-on-theme="light"
-        className={`h-[${height}px] w-[${width}px] relative shrink-0`}
+        className={`h-${height} w-${width} relative shrink-0`}
       >
         <Image
           src={imageDark}
