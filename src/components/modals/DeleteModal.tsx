@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TrashIcon } from "@heroicons/react/20/solid";
-import ModalSection from "../../app/(main)/my-voyage/voyage-resources/components/ModalSection";
+import ModalSection from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ModalSection";
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
 import Alert from "@/components/Alert";
@@ -18,7 +18,7 @@ export default function DeleteModal () {
   
   const handleClose = () => {
     setDeleteAlertIsVisible(false);
-    dispatch(onCloseModal( { type:"deleteResource"} ));
+    dispatch(onCloseModal( { type:"deleteResource" } ));
   };
   const onDelete = () => {
     setDeleteAlertIsVisible(true);
