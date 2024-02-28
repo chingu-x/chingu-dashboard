@@ -122,3 +122,22 @@ export async function resetPasswordRequestEmail() {
     },
   );
 }
+
+export async function resetPassword() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: "kade.upton15@ethereal.email",
+        password: "something",
+        token: "future_token",
+      }),
+      cache: "no-store",
+    },
+  );
+}

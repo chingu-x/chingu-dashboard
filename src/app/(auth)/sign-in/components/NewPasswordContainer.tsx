@@ -1,9 +1,11 @@
+"use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextInput from "@/components/inputs/TextInput";
 import Button from "@/components/Button";
 import { validateTextInput } from "@/helpers/form/validateInput";
+import { resetPassword } from "../../authService";
 
 const validationSchema = z.object({
   password: validateTextInput({
@@ -20,6 +22,9 @@ type NewPasswordContainerProps = {
   onClick: () => void;
 };
 
+const fakeTokenUrl =
+  "https://chingu-dashboard.vercel.app/users/reset-password?token=fakeTokenPlaceholder";
+
 function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   const {
     register,
@@ -30,13 +35,16 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
-    onClick();
+    console.log("data in new password?", data);
+    // onClick();
+
+    // TODO: uncomment after reset password link can be tested
+    // resetPassword();
   };
 
   return (
-    <div className="w-[400px] min-h-[349px] bg-base-200 rounded-2xl xl:ml-60 p-6">
-      <p className="text-base-300 text-2xl text-center mt-2.5 mb-8 font-medium">
+    <div className="w-[400px] min-h-[349px] bg-base-200 rounded-2xl p-8">
+      <p className="text-base-300 text-2xl text-center mb-8 font-medium">
         Create New Password
       </p>
       <p className="text-base-300 text-base font-medium pb-8">
