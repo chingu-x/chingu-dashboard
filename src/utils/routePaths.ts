@@ -34,6 +34,15 @@ const routePaths = {
   sprintsPage(teamId: string) {
     return `/my-voyage/${teamId}/sprints`;
   },
+  submitVoyage(teamId: string) {
+    return `/my-voyage/${teamId}/sprints/voyage-submission`;
+  },
+  weeklyCheckIn(teamId: string) {
+    return `/my-voyage/${teamId}/sprints/weekly-checkin`;
+  },
+  createMeeting(teamId: string) {
+    return `/my-voyage/${teamId}/sprints/create-meeting`;
+  },
   voyageResourcesPage(teamId: string) {
     return `/my-voyage/${teamId}/voyage-resources`;
   },

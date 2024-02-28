@@ -3,6 +3,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { scaleOptions } from "./radioGroupDate";
 
@@ -14,6 +15,7 @@ import RadioGroupRating from "@/components/inputs/RadioGroup/RadioGroupRating";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import TextInput from "@/components/inputs/TextInput";
+import routePaths from "@/utils/routePaths";
 
 const validationSchema = z.object({
   projectName: validateTextInput({
@@ -53,6 +55,7 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function VoyageSubmissionForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -63,6 +66,8 @@ export default function VoyageSubmissionForm() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
+    //TODO: fix routing later
+    router.push(routePaths.sprintsPage("2"));
   };
 
   return (
