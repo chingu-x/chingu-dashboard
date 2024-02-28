@@ -1,4 +1,4 @@
-export interface Agenda {
+export interface Topic {
   id: number;
   title: string;
   description: string;
@@ -17,10 +17,10 @@ export interface Meeting {
   dateTime: string;
   meetingLink: string;
   notes: string;
-  agendas: Agenda[];
+  agendas: Topic[];
 }
 
-export const MeetingInfo: Meeting = {
+export const meetingInfo: Meeting = {
   id: 1,
   sprint: {
     id: 1,
@@ -64,3 +64,33 @@ export const MeetingInfo: Meeting = {
     },
   ],
 };
+
+export const topicsData: Topic[] = [
+  {
+    id: 0,
+    title: "Milestones for this week",
+    description:
+      "FE Team - make homepage responsive\nBE Team - create endpoints for user profile\nDE Team - user flow for the modals",
+    status: true,
+  },
+  {
+    id: 1,
+    title: "FE Team",
+    description: "PR pushed this week\nModal\nComponentsHomepage",
+    status: true,
+  },
+  {
+    id: 2,
+    title: "BE Team",
+    description:
+      "Endpoints created this week\nHomepage\nUser profile\nSettings",
+    status: true,
+  },
+  {
+    id: 3,
+    title: "Project Management Tools",
+    description:
+      "Walk the team through how the Jira board is organized and how we will coordinate communications and tickets.",
+    status: false,
+  },
+];
