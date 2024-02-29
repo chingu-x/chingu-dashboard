@@ -53,6 +53,8 @@ export default function IdeationForm() {
   const { projectIdeas } = useAppSelector((state) => state.ideation);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
+  const [formData, setFormData] = useState({});
+  const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
   const dispatch = useAppDispatch();
 
   const {
@@ -169,6 +171,78 @@ export default function IdeationForm() {
     []
   );
 
+  // This block is responsible for auto-save functionality. Right now nextjs does
+  // not have a way to intercept routes with app router. When that is implemented
+  // on their side, it will probably be better to go that method.
+  function asyncTimeout(ms: number) {
+    return new Promise((resolve) => {
+      setSaveTimeout(setTimeout(resolve, ms));
+    });
+  }
+
+  useEffect(() => {
+    async function autoSave() {
+      const ideationId = +params.ideationId;
+
+      const filteredData = {
+        teamId,
+        ideationId,
+        ...formData,
+      };
+
+      await asyncTimeout(1000);
+
+      const [res, error] = await editIdeationAction(filteredData);
+
+      if (res) {
+        setEditIdeationLoading(false);
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({
+            type: "error",
+            content: { message: error.message },
+          })
+        );
+        setEditIdeationLoading(false);
+      }
+    }
+
+    if (editMode && Object.keys(formData).length !== 0) {
+      void autoSave();
+    }
+  }, [
+    formData,
+    editMode,
+    dispatch,
+    params.ideationId,
+    teamId,
+    editIdeationAction,
+    setEditIdeationLoading,
+  ]);
+
+  useEffect(
+    () => () => {
+      if (saveTimeout) {
+        clearTimeout(saveTimeout);
+      }
+    },
+    [saveTimeout]
+  );
+
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+
+  // ------------------------------------------------------------------------------
+
   function renderButtonContent() {
     if (editIdeationLoading || addIdeationLoading) {
       return <Spinner />;
@@ -196,6 +270,7 @@ export default function IdeationForm() {
           label="title"
           placeholder="Enter your voyage project idea"
           {...register("title")}
+          onChange={handleChange}
           errorMessage={errors.title?.message}
           maxLength={50}
           defaultValue={ideationData?.title ?? ""}
@@ -205,6 +280,7 @@ export default function IdeationForm() {
           label="description"
           placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
           {...register("description")}
+          onChange={handleChange}
           errorMessage={errors.description?.message}
           defaultValue={ideationData?.description ?? ""}
         />
@@ -213,6 +289,7 @@ export default function IdeationForm() {
           label="vision statement"
           placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
           {...register("vision")}
+          onChange={handleChange}
           errorMessage={errors.vision?.message}
           defaultValue={ideationData?.vision ?? ""}
         />

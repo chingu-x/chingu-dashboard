@@ -84,7 +84,7 @@ export async function editIdeation({
 
   const editIdeationAsync = () =>
     PATCH<EditIdeationBody, EditIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideation/${ideationId}`,
+      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
       { title, description, vision }
