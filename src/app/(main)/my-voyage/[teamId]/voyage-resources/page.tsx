@@ -1,3 +1,5 @@
+// all pages should be server components
+
 "use client";
 import React, { useState } from "react";
 import ResourceInput from "./components/ResourceInput";

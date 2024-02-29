@@ -23,7 +23,7 @@ export default function ResourceCard({
       onOpenModal({
         type: "viewResource",
         content: "",
-      }),
+      })
     );
   }
   const openDeleteModal = () => {
@@ -31,7 +31,7 @@ export default function ResourceCard({
       onOpenModal({
         type: "deleteResource",
         content: "",
-      }),
+      })
     );
   };
 
@@ -39,7 +39,7 @@ export default function ResourceCard({
     <div className="group [&>*]:cursor-pointer flex items-center w-11/12 p-2 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
       <ArrowTopRightOnSquareIcon
         onClick={openViewModal}
-        className="w-8 h-8 mr-4 stroke-1 group-hover:stroke-2"
+        className="w-8 h-8 mr-4 stroke-1 group-hover:stroke-2 ml-2"
       />
       <div
         onClick={openViewModal}
@@ -47,7 +47,7 @@ export default function ResourceCard({
       >
         <h1 className="text-xl font-bold w-1/2 truncate">{title}</h1>
         <div className="flex mt-2 [&>*]:mr-8">
-          <div>Shared by {badge}</div>
+          <div>Shared by {badge /* Todo: replace with badge component */}</div>
           <div className="w-1 h-5 border border-r-1 border-r-neutral-content border-b-0 border-l-0 border-t-0"></div>
           <div className="text-neutral">Added {date}</div>
         </div>
