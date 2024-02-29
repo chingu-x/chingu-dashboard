@@ -23,6 +23,7 @@ export default function ResourceInput() {
           placeholder="Name your resource here."
         />
       </div>
+      {/* the button will be in disabled state until user puts in a valid url and name */}
       <Button className="h-1/4 w-1/4 m-4">Share Resource</Button>
     </form>
   );
