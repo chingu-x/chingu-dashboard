@@ -1,15 +1,12 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { serverSignIn } from "@/app/(auth)/authService";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import Link from "next/link";
+import { useAppSelector } from "@/store/hooks";
 import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
-import { clientSignIn } from "@/store/features/auth/authSlice";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
-import Link from "next/link";
 
 const notificationCount = 4;
 
@@ -18,7 +15,6 @@ export default function AuthHeader() {
   const { avatar } = useAppSelector((state) => state.user);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import TextInput from "@/components/inputs/TextInput";
 import Button from "@/components/Button";
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { resetPassword } from "../../authService";
+// import { resetPassword } from "../../authService";
 
 const validationSchema = z.object({
   password: validateTextInput({
@@ -22,8 +22,9 @@ type NewPasswordContainerProps = {
   onClick: () => void;
 };
 
-const fakeTokenUrl =
-  "https://chingu-dashboard.vercel.app/users/reset-password?token=fakeTokenPlaceholder";
+// uncomment once we can test reset password link:
+// const fakeTokenUrl =
+//   "https://chingu-dashboard.vercel.app/users/reset-password?token=fakeTokenPlaceholder";
 
 function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   const {
@@ -36,7 +37,7 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log("data in new password?", data);
-    // onClick();
+    onClick();
 
     // TODO: uncomment after reset password link can be tested
     // resetPassword();

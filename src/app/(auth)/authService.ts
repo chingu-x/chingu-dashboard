@@ -13,8 +13,6 @@ interface ServerSignInResponse extends AuthResponse {}
 
 interface ServerSignOutResponse extends AuthResponse {}
 
-interface ResetPasswordResponse extends AuthResponse {}
-
 // prettier-ignore
 // prettier causing issues here with eslint rules
 export async function serverSignIn(email:string, password:string): Promise<
@@ -114,8 +112,8 @@ async function asyncSignIn(
   }
 }
 
-export async function resetPasswordRequestEmail(email: string) {
-  const res = await fetch(
+export function resetPasswordRequestEmail(email: string) {
+  fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password/request`,
     {
       method: "POST",
@@ -128,28 +126,21 @@ export async function resetPasswordRequestEmail(email: string) {
       }),
       cache: "no-store",
     },
-  );
+  ).catch((error) => console.log("error: ", error));
 }
 
-export async function resetPassword(
-  email: string,
-  password: string,
-  token: string,
-) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password`,
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        token,
-      }),
-      cache: "no-store",
+export function resetPassword(email: string, password: string, token: string) {
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify({
+      email,
+      password,
+      token,
+    }),
+    cache: "no-store",
+  }).catch((error) => console.log("error: ", error));
 }

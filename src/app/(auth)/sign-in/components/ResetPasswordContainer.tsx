@@ -1,12 +1,12 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import routePaths from "@/utils/routePaths";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { SubmitHandler, useForm } from "react-hook-form";
-import * as z from "zod";
-import { resetPasswordRequestEmail } from "../../authService";
 
 const validationSchema = z.object({
   email: validateTextInput({
