@@ -35,6 +35,7 @@ export default function ViewModal() {
         </ModalSection>
         <div className="p-1 mb-4">
           <p className="font-bold">Would you like to see this message again?</p>
+          {/**TODO: Replace input with 'input group' */}
           <input className="mr-2" type="checkbox" />
           <label>
             Don&apos;t ask me this again when opening resources links.
