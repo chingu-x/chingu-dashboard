@@ -5,7 +5,8 @@ export type ModalType =
   | "example2"
   | "feature"
   | "error"
-  | "gettingHelp";
+  | "gettingHelp"
+  | "confirmation";
 
 interface ModalState {
   type: ModalType | undefined;
@@ -41,12 +42,16 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
+      const { type, isEditing } = action.payload;
+
       state.isOpen = true;
-      state.type = action.payload.type;
-      state.isEditing = action.payload.isEditing;
+      state.type = type;
+      state.isEditing = isEditing;
     },
     onCloseModal: (state, action: PayloadAction<ModalCloseActionPayload>) => {
-      state.type = action.payload.type;
+      const { type } = action.payload;
+
+      state.type = type;
       state.isOpen = false;
       state.isEditing = false;
     },

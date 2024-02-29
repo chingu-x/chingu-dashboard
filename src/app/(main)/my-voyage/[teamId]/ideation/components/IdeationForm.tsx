@@ -17,7 +17,6 @@ import {
   editIdeation,
   type EditIdeationProps,
   addIdeation,
-  deleteIdeation,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import useServerAction from "@/hooks/useServerAction";
 import { persistor } from "@/store/store";
@@ -67,11 +66,6 @@ export default function IdeationForm() {
     isLoading: addIdeationLoading,
     setIsLoading: setAddIdeationLoading,
   } = useServerAction(addIdeation);
-  const {
-    runAction: deleteIdeationAction,
-    isLoading: deleteIdeationLoading,
-    setIsLoading: setDeleteIdeationLoading,
-  } = useServerAction(deleteIdeation);
 
   const {
     register,
@@ -132,21 +126,19 @@ export default function IdeationForm() {
     }
   };
 
-  async function handleDelete() {
-    const ideationId = +params.ideationId;
-
-    const [res, error] = await deleteIdeationAction({ teamId, ideationId });
-
-    if (res) {
-      router.push(routePaths.ideationPage(teamId.toString()));
-    }
-
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
-      );
-      setDeleteIdeationLoading(false);
-    }
+  function handleDelete() {
+    dispatch(
+      onOpenModal({
+        type: "confirmation",
+        content: {
+          title: "Confirm Deletion",
+          message:
+            "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
+          confirmationText: "Delete",
+          cancelText: "Keep It",
+        },
+      })
+    );
   }
 
   useEffect(() => {
@@ -183,19 +175,6 @@ export default function IdeationForm() {
     }
 
     return editMode ? "Save Changes" : "Save";
-  }
-
-  function renderDeleteButtonContent() {
-    if (deleteIdeationLoading) {
-      return <Spinner />;
-    }
-
-    return (
-      <>
-        <TrashIcon className="w-4 h-4" />
-        Delete Project
-      </>
-    );
   }
 
   return (
@@ -245,10 +224,10 @@ export default function IdeationForm() {
               variant="error"
               onClick={handleDelete}
               title="delete"
-              disabled={deleteIdeationLoading}
               className="w-1/2"
             >
-              {renderDeleteButtonContent()}
+              <TrashIcon className="w-4 h-4" />
+              Delete Project
             </Button>
           )}
           <Button
