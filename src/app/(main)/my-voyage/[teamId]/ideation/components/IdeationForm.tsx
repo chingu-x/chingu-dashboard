@@ -174,6 +174,7 @@ export default function IdeationForm() {
   // This block is responsible for auto-save functionality. Right now nextjs does
   // not have a way to intercept routes with app router. When that is implemented
   // on their side, it will probably be better to go that method.
+
   function asyncTimeout(ms: number) {
     return new Promise((resolve) => {
       setSaveTimeout(setTimeout(resolve, ms));
@@ -190,7 +191,7 @@ export default function IdeationForm() {
         ...formData,
       };
 
-      await asyncTimeout(1000);
+      await asyncTimeout(5000);
 
       const [res, error] = await editIdeationAction(filteredData);
 
@@ -310,9 +311,7 @@ export default function IdeationForm() {
           <Button
             type="submit"
             title="submit"
-            disabled={
-              !isDirty || !isValid || editIdeationLoading || addIdeationLoading
-            }
+            disabled={!isValid || editIdeationLoading || addIdeationLoading}
             size="lg"
             variant="primary"
             className={`${editMode ? "w-1/2" : "w-full"}`}
