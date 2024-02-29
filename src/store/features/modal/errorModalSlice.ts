@@ -21,13 +21,17 @@ export const errorModalSlice = createSlice({
     builder.addCase(
       onOpenModal,
       (state, action: PayloadAction<ModalOpenActionPayload>) => {
-        if (action.payload.type === "error" && action.payload.content) {
-          state.error = action.payload.content.message!;
+        const { type, content } = action.payload;
+
+        if (type === "error") {
+          state.error = content.message!;
         }
       }
     );
     builder.addCase(onCloseModal, (state, action) => {
-      if (action.payload.type === "error") {
+      const { type } = action.payload;
+
+      if (type === "error") {
         state.error = "";
       }
     });
