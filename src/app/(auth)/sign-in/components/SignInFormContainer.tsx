@@ -8,6 +8,7 @@ import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -34,6 +35,9 @@ interface SignInFormContainerProps {
 function SignInFormContainer({
   handleResetPassword,
 }: SignInFormContainerProps) {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const {
     register,
     formState: { errors },
@@ -42,22 +46,19 @@ function SignInFormContainer({
     resolver: zodResolver(validationSchema),
   });
 
-  const dispatch = useAppDispatch();
-
-  async function handleClick() {
-    const [res, error] = await serverSignIn();
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    console.log(data);
+    const { email, password } = data;
+    const [res, error] = await serverSignIn(email, password);
 
     if (res) {
       dispatch(clientSignIn());
+      router.push("/dashboard");
     }
 
     if (error) {
       dispatch(onOpenModal({ type: "error", content: error.message }));
     }
-  }
-
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
   };
 
   return (

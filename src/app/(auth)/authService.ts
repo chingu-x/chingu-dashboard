@@ -17,10 +17,10 @@ interface ResetPasswordResponse extends AuthResponse {}
 
 // prettier-ignore
 // prettier causing issues here with eslint rules
-export async function serverSignIn(): Promise<
+export async function serverSignIn(email:string, password:string): Promise<
   AsyncActionResponse<ServerSignInResponse>
   > {
-  const userOrError = async () => asyncSignIn();
+  const userOrError = async () => asyncSignIn(email, password);
 
   return handleAsync(userOrError);
 }
@@ -50,7 +50,13 @@ export async function serverSignOut(): Promise<
 
 /////////////////////////////////////////////////////////////////////////////
 
-async function asyncSignIn(): Promise<ServerSignInResponse> {
+async function asyncSignIn(
+  email: string,
+  password: string,
+): Promise<ServerSignInResponse> {
+  console.log("email: ", email);
+  console.log("password: ", password);
+
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
@@ -61,8 +67,10 @@ async function asyncSignIn(): Promise<ServerSignInResponse> {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "jessica.williamson@gmail.com",
-          password: "password",
+          // email: "jessica.williamson@gmail.com",
+          // password: "password",
+          email,
+          password,
         }),
         credentials: "include",
         cache: "no-store",
