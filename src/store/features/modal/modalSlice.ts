@@ -5,7 +5,9 @@ export type ModalType =
   | "example2"
   | "feature"
   | "error"
-  | "gettingHelp";
+  | "gettingHelp" 
+  | "viewResource" 
+  | "deleteResource";
 
 interface ModalState {
   type: ModalType | undefined;
