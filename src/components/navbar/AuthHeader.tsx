@@ -8,6 +8,8 @@ import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import routePaths from "@/utils/routePaths";
+import Link from "next/link";
 
 const notificationCount = 4;
 
@@ -17,18 +19,6 @@ export default function AuthHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-
-  async function handleClick() {
-    const [res, error] = await serverSignIn();
-
-    if (res) {
-      dispatch(clientSignIn());
-    }
-
-    if (error) {
-      dispatch(onOpenModal({ type: "error", content: error.message }));
-    }
-  }
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -61,8 +51,8 @@ export default function AuthHeader() {
       </div>
     </>
   ) : (
-    <Button title="Login" type="button" onClick={handleClick}>
-      Log In
-    </Button>
+    <Link href={routePaths.signIn()}>
+      <Button>Log In</Button>
+    </Link>
   );
 }

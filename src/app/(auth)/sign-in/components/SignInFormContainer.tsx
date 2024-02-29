@@ -1,11 +1,15 @@
-import Link from "next/link";
-import { useForm, SubmitHandler } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { serverSignIn } from "@/app/(auth)/authService";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
+import { clientSignIn } from "@/store/features/auth/authSlice";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -37,6 +41,20 @@ function SignInFormContainer({
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
+
+  const dispatch = useAppDispatch();
+
+  async function handleClick() {
+    const [res, error] = await serverSignIn();
+
+    if (res) {
+      dispatch(clientSignIn());
+    }
+
+    if (error) {
+      dispatch(onOpenModal({ type: "error", content: error.message }));
+    }
+  }
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);

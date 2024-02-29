@@ -123,7 +123,11 @@ export async function resetPasswordRequestEmail() {
   );
 }
 
-export async function resetPassword() {
+export async function resetPassword(
+  email: string,
+  password: string,
+  token: string,
+) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password`,
     {
