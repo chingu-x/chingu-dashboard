@@ -106,7 +106,7 @@ async function asyncSignIn(): Promise<ServerSignInResponse> {
   }
 }
 
-export async function resetPasswordRequestEmail() {
+export async function resetPasswordRequestEmail(email: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password/request`,
     {
@@ -116,7 +116,7 @@ export async function resetPasswordRequestEmail() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: "kade.upton15@ethereal.email",
+        email,
       }),
       cache: "no-store",
     },
@@ -137,9 +137,9 @@ export async function resetPassword(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: "kade.upton15@ethereal.email",
-        password: "something",
-        token: "future_token",
+        email,
+        password,
+        token,
       }),
       cache: "no-store",
     },

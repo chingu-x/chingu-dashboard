@@ -34,9 +34,9 @@ function ResetPasswordContainer({
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+    const { email } = data;
     handleEmailCheck();
-    resetPasswordRequestEmail();
+    resetPasswordRequestEmail(email);
   };
 
   return (
