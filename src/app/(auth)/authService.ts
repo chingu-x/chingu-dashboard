@@ -112,35 +112,57 @@ async function asyncSignIn(
   }
 }
 
-export function resetPasswordRequestEmail(email: string) {
-  fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password/request`,
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+export async function resetPasswordRequestEmail(email: string) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password/request`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+        }),
+        cache: "no-store",
       },
-      body: JSON.stringify({
-        email,
-      }),
-      cache: "no-store",
-    },
-  ).catch((error) => console.log("error: ", error));
+    );
+
+    if (res.ok) {
+      console.log("Reset password request sent successfully");
+    }
+  } catch (error) {
+    console.log("Error with request to reset password: ", error);
+  }
 }
 
-export function resetPassword(email: string, password: string, token: string) {
-  fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email,
-      password,
-      token,
-    }),
-    cache: "no-store",
-  }).catch((error) => console.log("error: ", error));
+export async function resetPassword(
+  email: string,
+  password: string,
+  token: string,
+) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          token,
+        }),
+        cache: "no-store",
+      },
+    );
+    if (res.ok) {
+      console.log("Successfully reset password");
+    }
+  } catch (error) {
+    console.log("Error with resetting your password: ", error);
+  }
 }
