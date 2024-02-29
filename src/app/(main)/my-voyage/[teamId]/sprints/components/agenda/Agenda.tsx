@@ -11,7 +11,9 @@ import {
 import { CheckCircleIcon as CheckCircleIconSolid } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 
-import { topicsData } from "./fixtures/Meeting";
+import EmptyState from "./EmptyState";
+import IconButton from "./IconButton";
+import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 import routePaths from "@/utils/routePaths";
 import Button from "@/components/Button";
 import { cn } from "@/lib/utils";
@@ -43,19 +45,7 @@ export default function Agenda() {
           </Button>
         </Link>
       </div>
-      {topics.length === 0 && (
-        <div className="flex flex-col w-full p-5 rounded-lg bg-base-100 gap-y-4">
-          <h4 className="py-2 text-xl font-medium">
-            Contribute to the agenda!
-          </h4>
-          <p className="py-[10px] px-[14px] text-base font-medium text-neutral-focus bg-base-200 rounded-lg border-2 border-neutral/40 ">
-            To get started, click the Add Topic button to propose a new topic
-            for discussion during the upcoming meeting. Your input will assist
-            the team in planning for the meeting and ensuring that essential
-            topics receive proper attention.
-          </p>
-        </div>
-      )}
+      {topics.length === 0 && <EmptyState />}
       {topics.map((topic) => (
         <div
           key={topic.id}
@@ -66,22 +56,20 @@ export default function Agenda() {
         >
           <div className="flex justify-between">
             <h4 className="py-2 text-xl font-medium">{topic.title}</h4>
-            <div className="flex gap-x-5">
-              {/* TODO: replace with icon button ??? */}
-              <button type="button" className="px-1" onClick={editTopic}>
-                <EllipsisVerticalIcon className="w-5 h-5 text-base-300 stroke-[1.5px]" />
-              </button>
-              <button
-                type="button"
-                className="px-1"
+            <div className="flex items-center gap-x-5">
+              <IconButton onClick={editTopic} aria-label="edit topic">
+                <EllipsisVerticalIcon />
+              </IconButton>
+              <IconButton
                 onClick={() => changeStatus(topic.id)}
+                aria-label="change status"
               >
                 {topic.status ? (
                   <CheckCircleIcon className="w-5 h-5 text-base-300 stroke-[1.5px]" />
                 ) : (
                   <CheckCircleIconSolid className="w-5 h-5 text-base-300 stroke-[1.5px]" />
                 )}
-              </button>
+              </IconButton>
             </div>
           </div>
           <p className="py-[10px] px-[14px] text-base font-medium text-neutral-focus bg-base-200 rounded-lg border-2 border-neutral/40 ">
