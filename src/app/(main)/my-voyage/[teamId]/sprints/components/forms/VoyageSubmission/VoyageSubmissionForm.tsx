@@ -8,6 +8,7 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 import { scaleOptions } from "./radioGroupDate";
 
 import BaseFormPage from "@/app/(main)/my-voyage/[teamId]/sprints/components/forms/BaseFormPage";
+import FormItem from "@/app/(main)/my-voyage/[teamId]/sprints/components/forms/FormItem";
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
@@ -80,139 +81,123 @@ export default function VoyageSubmissionForm() {
         className="flex flex-col w-full gap-y-10"
       >
         {/* Project Name */}
-        <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
-            <Label htmlFor="projectName" className="font-semibold normal-case">
-              What is the name of the project?
-            </Label>
-            <Textarea
-              id="projectName"
-              placeholder="Your answer"
-              {...register("projectName")}
-              errorMessage={errors.projectName?.message}
-              rows={2}
-            />
-          </div>
-        </div>
+        <FormItem>
+          <Label htmlFor="projectName" className="font-semibold normal-case">
+            What is the name of the project?
+          </Label>
+          <Textarea
+            id="projectName"
+            placeholder="Your answer"
+            {...register("projectName")}
+            errorMessage={errors.projectName?.message}
+            rows={2}
+          />
+        </FormItem>
         {/* Project Description */}
-        <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
-            <Label
-              htmlFor="projectDescription"
-              className="font-semibold normal-case"
-            >
-              Please describe the project in a sentence or two.
-            </Label>
-            <Textarea
-              id="projectDescription"
-              placeholder="Your answer"
-              {...register("projectDescription")}
-              errorMessage={errors.projectDescription?.message}
-              rows={2}
-            />
-          </div>
-        </div>
+        <FormItem>
+          <Label
+            htmlFor="projectDescription"
+            className="font-semibold normal-case"
+          >
+            Please describe the project in a sentence or two.
+          </Label>
+          <Textarea
+            id="projectDescription"
+            placeholder="Your answer"
+            {...register("projectDescription")}
+            errorMessage={errors.projectDescription?.message}
+            rows={2}
+          />
+        </FormItem>
         {/* Github Repo */}
-        <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
-            <Label htmlFor="githubRepo" className="font-semibold normal-case">
-              Please link your Github repo:
-            </Label>
-            <TextInput
-              id="githubRepo"
-              placeholder="Please provide a link"
-              inputGroupContent={<LinkIcon />}
-              {...register("githubRepo")}
-              errorMessage={errors.githubRepo?.message}
-            />
-          </div>
-        </div>
+        <FormItem>
+          <Label htmlFor="githubRepo" className="font-semibold normal-case">
+            Please link your Github repo:
+          </Label>
+          <TextInput
+            id="githubRepo"
+            placeholder="Please provide a link"
+            inputGroupContent={<LinkIcon />}
+            {...register("githubRepo")}
+            errorMessage={errors.githubRepo?.message}
+          />
+        </FormItem>
         {/* Deployed Project Link */}
-        <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
-            <Label
-              htmlFor="deployedProjectLink"
-              className="font-semibold normal-case"
-            >
-              Please link your deployed project:
-            </Label>
-            <TextInput
-              id="deployedProjectLink"
-              placeholder="Please provide a link"
-              inputGroupContent={<LinkIcon />}
-              {...register("deployedProjectLink")}
-              errorMessage={errors.deployedProjectLink?.message}
-            />
-          </div>
-        </div>
+        <FormItem>
+          <Label
+            htmlFor="deployedProjectLink"
+            className="font-semibold normal-case"
+          >
+            Please link your deployed project:
+          </Label>
+          <TextInput
+            id="deployedProjectLink"
+            placeholder="Please provide a link"
+            inputGroupContent={<LinkIcon />}
+            {...register("deployedProjectLink")}
+            errorMessage={errors.deployedProjectLink?.message}
+          />
+        </FormItem>
         {/* Showcase Link*/}
-        <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
-            <Label htmlFor="showcaseLink" className="font-semibold normal-case">
-              If you have a project showcase video, please provide the public
-              link:
-            </Label>
-            <TextInput
-              id="showcaseLink"
-              placeholder="Please provide a link"
-              inputGroupContent={<LinkIcon />}
-              {...register("showcaseLink")}
-              errorMessage={errors.showcaseLink?.message}
-            />
-          </div>
-        </div>
+        <FormItem>
+          <Label htmlFor="showcaseLink" className="font-semibold normal-case">
+            If you have a project showcase video, please provide the public
+            link:
+          </Label>
+          <TextInput
+            id="showcaseLink"
+            placeholder="Please provide a link"
+            inputGroupContent={<LinkIcon />}
+            {...register("showcaseLink")}
+            errorMessage={errors.showcaseLink?.message}
+          />
+        </FormItem>
         {/* Positive Aspects */}
-        <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
-            <Label
-              htmlFor="positiveAspects"
-              className="font-semibold normal-case"
-            >
-              What stood out as the most positive aspects of your experience?
-            </Label>
-            <Textarea
-              id="positiveAspects"
-              placeholder="Your answer"
-              {...register("positiveAspects")}
-              errorMessage={errors.positiveAspects?.message}
-              rows={2}
-            />
-          </div>
-        </div>
+        <FormItem>
+          <Label
+            htmlFor="positiveAspects"
+            className="font-semibold normal-case"
+          >
+            What stood out as the most positive aspects of your experience?
+          </Label>
+          <Textarea
+            id="positiveAspects"
+            placeholder="Your answer"
+            {...register("positiveAspects")}
+            errorMessage={errors.positiveAspects?.message}
+            rows={2}
+          />
+        </FormItem>
         {/* Challenging Aspects */}
-        <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
-            <Label
-              htmlFor="challengingAspects"
-              className="font-semibold normal-case"
-            >
-              What proved to be the most challenging aspect of the team project?
-            </Label>
-            <Textarea
-              id="challengingAspects"
-              placeholder="Your answer"
-              {...register("challengingAspects")}
-              errorMessage={errors.challengingAspects?.message}
-              rows={2}
-            />
-          </div>
-        </div>
+        <FormItem>
+          <Label
+            htmlFor="challengingAspects"
+            className="font-semibold normal-case"
+          >
+            What proved to be the most challenging aspect of the team project?
+          </Label>
+          <Textarea
+            id="challengingAspects"
+            placeholder="Your answer"
+            {...register("challengingAspects")}
+            errorMessage={errors.challengingAspects?.message}
+            rows={2}
+          />
+        </FormItem>
         {/* Extra comment */}
-        <div className="flex flex-col items-center w-full p-10 pb-4 bg-base-100 rounded-2xl">
-          <div className="max-w-[650px] w-full flex flex-col gap-y-10">
-            <Label htmlFor="extraComment" className="font-semibold normal-case">
-              Is there anything else you&apos;d like to share or comment on
-              regarding your experience?
-            </Label>
-            <Textarea
-              id="extraComment"
-              placeholder="Your answer"
-              {...register("extraComment")}
-              errorMessage={errors.extraComment?.message}
-              rows={2}
-            />
-          </div>
-        </div>
+        <FormItem>
+          <Label htmlFor="extraComment" className="font-semibold normal-case">
+            Is there anything else you&apos;d like to share or comment on
+            regarding your experience?
+          </Label>
+          <Textarea
+            id="extraComment"
+            placeholder="Your answer"
+            {...register("extraComment")}
+            errorMessage={errors.extraComment?.message}
+            rows={2}
+          />
+        </FormItem>
         {/* Scale */}
         <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl gap-y-10">
           <Label className="font-semibold normal-case max-w-[650px] w-full">
