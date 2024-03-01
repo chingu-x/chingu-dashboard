@@ -1,45 +1,17 @@
 "use client";
 
 import React from "react";
-import { DocumentCheckIcon } from "@heroicons/react/24/outline";
 import DashboardWidget from "./DashboardWidget";
+import CheckInWidget from "./CheckInWidget";
+import CalendarWidget from "./CalendarWidget";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
-import Badge from "@/components/badge/Badge";
-import Button from "@/components/Button";
 
 function VoyageDashboard() {
   return (
     <div className="flex flex-row gap-x-6">
       <div className="flex flex-col gap-y-6 flex-grow-2 w-full">
-        <div className="w-full h-full p-6 bg-base-200 rounded-2xl flex flex-row">
-          <div className="w-max-[500px] min-h-[475px] flex justify-center items-center border">
-            Calendar placeholder
-          </div>
-          <div className="pl-6 flex flex-col justify-between w-full">
-            <div>
-              <p className="text-xl font-semibold pb-3">Wednesday, May 4</p>
-              <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-[200px]">
-                Sprint Week 1
-              </p>
-            </div>
-            <Button className="self-end p-1 rounded text-base font-medium">
-              Today
-            </Button>
-          </div>
-        </div>
-        <div className="bg-base-200 rounded-2xl flex flex-col p-6">
-          <div className="flex flex-row pb-[9px] justify-between">
-            <p className="text-xl font-semibold">Weekly Check-in</p>
-            <Badge title="Pending Submission" variant="warning" />
-          </div>
-          <p className="pb-6 font-medium text-base">
-            How did that last sprint with your team go?
-          </p>
-          <Button className="w-max-[200px] self-center text-base font-semibold">
-            <DocumentCheckIcon width={14} />
-            Submit Check-in
-          </Button>
-        </div>
+        <CalendarWidget />
+        <CheckInWidget status="Pending Submission" />
         <VoyageSupport />
       </div>
       <div className="flex flex-grow-1 flex-col w-max-[650px] w-full bg-base-200 rounded-2xl p-4">
