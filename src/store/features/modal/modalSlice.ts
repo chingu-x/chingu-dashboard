@@ -1,12 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type ModalType =
-  | "example1"
-  | "example2"
   | "feature"
   | "error"
   | "gettingHelp"
-  | "confirmation";
+  | "confirmation"
+  | "viewResource";
 
 interface ModalState {
   type: ModalType | undefined;
