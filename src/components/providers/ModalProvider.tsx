@@ -7,6 +7,7 @@ import FeatureModal from "@/components/modals/FeatureModal";
 import ErrorModal from "@/components/modals/ErrorModal";
 import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import ViewModal from "@/components/modals/ViewModal";
+import CheckInSuccessModal from "@/components/modals/CheckInSuccessModal";
 
 export default function ModalProvider() {
   const [isMounted, setIsMounted] = useState(false);
@@ -24,6 +25,7 @@ export default function ModalProvider() {
       <GettingHelpModal />
       <DeleteConfirmationModal />
       <ViewModal />
+      <CheckInSuccessModal />
     </>
   );
 }

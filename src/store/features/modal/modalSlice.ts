@@ -5,7 +5,8 @@ export type ModalType =
   | "error"
   | "gettingHelp"
   | "confirmation"
-  | "viewResource";
+  | "viewResource"
+  | "checkInSuccess";
 
 interface ModalState {
   type: ModalType | undefined;
