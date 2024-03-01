@@ -47,7 +47,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       // The 2 corresponds to the 2 1px borders (top and bottom):
       if (textAreaRef !== null && textAreaRef.current !== null) {
         textAreaRef.current.style.height = `${Math.max(
-          textAreaRef.current.scrollHeight + 2,
+          textAreaRef.current.scrollHeight + 4,
           0,
         )}px`;
       }
@@ -58,10 +58,10 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       // The 2 corresponds to the 2 1px borders (top and bottom):
       e.target.style.height = e.target.style.minHeight = "auto";
       e.target.style.minHeight = `${Math.min(
-        e.target.scrollHeight + 2,
+        e.target.scrollHeight + 4,
         parseInt(e.target.style.maxHeight),
       )}px`;
-      e.target.style.height = `${Math.max(e.target.scrollHeight + 2, 0)}px`;
+      e.target.style.height = `${Math.max(e.target.scrollHeight + 4, 0)}px`;
 
       // Set character length counter
       if (!maxLength) return;
@@ -92,8 +92,9 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           defaultValue={defaultValue}
           aria-describedby={`${id}-message`}
           className={cn(
-            "leading-5 resize-none outline-none px-3.5 py-2.5 rounded-lg border w-full my-2 text-base shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus focus-visible:ring-0 focus-visible:bg-base-200 placeholder-base placeholder:leading-5 disabled:cursor-not-allowed border-neutral/40 focus-visible:shadow-neutral/30",
-            errorMessage && "border-error focus-visible:shadow-error/30",
+            "hover:border-neutral-focus hover:focus-visible:border-neutral/40 focus-visible:border-neutral/40 disabled:bg-base-100 disabled:hover:border-neutral/40 transition resize-none outline-none px-3.5 py-2.5 rounded-lg border-2 w-full my-2 text-base text-base-300 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 focus-visible:ring-0 focus-visible:bg-base-200 placeholder-base disabled:cursor-not-allowed border-neutral/40 focus-visible:shadow-neutral/30",
+            errorMessage &&
+              "border-error/40 focus-visible:border-error/40 focus-visible:shadow-error/20",
             className,
           )}
           {...props}
