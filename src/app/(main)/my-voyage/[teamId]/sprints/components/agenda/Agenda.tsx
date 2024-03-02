@@ -1,40 +1,53 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import {
-  CheckCircleIcon,
   ClipboardDocumentListIcon,
-  EllipsisVerticalIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
-import { CheckCircleIcon as CheckCircleIconSolid } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 
 import EmptyState from "./EmptyState";
-import IconButton from "./IconButton";
+import Topic from "./AgendaTopic";
 import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 import routePaths from "@/utils/routePaths";
 import Button from "@/components/Button";
-import { cn } from "@/lib/utils";
 
 export default function Agenda() {
   const router = useRouter();
   // Temp
-  const [topics, setTopics] = useState(topicsData);
+  const [incompletedTopics, setIncompletedTopics] = useState(
+    topicsData.filter((topic) => topic.status === false)
+  );
+  const [completedTopics, setCompletedTopics] = useState(
+    topicsData.filter((topic) => topic.status === true)
+  );
 
-  const changeStatus = (id: number) => {
-    const newTopics = topics.map((topic) =>
-      topic.id === id ? { ...topic, status: !topic.status } : topic,
-    );
-    setTopics(newTopics);
+  const changeStatus = (id: number, status: boolean) => {
+    // Temp
+    if (status === false) {
+      const topicIndex = incompletedTopics.findIndex(
+        (topic) => topic.id === id
+      );
+      const topic = { ...incompletedTopics[topicIndex], status: true };
+      setIncompletedTopics([...incompletedTopics].toSpliced(topicIndex, 1));
+      setCompletedTopics([...completedTopics, topic]);
+    } else {
+      const topicIndex = completedTopics.findIndex((topic) => topic.id === id);
+      const topic = { ...completedTopics[topicIndex], status: false };
+      setCompletedTopics([...completedTopics].toSpliced(topicIndex, 1));
+      setIncompletedTopics([...incompletedTopics, topic]);
+    }
   };
+
   const editTopic = () => {
     router.push(routePaths.addTopic("2"));
   };
   return (
-    <div className="flex flex-col items-center justify-between w-full p-10 bg-base-200 rounded-2xl gap-y-5">
-      <div className="flex justify-between w-full">
+    <div className="flex flex-col items-center justify-between w-full p-10 bg-base-200 rounded-2xl">
+      <div className="flex justify-between w-full mb-5">
         <h3 className="text-[25px] font-semibold flex gap-x-2 items-center">
           <ClipboardDocumentListIcon className="h-[30px] w-[30px]" />
           Agenda
@@ -45,38 +58,42 @@ export default function Agenda() {
           </Button>
         </Link>
       </div>
-      {topics.length === 0 && <EmptyState />}
-      {topics.map((topic) => (
-        <div
-          key={topic.id}
-          className={cn(
-            "flex flex-col w-full p-5 rounded-lg bg-base-100 gap-y-4",
-            !topic.status && "bg-neutral-content",
-          )}
-        >
-          <div className="flex justify-between">
-            <h4 className="py-2 text-xl font-medium">{topic.title}</h4>
-            <div className="flex items-center gap-x-5">
-              <IconButton onClick={editTopic} aria-label="edit topic">
-                <EllipsisVerticalIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => changeStatus(topic.id)}
-                aria-label="change status"
-              >
-                {topic.status ? (
-                  <CheckCircleIcon className="w-5 h-5 text-base-300 stroke-[1.5px]" />
-                ) : (
-                  <CheckCircleIconSolid className="w-5 h-5 text-base-300 stroke-[1.5px]" />
-                )}
-              </IconButton>
-            </div>
-          </div>
-          <p className="py-[10px] px-[14px] text-base font-medium text-neutral-focus bg-base-200 rounded-lg border-2 border-neutral/40 ">
-            {topic.description}
-          </p>
-        </div>
-      ))}
+      {topicsData.length === 0 && <EmptyState />}
+      <ul className="flex flex-col w-full gap-y-5">
+        {incompletedTopics.map((topic) => (
+          <Topic
+            key={topic.id}
+            topic={topic}
+            editTopic={editTopic}
+            changeStatus={changeStatus}
+          />
+        ))}
+      </ul>
+      <AnimatePresence>
+        {completedTopics.length !== 0 && (
+          <motion.p
+            initial={{ y: 50 }}
+            animate={{ y: 0 }}
+            exit={{ y: 50 }}
+            layout
+            className="flex items-center w-full py-5 text-base font-medium rounded-lg gap-x-10 text-neutral whitespace-nowrap bg-base-200"
+          >
+            <span className="w-full bg-neutral h-[1px]" />
+            Completed Topics
+            <span className="w-full bg-neutral h-[1px]" />
+          </motion.p>
+        )}
+      </AnimatePresence>
+      <ul className="flex flex-col w-full gap-y-5">
+        {completedTopics.map((topic) => (
+          <Topic
+            key={topic.id}
+            topic={topic}
+            editTopic={editTopic}
+            changeStatus={changeStatus}
+          />
+        ))}
+      </ul>
     </div>
   );
 }
