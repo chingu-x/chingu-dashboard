@@ -26,7 +26,7 @@ export default function AgendaTopic({
       layout
       className={cn(
         "flex flex-col w-full p-5 rounded-lg bg-base-100 gap-y-4",
-        topic.status && "bg-neutral-content"
+        topic.status && "bg-neutral-content",
       )}
     >
       <div className="flex justify-between">

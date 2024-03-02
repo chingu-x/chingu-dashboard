@@ -19,17 +19,17 @@ export default function Agenda() {
   const router = useRouter();
   // Temp
   const [incompletedTopics, setIncompletedTopics] = useState(
-    topicsData.filter((topic) => topic.status === false)
+    topicsData.filter((topic) => topic.status === false),
   );
   const [completedTopics, setCompletedTopics] = useState(
-    topicsData.filter((topic) => topic.status === true)
+    topicsData.filter((topic) => topic.status === true),
   );
 
   const changeStatus = (id: number, status: boolean) => {
     // Temp
     if (status === false) {
       const topicIndex = incompletedTopics.findIndex(
-        (topic) => topic.id === id
+        (topic) => topic.id === id,
       );
       const topic = { ...incompletedTopics[topicIndex], status: true };
       setIncompletedTopics([...incompletedTopics].toSpliced(topicIndex, 1));
