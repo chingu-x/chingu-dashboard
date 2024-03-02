@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState, useRef, ElementRef } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
@@ -42,7 +42,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     },
     ref,
   ) => {
-    const textInputRef = useRef<ElementRef<"input"> | null>(null);
     const [isClearButtonVisible, setIsClearButtonVisible] = useState(false);
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const [showPassword, setShowPassword] = useState(false);
@@ -104,14 +103,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               submitButtonText && "pr-[72px]",
               className,
             )}
-            ref={(e) => {
-              if (typeof ref === "function") {
-                ref(e);
-              } else if (ref) {
-                ref.current = e;
-              }
-              textInputRef.current = e;
-            }}
+            ref={ref}
             {...props}
             onChange={(e) => {
               // call onChange which can be passed as prop
