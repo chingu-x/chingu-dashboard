@@ -71,26 +71,26 @@ export const topicsData: Topic[] = [
     title: "Milestones for this week",
     description:
       "FE Team - make homepage responsive\nBE Team - create endpoints for user profile\nDE Team - user flow for the modals",
-    status: true,
+    status: false,
   },
   {
     id: 1,
     title: "FE Team",
-    description: "PR pushed this week\nModal\nComponentsHomepage",
-    status: true,
+    description: "PR pushed this week:\nModal\nComponents Homepage",
+    status: false,
   },
   {
     id: 2,
     title: "BE Team",
     description:
-      "Endpoints created this week\nHomepage\nUser profile\nSettings",
-    status: true,
+      "Endpoints created this week:\nHomepage\nUser profile\nSettings",
+    status: false,
   },
   {
     id: 3,
     title: "Project Management Tools",
     description:
       "Walk the team through how the Jira board is organized and how we will coordinate communications and tickets.",
-    status: false,
+    status: true,
   },
 ];
