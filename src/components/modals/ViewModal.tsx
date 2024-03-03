@@ -39,7 +39,6 @@ export default function ViewModal() {
           <p className="mb-2 font-bold">
             Would you like to see this message again?
           </p>
-          {/**TODO: Replace input with 'input group' */}
           <CheckboxGroupItem
             id="confirmation"
             label="Don't ask me this again when opening resources links"
