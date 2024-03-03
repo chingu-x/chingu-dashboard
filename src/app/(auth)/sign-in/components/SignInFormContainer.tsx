@@ -48,7 +48,6 @@ function SignInFormContainer({
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    console.log(data);
     const { email, password } = data;
     const [res, error] = await serverSignIn(email, password);
 

@@ -46,72 +46,6 @@ export async function serverSignOut(): Promise<
   
 }
 
-/////////////////////////////////////////////////////////////////////////////
-
-async function asyncSignIn(
-  email: string,
-  password: string,
-): Promise<ServerSignInResponse> {
-  console.log("email: ", email);
-  console.log("password: ", password);
-
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          // email: "jessica.williamson@gmail.com",
-          // password: "password",
-          email,
-          password,
-        }),
-        credentials: "include",
-        cache: "no-store",
-      },
-    );
-
-    if (!res.ok) {
-      throw new Error(res.statusText);
-    }
-
-    const accessToken = res.headers.getSetCookie()[0].split("access_token=")[1];
-    const refreshToken = res.headers
-      .getSetCookie()[1]
-      .split("refresh_token=")[1];
-    const accessTokenValue = accessToken.split("; ")[0];
-    const accessTokenMaxAge = accessToken.split("; ")[1].split("=")[1];
-    const refreshTokenValue = refreshToken.split(";")[0];
-    const refreshTokenMaxAge = refreshToken.split("; ")[1].split("=")[1];
-
-    cookies().set({
-      name: "access_token",
-      value: accessTokenValue,
-      httpOnly: true,
-      maxAge: +accessTokenMaxAge,
-      path: "/",
-      secure: true,
-    });
-
-    cookies().set({
-      name: "refresh_token",
-      value: refreshTokenValue,
-      httpOnly: true,
-      maxAge: +refreshTokenMaxAge,
-      path: "/",
-      secure: true,
-    });
-
-    return (await res.json()) as ServerSignInResponse;
-  } catch (error) {
-    throw error;
-  }
-}
-
 export async function resetPasswordRequestEmail(email: string) {
   try {
     const res = await fetch(
@@ -164,5 +98,66 @@ export async function resetPassword(
     }
   } catch (error) {
     console.log("Error with resetting your password: ", error);
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+async function asyncSignIn(
+  email: string,
+  password: string,
+): Promise<ServerSignInResponse> {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        credentials: "include",
+        cache: "no-store",
+      },
+    );
+
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    }
+
+    const accessToken = res.headers.getSetCookie()[0].split("access_token=")[1];
+    const refreshToken = res.headers
+      .getSetCookie()[1]
+      .split("refresh_token=")[1];
+    const accessTokenValue = accessToken.split("; ")[0];
+    const accessTokenMaxAge = accessToken.split("; ")[1].split("=")[1];
+    const refreshTokenValue = refreshToken.split(";")[0];
+    const refreshTokenMaxAge = refreshToken.split("; ")[1].split("=")[1];
+
+    cookies().set({
+      name: "access_token",
+      value: accessTokenValue,
+      httpOnly: true,
+      maxAge: +accessTokenMaxAge,
+      path: "/",
+      secure: true,
+    });
+
+    cookies().set({
+      name: "refresh_token",
+      value: refreshTokenValue,
+      httpOnly: true,
+      maxAge: +refreshTokenMaxAge,
+      path: "/",
+      secure: true,
+    });
+
+    return (await res.json()) as ServerSignInResponse;
+  } catch (error) {
+    throw error;
   }
 }

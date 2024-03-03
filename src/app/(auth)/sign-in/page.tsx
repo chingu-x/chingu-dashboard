@@ -1,4 +1,3 @@
-"use client";
 import BannerContainer from "./components/BannerContainer";
 import SignInContainer from "./components/SignInContainer";
 
