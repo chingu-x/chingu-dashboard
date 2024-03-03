@@ -4,6 +4,7 @@ import React from "react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 
 import Label from "@/components/inputs/Label";
+import { cn } from "@/lib/utils";
 
 export interface CheckboxGroupItemProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -14,11 +15,14 @@ export interface CheckboxGroupItemProps
 export const CheckboxGroupItem = React.forwardRef<
   HTMLInputElement,
   CheckboxGroupItemProps
->(({ id, label, ...props }, ref) => (
+>(({ id, label, className, ...props }, ref) => (
   <div className="relative flex items-center w-full gap-x-4">
     <Label
       htmlFor={id}
-      className="flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4 group"
+      className={cn(
+        "flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4 group",
+        className
+      )}
     >
       <input
         id={id}
