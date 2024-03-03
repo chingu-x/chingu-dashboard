@@ -5,42 +5,42 @@ import Stepper, { SteppersItem } from "@/components/Stepper";
 const steppers: SteppersItem[] = [
   {
     icon: <EnvelopeIcon className="h-[1.125rem]" />,
-    name: "1",
+    name: "Sprint 1",
     status: "completed",
     onClickEvent: () => console.log("1"),
-    isActive: true,
-  },
-  {
-    icon: <EnvelopeIcon className="h-[1.125rem]" />,
-    name: "2",
-    status: "completed",
-    onClickEvent: () => console.log("2"),
     isActive: false,
   },
   {
     icon: <EnvelopeIcon className="h-[1.125rem]" />,
-    name: "3",
+    name: "Sprint 2",
+    status: "completed",
+    onClickEvent: () => console.log("2"),
+    isActive: true,
+  },
+  {
+    icon: <EnvelopeIcon className="h-[1.125rem]" />,
+    name: "Sprint 3",
     status: "current",
     onClickEvent: () => console.log("3"),
     isActive: false,
   },
   {
     icon: <EnvelopeIcon className="h-[1.125rem]" />,
-    name: "4",
+    name: "Sprint 4",
     status: "remaining",
     onClickEvent: () => console.log("4"),
     isActive: false,
   },
   {
     icon: <EnvelopeIcon className="h-[1.125rem]" />,
-    name: "5",
+    name: "Sprint 5",
     status: "remaining",
     onClickEvent: () => console.log("5"),
     isActive: false,
   },
   {
     icon: <EnvelopeIcon className="h-[1.125rem]" />,
-    name: "6",
+    name: "Sprint 6",
     status: "remaining",
     onClickEvent: () => console.log("6"),
     isActive: false,
@@ -76,7 +76,6 @@ type Story = StoryObj<typeof meta>;
 const BaseTemplate: Story = {
   args: {
     steppers: steppers,
-    stepperWidth: "w-[1000px]",
     styleType: "icons",
   },
 };

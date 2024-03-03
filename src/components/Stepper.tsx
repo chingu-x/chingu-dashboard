@@ -3,11 +3,6 @@ import React from "react";
 import Button from "@/components/Button";
 import { cn } from "@/lib/utils";
 
-// TODO FOR LATER REFACTOR:
-//  - setting the widths for the stepper: do we want to specify the width or base it off parent's width
-//  - variant colors for stepper button
-
-// chips or blocks
 type StepperStyle = "chips" | "icons";
 type StepperStatus = "completed" | "current" | "remaining";
 
@@ -44,7 +39,7 @@ export default function Stepper({
 }: StepperProps) {
   return (
     <div className="flex justify-center">
-      <div className={`${stepperWidth ? stepperWidth : "w-full"}`}>
+      <div className={`${stepperWidth ? stepperWidth : "w-[1000px]"}`}>
         <div className="flex">
           {steppers.map((step) => {
             const { icon, status, onClickEvent, name, isActive } = step;
