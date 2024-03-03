@@ -2,11 +2,7 @@ import React from "react";
 import PreVoyageDashboard from "./components/PreVoyageDashboard";
 
 function DashboardPage() {
-  return (
-    <>
-      <PreVoyageDashboard />
-    </>
-  );
+  return <PreVoyageDashboard />;
 }
 
 export default DashboardPage;
