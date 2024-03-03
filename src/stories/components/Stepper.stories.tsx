@@ -8,36 +8,42 @@ const steppers: SteppersItem[] = [
     name: "1",
     status: "completed",
     onClickEvent: () => console.log("1"),
+    isActive: true,
   },
   {
     icon: <EnvelopeIcon className="h-[1.125rem]" />,
     name: "2",
     status: "completed",
     onClickEvent: () => console.log("2"),
+    isActive: false,
   },
   {
     icon: <EnvelopeIcon className="h-[1.125rem]" />,
     name: "3",
     status: "current",
     onClickEvent: () => console.log("3"),
+    isActive: false,
   },
   {
     icon: <EnvelopeIcon className="h-[1.125rem]" />,
     name: "4",
     status: "remaining",
     onClickEvent: () => console.log("4"),
+    isActive: false,
   },
   {
     icon: <EnvelopeIcon className="h-[1.125rem]" />,
     name: "5",
     status: "remaining",
     onClickEvent: () => console.log("5"),
+    isActive: false,
   },
   {
     icon: <EnvelopeIcon className="h-[1.125rem]" />,
     name: "6",
     status: "remaining",
     onClickEvent: () => console.log("6"),
+    isActive: false,
   },
 ];
 
