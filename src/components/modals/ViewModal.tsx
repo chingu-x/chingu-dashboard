@@ -4,6 +4,7 @@ import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { CheckboxGroupItem } from "../inputs/CheckBoxGroup/CheckboxGroupItem";
 
 export default function ViewModal() {
   const dispatch = useAppDispatch();
@@ -34,12 +35,15 @@ export default function ViewModal() {
           </Link>
         </ModalSection>
         <div className="p-1 mb-4">
-          <p className="font-bold">Would you like to see this message again?</p>
+          <p className="mb-2 font-bold">
+            Would you like to see this message again?
+          </p>
           {/**TODO: Replace input with 'input group' */}
-          <input className="mr-2" type="checkbox" />
-          <label>
-            Don&apos;t ask me this again when opening resources links.
-          </label>
+          <CheckboxGroupItem
+            id="confirmation"
+            label="Don't ask me this again when opening resources links"
+            className="text-base-300 hover:[&>*:nth-child(3)]:text-neutral-focus"
+          />
         </div>
         <div className="flex justify-between w-full h-16">
           <Button
