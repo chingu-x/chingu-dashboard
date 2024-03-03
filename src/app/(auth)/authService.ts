@@ -13,6 +13,16 @@ interface ServerSignInResponse extends AuthResponse {}
 
 interface ServerSignOutResponse extends AuthResponse {}
 
+interface resetPasswordProps {
+  email: string;
+  password: string;
+  token: string;
+}
+
+interface requestResetPasswordProps {
+  email: string;
+}
+
 // prettier-ignore
 // prettier causing issues here with eslint rules
 export async function serverSignIn(email:string, password:string): Promise<
@@ -46,7 +56,9 @@ export async function serverSignOut(): Promise<
   
 }
 
-export async function resetPasswordRequestEmail(email: string) {
+export async function resetPasswordRequestEmail({
+  email,
+}: requestResetPasswordProps) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password/request`,
@@ -71,11 +83,11 @@ export async function resetPasswordRequestEmail(email: string) {
   }
 }
 
-export async function resetPassword(
-  email: string,
-  password: string,
-  token: string,
-) {
+export async function resetPassword({
+  email,
+  password,
+  token,
+}: resetPasswordProps) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password`,
