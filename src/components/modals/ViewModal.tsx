@@ -1,10 +1,11 @@
 import Link from "next/link";
 import ModalSection from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ModalSection";
+import { CheckboxGroupItem } from "@/components/inputs/CheckBoxGroup/CheckboxGroupItem";
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
+
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { CheckboxGroupItem } from "../inputs/CheckBoxGroup/CheckboxGroupItem";
 
 export default function ViewModal() {
   const dispatch = useAppDispatch();

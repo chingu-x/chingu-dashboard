@@ -19,7 +19,7 @@ export default function Avatar({
     <div
       className={cn(
         "border border-1 border-neutral px-0 rounded-full cursor-pointer overflow-hidden shrink-0",
-        customClassName
+        customClassName,
       )}
     >
       <Image

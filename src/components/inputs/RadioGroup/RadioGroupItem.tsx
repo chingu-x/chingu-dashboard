@@ -18,7 +18,7 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
     <div
       className={cn(
         "relative flex items-center w-full gap-x-4",
-        groupLayout !== "vertical" && "w-auto"
+        groupLayout !== "vertical" && "w-auto",
       )}
     >
       <Label
@@ -26,7 +26,7 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
         className={cn(
           "flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4 group",
           groupLayout === "rating" && "flex-col-reverse text-base-300 gap-y-4",
-          className
+          className,
         )}
       >
         <input
@@ -42,7 +42,7 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
         </span>
       </Label>
     </div>
-  )
+  ),
 );
 
 RadioGroupItem.displayName = "RadioGroupItem";
