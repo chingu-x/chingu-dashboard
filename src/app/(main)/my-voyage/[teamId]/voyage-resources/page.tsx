@@ -26,7 +26,7 @@ export default function ResourcesPage() {
         title="Resources"
         description="This resources page is your secret weapon for this voyage! Take a look at what your team is sharing or share your own resources for this voyage. Go ahead and be the first to post a new resource for you and your peers!"
       />
-      <div className="flex items-center">
+      <div className="grid grid-cols-[1fr_150px] items-center">
         <ResourceInput />
         <SortingButton onClick={sort} type={byNewest} />
       </div>
