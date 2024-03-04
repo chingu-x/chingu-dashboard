@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, Variants, motion } from "framer-motion";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -34,6 +35,44 @@ export default function SectionBase({
     setIsOpen(true);
   };
 
+  const panelVariants: Variants = {
+    initial: {
+      height: "0",
+    },
+    animate: {
+      height: "auto",
+      transition: {
+        duration: 0.4,
+      },
+    },
+    exit: {
+      height: "0",
+      transition: {
+        duration: 0.4,
+        delay: 0.3,
+      },
+    },
+  };
+
+  const innerContentVariants: Variants = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        delay: 0.4,
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
+
   return (
     <div
       className={cn(
@@ -62,22 +101,35 @@ export default function SectionBase({
           >
             <ChevronUpIcon className="w-10 h-10 text-base-300" />
           </button>
-        )}{" "}
+        )}
         {isAdded && !isOpen && (
           <button type="button" onClick={handleToggle} aria-label="open">
             <ChevronDownIcon className="w-10 h-10 text-base-300" />
           </button>
         )}
       </div>
-      {isOpen && (
-        <section
-          id={`accordion-panel-${title}`}
-          aria-labelledby={`accordion-header-${title}`}
-          className="mt-10"
-        >
-          {children}
-        </section>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.section
+            variants={panelVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            id={`accordion-panel-${title}`}
+            aria-labelledby={`accordion-header-${title}`}
+          >
+            <motion.div
+              variants={innerContentVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="pt-10"
+            >
+              {children}
+            </motion.div>
+          </motion.section>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
