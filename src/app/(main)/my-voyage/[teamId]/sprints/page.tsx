@@ -2,6 +2,7 @@
 // import EmptyState from "./components/EmptyState";
 import Agenda from "./components/agenda/Agenda";
 import MeetingOverview from "./components/MeetingOverview";
+import Sections from "./components/sections/Sections";
 import SprintActions from "./components/SprintActions";
 import Banner from "@/components/banner/Banner";
 
@@ -20,6 +21,7 @@ export default function SprintsPage() {
       <MeetingOverview />
       <Agenda />
       {/* <VoyageSubmittedMessage /> */}
+      <Sections />
     </div>
   );
 }
