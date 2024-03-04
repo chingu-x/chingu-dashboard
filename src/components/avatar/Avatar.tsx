@@ -1,5 +1,7 @@
 import Image, { StaticImageData } from "next/image";
 
+import { cn } from "@/lib/utils";
+
 interface AvatarProps {
   image?: string | StaticImageData;
   customClassName?: string;
@@ -15,7 +17,10 @@ export default function Avatar({
 }: AvatarProps) {
   return (
     <div
-      className={`border border-1 border-neutral px-0 rounded-full cursor-pointer overflow-hidden ${customClassName}`}
+      className={cn(
+        "border border-neutral px-0 rounded-full cursor-pointer overflow-hidden shrink-0",
+        customClassName,
+      )}
     >
       <Image
         alt="avatar"

@@ -32,7 +32,7 @@ export default function ResourcesPage() {
           width="w-[276px]"
         />
       </VoyagePageBannerContainer>
-      <div className="flex  items-center">
+      <div className="grid grid-cols-[1fr_150px] items-center">
         <ResourceInput />
         <SortingButton onClick={sort} type={byNewest} />
       </div>
@@ -43,7 +43,7 @@ export default function ResourcesPage() {
           <ResourceCard
             key={item.id}
             title={item.title}
-            badge={item.badge}
+            user={item.user}
             currentUser={item.currentUser}
             date={item.date}
           />
