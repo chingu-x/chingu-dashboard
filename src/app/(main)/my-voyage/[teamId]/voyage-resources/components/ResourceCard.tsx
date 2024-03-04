@@ -2,10 +2,11 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import Badge from "@/components/badge/Badge";
 
 interface ResourceCardProps {
   title: string;
-  badge: string;
+  user: { name: string; image: string };
   currentUser: boolean;
   date: string;
 }
@@ -13,7 +14,7 @@ interface ResourceCardProps {
 export default function ResourceCard({
   title,
   currentUser,
-  badge,
+  user,
   date,
 }: ResourceCardProps) {
   const dispatch = useAppDispatch();
@@ -31,25 +32,29 @@ export default function ResourceCard({
   };
 
   return (
-    <div className="group [&>*]:cursor-pointer flex items-center w-11/12 p-2 bg-base-200 rounded-xl shadow-sm hover:shadow-md hover:border hover:border-base-100">
+    <div className="group [&>*]:cursor-pointer flex items-center w-full p-2 bg-base-200 border border-base-200 rounded-xl shadow-sm transition-all hover:shadow-md hover:border-base-100">
       <ArrowTopRightOnSquareIcon
         onClick={openViewModal}
-        className="w-8 h-8 mr-4 stroke-1 group-hover:stroke-2 ml-2"
+        className="w-8 h-8 ml-2 mr-4 transition-all stroke-1 group-hover:stroke-2"
       />
       <div
         onClick={openViewModal}
-        className="overflow-hidden flex flex-col justify-center p-2 w-full"
+        className="flex flex-col justify-center w-full p-2 overflow-hidden"
       >
-        <h1 className="text-xl font-bold w-1/2 truncate">{title}</h1>
+        <h1 className="w-1/2 text-xl font-bold truncate">{title}</h1>
         <div className="flex mt-2 [&>*]:mr-8">
-          <div>Shared by {badge /* Todo: replace with badge component */}</div>
-          <div className="w-1 h-5 border border-r-1 border-r-neutral-content border-b-0 border-l-0 border-t-0"></div>
+          <p className="flex items-center gap-x-2">
+            Shared by
+            <Badge title={user.name} avatarUrlImage={user.image} />
+          </p>
+          <div className="w-1 h-5 border border-t-0 border-b-0 border-l-0 border-r-1 border-r-neutral-content"></div>
           <div className="text-neutral">Added {date}</div>
         </div>
       </div>
       {currentUser && (
+        // TODO: replace with icon button
         <div
-          className="w-10 h-10 hover:bg-base-100 flex justify-center items-center rounded-full"
+          className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-base-100"
           onClick={openDeleteModal}
         >
           <TrashIcon className="w-6 h-6" />
