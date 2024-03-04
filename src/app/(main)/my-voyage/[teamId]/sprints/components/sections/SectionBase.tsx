@@ -90,27 +90,44 @@ export default function SectionBase({
             <PlusCircleIcon className="w-10 h-10 text-base-300" />
           </button>
         )}
-        {isAdded && isOpen && (
-          <button
-            id={`accordion-header-${title}`}
-            aria-expanded={isOpen}
-            aria-controls={`accordion-panel-${title}`}
-            type="button"
-            onClick={handleToggle}
-            aria-label="close"
-          >
-            <ChevronUpIcon className="w-10 h-10 text-base-300" />
-          </button>
-        )}
-        {isAdded && !isOpen && (
-          <button type="button" onClick={handleToggle} aria-label="open">
-            <ChevronDownIcon className="w-10 h-10 text-base-300" />
-          </button>
-        )}
+        <AnimatePresence mode="popLayout">
+          {isAdded && isOpen && (
+            <motion.button
+              key="up"
+              initial={{ rotateX: "0deg" }}
+              animate={{ rotateX: "180deg" }}
+              exit={{ rotateX: "0deg" }}
+              transition={{ duration: 0.3 }}
+              id={`accordion-header-${title}`}
+              aria-expanded={isOpen}
+              aria-controls={`accordion-panel-${title}`}
+              type="button"
+              onClick={handleToggle}
+              aria-label="close"
+            >
+              <ChevronUpIcon className="w-10 h-10 text-base-300" />
+            </motion.button>
+          )}
+          {isAdded && !isOpen && (
+            <motion.button
+              key="down"
+              initial={{ rotateX: "0deg" }}
+              animate={{ rotateX: "180deg" }}
+              exit={{ rotateX: "0deg" }}
+              transition={{ duration: 0.3 }}
+              type="button"
+              onClick={handleToggle}
+              aria-label="open"
+            >
+              <ChevronDownIcon className="w-10 h-10 text-base-300" />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
       <AnimatePresence>
         {isOpen && (
           <motion.section
+            key="panel"
             variants={panelVariants}
             initial="initial"
             animate="animate"
@@ -119,6 +136,7 @@ export default function SectionBase({
             aria-labelledby={`accordion-header-${title}`}
           >
             <motion.div
+              key="innerContent"
               variants={innerContentVariants}
               initial="initial"
               animate="animate"
