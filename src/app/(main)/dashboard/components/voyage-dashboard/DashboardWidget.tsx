@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Button from "@/components/Button";
 
 interface DashboardWidgetProps {
   title: string;
+  linkTitle: string;
   link: string;
   buttonTitle: string;
   description: string;
@@ -14,22 +17,50 @@ function DashboardWidget({
   imageLight,
   imageDark,
   title,
+  linkTitle,
   link,
   buttonTitle,
   description,
 }: DashboardWidgetProps) {
+  const [linkHovered, setLinkHovered] = useState<boolean>(false);
+  const [widgetHovered, setWidgetHovered] = useState<boolean>(false);
+
   return (
-    <div className="rounded-lg bg-base-100 p-4">
-      <p className="text-[13px] font-semibold text-neutral-focus pb-4">
-        {link}
-      </p>
-      <div className="flex flex-row">
-        <div className="flex flex-col gap-y-4">
+    <div
+      className="rounded-lg bg-base-100 p-4 hover:shadow-md flex flex-col h-full"
+      onMouseEnter={() => setWidgetHovered(true)}
+      onMouseLeave={() => setWidgetHovered(false)}
+    >
+      <div
+        className="inline-flex items-start text-neutral-focus max-w-[100px]"
+        onMouseEnter={() => setLinkHovered(true)}
+        onMouseLeave={() => setLinkHovered(false)}
+      >
+        <Link href={link}>
+          <p
+            className={`inline-block text-[13px] font-semibold mb-4 hover:text-primary cursor-pointer relative ${
+              widgetHovered ? "text-base-300" : "text-neutral-focus"
+            }`}
+          >
+            {linkTitle}
+            {linkHovered ? (
+              <div className="absolute top-[4px] right-[-15px]">
+                <ArrowRightIcon className="w-3 ml-1" />
+              </div>
+            ) : null}
+          </p>
+        </Link>
+      </div>
+
+      <div className="flex flex-row flex-grow">
+        <div className="flex flex-col gap-y-4 h-full justify-between">
           <p className="text-xl font-semibold">{title}</p>
           <p className="text-base font-medium">{description}</p>
-          <Button variant="outline" className="text-base font-semibold">
-            {buttonTitle}
-          </Button>
+          <Link href={link}>
+            <Button variant="outline" className="text-base font-semibold">
+              {buttonTitle}
+            </Button>
+          </Link>
         </div>
         {imageLight && imageDark ? (
           <div className="w-full">

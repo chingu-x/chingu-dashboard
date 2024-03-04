@@ -11,7 +11,7 @@ function VoyageDashboard() {
     <div className="flex flex-row gap-x-6">
       <div className="flex flex-col gap-y-6 flex-grow-2 w-full">
         <CalendarWidget />
-        <CheckInWidget status="Pending Submission" />
+        <CheckInWidget status="Due today" />
         <VoyageSupport />
       </div>
       <div className="flex flex-grow-1 flex-col w-max-[650px] w-full bg-base-200 rounded-2xl p-4">
@@ -23,7 +23,8 @@ function VoyageDashboard() {
             imageLight="/img/discover_light.png"
             imageDark="/img/discover_dark.png"
             title="What is your Voyage project idea & vision?"
-            link="Ideation"
+            link="/my-voyage/ideation"
+            linkTitle="Ideation"
             buttonTitle="Go to Ideation"
             description="Share your ideas on what the team Voyage should be. Describe your
             vision to capture what it does and the benefit it will bring to
@@ -33,7 +34,8 @@ function VoyageDashboard() {
             <div className="flex flex-grow-1 w-full">
               <DashboardWidget
                 title="What features will you develop?"
-                link="Features"
+                link="/my-voyage/features"
+                linkTitle="Features"
                 buttonTitle="Go to Features"
                 description="Brainstorm and prioritize the features that will be included in the scope of your project. "
               />
@@ -41,7 +43,8 @@ function VoyageDashboard() {
             <div className="flex flex-grow-1 w-full">
               <DashboardWidget
                 title="Choose your tech stack "
-                link="Tech Stack"
+                link="/my-voyage/tech-stack"
+                linkTitle="Tech Stack"
                 buttonTitle="Go to Tech Stack"
                 description="Choose the programming languages, frameworks, and tools that will serve as the foundation of your project."
               />
@@ -51,7 +54,8 @@ function VoyageDashboard() {
             imageLight="/img/share_link_light.png"
             imageDark="/img/share_link_dark.png"
             title="Share resources with your team"
-            link="Resources"
+            link="/my-voyage/voyage-resources"
+            linkTitle="Resources"
             buttonTitle="Go to Resources"
             description="Share links of helpful resources to your team for the Voyage. Contribute to the collective knowledgebase to empower your team."
           />
