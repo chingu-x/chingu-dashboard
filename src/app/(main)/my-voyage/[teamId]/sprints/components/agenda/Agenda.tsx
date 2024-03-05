@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 import EmptyState from "./EmptyState";
-import Topic from "./AgendaTopic";
+import AgendaTopic from "./AgendaTopic";
 import AgendaHeader from "./AgendaHeader";
 import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 
@@ -50,7 +50,7 @@ export default function Agenda() {
       {topicsData.length === 0 && <EmptyState />}
       <ul className="flex flex-col w-full gap-y-5">
         {incompletedTopics.map((topic) => (
-          <Topic
+          <AgendaTopic
             key={topic.id}
             topic={topic}
             editTopic={editTopic}
@@ -67,7 +67,7 @@ export default function Agenda() {
       {/* COMPLETED TOPICS */}
       <ul className="flex flex-col w-full gap-y-5">
         {completedTopics.map((topic) => (
-          <Topic
+          <AgendaTopic
             key={topic.id}
             topic={topic}
             editTopic={editTopic}
