@@ -37,7 +37,7 @@ export default function SectionBase({
 
   const panelVariants: Variants = {
     initial: {
-      height: "0",
+      height: 0,
     },
     animate: {
       height: "auto",
@@ -46,7 +46,7 @@ export default function SectionBase({
       },
     },
     exit: {
-      height: "0",
+      height: 0,
       transition: {
         duration: 0.4,
         delay: 0.3,
@@ -77,7 +77,7 @@ export default function SectionBase({
     <div
       className={cn(
         "p-10 rounded-2xl bg-base-100 border border-base-100",
-        isAdded && "bg-base-200",
+        isAdded && "bg-base-200"
       )}
     >
       <div className="flex items-center justify-between">
@@ -103,7 +103,7 @@ export default function SectionBase({
               aria-controls={`accordion-panel-${title}`}
               type="button"
               onClick={handleToggle}
-              aria-label="close"
+              aria-label={`close ${title} panel`}
             >
               <ChevronUpIcon className="w-10 h-10 text-base-300" />
             </motion.button>
@@ -115,9 +115,12 @@ export default function SectionBase({
               animate={{ rotateX: "180deg" }}
               exit={{ rotateX: "0deg" }}
               transition={{ duration: 0.3 }}
+              id={`accordion-header-${title}`}
+              aria-expanded={isOpen}
+              aria-controls={`accordion-panel-${title}`}
               type="button"
               onClick={handleToggle}
-              aria-label="open"
+              aria-label={`open ${title} panel`}
             >
               <ChevronDownIcon className="w-10 h-10 text-base-300" />
             </motion.button>
@@ -127,7 +130,7 @@ export default function SectionBase({
       <AnimatePresence>
         {isOpen && (
           <motion.section
-            key="panel"
+            key={`accordion-panel-${title}`}
             variants={panelVariants}
             initial="initial"
             animate="animate"
@@ -141,7 +144,6 @@ export default function SectionBase({
               initial="initial"
               animate="animate"
               exit="exit"
-              className="pt-10"
             >
               {children}
             </motion.div>

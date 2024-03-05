@@ -36,7 +36,10 @@ export default function Planning() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-2">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col pt-10 gap-y-2"
+    >
       <Textarea
         id="goal"
         label="Sprint Goal"

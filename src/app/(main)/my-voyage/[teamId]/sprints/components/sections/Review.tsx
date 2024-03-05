@@ -40,7 +40,10 @@ export default function Review() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-2">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col pt-10 gap-y-2"
+    >
       <Textarea
         id="what_right"
         label="What went right?"
