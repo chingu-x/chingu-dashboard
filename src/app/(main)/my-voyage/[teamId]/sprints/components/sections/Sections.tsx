@@ -20,35 +20,52 @@ export default function Sections() {
 
   const dividerIsVisible = !notesIsAdded || !planningIsAdded || !reviewIsAdded;
   return (
-    <div className="flex flex-col gap-y-10">
+    <div className="flex flex-col overflow-hidden gap-y-10">
+      {/* DIVIDER */}
       {dividerIsVisible && (
         <Divider title="Add a Section Template to the Meeting ↓" />
       )}
+      {/* NOTES */}
       <SectionBase
-        title="Retrospective & Review"
+        title="Notes"
         icon={
-          <ArrowPathRoundedSquareIcon className="h-[30px] w-[30px] text-base-300" />
+          <DocumentTextIcon
+            aria-hidden="true"
+            className="h-[30px] w-[30px] text-base-300"
+          />
         }
-        isAdded={reviewIsAdded}
-        setIsAdded={setReviewIsAdded}
+        isAdded={notesIsAdded}
+        setIsAdded={setNotesIsAdded}
       >
-        <Notes />
+        <Review />
       </SectionBase>
+      {/* SPRINT PLANNING */}
       <SectionBase
         title="Sprint Planning"
-        icon={<LightBulbIcon className="h-[30px] w-[30px] text-base-300" />}
+        icon={
+          <LightBulbIcon
+            aria-hidden="true"
+            className="h-[30px] w-[30px] text-base-300"
+          />
+        }
         isAdded={planningIsAdded}
         setIsAdded={setPlanningIsAdded}
       >
         <Planning />
       </SectionBase>
+      {/* RETROSPECTIVE & REVIEW */}
       <SectionBase
-        title="Notes"
-        icon={<DocumentTextIcon className="h-[30px] w-[30px] text-base-300" />}
-        isAdded={notesIsAdded}
-        setIsAdded={setNotesIsAdded}
+        title="Retrospective & Review"
+        icon={
+          <ArrowPathRoundedSquareIcon
+            aria-hidden="true"
+            className="h-[30px] w-[30px] text-base-300"
+          />
+        }
+        isAdded={reviewIsAdded}
+        setIsAdded={setReviewIsAdded}
       >
-        <Review />
+        <Notes />
       </SectionBase>
     </div>
   );
