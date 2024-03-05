@@ -5,7 +5,7 @@ import TextInput from "@/components/inputs/TextInput";
 export default function ResourceInput() {
   //TODO: Input group/link will replace the TextInputs in this form.
   return (
-    <form className="flex items-center w-5/6 p-1 shadow-lg bg-base-200 rounded-xl">
+    <form className="flex items-center w-full p-1 shadow-lg bg-base-200 rounded-xl">
       <div className="flex flex-col w-3/4 m-4 ">
         <TextInput
           id="link"
@@ -15,7 +15,7 @@ export default function ResourceInput() {
         <TextInput id="title" placeholder="Name your resource here." />
       </div>
       {/* the button will be in disabled state until user puts in a valid url and name */}
-      <Button className="w-1/4 m-4 h-1/4">Share Resource</Button>
+      <Button className="w-1/4 m-4 whitespace-nowrap">Share Resource</Button>
     </form>
   );
 }
