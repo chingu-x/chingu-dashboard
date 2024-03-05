@@ -77,7 +77,7 @@ export default function SectionBase({
     <div
       className={cn(
         "p-10 rounded-2xl bg-base-100 border border-base-100",
-        isAdded && "bg-base-200"
+        isAdded && "bg-base-200",
       )}
     >
       <div className="flex items-center justify-between">

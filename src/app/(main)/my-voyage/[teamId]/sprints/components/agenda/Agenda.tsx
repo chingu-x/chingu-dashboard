@@ -6,26 +6,27 @@ import { useRouter } from "next/navigation";
 
 import EmptyState from "./EmptyState";
 import Topic from "./AgendaTopic";
+import AgendaHeader from "./AgendaHeader";
 import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
+
 import routePaths from "@/utils/routePaths";
 
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
-import AgendaHeader from "./AgendaHeader";
 
 export default function Agenda() {
   const router = useRouter();
 
   const [incompletedTopics, setIncompletedTopics] = useState(
-    topicsData.filter((topic) => topic.status === false)
+    topicsData.filter((topic) => topic.status === false),
   );
   const [completedTopics, setCompletedTopics] = useState(
-    topicsData.filter((topic) => topic.status === true)
+    topicsData.filter((topic) => topic.status === true),
   );
 
   const changeStatus = (id: number, status: boolean) => {
     if (status === false) {
       const topicIndex = incompletedTopics.findIndex(
-        (topic) => topic.id === id
+        (topic) => topic.id === id,
       );
       const topic = { ...incompletedTopics[topicIndex], status: true };
       setIncompletedTopics([...incompletedTopics].toSpliced(topicIndex, 1));
