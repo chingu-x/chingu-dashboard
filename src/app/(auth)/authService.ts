@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { getAccessToken, getRefreshToken } from "@/utils/getCookie";
-import { POST } from "@/utils/requests";
+import { POST, PASSWORDPOST } from "@/utils/requests";
 
 interface AuthResponse {
   message: string;
@@ -12,16 +12,6 @@ interface AuthResponse {
 interface ServerSignInResponse extends AuthResponse {}
 
 interface ServerSignOutResponse extends AuthResponse {}
-
-interface resetPasswordProps {
-  email: string;
-  password: string;
-  token: string;
-}
-
-interface requestResetPasswordProps {
-  email: string;
-}
 
 // prettier-ignore
 // prettier causing issues here with eslint rules
@@ -56,61 +46,24 @@ export async function serverSignOut(): Promise<
   
 }
 
-export async function resetPasswordRequestEmail({
-  email,
-}: requestResetPasswordProps) {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password/request`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-        }),
-        cache: "no-store",
-      },
-    );
-
-    if (res.ok) {
-      console.log("Reset password request sent successfully");
-    }
-  } catch (error) {
-    console.log("Error with request to reset password: ", error);
-  }
+export async function resetPasswordRequestEmail(email: string) {
+  PASSWORDPOST<undefined, undefined>(
+    "api/v1/auth/reset-password/request",
+    "no-store",
+    { email },
+  );
 }
 
-export async function resetPassword({
-  email,
-  password,
-  token,
-}: resetPasswordProps) {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/reset-password`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          token,
-        }),
-        cache: "no-store",
-      },
-    );
-    if (res.ok) {
-      console.log("Successfully reset password");
-    }
-  } catch (error) {
-    console.log("Error with resetting your password: ", error);
-  }
+export async function resetPassword(
+  email: string,
+  password: string,
+  token: string,
+) {
+  PASSWORDPOST<undefined, undefined>("api/v1/auth/reset-password", "no-store", {
+    email,
+    password,
+    token,
+  });
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -103,3 +103,29 @@ export async function DELETE<X>(
     throw error;
   }
 }
+
+export async function PASSWORDPOST<X, Y>(
+  url: string,
+  cache: RequestCache,
+  payload: any,
+): Promise<Y> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      cache,
+    });
+
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    }
+
+    return (await res.json()) as Y;
+  } catch (error) {
+    throw error;
+  }
+}
