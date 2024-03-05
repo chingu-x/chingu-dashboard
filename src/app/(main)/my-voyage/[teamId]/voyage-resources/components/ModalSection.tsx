@@ -5,7 +5,7 @@ interface ModalSectionProps {
 
 export default function ModalSection({ heading, children }: ModalSectionProps) {
   return (
-    <div className="bg-base-200 p-1 mb-4 mt-4  rounded-lg">
+    <div className="px-2 py-1 my-4 rounded-lg bg-base-200">
       <p className="font-bold">{heading}</p>
       {children}
     </div>

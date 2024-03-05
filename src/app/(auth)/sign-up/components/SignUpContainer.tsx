@@ -24,10 +24,10 @@ function SignUpContainer() {
           </p>
           <div className="flex flex-col items-center">
             <SocialLoginButtonsContainer />
-            <div className="flex items-center mt-6 mb-8 w-full">
-              <hr className="flex-grow border-neutral-content w-11/12" />
-              <p className="mx-4 text-base-300 font-semibold">or</p>
-              <hr className="flex-grow border-neutral-content w-11/12" />
+            <div className="flex items-center w-full mt-6 mb-8">
+              <hr className="flex-grow w-11/12 border-neutral-content" />
+              <p className="mx-4 font-semibold text-base-300">Or</p>
+              <hr className="flex-grow w-11/12 border-neutral-content" />
             </div>
           </div>
           <SignUpFormContainer
