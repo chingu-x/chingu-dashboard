@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { CheckCircleIcon as CheckCircleIconSolid } from "@heroicons/react/24/solid";
 
-import IconButton from "./IconButton";
+import IconButton from "@/components/IconButton";
 import { Topic } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +26,7 @@ export default function AgendaTopic({
       layout
       className={cn(
         "flex flex-col w-full p-5 rounded-lg bg-base-100 gap-y-4",
-        topic.status && "bg-neutral-content",
+        topic.status && "bg-neutral-content"
       )}
     >
       <div className="flex justify-between">
