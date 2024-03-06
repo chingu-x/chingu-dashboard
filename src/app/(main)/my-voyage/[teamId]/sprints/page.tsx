@@ -1,8 +1,10 @@
 // import VoyageSubmittedMessage from "./components/VoyageSubmittedMessage";
 // import EmptyState from "./components/EmptyState";
-import Agenda from "./components/Agenda";
+import Agenda from "./components/agenda/Agenda";
 import MeetingOverview from "./components/MeetingOverview";
+import Sections from "./components/sections/Sections";
 import SprintActions from "./components/SprintActions";
+import ProgressStepper from "./components/ProgressStepper";
 import Banner from "@/components/banner/Banner";
 
 export default function SprintsPage() {
@@ -15,11 +17,13 @@ export default function SprintsPage() {
         title="Sprints"
         description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
       />
+      <ProgressStepper />
       <SprintActions />
       {/* <EmptyState /> */}
       <MeetingOverview />
       <Agenda />
       {/* <VoyageSubmittedMessage /> */}
+      <Sections />
     </div>
   );
 }

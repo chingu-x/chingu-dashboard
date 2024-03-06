@@ -22,6 +22,11 @@ const meta = {
       description: "The textarea placeholder.",
       control: "text",
     },
+    defaultValue: {
+      description:
+        "The textarea default value. Should pass a string in  **curly** braces if you want `\\n` become a new line:\n`defaultValue={'Line\\nNew Line\\nNewLine'}` (optional)",
+      control: "text",
+    },
     suggestion: {
       description: "Add a short suggestion (optional).",
       control: "text",
