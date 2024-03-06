@@ -25,6 +25,8 @@
     }
   },
   "rules": {
+    "@typescript-eslint/no-redeclare": "off",
+    "no-redeclare": "error",
     "@typescript-eslint/naming-convention": [
       "error",
       {

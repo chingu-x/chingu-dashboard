@@ -14,6 +14,7 @@ import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
 import { useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
+import routePaths from "@/utils/routePaths";
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -43,39 +44,12 @@ export type PageProperty = {
   link: string;
 };
 
-export const voyagePages: VoyagePageProperty[] = [
-  {
-    name: VoyagePages.directory,
-    link: "/my-voyage/directory",
-  },
-  {
-    name: VoyagePages.techStack,
-    link: "/my-voyage/tech-stack",
-  },
-  {
-    name: VoyagePages.ideation,
-    link: "/my-voyage/ideation",
-  },
-  {
-    name: VoyagePages.features,
-    link: "/my-voyage/features",
-  },
-  {
-    name: VoyagePages.sprints,
-    link: "/my-voyage/sprints",
-  },
-  {
-    name: VoyagePages.resources,
-    link: "/my-voyage/voyage-resources",
-  },
-];
-
 const pagesProperties: PageProperty[] = [
   {
     name: MainPages.dashboard,
     marginBottom: "mb-4",
     icon: <RectangleGroupIcon className="h-[1.125rem]" />,
-    link: "/",
+    link: routePaths.dashboardPage(),
   },
   {
     name: MainPages.assessment,
@@ -122,6 +96,39 @@ export default function Sidebar() {
 
   const isVoyageStarted: boolean = isAuthenticated && isActive;
 
+  const currentVoyageTeam = voyageTeamMembers.find(
+    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+  );
+
+  const teamId = currentVoyageTeam?.voyageTeamId.toString();
+
+  const voyagePages: VoyagePageProperty[] = [
+    {
+      name: VoyagePages.directory,
+      link: routePaths.directoryPage(teamId!),
+    },
+    {
+      name: VoyagePages.techStack,
+      link: routePaths.techStackPage(teamId!),
+    },
+    {
+      name: VoyagePages.ideation,
+      link: routePaths.ideationPage(teamId!),
+    },
+    {
+      name: VoyagePages.features,
+      link: routePaths.featuresPage(teamId!),
+    },
+    {
+      name: VoyagePages.sprints,
+      link: routePaths.sprintsPage(teamId!),
+    },
+    {
+      name: VoyagePages.resources,
+      link: routePaths.voyageResourcesPage(teamId!),
+    },
+  ];
+
   useEffect(() => {
     setSelectedButton(currentPath);
   }, [currentPath]);
@@ -157,6 +164,7 @@ export default function Sidebar() {
             isOpen={isOpenSidebar}
             link={element.link}
             setHoveredButton={setHoveredButton}
+            voyagePages={voyagePages}
           />
         ))}
         {isOpenSidebar && (
