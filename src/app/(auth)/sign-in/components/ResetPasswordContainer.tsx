@@ -33,10 +33,14 @@ function ResetPasswordContainer({
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { email } = data;
     handleEmailCheck();
-    resetPasswordRequestEmail(email);
+    try {
+      await resetPasswordRequestEmail(email);
+    } catch (error) {
+      console.error("Error sending request to email: ", error);
+    }
   };
 
   return (
