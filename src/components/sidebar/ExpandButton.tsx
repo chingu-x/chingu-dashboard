@@ -12,8 +12,9 @@ export default function ExpandButton({ isOpen, onClick }: ExpandButtonProps) {
   return (
     <button
       type="button"
-      className="bg-base-200 text-base-300 capitalize hover:bg-base-200 border-none"
+      className="capitalize border-none bg-base-200 text-base-300 hover:bg-base-200"
       onClick={() => onClick(!isOpen)}
+      aria-label={`${isOpen ? "close sidebar" : "open sidebar"}`}
     >
       {isOpen ? (
         <ArrowLeftOnRectangleIcon className="h-6" />
