@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { getAccessToken, getRefreshToken } from "@/utils/getCookie";
-import { POST, PASSWORDPOST } from "@/utils/requests";
+import { POST, UNAUTHPOST } from "@/utils/requests";
 
 interface AuthResponse {
   message: string;
@@ -51,20 +51,24 @@ export async function serverSignOut(): Promise<
   
 }
 
+// prettier-ignore
+// prettier causing issues here with eslint rules
 export async function resetPasswordRequestEmail(email: string) {
-  PASSWORDPOST<undefined, undefined>(
+  UNAUTHPOST<void>(
     "api/v1/auth/reset-password/request",
     "no-store",
     { email },
   );
 }
 
+// prettier-ignore
+// prettier causing issues here with eslint rules
 export async function resetPassword(
   email: string,
   password: string,
   token: string,
 ) {
-  PASSWORDPOST<undefined, undefined>("api/v1/auth/reset-password", "no-store", {
+  UNAUTHPOST<void>("api/v1/auth/reset-password", "no-store", {
     email,
     password,
     token,

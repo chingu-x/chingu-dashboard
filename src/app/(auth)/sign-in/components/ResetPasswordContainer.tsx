@@ -36,6 +36,8 @@ function ResetPasswordContainer({
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     const { email } = data;
     handleEmailCheck();
+    // lint error due to issues in authService
+    // remove comment after linting is done
     resetPasswordRequestEmail(email);
   };
 

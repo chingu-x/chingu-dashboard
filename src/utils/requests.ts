@@ -104,11 +104,11 @@ export async function DELETE<X>(
   }
 }
 
-export async function PASSWORDPOST<X, Y>(
+export async function UNAUTHPOST<X>(
   url: string,
   cache: RequestCache,
-  payload: any,
-): Promise<Y> {
+  payload: { email: string; password?: string; token?: string },
+): Promise<X> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
       method: "POST",
@@ -124,7 +124,7 @@ export async function PASSWORDPOST<X, Y>(
       throw new Error(res.statusText);
     }
 
-    return (await res.json()) as Y;
+    return (await res.json()) as X;
   } catch (error) {
     throw error;
   }
