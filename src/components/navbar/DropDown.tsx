@@ -6,6 +6,7 @@ import Button from "@/components/Button";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 import { serverSignOut } from "@/app/(auth)/authService";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 export default function DropDown({ openState }: { openState?: boolean }) {
   const dispatch = useAppDispatch();
@@ -21,9 +22,17 @@ export default function DropDown({ openState }: { openState?: boolean }) {
     "absolute z-[1] w-44 p-4 [&>*]:mt-2 mt-6 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
 
   async function handleClick() {
-    await serverSignOut();
-    dispatch(clientSignOut());
+    const [res, error] = await serverSignOut();
+
+    if (res) {
+      dispatch(clientSignOut());
+    }
+
+    if (error) {
+      dispatch(onOpenModal({ type: "error", content: error.message }));
+    }
   }
+
   const handleDropDownClick = (event: React.MouseEvent<HTMLUListElement>) => {
     event.stopPropagation();
   };
@@ -44,11 +53,11 @@ export default function DropDown({ openState }: { openState?: boolean }) {
         <li className="bg-secondary-content text-xs p-2 [&>*]:m-1 rounded-lg ">
           <p className="text-neutral text-xs">My Status:</p>
           {currentVoyage ? (
-            <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
+            <p className="border-[1px] border-transparent font-semibold text-base-300">
               {currentVoyage}
             </p>
           ) : (
-            <p className="text-base-300 border-[1px] border-transparent font-semibold text-base-300">
+            <p className="border-[1px] border-transparent font-semibold text-base-300">
               {currentVoyage}
             </p>
           )}
