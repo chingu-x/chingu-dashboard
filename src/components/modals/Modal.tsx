@@ -22,6 +22,7 @@ export default function Modal({
     const down = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
+
         onClose();
       }
     };
