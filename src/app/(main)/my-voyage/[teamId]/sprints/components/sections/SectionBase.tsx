@@ -13,26 +13,25 @@ interface SectionBaseProps {
   title: string;
   icon: React.JSX.Element;
   isAdded: boolean;
-  setIsAdded: (_: boolean) => void;
   children: React.ReactNode;
+  reorderSections?: (title: string) => void;
 }
 
 export default function SectionBase({
   title,
   icon,
   isAdded,
-  setIsAdded,
   children,
+  reorderSections,
 }: SectionBaseProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(isAdded);
+
+  const handleAddSection = () => {
+    reorderSections && reorderSections(title);
+  };
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleOpen = () => {
-    setIsAdded(true);
-    setIsOpen(true);
   };
 
   const panelVariants: Variants = {
@@ -81,19 +80,23 @@ export default function SectionBase({
       )}
     >
       <div className="flex items-center justify-between">
-        <h2 className="flex items-center gap-x-2 text-base-300 text-[25px] font-medium">
+        <h2 className="flex items-center gap-x-2 text-base-300 text-[25px] font-medium capitalize [&>*:first-child]:h-[30px] [&>*:first-child]:w-[30px]">
           {icon}
           {title}
         </h2>
         {!isAdded && (
-          <button type="button" onClick={handleOpen} aria-label="add section">
+          <button
+            type="button"
+            onClick={handleAddSection}
+            aria-label="add section"
+          >
             <PlusCircleIcon className="w-10 h-10 text-base-300" />
           </button>
         )}
         <AnimatePresence mode="popLayout">
           {isAdded && isOpen && (
             <motion.button
-              key="up"
+              key={`open-${title}`}
               initial={{ rotateX: "0deg" }}
               animate={{ rotateX: "180deg" }}
               exit={{ rotateX: "0deg" }}
@@ -110,7 +113,7 @@ export default function SectionBase({
           )}
           {isAdded && !isOpen && (
             <motion.button
-              key="down"
+              key={`close-${title}`}
               initial={{ rotateX: "0deg" }}
               animate={{ rotateX: "180deg" }}
               exit={{ rotateX: "0deg" }}

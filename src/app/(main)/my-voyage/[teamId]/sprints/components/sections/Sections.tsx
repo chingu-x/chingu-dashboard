@@ -13,60 +13,78 @@ import Review from "./Review";
 import SectionBase from "./SectionBase";
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
 
-export default function Sections() {
-  const [notesIsAdded, setNotesIsAdded] = useState(false);
-  const [planningIsAdded, setPlanningIsAdded] = useState(false);
-  const [reviewIsAdded, setReviewIsAdded] = useState(false);
+const sectionTemplates = [
+  {
+    title: "notes",
+    icon: <DocumentTextIcon aria-hidden="true" />,
+    isAdded: false,
+    children: <Notes />,
+  },
+  {
+    title: "sprint planning",
+    icon: <LightBulbIcon aria-hidden="true" />,
+    isAdded: false,
+    children: <Planning />,
+  },
+  {
+    title: "retrospective & review",
+    icon: <ArrowPathRoundedSquareIcon aria-hidden="true" />,
+    isAdded: false,
+    children: <Review />,
+  },
+];
 
-  const dividerIsVisible = !notesIsAdded || !planningIsAdded || !reviewIsAdded;
+export default function Sections() {
+  const [addedSections, setAddedSections] = useState(
+    sectionTemplates.filter((template) => template.isAdded === true),
+  );
+  const [canBeAddedSections, setCanBeAddedSections] = useState(
+    sectionTemplates.filter((template) => template.isAdded === false),
+  );
+
+  function reorderSections(title: string) {
+    const sectionIndex = canBeAddedSections.findIndex(
+      (section) => section.title === title,
+    );
+    const section = {
+      ...canBeAddedSections[sectionIndex],
+      isAdded: true,
+    };
+    setCanBeAddedSections([...canBeAddedSections].toSpliced(sectionIndex, 1));
+    setAddedSections([...addedSections, section]);
+  }
+
+  const dividerIsVisible = canBeAddedSections.length !== 0;
+
   return (
     <div className="flex flex-col overflow-hidden gap-y-10">
+      {/* ADDED SECTIONS */}
+      {addedSections.map((section) => (
+        <SectionBase
+          key={`${section.title}-section-added`}
+          title={section.title}
+          icon={section.icon}
+          isAdded={section.isAdded}
+        >
+          {section.children}
+        </SectionBase>
+      ))}
       {/* DIVIDER */}
       {dividerIsVisible && (
         <Divider title="Add a Section Template to the Meeting ↓" />
       )}
-      {/* NOTES */}
-      <SectionBase
-        title="Notes"
-        icon={
-          <DocumentTextIcon
-            aria-hidden="true"
-            className="h-[30px] w-[30px] text-base-300"
-          />
-        }
-        isAdded={notesIsAdded}
-        setIsAdded={setNotesIsAdded}
-      >
-        <Review />
-      </SectionBase>
-      {/* SPRINT PLANNING */}
-      <SectionBase
-        title="Sprint Planning"
-        icon={
-          <LightBulbIcon
-            aria-hidden="true"
-            className="h-[30px] w-[30px] text-base-300"
-          />
-        }
-        isAdded={planningIsAdded}
-        setIsAdded={setPlanningIsAdded}
-      >
-        <Planning />
-      </SectionBase>
-      {/* RETROSPECTIVE & REVIEW */}
-      <SectionBase
-        title="Retrospective & Review"
-        icon={
-          <ArrowPathRoundedSquareIcon
-            aria-hidden="true"
-            className="h-[30px] w-[30px] text-base-300"
-          />
-        }
-        isAdded={reviewIsAdded}
-        setIsAdded={setReviewIsAdded}
-      >
-        <Notes />
-      </SectionBase>
+      {/* CAN BE ADDED SECTIONS */}
+      {canBeAddedSections.map((section) => (
+        <SectionBase
+          key={`${section.title}-section-not-added`}
+          title={section.title}
+          icon={section.icon}
+          isAdded={section.isAdded}
+          reorderSections={reorderSections}
+        >
+          {section.children}
+        </SectionBase>
+      ))}
     </div>
   );
 }
