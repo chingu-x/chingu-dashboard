@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 import EmptyState from "./EmptyState";
@@ -43,6 +43,8 @@ export default function Agenda() {
     router.push(routePaths.addTopic("2"));
   };
 
+  const dividerIsVisible = completedTopics.length !== 0;
+
   return (
     <div className="flex flex-col items-center justify-between w-full p-10 border bg-base-200 rounded-2xl border-base-100">
       <AgendaHeader />
@@ -59,11 +61,13 @@ export default function Agenda() {
         ))}
       </ul>
       {/* DIVIDER */}
-      {completedTopics.length !== 0 && (
-        <motion.div layout className="w-full">
-          <Divider title="Completed Topics" className="py-5 bg-base-200" />
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {dividerIsVisible && (
+          <motion.div layout className="w-full">
+            <Divider title="Completed Topics" className="py-5 bg-base-200" />
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* COMPLETED TOPICS */}
       <ul className="flex flex-col w-full gap-y-5">
         {completedTopics.map((topic) => (
