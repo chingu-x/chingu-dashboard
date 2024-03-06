@@ -13,9 +13,14 @@ interface ServerSignInResponse extends AuthResponse {}
 
 interface ServerSignOutResponse extends AuthResponse {}
 
+interface ServerSignInProps {
+  email: string;
+  password: string;
+}
+
 // prettier-ignore
 // prettier causing issues here with eslint rules
-export async function serverSignIn(email:string, password:string): Promise<
+export async function serverSignIn({ email, password }: ServerSignInProps ): Promise<
   AsyncActionResponse<ServerSignInResponse>
   > {
   const userOrError = async () => asyncSignIn(email, password);

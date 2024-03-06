@@ -13,6 +13,9 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 
+import useServerAction from "@/hooks/useServerAction";
+import Spinner from "@/components/Spinner";
+
 const validationSchema = z.object({
   email: validateTextInput({
     inputName: "Email",
@@ -40,6 +43,12 @@ function SignInFormContainer({
   const dispatch = useAppDispatch();
 
   const {
+    runAction: serverSignInAction,
+    isLoading: serverSignInLoading,
+    setIsLoading: setServerSignInLoading,
+  } = useServerAction(serverSignIn);
+
+  const {
     register,
     formState: { errors },
     handleSubmit,
@@ -49,7 +58,7 @@ function SignInFormContainer({
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { email, password } = data;
-    const [res, error] = await serverSignIn(email, password);
+    const [res, error] = await serverSignInAction({ email, password });
 
     if (res) {
       dispatch(clientSignIn());
@@ -58,8 +67,16 @@ function SignInFormContainer({
 
     if (error) {
       dispatch(onOpenModal({ type: "error", content: error.message }));
+      setServerSignInLoading(false);
     }
   };
+
+  function renderButtonContent() {
+    if (serverSignInLoading) {
+      return <Spinner />;
+    }
+    return "Sign In";
+  }
 
   return (
     <form
@@ -98,7 +115,7 @@ function SignInFormContainer({
           title="submit"
           className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
         >
-          Sign in
+          {renderButtonContent()}
         </Button>
         <Link
           href={routePaths.signUp()}
