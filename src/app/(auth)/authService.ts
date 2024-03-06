@@ -51,28 +51,30 @@ export async function serverSignOut(): Promise<
   
 }
 
-// prettier-ignore
-// prettier causing issues here with eslint rules
-export async function resetPasswordRequestEmail(email: string) {
-  UNAUTHPOST<void>(
-    "api/v1/auth/reset-password/request",
-    "no-store",
-    { email },
-  );
+export async function resetPasswordRequestEmail(
+  email: string,
+): Promise<AsyncActionResponse<void>> {
+  const asyncPasswordResetEmail = async () =>
+    UNAUTHPOST<void>("api/v1/auth/reset-password/request", "no-store", {
+      email,
+    });
+
+  return handleAsync(asyncPasswordResetEmail);
 }
 
-// prettier-ignore
-// prettier causing issues here with eslint rules
 export async function resetPassword(
   email: string,
   password: string,
   token: string,
-) {
-  UNAUTHPOST<void>("api/v1/auth/reset-password", "no-store", {
-    email,
-    password,
-    token,
-  });
+): Promise<AsyncActionResponse<void>> {
+  const asyncResetPassword = async () =>
+    UNAUTHPOST<void>("api/v1/auth/reset-password", "no-store", {
+      email,
+      password,
+      token,
+    });
+
+  return handleAsync(asyncResetPassword);
 }
 
 /////////////////////////////////////////////////////////////////////////////
