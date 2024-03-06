@@ -156,7 +156,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId
+        (project) => project.id === +params.ideationId,
       );
 
       setIdeationData(ideation);
@@ -178,7 +178,7 @@ export default function IdeationForm() {
     () => () => {
       void persistor.purge();
     },
-    []
+    [],
   );
 
   function renderButtonContent() {
