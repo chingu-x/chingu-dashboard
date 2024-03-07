@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
-import Button from "@/components/Button";
+import EmptyWidgetContent from "./EmptyWidgetContent";
 
 interface DashboardWidgetProps {
   title: string;
@@ -12,6 +11,8 @@ interface DashboardWidgetProps {
   description: string;
   imageLight?: string;
   imageDark?: string;
+  data?: unknown; // TODO: need to update this value when we will have data from the backend
+  children?: React.ReactNode;
 }
 function DashboardWidget({
   imageLight,
@@ -21,13 +22,18 @@ function DashboardWidget({
   link,
   buttonTitle,
   description,
+  data = {},
+  children,
 }: DashboardWidgetProps) {
   const [linkHovered, setLinkHovered] = useState<boolean>(false);
   const [widgetHovered, setWidgetHovered] = useState<boolean>(false);
 
+  const isEmpty = (obj: unknown): boolean =>
+    Object.keys(obj as object).length === 0;
+
   return (
     <div
-      className="rounded-lg bg-base-100 p-4 hover:shadow-md flex flex-col h-full"
+      className="rounded-lg bg-base-100 p-4 hover:shadow-md flex flex-col h-full w-full"
       onMouseEnter={() => setWidgetHovered(true)}
       onMouseLeave={() => setWidgetHovered(false)}
     >
@@ -52,45 +58,17 @@ function DashboardWidget({
         </Link>
       </div>
 
-      <div className="flex flex-row flex-grow">
-        <div className="flex flex-col gap-y-4 h-full justify-between">
-          <p className="text-xl font-semibold">{title}</p>
-          <p className="text-base font-medium">{description}</p>
-          <Link href={link}>
-            <Button variant="outline" className="text-base font-semibold">
-              {buttonTitle}
-            </Button>
-          </Link>
-        </div>
-        {imageLight && imageDark ? (
-          <div className="w-full">
-            <div
-              data-hide-on-theme="dark"
-              className="flex h-[140px] w-full relative shrink-0"
-            >
-              <Image
-                src={imageLight}
-                alt="Light pre Voyage image"
-                fill={true}
-                style={{ objectFit: "contain" }}
-                priority={true}
-              />
-            </div>
-            <div
-              data-hide-on-theme="light"
-              className="flex h-[140px] w-full relative shrink-0"
-            >
-              <Image
-                src={imageDark}
-                alt="Light pre Voyage image"
-                fill={true}
-                style={{ objectFit: "contain" }}
-                priority={true}
-              />
-            </div>
-          </div>
-        ) : null}
-      </div>
+      {isEmpty(data) ? (
+        <EmptyWidgetContent
+          title={title}
+          description={description}
+          link={link}
+          buttonTitle={buttonTitle}
+          imageLight={imageLight}
+          imageDark={imageDark}
+        />
+      ) : null}
+      {children}
     </div>
   );
 }
