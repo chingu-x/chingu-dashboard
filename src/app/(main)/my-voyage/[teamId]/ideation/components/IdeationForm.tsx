@@ -23,7 +23,7 @@ import useServerAction from "@/hooks/useServerAction";
 import { persistor } from "@/store/store";
 import routePaths from "@/utils/routePaths";
 import useModal from "@/hooks/useModal";
-import ErrorModal from "@/components/modals/ErrorModal";
+import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -54,7 +54,6 @@ export default function IdeationForm() {
   const teamId = +params.teamId;
   const { projectIdeas } = useAppSelector((state) => state.ideation);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [modalError, setModalError] = useState<string>("");
   const [ideationData, setIdeationData] = useState<IdeationData>();
 
   const {
@@ -68,16 +67,12 @@ export default function IdeationForm() {
     isLoading: addIdeationLoading,
     setIsLoading: setAddIdeationLoading,
   } = useServerAction(addIdeation);
-  const {
-    runAction: deleteIdeationAction,
-    isLoading: deleteIdeationLoading,
-    setIsLoading: setDeleteIdeationLoading,
-  } = useServerAction(deleteIdeation);
+  const { isLoading: deleteIdeationLoading } = useServerAction(deleteIdeation);
 
   const {
-    isOpen: isErrorModalOpen,
-    openModal: openErrorModal,
-    closeModal: closeErrorModal,
+    isOpen: isDeleteConfirmationModalOpen,
+    openModal: openDeleteConfirmationModal,
+    closeModal: closeDeleteConfirmationModal,
   } = useModal();
 
   const {
@@ -116,8 +111,8 @@ export default function IdeationForm() {
       }
 
       if (error) {
-        setModalError(error.message);
-        openErrorModal();
+        // setModalError(error.message);
+        // openErrorModal();
         setEditIdeationLoading(false);
       }
     } else {
@@ -130,33 +125,21 @@ export default function IdeationForm() {
       }
 
       if (error) {
-        setModalError(error.message);
-        openErrorModal();
+        // setModalError(error.message);
+        // openErrorModal();
         setAddIdeationLoading(false);
       }
     }
   };
 
-  async function handleDelete() {
-    const ideationId = +params.ideationId;
-
-    const [res, error] = await deleteIdeationAction({ teamId, ideationId });
-
-    if (res) {
-      router.push(routePaths.ideationPage(teamId.toString()));
-    }
-
-    if (error) {
-      setModalError(error.message);
-      openErrorModal();
-      setDeleteIdeationLoading(false);
-    }
+  function handleDelete() {
+    openDeleteConfirmationModal();
   }
 
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
@@ -178,7 +161,7 @@ export default function IdeationForm() {
     () => () => {
       void persistor.purge();
     },
-    [],
+    []
   );
 
   function renderButtonContent() {
@@ -204,11 +187,12 @@ export default function IdeationForm() {
 
   return (
     <>
-      <ErrorModal
-        isOpen={isErrorModalOpen}
-        onClose={closeErrorModal}
-        modalError={modalError}
-        setModalError={setModalError}
+      <DeleteConfirmationModal
+        isOpen={isDeleteConfirmationModalOpen}
+        onClose={closeDeleteConfirmationModal}
+        title="Confirm Deletion"
+        message="Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it."
+        confirmationText="Delete"
       />
       <div className="flex flex-col items-center">
         <form
