@@ -2,21 +2,14 @@
 
 import { useEffect } from "react";
 import { AnimatePresence, Variants, motion } from "framer-motion";
-import { XMarkIcon } from "@heroicons/react/20/solid";
 
 interface ModalProps {
   isOpen: boolean;
-  title: string;
   onClose: () => void;
   children: React.ReactNode;
 }
 
-export default function Modal({
-  isOpen,
-  title,
-  children,
-  onClose,
-}: ModalProps) {
+export default function Modal({ isOpen, children, onClose }: ModalProps) {
   // Use ESC to close the modal
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -89,16 +82,8 @@ export default function Modal({
             animate="animate"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="rounded-2xl bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden p-10 max-h-[calc(100vh-5em)]"
+            className="rounded-2xl bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden max-h-[calc(100vh-5em)]"
           >
-            {/* HEADER */}
-            <div className="flex items-center justify-between pb-8">
-              <h3 className="text-xl font-semibold capitalize">{title}</h3>
-              <button type="button" aria-label="close modal" onClick={onClose}>
-                <XMarkIcon className="w-6 h-6 fill-current" />
-              </button>
-            </div>
-            {/* CONTENT */}
             {children}
           </motion.div>
         </motion.dialog>
