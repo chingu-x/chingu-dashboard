@@ -72,9 +72,6 @@ export default async function IdeationComponentWrapper({
     redirect("/");
   }
 
-  // todo: add image when project ideas is empty
-  // todo: adjust styles (colors)
-
   function renderProjects() {
     if (projectIdeas.length === 0) {
       return (

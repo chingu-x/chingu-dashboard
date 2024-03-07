@@ -15,7 +15,7 @@ import routePaths from "@/utils/routePaths";
 export default function DeleteConfirmationModal() {
   const { isOpen, type } = useAppSelector((state) => state.modal);
   const { title, message, confirmationText } = useAppSelector(
-    (state) => state.modal.content
+    (state) => state.modal.content,
   );
   const dispatch = useAppDispatch();
   const params = useParams<{ teamId: string; ideationId: string }>();
@@ -45,7 +45,7 @@ export default function DeleteConfirmationModal() {
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
       setDeleteIdeationLoading(false);
     }

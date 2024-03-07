@@ -25,7 +25,6 @@ interface VoteCardProps {
   teamId: number;
 }
 
-// todo: add delete confirmation modal
 function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
     null
