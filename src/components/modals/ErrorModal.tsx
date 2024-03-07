@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import Modal from "./Modal";
 import Button from "@/components/Button";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
@@ -18,10 +19,18 @@ export default function ErrorModal() {
   }, [dispatch]);
 
   return (
-    <Modal isOpen={isModalOpen} title={"Error"} onClose={handleClose}>
+    <Modal
+      isOpen={isModalOpen}
+      title="Submission Error"
+      onClose={handleClose}
+      icon={<ExclamationTriangleIcon className="w-8" />}
+      headerBackground="bg-error-content"
+    >
       <div className="flex flex-col overflow-hidden">
         <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[90px]">
-          <div className="flex flex-col gap-4">{content.message}</div>
+          <div className="flex flex-col gap-4 text-base-300">
+            {content.message}
+          </div>
           <div className="flex flex-col gap-5 pt-8">
             <Button
               size="lg"

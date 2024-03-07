@@ -136,7 +136,7 @@ export default function IdeationForm() {
           title: "Confirm Deletion",
           message:
             "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
-          confirmationText: "Delete",
+          confirmationText: "Delete Project",
           cancelText: "Keep It",
         },
       })
@@ -260,7 +260,7 @@ export default function IdeationForm() {
       >
         <div className="flex flex-col gap-y-4">
           <h1 className="text-base-300 text-3xl font-bold mt-10">
-            {editMode ? "Edit Project Idea" : "Add Project Idea"}
+            {editMode ? "Edit Project" : "Add Project"}
           </h1>
           <p className="text-base-300 text-lg font-medium">
             Share your project idea with the team.

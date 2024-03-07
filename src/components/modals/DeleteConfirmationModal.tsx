@@ -32,16 +32,17 @@ export default function DeleteConfirmationModal() {
 
   const handleClose = () => {
     dispatch(onCloseModal());
-    handleDelete;
   };
 
   const handleDelete = useCallback(async () => {
     const ideationId = +params.ideationId;
     const [res, error] = await deleteIdeationAction({ teamId, ideationId });
+
     if (res) {
       dispatch(onCloseModal());
       router.push(routePaths.ideationPage(teamId.toString()));
     }
+
     if (error) {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } })
@@ -72,14 +73,24 @@ export default function DeleteConfirmationModal() {
 
   return (
     <Modal isOpen={isModalOpen} title={title!} onClose={handleClose}>
-      <div className="">{message}</div>
-      <div className="">
+      <div className="mb-10 text-base-300">{message}</div>
+      <div className="flex gap-x-10 mt-10">
         <Button
           size="lg"
           variant="neutral"
           type="button"
+          onClick={handleClose}
+          className="w-full"
+        >
+          Keep It
+        </Button>
+        <Button
+          size="lg"
+          variant="error"
+          type="button"
           disabled={deleteIdeationLoading}
           onClick={handleDelete}
+          className="w-full"
         >
           {renderDeleteButtonContent()}
         </Button>
