@@ -28,10 +28,6 @@ export interface ContentPayload {
   cancelText?: string;
 }
 
-// interface ModalCloseActionPayload {
-//   type?: ModalType;
-// }
-
 const initialState: ModalState = {
   type: undefined,
   isOpen: false,
