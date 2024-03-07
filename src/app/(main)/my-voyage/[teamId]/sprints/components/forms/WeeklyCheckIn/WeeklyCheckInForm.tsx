@@ -102,7 +102,7 @@ export default function WeeklyCheckingForm() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
-    dispatch(onOpenModal({ type: "checkInSuccess", content: "" }));
+    dispatch(onOpenModal({ type: "checkInSuccess", content: {} }));
   };
 
   return (

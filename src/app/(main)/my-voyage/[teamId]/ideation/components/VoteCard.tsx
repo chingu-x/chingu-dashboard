@@ -28,11 +28,11 @@ interface VoteCardProps {
 // todo: add delete confirmation modal
 function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
-    null,
+    null
   );
   const { id } = useAppSelector((state) => state.user);
   const { loading } = useAppSelector((state) => state.ideation);
-  const { isOpen } = useAppSelector((state) => state.modal.baseModal);
+  const { isOpen } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
   const [voteChanged, setVoteChanged] = useState<boolean>(false);
 
@@ -58,7 +58,9 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       });
 
       if (error) {
-        dispatch(onOpenModal({ type: "error", content: error.message }));
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } })
+        );
       }
 
       setVoteChanged(true);
@@ -71,7 +73,9 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       });
 
       if (error) {
-        dispatch(onOpenModal({ type: "error", content: error.message }));
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } })
+        );
       }
 
       setVoteChanged(true);
@@ -81,7 +85,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users],
+    [users]
   );
 
   function buttonContent() {

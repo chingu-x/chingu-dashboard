@@ -24,9 +24,9 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
     dispatch(
       onOpenModal({
         type: "feature",
-        content: "",
+        content: {},
         isEditing: true,
-      }),
+      })
     );
   }
 

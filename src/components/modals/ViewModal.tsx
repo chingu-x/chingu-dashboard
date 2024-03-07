@@ -9,14 +9,14 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function ViewModal() {
   const dispatch = useAppDispatch();
-  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
+  const { isOpen, type } = useAppSelector((state) => state.modal);
   const isModalOpen = isOpen && type === "viewResource";
 
   //TODO: replace data with actual data.
   const data = { title: "title here", href: "link url here" };
 
   const handleClose = () => {
-    dispatch(onCloseModal({ type: "viewResource" }));
+    dispatch(onCloseModal());
   };
 
   return (

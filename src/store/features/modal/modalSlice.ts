@@ -12,6 +12,7 @@ interface ModalState {
   type: ModalType | undefined;
   isOpen: boolean;
   isEditing?: boolean;
+  content: ContentPayload;
 }
 
 export interface ModalOpenActionPayload {
@@ -27,14 +28,15 @@ export interface ContentPayload {
   cancelText?: string;
 }
 
-interface ModalCloseActionPayload {
-  type?: ModalType;
-}
+// interface ModalCloseActionPayload {
+//   type?: ModalType;
+// }
 
 const initialState: ModalState = {
   type: undefined,
   isOpen: false,
   isEditing: false,
+  content: {},
 };
 
 export const modalSlice = createSlice({
@@ -42,19 +44,14 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
-      const { type, isEditing } = action.payload;
+      const { type, isEditing, content } = action.payload;
 
       state.isOpen = true;
       state.type = type;
       state.isEditing = isEditing;
+      state.content = content;
     },
-    onCloseModal: (state, action: PayloadAction<ModalCloseActionPayload>) => {
-      const { type } = action.payload;
-
-      state.type = type;
-      state.isOpen = false;
-      state.isEditing = false;
-    },
+    onCloseModal: () => initialState,
   },
 });
 
