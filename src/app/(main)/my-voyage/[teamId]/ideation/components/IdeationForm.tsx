@@ -54,7 +54,6 @@ export default function IdeationForm() {
   const { projectIdeas } = useAppSelector((state) => state.ideation);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
-  const [formData, setFormData] = useState({});
   const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
   const dispatch = useAppDispatch();
 
@@ -74,11 +73,14 @@ export default function IdeationForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid, dirtyFields },
+    watch,
+    formState: { errors, isDirty, isValid, dirtyFields },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
+
+  const { title, description, vision } = watch();
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     if (editMode) {
@@ -107,7 +109,7 @@ export default function IdeationForm() {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
+          onOpenModal({ type: "error", content: { message: error.message } })
         );
         setEditIdeationLoading(false);
       }
@@ -122,7 +124,7 @@ export default function IdeationForm() {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
+          onOpenModal({ type: "error", content: { message: error.message } })
         );
         setAddIdeationLoading(false);
       }
@@ -140,14 +142,14 @@ export default function IdeationForm() {
           confirmationText: "Delete Project",
           cancelText: "Keep It",
         },
-      }),
+      })
     );
   }
 
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
@@ -169,7 +171,7 @@ export default function IdeationForm() {
     () => () => {
       void persistor.purge();
     },
-    [],
+    []
   );
 
   // This block is responsible for auto-save functionality. Right now nextjs does
@@ -185,11 +187,27 @@ export default function IdeationForm() {
   useEffect(() => {
     async function autoSave() {
       const ideationId = +params.ideationId;
+      const modifiedObject: { [key: string]: string } = {};
+
+      if (ideationData) {
+        const watchedData = watch();
+
+        for (const key in watchedData) {
+          if (
+            watchedData.hasOwnProperty(key) &&
+            ideationData[key as keyof IdeationData] !==
+              watchedData[key as keyof typeof watchedData]
+          ) {
+            modifiedObject[key as keyof IdeationData] =
+              watchedData[key as keyof typeof watchedData];
+          }
+        }
+      }
 
       const filteredData = {
         teamId,
         ideationId,
-        ...formData,
+        ...modifiedObject,
       };
 
       await asyncTimeout(5000);
@@ -205,23 +223,28 @@ export default function IdeationForm() {
           onOpenModal({
             type: "error",
             content: { message: error.message },
-          }),
+          })
         );
         setEditIdeationLoading(false);
       }
     }
 
-    if (editMode && Object.keys(formData).length !== 0) {
+    if (editMode && isDirty) {
       void autoSave();
     }
   }, [
-    formData,
+    isDirty,
+    ideationData,
+    watch,
     editMode,
     dispatch,
     params.ideationId,
     teamId,
     editIdeationAction,
     setEditIdeationLoading,
+    title,
+    description,
+    vision,
   ]);
 
   useEffect(
@@ -230,18 +253,8 @@ export default function IdeationForm() {
         clearTimeout(saveTimeout);
       }
     },
-    [saveTimeout],
+    [saveTimeout]
   );
-
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  }
 
   // ------------------------------------------------------------------------------
 
@@ -272,7 +285,6 @@ export default function IdeationForm() {
           label="title"
           placeholder="Enter your voyage project idea"
           {...register("title")}
-          onChange={handleChange}
           errorMessage={errors.title?.message}
           maxLength={50}
           defaultValue={ideationData?.title ?? ""}
@@ -282,7 +294,6 @@ export default function IdeationForm() {
           label="description"
           placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
           {...register("description")}
-          onChange={handleChange}
           errorMessage={errors.description?.message}
           defaultValue={ideationData?.description ?? ""}
         />
@@ -291,7 +302,6 @@ export default function IdeationForm() {
           label="vision statement"
           placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
           {...register("vision")}
-          onChange={handleChange}
           errorMessage={errors.vision?.message}
           defaultValue={ideationData?.vision ?? ""}
         />
@@ -312,7 +322,9 @@ export default function IdeationForm() {
           <Button
             type="submit"
             title="submit"
-            disabled={!isValid || editIdeationLoading || addIdeationLoading}
+            disabled={
+              !isDirty || !isValid || editIdeationLoading || addIdeationLoading
+            }
             size="lg"
             variant="primary"
             className={`${editMode ? "w-1/2" : "w-full"}`}
