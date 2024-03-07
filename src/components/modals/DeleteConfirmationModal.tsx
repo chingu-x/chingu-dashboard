@@ -73,7 +73,9 @@ export default function DeleteConfirmationModal() {
 
   return (
     <Modal isOpen={isModalOpen} title={title!} onClose={handleClose}>
-      <div className="mb-10 text-base-300">{message}</div>
+      <div className="mb-10 text-base text-base-300 font-medium ">
+        {message}
+      </div>
       <div className="flex gap-x-10 mt-10">
         <Button
           size="lg"
