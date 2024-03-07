@@ -9,13 +9,13 @@ import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function GettingHelpModal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
+  const { isOpen, type } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "gettingHelp";
 
   const handleClose = useCallback(() => {
-    dispatch(onCloseModal({}));
+    dispatch(onCloseModal());
   }, [dispatch]);
 
   return (

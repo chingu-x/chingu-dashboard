@@ -73,7 +73,7 @@ export default function IdeationForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, isValid, dirtyFields },
+    formState: { errors, isValid, dirtyFields },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
@@ -146,7 +146,7 @@ export default function IdeationForm() {
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
@@ -168,7 +168,7 @@ export default function IdeationForm() {
     () => () => {
       void persistor.purge();
     },
-    [],
+    []
   );
 
   // This block is responsible for auto-save functionality. Right now nextjs does

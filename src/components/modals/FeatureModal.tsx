@@ -29,9 +29,7 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function FeatureModal() {
   const dispatch = useAppDispatch();
-  const { isOpen, type, isEditing } = useAppSelector(
-    (state) => state.modal.baseModal,
-  );
+  const { isOpen, type, isEditing } = useAppSelector((state) => state.modal);
   const [deleteAlertIsVisible, setDeleteAlertIsVisible] = useState(false);
 
   const isModalOpen = isOpen && type === "feature";
@@ -56,7 +54,7 @@ export default function FeatureModal() {
   const handleClose = useCallback(() => {
     reset({ feature: "" });
     setDeleteAlertIsVisible(false);
-    dispatch(onCloseModal({ type: "feature" }));
+    dispatch(onCloseModal());
   }, [dispatch, reset]);
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
@@ -78,7 +76,7 @@ export default function FeatureModal() {
     // TODO: temp
     handleClose();
     dispatch(
-      onOpen({ context: "warning", message: "Your feature has been deleted" }),
+      onOpen({ context: "warning", message: "Your feature has been deleted" })
     );
   };
 

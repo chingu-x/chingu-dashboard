@@ -13,9 +13,9 @@ import { deleteIdeation } from "@/app/(main)/my-voyage/[teamId]/ideation/ideatio
 import routePaths from "@/utils/routePaths";
 
 export default function DeleteConfirmationModal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
-  const { title, message, confirmationText, cancelText } = useAppSelector(
-    (state) => state.modal.confirmationModal
+  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { title, message, confirmationText } = useAppSelector(
+    (state) => state.modal.content
   );
   const dispatch = useAppDispatch();
   const params = useParams<{ teamId: string; ideationId: string }>();
@@ -30,12 +30,16 @@ export default function DeleteConfirmationModal() {
 
   const isModalOpen = isOpen && type === "confirmation";
 
-  const handleClose = useCallback(async () => {
-    // dispatch(onCloseModal({ type: "confirmation" }));
+  const handleClose = () => {
+    dispatch(onCloseModal());
+    handleDelete;
+  };
+
+  const handleDelete = useCallback(async () => {
     const ideationId = +params.ideationId;
     const [res, error] = await deleteIdeationAction({ teamId, ideationId });
     if (res) {
-      dispatch(onCloseModal({ type: "confirmation" }));
+      dispatch(onCloseModal());
       router.push(routePaths.ideationPage(teamId.toString()));
     }
     if (error) {
@@ -67,7 +71,7 @@ export default function DeleteConfirmationModal() {
   }
 
   return (
-    <Modal isOpen={isModalOpen} title={title} onClose={handleClose}>
+    <Modal isOpen={isModalOpen} title={title!} onClose={handleClose}>
       <div className="">{message}</div>
       <div className="">
         <Button
@@ -75,7 +79,7 @@ export default function DeleteConfirmationModal() {
           variant="neutral"
           type="button"
           disabled={deleteIdeationLoading}
-          onClick={handleClose}
+          onClick={handleDelete}
         >
           {renderDeleteButtonContent()}
         </Button>

@@ -13,13 +13,13 @@ import { onCloseModal } from "@/store/features/modal/modalSlice";
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 export default function CheckInSuccessModal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
+  const { isOpen, type } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "checkInSuccess";
 
   const handleClose = useCallback(() => {
-    dispatch(onCloseModal({ type: "checkInSuccess" }));
+    dispatch(onCloseModal());
   }, [dispatch]);
 
   return (
