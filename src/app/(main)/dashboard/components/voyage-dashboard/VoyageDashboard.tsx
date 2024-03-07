@@ -4,6 +4,9 @@ import React from "react";
 import DashboardWidget from "./DashboardWidget";
 import CheckInWidget from "./CheckInWidget";
 import CalendarWidget from "./CalendarWidget";
+import IdeationStateContent from "./IdeationStateContent";
+import { CHECKIN_STATUS } from "./mocks/voyageDashboardData";
+import FeaturesStateContent from "./FeaturesStateContent";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 
 function VoyageDashboard() {
@@ -11,7 +14,7 @@ function VoyageDashboard() {
     <div className="flex flex-row gap-x-6">
       <div className="flex flex-col gap-y-6 flex-grow-2 w-full">
         <CalendarWidget />
-        <CheckInWidget status="Due today" />
+        <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />
       </div>
       <div className="flex flex-grow-1 flex-col w-max-[650px] w-full bg-base-200 rounded-2xl p-4">
@@ -29,7 +32,9 @@ function VoyageDashboard() {
             description="Share your ideas on what the team Voyage should be. Describe your
             vision to capture what it does and the benefit it will bring to
             users."
-          />
+          >
+            <IdeationStateContent />
+          </DashboardWidget>
           <div className="flex flex-row justify-between gap-x-4">
             <div className="flex flex-grow-1 w-full">
               <DashboardWidget
@@ -38,7 +43,9 @@ function VoyageDashboard() {
                 linkTitle="Features"
                 buttonTitle="Go to Features"
                 description="Brainstorm and prioritize the features that will be included in the scope of your project. "
-              />
+              >
+                <FeaturesStateContent />
+              </DashboardWidget>
             </div>
             <div className="flex flex-grow-1 w-full">
               <DashboardWidget
