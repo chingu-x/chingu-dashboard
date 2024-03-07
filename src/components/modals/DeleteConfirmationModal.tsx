@@ -80,7 +80,7 @@ export default function DeleteConfirmationModal() {
           variant="neutral"
           type="button"
           onClick={handleClose}
-          className="w-full"
+          className="w-1/2"
         >
           Keep It
         </Button>
@@ -90,7 +90,7 @@ export default function DeleteConfirmationModal() {
           type="button"
           disabled={deleteIdeationLoading}
           onClick={handleDelete}
-          className="w-full"
+          className="w-1/2"
         >
           {renderDeleteButtonContent()}
         </Button>
