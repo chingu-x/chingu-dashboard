@@ -106,7 +106,7 @@ export default function IdeationForm() {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
         setEditIdeationLoading(false);
       }
@@ -121,7 +121,7 @@ export default function IdeationForm() {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
         setAddIdeationLoading(false);
       }
@@ -139,14 +139,14 @@ export default function IdeationForm() {
           confirmationText: "Delete Project",
           cancelText: "Keep It",
         },
-      })
+      }),
     );
   }
 
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId
+        (project) => project.id === +params.ideationId,
       );
 
       setIdeationData(ideation);
@@ -168,7 +168,7 @@ export default function IdeationForm() {
     () => () => {
       void persistor.purge();
     },
-    []
+    [],
   );
 
   // This block is responsible for auto-save functionality. Right now nextjs does
@@ -204,7 +204,7 @@ export default function IdeationForm() {
           onOpenModal({
             type: "error",
             content: { message: error.message },
-          })
+          }),
         );
         setEditIdeationLoading(false);
       }
@@ -229,11 +229,11 @@ export default function IdeationForm() {
         clearTimeout(saveTimeout);
       }
     },
-    [saveTimeout]
+    [saveTimeout],
   );
 
   function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
     const { name, value } = e.target;
     setFormData((prevData) => ({
