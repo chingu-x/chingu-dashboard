@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import TeamDirectory from "./components/TeamDirectory";
+import DirectoryComponentWrapper from "./components/DirectoryComponentWrapper";
 import Spinner from "@/components/Spinner";
 
 interface DirectoryPageProps {
@@ -12,7 +12,7 @@ export default function DirectoryPage({ params }: DirectoryPageProps) {
   return (
     <>
       <Suspense fallback={<Spinner />}>
-        <TeamDirectory params={params} />
+        <DirectoryComponentWrapper params={params} />
       </Suspense>
     </>
   );

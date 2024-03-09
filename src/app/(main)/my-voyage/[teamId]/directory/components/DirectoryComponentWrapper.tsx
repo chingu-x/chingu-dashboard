@@ -1,6 +1,34 @@
+import { redirect } from "next/navigation";
 import TeamCardsContainer from "./TeamCardsContainer";
 import TeamTable from "./TeamTable";
+import { TeamDirectory } from "@/store/features/directory/directorySlice";
 import Banner from "@/components/banner/Banner";
+import { getAccessToken } from "@/utils/getCookie";
+import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { GET } from "@/utils/requests";
+import { CacheTag } from "@/utils/cacheTag";
+import { VoyageTeamMember } from "@/store/features/user/userSlice";
+import { getUser } from "@/utils/getUser";
+
+interface FetchTeamDirectoryProps {
+  teamId: number;
+}
+
+export async function fetchTeamDirectory({
+  teamId,
+}: FetchTeamDirectoryProps): Promise<AsyncActionResponse<TeamDirectory>> {
+  const token = getAccessToken();
+
+  const fetchTeamDirectoryAsync = () =>
+    GET<TeamDirectory>(
+      `api/v1/teams/${teamId}`,
+      token,
+      "force-cache",
+      CacheTag.directory
+    );
+
+  return await handleAsync(fetchTeamDirectoryAsync);
+}
 
 interface TeamDirectoryProps {
   params: {
@@ -8,8 +36,10 @@ interface TeamDirectoryProps {
   };
 }
 
-export default function TeamDirectory({ params }: TeamDirectoryProps) {
-  const teamDirectory: IdeationData[] = [];
+export default async function DirectoryComponentWrapper({
+  params,
+}: TeamDirectoryProps) {
+  let teamDirectory: TeamDirectory;
   let currentVoyageTeam: VoyageTeamMember | undefined;
 
   const [user, error] = await getUser();
@@ -27,16 +57,18 @@ export default function TeamDirectory({ params }: TeamDirectoryProps) {
   const teamId = currentVoyageTeam?.voyageTeamId && +params.teamId;
 
   if (teamId) {
-    const [res, error] = await fetchProjectIdeas({ teamId });
+    const [res, error] = await fetchTeamDirectory({ teamId });
 
     if (res) {
-      projectIdeas = res;
+      teamDirectory = res;
     } else {
       return `Error: ${error?.message}`;
     }
   } else {
     redirect("/");
   }
+
+  console.log(teamDirectory);
 
   return (
     <>
