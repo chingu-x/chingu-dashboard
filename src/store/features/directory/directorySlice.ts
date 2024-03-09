@@ -25,7 +25,7 @@ interface VoyageMember {
   timezone: string;
 }
 
-interface TeamDirectory {
+export interface TeamDirectory {
   id: number;
   voyageId: number;
   name: string;
