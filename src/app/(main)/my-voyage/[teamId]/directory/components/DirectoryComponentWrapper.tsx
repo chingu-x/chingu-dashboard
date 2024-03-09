@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import TeamCardsContainer from "./TeamCardsContainer";
 import TeamTable from "./TeamTable";
+import DirectoryProvider from "./DirectoryProvider";
 import { TeamDirectory } from "@/store/features/directory/directorySlice";
 import Banner from "@/components/banner/Banner";
 import { getAccessToken } from "@/utils/getCookie";
@@ -68,8 +69,6 @@ export default async function DirectoryComponentWrapper({
     redirect("/");
   }
 
-  console.log(teamDirectory);
-
   return (
     <>
       <Banner
@@ -79,8 +78,9 @@ export default async function DirectoryComponentWrapper({
         title="Directory"
         description="Behold, your mighty band of teammates! If you want them to plan with precision and prowess, make sure your deets are up to date, or else prepare for some serious spreadsheet confusion!"
       />
+      <DirectoryProvider payload={teamDirectory} />
       {/* For screens > 1920px */}
-      <TeamTable />
+      <TeamTable teamDirectory={teamDirectory} />
       {/* For screens < 1920px */}
       <TeamCardsContainer />
     </>

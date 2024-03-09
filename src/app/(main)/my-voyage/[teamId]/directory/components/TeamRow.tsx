@@ -1,21 +1,23 @@
 import EditCell from "./EditCell";
 import type { TeamMember } from "./fixtures/MyTeam";
+import { VoyageTeam } from "@/store/features/directory/directorySlice";
 
 interface TeamRowProps {
-  teamMember: TeamMember;
-  currentUserId: string;
+  teamMember: VoyageTeam;
 }
 
-export default function TeamRow({ teamMember, currentUserId }: TeamRowProps) {
+export default function TeamRow({ teamMember }: TeamRowProps) {
+  const { firstName, lastName, discordId, timezone } = teamMember.member;
+  const { voyageRole, hrPerSprint } = teamMember;
+
   return (
     <tr className="[&>*]:py-1">
-      <td>{teamMember.name}</td>
-      <td>{teamMember.discordId}</td>
-      <td>
-        <EditCell teamMember={teamMember} currentUserId={currentUserId} />
-      </td>
-      <td>{teamMember.timeZone}</td>
-      <td>{teamMember.position}</td>
+      <td>{firstName + lastName}</td>
+      <td>{discordId}</td>
+      <td>{hrPerSprint}</td>
+      {/* <td><EditCell teamMember={teamMember} /></td> */}
+      <td>{timezone}</td>
+      <td>{voyageRole.name}</td>
     </tr>
   );
 }

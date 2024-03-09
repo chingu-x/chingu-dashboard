@@ -6,7 +6,7 @@ interface VoyageTier {
   name: string;
 }
 
-interface VoyageTeam {
+export interface VoyageTeam {
   id: number;
   member: VoyageMember;
   hrPerSprint: number;
