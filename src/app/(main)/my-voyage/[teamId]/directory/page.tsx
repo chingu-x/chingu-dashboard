@@ -1,17 +1,19 @@
+import { Suspense } from "react";
 import TeamDirectory from "./components/TeamDirectory";
-import Banner from "@/components/banner/Banner";
+import Spinner from "@/components/Spinner";
 
-export default function DirectoryPage() {
+interface DirectoryPageProps {
+  params: {
+    teamId: string;
+  };
+}
+
+export default function DirectoryPage({ params }: DirectoryPageProps) {
   return (
     <>
-      <Banner
-        imageLight="/img/directory_banner_light.png"
-        imageDark="/img/directory_banner_dark.png"
-        alt="directory_banner"
-        title="Directory"
-        description="Behold, your mighty band of teammates! If you want them to plan with precision and prowess, make sure your deets are up to date, or else prepare for some serious spreadsheet confusion!"
-      />
-      <TeamDirectory />
+      <Suspense fallback={<Spinner />}>
+        <TeamDirectory params={params} />
+      </Suspense>
     </>
   );
 }
