@@ -3,10 +3,9 @@ import type { TeamMember } from "./fixtures/MyTeam";
 
 interface TeamCardProps {
   teamMember: TeamMember;
-  currentUserId: string;
 }
 
-export default function TeamCard({ teamMember, currentUserId }: TeamCardProps) {
+export default function TeamCard({ teamMember }: TeamCardProps) {
   return (
     <div className="box-border flex flex-col items-center p-10 bg-secondary-content rounded-2xl">
       <ul className="flex flex-col gap-6 min-w-[400px]">
@@ -20,7 +19,7 @@ export default function TeamCard({ teamMember, currentUserId }: TeamCardProps) {
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Average Hour/Sprint</span>
-          <EditCell teamMember={teamMember} currentUserId={currentUserId} />
+          <EditCell teamMember={teamMember} />
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Timezone</span>

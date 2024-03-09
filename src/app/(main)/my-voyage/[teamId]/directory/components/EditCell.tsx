@@ -4,20 +4,19 @@ import { cn } from "@/lib/utils";
 
 interface EditCellProps {
   teamMember: TeamMember;
-  currentUserId: string;
 }
 
-export default function EditCell({ teamMember, currentUserId }: EditCellProps) {
+export default function EditCell({ teamMember }: EditCellProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-between h-[35px] max-w-[198px] rounded-md pl-4",
-        teamMember.id === currentUserId &&
-          "bg-base-100 hover:cursor-pointer hover:bg-secondary transition",
+        "flex items-center justify-between h-[35px] max-w-[198px] rounded-md pl-4"
+        // teamMember.id === currentUserId &&
+        //   "bg-base-100 hover:cursor-pointer hover:bg-secondary transition"
       )}
     >
       {teamMember.averageHour === 0 ? "Add hours" : teamMember.averageHour}
-      {teamMember.id === currentUserId && (
+      {/* {teamMember.id === currentUserId && (
         <button
           type="button"
           title="edit"
@@ -25,7 +24,7 @@ export default function EditCell({ teamMember, currentUserId }: EditCellProps) {
         >
           <PencilSquareIcon className="w-4 h-4 text-base-300" />
         </button>
-      )}
+      )} */}
     </div>
   );
 }

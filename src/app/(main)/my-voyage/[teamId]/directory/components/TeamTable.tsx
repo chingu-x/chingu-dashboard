@@ -1,10 +1,14 @@
 import TeamRow from "./TeamRow";
 import { teamMembers } from "./fixtures/MyTeam";
+import { TeamDirectory } from "@/store/features/directory/directorySlice";
 
-// Temp:
-const currentUserId = "1";
+interface TeamTableProps {
+  teamDirectory: TeamDirectory;
+}
 
-export default function TeamTable() {
+export default function TeamTable({ teamDirectory }: TeamTableProps) {
+  const { voyageTeamMembers } = teamDirectory;
+
   return (
     <div className="hidden w-full min-[1920px]:block">
       <table className="w-full p-10 border-separate border-none rounded-2xl bg-secondary-content text-base-300">
@@ -20,12 +24,8 @@ export default function TeamTable() {
         </thead>
         <tbody className="text-base font-medium text-base-300">
           {/* rows */}
-          {teamMembers.map((teamMember) => (
-            <TeamRow
-              key={teamMember.id}
-              teamMember={teamMember}
-              currentUserId={currentUserId}
-            />
+          {voyageTeamMembers.map((teamMember) => (
+            <TeamRow key={teamMember.id} teamMember={teamMember} />
           ))}
         </tbody>
       </table>
