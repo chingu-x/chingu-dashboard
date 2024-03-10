@@ -111,6 +111,7 @@ export default function IdeationForm() {
         dispatch(
           onOpenModal({ type: "error", content: { message: error.message } })
         );
+
         setEditIdeationLoading(false);
       }
     } else {
