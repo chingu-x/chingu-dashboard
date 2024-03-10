@@ -5,10 +5,19 @@ import DashboardWidget from "./DashboardWidget";
 import CheckInWidget from "./CheckInWidget";
 import CalendarWidget from "./CalendarWidget";
 import IdeationStateContent from "./IdeationStateContent";
-import { CHECKIN_STATUS } from "./mocks/voyageDashboardData";
+import {
+  CHECKIN_STATUS,
+  getFeaturesData,
+  getIdeationData,
+  getTechStackData,
+} from "./mocks/voyageDashboardData";
 import FeaturesStateContent from "./FeaturesStateContent";
+import TechStackStateContent from "./TechStackStateContent";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 
+const ideationData = null;
+const featureData = null;
+const techStackData = null;
 function VoyageDashboard() {
   return (
     <div className="flex flex-row gap-x-6">
@@ -33,7 +42,9 @@ function VoyageDashboard() {
             vision to capture what it does and the benefit it will bring to
             users."
           >
-            <IdeationStateContent />
+            {ideationData ? (
+              <IdeationStateContent contentObject={ideationData} />
+            ) : null}
           </DashboardWidget>
           <div className="flex flex-row justify-between gap-x-4">
             <div className="flex flex-grow-1 w-full">
@@ -44,7 +55,9 @@ function VoyageDashboard() {
                 buttonTitle="Go to Features"
                 description="Brainstorm and prioritize the features that will be included in the scope of your project. "
               >
-                <FeaturesStateContent />
+                {featureData ? (
+                  <FeaturesStateContent contentObject={featureData} />
+                ) : null}
               </DashboardWidget>
             </div>
             <div className="flex flex-grow-1 w-full">
@@ -54,7 +67,11 @@ function VoyageDashboard() {
                 linkTitle="Tech Stack"
                 buttonTitle="Go to Tech Stack"
                 description="Choose the programming languages, frameworks, and tools that will serve as the foundation of your project."
-              />
+              >
+                {techStackData ? (
+                  <TechStackStateContent contentObject={techStackData} />
+                ) : null}
+              </DashboardWidget>
             </div>
           </div>
           <DashboardWidget

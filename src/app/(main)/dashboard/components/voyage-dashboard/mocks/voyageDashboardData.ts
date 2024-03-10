@@ -1,9 +1,25 @@
+import {
+  ComputerDesktopIcon,
+  SwatchIcon,
+  CodeBracketSquareIcon,
+  ChartPieIcon,
+  CloudIcon,
+  ServerStackIcon,
+} from "@heroicons/react/24/solid";
+import type { ComponentType } from "react";
+
 export const CHECKIN_STATUS = "Due today";
 
 export type IdeationData = {
   title: string;
   topic: string;
   description: string;
+};
+
+export type TechStackData = {
+  title: string;
+  icon: ComponentType;
+  value: string;
 };
 
 export const getIdeationData = (): IdeationData => ({
@@ -31,4 +47,37 @@ export const getFeaturesData = (): string[] => [
   "Estate Listing",
   "Property Search",
   "Items search",
+];
+
+export const getTechStackData = (): TechStackData[] => [
+  {
+    title: "Frontend",
+    icon: ComputerDesktopIcon,
+    value: "React",
+  },
+  {
+    title: "CSS Library",
+    icon: SwatchIcon,
+    value: "TailwindCSS",
+  },
+  {
+    title: "Backend",
+    icon: CodeBracketSquareIcon,
+    value: "NodeJs",
+  },
+  {
+    title: "Project Management",
+    icon: ChartPieIcon,
+    value: "Jira",
+  },
+  {
+    title: "Cloud Provider",
+    icon: CloudIcon,
+    value: "AWS",
+  },
+  {
+    title: "Hosting",
+    icon: ServerStackIcon,
+    value: "Render",
+  },
 ];

@@ -13,7 +13,7 @@ interface CalendarWidgetProps {
 function CalendarWidget({ sprintWeek = 1, eventList }: CalendarWidgetProps) {
   return (
     <div className="w-full h-full bg-base-200 rounded-2xl flex flex-row">
-      <div className="w-max-[500px] min-h-[475px] flex justify-center items-center w-full flex-grow-3">
+      <div className="min-w-[400px] min-h-[475px] flex justify-center items-center w-full flex-grow-3">
         Calendar placeholder
       </div>
       <div className="p-6 flex flex-col justify-between w-full flex-grow-2 border-l">

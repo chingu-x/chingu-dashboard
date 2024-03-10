@@ -31,10 +31,10 @@ function EmptyWidgetContent({
         </Link>
       </div>
       {imageLight && imageDark ? (
-        <div className="w-full">
+        <div className="w-full h-full flex flex-col justify-center">
           <div
             data-hide-on-theme="dark"
-            className="flex h-[140px] w-full relative shrink-0"
+            className="flex h-[160px] w-full relative shrink-0"
           >
             <Image
               src={imageLight}
@@ -46,7 +46,7 @@ function EmptyWidgetContent({
           </div>
           <div
             data-hide-on-theme="light"
-            className="flex h-[140px] w-full relative shrink-0"
+            className="flex h-[160px] w-full relative shrink-0"
           >
             <Image
               src={imageDark}
