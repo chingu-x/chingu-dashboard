@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { AnimatePresence, Variants, motion } from "framer-motion";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import { cn } from "@/lib/utils";
 
 interface ModalProps {
   isOpen: boolean;
@@ -97,7 +98,10 @@ export default function Modal({
           >
             {/* HEADER */}
             <div
-              className={`flex items-center justify-between px-10 py-6 ${headerBackground}`}
+              className={cn(
+                `flex items-center justify-between px-10 pt-10 ${headerBackground}`,
+                headerBackground && "py-6"
+              )}
             >
               <div className="flex items-center gap-x-4">
                 {icon}
