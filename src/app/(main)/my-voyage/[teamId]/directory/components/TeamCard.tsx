@@ -24,18 +24,18 @@ export default function TeamCard({ teamMember }: TeamCardProps) {
           <span>{discordId}</span>
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
-          <span className="font-semibold">Average Hour/Sprint</span>
-          {/* <EditCell teamMember={teamMember} /> */}
-          <EditHours hrPerSprint={hrPerSprint} />
-          {/* {hrPerSprint} */}
-        </li>
-        <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Timezone</span>
           <span>{currentTime}</span>
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Position</span>
           <span>{voyageRole.name}</span>
+        </li>
+        <li className="grid items-center grid-cols-2 gap-6">
+          <span className="font-semibold">Average Hour/Sprint</span>
+          {/* <EditCell teamMember={teamMember} /> */}
+          <EditHours hrPerSprint={hrPerSprint} />
+          {/* {hrPerSprint} */}
         </li>
       </ul>
     </div>
