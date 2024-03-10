@@ -268,10 +268,10 @@ export default function IdeationForm() {
   }
 
   return (
-    <div className="flex flex-col items-center h-[800px] bg-base-200 mt-10 rounded-2xl">
+    <div className="flex flex-col items-center bg-base-200 mt-10 rounded-2xl">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full max-w-[1000px] gap-y-10"
+        className="flex flex-col w-full max-w-[650px] gap-y-4 py-10"
       >
         <div className="flex flex-col gap-y-4">
           <h1 className="text-base-300 text-3xl font-bold mt-10">
