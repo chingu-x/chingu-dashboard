@@ -27,7 +27,7 @@ export default function ErrorModal() {
     >
       <div className="flex flex-col overflow-hidden">
         <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[90px]">
-          <div className="flex flex-col gap-4 text-base text-base-300 font-medium">
+          <div className="flex flex-col gap-4 text-base text-base-300 font-medium max-w-[650px]">
             {content!.message}
           </div>
           <div className="flex flex-col gap-5 pt-8">

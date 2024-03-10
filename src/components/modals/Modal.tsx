@@ -100,7 +100,7 @@ export default function Modal({
             <div
               className={cn(
                 `flex items-center justify-between px-10 pt-10 ${headerBackground}`,
-                headerBackground && "py-6"
+                headerBackground && "py-6",
               )}
             >
               <div className="flex items-center gap-x-4">
