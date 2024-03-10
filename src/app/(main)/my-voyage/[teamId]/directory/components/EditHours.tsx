@@ -3,9 +3,11 @@
 import * as z from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams } from "next/navigation";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { useDirectory, useUser } from "@/store/hooks";
+import { editHours } from "@/app/(main)/my-voyage/[teamId]/directory/directoryService";
 
 interface EditHoursProps {
   hrPerSprint: number;
@@ -22,6 +24,9 @@ const validationSchema = z.object({
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function EditHours({ hrPerSprint }: EditHoursProps) {
+  const params = useParams<{ teamId: string }>();
+  const teamId = +params.teamId;
+
   const {
     register,
     handleSubmit,
@@ -33,7 +38,8 @@ export default function EditHours({ hrPerSprint }: EditHoursProps) {
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    console.log(data);
+    const { avgHours } = data;
+    await editHours({ teamId, hrPerSprint: +avgHours });
   };
 
   return (
