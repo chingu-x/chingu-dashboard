@@ -12,7 +12,7 @@ export default function DropDown({ openState }: { openState?: boolean }) {
   const dispatch = useAppDispatch();
   const allVoyages = useUser().voyageTeamMembers;
   const activeVoyage = allVoyages?.find(
-    (item) => item.voyageTeam.voyage.status.name === "Active"
+    (item) => item.voyageTeam.voyage.status.name === "Active",
   );
   const currentVoyage =
     activeVoyage?.voyageTeam.name ??
@@ -30,7 +30,7 @@ export default function DropDown({ openState }: { openState?: boolean }) {
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
   }
