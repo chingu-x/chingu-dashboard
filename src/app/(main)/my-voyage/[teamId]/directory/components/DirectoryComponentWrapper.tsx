@@ -40,6 +40,15 @@ function updateDirectoryWithCurrentTime(data: TeamDirectory) {
   });
 }
 
+// function moveElementToLast<T>(arr: T[], element: T): T[] {
+//   const index = arr.indexOf(element);
+//   if (index === -1) {
+//     return arr;
+//   }
+//   [arr[index], arr[arr.length - 1]] = [arr[arr.length - 1], arr[index]];
+//   return arr;
+// }
+
 interface TeamDirectoryProps {
   params: {
     teamId: string;

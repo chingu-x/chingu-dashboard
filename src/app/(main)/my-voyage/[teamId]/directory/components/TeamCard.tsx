@@ -1,6 +1,7 @@
 // import EditCell from "./EditCell";
 // import type { TeamMember } from "./fixtures/MyTeam";
 
+import EditHours from "./EditHours";
 import { VoyageTeam } from "@/store/features/directory/directorySlice";
 
 interface TeamCardProps {
@@ -25,6 +26,7 @@ export default function TeamCard({ teamMember }: TeamCardProps) {
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Average Hour/Sprint</span>
           {/* <EditCell teamMember={teamMember} /> */}
+          <EditHours />
           {hrPerSprint}
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
