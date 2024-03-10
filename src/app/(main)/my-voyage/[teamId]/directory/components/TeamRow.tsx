@@ -7,7 +7,7 @@ interface TeamRowProps {
 }
 
 export default function TeamRow({ teamMember }: TeamRowProps) {
-  const { firstName, lastName, discordId, timezone } = teamMember.member;
+  const { firstName, lastName, discordId, currentTime } = teamMember.member;
   const { voyageRole, hrPerSprint } = teamMember;
 
   return (
@@ -16,7 +16,7 @@ export default function TeamRow({ teamMember }: TeamRowProps) {
       <td>{discordId}</td>
       <td>{hrPerSprint}</td>
       {/* <td><EditCell teamMember={teamMember} /></td> */}
-      <td>{timezone}</td>
+      <td>{currentTime}</td>
       <td>{voyageRole.name}</td>
     </tr>
   );

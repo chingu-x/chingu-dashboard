@@ -8,7 +8,7 @@ interface TeamCardProps {
 }
 
 export default function TeamCard({ teamMember }: TeamCardProps) {
-  const { firstName, lastName, discordId, timezone } = teamMember.member;
+  const { firstName, lastName, discordId, currentTime } = teamMember.member;
   const { voyageRole, hrPerSprint } = teamMember;
 
   return (
@@ -29,7 +29,7 @@ export default function TeamCard({ teamMember }: TeamCardProps) {
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Timezone</span>
-          <span>{timezone}</span>
+          <span>{currentTime}</span>
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Position</span>
