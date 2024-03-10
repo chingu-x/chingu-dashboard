@@ -11,7 +11,6 @@ interface DashboardWidgetProps {
   description: string;
   imageLight?: string;
   imageDark?: string;
-  data?: unknown; // TODO: need to update this value when we will have data from the backend
   children?: React.ReactNode;
 }
 function DashboardWidget({
@@ -22,14 +21,10 @@ function DashboardWidget({
   link,
   buttonTitle,
   description,
-  data = {},
   children,
 }: DashboardWidgetProps) {
   const [linkHovered, setLinkHovered] = useState<boolean>(false);
   const [widgetHovered, setWidgetHovered] = useState<boolean>(false);
-
-  const isEmpty = (obj: unknown): boolean =>
-    Object.keys(obj as object).length === 0;
 
   return (
     <div
@@ -58,7 +53,7 @@ function DashboardWidget({
         </Link>
       </div>
 
-      {isEmpty(data) ? (
+      {!children ? (
         <EmptyWidgetContent
           title={title}
           description={description}

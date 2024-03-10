@@ -5,10 +5,6 @@ interface IdeationStateContentProps {
   contentObject?: IdeationData;
 }
 function IdeationStateContent({ contentObject }: IdeationStateContentProps) {
-  if (!contentObject || Object.keys(contentObject).length === 0) {
-    return null;
-  }
-
   return (
     <div className="flex flex-row flex-grow max-h-[255px]">
       <div className="flex flex-col gap-y-4 h-full justify-between">
