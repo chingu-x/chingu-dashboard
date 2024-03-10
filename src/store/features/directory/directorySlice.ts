@@ -23,6 +23,7 @@ interface VoyageMember {
   linkedinId: string | null;
   countryCode: string;
   timezone: string;
+  currentTime: string;
 }
 
 export interface TeamDirectory {
@@ -75,6 +76,7 @@ const initialState: DirectoryState = {
           linkedinId: null,
           countryCode: "",
           timezone: "",
+          currentTime: "",
         },
         hrPerSprint: 0,
         voyageRole: {

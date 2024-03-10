@@ -32,6 +32,14 @@ export async function fetchTeamDirectory({
   return await handleAsync(fetchTeamDirectoryAsync);
 }
 
+function updateDirectoryWithCurrentTime(data: TeamDirectory) {
+  return data.voyageTeamMembers.forEach((teamMember) => {
+    const { timezone } = teamMember.member;
+    const currentTime = getTimezone(timezone);
+    teamMember.member.currentTime = currentTime;
+  });
+}
+
 interface TeamDirectoryProps {
   params: {
     teamId: string;
@@ -62,11 +70,7 @@ export default async function DirectoryComponentWrapper({
     const [res, error] = await fetchTeamDirectory({ teamId });
 
     if (res) {
-      const formattedTimeZone = res.voyageTeamMembers.map((teamMember) =>
-        getTimezone(teamMember.member.timezone)
-      );
-
-      console.log(formattedTimeZone);
+      updateDirectoryWithCurrentTime(res);
 
       teamDirectory = res;
     } else {
