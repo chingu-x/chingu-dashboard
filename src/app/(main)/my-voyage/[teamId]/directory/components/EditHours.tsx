@@ -5,28 +5,17 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { useDirectory } from "@/store/hooks";
+import { useDirectory, useUser } from "@/store/hooks";
 
 interface EditHoursProps {
   hrPerSprint: number;
 }
 
 const validationSchema = z.object({
-  title: validateTextInput({
-    inputName: "Title",
+  avgHours: validateTextInput({
+    inputName: "Average Hour/Sprint",
     required: true,
-    minLen: 10,
-    maxLen: 50,
-  }),
-  description: validateTextInput({
-    inputName: "Description",
-    required: true,
-    minLen: 10,
-  }),
-  vision: validateTextInput({
-    inputName: "Vision statement",
-    required: true,
-    minLen: 10,
+    isHours: true,
   }),
 });
 
@@ -51,10 +40,9 @@ export default function EditHours({ hrPerSprint }: EditHoursProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextInput
         clearInputAction={() => {}}
-        id="hoursPerSprint"
-        label="hoursPerSprint"
-        {...register("hoursPerSprint")}
-        errorMessage={errors.title?.message}
+        id="avgHours"
+        {...register("avgHours")}
+        errorMessage={errors.avgHours?.message}
         onChange={() => {}}
         placeholder={`${hrPerSprint}`}
         defaultValue={`${hrPerSprint}`}
