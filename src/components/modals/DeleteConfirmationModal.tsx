@@ -7,16 +7,14 @@ import Modal from "./Modal";
 import Spinner from "@/components/Spinner";
 import Button from "@/components/Button";
 import { onCloseModal, onOpenModal } from "@/store/features/modal/modalSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector, useModal } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { deleteIdeation } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import routePaths from "@/utils/routePaths";
 
 export default function DeleteConfirmationModal() {
   const { isOpen, type } = useAppSelector((state) => state.modal);
-  const { title, message, confirmationText } = useAppSelector(
-    (state) => state.modal.content,
-  );
+  const { title, message, confirmationText } = useModal().content!;
   const dispatch = useAppDispatch();
   const params = useParams<{ teamId: string; ideationId: string }>();
   const teamId = +params.teamId;
@@ -45,7 +43,7 @@ export default function DeleteConfirmationModal() {
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
+        onOpenModal({ type: "error", content: { message: error.message } })
       );
       setDeleteIdeationLoading(false);
     }
