@@ -10,7 +10,7 @@ interface TeamCardProps {
 
 export default function TeamCard({ teamMember }: TeamCardProps) {
   const { firstName, lastName, discordId, currentTime } = teamMember.member;
-  const { voyageRole, hrPerSprint } = teamMember;
+  const { id, voyageRole, hrPerSprint } = teamMember;
 
   return (
     <div className="box-border flex flex-col items-center p-10 bg-secondary-content rounded-2xl">
@@ -26,8 +26,8 @@ export default function TeamCard({ teamMember }: TeamCardProps) {
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Average Hour/Sprint</span>
           {/* <EditCell teamMember={teamMember} /> */}
-          <EditHours />
-          {hrPerSprint}
+          <EditHours hrPerSprint={hrPerSprint} />
+          {/* {hrPerSprint} */}
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Timezone</span>
