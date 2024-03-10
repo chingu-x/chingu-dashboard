@@ -43,7 +43,7 @@ export default function DeleteConfirmationModal() {
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
+        onOpenModal({ type: "error", content: { message: error.message } })
       );
       setDeleteIdeationLoading(false);
     }
@@ -71,7 +71,7 @@ export default function DeleteConfirmationModal() {
 
   return (
     <Modal isOpen={isModalOpen} title={title!} onClose={handleClose}>
-      <div className="mb-10 text-base text-base-300 font-medium ">
+      <div className="mb-10 text-base text-base-300 font-medium max-w-[650px]">
         {message}
       </div>
       <div className="flex gap-x-10 mt-10">
