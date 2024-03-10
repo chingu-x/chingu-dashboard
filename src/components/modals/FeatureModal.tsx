@@ -15,7 +15,7 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { onOpen } from "@/store/features/toast/toastSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useModal } from "@/store/hooks";
 
 const validationSchema = z.object({
   feature: validateTextInput({
@@ -29,7 +29,7 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function FeatureModal() {
   const dispatch = useAppDispatch();
-  const { isOpen, type, isEditing } = useAppSelector((state) => state.modal);
+  const { isOpen, type, isEditing } = useModal();
   const [deleteAlertIsVisible, setDeleteAlertIsVisible] = useState(false);
 
   const isModalOpen = isOpen && type === "feature";

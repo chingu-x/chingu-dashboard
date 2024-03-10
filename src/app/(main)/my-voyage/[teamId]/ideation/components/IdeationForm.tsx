@@ -10,7 +10,7 @@ import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useIdeation } from "@/store/hooks";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
 import {
@@ -51,7 +51,7 @@ export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
   const teamId = +params.teamId;
-  const { projectIdeas } = useAppSelector((state) => state.ideation);
+  const { projectIdeas } = useIdeation();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
   const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -109,7 +109,7 @@ export default function IdeationForm() {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
+          onOpenModal({ type: "error", content: { message: error.message } })
         );
 
         setEditIdeationLoading(false);
@@ -125,7 +125,7 @@ export default function IdeationForm() {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
+          onOpenModal({ type: "error", content: { message: error.message } })
         );
         setAddIdeationLoading(false);
       }
@@ -143,14 +143,14 @@ export default function IdeationForm() {
           confirmationText: "Delete Project",
           cancelText: "Keep It",
         },
-      }),
+      })
     );
   }
 
   useEffect(() => {
     if (params.ideationId) {
       const ideation = projectIdeas.find(
-        (project) => project.id === +params.ideationId,
+        (project) => project.id === +params.ideationId
       );
 
       setIdeationData(ideation);
@@ -172,7 +172,7 @@ export default function IdeationForm() {
     () => () => {
       void persistor.purge();
     },
-    [],
+    []
   );
 
   // This block is responsible for auto-save functionality. Right now nextjs does
@@ -224,7 +224,7 @@ export default function IdeationForm() {
           onOpenModal({
             type: "error",
             content: { message: error.message },
-          }),
+          })
         );
         setEditIdeationLoading(false);
       }
@@ -254,7 +254,7 @@ export default function IdeationForm() {
         clearTimeout(saveTimeout);
       }
     },
-    [saveTimeout],
+    [saveTimeout]
   );
 
   // ------------------------------------------------------------------------------

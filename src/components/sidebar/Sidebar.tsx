@@ -12,8 +12,7 @@ import {
 import PageButton from "./PageButton";
 import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
-import { useAppSelector } from "@/store/hooks";
-import { RootState } from "@/store/store";
+import { useAuth, useUser } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 
 export enum MainPages {
@@ -78,26 +77,22 @@ export default function Sidebar() {
   const [selectedButton, setSelectedButton] = useState<string>(currentPath);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
-  const { isAuthenticated } = useAppSelector(
-    (state: RootState): { isAuthenticated: boolean } => state.auth,
-  );
-  const { voyageTeamMembers } = useAppSelector(
-    (state: RootState) => state.user,
-  );
+  const { isAuthenticated } = useAuth();
+  const { voyageTeamMembers } = useUser();
 
   const isActive = useMemo(() => {
     if (voyageTeamMembers.length === 0) {
       return false;
     }
     return voyageTeamMembers.some(
-      (member) => member.voyageTeam.voyage.status.name === "Active",
+      (member) => member.voyageTeam.voyage.status.name === "Active"
     );
   }, [voyageTeamMembers]);
 
   const isVoyageStarted: boolean = isAuthenticated && isActive;
 
   const currentVoyageTeam = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+    (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
   );
 
   const teamId = currentVoyageTeam?.voyageTeamId.toString();
@@ -141,7 +136,7 @@ export default function Sidebar() {
         setSelectedButton(element.link);
       }
     },
-    [setSelectedButton, setIsOpenSidebar],
+    [setSelectedButton, setIsOpenSidebar]
   );
 
   return (
