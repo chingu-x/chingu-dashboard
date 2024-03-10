@@ -10,6 +10,7 @@ import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { VoyageTeamMember } from "@/store/features/user/userSlice";
 import { getUser } from "@/utils/getUser";
+import { getTimezone } from "@/utils/getTimezone";
 
 interface FetchTeamDirectoryProps {
   teamId: number;
@@ -25,7 +26,7 @@ export async function fetchTeamDirectory({
       `api/v1/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.directory,
+      CacheTag.directory
     );
 
   return await handleAsync(fetchTeamDirectoryAsync);
@@ -47,7 +48,7 @@ export default async function DirectoryComponentWrapper({
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
     );
   }
 
@@ -61,6 +62,12 @@ export default async function DirectoryComponentWrapper({
     const [res, error] = await fetchTeamDirectory({ teamId });
 
     if (res) {
+      const formattedTimeZone = res.voyageTeamMembers.map((teamMember) =>
+        getTimezone(teamMember.member.timezone)
+      );
+
+      console.log(formattedTimeZone);
+
       teamDirectory = res;
     } else {
       return `Error: ${error?.message}`;
@@ -82,7 +89,7 @@ export default async function DirectoryComponentWrapper({
       {/* For screens > 1920px */}
       <TeamTable teamDirectory={teamDirectory} />
       {/* For screens < 1920px */}
-      <TeamCardsContainer />
+      <TeamCardsContainer teamDirectory={teamDirectory} />
     </>
   );
 }

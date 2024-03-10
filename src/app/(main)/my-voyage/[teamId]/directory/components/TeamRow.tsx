@@ -1,5 +1,5 @@
-import EditCell from "./EditCell";
-import type { TeamMember } from "./fixtures/MyTeam";
+// import EditCell from "./EditCell";
+// import type { TeamMember } from "./fixtures/MyTeam";
 import { VoyageTeam } from "@/store/features/directory/directorySlice";
 
 interface TeamRowProps {
@@ -12,7 +12,7 @@ export default function TeamRow({ teamMember }: TeamRowProps) {
 
   return (
     <tr className="[&>*]:py-1">
-      <td>{firstName + lastName}</td>
+      <td>{firstName + " " + lastName}</td>
       <td>{discordId}</td>
       <td>{hrPerSprint}</td>
       {/* <td><EditCell teamMember={teamMember} /></td> */}

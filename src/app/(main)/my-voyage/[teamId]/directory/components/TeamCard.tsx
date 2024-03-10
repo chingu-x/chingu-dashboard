@@ -1,33 +1,39 @@
-import EditCell from "./EditCell";
-import type { TeamMember } from "./fixtures/MyTeam";
+// import EditCell from "./EditCell";
+// import type { TeamMember } from "./fixtures/MyTeam";
+
+import { VoyageTeam } from "@/store/features/directory/directorySlice";
 
 interface TeamCardProps {
-  teamMember: TeamMember;
+  teamMember: VoyageTeam;
 }
 
 export default function TeamCard({ teamMember }: TeamCardProps) {
+  const { firstName, lastName, discordId, timezone } = teamMember.member;
+  const { voyageRole, hrPerSprint } = teamMember;
+
   return (
     <div className="box-border flex flex-col items-center p-10 bg-secondary-content rounded-2xl">
       <ul className="flex flex-col gap-6 min-w-[400px]">
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Name</span>
-          <span>{teamMember.name}</span>
+          <span>{firstName + " " + lastName}</span>
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Discord ID</span>
-          <span>{teamMember.discordId}</span>
+          <span>{discordId}</span>
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Average Hour/Sprint</span>
-          <EditCell teamMember={teamMember} />
+          {/* <EditCell teamMember={teamMember} /> */}
+          {hrPerSprint}
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Timezone</span>
-          <span>{teamMember.timeZone}</span>
+          <span>{timezone}</span>
         </li>
         <li className="grid items-center grid-cols-2 gap-6">
           <span className="font-semibold">Position</span>
-          <span>{teamMember.position}</span>
+          <span>{voyageRole.name}</span>
         </li>
       </ul>
     </div>
