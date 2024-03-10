@@ -1,5 +1,5 @@
 import TeamRow from "./TeamRow";
-import { teamMembers } from "./fixtures/MyTeam";
+// import { teamMembers } from "./fixtures/MyTeam";
 import { TeamDirectory } from "@/store/features/directory/directorySlice";
 
 interface TeamTableProps {

@@ -10,7 +10,7 @@ export default function EditCell({ teamMember }: EditCellProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-between h-[35px] max-w-[198px] rounded-md pl-4"
+        "flex items-center justify-between h-[35px] max-w-[198px] rounded-md pl-4",
         // teamMember.id === currentUserId &&
         //   "bg-base-100 hover:cursor-pointer hover:bg-secondary transition"
       )}
