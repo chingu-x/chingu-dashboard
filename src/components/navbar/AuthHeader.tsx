@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { serverSignIn } from "@/app/(auth)/authService";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAuth, useUser } from "@/store/hooks";
 import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
@@ -12,8 +12,8 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 const notificationCount = 4;
 
 export default function AuthHeader() {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
-  const { avatar } = useAppSelector((state) => state.user);
+  const { isAuthenticated } = useAuth();
+  const { avatar } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();

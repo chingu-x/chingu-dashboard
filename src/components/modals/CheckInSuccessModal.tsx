@@ -7,13 +7,13 @@ import checkmarkDark from "@/public/lotties/checkmark_dark.json";
 
 import Modal from "@/components/modals/Modal";
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useModal } from "@/store/hooks";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 export default function CheckInSuccessModal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type } = useModal();
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "checkInSuccess";

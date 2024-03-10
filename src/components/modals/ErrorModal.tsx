@@ -5,11 +5,10 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import Modal from "./Modal";
 import Button from "@/components/Button";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useModal } from "@/store/hooks";
 
 export default function ErrorModal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
-  const { content } = useAppSelector((state) => state.modal);
+  const { isOpen, type, content } = useModal();
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "error";
@@ -29,7 +28,7 @@ export default function ErrorModal() {
       <div className="flex flex-col overflow-hidden">
         <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[90px]">
           <div className="flex flex-col gap-4 text-base text-base-300 font-medium">
-            {content.message}
+            {content!.message}
           </div>
           <div className="flex flex-col gap-5 pt-8">
             <Button

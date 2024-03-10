@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Badge from "@/components/badge/Badge";
 import Button from "@/components/Button";
 import { VoyageMember } from "@/store/features/ideation/ideationSlice";
-import { useAppSelector } from "@/store/hooks";
+import { useUser } from "@/store/hooks";
 import { cn } from "@/lib/utils";
 import routePaths from "@/utils/routePaths";
 
@@ -24,7 +24,7 @@ function ContributionCard({
   projectIdeaId,
 }: ContributionCardProps) {
   const { teamId } = useParams<{ teamId: string }>();
-  const { id } = useAppSelector((state) => state.user);
+  const { id } = useUser();
   const [ownVote, setOwnVote] = useState<boolean>(false);
   const { member } = contributed_by;
 

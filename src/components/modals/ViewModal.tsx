@@ -5,11 +5,11 @@ import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
 
 import { onCloseModal } from "@/store/features/modal/modalSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useModal } from "@/store/hooks";
 
 export default function ViewModal() {
   const dispatch = useAppDispatch();
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type } = useModal();
   const isModalOpen = isOpen && type === "viewResource";
 
   //TODO: replace data with actual data.

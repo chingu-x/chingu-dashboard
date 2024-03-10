@@ -3,14 +3,14 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import DropDownLink from "./DropDownLink";
 import Button from "@/components/Button";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useUser } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 import { serverSignOut } from "@/app/(auth)/authService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 export default function DropDown({ openState }: { openState?: boolean }) {
   const dispatch = useAppDispatch();
-  const allVoyages = useAppSelector((state) => state.user.voyageTeamMembers);
+  const allVoyages = useUser().voyageTeamMembers;
   const activeVoyage = allVoyages?.find(
     (item) => item.voyageTeam.voyage.status.name === "Active"
   );
