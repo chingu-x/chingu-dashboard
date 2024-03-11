@@ -15,7 +15,7 @@ export default function TeamMemberDataItemWrapper({
     <div
       className={cn(
         "w-auto min-w-[500px] 3xl:min-w-0 3xl:min-h-[96px] grid items-center grid-cols-2 3xl:grid-cols-1 pb-6 3xl:pb-0",
-        className
+        className,
       )}
     >
       <h2 className="font-semibold 3xl:hidden">{label}</h2>
