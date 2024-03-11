@@ -268,16 +268,16 @@ export default function IdeationForm() {
   }
 
   return (
-    <div className="flex flex-col items-center bg-base-200 mt-10 rounded-2xl">
+    <div className="flex flex-col items-center w-full p-10 bg-base-200 rounded-2xl">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full max-w-[650px] gap-y-4 py-10"
+        className="flex flex-col gap-y-4 max-w-[650px] w-full"
       >
         <div className="flex flex-col gap-y-4">
-          <h1 className="text-base-300 text-3xl font-bold mt-10">
+          <h1 className="text-3xl font-bold text-base-300">
             {editMode ? "Edit Project" : "Add Project"}
           </h1>
-          <p className="text-base-300 text-lg font-medium">
+          <p className="text-lg font-medium text-base-300">
             Share your project idea with the team.
           </p>
         </div>

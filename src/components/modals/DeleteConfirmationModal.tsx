@@ -43,7 +43,7 @@ export default function DeleteConfirmationModal() {
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
       setDeleteIdeationLoading(false);
     }
