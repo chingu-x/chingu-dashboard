@@ -22,7 +22,7 @@ function EmptyWidgetContent({
   return (
     <div className="flex flex-row flex-grow">
       <div className="flex flex-col gap-y-4 h-full justify-between">
-        <p className="text-xl font-semibold">{title}</p>
+        <p className="text-xl font-semibold mt-3">{title}</p>
         <p className="text-base font-medium">{description}</p>
         <Link href={link}>
           <Button variant="outline" className="text-base font-semibold w-full">

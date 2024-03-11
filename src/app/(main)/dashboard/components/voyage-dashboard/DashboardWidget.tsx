@@ -39,7 +39,7 @@ function DashboardWidget({
       >
         <Link href={link}>
           <p
-            className={`inline-block text-[13px] font-semibold mb-4 hover:text-primary cursor-pointer relative ${
+            className={`inline-block text-[13px] font-semibold hover:text-primary cursor-pointer relative ${
               widgetHovered ? "text-base-300" : "text-neutral-focus"
             }`}
           >
