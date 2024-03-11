@@ -21,7 +21,7 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
     <div
       className={cn(
         "flex flex-col items-center p-8 text-base font-medium border border-base-100 3xl:border-none 3xl:grid 3xl:grid-cols-5 text-base-300 bg-base-200 3xl:bg-transparent 3xl:p-0 rounded-2xl 3xl:rounded-none",
-        isCurrentUser && "pt-8 pb-3"
+        isCurrentUser && "pt-8 pb-3",
       )}
     >
       <TeamMemberDataItemWrapper label="Name">

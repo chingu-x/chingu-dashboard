@@ -7,6 +7,8 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";
 import { editHours } from "@/app/(main)/my-voyage/[teamId]/directory/directoryService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import useServerAction from "@/hooks/useServerAction";
+import Spinner from "@/components/Spinner";
 
 interface EditHoursProps {
   hrPerSprint: number;
@@ -28,10 +30,16 @@ export default function EditHours({ hrPerSprint }: EditHoursProps) {
   const dispatch = useAppDispatch();
 
   const {
+    runAction: editHoursAction,
+    isLoading: editHoursLoading,
+    setIsLoading: setEditHoursLoading,
+  } = useServerAction(editHours);
+
+  const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, isValid, dirtyFields },
+    formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
@@ -39,23 +47,27 @@ export default function EditHours({ hrPerSprint }: EditHoursProps) {
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { avgHours } = data;
-    const [, error] = await editHours({ teamId, hrPerSprint: +avgHours });
+    const [, error] = await editHoursAction({ teamId, hrPerSprint: +avgHours });
 
     if (error) {
       dispatch(onOpenModal({ type: "error", content: error.message }));
     }
+
+    setEditHoursLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextInput
-        clearInputAction={() => {}}
+        clearInputAction={() => {
+          reset({ avgHours: hrPerSprint.toString() });
+        }}
         id="avgHours"
         {...register("avgHours")}
         errorMessage={errors.avgHours?.message}
         placeholder={`${hrPerSprint}`}
         defaultValue={`${hrPerSprint}`}
-        submitButtonText="Save"
+        submitButtonText={editHoursLoading ? <Spinner /> : "Save"}
         buttonDisabled={!isDirty || !isValid}
       />
     </form>

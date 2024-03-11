@@ -19,7 +19,7 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   maxLength?: number;
   errorMessage?: string | undefined;
   inputGroupContent?: JSX.Element;
-  submitButtonText?: string;
+  submitButtonText?: string | React.ReactNode;
   buttonDisabled?: boolean;
   clearInputAction?: () => void;
 }
