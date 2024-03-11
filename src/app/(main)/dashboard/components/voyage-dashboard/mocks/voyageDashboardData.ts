@@ -31,7 +31,8 @@ export type ResourcesData = {
 
 export type Event = {
   title: string;
-  link?: string;
+  link: string;
+  date: string;
 };
 
 export const getIdeationData = (): IdeationData => ({
@@ -119,9 +120,11 @@ export const getCalendarData = (): Event[] => [
   {
     title: "Sprint Planning",
     link: "https://www.agileway.it/sprint-planning-meeting/",
+    date: "11:00 AM",
   },
   {
     title: "Sprint Review",
     link: "https://www.nuclino.com/articles/sprint-review#:~:text=A%20sprint%20review%20is%20an,than%20a%20one%2Dsided%20presentation.",
+    date: "3:00 PM",
   },
 ];
