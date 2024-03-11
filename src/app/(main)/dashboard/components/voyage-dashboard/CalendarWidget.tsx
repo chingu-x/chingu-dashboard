@@ -1,14 +1,11 @@
 import React from "react";
 import SprintItem from "./SprintItem";
+import type { Event } from "./mocks/voyageDashboardData";
 import Button from "@/components/Button";
 
-export type Event = {
-  title: string;
-  link: string;
-};
 interface CalendarWidgetProps {
   sprintWeek?: number;
-  eventList?: Event[];
+  eventList?: Event[] | null;
 }
 function CalendarWidget({ sprintWeek = 1, eventList }: CalendarWidgetProps) {
   return (
@@ -24,7 +21,7 @@ function CalendarWidget({ sprintWeek = 1, eventList }: CalendarWidgetProps) {
           </p>
           {eventList?.map((event) => (
             <div key={event.title}>
-              <SprintItem title={event.title} link={event.link} />
+              <SprintItem title={event.title} link={event.link ?? ""} />
             </div>
           ))}
         </div>

@@ -5,27 +5,27 @@ import DashboardWidget from "./DashboardWidget";
 import CheckInWidget from "./CheckInWidget";
 import CalendarWidget from "./CalendarWidget";
 import IdeationStateContent from "./IdeationStateContent";
-import {
-  CHECKIN_STATUS,
-  getFeaturesData,
-  getIdeationData,
-  getResourcesData,
-  getTechStackData,
-} from "./mocks/voyageDashboardData";
+import { CHECKIN_STATUS } from "./mocks/voyageDashboardData";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
+import useVoyageDashboardLogic from "./useVoyageDashboardLogic";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 
-const ideationData = null;
-const featureData = null;
-const techStackData = null;
-const resourceData = getResourcesData();
 function VoyageDashboard() {
+  //NOTE - This is a custom hook that returns mock data based on the filledState
+  const {
+    ideationData,
+    featureData,
+    techStackData,
+    resourceData,
+    calendarData,
+  } = useVoyageDashboardLogic(true);
+
   return (
     <div className="flex flex-row gap-x-6">
       <div className="flex flex-col gap-y-6 flex-grow-2 w-full">
-        <CalendarWidget />
+        <CalendarWidget eventList={calendarData} />
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />
       </div>
