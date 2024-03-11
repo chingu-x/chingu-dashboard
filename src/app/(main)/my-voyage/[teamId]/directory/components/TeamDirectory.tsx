@@ -28,7 +28,7 @@ export default function TeamDirectory() {
             key={teamMember.id}
             className={cn(
               "flex flex-col items-center p-8 text-base font-medium 3xl:grid 3xl:grid-cols-5 text-base-300 bg-secondary-content 3xl:bg-transparent 3xl:p-0 rounded-2xl 3xl:rounded-none",
-              isCurrentUser && "pt-8 pb-3"
+              isCurrentUser && "pt-8 pb-3",
             )}
           >
             <TeamMemberDataItemWrapper label="Name">
