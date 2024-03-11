@@ -55,11 +55,6 @@ export const getFeaturesData = (): string[] => [
   "Estate Listing",
   "Property Search",
   "Items search",
-  "User Registration",
-  "User Login",
-  "Estate Listing",
-  "Property Search",
-  "Items search",
 ];
 
 export const getTechStackData = (): TechStackData[] => [
