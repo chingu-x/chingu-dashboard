@@ -24,7 +24,7 @@ export default function ResourceCard({
       onOpenModal({
         type: "viewResource",
         content: {},
-      })
+      }),
     );
   }
   const openDeleteModal = () => {
