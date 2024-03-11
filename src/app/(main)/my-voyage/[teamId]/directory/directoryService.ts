@@ -41,6 +41,9 @@ export async function editHours({
 
   const [res, error] = await handleAsync(editHoursAsync);
 
+  console.log(res);
+  console.log(error);
+
   if (res) {
     revalidateTag(CacheTag.directory);
   }

@@ -6,8 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { useDirectory, useUser } from "@/store/hooks";
+import { useAppDispatch, useDirectory, useUser } from "@/store/hooks";
 import { editHours } from "@/app/(main)/my-voyage/[teamId]/directory/directoryService";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface EditHoursProps {
   hrPerSprint: number;
@@ -26,6 +27,7 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function EditHours({ hrPerSprint }: EditHoursProps) {
   const params = useParams<{ teamId: string }>();
   const teamId = +params.teamId;
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -39,7 +41,11 @@ export default function EditHours({ hrPerSprint }: EditHoursProps) {
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { avgHours } = data;
-    await editHours({ teamId, hrPerSprint: +avgHours });
+    const [, error] = await editHours({ teamId, hrPerSprint: +avgHours });
+
+    if (error) {
+      dispatch(onOpenModal({ type: "error", content: error.message }));
+    }
   };
 
   return (
@@ -49,10 +55,10 @@ export default function EditHours({ hrPerSprint }: EditHoursProps) {
         id="avgHours"
         {...register("avgHours")}
         errorMessage={errors.avgHours?.message}
-        onChange={() => {}}
         placeholder={`${hrPerSprint}`}
         defaultValue={`${hrPerSprint}`}
         submitButtonText="Save"
+        buttonDisabled={!isDirty || !isValid}
       />
     </form>
   );
