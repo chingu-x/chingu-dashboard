@@ -13,8 +13,8 @@ export default function Layout({ children }: LayoutProps) {
           <ModeToggle />
         </div>
       </Navbar>
-      <main className="flex flex-col items-center flex-1 w-full p-10 overflow-y-auto">
-        <div className="flex flex-col max-w-[1353px] gap-y-9">{children}</div>
+      <main className="flex flex-col items-center w-full p-10 overflow-y-auto">
+        <div className="gap-y-9">{children}</div>
       </main>
     </div>
   );

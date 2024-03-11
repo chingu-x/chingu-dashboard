@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState, useRef, ElementRef } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
@@ -14,6 +14,7 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label?: string;
   placeholder: string;
+  defaultValue?: string;
   suggestion?: string;
   maxLength?: number;
   errorMessage?: string | undefined;
@@ -28,6 +29,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       id,
       label,
       placeholder,
+      defaultValue,
       suggestion,
       maxLength,
       errorMessage,
@@ -40,7 +42,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     },
     ref,
   ) => {
-    const textInputRef = useRef<ElementRef<"input"> | null>(null);
     const [isClearButtonVisible, setIsClearButtonVisible] = useState(false);
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const [showPassword, setShowPassword] = useState(false);
@@ -92,23 +93,17 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             id={id}
             type={showPassword ? "text" : type}
             placeholder={placeholder}
+            defaultValue={defaultValue}
             aria-describedby={`${id}-message`}
             className={cn(
-              "transition border-2 peer w-full outline-none rounded-lg px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-neutral-focus disabled:cursor-not-allowed border-neutral/40 group-hover:border-neutral-focus group-hover:focus-visible:border-neutral/40 focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:group-hover:border-neutral/40",
+              "transition border-2 peer w-full outline-none rounded-lg px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-base-300 disabled:cursor-not-allowed border-neutral/40 group-hover:border-neutral-focus group-hover:focus-visible:border-neutral/40 focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:group-hover:border-neutral/40",
               errorMessage &&
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
               inputGroupContent && "pl-[56px]",
               submitButtonText && "pr-[72px]",
               className,
             )}
-            ref={(e) => {
-              if (typeof ref === "function") {
-                ref(e);
-              } else if (ref) {
-                ref.current = e;
-              }
-              textInputRef.current = e;
-            }}
+            ref={ref}
             {...props}
             onChange={(e) => {
               // call onChange which can be passed as prop

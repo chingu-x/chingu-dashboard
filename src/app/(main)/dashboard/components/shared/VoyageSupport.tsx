@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@/components/Button";
 import { useAppDispatch } from "@/store/hooks";
-import { onOpen } from "@/store/features/modal/modalSlice";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 function VoyageSupport() {
   const dispatch = useAppDispatch();
@@ -14,7 +14,9 @@ function VoyageSupport() {
       <Button
         className="self-center text-base font-semibold"
         variant="outline"
-        onClick={() => dispatch(onOpen({ type: "gettingHelp" }))}
+        onClick={() =>
+          dispatch(onOpenModal({ type: "gettingHelp", content: "" }))
+        }
       >
         Get Help
       </Button>
