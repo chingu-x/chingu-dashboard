@@ -22,6 +22,13 @@ export type TechStackData = {
   value: string;
 };
 
+export type ResourcesData = {
+  title: string;
+  userName: string;
+  resourceUrl: string;
+  userImage?: string;
+};
+
 export const getIdeationData = (): IdeationData => ({
   title: "Real Estate crowdsourcing",
   topic: "Project Idea",
@@ -79,5 +86,26 @@ export const getTechStackData = (): TechStackData[] => [
     title: "Hosting",
     icon: ServerStackIcon,
     value: "Render",
+  },
+];
+
+export const getResourcesData = (): ResourcesData[] => [
+  {
+    title: "What is Agile",
+    userName: "Jonathon Doe",
+    resourceUrl: "https://www.atlassian.com/agile",
+  },
+  {
+    title: "The 5 Best Practices for Writing Clean Code",
+    userName: "Mark Red",
+    resourceUrl:
+      "https://dev.to/favourmark05/writing-clean-code-best-practices-and-principles-3amh",
+  },
+  {
+    title:
+      "The Future of Programming Languages: What to Watch for in the Coming Years",
+    userName: "David Jackson",
+    resourceUrl:
+      "https://www.flowmatters.com/blog/the-future-of-programming-languages-what-to-expect-in-the-next-10-years/",
   },
 ];

@@ -9,15 +9,18 @@ import {
   CHECKIN_STATUS,
   getFeaturesData,
   getIdeationData,
+  getResourcesData,
   getTechStackData,
 } from "./mocks/voyageDashboardData";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
+import ResourcesStateContent from "./ResourcesStateContent";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 
 const ideationData = null;
 const featureData = null;
 const techStackData = null;
+const resourceData = getResourcesData();
 function VoyageDashboard() {
   return (
     <div className="flex flex-row gap-x-6">
@@ -82,7 +85,11 @@ function VoyageDashboard() {
             linkTitle="Resources"
             buttonTitle="Go to Resources"
             description="Share links of helpful resources to your team for the Voyage. Contribute to the collective knowledgebase to empower your team."
-          />
+          >
+            {resourceData ? (
+              <ResourcesStateContent contentObject={resourceData} />
+            ) : null}
+          </DashboardWidget>
         </div>
       </div>
     </div>
