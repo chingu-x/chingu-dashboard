@@ -29,6 +29,11 @@ export type ResourcesData = {
   userImage?: string;
 };
 
+export type Event = {
+  title: string;
+  link?: string;
+};
+
 export const getIdeationData = (): IdeationData => ({
   title: "Real Estate crowdsourcing",
   topic: "Project Idea",
@@ -107,5 +112,16 @@ export const getResourcesData = (): ResourcesData[] => [
     userName: "David Jackson",
     resourceUrl:
       "https://www.flowmatters.com/blog/the-future-of-programming-languages-what-to-expect-in-the-next-10-years/",
+  },
+];
+
+export const getCalendarData = (): Event[] => [
+  {
+    title: "Sprint Planning",
+    link: "https://www.agileway.it/sprint-planning-meeting/",
+  },
+  {
+    title: "Sprint Review",
+    link: "https://www.nuclino.com/articles/sprint-review#:~:text=A%20sprint%20review%20is%20an,than%20a%20one%2Dsided%20presentation.",
   },
 ];
