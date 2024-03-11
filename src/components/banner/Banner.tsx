@@ -19,6 +19,7 @@ function Banner({ imageLight, imageDark, alt, height, width }: BannerProps) {
           src={imageLight}
           alt={alt}
           fill={true}
+          sizes={`${width}`}
           style={{ objectFit: "contain" }}
           priority={true}
         />
@@ -31,6 +32,7 @@ function Banner({ imageLight, imageDark, alt, height, width }: BannerProps) {
           src={imageDark}
           alt={alt}
           fill={true}
+          sizes={`${width}`}
           style={{ objectFit: "contain" }}
           priority={true}
         />

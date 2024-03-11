@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import {
   IdeationData,
   fetchIdeations,
@@ -14,8 +15,10 @@ export interface IdeationProviderProps {
 export default function IdeationProvider({ payload }: IdeationProviderProps) {
   const dispatch = useAppDispatch();
 
-  dispatch(fetchIdeations(payload));
-  dispatch(setProjectIdeasLoadingFalse());
+  useEffect(() => {
+    dispatch(fetchIdeations(payload));
+    dispatch(setProjectIdeasLoadingFalse());
+  }, [dispatch, payload]);
 
   return null;
 }
