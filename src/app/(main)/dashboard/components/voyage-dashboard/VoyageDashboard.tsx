@@ -11,6 +11,7 @@ import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
 import useVoyageDashboardLogic from "./useVoyageDashboardLogic";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
+import { useAppSelector } from "@/store/hooks";
 
 function VoyageDashboard() {
   //NOTE - This is a custom hook that returns mock data based on the filledState
@@ -20,7 +21,7 @@ function VoyageDashboard() {
     techStackData,
     resourceData,
     calendarData,
-  } = useVoyageDashboardLogic(true);
+  } = useVoyageDashboardLogic(false);
 
   return (
     <div className="flex flex-row gap-x-6">
@@ -96,4 +97,13 @@ function VoyageDashboard() {
   );
 }
 
-export default VoyageDashboard;
+function VoyageDashboardWrapper() {
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  if (isAuthenticated) {
+    return <VoyageDashboard />;
+  }
+
+  return null;
+}
+
+export default VoyageDashboardWrapper;
