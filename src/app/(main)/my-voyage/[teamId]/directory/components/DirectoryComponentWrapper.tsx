@@ -25,7 +25,7 @@ export async function fetchTeamDirectory({
       `api/v1/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.directory
+      CacheTag.directory,
     );
 
   return await handleAsync(fetchTeamDirectoryAsync);
@@ -64,7 +64,7 @@ export default async function DirectoryComponentWrapper({
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
     );
   }
 
