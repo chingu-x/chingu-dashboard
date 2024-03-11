@@ -5,17 +5,17 @@ import { useCallback } from "react";
 import Link from "next/link";
 import Modal from "@/components/modals/Modal";
 
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { onClose } from "@/store/features/modal/modalSlice";
 
 export default function GettingHelpModal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal);
+  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "gettingHelp";
 
   const handleClose = useCallback(() => {
-    dispatch(onClose());
+    dispatch(onCloseModal({}));
   }, [dispatch]);
 
   return (

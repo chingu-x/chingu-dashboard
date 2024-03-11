@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import chinguLogo from "@/public/img/chingu_logo.png";
+import routePaths from "@/utils/routePaths";
 
 export default function ChinguMenu() {
   return (
-    <Link href="/">
+    <Link href={routePaths.dashboardPage()}>
       <div className="flex flex-col items-center gap-2 cursor-pointer sm:flex-row">
         <Image
           src={chinguLogo}
