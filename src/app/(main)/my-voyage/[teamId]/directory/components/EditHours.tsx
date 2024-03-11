@@ -1,12 +1,10 @@
-"use client";
-
 import * as z from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { useAppDispatch, useDirectory, useUser } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { editHours } from "@/app/(main)/my-voyage/[teamId]/directory/directoryService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 

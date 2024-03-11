@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
-import TeamCardsContainer from "./TeamCardsContainer";
-import TeamTable from "./TeamTable";
 import DirectoryProvider from "./DirectoryProvider";
+import TeamMember from "./TeamMember";
 import { TeamDirectory } from "@/store/features/directory/directorySlice";
 import Banner from "@/components/banner/Banner";
 import { getAccessToken } from "@/utils/getCookie";
@@ -100,9 +99,20 @@ export default async function DirectoryComponentWrapper({
       />
       <DirectoryProvider payload={teamDirectory} />
       {/* For screens > 1920px */}
-      <TeamTable teamDirectory={teamDirectory} />
-      {/* For screens < 1920px */}
-      <TeamCardsContainer teamDirectory={teamDirectory} />
+      <div className="flex flex-col w-full p-10 pb-4 bg-transparent border border-transparent border-base-100 rounded-2xl 3xl:bg-base-200 text-base-300 gap-y-10 3xl:gap-y-0">
+        {/* header - table only */}
+        <div className="items-center hidden mb-6 text-xl font-semibold text-base-300 3xl:grid 3xl:grid-cols-5">
+          <h2>Name</h2>
+          <h2>Discord ID</h2>
+          <h2>Time Zone</h2>
+          <h2>Position</h2>
+          <h2>Average Hour/Sprint</h2>
+        </div>
+        {/* data */}
+        {teamDirectory.voyageTeamMembers.map((teamMember) => (
+          <TeamMember key={teamMember.id} teamMember={teamMember} />
+        ))}
+      </div>
     </>
   );
 }
