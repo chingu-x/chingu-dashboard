@@ -7,7 +7,7 @@ interface TechStackStateContentProps {
 
 function TechStackStateContent({ contentObject }: TechStackStateContentProps) {
   return (
-    <div className="flex flex-col h-full justify-center">
+    <div className="flex flex-col h-full justify-center mt-4">
       <div className="flex flex-col overflow-auto w-full max-h-[200px] pr-3">
         {contentObject?.map((item) => (
           <div

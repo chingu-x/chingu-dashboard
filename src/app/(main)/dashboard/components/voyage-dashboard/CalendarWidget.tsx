@@ -21,7 +21,11 @@ function CalendarWidget({ sprintWeek = 1, eventList }: CalendarWidgetProps) {
           </p>
           {eventList?.map((event) => (
             <div key={event.title}>
-              <SprintItem title={event.title} link={event.link ?? ""} />
+              <SprintItem
+                title={event.title}
+                link={event.link ?? ""}
+                time={event.date}
+              />
             </div>
           ))}
         </div>
