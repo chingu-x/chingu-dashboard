@@ -14,11 +14,11 @@ export default function TeamMemberDataItemWrapper({
   return (
     <div
       className={cn(
-        "w-auto min-w-[500px] 3xl:min-w-0 grid items-center grid-cols-2 3xl:grid-cols-1 pb-6 3xl:pb-4",
-        className,
+        "w-auto min-w-[500px] 3xl:min-w-0 3xl:min-h-[96px] grid items-center grid-cols-2 3xl:grid-cols-1 pb-6 3xl:pb-0",
+        className
       )}
     >
-      <div className="font-semibold 3xl:hidden">{label}</div>
+      <h2 className="font-semibold 3xl:hidden">{label}</h2>
       <div>{children}</div>
     </div>
   );
