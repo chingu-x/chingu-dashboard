@@ -6,7 +6,7 @@ import ResourceCard from "./ResourceCard";
 import EmptyBanner from "./EmptyBanner";
 import { resources } from "./fixtures/resources";
 import { ResourceData } from "@/store/features/resources/resourcesSlice";
-//const resources = null // temp var for toggling empty banner or resource cards.
+//const resources = null // temp var for toggling empty banner or resource cards based on 'fake data'
 
 interface ResourcesContainerProps {
   data: ResourceData[];
@@ -35,13 +35,26 @@ export default function ResourcesContainer({ data }: ResourcesContainerProps) {
     });
     return voyageResources;
   };
-
   return (
     <>
       <div className="grid grid-cols-[1fr_150px] items-center">
         <ResourceInput />
-        <SortingButton onClick={handleClick} type={byNewest} />
+        {/*TODO: replace 'resources' (fake data) with 'voyageResources'(data)*/}
+        {!resources ? (
+          <SortingButton
+            onClick={handleClick}
+            type={byNewest}
+            isDisabled={true}
+          />
+        ) : (
+          <SortingButton
+            onClick={handleClick}
+            type={byNewest}
+            isDisabled={false}
+          />
+        )}
       </div>
+      {/*TODO: replace 'resources' (fake data) with 'voyageResources'(data)*/}
       {!resources ? (
         <EmptyBanner />
       ) : (
