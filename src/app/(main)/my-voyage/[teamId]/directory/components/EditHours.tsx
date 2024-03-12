@@ -74,6 +74,7 @@ export default function EditHours({
         clearInputAction={handleClearInputAction}
         id="avgHours"
         {...register("avgHours")}
+        className=""
         errorMessage={errors.avgHours?.message}
         placeholder={`${hrPerSprint}`}
         defaultValue={`${hrPerSprint}`}
@@ -87,7 +88,7 @@ export default function EditHours({
       className="flex justify-between border-2 w-full outline-none rounded-lg px-3.5 mt-2 mb-5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-base-300 disabled:cursor-not-allowed border-neutral/40 group-hover:border-neutral-focus group-hover:focus-visible:border-neutral/40 focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:group-hover:border-neutral/40"
       onClick={handleclick}
     >
-      Add Hours
+      {hrPerSprint ? `${hrPerSprint}` : "Add Hours"}
       <PencilSquareIcon className="w-3.5" />
     </Button>
   );
