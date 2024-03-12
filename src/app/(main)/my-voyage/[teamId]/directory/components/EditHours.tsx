@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { SetStateAction } from "react";
+import { SetStateAction, useEffect } from "react";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";
@@ -50,6 +50,7 @@ export default function EditHours({
     register,
     handleSubmit,
     reset,
+    setFocus,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
@@ -72,13 +73,18 @@ export default function EditHours({
     reset({ avgHours: hrPerSprint.toString() });
   }
 
+  useEffect(() => {
+    if (isEditing) {
+      setFocus("avgHours", { shouldSelect: true });
+    }
+  }, [isEditing, setFocus]);
+
   return isEditing ? (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextInput
         clearInputAction={handleClearInputAction}
         id="avgHours"
         {...register("avgHours")}
-        className=""
         errorMessage={errors.avgHours?.message}
         placeholder={`${hrPerSprint}`}
         defaultValue={`${hrPerSprint}`}
