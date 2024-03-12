@@ -2,11 +2,17 @@ import { Suspense } from "react";
 import ResourcesComponentWrapper from "./components/ResourcesComponentWrapper";
 import Spinner from "@/components/Spinner";
 
-export default function ResourcesPage() {
+interface ResourcesPageProps {
+  params: {
+    teamId: string;
+  };
+}
+
+export default function ResourcesPage({ params }: ResourcesPageProps) {
   return (
     <>
       <Suspense fallback={<Spinner />}>
-        <ResourcesComponentWrapper />
+        <ResourcesComponentWrapper params={params} />
       </Suspense>
     </>
   );
