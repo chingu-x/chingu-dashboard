@@ -1,21 +1,23 @@
 import { redirect } from "next/navigation";
 import ResourcesContainer from "./ResourcesContainer";
 import { getUser } from "@/utils/getUser";
+import { ResourceData } from "@/store/features/resources/resourcesSlice";
 import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { handleAsync } from "@/utils/handleAsync";
 import { VoyageTeamMember } from "@/store/features/user/userSlice";
 import Banner from "@/components/banner/Banner";
 
-interface fetchResourcesProps {
+interface FetchResourcesProps {
   teamId: number;
 }
-export async function fetchResources({ teamId }: fetchResourcesProps) {
+
+export async function fetchResources({ teamId }: FetchResourcesProps) {
   const token = getAccessToken();
 
   const fetchResourcesAsync = () =>
-    GET(
+    GET<ResourceData[]>(
       `api/v1/voyages/${teamId}/resources`,
       token,
       "force-cache",
@@ -30,22 +32,12 @@ interface ResourcesComponentWrapperProps {
     teamId: string;
   };
 }
-interface ResourceType {
-  id: number;
-  teamMemberId: number;
-  url: string;
-  title: string;
-  createdAt: Date;
-  updatedAt: Date;
-  addedBy: { member: [Object] };
-}
-interface ResourceArray extends Array<ResourceType> {}
 
 export default async function ResourcesComponentWrapper({
   params,
 }: ResourcesComponentWrapperProps) {
   //TODO define ResourceArray type in Redux Store. See ideation example.
-  let projectResources: ResourceArray = [];
+  let projectResources: ResourceData[] = [];
   let currentVoyageTeam: VoyageTeamMember | undefined;
 
   const [user, error] = await getUser();
@@ -67,7 +59,7 @@ export default async function ResourcesComponentWrapper({
     const [res, error] = await fetchResources({ teamId });
 
     if (res) {
-      projectResources = res as ResourceArray;
+      projectResources = res;
       console.log(res);
     } else {
       return `Error: ${error?.message}`;
