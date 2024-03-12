@@ -61,7 +61,7 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
       </TeamMemberDataItemWrapper>
       <TeamMemberDataItemWrapper label="Average Hour/Sprint" className="pb-0">
         <div
-          className={`max-w-[227px] ${isCurrentUser && "pt-4"}`}
+          className={`max-w-[227px] ${isCurrentUser && "pt-7"}`}
           ref={newRef}
         >
           {isCurrentUser ? (
