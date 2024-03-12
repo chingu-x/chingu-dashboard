@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { SetStateAction } from "react";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";
@@ -15,6 +16,7 @@ import Button from "@/components/Button";
 interface EditHoursProps {
   hrPerSprint: number;
   isEditing: boolean;
+  setIsEditing: (value: SetStateAction<boolean>) => void;
   handleclick: () => void;
 }
 
@@ -31,6 +33,7 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function EditHours({
   hrPerSprint,
   isEditing,
+  setIsEditing,
   handleclick,
 }: EditHoursProps) {
   const params = useParams<{ teamId: string }>();
@@ -62,6 +65,7 @@ export default function EditHours({
     }
 
     setEditHoursLoading(false);
+    setIsEditing(false);
   };
 
   function handleClearInputAction() {
