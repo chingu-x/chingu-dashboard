@@ -5,44 +5,32 @@ import SortingButton from "./SortingButton";
 import ResourceCard from "./ResourceCard";
 import EmptyBanner from "./EmptyBanner";
 import { resources } from "./fixtures/resources";
+import { ResourceData } from "@/store/features/resources/resourcesSlice";
 //const resources = null // temp var for toggling empty banner or resource cards.
 
-//TODO: Tidy up Types in ResourceComponentWrapper and ResourceContainer components.
-//Should come from Redux store. See Ideation for example.
 interface ResourcesContainerProps {
-  data: [
-    {
-      id: number;
-      teamMemberId: number;
-      url: string;
-      title: string;
-      createdAt: Date;
-      updatedAt: Date;
-      addedBy: { member: [Object] };
-    },
-  ];
+  data: ResourceData[];
 }
 
 export default function ResourcesContainer({ data }: ResourcesContainerProps) {
   const [byNewest, setByNewest] = useState(true);
   const [voyageResources, setVoyageResources] = useState(data);
+
   console.log(voyageResources);
+
   const handleClick = () => {
     setByNewest(!byNewest);
     setVoyageResources(sortResources());
   };
+
   const sortResources = () => {
     voyageResources.sort(function (a, b) {
+      const prev = new Date(a.updatedAt);
+      const next = new Date(b.updatedAt);
       if (byNewest) {
-        console.log("by newest true. Sorting by oldest.");
-        console.log("b: ", new Date(b.updatedAt));
-        console.log("a: ", new Date(a.updatedAt));
-        return new Date(b.updatedAt) - new Date(a.updatedAt);
+        return next.getTime() - prev.getTime();
       } else {
-        console.log("Currently showing by oldest. Sorting by newest.");
-        console.log("a: ", new Date(a.updatedAt));
-        console.log("b: ", new Date(b.updatedAt));
-        return new Date(a.updatedAt) - new Date(b.updatedAt);
+        return prev.getTime() - next.getTime();
       }
     });
     return voyageResources;
