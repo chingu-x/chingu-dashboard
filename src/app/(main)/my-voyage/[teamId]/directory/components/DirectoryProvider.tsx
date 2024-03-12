@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import {
   TeamDirectory,
   fetchTeamDirectory,
@@ -13,8 +14,9 @@ export interface DirectoryProviderProps {
 export default function DirectoryProvider({ payload }: DirectoryProviderProps) {
   const dispatch = useAppDispatch();
 
-  dispatch(fetchTeamDirectory(payload));
-  //   dispatch(setProjectIdeasLoadingFalse());
+  useEffect(() => {
+    dispatch(fetchTeamDirectory(payload));
+  }, [dispatch, payload]);
 
   return null;
 }

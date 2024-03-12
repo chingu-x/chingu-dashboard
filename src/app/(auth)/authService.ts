@@ -64,7 +64,7 @@ async function asyncSignIn(): Promise<ServerSignInResponse> {
         }),
         credentials: "include",
         cache: "no-store",
-      }
+      },
     );
 
     if (!res.ok) {
