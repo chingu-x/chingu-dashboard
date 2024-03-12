@@ -7,16 +7,18 @@ import { getAccessToken } from "@/utils/getCookie";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
+import { User, VoyageTeamMember } from "@/store/features/user/userSlice";
 import { getUser } from "@/utils/getUser";
 import { getTimezone } from "@/utils/getTimezone";
 
 interface FetchTeamDirectoryProps {
   teamId: number;
+  user: User | null;
 }
 
 export async function fetchTeamDirectory({
   teamId,
+  user,
 }: FetchTeamDirectoryProps): Promise<AsyncActionResponse<TeamDirectory>> {
   const token = getAccessToken();
 
@@ -25,10 +27,21 @@ export async function fetchTeamDirectory({
       `api/v1/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.directory,
+      CacheTag.directory
     );
 
-  return await handleAsync(fetchTeamDirectoryAsync);
+  const [res, error] = await handleAsync(fetchTeamDirectoryAsync);
+
+  if (res) {
+    updateDirectoryWithCurrentTime(res);
+    const teamMember = res.voyageTeamMembers;
+    const elementToSort = teamMember.find(
+      (element) => element.member.discordId === user?.discordId
+    );
+    moveElementToFirst(teamMember, elementToSort);
+  }
+
+  return [res, error];
 }
 
 function updateDirectoryWithCurrentTime(data: TeamDirectory) {
@@ -39,14 +52,14 @@ function updateDirectoryWithCurrentTime(data: TeamDirectory) {
   });
 }
 
-// function moveElementToLast<T>(arr: T[], element: T): T[] {
-//   const index = arr.indexOf(element);
-//   if (index === -1) {
-//     return arr;
-//   }
-//   [arr[index], arr[arr.length - 1]] = [arr[arr.length - 1], arr[index]];
-//   return arr;
-// }
+function moveElementToFirst<T>(arr: T[], element: T): T[] {
+  const index = arr.indexOf(element);
+  if (index === -1) {
+    return arr;
+  }
+  [arr[index], arr[0]] = [arr[0], arr[index]];
+  return arr;
+}
 
 interface TeamDirectoryProps {
   params: {
@@ -64,7 +77,7 @@ export default async function DirectoryComponentWrapper({
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
     );
   }
 
@@ -75,11 +88,9 @@ export default async function DirectoryComponentWrapper({
   const teamId = currentVoyageTeam?.voyageTeamId && +params.teamId;
 
   if (teamId) {
-    const [res, error] = await fetchTeamDirectory({ teamId });
+    const [res, error] = await fetchTeamDirectory({ teamId, user });
 
     if (res) {
-      updateDirectoryWithCurrentTime(res);
-
       teamDirectory = res;
     } else {
       return `Error: ${error?.message}`;
