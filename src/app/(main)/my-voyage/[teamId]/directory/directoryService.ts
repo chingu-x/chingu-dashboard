@@ -29,8 +29,6 @@ export async function editHours({
 }: EditHoursProps): Promise<AsyncActionResponse<EditHoursResponse>> {
   const token = getAccessToken();
 
-  console.log(hrPerSprint, teamId);
-
   const editHoursAsync = () =>
     PATCH<EditHoursBody, EditHoursResponse>(
       `api/v1/teams/${teamId}/members`,
@@ -40,9 +38,6 @@ export async function editHours({
     );
 
   const [res, error] = await handleAsync(editHoursAsync);
-
-  console.log(res);
-  console.log(error);
 
   if (res) {
     revalidateTag(CacheTag.directory);
