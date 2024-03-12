@@ -23,7 +23,7 @@ export default function FieldMessage({
       <span
         className={cn(
           "flex items-center h-4 gap-1 py-4 text-[13px] font-medium text-base-300",
-          errorMessage && "text-error"
+          errorMessage && "text-error",
         )}
       >
         {errorMessage && (

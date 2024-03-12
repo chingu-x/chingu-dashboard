@@ -68,6 +68,7 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
             <EditHours
               hrPerSprint={hrPerSprint}
               isEditing={isEditing}
+              setIsEditing={setIsEditing}
               handleclick={handleclick}
             />
           ) : (
