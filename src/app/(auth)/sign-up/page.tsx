@@ -1,10 +1,10 @@
-import BannerContainer from "./components/BannerContainer";
 import SignUpContainer from "./components/SignUpContainer";
+import AuthBannerContainer from "@/app/(auth)/components/AuthBannerContainer";
 
 export default function SignInPage() {
   return (
     <div className="flex flex-col xl:flex-row items-center justify-center">
-      <BannerContainer />
+      <AuthBannerContainer />
       <SignUpContainer />
     </div>
   );

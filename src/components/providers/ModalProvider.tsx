@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import GettingHelpModal from "@/components/modals/GettingHelpModal";
 import FeatureModal from "@/components/modals/FeatureModal";
 import ErrorModal from "@/components/modals/ErrorModal";
-import DeleteModal from "@/components/modals/DeleteModal";
+import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import ViewModal from "@/components/modals/ViewModal";
 import CheckInSuccessModal from "@/components/modals/CheckInSuccessModal";
 
@@ -23,7 +23,7 @@ export default function ModalProvider() {
       <FeatureModal />
       <ErrorModal />
       <GettingHelpModal />
-      <DeleteModal />
+      <DeleteConfirmationModal />
       <ViewModal />
       <CheckInSuccessModal />
     </>

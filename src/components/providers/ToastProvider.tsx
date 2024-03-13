@@ -5,14 +5,12 @@ import { AnimatePresence, Variants, motion } from "framer-motion";
 
 import Alert from "@/components/Alert";
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useToast } from "@/store/hooks";
 import { onClose } from "@/store/features/toast/toastSlice";
 
 export default function ToastProvider() {
   const dispatch = useAppDispatch();
-  const { isToastOpen, context, message } = useAppSelector(
-    (state) => state.toast,
-  );
+  const { isToastOpen, context, message } = useToast();
 
   // To make toast disappear after 3 seconds
   useEffect(() => {
