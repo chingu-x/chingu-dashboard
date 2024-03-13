@@ -28,7 +28,7 @@ export interface Sprint {
   number: number;
   startDate: string;
   endDate: string;
-  meetingData: Meeting;
+  // meetingData: Meeting;
 }
 
 interface SprintState {
@@ -51,7 +51,9 @@ export const sprintSlice = createSlice({
     },
     fetchMeeting: (state, action: PayloadAction<Meeting>) => {
       const sprintNumber = action.payload.sprint.number;
-      state.sprints[sprintNumber - 1].meetingData = action.payload;
+      console.log(sprintNumber);
+
+      // state.sprints[sprintNumber - 1].meetingData = action.payload;
       state.loading = true;
     },
     setSprintsLoadingTrue: (state) => {
