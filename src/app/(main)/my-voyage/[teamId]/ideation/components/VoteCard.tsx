@@ -6,7 +6,7 @@ import {
   ProjectIdeaVotes,
   setProjectIdeasLoadingTrue,
 } from "@/store/features/ideation/ideationSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useIdeation, useModal, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
@@ -25,14 +25,13 @@ interface VoteCardProps {
   teamId: number;
 }
 
-// todo: add delete confirmation modal
 function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
     null,
   );
-  const { id } = useAppSelector((state) => state.user);
-  const { loading } = useAppSelector((state) => state.ideation);
-  const { isOpen } = useAppSelector((state) => state.modal.baseModal);
+  const { id } = useUser();
+  const { loading } = useIdeation();
+  const { isOpen } = useModal();
   const dispatch = useAppDispatch();
   const [voteChanged, setVoteChanged] = useState<boolean>(false);
 
@@ -58,7 +57,9 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       });
 
       if (error) {
-        dispatch(onOpenModal({ type: "error", content: error.message }));
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
       }
 
       setVoteChanged(true);
@@ -71,7 +72,9 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       });
 
       if (error) {
-        dispatch(onOpenModal({ type: "error", content: error.message }));
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
       }
 
       setVoteChanged(true);
@@ -123,7 +126,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   }, [id, getVoteUsers]);
 
   return (
-    <div className={cn("w-full bg-primary-content rounded-lg", className)}>
+    <div className={cn("w-full bg-base-100 rounded-lg", className)}>
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-3xl font-semibold text-base-300">{users.length}</h1>
         <h2 className="text-xl font-semibold text-base-300">{`Vote${
