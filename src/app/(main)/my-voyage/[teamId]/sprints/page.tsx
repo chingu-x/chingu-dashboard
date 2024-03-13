@@ -1,3 +1,8 @@
+import { Suspense } from "react";
+
+import SprintsLoaderWrapper from "./components/SprintsLoaderWrapper";
+import Spinner from "@/components/Spinner";
+
 interface SprintsPageProps {
   params: {
     teamId: string;
@@ -5,5 +10,9 @@ interface SprintsPageProps {
 }
 
 export default function SprintsPage({ params }: SprintsPageProps) {
-  return <h1>{params.teamId}</h1>;
+  return (
+    <Suspense fallback={<Spinner />}>
+      <SprintsLoaderWrapper params={params} />
+    </Suspense>
+  );
 }

@@ -34,6 +34,9 @@ const routePaths = {
   sprintsPage(teamId: string) {
     return `/my-voyage/${teamId}/sprints`;
   },
+  sprintPage(teamId: string, sprintNumber: string) {
+    return `/my-voyage/${teamId}/sprints/${sprintNumber}`;
+  },
   submitVoyage(teamId: string) {
     return `/my-voyage/${teamId}/sprints/voyage-submission`;
   },
