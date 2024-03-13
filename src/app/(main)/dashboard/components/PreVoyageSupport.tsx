@@ -14,9 +14,7 @@ function PreVoyageSupport() {
       <Button
         className="self-center"
         variant="outline"
-        onClick={() =>
-          dispatch(onOpenModal({ type: "gettingHelp", content: "" }))
-        }
+        onClick={() => dispatch(onOpenModal({ type: "gettingHelp" }))}
       >
         Get Help
       </Button>
