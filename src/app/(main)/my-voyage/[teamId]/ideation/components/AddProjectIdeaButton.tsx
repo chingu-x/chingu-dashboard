@@ -10,7 +10,7 @@ export default function AddProjectIdeaButton() {
   return (
     <Link href={routePaths.addIdeationPage(teamId)} className="w-full">
       <Button size="lg" className="w-full">
-        Add Project Idea
+        Add Project
       </Button>
     </Link>
   );

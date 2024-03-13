@@ -14,9 +14,7 @@ function VoyageSupport() {
       <Button
         className="self-center text-base font-semibold"
         variant="outline"
-        onClick={() =>
-          dispatch(onOpenModal({ type: "gettingHelp", content: "" }))
-        }
+        onClick={() => dispatch(onOpenModal({ type: "gettingHelp" }))}
       >
         Get Help
       </Button>

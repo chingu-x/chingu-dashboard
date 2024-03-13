@@ -23,17 +23,12 @@ export default function ResourceCard({
     dispatch(
       onOpenModal({
         type: "viewResource",
-        content: "",
+        content: {},
       }),
     );
   }
   const openDeleteModal = () => {
-    dispatch(
-      onOpenModal({
-        type: "deleteResource",
-        content: "",
-      }),
-    );
+    // todo: replace with modal
   };
 
   return (
