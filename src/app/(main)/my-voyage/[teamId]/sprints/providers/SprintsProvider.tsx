@@ -15,12 +15,13 @@ export interface SprintsProviderProps {
   payload: Sprint[];
   teamId: number;
   currentSprintNumber: number;
+  meetingId: number;
 }
 
-export default function IdeationProvider({
+export default function SprintsProvider({
   payload,
   teamId,
-  currentSprintNumber,
+  meetingId,
 }: SprintsProviderProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -29,10 +30,9 @@ export default function IdeationProvider({
     dispatch(fetchSprints(payload));
     dispatch(setSprintsLoadingFalse());
 
-    router.push(
-      routePaths.sprintPage(teamId.toString(), currentSprintNumber.toString()),
-    );
-  }, [dispatch, payload, router, currentSprintNumber, teamId]);
+    // TODO: need to include currentSprintNumber too
+    router.push(routePaths.sprintPage(teamId.toString(), meetingId.toString()));
+  }, [dispatch, payload, router, meetingId, teamId]);
 
   return null;
 }

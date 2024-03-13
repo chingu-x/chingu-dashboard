@@ -4,17 +4,17 @@ import { PURGE } from "redux-persist";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 
 export interface Agenda {
-  id: string;
+  id: number;
   title: string;
   description: string;
   status: boolean;
 }
 
 export interface Meeting {
-  id: number;
-  sprint: {
-    number: number;
-  };
+  // id: number;
+  // sprint: {
+  //   number: number;
+  // };
   title: string;
   dateTime: string;
   meetingLink: string;
@@ -50,9 +50,9 @@ export const sprintSlice = createSlice({
       state.loading = true;
     },
     fetchMeeting: (state, action: PayloadAction<Meeting>) => {
-      const sprintNumber = action.payload.sprint.number;
-      console.log(sprintNumber);
+      console.log(action);
 
+      // const sprintNumber = action.payload.sprint.number;
       // state.sprints[sprintNumber - 1].meetingData = action.payload;
       state.loading = true;
     },
