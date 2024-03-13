@@ -51,6 +51,3 @@ export async function addResource({
 
   return [res, error];
 }
-
-// "oops"
-// `api/v1/voyages/${teamId}/resources`
