@@ -10,6 +10,7 @@ import { CacheTag } from "@/utils/cacheTag";
 import { User, VoyageTeamMember } from "@/store/features/user/userSlice";
 import { getUser } from "@/utils/getUser";
 import { getTimezone } from "@/utils/getTimezone";
+import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 
 interface FetchTeamDirectoryProps {
   teamId: number;
@@ -27,7 +28,7 @@ export async function fetchTeamDirectory({
       `api/v1/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.directory,
+      CacheTag.directory
     );
 
   const [res, error] = await handleAsync(fetchTeamDirectoryAsync);
@@ -36,7 +37,7 @@ export async function fetchTeamDirectory({
     updateDirectoryWithCurrentTime(res);
     const teamMember = res.voyageTeamMembers;
     const elementToSort = teamMember.find(
-      (element) => element.member.discordId === user?.discordId,
+      (element) => element.member.discordId === user?.discordId
     );
     moveElementToFirst(teamMember, elementToSort);
   }
@@ -77,7 +78,7 @@ export default async function DirectoryComponentWrapper({
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
     );
   }
 
@@ -101,13 +102,18 @@ export default async function DirectoryComponentWrapper({
 
   return (
     <>
-      <Banner
-        imageLight="/img/directory_banner_light.png"
-        imageDark="/img/directory_banner_dark.png"
-        alt="directory_banner"
+      <VoyagePageBannerContainer
         title="Directory"
         description="Behold, your mighty band of teammates! If you want them to plan with precision and prowess, make sure your deets are up to date, or else prepare for some serious spreadsheet confusion!"
-      />
+      >
+        <Banner
+          imageLight="/img/directory_banner_light.png"
+          imageDark="/img/directory_banner_dark.png"
+          alt="directory_banner"
+          height="h-[200px]"
+          width="w-[276px]"
+        />
+      </VoyagePageBannerContainer>
       <DirectoryProvider payload={teamDirectory} />
       {/* For screens > 1920px */}
       <div className="flex flex-col w-full p-10 pb-4 bg-transparent border border-transparent border-base-100 rounded-2xl 3xl:bg-base-200 text-base-300 gap-y-10 3xl:gap-y-0">
