@@ -4,30 +4,52 @@ export type ModalType =
   | "feature"
   | "error"
   | "gettingHelp"
+  | "confirmation"
   | "viewResource"
-  | "deleteResource"
   | "checkInSuccess";
 
 interface ModalState {
   type: ModalType | undefined;
   isOpen: boolean;
   isEditing?: boolean;
+  content?: ContentPayload;
 }
 
-interface ModalOpenActionPayload {
-  type: ModalType;
-  content: string;
+export interface BaseModalOpenActionPayload {
+  type: Exclude<ModalType, "error" | "confirmation">;
+  content?: ContentPayload;
   isEditing?: boolean;
 }
 
-interface ModalCloseActionPayload {
-  type?: ModalType;
+export interface ErrorModalOpenActionPayload
+  extends Omit<BaseModalOpenActionPayload, "type"> {
+  type: "error";
+  content: Required<Pick<ContentPayload, "message">>;
 }
+
+export interface ConfirmationModalOpenActionPayload
+  extends Omit<BaseModalOpenActionPayload, "type"> {
+  type: "confirmation";
+  content: Required<ContentPayload>;
+}
+
+export interface ContentPayload {
+  title?: string;
+  message?: string;
+  confirmationText?: string;
+  cancelText?: string;
+}
+
+export type ModalOpenActionPayload =
+  | BaseModalOpenActionPayload
+  | ErrorModalOpenActionPayload
+  | ConfirmationModalOpenActionPayload;
 
 const initialState: ModalState = {
   type: undefined,
   isOpen: false,
   isEditing: false,
+  content: {},
 };
 
 export const modalSlice = createSlice({
@@ -35,15 +57,14 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
+      const { type, isEditing, content } = action.payload;
+
       state.isOpen = true;
-      state.type = action.payload.type;
-      state.isEditing = action.payload.isEditing;
+      state.type = type;
+      state.isEditing = isEditing;
+      state.content = content;
     },
-    onCloseModal: (state, action: PayloadAction<ModalCloseActionPayload>) => {
-      state.type = action.payload.type;
-      state.isOpen = false;
-      state.isEditing = false;
-    },
+    onCloseModal: () => initialState,
   },
 });
 

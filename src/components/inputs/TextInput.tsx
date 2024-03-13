@@ -79,7 +79,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     }
 
     return (
-      <div className="relative w-full pr-2 ml-1">
+      <div className="relative w-full">
         {/* LABEL */}
         {label && <Label htmlFor={id}>{label}</Label>}
         {/* INPUT */}
