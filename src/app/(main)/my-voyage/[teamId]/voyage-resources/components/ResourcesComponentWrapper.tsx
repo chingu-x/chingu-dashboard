@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import ResourcesContainer from "./ResourcesContainer";
+import ResourcesProvider from "./ResourcesProvider";
 import { getUser } from "@/utils/getUser";
 import { ResourceData } from "@/store/features/resources/resourcesSlice";
 import { getAccessToken } from "@/utils/getCookie";
@@ -36,7 +37,6 @@ interface ResourcesComponentWrapperProps {
 export default async function ResourcesComponentWrapper({
   params,
 }: ResourcesComponentWrapperProps) {
-  //TODO define ResourceArray type in Redux Store. See ideation example.
   let projectResources: ResourceData[] = [];
   let currentVoyageTeam: VoyageTeamMember | undefined;
 
@@ -53,14 +53,12 @@ export default async function ResourcesComponentWrapper({
   }
 
   const teamId = currentVoyageTeam?.voyageTeamId && Number(params.teamId);
-  //const teamId = null
 
   if (teamId) {
     const [res, error] = await fetchResources({ teamId });
 
     if (res) {
       projectResources = res;
-      console.log(res);
     } else {
       return `Error: ${error?.message}`;
     }
@@ -77,10 +75,7 @@ export default async function ResourcesComponentWrapper({
         title="Resources"
         description="This resources page is your secret weapon for this voyage! Take a look at what your team is sharing or share your own resources for this voyage. Go ahead and be the first to post a new resource for you and your peers!"
       />
-      {/* 1.create and call Provider to update Redux with resources
-       *  2.pass resources to ResourcesContainer (which is a client component 
-          ... b/c of sorting Btn).
-       */}
+      <ResourcesProvider payload={projectResources} />
       <ResourcesContainer data={projectResources} />
     </>
   );
