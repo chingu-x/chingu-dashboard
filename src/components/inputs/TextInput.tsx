@@ -42,7 +42,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       type = "text",
       ...props
     },
-    ref,
+    ref
   ) => {
     const [isClearButtonVisible, setIsClearButtonVisible] = useState(false);
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
@@ -58,7 +58,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         const currentLength = e.target.value.length;
         if (currentLength > 0) {
           setCurrentSuggestion(
-            `Character length ${currentLength}/${maxLength}`,
+            `Character length ${currentLength}/${maxLength}`
           );
         } else {
           setCurrentSuggestion(suggestion);
@@ -88,7 +88,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         <div
           className={cn(
             "group relative my-2",
-            isClearButtonVisible && "pr-[48px]",
+            isClearButtonVisible && "pr-[48px]"
           )}
         >
           <input
@@ -98,12 +98,12 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             defaultValue={defaultValue}
             aria-describedby={`${id}-message`}
             className={cn(
-              "transition border-2 w-full outline-none rounded-lg px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-base-300 disabled:cursor-not-allowed border-neutral/40 group-hover:border-neutral-focus group-hover:focus-visible:border-neutral/40 focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:group-hover:border-neutral/40",
+              "transition border-2 peer w-full outline-none rounded-lg px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-base-300 disabled:cursor-not-allowed border-neutral/40 group-hover:border-neutral-focus group-hover:focus-visible:border-neutral/40 focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:group-hover:border-neutral/40",
               errorMessage &&
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
               inputGroupContent && "pl-[56px]",
               submitButtonText && "pr-[72px]",
-              className,
+              className
             )}
             ref={ref}
             {...props}
@@ -129,7 +129,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               disabled={buttonDisabled}
               className={cn(
                 "absolute top-1/2 -translate-y-1/2 right-[2px] h-[calc(100%-4px)] rounded-[6.2px]",
-                isClearButtonVisible && "right-[50px]",
+                isClearButtonVisible && "right-[50px]"
               )}
             >
               {submitButtonText}
@@ -167,7 +167,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         />
       </div>
     );
-  },
+  }
 );
 
 TextInput.displayName = "TextInput";
