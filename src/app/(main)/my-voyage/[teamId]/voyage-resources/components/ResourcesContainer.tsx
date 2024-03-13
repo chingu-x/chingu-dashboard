@@ -14,13 +14,14 @@ interface ResourcesContainerProps {
 
 export default function ResourcesContainer({ data }: ResourcesContainerProps) {
   const [byNewest, setByNewest] = useState(true);
+  {
+    /*TODO: replace 'data' with call to Redux store resources slice.*/
+  }
   const [voyageResources, setVoyageResources] = useState(data);
 
-  console.log(voyageResources);
-
   const handleClick = () => {
-    setByNewest(!byNewest);
     setVoyageResources(sortResources());
+    setByNewest(!byNewest);
   };
 
   const sortResources = () => {
@@ -33,13 +34,15 @@ export default function ResourcesContainer({ data }: ResourcesContainerProps) {
         return prev.getTime() - next.getTime();
       }
     });
+
     return voyageResources;
   };
+
   return (
     <>
       <div className="grid grid-cols-[1fr_150px] items-center">
         <ResourceInput />
-        {/*TODO: replace 'resources' (fake data) with 'voyageResources'(data)*/}
+        {/*TODO: replace 'resources' (fake data) with 'voyageResources'*/}
         {!resources ? (
           <SortingButton
             onClick={handleClick}
@@ -54,7 +57,7 @@ export default function ResourcesContainer({ data }: ResourcesContainerProps) {
           />
         )}
       </div>
-      {/*TODO: replace 'resources' (fake data) with 'voyageResources'(data)*/}
+      {/*TODO: replace 'resources' (fake data) with 'voyageResources'*/}
       {!resources ? (
         <EmptyBanner />
       ) : (
