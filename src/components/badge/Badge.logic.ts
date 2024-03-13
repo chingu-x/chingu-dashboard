@@ -16,7 +16,7 @@ export interface BadgeProps
 export const badge = cva("flex items-center justify-center rounded-[100px]", {
   variants: {
     variant: {
-      primary: ["bg-base-100"],
+      primary: ["bg-accent-content"],
       error: ["bg-error-content"],
       warning: ["bg-warning-content"],
       success: ["bg-success-content"],
@@ -40,9 +40,9 @@ export const AVATAR_SIZES = {
 };
 export const useBadgeLogic = (size: Size) => {
   const sizeToH2 = {
-    sm: "text-[13px] font-medium",
-    md: "text-base font-medium",
-    lg: "text-xl font-medium",
+    sm: "text-[13px] font-medium text-base-300",
+    md: "text-base font-medium text-base-300",
+    lg: "text-xl font-medium text-base-300",
   };
 
   const sizeToAvatarDimension = {
