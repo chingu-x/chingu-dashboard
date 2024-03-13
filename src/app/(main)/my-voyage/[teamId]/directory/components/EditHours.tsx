@@ -62,7 +62,9 @@ export default function EditHours({
     const [, error] = await editHoursAction({ teamId, hrPerSprint: +avgHours });
 
     if (error) {
-      dispatch(onOpenModal({ type: "error", content: error.message }));
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } })
+      );
     }
 
     setEditHoursLoading(false);
