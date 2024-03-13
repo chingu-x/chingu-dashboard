@@ -9,6 +9,8 @@ import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { addResource } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
+import useServerAction from "@/hooks/useServerAction";
+import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
   url: validateTextInput({
@@ -16,7 +18,6 @@ const validationSchema = z.object({
     required: true,
     minLen: 1,
     maxLen: 50,
-    //require actual link i.e. "https://" or "http://" check Zod doc and validateInput.ts file
   }),
   title: validateTextInput({
     inputName: "Title",
@@ -34,6 +35,12 @@ export default function ResourceInput() {
   const teamId = Number(params.teamId);
 
   const {
+    runAction: addResourceAction,
+    isLoading: addResourceLoading,
+    setIsLoading: setAddResourceLoading,
+  } = useServerAction(addResource);
+
+  const {
     register,
     handleSubmit,
     formState: { /*errors, isDirty,*/ isValid /*dirtyFields*/ },
@@ -44,13 +51,14 @@ export default function ResourceInput() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const payload = { ...data, teamId };
-    const [res, error] = await addResource(payload);
+    const [res, error] = await addResourceAction(payload);
 
     if (res) {
-      console.log(res);
+      setAddResourceLoading(false);
     }
     if (error) {
       dispatch(onOpenModal({ type: "error", content: error.message }));
+      setAddResourceLoading(false);
     }
   };
 
@@ -72,13 +80,13 @@ export default function ResourceInput() {
           {...register("title")}
         />
       </div>
-      {/* the button will be in disabled state until user puts in a valid url and name */}
       <Button
         className="w-1/4 m-4 whitespace-nowrap"
         type="submit"
         disabled={!isValid}
       >
         Share Resource
+        {addResourceLoading ? <Spinner /> : null}
       </Button>
     </form>
   );
