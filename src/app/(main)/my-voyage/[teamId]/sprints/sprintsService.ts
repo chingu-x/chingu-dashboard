@@ -2,7 +2,7 @@
 
 import { revalidateTag } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
-import { PATCH, POST } from "@/utils/requests";
+import { GET, PATCH, POST } from "@/utils/requests";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 
@@ -19,26 +19,64 @@ interface MeetingBody {
   notes: string;
 }
 
+type FetchSprintsType = Pick<SprintProps, "teamId">;
+type FetchMeetingType = Pick<SprintProps, "meetingId">;
 type AddMeetingType = Omit<SprintProps, "meetingId">;
 type EditMeetingType = Pick<SprintProps, "meetingId">;
 
-interface MeetingResponse {
+interface SprintsResponse {
   id: number;
-  sprintId: number;
+  name: string;
+  voyage: {
+    id: number;
+    number: string;
+    sprints: {
+      id: number;
+      number: number;
+      startDate: string;
+      endDate: string;
+    }[];
+  };
+}
+
+interface MeetingResponse {
   title: string;
   dateTime: string;
   meetingLink: string;
   notes: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 interface AddMeetingBody extends MeetingBody {}
 interface EditMeetingBody extends Partial<AddMeetingBody> {}
 
+export interface FetchSprintsProps extends FetchSprintsType {}
 export interface AddMeetingProps extends AddMeetingType, MeetingBody {}
 export interface EditMeetingProps extends EditMeetingType, EditMeetingBody {}
 
+export interface FetchSprintsResponse extends SprintsResponse {
+  voyage: {
+    id: number;
+    number: string;
+    sprints: {
+      id: number;
+      number: number;
+      startDate: string;
+      endDate: string;
+    }[];
+  };
+}
+export interface FetchMeetingResponse extends MeetingResponse {
+  title: string;
+  dateTime: string;
+  meetingLink: string;
+  notes: string;
+  agendas: {
+    id: number;
+    title: string;
+    description: string;
+    status: boolean;
+  }[];
+}
 export interface AddMeetingResponse extends MeetingResponse {
   title: string;
   dateTime: string;
@@ -46,6 +84,40 @@ export interface AddMeetingResponse extends MeetingResponse {
   notes: string;
 }
 export interface EditMeetingResponse extends AddMeetingResponse {}
+
+export async function fetchSprints({
+  teamId,
+}: FetchSprintsProps): Promise<AsyncActionResponse<FetchSprintsResponse>> {
+  const token = getAccessToken();
+
+  const fetchSprintsAsync = () =>
+    GET<SprintsResponse>(
+      `api/v1/voyages/sprints/teams/${teamId}`,
+      token,
+      "force-cache",
+      CacheTag.sprint,
+    );
+
+  const [res, error] = await handleAsync(fetchSprintsAsync);
+  return [res, error];
+}
+
+export async function fetchMeeting({
+  meetingId,
+}: FetchMeetingType): Promise<AsyncActionResponse<FetchMeetingResponse>> {
+  const token = getAccessToken();
+
+  const fetchMeetingAsync = () =>
+    GET<FetchMeetingResponse>(
+      `api/v1/voyages/sprints/meetings/${meetingId}`,
+      token,
+      "force-cache",
+      CacheTag.sprint,
+    );
+
+  const [res, error] = await handleAsync(fetchMeetingAsync);
+  return [res, error];
+}
 
 export async function addMeeting({
   teamId,
