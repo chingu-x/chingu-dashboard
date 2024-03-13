@@ -57,7 +57,9 @@ export default function ResourceInput() {
       setAddResourceLoading(false);
     }
     if (error) {
-      dispatch(onOpenModal({ type: "error", content: error.message }));
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
       setAddResourceLoading(false);
     }
   };
