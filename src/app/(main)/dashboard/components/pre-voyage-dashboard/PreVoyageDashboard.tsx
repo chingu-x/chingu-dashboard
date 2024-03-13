@@ -4,7 +4,7 @@ import React from "react";
 import PreVoyageLinks from "./PreVoyageLinks";
 import PreVoyageBanner from "./PreVoyageBanner";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
-import { useAppSelector } from "@/store/hooks";
+import { useAuth } from "@/store/hooks";
 
 function PreVoyageDashboard() {
   return (
@@ -32,7 +32,7 @@ function PreVoyageDashboard() {
 }
 
 function PreVoyageDashboardWrapper() {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated } = useAuth();
   if (isAuthenticated) {
     return <PreVoyageDashboard />;
   }
