@@ -16,6 +16,7 @@ export default async function SprintsLoaderWrapper({
 }: SprintsLoaderWrapperProps) {
   let sprintsData: Sprint[] = [];
   let currentSprintNumber: number;
+  let currentMeetingId: number;
   const cookie = getAccessToken();
 
   if (!cookie) {
@@ -26,10 +27,10 @@ export default async function SprintsLoaderWrapper({
   const [res, error] = await fetchSprints({ teamId });
 
   if (res) {
-    console.log(res);
     sprintsData = res.voyage.sprints;
     // TODO: need to add logic to get current sprint number (compare dates)
     currentSprintNumber = 3;
+    currentMeetingId = 3;
   } else {
     return `Error: ${error?.message}`;
   }
@@ -39,6 +40,7 @@ export default async function SprintsLoaderWrapper({
       payload={sprintsData}
       teamId={teamId}
       currentSprintNumber={currentSprintNumber}
+      meetingId={currentMeetingId}
     />
   );
 }
