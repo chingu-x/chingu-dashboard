@@ -1,14 +1,23 @@
 // import VoyageSubmittedMessage from "./components/VoyageSubmittedMessage";
 // import EmptyState from "./components/EmptyState";
-import Agenda from "./components/agenda/Agenda";
-import MeetingOverview from "./components/MeetingOverview";
-import Sections from "./components/sections/Sections";
-import SprintActions from "./components/SprintActions";
-import ProgressStepper from "./components/ProgressStepper";
+// import Agenda from "./components/agenda/Agenda";
+// import MeetingOverview from "./components/MeetingOverview";
+// import Sections from "./components/sections/Sections";
+// import SprintActions from "./components/SprintActions";
+// import ProgressStepper from "./components/ProgressStepper";
 import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 
-export default function SprintsPage() {
+interface SprintsPageProps {
+  params: {
+    teamId: string;
+  };
+}
+
+export default function SprintsPage({ params }: SprintsPageProps) {
+  console.log(params.teamId);
+  //
+
   return (
     <div className="flex flex-col w-full gap-y-10">
       <VoyagePageBannerContainer
@@ -23,13 +32,13 @@ export default function SprintsPage() {
           width="w-[276px]"
         />
       </VoyagePageBannerContainer>
-      <ProgressStepper />
-      <SprintActions />
+      {/* <ProgressStepper /> */}
+      {/* <SprintActions /> */}
       {/* <EmptyState /> */}
-      <MeetingOverview />
-      <Agenda />
+      {/* <MeetingOverview /> */}
+      {/* <Agenda /> */}
       {/* <VoyageSubmittedMessage /> */}
-      <Sections />
+      {/* <Sections /> */}
     </div>
   );
 }

@@ -1,4 +1,11 @@
-export interface Topic {
+export interface Sprint {
+  id: number;
+  number: number;
+  startDate: string;
+  endDate: string;
+}
+
+export interface Agenda {
   id: number;
   title: string;
   description: string;
@@ -7,17 +14,12 @@ export interface Topic {
 
 export interface Meeting {
   id: number;
-  sprint: {
-    id: number;
-    number: number;
-    startDate: string;
-    endDate: string;
-  };
+  sprint: Sprint;
   title: string;
   dateTime: string;
   meetingLink: string;
   notes: string;
-  agendas: Topic[];
+  agendas: Agenda[];
 }
 
 export const meetingInfo: Meeting = {
@@ -65,7 +67,8 @@ export const meetingInfo: Meeting = {
   ],
 };
 
-export const topicsData: Topic[] = [
+// TODO: DELETE
+export const topicsData: Agenda[] = [
   {
     id: 0,
     title: "Milestones for this week",

@@ -6,6 +6,7 @@ import toastReducer from "./features/toast/toastSlice";
 import authReducer from "./features/auth/authSlice";
 import ideationReducer from "./features/ideation/ideationSlice";
 import userReducer from "./features/user/userSlice";
+import sprintReducer from "./features/sprint/sprintSlice";
 
 const createNoopStorage = () => ({
   getItem() {
@@ -27,7 +28,7 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["ideation"],
+  whitelist: ["ideation", "sprint"],
 };
 
 const rootReducer = combineReducers({
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   ideation: ideationReducer,
+  sprint: sprintReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
