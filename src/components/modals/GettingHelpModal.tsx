@@ -6,16 +6,16 @@ import Link from "next/link";
 import Modal from "@/components/modals/Modal";
 
 import { onCloseModal } from "@/store/features/modal/modalSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useModal } from "@/store/hooks";
 
 export default function GettingHelpModal() {
-  const { isOpen, type } = useAppSelector((state) => state.modal.baseModal);
+  const { isOpen, type } = useModal();
   const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "gettingHelp";
 
   const handleClose = useCallback(() => {
-    dispatch(onCloseModal({}));
+    dispatch(onCloseModal());
   }, [dispatch]);
 
   return (

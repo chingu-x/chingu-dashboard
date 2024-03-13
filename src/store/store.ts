@@ -2,7 +2,6 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import modalReducer from "./features/modal/modalSlice";
-import errorModalReducer from "./features/modal/errorModalSlice";
 import toastReducer from "./features/toast/toastSlice";
 import authReducer from "./features/auth/authSlice";
 import ideationReducer from "./features/ideation/ideationSlice";
@@ -31,13 +30,8 @@ const persistConfig = {
   whitelist: ["ideation"],
 };
 
-const modal = combineReducers({
-  baseModal: modalReducer,
-  errorModal: errorModalReducer,
-});
-
 const rootReducer = combineReducers({
-  modal,
+  modal: modalReducer,
   toast: toastReducer,
   auth: authReducer,
   user: userReducer,
