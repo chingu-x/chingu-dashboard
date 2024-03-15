@@ -1,52 +1,60 @@
+import { addWeeks, subWeeks } from "date-fns";
+
+export interface TeamMeating {
+  meetingId: number;
+}
+
 export interface Sprint {
   id: number;
   number: number;
   startDate: string;
   endDate: string;
-  teamMeetings: { meetingId: number }[];
+  teamMeetings: TeamMeating[];
 }
 
-export const sprints: Sprint[] = [
+const currentDateTime = new Date();
+
+export const mockSprintsData: Sprint[] = [
   {
     id: 1,
     number: 1,
-    startDate: "2023-11-06T00:00:00.000Z",
-    endDate: "2023-11-12T00:00:00.000Z",
+    startDate: `${subWeeks(currentDateTime, 1).toISOString()}`,
+    endDate: `${subWeeks(currentDateTime, 3).toISOString()}`,
     teamMeetings: [{ meetingId: 1 }],
   },
   {
     id: 2,
     number: 2,
-    startDate: "2023-11-13T00:00:00.000Z",
-    endDate: "2023-11-19T00:00:00.000Z",
+    startDate: `${subWeeks(currentDateTime, 2).toISOString()}`,
+    endDate: `${subWeeks(currentDateTime, 1).toISOString()}`,
     teamMeetings: [{ meetingId: 2 }],
   },
   {
     id: 3,
     number: 3,
-    startDate: "2023-11-20T00:00:00.000Z",
-    endDate: "2023-11-26T00:00:00.000Z",
+    startDate: `${currentDateTime.toISOString()}`,
+    endDate: `${addWeeks(currentDateTime, 1).toISOString()}`,
     teamMeetings: [{ meetingId: 3 }],
   },
   {
     id: 4,
     number: 4,
-    startDate: "2023-11-27T00:00:00.000Z",
-    endDate: "2023-12-03T00:00:00.000Z",
+    startDate: `${addWeeks(currentDateTime, 2).toISOString()}`,
+    endDate: `${addWeeks(currentDateTime, 3).toISOString()}`,
     teamMeetings: [{ meetingId: 4 }],
   },
   {
     id: 5,
     number: 5,
-    startDate: "2023-12-04T00:00:00.000Z",
-    endDate: "2023-12-10T00:00:00.000Z",
+    startDate: `${addWeeks(currentDateTime, 4).toISOString()}`,
+    endDate: `${addWeeks(currentDateTime, 5).toISOString()}`,
     teamMeetings: [{ meetingId: 5 }],
   },
   {
     id: 6,
     number: 6,
-    startDate: "2023-12-11T00:00:00.000Z",
-    endDate: "2023-12-17T00:00:00.000Z",
+    startDate: `${addWeeks(currentDateTime, 42).toISOString()}`,
+    endDate: `${addWeeks(currentDateTime, 49).toISOString()}`,
     teamMeetings: [{ meetingId: 6 }],
   },
 ];
