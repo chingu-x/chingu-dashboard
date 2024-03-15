@@ -28,7 +28,7 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["ideation", "sprint"],
+  whitelist: ["ideation"],
 };
 
 const rootReducer = combineReducers({
