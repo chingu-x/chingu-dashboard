@@ -4,6 +4,7 @@ import SprintComponentWrapper from "@/sprints/components/SprintComponentWrapper"
 
 interface SprintPageProps {
   params: {
+    teamId: string;
     meetingId: string;
   };
 }
