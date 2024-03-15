@@ -1,7 +1,7 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
-import { PURGE } from "redux-persist";
-import { clientSignOut } from "@/store/features/auth/authSlice";
+// import storage from "redux-persist/lib/storage";
+// import { PURGE } from "redux-persist";
+// import { clientSignOut } from "@/store/features/auth/authSlice";
 
 export interface Agenda {
   id: number;
@@ -11,10 +11,11 @@ export interface Agenda {
 }
 
 export interface Meeting {
-  // id: number;
-  // sprint: {
-  //   number: number;
-  // };
+  id: number;
+  sprint: {
+    id: number;
+    number: number;
+  };
   title: string;
   dateTime: string;
   meetingLink: string;
@@ -28,17 +29,19 @@ export interface Sprint {
   number: number;
   startDate: string;
   endDate: string;
-  // meetingData: Meeting;
+  meetingData: Meeting | Pick<Meeting, "id">;
 }
 
 interface SprintState {
   loading: boolean;
   sprints: Sprint[];
+  currentSprintNumber: number;
 }
 
 const initialState: SprintState = {
   loading: false,
   sprints: [],
+  currentSprintNumber: 1,
 };
 
 export const sprintSlice = createSlice({
@@ -46,15 +49,28 @@ export const sprintSlice = createSlice({
   initialState,
   reducers: {
     fetchSprints: (state, action: PayloadAction<Sprint[]>) => {
+      console.log("fetch sprints");
+      console.log(action.payload);
+
       state.sprints = action.payload;
       state.loading = true;
     },
     fetchMeeting: (state, action: PayloadAction<Meeting>) => {
-      console.log(action);
+      console.log("fetch meeting");
+      console.log(action.payload);
 
-      // const sprintNumber = action.payload.sprint.number;
-      // state.sprints[sprintNumber - 1].meetingData = action.payload;
+      const sprintId = action.payload.sprint.id;
+
+      state.sprints[sprintId].meetingData = action.payload;
       state.loading = true;
+    },
+    setCurrentSprintNumber: (
+      state,
+      action: PayloadAction<{ currentSprintNumber: number }>
+    ) => {
+      console.log("set current sprint number");
+      console.log(action.payload);
+      state.currentSprintNumber = action.payload.currentSprintNumber;
     },
     setSprintsLoadingTrue: (state) => {
       state.loading = true;
@@ -63,17 +79,18 @@ export const sprintSlice = createSlice({
       state.loading = false;
     },
   },
-  extraReducers(builder) {
-    builder.addCase(PURGE, () => {
-      void storage.removeItem("persist:root");
-    });
-    builder.addCase(clientSignOut, () => initialState);
-  },
+  // extraReducers(builder) {
+  //   builder.addCase(PURGE, () => {
+  //     void storage.removeItem("persist:root");
+  //   });
+  //   builder.addCase(clientSignOut, () => initialState);
+  // },
 });
 
 export const {
   fetchSprints,
   fetchMeeting,
+  setCurrentSprintNumber,
   setSprintsLoadingTrue,
   setSprintsLoadingFalse,
 } = sprintSlice.actions;
