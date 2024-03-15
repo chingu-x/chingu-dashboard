@@ -6706,6 +6706,7 @@ __metadata:
     autoprefixer: "npm:10.4.14"
     class-variance-authority: "npm:^0.7.0"
     cypress: "npm:^12.17.3"
+    date-fns: "npm:^3.5.0"
     eslint: "npm:8.46.0"
     eslint-config-next: "npm:^14.0.3"
     eslint-config-prettier: "npm:^8.10.0"
@@ -7484,6 +7485,13 @@ __metadata:
   version: 3.3.1
   resolution: "date-fns@npm:3.3.1"
   checksum: e04ff79244010e03b912d791cd3250af5f18866ce868604958d76bd87e5fb0b79f0a810b8e7066248452b41779b288c4fd21de1cac2cd4b6d384e9dd931c9674
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "date-fns@npm:3.5.0"
+  checksum: 588866a963af617c46f71d7ae4971d2e88bce67bda39916f03ec6c2807c0344da27c4793d718a9082e7651d37a4c9ffaecc1cc1dee057d6eafcd85535a795a9f
   languageName: node
   linkType: hard
 
