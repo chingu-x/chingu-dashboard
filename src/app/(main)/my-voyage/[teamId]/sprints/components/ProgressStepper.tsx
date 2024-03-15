@@ -1,9 +1,9 @@
 "use client";
 
+import { useParams, useRouter } from "next/navigation";
 import { RocketLaunchIcon } from "@heroicons/react/24/outline";
 import Stepper, { SteppersItem } from "@/components/Stepper";
 import { useSprint } from "@/store/hooks";
-import { useParams, useRouter } from "next/navigation";
 import routePaths from "@/utils/routePaths";
 
 function getStatus(sprintNumber: number, currentSprintNumber: number) {
