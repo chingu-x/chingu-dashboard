@@ -66,7 +66,7 @@ export const sprintSlice = createSlice({
     },
     setCurrentSprintNumber: (
       state,
-      action: PayloadAction<{ currentSprintNumber: number }>
+      action: PayloadAction<{ currentSprintNumber: number }>,
     ) => {
       console.log("set current sprint number");
       console.log(action.payload);
