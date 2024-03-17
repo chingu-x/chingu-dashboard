@@ -11,7 +11,7 @@ import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
 import useVoyageDashboardLogic from "./useVoyageDashboardLogic";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
-import { useAppSelector } from "@/store/hooks";
+import { useAuth } from "@/store/hooks";
 
 function VoyageDashboard() {
   //NOTE - This is a custom hook that returns mock data based on the filledState
@@ -98,7 +98,7 @@ function VoyageDashboard() {
 }
 
 function VoyageDashboardWrapper() {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated } = useAuth();
   if (isAuthenticated) {
     return <VoyageDashboard />;
   }

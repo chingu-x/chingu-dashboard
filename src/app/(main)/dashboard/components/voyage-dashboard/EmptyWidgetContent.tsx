@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
 import Button from "@/components/Button";
+import Banner from "@/components/banner/Banner";
 
 interface EmptyWidgetContentProps {
   title: string;
@@ -32,30 +32,13 @@ function EmptyWidgetContent({
       </div>
       {imageLight && imageDark ? (
         <div className="w-full h-full flex flex-col justify-center">
-          <div
-            data-hide-on-theme="dark"
-            className="flex h-[160px] w-full relative shrink-0"
-          >
-            <Image
-              src={imageLight}
-              alt="Light pre Voyage image"
-              fill={true}
-              style={{ objectFit: "contain" }}
-              priority={true}
-            />
-          </div>
-          <div
-            data-hide-on-theme="light"
-            className="flex h-[160px] w-full relative shrink-0"
-          >
-            <Image
-              src={imageDark}
-              alt="Light pre Voyage image"
-              fill={true}
-              style={{ objectFit: "contain" }}
-              priority={true}
-            />
-          </div>
+          <Banner
+            imageLight={imageLight}
+            imageDark={imageDark}
+            alt="Pre Voyage image"
+            height="h-[160px]"
+            width="w-full"
+          />
         </div>
       ) : null}
     </div>
