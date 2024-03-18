@@ -17,7 +17,7 @@ interface EditHoursProps {
   hrPerSprint: number;
   isEditing: boolean;
   setIsEditing: (value: SetStateAction<boolean>) => void;
-  handleclick: () => void;
+  handleClick: () => void;
 }
 
 const validationSchema = z.object({
@@ -34,7 +34,7 @@ export default function EditHours({
   hrPerSprint,
   isEditing,
   setIsEditing,
-  handleclick,
+  handleClick,
 }: EditHoursProps) {
   const params = useParams<{ teamId: string }>();
   const teamId = +params.teamId;
@@ -98,7 +98,7 @@ export default function EditHours({
     <Button
       variant="link"
       className="flex justify-between border-2 w-full outline-none rounded-lg px-3.5 py-2.5 mt-2 mb-10 text-base-300 border-neutral-content hover:border-base-300"
-      onClick={handleclick}
+      onClick={handleClick}
     >
       {hrPerSprint ? `${hrPerSprint}` : "Add Hours"}
       <PencilSquareIcon className="w-3.5" />
