@@ -1,10 +1,11 @@
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
-import SprintComponentWrapper from "@/sprints/components/SprintComponentWrapper";
+import SprintWrapper from "@/sprints/components/SprintWrapper";
 
 interface SprintPageProps {
   params: {
     teamId: string;
+    sprintNumber: string;
     meetingId: string;
   };
 }
@@ -12,7 +13,7 @@ interface SprintPageProps {
 export default function SprintPage({ params }: SprintPageProps) {
   return (
     <Suspense fallback={<Spinner />}>
-      <SprintComponentWrapper params={params} />
+      <SprintWrapper params={params} />
     </Suspense>
   );
 }

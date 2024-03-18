@@ -1,7 +1,5 @@
 import { addDays, isAfter, isBefore } from "date-fns";
-// import { redirect } from "next/navigation";
 // import { fetchMeeting } from "@/sprints/sprintsService";
-// import { getAccessToken } from "@/utils/getCookie";
 import ProgressStepper from "./ProgressStepper";
 import MeetingOverview from "./MeetingOverview";
 
@@ -13,33 +11,18 @@ import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 
 import { Sprint } from "@/store/features/sprint/sprintSlice";
+import getCurrentSprint from "@/utils/getCurrentSprint";
 
-function getCurrentSprint(sprints: Sprint[]) {
-  const currentDate = addDays(new Date(), 1).toISOString();
-  const currentSprintNumber = sprints.filter(
-    (sprint) =>
-      isAfter(currentDate, sprint.startDate) &&
-      isBefore(currentDate, sprint.endDate),
-  );
-  return currentSprintNumber[0];
-}
-
-interface SprintComponentWrapperProps {
+interface SprintWrapperProps {
   params: {
     teamId: string;
+    sprintNumber: string;
     meetingId: string;
   };
 }
 
-export default function SprintComponentWrapper({
-  params,
-}: SprintComponentWrapperProps) {
+export default function SprintWrapper({ params }: SprintWrapperProps) {
   let sprints: Sprint[] = [];
-  // const cookie = getAccessToken();
-
-  // if (!cookie) {
-  //   redirect("/");
-  // }
 
   const meetingId = +params.meetingId;
   console.log(meetingId);
