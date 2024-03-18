@@ -37,7 +37,7 @@ export default function EditHours({
   handleClick,
 }: EditHoursProps) {
   const params = useParams<{ teamId: string }>();
-  const teamId = +params.teamId;
+  const teamId = Number(params.teamId);
   const dispatch = useAppDispatch();
 
   const {
