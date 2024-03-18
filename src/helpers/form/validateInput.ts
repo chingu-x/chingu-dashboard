@@ -41,7 +41,7 @@ export function validateTextInput({
   if (isHours) {
     rules = rules.regex(
       /^[1-9][0-9]?$/,
-      "You can enter numbers only, such as 5, 10 or 15",
+      "Whole numbers only",
     );
   }
 

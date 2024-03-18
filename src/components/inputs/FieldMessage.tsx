@@ -22,7 +22,7 @@ export default function FieldMessage({
     <div id={id} aria-live="polite" aria-atomic="true">
       <span
         className={cn(
-          "flex items-center h-4 gap-1 py-4 text-[13px] font-medium text-base-300",
+          "flex items-center h-4 gap-1 text-[13px] font-medium text-base-300",
           errorMessage && "text-error",
         )}
       >
