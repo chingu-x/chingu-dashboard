@@ -45,6 +45,7 @@ export default async function IdeationComponentWrapper({
 }: IdeationComponentWrapperProps) {
   let projectIdeas: IdeationData[] = [];
   let currentVoyageTeam: VoyageTeamMember | undefined;
+  const teamId = Number(params.teamId);
 
   const [user, error] = await getUser();
 
@@ -58,9 +59,7 @@ export default async function IdeationComponentWrapper({
     return `Error: ${error?.message}`;
   }
 
-  const teamId = currentVoyageTeam?.voyageTeamId && +params.teamId;
-
-  if (teamId) {
+  if (teamId === currentVoyageTeam?.voyageTeamId) {
     const [res, error] = await fetchProjectIdeas({ teamId });
 
     if (res) {
@@ -113,7 +112,7 @@ export default async function IdeationComponentWrapper({
         vision_statement={projectIdea.vision}
         users={projectIdea.projectIdeaVotes}
         contributed_by={projectIdea.contributedBy}
-        teamId={teamId!}
+        teamId={teamId}
       />
     ));
   }
