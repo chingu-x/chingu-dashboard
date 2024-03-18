@@ -1,7 +1,6 @@
-import { addDays, isAfter, isBefore } from "date-fns";
 // import { fetchMeeting } from "@/sprints/sprintsService";
 import ProgressStepper from "./ProgressStepper";
-import MeetingOverview from "./MeetingOverview";
+import MeetingOverview from "./meetingOverview/MeetingOverview";
 
 import { mockMeetingData } from "./fixtures/Meeting";
 import { mockSprintsData } from "./fixtures/Sprints";
@@ -64,7 +63,12 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
         />
       </VoyagePageBannerContainer>
       <ProgressStepper />
-      <MeetingOverview />
+      <MeetingOverview
+        title={meeting.title}
+        dateTime={meeting.dateTime}
+        meetingLink={meeting.meetingLink}
+        notes={meeting.notes}
+      />
       <MeetingProvider
         sprints={sprints}
         meeting={meeting}
