@@ -97,7 +97,7 @@ export default function EditHours({
   ) : (
     <Button
       variant="link"
-      className="flex justify-between border-2 w-full outline-none rounded-lg px-3.5 py-2.5 mt-2 mb-10 text-base-300 border-neutral-content hover:border-base-300"
+      className="flex justify-between border-2 w-full outline-none rounded-lg px-3.5 py-2.5 mt-2 mb-6 text-base-300 border-neutral-content hover:border-base-300"
       onClick={handleClick}
     >
       {hrPerSprint ? `${hrPerSprint}` : "Add Hours"}
