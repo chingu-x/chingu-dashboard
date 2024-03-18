@@ -61,7 +61,7 @@ export async function addIdeation({
       `api/v1/voyages/${teamId}/ideations`,
       token,
       "default",
-      { title, description, vision },
+      { title, description, vision }
     );
 
   const [res, error] = await handleAsync(addIdeationAsync);
@@ -87,7 +87,7 @@ export async function editIdeation({
       `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
-      { title, description, vision },
+      { title, description, vision }
     );
 
   const [res, error] = await handleAsync(editIdeationAsync);
@@ -106,9 +106,9 @@ export async function deleteIdeation({
   const token = getAccessToken();
   const deleteIdeationAsync = () =>
     DELETE<DeleteIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideation/${ideationId}`,
+      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
-      "default",
+      "default"
     );
 
   const [res, error] = await handleAsync(deleteIdeationAsync);
@@ -130,7 +130,7 @@ export async function addIdeationVote({
     POST<undefined, IdeationVoteResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
-      "default",
+      "default"
     );
 
   const [res, error] = await handleAsync(addIdeationVoteAsync);
@@ -152,7 +152,7 @@ export async function removeIdeationVote({
     DELETE<IdeationVoteResponse>(
       `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
-      "default",
+      "default"
     );
 
   const [res, error] = await handleAsync(removeIdeationVoteAsync);
