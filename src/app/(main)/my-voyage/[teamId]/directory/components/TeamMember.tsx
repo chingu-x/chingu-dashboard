@@ -26,13 +26,13 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
     };
   });
 
-  const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+  function handleOutsideClick(e: MouseEvent | TouchEvent) {
     if (newRef.current && !newRef.current.contains(e.target as Node)) {
       setIsEditing(false);
     }
   };
 
-  function handleclick() {
+  function handleClick() {
     setIsEditing(true);
   }
 
@@ -68,7 +68,7 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
               hrPerSprint={hrPerSprint}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
-              handleclick={handleclick}
+              handleClick={handleClick}
             />
           ) : (
             hrPerSprint
