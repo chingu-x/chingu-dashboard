@@ -28,8 +28,8 @@ export default function ProgressStepper() {
       routePaths.sprintPage(
         params.teamId,
         sprintNumber.toString(),
-        meetingId.toString()
-      )
+        meetingId.toString(),
+      ),
     );
   }
 

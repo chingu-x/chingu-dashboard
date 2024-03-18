@@ -1,11 +1,12 @@
+import { format, isToday, isTomorrow } from "date-fns";
 import {
   ArrowUpRightIcon,
   CalendarDaysIcon,
   ClockIcon,
 } from "@heroicons/react/24/outline";
-import Button from "@/components/Button";
-import { format, isToday, isTomorrow } from "date-fns";
+
 import DateTimeComponent from "./DateTimeComponent";
+import Button from "@/components/Button";
 
 interface MeetingOverviewProps {
   title: string;
