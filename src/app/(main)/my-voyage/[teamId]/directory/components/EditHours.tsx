@@ -59,7 +59,7 @@ export default function EditHours({
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { avgHours } = data;
-    const [, error] = await editHoursAction({ teamId, hrPerSprint: +avgHours });
+    const [, error] = await editHoursAction({ teamId, hrPerSprint: Number(avgHours) });
 
     if (error) {
       dispatch(
