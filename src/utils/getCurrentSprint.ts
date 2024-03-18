@@ -6,7 +6,7 @@ export default function getCurrentSprint(sprints: Sprint[]) {
   const currentSprintNumber = sprints.filter(
     (sprint) =>
       isAfter(currentDate, sprint.startDate) &&
-      isBefore(currentDate, sprint.endDate)
+      isBefore(currentDate, sprint.endDate),
   );
   return currentSprintNumber[0];
 }
