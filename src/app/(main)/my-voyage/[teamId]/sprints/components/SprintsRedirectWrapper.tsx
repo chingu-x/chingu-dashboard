@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 
 import { mockSprintsData } from "./fixtures/Sprints";
-// import SprintsProvider from "@/sprints/providers/SprintsProvider";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 import getCurrentSprint from "@/utils/getCurrentSprint";
 

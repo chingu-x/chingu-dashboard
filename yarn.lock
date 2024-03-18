@@ -6707,6 +6707,7 @@ __metadata:
     class-variance-authority: "npm:^0.7.0"
     cypress: "npm:^12.17.3"
     date-fns: "npm:^3.5.0"
+    date-fns-tz: "npm:^2.0.1"
     eslint: "npm:8.46.0"
     eslint-config-next: "npm:^14.0.3"
     eslint-config-prettier: "npm:^8.10.0"
@@ -7478,6 +7479,15 @@ __metadata:
     whatwg-mimetype: "npm:^3.0.0"
     whatwg-url: "npm:^11.0.0"
   checksum: 051c3aaaf3e961904f136aab095fcf6dff4db23a7fc759dd8ba7b3e6ba03fc07ef608086caad8ab910d864bd3b5e57d0d2f544725653d77c96a2c971567045f4
+  languageName: node
+  linkType: hard
+
+"date-fns-tz@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "date-fns-tz@npm:2.0.1"
+  peerDependencies:
+    date-fns: 2.x
+  checksum: f860dda9e3d38bc99dc325c678cafb94b3a18c12b1fea0e2f4e451396ea6c4cacced683066c669a67ec380f64fdda83aa4c414a207029b647faa2b76b2a5c6e3
   languageName: node
   linkType: hard
 
