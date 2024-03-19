@@ -16,13 +16,14 @@ const validationSchema = z.object({
   url: validateTextInput({
     inputName: "Url",
     required: true,
-    minLen: 1,
+    minLen: 2,
     maxLen: 50,
+    isUrl: true,
   }),
   title: validateTextInput({
     inputName: "Title",
     required: true,
-    minLen: 1,
+    minLen: 2,
     maxLen: 50,
   }),
 });
@@ -43,7 +44,7 @@ export default function ResourceInput() {
   const {
     register,
     handleSubmit,
-    formState: { /*errors, isDirty,*/ isValid /*dirtyFields*/ },
+    formState: { errors, isValid },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
@@ -73,6 +74,9 @@ export default function ResourceInput() {
         <TextInput
           id="url"
           placeholder="Paste your resource link here."
+          errorMessage={
+            errors.url?.type === "invalid_string" ? "Must be a url." : ""
+          }
           {...register("url")}
           inputGroupContent={<LinkIcon />}
         />
