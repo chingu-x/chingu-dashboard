@@ -46,7 +46,7 @@ export async function addResource({
   const [res, error] = await handleAsync(addResourceAsync);
 
   if (res) {
-    revalidateTag(CacheTag.ideation);
+    revalidateTag(CacheTag.resources);
   }
 
   return [res, error];

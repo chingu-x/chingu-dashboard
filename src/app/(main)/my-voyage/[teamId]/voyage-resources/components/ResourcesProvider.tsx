@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import {
   ResourceData,
   fetchResources,
@@ -13,7 +14,9 @@ export interface ResourceProviderProps {
 export default function ResourcesProvider({ payload }: ResourceProviderProps) {
   const dispatch = useAppDispatch();
 
-  dispatch(fetchResources(payload));
+  useEffect(() => {
+    dispatch(fetchResources(payload));
+  }, [dispatch, payload]);
 
   return null;
 }
