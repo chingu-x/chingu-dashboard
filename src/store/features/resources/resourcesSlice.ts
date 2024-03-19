@@ -1,7 +1,5 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
-import { PURGE } from "redux-persist";
-import { clientSignOut } from "@/store/features/auth/authSlice";
+import { VoyageMember } from "@/store/features/ideation/ideationSlice";
 
 export interface ResourceData {
   id: number;
@@ -10,7 +8,7 @@ export interface ResourceData {
   title: string;
   createdAt: Date;
   updatedAt: Date;
-  addedBy: { member: [object] };
+  addedBy: { member: Pick<VoyageMember, "avatar" | "firstName" | "lastName"> };
 }
 interface ResourcesState {
   //loading:
@@ -28,12 +26,6 @@ export const resourcesSlice = createSlice({
     fetchResources: (state, action: PayloadAction<ResourceData[]>) => {
       state.resources = action.payload;
     },
-  },
-  extraReducers(builder) {
-    builder.addCase(PURGE, () => {
-      void storage.removeItem("persit:root");
-    });
-    builder.addCase(clientSignOut, () => initialState);
   },
 });
 

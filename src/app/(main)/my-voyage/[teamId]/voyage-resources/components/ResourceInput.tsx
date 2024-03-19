@@ -75,7 +75,9 @@ export default function ResourceInput() {
           id="url"
           placeholder="Paste your resource link here."
           errorMessage={
-            errors.url?.type === "invalid_string" ? "Must be a url." : ""
+            errors.url?.type === "invalid_string"
+              ? "Must start with https://"
+              : ""
           }
           {...register("url")}
           inputGroupContent={<LinkIcon />}
