@@ -1,6 +1,9 @@
+"use client";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { resetPassword } from "@/app/(auth)/authService";
 import TextInput from "@/components/inputs/TextInput";
 import Button from "@/components/Button";
 import { validateTextInput } from "@/helpers/form/validateInput";
@@ -21,6 +24,9 @@ type NewPasswordContainerProps = {
 };
 
 function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
   const {
     register,
     formState: { errors },
@@ -29,14 +35,22 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     onClick();
+    // INPUT YOUR EMAIL HERE
+    const email = "";
+    try {
+      if (token) {
+        await resetPassword(email, data.password, token);
+      }
+    } catch (error) {
+      console.error("Error to change password: ", error);
+    }
   };
 
   return (
-    <div className="w-[400px] min-h-[349px] bg-base-200 rounded-2xl xl:ml-60 p-6">
-      <p className="text-base-300 text-2xl text-center mt-2.5 mb-8 font-medium">
+    <div className="w-[400px] min-h-[349px] bg-base-200 rounded-2xl p-8">
+      <p className="text-base-300 text-2xl text-center mb-8 font-medium">
         Create New Password
       </p>
       <p className="text-base-300 text-base font-medium pb-8">
