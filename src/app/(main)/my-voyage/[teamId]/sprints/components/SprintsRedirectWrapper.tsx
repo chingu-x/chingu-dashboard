@@ -32,7 +32,7 @@ export default function SprintsRedirectWrapper({
     number: sprint.number,
     startDate: sprint.startDate,
     endDate: sprint.endDate,
-    meetingData: { id: sprint.teamMeetings[0].meetingId },
+    meetingData: { id: sprint.teamMeetings[0].id },
   }));
 
   const { meetingData, number } = getCurrentSprint(sprints);
@@ -41,7 +41,7 @@ export default function SprintsRedirectWrapper({
 
   if (teamId && currentMeetingId) {
     return redirect(
-      `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`,
+      `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`
     );
   }
 

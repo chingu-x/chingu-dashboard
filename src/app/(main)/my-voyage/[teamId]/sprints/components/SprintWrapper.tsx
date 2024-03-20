@@ -40,7 +40,7 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
     number: sprint.number,
     startDate: sprint.startDate,
     endDate: sprint.endDate,
-    meetingData: { id: sprint.teamMeetings[0].meetingId },
+    meetingData: { id: sprint.teamMeetings[0].id },
   }));
 
   // Get current sprint number and current meeting id

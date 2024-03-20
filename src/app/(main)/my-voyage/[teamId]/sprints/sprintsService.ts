@@ -35,7 +35,7 @@ export interface SprintsResponse {
       number: number;
       startDate: string;
       endDate: string;
-      teamMeetings: { meetingId: number }[];
+      teamMeetings: { id: number }[];
     }[];
   };
 }
@@ -63,7 +63,7 @@ export interface FetchSprintsResponse extends SprintsResponse {
       number: number;
       startDate: string;
       endDate: string;
-      teamMeetings: { meetingId: number }[];
+      teamMeetings: { id: number }[];
     }[];
   };
 }
@@ -97,7 +97,7 @@ export async function fetchSprints({
       `api/v1/voyages/sprints/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.sprint,
+      CacheTag.sprint
     );
 
   const [res, error] = await handleAsync(fetchSprintsAsync);
@@ -114,7 +114,7 @@ export async function fetchMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "force-cache",
-      CacheTag.sprint,
+      CacheTag.sprint
     );
 
   const [res, error] = await handleAsync(fetchMeetingAsync);
@@ -136,7 +136,7 @@ export async function addMeeting({
       `api/v1/voyages/sprints/${sprintNumber}/teams/${teamId}/meeting`,
       token,
       "default",
-      { title, dateTime, meetingLink, notes },
+      { title, dateTime, meetingLink, notes }
     );
 
   const [res, error] = await handleAsync(addMeetingAsync);
@@ -162,7 +162,7 @@ export async function editMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "default",
-      { title, dateTime, meetingLink, notes },
+      { title, dateTime, meetingLink, notes }
     );
 
   const [res, error] = await handleAsync(editMeetingAsync);
