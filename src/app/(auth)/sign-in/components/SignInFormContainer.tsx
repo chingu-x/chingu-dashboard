@@ -67,7 +67,7 @@ function SignInFormContainer({
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
       setServerSignInLoading(false);
     }
