@@ -1,17 +1,41 @@
-// import { fetchMeeting } from "@/sprints/sprintsService";
 import ProgressStepper from "./ProgressStepper";
 import MeetingOverview from "./meetingOverview/MeetingOverview";
 
-import { mockMeetingData } from "./fixtures/Meeting";
-import { mockSprintsData } from "./fixtures/Sprints";
+// import { mockMeetingData } from "./fixtures/Meeting";
+// import { mockSprintsData } from "./fixtures/Sprints";
 
+import { fetchSprints } from "./SprintsRedirectWrapper";
 import SprintActions from "./SprintActions";
 import MeetingProvider from "@/sprints/providers/MeetingProvider";
 import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 
-import { Sprint } from "@/store/features/sprint/sprintSlice";
+import { Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
 import getCurrentSprint from "@/utils/getCurrentSprint";
+import {
+  FetchMeetingProps,
+  FetchMeetingResponse,
+} from "@/sprints/sprintsService";
+import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { GET } from "@/utils/requests";
+import { CacheTag } from "@/utils/cacheTag";
+import { getAccessToken } from "@/utils/getCookie";
+
+async function fetchMeeting({
+  meetingId,
+}: FetchMeetingProps): Promise<AsyncActionResponse<FetchMeetingResponse>> {
+  const token = getAccessToken();
+
+  const fetchMeetingAsync = () =>
+    GET<FetchMeetingResponse>(
+      `api/v1/voyages/sprints/meetings/${meetingId}`,
+      token,
+      "force-cache",
+      CacheTag.sprint,
+    );
+
+  return await handleAsync(fetchMeetingAsync);
+}
 
 interface SprintWrapperProps {
   params: {
@@ -21,33 +45,36 @@ interface SprintWrapperProps {
   };
 }
 
-export default function SprintWrapper({ params }: SprintWrapperProps) {
-  let sprints: Sprint[] = [];
+export default async function SprintWrapper({ params }: SprintWrapperProps) {
+  let sprintsData: Sprint[] = [];
+  let meetingData: Meeting = { id: +params.meetingId };
 
+  const teamId = +params.teamId;
   const meetingId = +params.meetingId;
-  console.log(meetingId);
 
-  // const [res, error] = await fetchMeeting({ meetingId });
+  if (teamId) {
+    const [res, error] = await fetchSprints({ teamId });
 
-  // if (res) {
-  //   meetingData = res;
-  // } else {
-  //   return `Error: ${error?.message}`;
-  // }
+    if (res) {
+      sprintsData = res.voyage.sprints;
+    } else {
+      return `Error: ${error?.message}`;
+    }
+  }
 
-  // Get Sprints
-  sprints = mockSprintsData.map((sprint) => ({
-    id: sprint.id,
-    number: sprint.number,
-    startDate: sprint.startDate,
-    endDate: sprint.endDate,
-    meetingData: { id: sprint.teamMeetings[0].id },
-  }));
+  if (meetingId) {
+    const [res, error] = await fetchMeeting({ meetingId });
+
+    if (res) {
+      meetingData = res;
+    } else {
+      return `Error: ${error?.message}`;
+    }
+  }
 
   // Get current sprint number and current meeting id
-  const { number } = getCurrentSprint(sprints);
+  const { number } = getCurrentSprint(sprintsData);
   const currentSprintNumber = number;
-  const meeting = mockMeetingData;
 
   return (
     <div className="flex flex-col w-full gap-y-10">
@@ -65,18 +92,19 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
       </VoyagePageBannerContainer>
       <ProgressStepper />
       <SprintActions
+        teamId={params.teamId}
         meetingId={params.meetingId}
         sprintNumber={params.sprintNumber}
       />
       <MeetingOverview
-        title={meeting.title}
-        dateTime={meeting.dateTime}
-        meetingLink={meeting.meetingLink}
-        notes={meeting.notes}
+        title={meetingData.title!}
+        dateTime={meetingData.dateTime!}
+        meetingLink={meetingData.meetingLink!}
+        notes={meetingData.notes!}
       />
       <MeetingProvider
-        sprints={sprints}
-        meeting={meeting}
+        sprints={sprintsData}
+        meeting={meetingData}
         currentSprintNumber={currentSprintNumber}
       />
     </div>

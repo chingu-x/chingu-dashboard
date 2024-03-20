@@ -2,7 +2,7 @@
 
 import { revalidateTag } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
-import { GET, PATCH, POST } from "@/utils/requests";
+import { PATCH, POST } from "@/utils/requests";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 
@@ -51,6 +51,7 @@ interface AddMeetingBody extends MeetingBody {}
 interface EditMeetingBody extends Partial<AddMeetingBody> {}
 
 export interface FetchSprintsProps extends FetchSprintsType {}
+export interface FetchMeetingProps extends FetchMeetingType {}
 export interface AddMeetingProps extends AddMeetingType, MeetingBody {}
 export interface EditMeetingProps extends EditMeetingType, EditMeetingBody {}
 
@@ -68,6 +69,7 @@ export interface FetchSprintsResponse extends SprintsResponse {
   };
 }
 export interface FetchMeetingResponse extends MeetingResponse {
+  id: number;
   title: string;
   dateTime: string;
   meetingLink: string;
@@ -86,40 +88,6 @@ export interface AddMeetingResponse extends MeetingResponse {
   notes: string;
 }
 export interface EditMeetingResponse extends AddMeetingResponse {}
-
-export async function fetchSprints({
-  teamId,
-}: FetchSprintsProps): Promise<AsyncActionResponse<FetchSprintsResponse>> {
-  const token = getAccessToken();
-
-  const fetchSprintsAsync = () =>
-    GET<SprintsResponse>(
-      `api/v1/voyages/sprints/teams/${teamId}`,
-      token,
-      "force-cache",
-      CacheTag.sprint,
-    );
-
-  const [res, error] = await handleAsync(fetchSprintsAsync);
-  return [res, error];
-}
-
-export async function fetchMeeting({
-  meetingId,
-}: FetchMeetingType): Promise<AsyncActionResponse<FetchMeetingResponse>> {
-  const token = getAccessToken();
-
-  const fetchMeetingAsync = () =>
-    GET<FetchMeetingResponse>(
-      `api/v1/voyages/sprints/meetings/${meetingId}`,
-      token,
-      "force-cache",
-      CacheTag.sprint,
-    );
-
-  const [res, error] = await handleAsync(fetchMeetingAsync);
-  return [res, error];
-}
 
 export async function addMeeting({
   teamId,
