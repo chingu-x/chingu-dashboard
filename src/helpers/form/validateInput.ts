@@ -7,6 +7,7 @@ interface ValidateTextInput {
   maxLen?: number;
   isEmail?: boolean;
   isHours?: boolean;
+  isUrl?: boolean;
 }
 
 export function validateTextInput({
@@ -16,6 +17,7 @@ export function validateTextInput({
   maxLen,
   isEmail,
   isHours,
+  isUrl,
 }: ValidateTextInput): z.ZodString | z.ZodEffects<z.ZodString, string, string> {
   let rules;
   rules = z.string();
@@ -30,6 +32,10 @@ export function validateTextInput({
     rules = rules.email("This is not a valid email.");
   }
 
+  //Must be a url
+  if (isUrl) {
+    rules = rules.startsWith("https://");
+  }
   // Minimum Length
   if (minLen && minLen > 1) {
     rules = rules.min(minLen, {
@@ -39,17 +45,14 @@ export function validateTextInput({
 
   // Only whole numbers
   if (isHours) {
-    rules = rules.regex(
-      /^[1-9][0-9]?$/,
-      "Whole numbers only",
-    );
+    rules = rules.regex(/^[1-9][0-9]?$/, "Whole numbers only");
   }
 
   // Maximum Length
   if (maxLen) {
     rules = rules.refine(
       (val) => val.length <= maxLen,
-      (val) => ({ message: `Character length ${val.length}/${maxLen}` }),
+      (val) => ({ message: `Character length ${val.length}/${maxLen}` })
     );
   }
 
