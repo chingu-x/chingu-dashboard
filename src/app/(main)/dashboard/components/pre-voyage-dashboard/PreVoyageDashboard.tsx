@@ -3,8 +3,8 @@
 import React from "react";
 import PreVoyageLinks from "./PreVoyageLinks";
 import PreVoyageBanner from "./PreVoyageBanner";
-import PreVoyageSupport from "./PreVoyageSupport";
-import { useAppSelector } from "@/store/hooks";
+import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
+import { useAuth } from "@/store/hooks";
 
 function PreVoyageDashboard() {
   return (
@@ -22,7 +22,7 @@ function PreVoyageDashboard() {
           </div>
           <PreVoyageLinks />
         </div>
-        <PreVoyageSupport />
+        <VoyageSupport />
       </div>
       <div className="flex flex-grow-1 w-full">
         <PreVoyageBanner />
@@ -32,7 +32,7 @@ function PreVoyageDashboard() {
 }
 
 function PreVoyageDashboardWrapper() {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated } = useAuth();
   if (isAuthenticated) {
     return <PreVoyageDashboard />;
   }
