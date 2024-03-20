@@ -58,7 +58,7 @@ export async function serverSignOut(): Promise<
 }
 
 export async function resetPasswordRequestEmail(
-  email: string
+  email: string,
 ): Promise<AsyncActionResponse<void>> {
   const asyncPasswordResetEmail = async () =>
     UNAUTHPOST<ResetPasswordRequestProps, void>(
@@ -66,7 +66,7 @@ export async function resetPasswordRequestEmail(
       "no-store",
       {
         email,
-      }
+      },
     );
 
   return handleAsync(asyncPasswordResetEmail);
@@ -76,7 +76,7 @@ export async function resetPasswordRequestEmail(
 export async function resetPassword(
   email: string,
   password: string,
-  token: string
+  token: string,
 ): Promise<AsyncActionResponse<void>> {
   const asyncResetPassword = async () =>
     UNAUTHPOST<ResetPasswordRequestProps, void>(
@@ -86,7 +86,7 @@ export async function resetPassword(
         email,
         password,
         token,
-      }
+      },
     );
 
   return handleAsync(asyncResetPassword);
@@ -96,7 +96,7 @@ export async function resetPassword(
 
 async function asyncSignIn(
   email: string,
-  password: string
+  password: string,
 ): Promise<ServerSignInResponse> {
   console.log("email: ", email);
   console.log("password: ", password);
@@ -118,7 +118,7 @@ async function asyncSignIn(
         }),
         credentials: "include",
         cache: "no-store",
-      }
+      },
     );
 
     if (!res.ok) {
