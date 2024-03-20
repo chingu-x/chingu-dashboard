@@ -1,8 +1,7 @@
 "use client";
 
-import { format } from "date-fns";
-// import { utcToZonedTime } from "date-fns-tz";
-// import { useUser } from "@/store/hooks";
+import { formatInTimeZone } from "date-fns-tz";
+import { useUser } from "@/store/hooks";
 
 interface DateTimeComponentWrapper {
   dateTime: string;
@@ -11,14 +10,10 @@ interface DateTimeComponentWrapper {
 export default function DateTimeComponent({
   dateTime,
 }: DateTimeComponentWrapper) {
-  // const { timezone } = useUser();
+  const { timezone } = useUser();
+
   const getMeetingTime = () => {
-    console.log(dateTime);
-
-    // const convertedTime = utcToZonedTime(dateTime, timezone);
-    // console.log(convertedTime);
-
-    return format(dateTime, "k:m");
+    return formatInTimeZone(dateTime, timezone, "k:m (zzz)");
   };
   return <>{getMeetingTime()}</>;
 }

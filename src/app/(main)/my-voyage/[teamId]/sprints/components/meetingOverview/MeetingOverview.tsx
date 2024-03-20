@@ -1,4 +1,4 @@
-import { format, isToday, isTomorrow } from "date-fns";
+import { format, isToday, isTomorrow, parseISO } from "date-fns";
 import {
   ArrowUpRightIcon,
   CalendarDaysIcon,
@@ -22,10 +22,11 @@ export default function MeetingOverview({
   notes,
 }: MeetingOverviewProps) {
   const getMeetingDate = () => {
-    if (isToday(dateTime)) return "today";
-    if (isTomorrow(dateTime)) return "tomorrow";
+    const dateTimeTemp = parseISO(dateTime);
+    if (isToday(dateTimeTemp)) return "today";
+    if (isTomorrow(dateTimeTemp)) return "tomorrow";
 
-    return format(dateTime, "MMM, d");
+    return format(dateTimeTemp, "MMM, d");
   };
 
   return (
