@@ -1,7 +1,7 @@
 import { addWeeks, subWeeks } from "date-fns";
 
 export interface TeamMeating {
-  meetingId: number;
+  id: number;
 }
 
 export interface Sprint {
@@ -20,41 +20,41 @@ export const mockSprintsData: Sprint[] = [
     number: 1,
     startDate: `${subWeeks(currentDateTime, 1).toISOString()}`,
     endDate: `${subWeeks(currentDateTime, 3).toISOString()}`,
-    teamMeetings: [{ meetingId: 1 }],
+    teamMeetings: [{ id: 1 }],
   },
   {
     id: 2,
     number: 2,
     startDate: `${subWeeks(currentDateTime, 2).toISOString()}`,
     endDate: `${subWeeks(currentDateTime, 1).toISOString()}`,
-    teamMeetings: [{ meetingId: 2 }],
+    teamMeetings: [{ id: 2 }],
   },
   {
     id: 3,
     number: 3,
     startDate: `${currentDateTime.toISOString()}`,
     endDate: `${addWeeks(currentDateTime, 1).toISOString()}`,
-    teamMeetings: [{ meetingId: 3 }],
+    teamMeetings: [{ id: 3 }],
   },
   {
     id: 4,
     number: 4,
     startDate: `${addWeeks(currentDateTime, 2).toISOString()}`,
     endDate: `${addWeeks(currentDateTime, 3).toISOString()}`,
-    teamMeetings: [{ meetingId: 4 }],
+    teamMeetings: [{ id: 4 }],
   },
   {
     id: 5,
     number: 5,
     startDate: `${addWeeks(currentDateTime, 4).toISOString()}`,
     endDate: `${addWeeks(currentDateTime, 5).toISOString()}`,
-    teamMeetings: [{ meetingId: 5 }],
+    teamMeetings: [{ id: 5 }],
   },
   {
     id: 6,
     number: 6,
     startDate: `${addWeeks(currentDateTime, 42).toISOString()}`,
     endDate: `${addWeeks(currentDateTime, 49).toISOString()}`,
-    teamMeetings: [{ meetingId: 6 }],
+    teamMeetings: [{ id: 6 }],
   },
 ];
