@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Banner from "@/components/banner/Banner";
 
 export default function EmptyBanner() {
   return (
@@ -14,30 +14,13 @@ export default function EmptyBanner() {
           Click on the Add Resource button at the top to get started!
         </p>
       </div>
-      <div
-        data-hide-on-theme="dark"
-        className="h-[200px] w-[400px] relative shrink-0"
-      >
-        <Image
-          src="/img/empty_resources_light.png"
-          height={500}
-          width={500}
-          alt="desk"
-          priority={true}
-        />
-      </div>
-      <div
-        data-hide-on-theme="light"
-        className="h-[200px] w-[400px] relative shrink-0"
-      >
-        <Image
-          src="/img/empty_resources_dark.png"
-          height={500}
-          width={500}
-          alt="desk"
-          priority={true}
-        />
-      </div>
+      <Banner
+        imageLight="/img/empty_resources_light.png"
+        imageDark="/img/empty_resources_dark.png"
+        alt="desk"
+        height="h-[500px]"
+        width="w-[500px]"
+      />
     </div>
   );
 }

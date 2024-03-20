@@ -6,6 +6,7 @@ interface ValidateTextInput {
   minLen?: number;
   maxLen?: number;
   isEmail?: boolean;
+  isUrl?: boolean;
 }
 
 export function validateTextInput({
@@ -14,6 +15,7 @@ export function validateTextInput({
   minLen,
   maxLen,
   isEmail,
+  isUrl,
 }: ValidateTextInput): z.ZodString | z.ZodEffects<z.ZodString, string, string> {
   let rules;
   rules = z.string();
@@ -24,6 +26,10 @@ export function validateTextInput({
   // Must be email
   if (isEmail) {
     rules = rules.email("This is not a valid email.");
+  }
+  //Must be a url
+  if (isUrl) {
+    rules = rules.startsWith("https://");
   }
   // Minimum Length
   if (minLen && minLen > 1) {
