@@ -23,17 +23,12 @@ export default function ResourceCard({
     dispatch(
       onOpenModal({
         type: "viewResource",
-        content: "",
+        content: {},
       }),
     );
   }
   const openDeleteModal = () => {
-    dispatch(
-      onOpenModal({
-        type: "deleteResource",
-        content: "",
-      }),
-    );
+    // todo: replace with modal
   };
 
   return (
@@ -48,10 +43,10 @@ export default function ResourceCard({
       >
         <h1 className="w-1/2 text-xl font-bold truncate">{title}</h1>
         <div className="flex mt-2 [&>*]:mr-8">
-          <p className="flex items-center gap-x-2">
-            Shared by
+          <div className="flex items-center gap-x-2">
+            <p>Shared by</p>
             <Badge title={user.name} avatarUrlImage={user.image} />
-          </p>
+          </div>
           <div className="w-1 h-5 border border-t-0 border-b-0 border-l-0 border-r-1 border-r-neutral-content"></div>
           <div className="text-neutral">Added {date}</div>
         </div>
