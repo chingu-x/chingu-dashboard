@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +14,11 @@ import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
+import { useSprint } from "@/store/hooks";
+// import useServerAction from "@/hooks/useServerAction";
+// import { addMeeting, editMeeting } from "../../sprintsService";
+import { Meeting } from "@/store/features/sprint/sprintSlice";
+// import { parseISO } from "date-fns";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -23,7 +30,6 @@ const validationSchema = z.object({
     inputName: "Description",
     required: true,
   }),
-  // TODO: update validation
   meetingDateTime: z.date(),
   meetingLink: validateTextInput({
     inputName: "Meeting Link",
@@ -34,11 +40,30 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function MeetingForm() {
+  const params = useParams<{ meetingId: string }>();
+  // const dispatch = useAppDispatch();
+  const { sprints } = useSprint();
+  // const [editMode, setEditMode] = useState<boolean>(false);
+  const [meetingData, setMeetingData] = useState<Meeting>();
+
+  // const {
+  //   runAction: editIdeationAction,
+  //   isLoading: editIdeationLoading,
+  //   setIsLoading: setEditIdeationLoading,
+  // } = useServerAction(editMeeting);
+
+  // const {
+  //   runAction: addIdeationAction,
+  //   isLoading: addIdeationLoading,
+  //   setIsLoading: setAddIdeationLoading,
+  // } = useServerAction(addMeeting);
+
   const {
     register,
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
@@ -57,6 +82,36 @@ export default function MeetingForm() {
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    if (params.meetingId) {
+      const meeting = sprints.find(
+        (sprint) => sprint.meetingData.id === +params.meetingId,
+      )?.meetingData;
+
+      setMeetingData(meeting as Meeting);
+      // setEditMode(true);
+    }
+  }, [params.meetingId, sprints]);
+
+  useEffect(() => {
+    reset({
+      title: meetingData?.title,
+      description: meetingData?.notes,
+      // meetingDateTime: parseISO(meetingData?.dateTime!),
+      meetingLink: meetingData?.meetingLink,
+    });
+  }, [meetingData, reset]);
+
+  // function renderButtonContent() {
+  //   if (editIdeationLoading || addIdeationLoading) {
+  //     return <Spinner />;
+  //   }
+
+  //   return editMode ? "Save Changes" : "Save";
+  // }
+
+  console.log(meetingData);
 
   return (
     // TODO: Create some general form wrapper component
@@ -78,6 +133,7 @@ export default function MeetingForm() {
           {...register("title")}
           errorMessage={errors.title?.message}
           maxLength={50}
+          defaultValue={meetingData?.title ?? ""}
         />
         <Textarea
           id="description"
@@ -85,6 +141,7 @@ export default function MeetingForm() {
           placeholder="Please provide a brief description of the goals for this meeting."
           {...register("description")}
           errorMessage={errors.description?.message}
+          defaultValue={meetingData?.notes ?? ""}
         />
         <DateTimePicker
           id="date"
@@ -102,6 +159,7 @@ export default function MeetingForm() {
           placeholder="Provide a link to the meeting"
           {...register("meetingLink")}
           errorMessage={errors.meetingLink?.message}
+          defaultValue={meetingData?.meetingLink ?? ""}
         />
         <Button
           type="submit"

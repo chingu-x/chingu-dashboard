@@ -60,8 +60,13 @@ export const sprintSlice = createSlice({
       console.log(action.payload);
 
       const sprintId = action.payload.sprint.id;
+      const updatedSprints = state.sprints.map((sprint) => {
+        if (sprint.id === sprintId)
+          return { ...sprint, meetingData: action.payload };
+        return sprint;
+      });
 
-      state.sprints[sprintId].meetingData = action.payload;
+      state.sprints = updatedSprints;
       state.loading = true;
     },
     setCurrentSprintNumber: (
