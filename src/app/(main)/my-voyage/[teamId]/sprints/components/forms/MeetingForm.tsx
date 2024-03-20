@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { parseISO } from "date-fns";
 
 import { LinkIcon } from "@heroicons/react/24/outline";
 
@@ -18,8 +19,6 @@ import { useSprint } from "@/store/hooks";
 // import useServerAction from "@/hooks/useServerAction";
 // import { addMeeting, editMeeting } from "../../sprintsService";
 import { Meeting } from "@/store/features/sprint/sprintSlice";
-import { parseISO } from "date-fns";
-import { log } from "console";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -87,7 +86,7 @@ export default function MeetingForm() {
   useEffect(() => {
     if (params.meetingId) {
       const meeting = sprints.find(
-        (sprint) => sprint.meetingData.id === +params.meetingId
+        (sprint) => sprint.meetingData.id === +params.meetingId,
       )?.meetingData;
 
       setMeetingData(meeting as Meeting);
@@ -96,12 +95,12 @@ export default function MeetingForm() {
   }, [params.meetingId, sprints]);
 
   useEffect(() => {
-    if (meetingData) {
+    if (meetingData && meetingData.dateTime) {
       reset({
         title: meetingData?.title,
         description: meetingData?.notes,
         meetingLink: meetingData?.meetingLink,
-        meetingDateTime: new Date(meetingData?.dateTime!),
+        meetingDateTime: parseISO(meetingData?.dateTime),
       });
     }
   }, [meetingData, reset]);
