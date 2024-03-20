@@ -1,7 +1,8 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
@@ -32,9 +33,14 @@ function ResetPasswordContainer({
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    const { email } = data;
     handleEmailCheck();
+    try {
+      await resetPasswordRequestEmail(email);
+    } catch (error) {
+      console.error("Error sending request to email: ", error);
+    }
   };
 
   return (
