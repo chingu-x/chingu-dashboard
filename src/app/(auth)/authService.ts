@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { getAccessToken, getRefreshToken } from "@/utils/getCookie";
-import { POST } from "@/utils/requests";
+import { POST, UNAUTHPOST } from "@/utils/requests";
 
 interface AuthResponse {
   message: string;
@@ -13,12 +13,23 @@ interface ServerSignInResponse extends AuthResponse {}
 
 interface ServerSignOutResponse extends AuthResponse {}
 
+interface ServerSignInProps {
+  email: string;
+  password: string;
+}
+
+interface ResetPasswordRequestProps {
+  email?: string;
+  token?: string;
+  password?: string;
+}
+
 // prettier-ignore
 // prettier causing issues here with eslint rules
-export async function serverSignIn(): Promise<
+export async function serverSignIn({ email, password }: ServerSignInProps ): Promise<
   AsyncActionResponse<ServerSignInResponse>
   > {
-  const userOrError = async () => asyncSignIn();
+  const userOrError = async () => asyncSignIn(email, password);
 
   return handleAsync(userOrError);
 }
@@ -46,9 +57,50 @@ export async function serverSignOut(): Promise<
   
 }
 
+export async function resetPasswordRequestEmail(
+  email: string
+): Promise<AsyncActionResponse<void>> {
+  const asyncPasswordResetEmail = async () =>
+    UNAUTHPOST<ResetPasswordRequestProps, void>(
+      "api/v1/auth/reset-password/request",
+      "no-store",
+      {
+        email,
+      }
+    );
+
+  return handleAsync(asyncPasswordResetEmail);
+}
+
+// REMOVE EMAIL FROM PARAMS AFTER BACKEND CHANGES
+export async function resetPassword(
+  email: string,
+  password: string,
+  token: string
+): Promise<AsyncActionResponse<void>> {
+  const asyncResetPassword = async () =>
+    UNAUTHPOST<ResetPasswordRequestProps, void>(
+      "api/v1/auth/reset-password",
+      "no-store",
+      {
+        email,
+        password,
+        token,
+      }
+    );
+
+  return handleAsync(asyncResetPassword);
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
-async function asyncSignIn(): Promise<ServerSignInResponse> {
+async function asyncSignIn(
+  email: string,
+  password: string
+): Promise<ServerSignInResponse> {
+  console.log("email: ", email);
+  console.log("password: ", password);
+
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
@@ -59,12 +111,14 @@ async function asyncSignIn(): Promise<ServerSignInResponse> {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "l.castro@outlook.com",
-          password: "password",
+          // email: "l.castro@outlook.com",
+          // password: "password",
+          email,
+          password,
         }),
         credentials: "include",
         cache: "no-store",
-      },
+      }
     );
 
     if (!res.ok) {
