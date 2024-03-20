@@ -43,8 +43,11 @@ const routePaths = {
   weeklyCheckIn(teamId: string) {
     return `/my-voyage/${teamId}/sprints/weekly-checkin`;
   },
-  createMeeting(teamId: string) {
-    return `/my-voyage/${teamId}/sprints/create-meeting`;
+  createMeeting(teamId: string, sprintNumber: string) {
+    return `/my-voyage/${teamId}/sprints/${sprintNumber}/create`;
+  },
+  editMeeting(teamId: string, sprintNumber: string, meetingId: string) {
+    return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/edit`;
   },
   addTopic(teamId: string) {
     return `/my-voyage/${teamId}/sprints/add-topic`;

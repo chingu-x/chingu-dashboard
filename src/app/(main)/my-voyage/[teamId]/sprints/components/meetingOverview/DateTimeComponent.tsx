@@ -20,8 +20,5 @@ export default function DateTimeComponent({
 
   if (!isMounted) return null;
 
-  const getMeetingTime = () => {
-    return formatInTimeZone(dateTime, timezone, "k:mm (zzz)");
-  };
-  return <>{getMeetingTime()}</>;
+  return <>{formatInTimeZone(dateTime, timezone, "k:mm (zzz)")}</>;
 }

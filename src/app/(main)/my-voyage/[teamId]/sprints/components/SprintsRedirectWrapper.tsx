@@ -41,7 +41,7 @@ export default function SprintsRedirectWrapper({
 
   if (teamId && currentMeetingId) {
     return redirect(
-      `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`
+      `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`,
     );
   }
 

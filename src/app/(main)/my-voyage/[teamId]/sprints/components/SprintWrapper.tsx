@@ -5,6 +5,7 @@ import MeetingOverview from "./meetingOverview/MeetingOverview";
 import { mockMeetingData } from "./fixtures/Meeting";
 import { mockSprintsData } from "./fixtures/Sprints";
 
+import SprintActions from "./SprintActions";
 import MeetingProvider from "@/sprints/providers/MeetingProvider";
 import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
@@ -63,6 +64,10 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
         />
       </VoyagePageBannerContainer>
       <ProgressStepper />
+      <SprintActions
+        meetingId={params.meetingId}
+        sprintNumber={params.sprintNumber}
+      />
       <MeetingOverview
         title={meeting.title}
         dateTime={meeting.dateTime}
