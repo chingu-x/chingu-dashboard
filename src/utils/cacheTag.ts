@@ -4,5 +4,6 @@
 export enum CacheTag {
   ideation = "ideation",
   me = "me",
+  resources = "resources",
   sprint = "sprint",
 }
