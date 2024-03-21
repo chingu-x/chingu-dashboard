@@ -11,5 +11,5 @@ export default function getCurrentSprint(sprints: Sprint[]) {
   // );
   // return currentSprint[0];
 
-  return sprints[3];
+  return sprints[5];
 }

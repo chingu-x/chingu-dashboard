@@ -101,7 +101,7 @@ export async function addMeeting({
 
   const addMeetingAsync = () =>
     POST<AddMeetingBody, AddMeetingResponse>(
-      `api/v1/voyages/sprints/${sprintNumber}/teams/${teamId}/meeting`,
+      `api/v1/voyages/sprints/${sprintNumber}/teams/${teamId}/meetings`,
       token,
       "default",
       { title, dateTime, meetingLink, notes },

@@ -2,15 +2,14 @@ import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
 import EmptySprintWrapper from "@/sprints/components/EmptySprintWrapper";
 
-interface SprintPageProps {
+interface EmptySprintPageProps {
   params: {
     teamId: string;
     sprintNumber: string;
-    meetingId: string;
   };
 }
 
-export default function EmptySprintPage({ params }: SprintPageProps) {
+export default function EmptySprintPage({ params }: EmptySprintPageProps) {
   return (
     <Suspense fallback={<Spinner />}>
       <EmptySprintWrapper params={params} />
