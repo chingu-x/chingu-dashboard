@@ -23,7 +23,7 @@ export async function getCurrentVoyageData<X, Y>({
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
     );
   }
 

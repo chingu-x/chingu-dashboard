@@ -52,7 +52,7 @@ export function validateTextInput({
   if (maxLen) {
     rules = rules.refine(
       (val) => val.length <= maxLen,
-      (val) => ({ message: `Character length ${val.length}/${maxLen}` })
+      (val) => ({ message: `Character length ${val.length}/${maxLen}` }),
     );
   }
 
