@@ -30,7 +30,7 @@ export default function MeetingOverview({
   };
 
   return (
-    <div className="grid grid-rows-[92px_1fr] 2xl:grid-rows-1 grid-cols-[230px_1fr] 2xl:grid-cols-[156px_1fr_230px] justify-between items-start 2xl:items-center w-full p-10 bg-base-200 rounded-2xl gap-5 xl:gap-x-10 2xl:gap-x-16 3xl:gap-x-[100px]">
+    <div className="grid grid-rows-[92px_1fr] 2xl:grid-rows-1 grid-cols-[230px_1fr] 2xl:grid-cols-[180px_1fr_230px] justify-between items-start 2xl:items-center w-full p-10 bg-base-200 rounded-2xl gap-5 xl:gap-x-10 2xl:gap-x-16 3xl:gap-x-[100px]">
       <div className="flex flex-col p-4 text-base font-medium capitalize rounded-lg bg-base-100 gap-y-5 text-base-300">
         <p className="flex items-center gap-x-2">
           <CalendarDaysIcon className="w-[15px] h-[15px]" />

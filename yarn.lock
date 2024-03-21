@@ -6716,7 +6716,7 @@ __metadata:
     class-variance-authority: "npm:^0.7.0"
     cypress: "npm:^12.17.3"
     date-fns: "npm:2.30.0"
-    date-fns-tz: "npm:^2.0.1"
+    date-fns-tz: "npm:2.0.1"
     eslint: "npm:8.46.0"
     eslint-config-next: "npm:^14.0.3"
     eslint-config-prettier: "npm:^8.10.0"
@@ -7491,7 +7491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns-tz@npm:^2.0.1":
+"date-fns-tz@npm:2.0.1":
   version: 2.0.1
   resolution: "date-fns-tz@npm:2.0.1"
   peerDependencies:

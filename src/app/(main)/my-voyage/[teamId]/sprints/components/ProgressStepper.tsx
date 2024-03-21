@@ -23,14 +23,21 @@ export default function ProgressStepper() {
 
   function handleClick(sprintNumber: number) {
     const meetingId = sprints.find((sprint) => sprint.number === sprintNumber)!
-      .meetingData.id;
-    router.push(
-      routePaths.sprintPage(
-        params.teamId,
-        sprintNumber.toString(),
-        meetingId.toString(),
-      ),
-    );
+      .teamMeetings[0]?.id;
+
+    if (meetingId) {
+      router.push(
+        routePaths.sprintPage(
+          params.teamId,
+          sprintNumber.toString(),
+          meetingId.toString(),
+        ),
+      );
+    } else {
+      router.push(
+        routePaths.emptySprintPage(params.teamId, sprintNumber.toString()),
+      );
+    }
   }
 
   const steppers = [

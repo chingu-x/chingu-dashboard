@@ -12,15 +12,15 @@ export interface Agenda {
 
 export interface Meeting {
   id: number;
-  sprint: {
+  sprint?: {
     id: number;
     number: number;
   };
-  title: string;
-  dateTime: string;
-  meetingLink: string;
-  notes: string;
-  agendas: Agenda[];
+  title?: string;
+  dateTime?: string;
+  meetingLink?: string;
+  notes?: string;
+  agendas?: Agenda[];
 }
 
 // TODO: Notes/Sprint Planning/Retrospective&Review will be added later
@@ -29,7 +29,7 @@ export interface Sprint {
   number: number;
   startDate: string;
   endDate: string;
-  meetingData: Meeting | Pick<Meeting, "id">;
+  teamMeetings: Meeting[];
 }
 
 interface SprintState {
@@ -49,23 +49,24 @@ export const sprintSlice = createSlice({
   initialState,
   reducers: {
     fetchSprints: (state, action: PayloadAction<Sprint[]>) => {
-      console.log("fetch sprints");
-      console.log(action.payload);
-
       state.sprints = action.payload;
       state.loading = true;
     },
     fetchMeeting: (state, action: PayloadAction<Meeting>) => {
-      console.log("fetch meeting");
-      console.log(action.payload);
+      const sprintId = action.payload.sprint?.id;
 
-      const sprintId = action.payload.sprint.id;
       const updatedSprints = state.sprints.map((sprint) => {
-        if (sprint.id === sprintId)
-          return { ...sprint, meetingData: action.payload };
+        if (sprint.id === sprintId) {
+          const updatedMeetings = sprint.teamMeetings.map((meeting) => {
+            if (meeting.id === action.payload.id) {
+              return action.payload;
+            }
+            return meeting;
+          });
+          return { ...sprint, teamMeetings: updatedMeetings };
+        }
         return sprint;
       });
-
       state.sprints = updatedSprints;
       state.loading = true;
     },
@@ -73,8 +74,6 @@ export const sprintSlice = createSlice({
       state,
       action: PayloadAction<{ currentSprintNumber: number }>,
     ) => {
-      console.log("set current sprint number");
-      console.log(action.payload);
       state.currentSprintNumber = action.payload.currentSprintNumber;
     },
     setSprintsLoadingTrue: (state) => {
