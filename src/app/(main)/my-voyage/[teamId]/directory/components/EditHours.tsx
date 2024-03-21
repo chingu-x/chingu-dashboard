@@ -59,7 +59,10 @@ export default function EditHours({
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { avgHours } = data;
-    const [, error] = await editHoursAction({ teamId, hrPerSprint: Number(avgHours) });
+    const [, error] = await editHoursAction({
+      teamId,
+      hrPerSprint: Number(avgHours),
+    });
 
     if (error) {
       dispatch(
@@ -97,7 +100,7 @@ export default function EditHours({
   ) : (
     <Button
       variant="link"
-      className="flex justify-between border-2 w-full outline-none rounded-lg px-3.5 py-2.5 mt-2 mb-6 text-base-300 border-neutral-content hover:border-base-300"
+      className="text-base flex justify-between border-2 w-full outline-none rounded-lg px-3.5 py-2.5 mt-2 mb-6 text-base-300 border-neutral-content hover:border-base-300"
       onClick={handleClick}
     >
       {hrPerSprint ? `${hrPerSprint}` : "Add Hours"}

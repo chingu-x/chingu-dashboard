@@ -30,7 +30,7 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
     if (newRef.current && !newRef.current.contains(e.target as Node)) {
       setIsEditing(false);
     }
-  };
+  }
 
   function handleClick() {
     setIsEditing(true);
@@ -71,7 +71,7 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
               handleClick={handleClick}
             />
           ) : (
-            hrPerSprint
+            <span className="3xl:pl-4">{hrPerSprint}</span>
           )}
         </div>
       </TeamMemberDataItemWrapper>
