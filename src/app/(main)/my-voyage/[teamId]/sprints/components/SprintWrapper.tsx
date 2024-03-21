@@ -1,21 +1,16 @@
 import ProgressStepper from "./ProgressStepper";
 import MeetingOverview from "./meetingOverview/MeetingOverview";
-
-// import { mockMeetingData } from "./fixtures/Meeting";
-// import { mockSprintsData } from "./fixtures/Sprints";
-
 import { fetchSprints } from "./SprintsRedirectWrapper";
 import SprintActions from "./SprintActions";
 import MeetingProvider from "@/sprints/providers/MeetingProvider";
-import Banner from "@/components/banner/Banner";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 
-import { Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
-import getCurrentSprint from "@/utils/getCurrentSprint";
 import {
   FetchMeetingProps,
   FetchMeetingResponse,
 } from "@/sprints/sprintsService";
+import { Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
+
+import getCurrentSprint from "@/utils/getCurrentSprint";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
@@ -46,11 +41,11 @@ interface SprintWrapperProps {
 }
 
 export default async function SprintWrapper({ params }: SprintWrapperProps) {
+  const teamId = Number(params.teamId);
+  const meetingId = Number(params.meetingId);
+
   let sprintsData: Sprint[] = [];
   let meetingData: Meeting = { id: +params.meetingId };
-
-  const teamId = +params.teamId;
-  const meetingId = +params.meetingId;
 
   if (teamId) {
     const [res, error] = await fetchSprints({ teamId });
@@ -77,19 +72,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   const currentSprintNumber = number;
 
   return (
-    <div className="flex flex-col w-full gap-y-10">
-      <VoyagePageBannerContainer
-        title="Sprints"
-        description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
-      >
-        <Banner
-          imageLight="/img/sprints_banner_light.png"
-          imageDark="/img/sprints_banner_dark.png"
-          alt="sprints_banner"
-          height="h-[200px]"
-          width="w-[276px]"
-        />
-      </VoyagePageBannerContainer>
+    <>
       <ProgressStepper />
       <SprintActions
         teamId={params.teamId}
@@ -107,6 +90,6 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         meeting={meetingData}
         currentSprintNumber={currentSprintNumber}
       />
-    </div>
+    </>
   );
 }
