@@ -2,14 +2,12 @@ import { redirect } from "next/navigation";
 import IdeationContainer from "./IdeationContainer";
 import IdeationProvider from "./IdeationProvider";
 import CreateIdeationContainer from "./CreateIdeationContainer";
-import { getUser } from "@/utils/getUser";
 import { FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import Banner from "@/components/banner/Banner";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
 import { CacheTag } from "@/utils/cacheTag";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
@@ -46,51 +44,29 @@ export default async function IdeationComponentWrapper({
 }: IdeationComponentWrapperProps) {
   let projectIdeas: IdeationData[] = [];
   const teamId = Number(params.teamId);
-  // let currentVoyageTeam: VoyageTeamMember | undefined;
-  // const teamId = Number(params.teamId);
 
-  // const [user, error] = await getUser();
-
-  // if (user) {
-  //   currentVoyageTeam = user.voyageTeamMembers.find(
-  //     (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
-  //   );
-  // }
-
-  // if (error) {
-  //   return `Error: ${error?.message}`;
-  // }
-
-  // if (teamId === currentVoyageTeam?.voyageTeamId) {
-  //   const [res, error] = await fetchProjectIdeas({ teamId });
-
-  //   if (res) {
-  //     projectIdeas = res;
-  //   } else {
-  //     return `Error: ${error?.message}`;
-  //   }
-  // } else {
-  //   redirect("/");
-  // }
-
-  const fetchFunctionConfig = {
+  const { errorResponse, data, shouldRedirect } = await getCurrentVoyageData({
     teamId,
-    func: fetchProjectIdeas,
     args: { teamId },
-  };
+    func: fetchProjectIdeas,
+  });
 
-  const result = await getCurrentVoyageData(fetchFunctionConfig);
+  if (errorResponse) {
+    return errorResponse;
+  }
 
-  if (typeof result === "string") {
-    return result; // handles unauthenticated state
-  } else {
-    const [data, error] = result;
+  if (shouldRedirect) {
+    redirect("/");
+  }
+
+  if (data) {
+    const [res, error] = data;
+
     if (error) {
-      console.log(error);
-      return `Error: ${error.message}`; // handles errors from the fetch ideation call
+      return `Error: ${error.message}`;
     }
 
-    projectIdeas = data!;
+    projectIdeas = res!;
   }
 
   function renderProjects() {
