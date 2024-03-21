@@ -1,9 +1,4 @@
-import { format, isToday, isTomorrow, parseISO } from "date-fns";
-import {
-  ArrowUpRightIcon,
-  CalendarDaysIcon,
-  ClockIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 
 import DateTimeComponent from "./DateTimeComponent";
 import Button from "@/components/Button";
@@ -21,25 +16,10 @@ export default function MeetingOverview({
   meetingLink,
   notes,
 }: MeetingOverviewProps) {
-  const getMeetingDate = () => {
-    const dateTimeTemp = parseISO(dateTime);
-    if (isToday(dateTimeTemp)) return "today";
-    if (isTomorrow(dateTimeTemp)) return "tomorrow";
-
-    return format(dateTimeTemp, "MMM, d");
-  };
-
   return (
     <div className="grid grid-rows-[92px_1fr] 2xl:grid-rows-1 grid-cols-[230px_1fr] 2xl:grid-cols-[180px_1fr_230px] justify-between items-start 2xl:items-center w-full p-10 bg-base-200 rounded-2xl gap-5 xl:gap-x-10 2xl:gap-x-16 3xl:gap-x-[100px]">
-      <div className="flex flex-col p-4 text-base font-medium capitalize rounded-lg bg-base-100 gap-y-5 text-base-300">
-        <p className="flex items-center gap-x-2">
-          <CalendarDaysIcon className="w-[15px] h-[15px]" />
-          {getMeetingDate()}
-        </p>
-        <p className="flex items-center gap-x-2">
-          <ClockIcon className="w-[15px] h-[15px]" />
-          <DateTimeComponent dateTime={dateTime} />
-        </p>
+      <div className="min-h-[100px] flex flex-col p-4 text-base font-medium capitalize rounded-lg bg-base-100 gap-y-5 text-base-300">
+        <DateTimeComponent dateTime={dateTime} />
       </div>
       <div className="flex flex-col w-full row-span-2 gap-y-2 2xl:row-auto">
         <h2 className="text-xl font-semibold">{title}</h2>
