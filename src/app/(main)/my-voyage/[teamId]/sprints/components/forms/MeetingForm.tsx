@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { parseISO } from "date-fns";
 
 import { LinkIcon } from "@heroicons/react/24/outline";
 
@@ -18,7 +19,6 @@ import { useSprint } from "@/store/hooks";
 // import useServerAction from "@/hooks/useServerAction";
 // import { addMeeting, editMeeting } from "../../sprintsService";
 import { Meeting } from "@/store/features/sprint/sprintSlice";
-// import { parseISO } from "date-fns";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -43,7 +43,7 @@ export default function MeetingForm() {
   const params = useParams<{ meetingId: string }>();
   // const dispatch = useAppDispatch();
   const { sprints } = useSprint();
-  // const [editMode, setEditMode] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
   const [meetingData, setMeetingData] = useState<Meeting>();
 
   // const {
@@ -86,44 +86,45 @@ export default function MeetingForm() {
   useEffect(() => {
     if (params.meetingId) {
       const meeting = sprints.find(
-        (sprint) => sprint.meetingData.id === +params.meetingId,
-      )?.meetingData;
+        (sprint) => sprint.teamMeetings[0].id === +params.meetingId,
+      )?.teamMeetings[0];
 
       setMeetingData(meeting as Meeting);
-      // setEditMode(true);
+      setEditMode(true);
     }
   }, [params.meetingId, sprints]);
 
   useEffect(() => {
-    reset({
-      title: meetingData?.title,
-      description: meetingData?.notes,
-      // meetingDateTime: parseISO(meetingData?.dateTime!),
-      meetingLink: meetingData?.meetingLink,
-    });
+    if (meetingData && meetingData.dateTime) {
+      reset({
+        title: meetingData?.title,
+        description: meetingData?.notes,
+        meetingLink: meetingData?.meetingLink,
+        meetingDateTime: parseISO(meetingData?.dateTime),
+      });
+    }
   }, [meetingData, reset]);
 
-  // function renderButtonContent() {
-  //   if (editIdeationLoading || addIdeationLoading) {
-  //     return <Spinner />;
-  //   }
+  function renderButtonContent() {
+    // if (editIdeationLoading || addIdeationLoading) {
+    //   return <Spinner />;
+    // }
 
-  //   return editMode ? "Save Changes" : "Save";
-  // }
-
-  console.log(meetingData);
+    return editMode ? "Save Changes" : "Save";
+  }
 
   return (
-    // TODO: Create some general form wrapper component
     <div className="flex flex-col items-center w-full bg-base-200 rounded-2xl">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-4 max-w-[650px] p-10 w-full"
       >
         <div className="flex flex-col mb-6 gap-y-4">
-          <h2 className="text-3xl font-bold text-base-300">Create Meeting</h2>
+          <h2 className="text-3xl font-bold text-base-300">
+            {editMode ? "Edit" : "Create"} Meeting
+          </h2>
           <p className="text-lg font-medium text-base-300">
-            Create a new meeting for your team.
+            {editMode ? "Edit the" : "Create a new"} meeting for your team.
           </p>
         </div>
         <TextInput
@@ -168,7 +169,7 @@ export default function MeetingForm() {
           size="lg"
           variant="primary"
         >
-          Create
+          {renderButtonContent()}
         </Button>
         <Button type="button" title="cancel" size="lg" variant="link">
           Cancel
