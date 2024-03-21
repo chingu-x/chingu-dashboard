@@ -1,15 +1,15 @@
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import IdeationContainer from "./IdeationContainer";
 import IdeationProvider from "./IdeationProvider";
 import CreateIdeationContainer from "./CreateIdeationContainer";
-import { getUser } from "@/utils/getUser";
+// import { getUser } from "@/utils/getUser";
 import { FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import Banner from "@/components/banner/Banner";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
+// import { VoyageTeamMember } from "@/store/features/user/userSlice";
 import { CacheTag } from "@/utils/cacheTag";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
@@ -29,7 +29,7 @@ export async function fetchProjectIdeas({
       `api/v1/voyages/${teamId}/ideations`,
       token,
       "force-cache",
-      CacheTag.ideation
+      CacheTag.ideation,
     );
 
   return await handleAsync(fetchProjectIdeasAsync);
@@ -98,17 +98,17 @@ export default async function IdeationComponentWrapper({
       return (
         <div className="flex w-full mt-20 h-[290px] gap-x-48">
           <div className="flex flex-col justify-center">
-            <h1 className="text-base-300 font-medium text-xl">
+            <h1 className="text-xl font-medium text-base-300">
               Be the First to Share!
             </h1>
-            <p className="text-base-300 font-medium text-base my-4">
+            <p className="my-4 text-base font-medium text-base-300">
               It looks like no one has posted anything yet, but don’t worry, you
               can be the first to create a new project idea and vision for your
               team!
             </p>
-            <p className="text-base-300 font-medium text-base">
+            <p className="text-base font-medium text-base-300">
               Click on the{" "}
-              <b className="text-base-300 font-semibold text-base">
+              <b className="text-base font-semibold text-base-300">
                 Add Project Idea
               </b>{" "}
               button at the top to get started!
