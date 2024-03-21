@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,12 +13,15 @@ import Button from "@/components/Button";
 import DateTimePicker from "@/components/inputs/DateTimePicker";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
+import Spinner from "@/components/Spinner";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { useSprint } from "@/store/hooks";
-// import useServerAction from "@/hooks/useServerAction";
-// import { addMeeting, editMeeting } from "../../sprintsService";
+import { useSprint, useAppDispatch } from "@/store/hooks";
 import { Meeting } from "@/store/features/sprint/sprintSlice";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import useServerAction from "@/hooks/useServerAction";
+import { addMeeting, editMeeting } from "@/sprints/sprintsService";
+import routePaths from "@/utils/routePaths";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -26,11 +29,11 @@ const validationSchema = z.object({
     required: true,
     maxLen: 50,
   }),
-  description: validateTextInput({
+  notes: validateTextInput({
     inputName: "Description",
     required: true,
   }),
-  meetingDateTime: z.date(),
+  dateTime: z.date(),
   meetingLink: validateTextInput({
     inputName: "Meeting Link",
     required: true,
@@ -40,23 +43,34 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function MeetingForm() {
-  const params = useParams<{ meetingId: string }>();
-  // const dispatch = useAppDispatch();
+  const router = useRouter();
+  const params = useParams<{
+    teamId: string;
+    sprintNumber: string;
+    meetingId: string;
+  }>();
+  const [teamId, sprintNumber, meetingId] = [
+    Number(params.teamId),
+    Number(params.sprintNumber),
+    Number(params.meetingId),
+  ];
+
+  const dispatch = useAppDispatch();
   const { sprints } = useSprint();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [meetingData, setMeetingData] = useState<Meeting>();
 
-  // const {
-  //   runAction: editIdeationAction,
-  //   isLoading: editIdeationLoading,
-  //   setIsLoading: setEditIdeationLoading,
-  // } = useServerAction(editMeeting);
+  const {
+    runAction: editMeetingAction,
+    isLoading: editMeetingLoading,
+    setIsLoading: setEditMeetingLoading,
+  } = useServerAction(editMeeting);
 
-  // const {
-  //   runAction: addIdeationAction,
-  //   isLoading: addIdeationLoading,
-  //   setIsLoading: setAddIdeationLoading,
-  // } = useServerAction(addMeeting);
+  const {
+    runAction: addMeetingAction,
+    isLoading: addMeetingLoading,
+    setIsLoading: setAddMeetingLoading,
+  } = useServerAction(addMeeting);
 
   const {
     register,
@@ -66,12 +80,13 @@ export default function MeetingForm() {
     reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
-  const date = watch("meetingDateTime");
+  const date = watch("dateTime");
 
-  const setCustomValue = (id: "meetingDateTime", value: Date) => {
+  const setCustomValue = (id: "dateTime", value: Date) => {
     setValue(id, value, {
       shouldDirty: true,
       shouldTouch: true,
@@ -79,8 +94,43 @@ export default function MeetingForm() {
     });
   };
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    const dateTime = data.dateTime.toISOString();
+
+    if (editMode) {
+      const [res, error] = await editMeetingAction({
+        ...data,
+        dateTime,
+        meetingId,
+      });
+
+      if (res) {
+        router.push(routePaths.sprintsPage(teamId.toString()));
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+
+        setEditMeetingLoading(false);
+      }
+    } else {
+      const payload = { ...data, dateTime, teamId, sprintNumber };
+
+      const [res, error] = await addMeetingAction(payload);
+
+      if (res) {
+        router.push(routePaths.sprintsPage(teamId.toString()));
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+        setAddMeetingLoading(false);
+      }
+    }
   };
 
   useEffect(() => {
@@ -98,17 +148,17 @@ export default function MeetingForm() {
     if (meetingData && meetingData.dateTime) {
       reset({
         title: meetingData?.title,
-        description: meetingData?.notes,
+        notes: meetingData?.notes,
         meetingLink: meetingData?.meetingLink,
-        meetingDateTime: parseISO(meetingData?.dateTime),
+        dateTime: parseISO(meetingData?.dateTime),
       });
     }
   }, [meetingData, reset]);
 
   function renderButtonContent() {
-    // if (editIdeationLoading || addIdeationLoading) {
-    //   return <Spinner />;
-    // }
+    if (editMeetingLoading || addMeetingLoading) {
+      return <Spinner />;
+    }
 
     return editMode ? "Save Changes" : "Save";
   }
@@ -140,8 +190,8 @@ export default function MeetingForm() {
           id="description"
           label="description"
           placeholder="Please provide a brief description of the goals for this meeting."
-          {...register("description")}
-          errorMessage={errors.description?.message}
+          {...register("notes")}
+          errorMessage={errors.notes?.message}
           defaultValue={meetingData?.notes ?? ""}
         />
         <DateTimePicker
@@ -149,9 +199,9 @@ export default function MeetingForm() {
           placeholder="Select meeting date and time"
           label="Date & Time"
           selectedValue={date}
-          {...register("meetingDateTime")}
-          errorMessage={errors?.meetingDateTime?.message}
-          onChange={(value: Date) => setCustomValue("meetingDateTime", value)}
+          {...register("dateTime")}
+          errorMessage={errors?.dateTime?.message}
+          onChange={(value: Date) => setCustomValue("dateTime", value)}
         />
         <TextInput
           id="meetingLink"
@@ -165,7 +215,9 @@ export default function MeetingForm() {
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid}
+          disabled={
+            !isDirty || !isValid || editMeetingLoading || addMeetingLoading
+          }
           size="lg"
           variant="primary"
         >
