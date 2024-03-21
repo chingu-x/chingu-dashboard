@@ -1,8 +1,6 @@
-import { redirect } from "next/navigation";
 import { getUser } from "./getUser";
 import { AsyncActionResponse } from "./handleAsync";
 import { VoyageTeamMember } from "@/store/features/user/userSlice";
-import { AppError } from "@/types/types";
 
 interface GetCurrentVoyageDataProps<X, Y> {
   teamId: number;
@@ -10,14 +8,21 @@ interface GetCurrentVoyageDataProps<X, Y> {
   args: Y;
 }
 
+interface GetCurrentVoyageDataResponse<X> {
+  errorResponse: string;
+  data: AsyncActionResponse<X> | null;
+  shouldRedirect: boolean;
+}
+
 export async function getCurrentVoyageData<X, Y>({
   teamId,
   func,
   args,
-}: GetCurrentVoyageDataProps<X, Y>): Promise<
-  [X | null, AppError | null] | string
-> {
+}: GetCurrentVoyageDataProps<X, Y>): Promise<GetCurrentVoyageDataResponse<X>> {
   let currentVoyageTeam: VoyageTeamMember | undefined;
+  let errorResponse = "";
+  let data: AsyncActionResponse<X> | null = null;
+  let shouldRedirect = false;
 
   const [user, error] = await getUser();
 
@@ -28,12 +33,18 @@ export async function getCurrentVoyageData<X, Y>({
   }
 
   if (error) {
-    return `Error: ${error?.message}`;
+    errorResponse = `Error: ${error?.message}`;
   }
 
   if (teamId === currentVoyageTeam?.voyageTeamId) {
-    return await func({ ...args });
+    data = await func({ ...args });
   } else {
-    redirect("/");
+    shouldRedirect = true;
   }
+
+  return {
+    errorResponse,
+    data,
+    shouldRedirect,
+  };
 }
