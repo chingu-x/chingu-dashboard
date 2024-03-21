@@ -1,38 +1,62 @@
-import ProgressStepper from "./ProgressStepper";
+import { redirect } from "next/navigation";
 
+import { fetchSprints } from "./SprintsRedirectWrapper";
+import ProgressStepper from "./ProgressStepper";
 import EmptyState from "./EmptyState";
 import SprintActions from "./SprintActions";
-import Banner from "@/components/banner/Banner";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 
-interface SprintWrapperProps {
+import EmptySprintProvider from "@/sprints/providers/EmptySprintProvider";
+import getCurrentSprint from "@/utils/getCurrentSprint";
+import { Sprint } from "@/store/features/sprint/sprintSlice";
+
+interface EmptySprintWrapperProps {
   params: {
     teamId: string;
     sprintNumber: string;
   };
 }
 
-export default function SprintWrapper({ params }: SprintWrapperProps) {
+export default async function EmptySprintWrapper({
+  params,
+}: EmptySprintWrapperProps) {
+  const teamId = Number(params.teamId);
+  let sprintsData: Sprint[] = [];
+
+  if (teamId) {
+    const [res, error] = await fetchSprints({ teamId });
+
+    if (res) {
+      sprintsData = res.voyage.sprints;
+    } else {
+      return `Error: ${error?.message}`;
+    }
+  }
+
+  // Get current sprint number and current meeting id
+  const { teamMeetings, number } = getCurrentSprint(sprintsData);
+  const currentSprintNumber = number;
+  const currentMeetingId = teamMeetings[0]?.id;
+
+  // If a user tries to access this page directly, check if the current sprint's meetingId exists.
+  // If so, redirect to the existing meeting page.
+  if (currentMeetingId) {
+    redirect(
+      `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`,
+    );
+  }
+
   return (
-    <div className="flex flex-col w-full gap-y-10">
-      <VoyagePageBannerContainer
-        title="Sprints"
-        description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
-      >
-        <Banner
-          imageLight="/img/sprints_banner_light.png"
-          imageDark="/img/sprints_banner_dark.png"
-          alt="sprints_banner"
-          height="h-[200px]"
-          width="w-[276px]"
-        />
-      </VoyagePageBannerContainer>
+    <>
       <ProgressStepper />
       <SprintActions
         teamId={params.teamId}
         sprintNumber={params.sprintNumber}
       />
       <EmptyState />
-    </div>
+      <EmptySprintProvider
+        sprints={sprintsData}
+        currentSprintNumber={currentSprintNumber}
+      />
+    </>
   );
 }
