@@ -7,6 +7,7 @@ import {
   ServerStackIcon,
 } from "@heroicons/react/24/solid";
 import type { ComponentType } from "react";
+import dayjs from "dayjs";
 
 export const CHECKIN_STATUS = "Due today";
 
@@ -34,6 +35,8 @@ export type Event = {
   link: string;
   date: string;
 };
+
+export type SprintData = { start: dayjs.Dayjs; end: dayjs.Dayjs };
 
 export const getIdeationData = (): IdeationData => ({
   title: "Real Estate crowdsourcing",
@@ -123,3 +126,7 @@ export const getCalendarData = (): Event[] => [
     date: "3:00 PM",
   },
 ];
+export const getSprintData = (): SprintData => ({
+  start: dayjs().subtract(3, "day"),
+  end: dayjs().add(1, "day"),
+});

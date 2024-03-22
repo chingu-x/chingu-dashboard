@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 // eslint-disable-next-line no-relative-import-paths/no-relative-import-paths
-import type { Event } from "../mocks/voyageDashboardData";
+import type { Event, SprintData } from "../mocks/voyageDashboardData";
 // TODO: Fix the mocked types and import
 
 import { generateDate, months } from "./utils/calendar";
@@ -15,7 +15,7 @@ import Button from "@/components/Button";
 interface CalendarProps {
   sprintWeek?: number;
   eventList?: Event[] | null;
-  sprintRange?: { start: dayjs.Dayjs; end: dayjs.Dayjs };
+  sprintRange?: SprintData | null;
 }
 export default function Calendar({
   sprintWeek = 1,

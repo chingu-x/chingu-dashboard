@@ -1,11 +1,14 @@
 import dayjs from "dayjs";
 
+// eslint-disable-next-line no-relative-import-paths/no-relative-import-paths
+import { SprintData } from "../../mocks/voyageDashboardData";
+// TODO: Fix the mocked types and import
 export function generateClassString(
   date: dayjs.Dayjs,
   currentMonth: boolean,
   today: boolean = false,
   selectDate: dayjs.Dayjs,
-  sprintRange?: { start: dayjs.Dayjs; end: dayjs.Dayjs },
+  sprintRange?: SprintData | null,
 ) {
   let classes =
     "h-[50px] w-[48px] grid place-content-center hover:bg-base-100 transition-all cursor-pointer select-none";
