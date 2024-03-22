@@ -1,13 +1,12 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPassword } from "@/app/(auth)/authService";
 import TextInput from "@/components/inputs/TextInput";
 import Button from "@/components/Button";
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { useRouter } from "next/navigation";
 
 const validationSchema = z.object({
   password: validateTextInput({
