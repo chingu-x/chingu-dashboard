@@ -72,9 +72,7 @@ export async function resetPasswordRequestEmail(
   return handleAsync(asyncPasswordResetEmail);
 }
 
-// REMOVE EMAIL FROM PARAMS AFTER BACKEND CHANGES
 export async function resetPassword(
-  email: string,
   password: string,
   token: string,
 ): Promise<AsyncActionResponse<void>> {
@@ -83,7 +81,6 @@ export async function resetPassword(
       "api/v1/auth/reset-password",
       "no-store",
       {
-        email,
         password,
         token,
       },

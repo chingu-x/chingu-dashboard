@@ -7,6 +7,7 @@ import { resetPassword } from "@/app/(auth)/authService";
 import TextInput from "@/components/inputs/TextInput";
 import Button from "@/components/Button";
 import { validateTextInput } from "@/helpers/form/validateInput";
+import { useRouter } from "next/navigation";
 
 const validationSchema = z.object({
   password: validateTextInput({
@@ -26,6 +27,7 @@ type NewPasswordContainerProps = {
 function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  const router = useRouter();
 
   const {
     register,
@@ -37,11 +39,12 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     onClick();
-    // INPUT YOUR EMAIL HERE
-    const email = "";
     try {
       if (token) {
-        await resetPassword(email, data.password, token);
+        // TODO: will need to refactor once we can figure out the issue with containerState
+        await resetPassword(data.password, token).then(() =>
+          router.push("/sign-in"),
+        );
       }
     } catch (error) {
       console.error("Error to change password: ", error);
