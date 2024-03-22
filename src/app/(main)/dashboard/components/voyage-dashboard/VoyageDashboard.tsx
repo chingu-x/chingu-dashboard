@@ -21,12 +21,13 @@ function VoyageDashboard() {
     techStackData,
     resourceData,
     calendarData,
+    sprintData,
   } = useVoyageDashboardLogic(false);
 
   return (
     <div className="flex flex-row gap-x-6">
       <div className="flex flex-col gap-y-6 flex-grow-2 w-full">
-        <CalendarWidget eventList={calendarData} />
+        <CalendarWidget eventList={calendarData} sprintRange={sprintData} />
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />
       </div>

@@ -3,6 +3,7 @@ import {
   getFeaturesData,
   getIdeationData,
   getResourcesData,
+  getSprintData,
   getTechStackData,
 } from "./mocks/voyageDashboardData";
 
@@ -12,6 +13,7 @@ const useVoyageDashboardLogic = (filledState: boolean) => {
   const techStackData = filledState ? getTechStackData() : null;
   const resourceData = filledState ? getResourcesData() : null;
   const calendarData = filledState ? getCalendarData() : null;
+  const sprintData = filledState ? getSprintData() : null;
 
   return {
     ideationData,
@@ -19,6 +21,7 @@ const useVoyageDashboardLogic = (filledState: boolean) => {
     techStackData,
     resourceData,
     calendarData,
+    sprintData,
   };
 };
 
