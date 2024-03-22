@@ -1,13 +1,12 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { serverSignIn } from "@/app/(auth)/authService";
-import { useAppDispatch, useAuth, useUser } from "@/store/hooks";
+import Link from "next/link";
+import { useAuth, useUser } from "@/store/hooks";
 import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
-import { clientSignIn } from "@/store/features/auth/authSlice";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
+import routePaths from "@/utils/routePaths";
 
 const notificationCount = 4;
 
@@ -16,21 +15,6 @@ export default function AuthHeader() {
   const { avatar } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
-
-  async function handleClick() {
-    const [res, error] = await serverSignIn();
-
-    if (res) {
-      dispatch(clientSignIn());
-    }
-
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-    }
-  }
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -63,8 +47,8 @@ export default function AuthHeader() {
       </div>
     </>
   ) : (
-    <Button title="Login" type="button" onClick={handleClick}>
-      Log In
-    </Button>
+    <Link href={routePaths.signIn()}>
+      <Button>Log In</Button>
+    </Link>
   );
 }
