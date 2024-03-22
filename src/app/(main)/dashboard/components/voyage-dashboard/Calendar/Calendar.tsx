@@ -8,6 +8,7 @@ import type { Event } from "../mocks/voyageDashboardData";
 
 import { generateDate, months } from "./utils/calendar";
 import cn from "./utils/cn";
+import { generateClassString } from "./utils/generateClassString";
 import SprintItem from "@/components/sprintItem/SprintItem";
 import Button from "@/components/Button";
 
@@ -26,64 +27,29 @@ export default function Calendar({
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
 
-  function generateClassString(
-    date: dayjs.Dayjs,
-    currentMonth: boolean,
-    today: boolean = false,
-    selectDate: dayjs.Dayjs,
-    sprintRange?: { start: dayjs.Dayjs; end: dayjs.Dayjs },
-  ) {
-    let classes =
-      "h-[50px] w-[50px] grid place-content-center hover:bg-base-100 transition-all cursor-pointer select-none";
-
-    const isSelectedDate =
-      selectDate.toDate().toDateString() === date.toDate().toDateString();
-    const isWithinSprintRange =
-      sprintRange &&
-      (date.isSame(sprintRange.start.startOf("day")) ||
-        date.isAfter(sprintRange.start.startOf("day"))) &&
-      date.isBefore(sprintRange.end.endOf("day"));
-
-    if (!currentMonth) {
-      classes += " text-gray-400";
-    }
-
-    if (isSelectedDate) {
-      classes += " bg-primary text-white";
-    } else if (isWithinSprintRange && !today) {
-      classes += " bg-primary-content";
-    }
-
-    if (today) {
-      classes += " bg-primary text-white";
-    }
-
-    return classes;
-  }
-
   return (
-    <div className="flex gap-10 justify-center items-start">
-      <div className="w-[400px] p-[20px]">
+    <div className="flex justify-center items-start h-full">
+      <div className="w-[400px] p-6 h-full border-r-2">
         <div className="flex justify-center items-center">
-          <div className="flex gap-10 items-center">
+          <div className="flex gap-10 items-center w-full justify-center relative">
             <ArrowLeftIcon
-              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all"
+              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute left-[14px]"
               onClick={() => {
                 setToday(today.month(today.month() - 1));
               }}
             />
-            <h1 className="select-none font-semibold">
+            <h1 className="text-2xl select-none font-semibold">
               {months[today.month()]} {today.year()}
             </h1>
             <ArrowRightIcon
-              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all"
+              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute right-[14px]"
               onClick={() => {
                 setToday(today.month(today.month() + 1));
               }}
             />
           </div>
         </div>
-        <div className="grid grid-cols-7 ">
+        <div className="grid grid-cols-7 font-semibold">
           {days.map((day) => (
             <h1
               key={day}
@@ -99,7 +65,7 @@ export default function Calendar({
             ({ date, currentMonth, today }) => (
               <div
                 key={date.unix()}
-                className="p-2 text-center h-[52px] grid place-content-center text-sm border-t border-l"
+                className="text-center h-[52px] grid place-content-center text-sm border"
               >
                 <h1
                   className={cn(
@@ -122,22 +88,28 @@ export default function Calendar({
           )}
         </div>
       </div>
-      <div className="w-[250px] sm:px-5">
-        <h1 className="text-xl font-semibold pb-3">
-          {selectDate.toDate().toDateString()}
-        </h1>
-        <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
-          Sprint Week {sprintWeek}
-        </p>
-        {eventList?.map((event) => (
-          <div key={event.title}>
-            <SprintItem
-              title={event.title}
-              link={event.link ?? ""}
-              time={event.date}
-            />
-          </div>
-        ))}
+      <div className="w-[250px] h-full flex flex-col justify-between p-6">
+        <div>
+          <h1 className="text-xl font-semibold pb-3">
+            {selectDate.toDate().toLocaleDateString("en-US", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+            })}
+          </h1>
+          <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
+            Sprint Week {sprintWeek}
+          </p>
+          {eventList?.map((event) => (
+            <div key={event.title}>
+              <SprintItem
+                title={event.title}
+                link={event.link ?? ""}
+                time={event.date}
+              />
+            </div>
+          ))}
+        </div>
         <Button
           className="self-end p-1 rounded text-base font-medium"
           onClick={() => {
