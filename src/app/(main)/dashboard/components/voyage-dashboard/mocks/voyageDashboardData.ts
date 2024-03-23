@@ -36,7 +36,12 @@ export type Event = {
   date: string;
 };
 
-export type SprintData = { start: dayjs.Dayjs; end: dayjs.Dayjs };
+export type SprintData = {
+  number: number;
+  startDate: dayjs.Dayjs;
+  endDate: dayjs.Dayjs;
+  eventList?: Event[];
+};
 
 export const getIdeationData = (): IdeationData => ({
   title: "Real Estate crowdsourcing",
@@ -118,15 +123,17 @@ export const getCalendarData = (): Event[] => [
   {
     title: "Sprint Planning",
     link: "https://www.agileway.it/sprint-planning-meeting/",
-    date: "11:00 AM",
+    date: dayjs().format("YYYY-MM-DD h:mm A"),
   },
   {
     title: "Sprint Review",
     link: "https://www.nuclino.com/articles/sprint-review#:~:text=A%20sprint%20review%20is%20an,than%20a%20one%2Dsided%20presentation.",
-    date: "3:00 PM",
+    date: dayjs().subtract(2, "day").format("YYYY-MM-DD h:mm A"),
   },
 ];
 export const getSprintData = (): SprintData => ({
-  start: dayjs().subtract(3, "day"),
-  end: dayjs().add(1, "day"),
+  number: 1,
+  startDate: dayjs().subtract(3, "day"),
+  endDate: dayjs().add(1, "day"),
+  eventList: getCalendarData(),
 });

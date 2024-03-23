@@ -1,14 +1,11 @@
 import dayjs from "dayjs";
-
-// eslint-disable-next-line no-relative-import-paths/no-relative-import-paths
-import { SprintData } from "../../mocks/voyageDashboardData";
-// TODO: Fix the mocked types and import
 export function generateClassString(
   date: dayjs.Dayjs,
   currentMonth: boolean,
   today: boolean = false,
   selectDate: dayjs.Dayjs,
-  sprintRange?: SprintData | null,
+  startSprintDate?: dayjs.Dayjs | null,
+  endSprintDate?: dayjs.Dayjs | null,
 ) {
   let classes =
     "h-[50px] w-[48px] grid place-content-center hover:bg-base-100 transition-all cursor-pointer select-none";
@@ -16,10 +13,11 @@ export function generateClassString(
   const isSelectedDate =
     selectDate.toDate().toDateString() === date.toDate().toDateString();
   const isWithinSprintRange =
-    sprintRange &&
-    (date.isSame(sprintRange.start.startOf("day")) ||
-      date.isAfter(sprintRange.start.startOf("day"))) &&
-    date.isBefore(sprintRange.end.endOf("day"));
+    startSprintDate &&
+    endSprintDate &&
+    (date.isSame(startSprintDate.startOf("day")) ||
+      date.isAfter(startSprintDate.startOf("day"))) &&
+    date.isBefore(endSprintDate.endOf("day"));
 
   if (!currentMonth) {
     classes += " text-gray-400";
