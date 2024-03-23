@@ -88,7 +88,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
       </div>
       <div className="h-full w-full flex flex-col justify-between p-6">
         <div>
-          <h1 className="text-xl font-semibold pb-3">{selectedDate}</h1>
+          <h1 className="text-lg font-semibold pb-3">{selectedDate}</h1>
           {sprintData ? (
             <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
               Sprint Week {sprintData?.number}
