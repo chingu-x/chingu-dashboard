@@ -23,8 +23,8 @@ export default function Calendar({ sprintData }: CalendarProps) {
   const [selectDate, setSelectDate] = useState(currentDate);
 
   return (
-    <div className="flex justify-center items-start h-full">
-      <div className="w-[400px] p-6 h-full border-r-2">
+    <div className="flex h-full w-full">
+      <div className="min-w-[400px] max-w-[400px] p-6 h-full border-r-2">
         <div className="flex justify-center items-center">
           <div className="flex gap-10 items-center w-full justify-center relative">
             <ArrowLeftIcon
@@ -90,7 +90,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
           )}
         </div>
       </div>
-      <div className="w-[250px] h-full flex flex-col justify-between p-6">
+      <div className="h-full w-full flex flex-col justify-between p-6">
         <div>
           <h1 className="text-xl font-semibold pb-3">
             {selectDate.toDate().toLocaleDateString("en-US", {

@@ -17,7 +17,7 @@ function ResourcesStateContent({ contentObject }: ResourcesStateContentProps) {
             key={item.title}
             className="h-[79px] bg-base-200 rounded-lg w-full p-4 mb-4 flex justify-between items-center"
           >
-            <div className="flex flex-col w-[400px]">
+            <div className="flex flex-col max-w-[400px]">
               <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold mb-1">
                 {item.title}
               </p>
