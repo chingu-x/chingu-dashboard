@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
 import { useState } from "react";
+import { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
-export const useCalendarLogic = () => {
+export const useCalendarLogic = (sprintData?: SprintData) => {
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
@@ -71,9 +72,6 @@ export const useCalendarLogic = () => {
     date: dayjs.Dayjs,
     currentMonth: boolean,
     today: boolean = false,
-    selectDate: dayjs.Dayjs,
-    startSprintDate?: dayjs.Dayjs | null,
-    endSprintDate?: dayjs.Dayjs | null,
   ) => {
     let classes =
       "h-[50px] w-[48px] grid place-content-center hover:bg-base-100 transition-all cursor-pointer select-none";
@@ -81,11 +79,10 @@ export const useCalendarLogic = () => {
     const isSelectedDate =
       selectDate.toDate().toDateString() === date.toDate().toDateString();
     const isWithinSprintRange =
-      startSprintDate &&
-      endSprintDate &&
-      (date.isSame(startSprintDate.startOf("day")) ||
-        date.isAfter(startSprintDate.startOf("day"))) &&
-      date.isBefore(endSprintDate.endOf("day"));
+      sprintData &&
+      (date.isSame(sprintData?.startDate.startOf("day")) ||
+        date.isAfter(sprintData?.startDate.startOf("day"))) &&
+      date.isBefore(sprintData?.endDate.endOf("day"));
 
     if (!currentMonth) {
       classes += " text-gray-400";
@@ -104,10 +101,15 @@ export const useCalendarLogic = () => {
     return classes;
   };
 
+  const selectedDate = selectDate.toDate().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+
   return {
     cn,
     generateDate,
-    months,
     generateClassString,
     days,
     today,
@@ -115,5 +117,9 @@ export const useCalendarLogic = () => {
     selectDate,
     setSelectDate,
     currentDate,
+    onArrowClick: (month: number) => setToday(today.month(month)),
+    currentMonth: months[today.month()],
+    currentYear: today.year(),
+    selectedDate,
   };
 };
