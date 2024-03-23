@@ -1,7 +1,5 @@
 import dayjs from "dayjs";
 import React from "react";
-import Dot from "@/components/Dot";
-import type { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
 type CellProps = {
   date: dayjs.Dayjs;
@@ -14,7 +12,7 @@ type CellProps = {
     today: boolean,
   ) => string;
   setSelectDate: (value: React.SetStateAction<dayjs.Dayjs>) => void;
-  sprintData?: SprintData | null;
+  children?: React.ReactNode;
 };
 function Cell({
   date,
@@ -23,7 +21,7 @@ function Cell({
   cn,
   generateClassString,
   setSelectDate,
-  sprintData,
+  children,
 }: CellProps) {
   return (
     <div
@@ -38,10 +36,7 @@ function Cell({
       >
         {date.date()}
       </h1>
-      {sprintData?.startDate.isSame(date, "day") && <Dot color="bg-success" />}
-      {sprintData?.eventList?.some((event) =>
-        dayjs(event.date, "YYYY-MM-DD h:mm A").isSame(date, "day"),
-      ) && <Dot />}
+      {children}
     </div>
   );
 }

@@ -107,6 +107,20 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     day: "numeric",
   });
 
+  const showDotConditions = (date: dayjs.Dayjs) => [
+    {
+      id: 1,
+      check: sprintData?.startDate.isSame(date, "day"),
+      color: "bg-success",
+    },
+    {
+      id: 2,
+      check: sprintData?.eventList?.some((event) =>
+        dayjs(event.date, "YYYY-MM-DD h:mm A").isSame(date, "day"),
+      ),
+    },
+  ];
+
   return {
     cn,
     generateDate,
@@ -121,5 +135,6 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     currentMonth: months[today.month()],
     currentYear: today.year(),
     selectedDate,
+    showDotConditions,
   };
 };
