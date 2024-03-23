@@ -68,7 +68,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   }
 
   // Get current sprint number and current meeting id
-  const { number } = getCurrentSprint(sprintsData);
+  const { number } = getCurrentSprint(sprintsData) as Sprint;
   const currentSprintNumber = number;
 
   return (
