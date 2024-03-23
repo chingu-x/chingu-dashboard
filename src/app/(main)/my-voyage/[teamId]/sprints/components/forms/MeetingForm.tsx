@@ -23,6 +23,14 @@ import useServerAction from "@/hooks/useServerAction";
 import { addMeeting, editMeeting } from "@/sprints/sprintsService";
 import routePaths from "@/utils/routePaths";
 
+const dateWithoutTimezone = (date: Date) => {
+  const tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
+  const withoutTimezone = new Date(date.valueOf() - tzoffset)
+    .toISOString()
+    .slice(0, -1);
+  return withoutTimezone;
+};
+
 const validationSchema = z.object({
   title: validateTextInput({
     inputName: "Title",
@@ -95,7 +103,7 @@ export default function MeetingForm() {
   };
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    const dateTime = data.dateTime.toISOString();
+    const dateTime = dateWithoutTimezone(data.dateTime);
 
     if (editMode) {
       const [res, error] = await editMeetingAction({
