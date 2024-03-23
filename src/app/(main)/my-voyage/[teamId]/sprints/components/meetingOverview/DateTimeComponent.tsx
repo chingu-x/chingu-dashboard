@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { format, isToday, isTomorrow } from "date-fns";
-import { formatInTimeZone, utcToZonedTime } from "date-fns-tz";
+import { isToday, isTomorrow, parseISO } from "date-fns";
+import { format } from "date-fns-tz";
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { useUser } from "@/store/hooks";
 
@@ -15,13 +15,20 @@ export default function DateTimeComponent({
 }: DateTimeComponentWrapper) {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const { timezone } = useUser();
+  const dateTimeConvertedToDate = parseISO(
+    dateTime.substring(0, dateTime.length - 1),
+  );
 
   const getMeetingDate = () => {
-    const dateTimeConverted = new Date(utcToZonedTime(dateTime, timezone));
-    if (isToday(dateTimeConverted)) return "today";
-    if (isTomorrow(dateTimeConverted)) return "tomorrow";
-    return format(dateTimeConverted, "MMM, d");
+    if (isToday(dateTimeConvertedToDate)) return "today";
+    if (isTomorrow(dateTimeConvertedToDate)) return "tomorrow";
+    return format(dateTimeConvertedToDate, "MMM, d");
   };
+
+  const getMeetingTime = () =>
+    format(dateTimeConvertedToDate, "k:mm (zzz)", {
+      timeZone: timezone,
+    });
 
   useEffect(() => {
     setIsMounted(true);
@@ -37,7 +44,7 @@ export default function DateTimeComponent({
       </p>
       <p className="flex items-center gap-x-2">
         <ClockIcon className="w-[15px] h-[15px]" />
-        {formatInTimeZone(dateTime, timezone, "k:mm (zzz)")}
+        {getMeetingTime()}
       </p>
     </>
   );
