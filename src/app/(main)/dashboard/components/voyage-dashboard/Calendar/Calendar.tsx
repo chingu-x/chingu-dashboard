@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 // eslint-disable-next-line no-relative-import-paths/no-relative-import-paths
-import type { Event, SprintData } from "../mocks/voyageDashboardData";
+import type { SprintData } from "../mocks/voyageDashboardData";
 // TODO: Fix the mocked types and import
 
 import { generateDate, months } from "./utils/calendar";
@@ -13,15 +13,9 @@ import SprintItem from "@/components/sprintItem/SprintItem";
 import Button from "@/components/Button";
 
 interface CalendarProps {
-  sprintWeek?: number;
-  eventList?: Event[] | null;
-  sprintRange?: SprintData | null;
+  sprintData?: SprintData | null;
 }
-export default function Calendar({
-  sprintWeek = 1,
-  eventList,
-  sprintRange,
-}: CalendarProps) {
+export default function Calendar({ sprintData }: CalendarProps) {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
@@ -74,7 +68,8 @@ export default function Calendar({
                       currentMonth,
                       today,
                       selectDate,
-                      sprintRange,
+                      sprintData?.startDate,
+                      sprintData?.endDate,
                     ),
                   )}
                   onClick={() => {
@@ -97,10 +92,12 @@ export default function Calendar({
               day: "numeric",
             })}
           </h1>
-          <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
-            Sprint Week {sprintWeek}
-          </p>
-          {eventList?.map((event) => (
+          {sprintData !== null ? (
+            <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
+              Sprint Week {sprintData?.number}
+            </p>
+          ) : null}
+          {sprintData?.eventList?.map((event) => (
             <div key={event.title}>
               <SprintItem
                 title={event.title}
