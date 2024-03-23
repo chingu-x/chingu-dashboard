@@ -113,7 +113,13 @@ export default function MeetingForm() {
       });
 
       if (res) {
-        router.push(routePaths.sprintsPage(teamId.toString()));
+        router.push(
+          routePaths.sprintPage(
+            teamId.toString(),
+            sprintNumber.toString(),
+            meetingId.toString(),
+          ),
+        );
       }
 
       if (error) {
@@ -129,7 +135,13 @@ export default function MeetingForm() {
       const [res, error] = await addMeetingAction(payload);
 
       if (res) {
-        router.push(routePaths.sprintsPage(teamId.toString()));
+        router.push(
+          routePaths.sprintPage(
+            teamId.toString(),
+            sprintNumber.toString(),
+            res.id.toString(),
+          ),
+        );
       }
 
       if (error) {
@@ -144,7 +156,7 @@ export default function MeetingForm() {
   useEffect(() => {
     if (params.meetingId) {
       const meeting = sprints.find(
-        (sprint) => sprint.teamMeetings[0].id === +params.meetingId,
+        (sprint) => sprint.teamMeetings[0]?.id === +params.meetingId,
       )?.teamMeetings[0];
 
       setMeetingData(meeting as Meeting);
@@ -154,11 +166,14 @@ export default function MeetingForm() {
 
   useEffect(() => {
     if (meetingData && meetingData.dateTime) {
+      const dateTimeConvertedToDate = parseISO(
+        meetingData?.dateTime.substring(0, meetingData?.dateTime.length - 1),
+      );
       reset({
         title: meetingData?.title,
         notes: meetingData?.notes,
         meetingLink: meetingData?.meetingLink,
-        dateTime: parseISO(meetingData?.dateTime),
+        dateTime: dateTimeConvertedToDate,
       });
     }
   }, [meetingData, reset]);
