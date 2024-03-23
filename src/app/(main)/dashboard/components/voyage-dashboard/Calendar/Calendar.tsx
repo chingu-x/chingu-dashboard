@@ -120,7 +120,11 @@ export default function Calendar({ sprintData }: CalendarProps) {
           })}
         </div>
         <Button
-          className="self-end p-1 rounded text-base font-medium"
+          className={`self-end p-1 rounded text-base font-medium hover:bg-neutral ${
+            selectDate.isSame(currentDate, "day")
+              ? "bg-primary"
+              : "bg-neutral-focus"
+          }`}
           onClick={() => {
             setToday(currentDate);
             setSelectDate(currentDate);
