@@ -4,7 +4,7 @@ import {
   getResourcesData,
   getSprintData,
   getTechStackData,
-} from "./mocks/voyageDashboardData";
+} from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
 const useVoyageDashboardLogic = (filledState: boolean) => {
   const ideationData = filledState ? getIdeationData() : null;

@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import type { ResourcesData } from "./mocks/voyageDashboardData";
+import type { ResourcesData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import Badge from "@/components/badge/Badge";
 
 interface ResourcesStateContentProps {
