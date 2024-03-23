@@ -4,6 +4,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useCalendarLogic } from "./Calendar.logic";
 import Cell from "./components/Cell";
 import SprintItem from "./components/SprintItem";
+import Dot from "./components/Dot";
 import type { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import Button from "@/components/Button";
 
@@ -25,6 +26,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
     currentMonth,
     currentYear,
     selectedDate,
+    showDotConditions,
   } = useCalendarLogic(sprintData);
 
   return (
@@ -73,8 +75,13 @@ export default function Calendar({ sprintData }: CalendarProps) {
                   generateClassString(date, currentMonth, today)
                 }
                 setSelectDate={setSelectDate}
-                sprintData={sprintData}
-              />
+              >
+                {showDotConditions(date).map((condition) =>
+                  condition.check ? (
+                    <Dot key={condition.id} color={condition.color} />
+                  ) : null,
+                )}
+              </Cell>
             ),
           )}
         </div>
@@ -82,7 +89,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
       <div className="h-full w-full flex flex-col justify-between p-6">
         <div>
           <h1 className="text-xl font-semibold pb-3">{selectedDate}</h1>
-          {sprintData !== null ? (
+          {sprintData ? (
             <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
               Sprint Week {sprintData?.number}
             </p>
