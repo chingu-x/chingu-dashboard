@@ -1,6 +1,6 @@
 import React from "react";
-import type { SprintData } from "./mocks/voyageDashboardData";
-import Calendar from "./Calendar/Calendar";
+import Calendar from "@/app/(main)/dashboard/components/Calendar/Calendar";
+import type { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
 interface CalendarWidgetProps {
   sprintData?: SprintData | null;

@@ -1,14 +1,8 @@
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-
-// eslint-disable-next-line no-relative-import-paths/no-relative-import-paths
-import type { SprintData } from "../mocks/voyageDashboardData";
-// TODO: Fix the mocked types and import
-
-import { generateDate, months } from "./utils/calendar";
-import cn from "./utils/cn";
-import { generateClassString } from "./utils/generateClassString";
+import { useCalendarLogic } from "./Calendar.logic";
+import type { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import SprintItem from "@/components/sprintItem/SprintItem";
 import Button from "@/components/Button";
 import Dot from "@/components/Dot";
@@ -17,10 +11,18 @@ interface CalendarProps {
   sprintData?: SprintData | null;
 }
 export default function Calendar({ sprintData }: CalendarProps) {
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const currentDate = dayjs();
-  const [today, setToday] = useState(currentDate);
-  const [selectDate, setSelectDate] = useState(currentDate);
+  const {
+    cn,
+    generateDate,
+    months,
+    generateClassString,
+    days,
+    today,
+    setToday,
+    selectDate,
+    setSelectDate,
+    currentDate,
+  } = useCalendarLogic();
 
   return (
     <div className="flex h-full w-full">

@@ -5,11 +5,11 @@ import DashboardWidget from "./DashboardWidget";
 import CheckInWidget from "./CheckInWidget";
 import CalendarWidget from "./CalendarWidget";
 import IdeationStateContent from "./IdeationStateContent";
-import { CHECKIN_STATUS } from "./mocks/voyageDashboardData";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
 import useVoyageDashboardLogic from "./useVoyageDashboardLogic";
+import { CHECKIN_STATUS } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import { useAuth } from "@/store/hooks";
 
