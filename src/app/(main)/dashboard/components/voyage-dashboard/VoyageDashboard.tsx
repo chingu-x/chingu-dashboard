@@ -16,12 +16,12 @@ import { useAuth } from "@/store/hooks";
 function VoyageDashboard() {
   //NOTE - This is a custom hook that returns mock data based on the filledState
   const { ideationData, featureData, techStackData, resourceData, sprintData } =
-    useVoyageDashboardLogic(false);
+    useVoyageDashboardLogic(true);
 
   return (
     <div className="grid grid-cols-2 gap-x-6 w-full">
       <div className="col-span-1 flex flex-col gap-y-6 flex-grow-2">
-        <CalendarWidget sprintData={sprintData} />
+        <CalendarWidget sprintData={sprintData ?? undefined} />
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />
       </div>

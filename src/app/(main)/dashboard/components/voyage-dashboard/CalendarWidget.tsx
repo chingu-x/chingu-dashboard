@@ -3,7 +3,7 @@ import Calendar from "@/app/(main)/dashboard/components/Calendar/Calendar";
 import type { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
 interface CalendarWidgetProps {
-  sprintData?: SprintData | null;
+  sprintData?: SprintData;
 }
 
 function CalendarWidget({ sprintData }: CalendarWidgetProps) {

@@ -2,19 +2,18 @@ import dayjs from "dayjs";
 import React from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useCalendarLogic } from "./Calendar.logic";
+import Cell from "./components/Cell";
+import SprintItem from "./components/SprintItem";
 import type { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
-import SprintItem from "@/components/sprintItem/SprintItem";
 import Button from "@/components/Button";
-import Dot from "@/components/Dot";
 
 interface CalendarProps {
-  sprintData?: SprintData | null;
+  sprintData?: SprintData;
 }
 export default function Calendar({ sprintData }: CalendarProps) {
   const {
     cn,
     generateDate,
-    months,
     generateClassString,
     days,
     today,
@@ -22,7 +21,11 @@ export default function Calendar({ sprintData }: CalendarProps) {
     selectDate,
     setSelectDate,
     currentDate,
-  } = useCalendarLogic();
+    onArrowClick,
+    currentMonth,
+    currentYear,
+    selectedDate,
+  } = useCalendarLogic(sprintData);
 
   return (
     <div className="flex h-full w-full">
@@ -32,16 +35,16 @@ export default function Calendar({ sprintData }: CalendarProps) {
             <ArrowLeftIcon
               className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute left-[14px]"
               onClick={() => {
-                setToday(today.month(today.month() - 1));
+                onArrowClick(today.month() - 1);
               }}
             />
             <h1 className="text-2xl select-none font-semibold">
-              {months[today.month()]} {today.year()}
+              {currentMonth} {currentYear}
             </h1>
             <ArrowRightIcon
               className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute right-[14px]"
               onClick={() => {
-                setToday(today.month(today.month() + 1));
+                onArrowClick(today.month() + 1);
               }}
             />
           </div>
@@ -60,47 +63,25 @@ export default function Calendar({ sprintData }: CalendarProps) {
         <div className="grid grid-cols-7 border">
           {generateDate(today.month(), today.year()).map(
             ({ date, currentMonth, today }) => (
-              <div
+              <Cell
                 key={date.unix()}
-                className="text-center h-[52px] grid place-content-center text-sm border relative"
-              >
-                <h1
-                  className={cn(
-                    generateClassString(
-                      date,
-                      currentMonth,
-                      today,
-                      selectDate,
-                      sprintData?.startDate,
-                      sprintData?.endDate,
-                    ),
-                  )}
-                  onClick={() => {
-                    setSelectDate(date);
-                  }}
-                >
-                  {date.date()}
-                </h1>
-                {sprintData?.startDate.isSame(date, "day") && (
-                  <Dot color="bg-success" />
-                )}
-                {sprintData?.eventList?.some((event) =>
-                  dayjs(event.date, "YYYY-MM-DD h:mm A").isSame(date, "day"),
-                ) && <Dot />}
-              </div>
+                date={date}
+                currentMonth={currentMonth}
+                today={!!today}
+                cn={cn}
+                generateClassString={() =>
+                  generateClassString(date, currentMonth, today)
+                }
+                setSelectDate={setSelectDate}
+                sprintData={sprintData}
+              />
             ),
           )}
         </div>
       </div>
       <div className="h-full w-full flex flex-col justify-between p-6">
         <div>
-          <h1 className="text-xl font-semibold pb-3">
-            {selectDate.toDate().toLocaleDateString("en-US", {
-              weekday: "long",
-              month: "long",
-              day: "numeric",
-            })}
-          </h1>
+          <h1 className="text-xl font-semibold pb-3">{selectedDate}</h1>
           {sprintData !== null ? (
             <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
               Sprint Week {sprintData?.number}
@@ -111,13 +92,12 @@ export default function Calendar({ sprintData }: CalendarProps) {
             const isSelectedDate = selectDate.isSame(eventDate, "day");
 
             return isSelectedDate ? (
-              <div key={event.title}>
-                <SprintItem
-                  title={event.title}
-                  link={event.link ?? ""}
-                  time={eventDate.format("h:mm A")}
-                />
-              </div>
+              <SprintItem
+                key={event.title}
+                title={event.title}
+                link={event.link ?? ""}
+                time={eventDate.format("h:mm A")}
+              />
             ) : null;
           })}
         </div>
