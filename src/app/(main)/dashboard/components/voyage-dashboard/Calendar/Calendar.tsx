@@ -11,6 +11,7 @@ import cn from "./utils/cn";
 import { generateClassString } from "./utils/generateClassString";
 import SprintItem from "@/components/sprintItem/SprintItem";
 import Button from "@/components/Button";
+import Dot from "@/components/Dot";
 
 interface CalendarProps {
   sprintData?: SprintData | null;
@@ -59,7 +60,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
             ({ date, currentMonth, today }) => (
               <div
                 key={date.unix()}
-                className="text-center h-[52px] grid place-content-center text-sm border"
+                className="text-center h-[52px] grid place-content-center text-sm border relative"
               >
                 <h1
                   className={cn(
@@ -78,6 +79,12 @@ export default function Calendar({ sprintData }: CalendarProps) {
                 >
                   {date.date()}
                 </h1>
+                {sprintData?.startDate.isSame(date, "day") && (
+                  <Dot color="bg-success" />
+                )}
+                {sprintData?.eventList?.some((event) =>
+                  dayjs(event.date, "YYYY-MM-DD h:mm A").isSame(date, "day"),
+                ) && <Dot />}
               </div>
             ),
           )}
