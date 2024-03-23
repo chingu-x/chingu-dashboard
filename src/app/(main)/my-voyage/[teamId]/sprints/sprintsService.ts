@@ -82,6 +82,7 @@ export interface FetchMeetingResponse extends MeetingResponse {
   }[];
 }
 export interface AddMeetingResponse extends MeetingResponse {
+  id: number;
   title: string;
   dateTime: string;
   meetingLink: string;
