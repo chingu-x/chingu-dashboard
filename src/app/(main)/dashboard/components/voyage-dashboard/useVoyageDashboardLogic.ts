@@ -1,5 +1,4 @@
 import {
-  getCalendarData,
   getFeaturesData,
   getIdeationData,
   getResourcesData,
@@ -12,7 +11,6 @@ const useVoyageDashboardLogic = (filledState: boolean) => {
   const featureData = filledState ? getFeaturesData() : null;
   const techStackData = filledState ? getTechStackData() : null;
   const resourceData = filledState ? getResourcesData() : null;
-  const calendarData = filledState ? getCalendarData() : null;
   const sprintData = filledState ? getSprintData() : null;
 
   return {
@@ -20,7 +18,6 @@ const useVoyageDashboardLogic = (filledState: boolean) => {
     featureData,
     techStackData,
     resourceData,
-    calendarData,
     sprintData,
   };
 };

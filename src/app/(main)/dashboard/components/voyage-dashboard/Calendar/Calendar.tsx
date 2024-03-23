@@ -97,15 +97,20 @@ export default function Calendar({ sprintData }: CalendarProps) {
               Sprint Week {sprintData?.number}
             </p>
           ) : null}
-          {sprintData?.eventList?.map((event) => (
-            <div key={event.title}>
-              <SprintItem
-                title={event.title}
-                link={event.link ?? ""}
-                time={event.date}
-              />
-            </div>
-          ))}
+          {sprintData?.eventList?.map((event) => {
+            const eventDate = dayjs(event.date, "YYYY-MM-DD h:mm A");
+            const isSelectedDate = selectDate.isSame(eventDate, "day");
+
+            return isSelectedDate ? (
+              <div key={event.title}>
+                <SprintItem
+                  title={event.title}
+                  link={event.link ?? ""}
+                  time={eventDate.format("h:mm A")}
+                />
+              </div>
+            ) : null;
+          })}
         </div>
         <Button
           className="self-end p-1 rounded text-base font-medium"

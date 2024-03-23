@@ -119,7 +119,7 @@ export const getResourcesData = (): ResourcesData[] => [
   },
 ];
 
-export const getCalendarData = (): Event[] => [
+export const getMeetingsData = (): Event[] => [
   {
     title: "Sprint Planning",
     link: "https://www.agileway.it/sprint-planning-meeting/",
@@ -135,5 +135,5 @@ export const getSprintData = (): SprintData => ({
   number: 1,
   startDate: dayjs().subtract(3, "day"),
   endDate: dayjs().add(1, "day"),
-  eventList: getCalendarData(),
+  eventList: getMeetingsData(),
 });
