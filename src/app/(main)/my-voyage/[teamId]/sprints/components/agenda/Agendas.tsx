@@ -16,10 +16,17 @@ import { Agenda } from "@/store/features/sprint/sprintSlice";
 
 interface AgendasProps {
   teamId: string;
+  meetingId: string;
+  sprintNumber: string;
   topics: Agenda[];
 }
 
-export default function Agendas({ teamId, topics }: AgendasProps) {
+export default function Agendas({
+  teamId,
+  meetingId,
+  sprintNumber,
+  topics,
+}: AgendasProps) {
   const router = useRouter();
 
   const [incompletedTopics, setIncompletedTopics] = useState(
@@ -46,14 +53,18 @@ export default function Agendas({ teamId, topics }: AgendasProps) {
   };
 
   const editTopic = () => {
-    router.push(routePaths.addTopic(teamId));
+    router.push(routePaths.addTopic(teamId, sprintNumber, meetingId));
   };
 
   const dividerIsVisible = completedTopics.length !== 0;
 
   return (
     <div className="flex flex-col items-center justify-between w-full p-10 border bg-base-200 rounded-2xl border-base-100">
-      <AgendaHeader teamId={teamId} />
+      <AgendaHeader
+        teamId={teamId}
+        sprintNumber={sprintNumber}
+        meetingId={meetingId}
+      />
       {/* INCOMPLETED TOPICS */}
       {topics.length === 0 && <EmptyState />}
       <ul className="flex flex-col w-full gap-y-5">

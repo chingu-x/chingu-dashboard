@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,12 +11,17 @@ import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
+import { useSprint, useAppDispatch } from "@/store/hooks";
+import { Agenda } from "@/store/features/sprint/sprintSlice";
+import useServerAction from "@/hooks/useServerAction";
+import { addTopic, editTopic } from "@/sprints/sprintsService";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import routePaths from "@/utils/routePaths";
 
 const validationSchema = z.object({
   title: validateTextInput({
     inputName: "Title",
     required: true,
-    maxLen: 50,
   }),
   description: validateTextInput({
     inputName: "Description",
@@ -25,17 +32,118 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function TopicForm() {
+  const router = useRouter();
+  const params = useParams<{
+    teamId: string;
+    sprintNumber: string;
+    meetingId: string;
+    agendaId: string;
+  }>();
+  const [teamId, sprintNumber, meetingId, agendaId] = [
+    Number(params.teamId),
+    Number(params.sprintNumber),
+    Number(params.meetingId),
+    Number(params.agendaId),
+  ];
+
+  const dispatch = useAppDispatch();
+  const { sprints } = useSprint();
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [topicData, setTopicData] = useState<Agenda>();
+
+  const {
+    runAction: editTopicAction,
+    // isLoading: editTopicLoading,
+    setIsLoading: setEditTopicLoading,
+  } = useServerAction(editTopic);
+
+  const {
+    runAction: addTopicAction,
+    // isLoading: addTopicLoading,
+    setIsLoading: setAddTopicLoading,
+  } = useServerAction(addTopic);
+
   const {
     register,
     handleSubmit,
+    // watch,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+  // const { title, description } = watch();
+
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     console.log(data);
+    if (editMode) {
+      const [res, error] = await editTopicAction({
+        ...data,
+        agendaId,
+      });
+
+      if (res) {
+        router.push(
+          routePaths.sprintPage(
+            teamId.toString(),
+            sprintNumber.toString(),
+            meetingId.toString(),
+          ),
+        );
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+
+        setEditTopicLoading(false);
+      }
+    } else {
+      const payload = { ...data, meetingId };
+
+      const [res, error] = await addTopicAction(payload);
+
+      console.log(res);
+
+      // if (res) {
+      //   router.push(
+      //     routePaths.sprintPage(
+      //       teamId.toString(),
+      //       sprintNumber.toString(),
+      //       res.id.toString()
+      //     )
+      //   );
+      // }
+
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+        setAddTopicLoading(false);
+      }
+    }
   };
+
+  useEffect(() => {
+    if (agendaId) {
+      const topic = sprints
+        .find((sprint) => sprint.teamMeetings[0]?.id === meetingId)
+        ?.teamMeetings[0].agendas?.find((agenda) => agenda.id === agendaId);
+
+      setTopicData(topic);
+      setEditMode(true);
+    }
+  }, [meetingId, agendaId, sprints]);
+
+  useEffect(() => {
+    reset({
+      title: topicData?.title,
+      description: topicData?.description,
+    });
+  }, [topicData, reset]);
 
   return (
     // TODO: Create some general form wrapper component
