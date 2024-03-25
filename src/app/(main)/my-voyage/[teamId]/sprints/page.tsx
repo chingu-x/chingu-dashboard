@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import SprintsRedirectWrapper from "./components/SprintsRedirectWrapper";
+import SprintsRedirectWrapper from "./components/RedirectToCurrentSprintWrapper";
 import Spinner from "@/components/Spinner";
 
 interface SprintsPageProps {

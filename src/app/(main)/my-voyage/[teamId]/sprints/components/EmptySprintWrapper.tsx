@@ -1,13 +1,15 @@
 import { redirect } from "next/navigation";
 
-import { fetchSprints } from "./SprintsRedirectWrapper";
+import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import ProgressStepper from "./ProgressStepper";
 import EmptyState from "./EmptyState";
 import SprintActions from "./SprintActions";
 
 import EmptySprintProvider from "@/sprints/providers/EmptySprintProvider";
-import getCurrentSprint from "@/utils/getCurrentSprint";
+import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
+import { VoyageTeamMember } from "@/store/features/user/userSlice";
+import { getUser } from "@/utils/getUser";
 
 function getMeeting(sprints: Sprint[], sprintNumber: number) {
   const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
@@ -29,9 +31,24 @@ export default async function EmptySprintWrapper({
 }: EmptySprintWrapperProps) {
   const teamId = Number(params.teamId);
   const sprintNumber = Number(params.sprintNumber);
+
+  let currentVoyageTeam: VoyageTeamMember | undefined;
   let sprintsData: Sprint[] = [];
 
-  if (teamId) {
+  // TODO: replace with a reusable function
+  const [user, error] = await getUser();
+
+  if (user) {
+    currentVoyageTeam = user.voyageTeamMembers.find(
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+    );
+  }
+
+  if (error) {
+    return `Error: ${error?.message}`;
+  }
+
+  if (teamId === currentVoyageTeam?.voyageTeamId) {
     const [res, error] = await fetchSprints({ teamId });
 
     if (res) {
@@ -39,6 +56,8 @@ export default async function EmptySprintWrapper({
     } else {
       return `Error: ${error?.message}`;
     }
+  } else {
+    redirect("/");
   }
 
   // Check if a meeting exists
@@ -48,9 +67,11 @@ export default async function EmptySprintWrapper({
   const { number } = getCurrentSprint(sprintsData) as Sprint;
   const currentSprintNumber = number;
 
-  // If a user tries to access this page directly, check if the current sprint's meetingId exists.
-  // If so, redirect to the existing meeting page.
-  if (meeting) {
+  if (sprintNumber > currentSprintNumber) {
+    redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
+    // If a user tries to access this page directly, check if the current sprint's meetingId exists.
+    // If so, redirect to the existing meeting page.
+  } else if (meeting) {
     redirect(
       `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`,
     );
