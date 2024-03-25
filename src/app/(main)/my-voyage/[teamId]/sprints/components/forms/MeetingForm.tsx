@@ -22,6 +22,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import useServerAction from "@/hooks/useServerAction";
 import { addMeeting, editMeeting } from "@/sprints/sprintsService";
 import routePaths from "@/utils/routePaths";
+import { persistor } from "@/store/store";
 
 const dateWithoutTimezone = (date: Date) => {
   const tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
@@ -68,6 +69,7 @@ export default function MeetingForm() {
   const { sprints } = useSprint();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [meetingData, setMeetingData] = useState<Meeting>();
+  const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const {
     runAction: editMeetingAction,
@@ -93,7 +95,7 @@ export default function MeetingForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  const date = watch("dateTime");
+  const { title, notes, dateTime, meetingLink } = watch();
 
   const setCustomValue = (id: "dateTime", value: Date) => {
     setValue(id, value, {
@@ -179,6 +181,96 @@ export default function MeetingForm() {
     }
   }, [meetingData, reset]);
 
+  useEffect(
+    () => () => {
+      void persistor.purge();
+    },
+    [],
+  );
+
+  // This block is responsible for auto-save functionality. Right now nextjs does
+  // not have a way to intercept routes with app router. When that is implemented
+  // on their side, it will probably be better to go that method.
+
+  function asyncTimeout(ms: number) {
+    return new Promise((resolve) => {
+      setSaveTimeout(setTimeout(resolve, ms));
+    });
+  }
+
+  useEffect(() => {
+    async function autoSave() {
+      const meetingId = +params.meetingId;
+      const modifiedObject: { [key: string]: string | Date } = {};
+
+      if (meetingData) {
+        const watchedData = watch();
+
+        for (const key in watchedData) {
+          if (
+            watchedData.hasOwnProperty(key) &&
+            meetingData[key as keyof Meeting] !==
+              watchedData[key as keyof typeof watchedData]
+          ) {
+            modifiedObject[key as keyof Meeting] =
+              watchedData[key as keyof typeof watchedData];
+          }
+        }
+      }
+
+      const filteredData = {
+        teamId,
+        meetingId,
+        ...modifiedObject,
+      };
+
+      await asyncTimeout(5000);
+
+      const [res, error] = await editMeetingAction(filteredData);
+
+      if (res) {
+        setEditMeetingLoading(false);
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({
+            type: "error",
+            content: { message: error.message },
+          }),
+        );
+        setEditMeetingLoading(false);
+      }
+    }
+
+    if (editMode && isDirty) {
+      void autoSave();
+    }
+  }, [
+    isDirty,
+    meetingData,
+    watch,
+    editMode,
+    dispatch,
+    params.meetingId,
+    teamId,
+    editMeetingAction,
+    setEditMeetingLoading,
+    title,
+    notes,
+    dateTime,
+    meetingLink,
+  ]);
+
+  useEffect(
+    () => () => {
+      if (saveTimeout) {
+        clearTimeout(saveTimeout);
+      }
+    },
+    [saveTimeout],
+  );
+
   function renderButtonContent() {
     if (editMeetingLoading || addMeetingLoading) {
       return <Spinner />;
@@ -222,7 +314,7 @@ export default function MeetingForm() {
           id="date"
           placeholder="Select meeting date and time"
           label="Date & Time"
-          selectedValue={date}
+          selectedValue={dateTime}
           {...register("dateTime")}
           errorMessage={errors?.dateTime?.message}
           onChange={(value: Date) => setCustomValue("dateTime", value)}
@@ -247,7 +339,13 @@ export default function MeetingForm() {
         >
           {renderButtonContent()}
         </Button>
-        <Button type="button" title="cancel" size="lg" variant="link">
+        <Button
+          type="button"
+          title="cancel"
+          size="lg"
+          variant="link"
+          onClick={() => router.back()}
+        >
           Cancel
         </Button>
       </form>

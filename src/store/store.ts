@@ -29,7 +29,7 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["ideation"],
+  whitelist: ["ideation", "sprint"],
 };
 
 const rootReducer = combineReducers({

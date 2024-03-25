@@ -1,7 +1,7 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-// import storage from "redux-persist/lib/storage";
-// import { PURGE } from "redux-persist";
-// import { clientSignOut } from "@/store/features/auth/authSlice";
+import storage from "redux-persist/lib/storage";
+import { PURGE } from "redux-persist";
+import { clientSignOut } from "@/store/features/auth/authSlice";
 
 export interface Agenda {
   id: number;
@@ -83,12 +83,12 @@ export const sprintSlice = createSlice({
       state.loading = false;
     },
   },
-  // extraReducers(builder) {
-  //   builder.addCase(PURGE, () => {
-  //     void storage.removeItem("persist:root");
-  //   });
-  //   builder.addCase(clientSignOut, () => initialState);
-  // },
+  extraReducers(builder) {
+    builder.addCase(PURGE, () => {
+      void storage.removeItem("persist:root");
+    });
+    builder.addCase(clientSignOut, () => initialState);
+  },
 });
 
 export const {
