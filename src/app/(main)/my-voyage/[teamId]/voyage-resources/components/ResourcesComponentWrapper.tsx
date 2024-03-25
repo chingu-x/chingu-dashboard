@@ -82,7 +82,7 @@ export default async function ResourcesComponentWrapper({
         />
       </VoyagePageBannerContainer>
       <ResourcesProvider payload={projectResources} />
-      <ResourcesContainer data={projectResources} />
+      <ResourcesContainer />
     </>
   );
 }
