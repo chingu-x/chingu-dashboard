@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import SprintsRedirectWrapper from "./components/RedirectToCurrentSprintWrapper";
+import RedirectToCurrentSprintWrapper from "./components/RedirectToCurrentSprintWrapper";
 import Spinner from "@/components/Spinner";
 
 interface SprintsPageProps {
@@ -13,7 +13,7 @@ interface SprintsPageProps {
 export default function SprintsPage({ params }: SprintsPageProps) {
   return (
     <Suspense fallback={<Spinner />}>
-      <SprintsRedirectWrapper params={params} />
+      <RedirectToCurrentSprintWrapper params={params} />
     </Suspense>
   );
 }
