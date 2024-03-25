@@ -12,7 +12,7 @@ import {
   FetchMeetingProps,
   FetchMeetingResponse,
 } from "@/sprints/sprintsService";
-import { Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
+import { Agenda, Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
@@ -54,6 +54,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   let currentVoyageTeam: VoyageTeamMember | undefined;
   let sprintsData: Sprint[] = [];
   let meetingData: Meeting = { id: +params.meetingId };
+  let agendaData: Agenda[] = [];
 
   // TODO: replace with a reusable function
   const [user, error] = await getUser();
@@ -86,6 +87,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
 
       if (res) {
         meetingData = res;
+        agendaData = res.agendas;
       } else {
         return `Error: ${error?.message}`;
       }
@@ -123,7 +125,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         meeting={meetingData}
         currentSprintNumber={currentSprintNumber}
       />
-      <Agendas />
+      <Agendas teamId={params.teamId} topics={agendaData} />
       <Sections />
     </>
   );

@@ -14,15 +14,19 @@ import routePaths from "@/utils/routePaths";
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
 import { Agenda } from "@/store/features/sprint/sprintSlice";
 
-export default function Agendas() {
+interface AgendasProps {
+  teamId: string;
+  topics: Agenda[];
+}
+
+export default function Agendas({ teamId, topics }: AgendasProps) {
   const router = useRouter();
-  const topicsData: Agenda[] = [];
 
   const [incompletedTopics, setIncompletedTopics] = useState(
-    topicsData.filter((topic) => topic.status === false),
+    topics.filter((topic) => topic.status === false),
   );
   const [completedTopics, setCompletedTopics] = useState(
-    topicsData.filter((topic) => topic.status === true),
+    topics.filter((topic) => topic.status === true),
   );
 
   const changeStatus = (id: number, status: boolean) => {
@@ -42,16 +46,16 @@ export default function Agendas() {
   };
 
   const editTopic = () => {
-    router.push(routePaths.addTopic("2"));
+    router.push(routePaths.addTopic(teamId));
   };
 
   const dividerIsVisible = completedTopics.length !== 0;
 
   return (
     <div className="flex flex-col items-center justify-between w-full p-10 border bg-base-200 rounded-2xl border-base-100">
-      <AgendaHeader />
+      <AgendaHeader teamId={teamId} />
       {/* INCOMPLETED TOPICS */}
-      {topicsData.length === 0 && <EmptyState />}
+      {topics.length === 0 && <EmptyState />}
       <ul className="flex flex-col w-full gap-y-5">
         {incompletedTopics.map((topic) => (
           <AgendaTopic
