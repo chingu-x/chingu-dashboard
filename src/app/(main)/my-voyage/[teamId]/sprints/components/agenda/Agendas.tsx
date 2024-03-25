@@ -7,14 +7,16 @@ import { useRouter } from "next/navigation";
 import EmptyState from "./EmptyState";
 import AgendaTopic from "./AgendaTopic";
 import AgendaHeader from "./AgendaHeader";
-import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
+// import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 
 import routePaths from "@/utils/routePaths";
 
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
+import { Agenda } from "@/store/features/sprint/sprintSlice";
 
-export default function Agenda() {
+export default function Agendas() {
   const router = useRouter();
+  const topicsData: Agenda[] = [];
 
   const [incompletedTopics, setIncompletedTopics] = useState(
     topicsData.filter((topic) => topic.status === false),

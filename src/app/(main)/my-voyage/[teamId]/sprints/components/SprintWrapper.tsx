@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import ProgressStepper from "./ProgressStepper";
 import MeetingOverview from "./meetingOverview/MeetingOverview";
-import Agenda from "./agenda/Agenda";
+import Agendas from "./agenda/Agendas";
 import Sections from "./sections/Sections";
 import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import SprintActions from "./SprintActions";
@@ -123,7 +123,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         meeting={meetingData}
         currentSprintNumber={currentSprintNumber}
       />
-      <Agenda />
+      <Agendas />
       <Sections />
     </>
   );
