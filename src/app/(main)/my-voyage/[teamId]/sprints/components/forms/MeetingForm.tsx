@@ -45,6 +45,7 @@ const validationSchema = z.object({
   meetingLink: validateTextInput({
     inputName: "Meeting Link",
     required: true,
+    isUrl: true,
   }),
 });
 

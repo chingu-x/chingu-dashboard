@@ -22,7 +22,7 @@ export default function DateTimeComponent({
   const getMeetingDate = () => {
     if (isToday(dateTimeConvertedToDate)) return "today";
     if (isTomorrow(dateTimeConvertedToDate)) return "tomorrow";
-    return format(dateTimeConvertedToDate, "MMM, d");
+    return format(dateTimeConvertedToDate, "MMM. d");
   };
 
   const getMeetingTime = () =>
