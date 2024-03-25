@@ -125,7 +125,12 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         meeting={meetingData}
         currentSprintNumber={currentSprintNumber}
       />
-      <Agendas teamId={params.teamId} topics={agendaData} />
+      <Agendas
+        teamId={params.teamId}
+        meetingId={params.meetingId}
+        sprintNumber={params.sprintNumber}
+        topics={agendaData}
+      />
       <Sections />
     </>
   );

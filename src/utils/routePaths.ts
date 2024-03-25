@@ -52,8 +52,8 @@ const routePaths = {
   editMeeting(teamId: string, sprintNumber: string, meetingId: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/edit`;
   },
-  addTopic(teamId: string) {
-    return `/my-voyage/${teamId}/sprints/add-topic`;
+  addTopic(teamId: string, sprintNumber: string, meetingId: string) {
+    return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/add-topic`;
   },
   voyageResourcesPage(teamId: string) {
     return `/my-voyage/${teamId}/voyage-resources`;
