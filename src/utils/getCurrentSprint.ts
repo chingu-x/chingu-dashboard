@@ -1,7 +1,7 @@
 import { isWithinInterval, parseISO } from "date-fns";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 
-export default function getCurrentSprint(sprints: Sprint[]) {
+export function getCurrentSprint(sprints: Sprint[]) {
   // TODO: change to new Date() later
   const currentDate = new Date("2024-02-05T00:00:00.000");
   const currentSprint = sprints.find((sprint) => {

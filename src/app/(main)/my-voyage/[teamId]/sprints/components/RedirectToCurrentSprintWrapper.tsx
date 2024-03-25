@@ -7,11 +7,13 @@ import {
 } from "@/sprints/sprintsService";
 
 import { getAccessToken } from "@/utils/getCookie";
-import getCurrentSprint from "@/utils/getCurrentSprint";
+import { getUser } from "@/utils/getUser";
+import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
+import { VoyageTeamMember } from "@/store/features/user/userSlice";
 
 export async function fetchSprints({
   teamId,
@@ -29,21 +31,35 @@ export async function fetchSprints({
   return await handleAsync(fetchSprintsAsync);
 }
 
-interface SprintsRedirectWrapperProps {
+interface RedirectToCurrentSprintWrapperProps {
   params: {
     teamId: string;
   };
 }
 
-export default async function SprintsRedirectWrapper({
+export default async function RedirectToCurrentSprintWrapper({
   params,
-}: SprintsRedirectWrapperProps) {
+}: RedirectToCurrentSprintWrapperProps) {
   const teamId = Number(params.teamId);
 
+  let currentVoyageTeam: VoyageTeamMember | undefined;
   let currentSprintNumber: number;
   let currentMeetingId: number;
 
-  if (teamId) {
+  // TODO: replace with a reusable function
+  const [user, error] = await getUser();
+
+  if (user) {
+    currentVoyageTeam = user.voyageTeamMembers.find(
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+    );
+  }
+
+  if (error) {
+    return `Error: ${error?.message}`;
+  }
+
+  if (teamId === currentVoyageTeam?.voyageTeamId) {
     const [res, error] = await fetchSprints({ teamId });
 
     if (res) {
@@ -63,7 +79,7 @@ export default async function SprintsRedirectWrapper({
     } else {
       return `Error: ${error?.message}`;
     }
+  } else {
+    redirect("/");
   }
-
-  return null;
 }
