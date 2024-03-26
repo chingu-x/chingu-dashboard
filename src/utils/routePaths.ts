@@ -47,13 +47,21 @@ const routePaths = {
     return `/my-voyage/${teamId}/sprints/weekly-checkin`;
   },
   createMeeting(teamId: string, sprintNumber: string) {
-    return `/my-voyage/${teamId}/sprints/${sprintNumber}/create`;
+    return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/create`;
   },
   editMeeting(teamId: string, sprintNumber: string, meetingId: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/edit`;
   },
   addTopic(teamId: string, sprintNumber: string, meetingId: string) {
-    return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/add-topic`;
+    return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/agendas/add`;
+  },
+  editTopic(
+    teamId: string,
+    sprintNumber: string,
+    meetingId: string,
+    agendaId: string,
+  ) {
+    return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/agendas/${agendaId}/edit`;
   },
   voyageResourcesPage(teamId: string) {
     return `/my-voyage/${teamId}/voyage-resources`;

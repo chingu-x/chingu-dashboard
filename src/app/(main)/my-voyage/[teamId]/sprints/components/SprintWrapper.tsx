@@ -21,6 +21,8 @@ import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { VoyageTeamMember } from "@/store/features/user/userSlice";
+import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import Banner from "@/components/banner/Banner";
 
 async function fetchMeeting({
   meetingId,
@@ -108,13 +110,21 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   }
 
   return (
-    <>
+    <div className="flex flex-col w-full gap-y-10">
+      <VoyagePageBannerContainer
+        title="Sprints"
+        description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
+      >
+        <Banner
+          imageLight="/img/sprints_banner_light.png"
+          imageDark="/img/sprints_banner_dark.png"
+          alt="sprints_banner"
+          height="h-[200px]"
+          width="w-[276px]"
+        />
+      </VoyagePageBannerContainer>
       <ProgressStepper />
-      <SprintActions
-        teamId={params.teamId}
-        meetingId={params.meetingId}
-        sprintNumber={params.sprintNumber}
-      />
+      <SprintActions params={params} />
       <MeetingOverview
         title={meetingData.title!}
         dateTime={meetingData.dateTime!}
@@ -126,13 +136,8 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         meeting={meetingData}
         currentSprintNumber={currentSprintNumber}
       />
-      <Agendas
-        teamId={params.teamId}
-        meetingId={params.meetingId}
-        sprintNumber={params.sprintNumber}
-        topics={agendaData}
-      />
+      <Agendas params={params} topics={agendaData} />
       <Sections />
-    </>
+    </div>
   );
 }

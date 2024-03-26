@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { TrashIcon } from "@heroicons/react/20/solid";
 
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
@@ -14,9 +15,10 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 import { useSprint, useAppDispatch } from "@/store/hooks";
 import { Agenda } from "@/store/features/sprint/sprintSlice";
 import useServerAction from "@/hooks/useServerAction";
-import { addTopic, editTopic } from "@/sprints/sprintsService";
+import { addAgendaTopic, editAgendaTopic } from "@/sprints/sprintsService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
+import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -31,7 +33,7 @@ const validationSchema = z.object({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function TopicForm() {
+export default function AgendaTopicForm() {
   const router = useRouter();
   const params = useParams<{
     teamId: string;
@@ -52,16 +54,16 @@ export default function TopicForm() {
   const [topicData, setTopicData] = useState<Agenda>();
 
   const {
-    runAction: editTopicAction,
-    // isLoading: editTopicLoading,
-    setIsLoading: setEditTopicLoading,
-  } = useServerAction(editTopic);
+    runAction: editAgendaTopicAction,
+    isLoading: editAgendaTopicLoading,
+    setIsLoading: setEditAgendaTopicLoading,
+  } = useServerAction(editAgendaTopic);
 
   const {
-    runAction: addTopicAction,
-    // isLoading: addTopicLoading,
+    runAction: addAgendaTopicAction,
+    isLoading: addAgendaTopicLoading,
     setIsLoading: setAddTopicLoading,
-  } = useServerAction(addTopic);
+  } = useServerAction(addAgendaTopic);
 
   const {
     register,
@@ -77,9 +79,8 @@ export default function TopicForm() {
   // const { title, description } = watch();
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    console.log(data);
     if (editMode) {
-      const [res, error] = await editTopicAction({
+      const [res, error] = await editAgendaTopicAction({
         ...data,
         agendaId,
       });
@@ -98,25 +99,21 @@ export default function TopicForm() {
         dispatch(
           onOpenModal({ type: "error", content: { message: error.message } }),
         );
-
-        setEditTopicLoading(false);
+        setEditAgendaTopicLoading(false);
       }
     } else {
       const payload = { ...data, meetingId };
+      const [res, error] = await addAgendaTopicAction(payload);
 
-      const [res, error] = await addTopicAction(payload);
-
-      console.log(res);
-
-      // if (res) {
-      //   router.push(
-      //     routePaths.sprintPage(
-      //       teamId.toString(),
-      //       sprintNumber.toString(),
-      //       res.id.toString()
-      //     )
-      //   );
-      // }
+      if (res) {
+        router.push(
+          routePaths.sprintPage(
+            teamId.toString(),
+            sprintNumber.toString(),
+            meetingId.toString(),
+          ),
+        );
+      }
 
       if (error) {
         dispatch(
@@ -128,15 +125,15 @@ export default function TopicForm() {
   };
 
   useEffect(() => {
-    if (agendaId) {
+    if (sprintNumber && agendaId) {
       const topic = sprints
-        .find((sprint) => sprint.teamMeetings[0]?.id === meetingId)
-        ?.teamMeetings[0].agendas?.find((agenda) => agenda.id === agendaId);
+        .find((sprint) => sprint.number === sprintNumber)
+        ?.teamMeetings[0].agendas?.find((topic) => topic.id === agendaId);
 
       setTopicData(topic);
       setEditMode(true);
     }
-  }, [meetingId, agendaId, sprints]);
+  }, [sprintNumber, agendaId, sprints]);
 
   useEffect(() => {
     reset({
@@ -144,6 +141,14 @@ export default function TopicForm() {
       description: topicData?.description,
     });
   }, [topicData, reset]);
+
+  function renderButtonContent() {
+    if (editAgendaTopicLoading || addAgendaTopicLoading) {
+      return <Spinner />;
+    }
+
+    return editMode ? "Save Changes" : "Add";
+  }
 
   return (
     // TODO: Create some general form wrapper component
@@ -153,9 +158,13 @@ export default function TopicForm() {
         className="flex flex-col gap-y-4 max-w-[650px] p-10 w-full"
       >
         <div className="flex flex-col mb-6 gap-y-4">
-          <h2 className="text-3xl font-bold text-base-300">Add Agenda Topic</h2>
+          <h2 className="text-3xl font-bold text-base-300">
+            {editMode ? "Edit Topic on the Agenda" : "Add Agenda Topic"}
+          </h2>
           <p className="text-lg font-medium text-base-300">
-            What would you like to address during the meeting?
+            {editMode
+              ? "Edit an agenda topic for the meeting."
+              : "What would you like to address during the meeting?"}
           </p>
         </div>
         <TextInput
@@ -173,16 +182,43 @@ export default function TopicForm() {
           {...register("description")}
           errorMessage={errors.description?.message}
         />
+        <div className="flex w-full gap-x-10">
+          {editMode && (
+            <Button
+              type="button"
+              size="lg"
+              variant="error"
+              onClick={() => {}}
+              title="delete"
+              className="w-1/2"
+            >
+              <TrashIcon className="w-4 h-4" />
+              Delete
+            </Button>
+          )}
+          <Button
+            type="submit"
+            title="submit"
+            disabled={
+              !isDirty ||
+              !isValid ||
+              editAgendaTopicLoading ||
+              addAgendaTopicLoading
+            }
+            size="lg"
+            variant="primary"
+            className={`${editMode ? "w-1/2" : "w-full"}`}
+          >
+            {renderButtonContent()}
+          </Button>
+        </div>
         <Button
-          type="submit"
-          title="submit"
-          disabled={!isDirty || !isValid}
+          type="button"
+          title="cancel"
           size="lg"
-          variant="primary"
+          variant="link"
+          onClick={() => router.back()}
         >
-          Add
-        </Button>
-        <Button type="button" title="cancel" size="lg" variant="link">
           Cancel
         </Button>
       </form>

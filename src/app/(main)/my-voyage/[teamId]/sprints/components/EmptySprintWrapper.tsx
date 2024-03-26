@@ -10,6 +10,8 @@ import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 import { VoyageTeamMember } from "@/store/features/user/userSlice";
 import { getUser } from "@/utils/getUser";
+import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import Banner from "@/components/banner/Banner";
 
 function getMeeting(sprints: Sprint[], sprintNumber: number) {
   const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
@@ -78,18 +80,27 @@ export default async function EmptySprintWrapper({
     );
   } else {
     return (
-      <>
+      <div className="flex flex-col w-full gap-y-10">
+        <VoyagePageBannerContainer
+          title="Sprints"
+          description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
+        >
+          <Banner
+            imageLight="/img/sprints_banner_light.png"
+            imageDark="/img/sprints_banner_dark.png"
+            alt="sprints_banner"
+            height="h-[200px]"
+            width="w-[276px]"
+          />
+        </VoyagePageBannerContainer>
         <ProgressStepper />
-        <SprintActions
-          teamId={params.teamId}
-          sprintNumber={params.sprintNumber}
-        />
+        <SprintActions params={params} />
         <EmptySprintState />
         <EmptySprintProvider
           sprints={sprintsData}
           currentSprintNumber={currentSprintNumber}
         />
-      </>
+      </div>
     );
   }
 }
