@@ -9,11 +9,8 @@ import { useAppDispatch, useModal } from "@/store/hooks";
 
 export default function ViewModal() {
   const dispatch = useAppDispatch();
-  const { isOpen, type } = useModal();
+  const { isOpen, type, content } = useModal();
   const isModalOpen = isOpen && type === "viewResource";
-
-  //TODO: replace data with actual data.
-  const data = { title: "title here", href: "link url here" };
 
   const handleClose = () => {
     dispatch(onCloseModal());
@@ -23,16 +20,16 @@ export default function ViewModal() {
     <Modal isOpen={isModalOpen} title="View Resource?" onClose={handleClose}>
       <form>
         <ModalSection heading="Are you sure you would like to visit this resource?">
-          <p className="text-neutral">{data.title}</p>
+          <p className="text-neutral">{content?.title}</p>
         </ModalSection>
         <ModalSection heading="Are you sure you would like to visit this resource?">
           <Link
             className="text-neutral"
-            href={data.href}
+            href={content?.link ? content.link : ""}
             rel="noopener noreferrer"
             target="_blank"
           >
-            {data.href}
+            {content?.link}
           </Link>
         </ModalSection>
         <div className="p-1 mb-4">
