@@ -16,6 +16,12 @@ export default function ViewModal() {
     dispatch(onCloseModal());
   };
 
+  const openLink = () => {
+    if (content?.link) {
+      window.open(content.link, "_blank");
+    }
+  };
+
   return (
     <Modal isOpen={isModalOpen} title="View Resource?" onClose={handleClose}>
       <form>
@@ -51,7 +57,12 @@ export default function ViewModal() {
           >
             Go Back
           </Button>
-          <Button size="lg" variant="primary" className="w-3/6 m-1">
+          <Button
+            size="lg"
+            variant="primary"
+            className="w-3/6 m-1"
+            onClick={openLink}
+          >
             Continue
           </Button>
         </div>
