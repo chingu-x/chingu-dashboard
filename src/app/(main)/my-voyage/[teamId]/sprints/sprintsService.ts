@@ -41,6 +41,7 @@ export interface SprintsResponse {
 }
 
 interface MeetingResponse {
+  id: number;
   title: string;
   dateTime: string;
   meetingLink: string;
@@ -52,7 +53,7 @@ interface EditMeetingBody extends Partial<AddMeetingBody> {}
 
 export interface FetchSprintsProps extends FetchSprintsType {}
 export interface FetchMeetingProps extends FetchMeetingType {}
-export interface AddMeetingProps extends AddMeetingType, MeetingBody {}
+export interface AddMeetingProps extends AddMeetingType, AddMeetingBody {}
 export interface EditMeetingProps extends EditMeetingType, EditMeetingBody {}
 
 export interface FetchSprintsResponse extends SprintsResponse {
@@ -68,6 +69,8 @@ export interface FetchSprintsResponse extends SprintsResponse {
     }[];
   };
 }
+
+// TODO: will be updated later when agenda types/interfaces are added
 export interface FetchMeetingResponse extends MeetingResponse {
   id: number;
   title: string;
@@ -81,13 +84,7 @@ export interface FetchMeetingResponse extends MeetingResponse {
     status: boolean;
   }[];
 }
-export interface AddMeetingResponse extends MeetingResponse {
-  id: number;
-  title: string;
-  dateTime: string;
-  meetingLink: string;
-  notes: string;
-}
+export interface AddMeetingResponse extends MeetingResponse {}
 export interface EditMeetingResponse extends AddMeetingResponse {}
 
 export async function addMeeting({
