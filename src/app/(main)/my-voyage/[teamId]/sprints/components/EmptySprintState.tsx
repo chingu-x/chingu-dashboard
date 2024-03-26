@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function EmptyState() {
+export default function EmptySprintState() {
   return (
     <div className="w-full">
       <div
