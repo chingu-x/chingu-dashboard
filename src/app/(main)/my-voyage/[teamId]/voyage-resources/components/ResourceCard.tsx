@@ -7,17 +7,21 @@ import Badge from "@/components/badge/Badge";
 interface ResourceCardProps {
   title: string;
   user: { name: string; image: string };
-  currentUser: boolean;
   date: string;
+  userId: number;
 }
 
 export default function ResourceCard({
   title,
-  currentUser,
   user,
   date,
+  userId,
 }: ResourceCardProps) {
   const dispatch = useAppDispatch();
+  const currentUserId = 7;
+
+  console.log("user: ", userId);
+  console.log("CurrentUser: ", currentUserId);
 
   function openViewModal() {
     dispatch(
@@ -51,7 +55,10 @@ export default function ResourceCard({
           <div className="text-neutral">Added {date}</div>
         </div>
       </div>
-      {currentUser && (
+      {/**TODO: user id check is a placeholder. id from currently logged in user of different type to teamMemberId on a resource.
+       * is it possible to get user's actual id attached to resources they submit?
+       */}
+      {userId === currentUserId ? (
         // TODO: replace with icon button
         <div
           className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-base-100"
@@ -59,7 +66,7 @@ export default function ResourceCard({
         >
           <TrashIcon className="w-6 h-6" />
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
