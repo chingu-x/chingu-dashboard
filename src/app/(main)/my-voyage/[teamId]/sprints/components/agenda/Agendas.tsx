@@ -15,31 +15,33 @@ import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider"
 import { Agenda } from "@/store/features/sprint/sprintSlice";
 
 interface AgendasProps {
-  teamId: string;
-  meetingId: string;
-  sprintNumber: string;
+  params: {
+    teamId: string;
+    meetingId: string;
+    sprintNumber: string;
+  };
   topics: Agenda[];
 }
 
-export default function Agendas({
-  teamId,
-  meetingId,
-  sprintNumber,
-  topics,
-}: AgendasProps) {
+export default function Agendas({ params, topics }: AgendasProps) {
+  const [teamId, meetingId, sprintNumber] = [
+    params.teamId,
+    params.meetingId,
+    params.sprintNumber,
+  ];
   const router = useRouter();
 
   const [incompletedTopics, setIncompletedTopics] = useState(
-    topics.filter((topic) => topic.status === false)
+    topics.filter((topic) => topic.status === false),
   );
   const [completedTopics, setCompletedTopics] = useState(
-    topics.filter((topic) => topic.status === true)
+    topics.filter((topic) => topic.status === true),
   );
 
   const changeStatus = (id: number, status: boolean) => {
     if (status === false) {
       const topicIndex = incompletedTopics.findIndex(
-        (topic) => topic.id === id
+        (topic) => topic.id === id,
       );
       const topic = { ...incompletedTopics[topicIndex], status: true };
       setIncompletedTopics([...incompletedTopics].toSpliced(topicIndex, 1));
@@ -52,8 +54,15 @@ export default function Agendas({
     }
   };
 
-  const editTopic = () => {
-    router.push(routePaths.addTopic(teamId, sprintNumber, meetingId));
+  const editTopic = (agendaTopicId: number) => {
+    router.push(
+      routePaths.editTopic(
+        teamId,
+        sprintNumber,
+        meetingId,
+        agendaTopicId.toString(),
+      ),
+    );
   };
 
   const dividerIsVisible = completedTopics.length !== 0;
@@ -72,7 +81,7 @@ export default function Agendas({
           <AgendaTopic
             key={topic.id}
             topic={topic}
-            editTopic={editTopic}
+            editTopic={() => editTopic(topic.id)}
             changeStatus={changeStatus}
           />
         ))}
@@ -91,7 +100,7 @@ export default function Agendas({
           <AgendaTopic
             key={topic.id}
             topic={topic}
-            editTopic={editTopic}
+            editTopic={() => editTopic(topic.id)}
             changeStatus={changeStatus}
           />
         ))}

@@ -11,16 +11,19 @@ import Button from "@/components/Button";
 import routePaths from "@/utils/routePaths";
 
 interface SprintActionsProps {
-  teamId: string;
-  meetingId?: string;
-  sprintNumber: string;
+  params: {
+    teamId: string;
+    meetingId?: string;
+    sprintNumber: string;
+  };
 }
 
-export default function SprintActions({
-  teamId,
-  meetingId,
-  sprintNumber,
-}: SprintActionsProps) {
+export default function SprintActions({ params }: SprintActionsProps) {
+  const [teamId, meetingId, sprintNumber] = [
+    params.teamId,
+    params.meetingId,
+    params.sprintNumber,
+  ];
   const submitVoyageIsAllowed = sprintNumber === "5" || sprintNumber === "6";
   return (
     <div className="flex justify-between p-5 border shadow-md bg-base-200 rounded-2xl border-base-100">
