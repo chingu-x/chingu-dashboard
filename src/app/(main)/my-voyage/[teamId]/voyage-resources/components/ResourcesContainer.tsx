@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import ResourceInput from "./ResourceInput";
 import SortingButton from "./SortingButton";
 import ResourceCard from "./ResourceCard";
 import EmptyBanner from "./EmptyBanner";
 import { ResourceData } from "@/store/features/resources/resourcesSlice";
-import { useSelector } from "react-redux";
 
 type Resources = {
   resources: ResourceData[] | null;
@@ -21,8 +21,8 @@ export default function ResourcesContainer() {
   );
   const [voyageResources, setVoyageResources] = useState(initialResourcesState);
 
-  const mapResources = (resources: ResourceData[] | null) => {
-    return resources?.map((item) => ({
+  const mapResources = (resources: ResourceData[] | null) =>
+    resources?.map((item) => ({
       key: item.id,
       title: item.title,
       url: item.url,
@@ -33,34 +33,29 @@ export default function ResourcesContainer() {
       date: new Date(item.updatedAt).toString(),
       userId: item.teamMemberId,
     }));
-  };
 
-  const sortResources = (resources: ResourceData[] | null) => {
-    return resources?.slice().sort(function (a, b) {
+  const sortResources = (resources: ResourceData[] | null) =>
+    resources?.slice().sort(function (a, b) {
       const prev = new Date(a.updatedAt);
       const next = new Date(b.updatedAt);
       if (byNewest) {
-        return next.getTime() - prev.getTime();
-      } else {
         return prev.getTime() - next.getTime();
+      } else {
+        return next.getTime() - prev.getTime();
       }
     });
-  };
 
   const handleClick = () => {
+    const sortedResources = sortResources(voyageResources);
+    if (sortedResources !== undefined) {
+      setVoyageResources(sortedResources);
+    }
     setByNewest(!byNewest);
   };
 
   useEffect(() => {
     setVoyageResources(initialResourcesState);
   }, [initialResourcesState]);
-
-  useEffect(() => {
-    const sortedResources = sortResources(voyageResources);
-    if (sortedResources !== undefined) {
-      setVoyageResources(sortedResources);
-    }
-  }, [byNewest]);
 
   const resourceList = mapResources(voyageResources);
 
@@ -92,6 +87,7 @@ export default function ResourcesContainer() {
             user={item.user}
             date={item.date}
             userId={item.userId}
+            url={item.url}
           />
         ))
       )}
