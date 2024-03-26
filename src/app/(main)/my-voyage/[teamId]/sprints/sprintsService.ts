@@ -51,6 +51,7 @@ export interface SprintsResponse {
 }
 
 interface MeetingResponse {
+  id: number;
   title: string;
   dateTime: string;
   meetingLink: string;
@@ -91,6 +92,8 @@ export interface FetchSprintsResponse extends SprintsResponse {
     }[];
   };
 }
+
+// TODO: will be updated later when agenda types/interfaces are added
 export interface FetchMeetingResponse extends MeetingResponse {
   id: number;
   title: string;
@@ -104,13 +107,7 @@ export interface FetchMeetingResponse extends MeetingResponse {
     status: boolean;
   }[];
 }
-export interface AddMeetingResponse extends MeetingResponse {
-  id: number;
-  title: string;
-  dateTime: string;
-  meetingLink: string;
-  notes: string;
-}
+export interface AddMeetingResponse extends MeetingResponse {}
 export interface EditMeetingResponse extends AddMeetingResponse {}
 export interface AddTopicResponse extends TopicResponse {}
 export interface EditTopicResponse extends AddTopicResponse {}
