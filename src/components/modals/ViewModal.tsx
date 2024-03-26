@@ -22,6 +22,10 @@ export default function ViewModal() {
     }
   };
 
+  const handleChange = () => {
+    localStorage.setItem("hideResourceModal", JSON.stringify(true));
+  };
+
   return (
     <Modal isOpen={isModalOpen} title="View Resource?" onClose={handleClose}>
       <form>
@@ -46,6 +50,7 @@ export default function ViewModal() {
             id="confirmation"
             label="Don't ask me this again when opening resources links"
             className="text-base-300 hover:[&>*:nth-child(3)]:text-neutral-focus"
+            onChange={handleChange}
           />
         </div>
         <div className="flex justify-between w-full h-16">
