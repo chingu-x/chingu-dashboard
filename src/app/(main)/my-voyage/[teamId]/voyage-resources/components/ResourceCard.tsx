@@ -9,6 +9,7 @@ interface ResourceCardProps {
   user: { name: string; image: string };
   date: string;
   userId: number;
+  url: string;
 }
 
 export default function ResourceCard({
@@ -16,18 +17,16 @@ export default function ResourceCard({
   user,
   date,
   userId,
+  url,
 }: ResourceCardProps) {
   const dispatch = useAppDispatch();
   const currentUserId = 7;
-
-  console.log("user: ", userId);
-  console.log("CurrentUser: ", currentUserId);
 
   function openViewModal() {
     dispatch(
       onOpenModal({
         type: "viewResource",
-        content: {},
+        content: { title: title, link: url },
       }),
     );
   }
