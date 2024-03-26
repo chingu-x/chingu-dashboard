@@ -66,7 +66,7 @@ export default function Agendas({
         meetingId={meetingId}
       />
       {/* INCOMPLETED TOPICS */}
-      {topicsData.length === 0 && <NoAgendasState />}
+      {topics.length === 0 && <NoAgendasState />}
       <ul className="flex flex-col w-full gap-y-5">
         {incompletedTopics.map((topic) => (
           <AgendaTopic
