@@ -31,7 +31,7 @@ export default function ResourcesContainer() {
         image: item.addedBy.member.avatar,
       },
       date: new Date(item.updatedAt).toString(),
-      currentUser: true, //check if actual current user here if this is best ???
+      userId: item.teamMemberId,
     }));
   };
 
@@ -90,8 +90,8 @@ export default function ResourcesContainer() {
             key={item.key}
             title={item.title}
             user={item.user}
-            currentUser={item.currentUser}
             date={item.date}
+            userId={item.userId}
           />
         ))
       )}
