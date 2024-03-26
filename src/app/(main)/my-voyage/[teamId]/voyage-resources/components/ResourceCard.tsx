@@ -20,15 +20,20 @@ export default function ResourceCard({
   url,
 }: ResourceCardProps) {
   const dispatch = useAppDispatch();
-  const currentUserId = 7;
+  const currentUserId = 7; //TODO: replace with id from logged in user.
 
   function openViewModal() {
-    dispatch(
-      onOpenModal({
-        type: "viewResource",
-        content: { title: title, link: url },
-      }),
-    );
+    const hideResourceModal = localStorage.getItem("hideResourceModal");
+    if (hideResourceModal) {
+      window.open(url, "_blank");
+    } else {
+      dispatch(
+        onOpenModal({
+          type: "viewResource",
+          content: { title: title, link: url },
+        }),
+      );
+    }
   }
   const openDeleteModal = () => {
     // todo: replace with modal
