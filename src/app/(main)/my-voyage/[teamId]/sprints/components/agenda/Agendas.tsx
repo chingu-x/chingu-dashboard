@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-import EmptyState from "./EmptyState";
+import NoAgendasState from "./NoAgendasState";
 import AgendaTopic from "./AgendaTopic";
 import AgendaHeader from "./AgendaHeader";
 // import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
@@ -51,7 +51,7 @@ export default function Agendas() {
     <div className="flex flex-col items-center justify-between w-full p-10 border bg-base-200 rounded-2xl border-base-100">
       <AgendaHeader />
       {/* INCOMPLETED TOPICS */}
-      {topicsData.length === 0 && <EmptyState />}
+      {topicsData.length === 0 && <NoAgendasState />}
       <ul className="flex flex-col w-full gap-y-5">
         {incompletedTopics.map((topic) => (
           <AgendaTopic
