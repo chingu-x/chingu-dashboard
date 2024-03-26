@@ -11,40 +11,40 @@ type Resources = {
   resources: ResourceData[] | null;
 };
 interface ResourcesContainerProps {
-  resources: Resources ;
+  resources: Resources;
 }
 
 export default function ResourcesContainer() {
-  const [byNewest, setByNewest] = useState(true);  
-  const [voyageResources, setVoyageResources] = useState(
-    useSelector((state: ResourcesContainerProps ) => state.resources.resources),
+  const [byNewest, setByNewest] = useState(true);
+  const initialResourcesState = useSelector(
+    (state: ResourcesContainerProps) => state.resources.resources,
   );
-  //const [ voyageResources, setVoyageResources ]= useState(null)
+  const [voyageResources, setVoyageResources] = useState(initialResourcesState);
 
   const mapResources = (resources: ResourceData[] | null) => {
-    return resources?.map(( item ) => ({
+    return resources?.map((item) => ({
       key: item.id,
-        title: item.title,
-        url: item.url,
-        user: {
-          name: item.addedBy.member.firstName,
-          image: item.addedBy.member.avatar,
-        },
-        date: new Date(item.updatedAt).toString(),
-        currentUser: true, //check if actual current user here if this is best ???
+      title: item.title,
+      url: item.url,
+      user: {
+        name: item.addedBy.member.firstName,
+        image: item.addedBy.member.avatar,
+      },
+      date: new Date(item.updatedAt).toString(),
+      currentUser: true, //check if actual current user here if this is best ???
     }));
   };
 
-  const sortResources = (resources: ResourceData[] | null ) => {
-      return resources?.slice().sort(function (a, b) {
-        const prev = new Date(a.updatedAt);
-        const next = new Date(b.updatedAt);
-        if (byNewest) {
-          return next.getTime() - prev.getTime();
-        } else {
-          return prev.getTime() - next.getTime();
-        }
-      })
+  const sortResources = (resources: ResourceData[] | null) => {
+    return resources?.slice().sort(function (a, b) {
+      const prev = new Date(a.updatedAt);
+      const next = new Date(b.updatedAt);
+      if (byNewest) {
+        return next.getTime() - prev.getTime();
+      } else {
+        return prev.getTime() - next.getTime();
+      }
+    });
   };
 
   const handleClick = () => {
@@ -52,11 +52,15 @@ export default function ResourcesContainer() {
   };
 
   useEffect(() => {
+    setVoyageResources(initialResourcesState);
+  }, [initialResourcesState]);
+
+  useEffect(() => {
     const sortedResources = sortResources(voyageResources);
-    if(sortedResources !== undefined){
+    if (sortedResources !== undefined) {
       setVoyageResources(sortedResources);
     }
-  },[byNewest]);
+  }, [byNewest]);
 
   const resourceList = mapResources(voyageResources);
 
