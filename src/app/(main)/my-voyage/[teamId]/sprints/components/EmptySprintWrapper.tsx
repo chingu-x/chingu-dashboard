@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import ProgressStepper from "./ProgressStepper";
-import EmptyState from "./EmptyState";
+import EmptySprintState from "./EmptySprintState";
 import SprintActions from "./SprintActions";
 
 import EmptySprintProvider from "@/sprints/providers/EmptySprintProvider";
@@ -67,6 +67,7 @@ export default async function EmptySprintWrapper({
   const { number } = getCurrentSprint(sprintsData) as Sprint;
   const currentSprintNumber = number;
 
+  // Redirect if a user tries to access a sprint which hasn't started yet
   if (sprintNumber > currentSprintNumber) {
     redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
     // If a user tries to access this page directly, check if the current sprint's meetingId exists.
@@ -83,7 +84,7 @@ export default async function EmptySprintWrapper({
           teamId={params.teamId}
           sprintNumber={params.sprintNumber}
         />
-        <EmptyState />
+        <EmptySprintState />
         <EmptySprintProvider
           sprints={sprintsData}
           currentSprintNumber={currentSprintNumber}

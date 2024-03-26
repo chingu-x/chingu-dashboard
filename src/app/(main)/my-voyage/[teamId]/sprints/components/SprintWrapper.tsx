@@ -102,6 +102,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   const { number } = getCurrentSprint(sprintsData) as Sprint;
   const currentSprintNumber = number;
 
+  // Redirect if a user tries to access a sprint which hasn't started yet
   if (sprintNumber > currentSprintNumber) {
     redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
   }

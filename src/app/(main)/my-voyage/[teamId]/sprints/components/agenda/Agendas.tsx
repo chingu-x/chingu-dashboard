@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-import EmptyState from "./EmptyState";
+import NoAgendasState from "./NoAgendasState";
 import AgendaTopic from "./AgendaTopic";
 import AgendaHeader from "./AgendaHeader";
 // import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
@@ -30,16 +30,16 @@ export default function Agendas({
   const router = useRouter();
 
   const [incompletedTopics, setIncompletedTopics] = useState(
-    topics.filter((topic) => topic.status === false),
+    topics.filter((topic) => topic.status === false)
   );
   const [completedTopics, setCompletedTopics] = useState(
-    topics.filter((topic) => topic.status === true),
+    topics.filter((topic) => topic.status === true)
   );
 
   const changeStatus = (id: number, status: boolean) => {
     if (status === false) {
       const topicIndex = incompletedTopics.findIndex(
-        (topic) => topic.id === id,
+        (topic) => topic.id === id
       );
       const topic = { ...incompletedTopics[topicIndex], status: true };
       setIncompletedTopics([...incompletedTopics].toSpliced(topicIndex, 1));
@@ -66,7 +66,7 @@ export default function Agendas({
         meetingId={meetingId}
       />
       {/* INCOMPLETED TOPICS */}
-      {topics.length === 0 && <EmptyState />}
+      {topicsData.length === 0 && <NoAgendasState />}
       <ul className="flex flex-col w-full gap-y-5">
         {incompletedTopics.map((topic) => (
           <AgendaTopic
