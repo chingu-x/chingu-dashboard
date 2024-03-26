@@ -23,7 +23,7 @@ interface MeetingBody {
 interface AgendaTopicBody {
   title: string;
   description: string;
-  status: string;
+  status: boolean;
 }
 
 type FetchSprintsType = Pick<SprintProps, "teamId">;
@@ -62,7 +62,7 @@ interface AgendaTopicResponse {
   id: string;
   title: string;
   description: string;
-  status: string;
+  status: boolean;
 }
 
 interface AddMeetingBody extends MeetingBody {}
@@ -82,6 +82,11 @@ export interface EditAgendaTopicProps
   extends EditAgendaTopicType,
     EditAgendaTopicBody {}
 export interface DeleteAgendaTopicProps extends DeleteAgendaTopicType {}
+export interface ChangeAgendaTopicStatusProps
+  extends EditAgendaTopicType,
+    EditAgendaTopicBody {
+  status: boolean;
+}
 
 export interface FetchSprintsResponse extends SprintsResponse {
   voyage: {
@@ -236,6 +241,31 @@ export async function deleteAgendaTopic({
     );
 
   const [res, error] = await handleAsync(deleteAgendaTopicAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.sprint);
+  }
+
+  return [res, error];
+}
+
+export async function changeAgendaTopicStatus({
+  agendaId,
+  status,
+}: ChangeAgendaTopicStatusProps): Promise<
+  AsyncActionResponse<EditAgendaTopicResponse>
+> {
+  const token = getAccessToken();
+
+  const changeAgendaTopicStatusAsync = () =>
+    PATCH<EditAgendaTopicBody, EditAgendaTopicResponse>(
+      `api/v1/voyages/sprints/agendas/${agendaId}`,
+      token,
+      "default",
+      { status },
+    );
+
+  const [res, error] = await handleAsync(changeAgendaTopicStatusAsync);
 
   if (res) {
     revalidateTag(CacheTag.sprint);

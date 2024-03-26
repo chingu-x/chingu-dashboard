@@ -7,12 +7,14 @@ import { useRouter } from "next/navigation";
 import NoAgendasState from "./NoAgendasState";
 import AgendaTopic from "./AgendaTopic";
 import AgendaHeader from "./AgendaHeader";
-// import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 
 import routePaths from "@/utils/routePaths";
-
-import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
+import Divider from "@/sprints/components/Divider";
 import { Agenda } from "@/store/features/sprint/sprintSlice";
+import useServerAction from "@/hooks/useServerAction";
+import { changeAgendaTopicStatus } from "@/sprints/sprintsService";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface AgendasProps {
   params: {
@@ -29,6 +31,7 @@ export default function Agendas({ params, topics }: AgendasProps) {
     params.meetingId,
     params.sprintNumber,
   ];
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const [incompletedTopics, setIncompletedTopics] = useState(
@@ -38,19 +41,40 @@ export default function Agendas({ params, topics }: AgendasProps) {
     topics.filter((topic) => topic.status === true),
   );
 
-  const changeStatus = (id: number, status: boolean) => {
-    if (status === false) {
-      const topicIndex = incompletedTopics.findIndex(
-        (topic) => topic.id === id,
+  const {
+    runAction: changeAgendaTopicAction,
+    isLoading: changeAgendaTopicLoading,
+    setIsLoading: setChangeAgendaTopicLoading,
+  } = useServerAction(changeAgendaTopicStatus);
+
+  const changeStatus = async (agendaId: number, status: boolean) => {
+    const [res, error] = await changeAgendaTopicAction({
+      status,
+      agendaId,
+    });
+    if (res) {
+      if (status === true) {
+        const topicIndex = incompletedTopics.findIndex(
+          (topic) => topic.id === agendaId,
+        );
+        const topic = { ...incompletedTopics[topicIndex], status: true };
+        setIncompletedTopics([...incompletedTopics].toSpliced(topicIndex, 1));
+        setCompletedTopics([...completedTopics, topic]);
+      } else {
+        const topicIndex = completedTopics.findIndex(
+          (topic) => topic.id === agendaId,
+        );
+        const topic = { ...completedTopics[topicIndex], status: false };
+        setCompletedTopics([...completedTopics].toSpliced(topicIndex, 1));
+        setIncompletedTopics([...incompletedTopics, topic]);
+      }
+      setChangeAgendaTopicLoading(false);
+    }
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
-      const topic = { ...incompletedTopics[topicIndex], status: true };
-      setIncompletedTopics([...incompletedTopics].toSpliced(topicIndex, 1));
-      setCompletedTopics([...completedTopics, topic]);
-    } else {
-      const topicIndex = completedTopics.findIndex((topic) => topic.id === id);
-      const topic = { ...completedTopics[topicIndex], status: false };
-      setCompletedTopics([...completedTopics].toSpliced(topicIndex, 1));
-      setIncompletedTopics([...incompletedTopics, topic]);
+      setChangeAgendaTopicLoading(false);
     }
   };
 
@@ -83,6 +107,7 @@ export default function Agendas({ params, topics }: AgendasProps) {
             topic={topic}
             editTopic={() => editTopic(topic.id)}
             changeStatus={changeStatus}
+            statusButtonDisabled={changeAgendaTopicLoading}
           />
         ))}
       </ul>
@@ -102,6 +127,7 @@ export default function Agendas({ params, topics }: AgendasProps) {
             topic={topic}
             editTopic={() => editTopic(topic.id)}
             changeStatus={changeStatus}
+            statusButtonDisabled={changeAgendaTopicLoading}
           />
         ))}
       </ul>

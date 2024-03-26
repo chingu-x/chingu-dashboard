@@ -19,6 +19,7 @@ import { addAgendaTopic, editAgendaTopic } from "@/sprints/sprintsService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
+import { persistor } from "@/store/store";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -141,6 +142,13 @@ export default function AgendaTopicForm() {
       description: topicData?.description,
     });
   }, [topicData, reset]);
+
+  useEffect(
+    () => () => {
+      void persistor.purge();
+    },
+    [],
+  );
 
   function renderButtonContent() {
     if (editAgendaTopicLoading || addAgendaTopicLoading) {
