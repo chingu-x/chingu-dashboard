@@ -44,6 +44,7 @@ export default function ResourceInput() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
@@ -56,6 +57,7 @@ export default function ResourceInput() {
 
     if (res) {
       setAddResourceLoading(false);
+      reset();
     }
     if (error) {
       dispatch(

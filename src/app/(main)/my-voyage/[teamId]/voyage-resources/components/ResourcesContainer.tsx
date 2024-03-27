@@ -1,49 +1,64 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ResourceInput from "./ResourceInput";
 import SortingButton from "./SortingButton";
 import ResourceCard from "./ResourceCard";
 import EmptyBanner from "./EmptyBanner";
-import { resources } from "./fixtures/resources";
 import { ResourceData } from "@/store/features/resources/resourcesSlice";
-//const resources = null // temp var for toggling empty banner or resource cards based on 'fake data'
+import { useResource } from "@/store/hooks";
 
-interface ResourcesContainerProps {
-  data: ResourceData[];
-}
-
-export default function ResourcesContainer({ data }: ResourcesContainerProps) {
+export default function ResourcesContainer() {
   const [byNewest, setByNewest] = useState(true);
-  {
-    /*TODO: replace 'data' with call to Redux store resources slice.*/
-  }
-  const [voyageResources, setVoyageResources] = useState(data);
+  const initialResourcesState = useResource().resources;
+  const [voyageResources, setVoyageResources] = useState(initialResourcesState);
 
-  const handleClick = () => {
-    setVoyageResources(sortResources());
-    setByNewest(!byNewest);
-  };
+  const mapResources = (resources: ResourceData[] | null) =>
+    resources?.map((item) => ({
+      id: item.id,
+      title: item.title,
+      url: item.url,
+      user: {
+        name: item.addedBy.member.firstName,
+        image: item.addedBy.member.avatar,
+      },
+      date: new Date(item.updatedAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      }),
+      userId: item.teamMemberId,
+    }));
 
-  const sortResources = () => {
-    voyageResources.sort(function (a, b) {
+  const sortResources = (resources: ResourceData[] | null) =>
+    resources?.slice().sort(function (a, b) {
       const prev = new Date(a.updatedAt);
       const next = new Date(b.updatedAt);
       if (byNewest) {
-        return next.getTime() - prev.getTime();
-      } else {
         return prev.getTime() - next.getTime();
+      } else {
+        return next.getTime() - prev.getTime();
       }
     });
 
-    return voyageResources;
+  const handleClick = () => {
+    const sortedResources = sortResources(voyageResources);
+    if (sortedResources !== undefined) {
+      setVoyageResources(sortedResources);
+    }
+    setByNewest(!byNewest);
   };
+
+  useEffect(() => {
+    setVoyageResources(initialResourcesState);
+  }, [initialResourcesState]);
+
+  const resourceList = mapResources(voyageResources);
 
   return (
     <>
       <div className="grid grid-cols-[1fr_150px] items-center">
         <ResourceInput />
-        {/*TODO: replace 'resources' (fake data) with 'voyageResources'*/}
-        {!resources ? (
+        {!resourceList ? (
           <SortingButton
             onClick={handleClick}
             type={byNewest}
@@ -57,17 +72,18 @@ export default function ResourcesContainer({ data }: ResourcesContainerProps) {
           />
         )}
       </div>
-      {/*TODO: replace 'resources' (fake data) with 'voyageResources'*/}
-      {!resources ? (
+      {!resourceList ? (
         <EmptyBanner />
       ) : (
-        resources.map((item) => (
+        resourceList.map((item) => (
           <ResourceCard
             key={item.id}
+            id={item.id}
             title={item.title}
             user={item.user}
-            currentUser={item.currentUser}
             date={item.date}
+            userId={item.userId}
+            url={item.url}
           />
         ))
       )}
