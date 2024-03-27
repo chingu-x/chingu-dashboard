@@ -81,12 +81,12 @@ export interface AddAgendaTopicProps
 export interface EditAgendaTopicProps
   extends EditAgendaTopicType,
     EditAgendaTopicBody {}
-export interface DeleteAgendaTopicProps extends DeleteAgendaTopicType {}
 export interface ChangeAgendaTopicStatusProps
   extends EditAgendaTopicType,
     EditAgendaTopicBody {
   status: boolean;
 }
+export interface DeleteAgendaTopicProps extends DeleteAgendaTopicType {}
 
 export interface FetchSprintsResponse extends SprintsResponse {
   voyage: {
@@ -117,9 +117,9 @@ export interface FetchMeetingResponse extends MeetingResponse {
   }[];
 }
 export interface AddMeetingResponse extends MeetingResponse {}
-export interface EditMeetingResponse extends AddMeetingResponse {}
+export interface EditMeetingResponse extends MeetingResponse {}
 export interface AddAgendaTopicResponse extends AgendaTopicResponse {}
-export interface EditAgendaTopicResponse extends AddAgendaTopicResponse {}
+export interface EditAgendaTopicResponse extends AgendaTopicResponse {}
 export interface DeleteAgendaTopicResponse extends AgendaTopicResponse {}
 
 export async function addMeeting({
@@ -234,7 +234,7 @@ export async function deleteAgendaTopic({
   const token = getAccessToken();
 
   const deleteAgendaTopicAsync = () =>
-    DELETE<EditAgendaTopicResponse>(
+    DELETE<DeleteAgendaTopicResponse>(
       `api/v1/voyages/sprints/agendas/${agendaId}`,
       token,
       "default",

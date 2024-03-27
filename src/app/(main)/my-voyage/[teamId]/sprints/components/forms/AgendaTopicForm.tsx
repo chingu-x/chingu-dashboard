@@ -125,6 +125,21 @@ export default function AgendaTopicForm() {
     }
   };
 
+  function handleDelete() {
+    dispatch(
+      onOpenModal({
+        type: "deleteAgendaConfirmation",
+        content: {
+          title: "Confirm Deletion",
+          message:
+            "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
+          confirmationText: "Delete Agenda Topic",
+          cancelText: "Keep It",
+        },
+      }),
+    );
+  }
+
   useEffect(() => {
     if (sprintNumber && agendaId) {
       const topic = sprints
@@ -196,7 +211,7 @@ export default function AgendaTopicForm() {
               type="button"
               size="lg"
               variant="error"
-              onClick={() => {}}
+              onClick={handleDelete}
               title="delete"
               className="w-1/2"
             >
