@@ -1,45 +1,68 @@
 import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 import ModalSection from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ModalSection";
 import { CheckboxGroupItem } from "@/components/inputs/CheckBoxGroup/CheckboxGroupItem";
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
 
 import { onCloseModal } from "@/store/features/modal/modalSlice";
-import { useAppDispatch, useModal } from "@/store/hooks";
+import { useAppDispatch, useModal, useResource } from "@/store/hooks";
 
 export default function ViewModal() {
+  // Workaround to get resource data into Modal.
+  // Passed resource id from ResourceCard to ViewModal as 'title' (part of ModalSlice).
+  // Get resources from Redux store and use 'data()' to find item by id, and return relevant properties.
   const dispatch = useAppDispatch();
+  const resourceList = useResource().resources;
+  const [resourceData, setResourceData] = useState({ title: "", url: "" });
   const { isOpen, type, content } = useModal();
   const isModalOpen = isOpen && type === "viewResource";
+
+  const data = useCallback(() => {
+    const id = Number(content?.title);
+    let title = "";
+    let url = "";
+
+    if (resourceList && id) {
+      const resource = resourceList.find((item) => item.id === id);
+      if (resource) {
+        title = resource.title;
+        url = resource.url;
+      }
+    }
+    return { title: title, url: url };
+  }, [content, resourceList]);
 
   const handleClose = () => {
     dispatch(onCloseModal());
   };
 
   const openLink = () => {
-    if (content?.link) {
-      window.open(content.link, "_blank");
-    }
+    window.open(resourceData.url, "_blank");
   };
 
   const handleChange = () => {
     localStorage.setItem("hideResourceModal", JSON.stringify(true));
   };
 
+  useEffect(() => {
+    setResourceData(data());
+  }, [content, data]);
+
   return (
     <Modal isOpen={isModalOpen} title="View Resource?" onClose={handleClose}>
       <form>
         <ModalSection heading="Are you sure you would like to visit this resource?">
-          <p className="text-neutral">{content?.title}</p>
+          <p className="text-neutral">{resourceData.title}</p>
         </ModalSection>
-        <ModalSection heading="Are you sure you would like to visit this resource?">
+        <ModalSection heading="Full link of resource:">
           <Link
             className="text-neutral"
-            href={content?.link ? content.link : ""}
+            href={resourceData.url}
             rel="noopener noreferrer"
             target="_blank"
           >
-            {content?.link}
+            {resourceData.url}
           </Link>
         </ModalSection>
         <div className="p-1 mb-4">
