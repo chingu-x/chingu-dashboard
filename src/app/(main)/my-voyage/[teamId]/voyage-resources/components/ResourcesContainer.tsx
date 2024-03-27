@@ -1,24 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import ResourceInput from "./ResourceInput";
 import SortingButton from "./SortingButton";
 import ResourceCard from "./ResourceCard";
 import EmptyBanner from "./EmptyBanner";
 import { ResourceData } from "@/store/features/resources/resourcesSlice";
-
-type Resources = {
-  resources: ResourceData[] | null;
-};
-interface ResourcesContainerProps {
-  resources: Resources;
-}
+import { useResource } from "@/store/hooks";
 
 export default function ResourcesContainer() {
   const [byNewest, setByNewest] = useState(true);
-  const initialResourcesState = useSelector(
-    (state: ResourcesContainerProps) => state.resources.resources,
-  );
+  const initialResourcesState = useResource().resources;
   const [voyageResources, setVoyageResources] = useState(initialResourcesState);
 
   const mapResources = (resources: ResourceData[] | null) =>
