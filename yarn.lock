@@ -1522,6 +1522,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.21.0":
+  version: 7.24.0
+  resolution: "@babel/runtime@npm:7.24.0"
+  dependencies:
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: 3495eed727bf4a4f84c35bb51ab53317ae38f4bbc3b1d0a8303751f9dfa0ce6f5fb2afced72b76c3dd0d8bb2ccb84787559a4dee9886291a36b26f02f0f759b4
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.23.5":
   version: 7.23.6
   resolution: "@babel/runtime@npm:7.23.6"
@@ -6706,6 +6715,8 @@ __metadata:
     autoprefixer: "npm:10.4.14"
     class-variance-authority: "npm:^0.7.0"
     cypress: "npm:^12.17.3"
+    date-fns: "npm:2.30.0"
+    date-fns-tz: "npm:2.0.0"
     eslint: "npm:8.46.0"
     eslint-config-next: "npm:^14.0.3"
     eslint-config-prettier: "npm:^8.10.0"
@@ -7477,6 +7488,24 @@ __metadata:
     whatwg-mimetype: "npm:^3.0.0"
     whatwg-url: "npm:^11.0.0"
   checksum: 051c3aaaf3e961904f136aab095fcf6dff4db23a7fc759dd8ba7b3e6ba03fc07ef608086caad8ab910d864bd3b5e57d0d2f544725653d77c96a2c971567045f4
+  languageName: node
+  linkType: hard
+
+"date-fns-tz@npm:2.0.0":
+  version: 2.0.0
+  resolution: "date-fns-tz@npm:2.0.0"
+  peerDependencies:
+    date-fns: ">=2.0.0"
+  checksum: 31cacb83c675ef8c2cf31d21c298ab6d74c5e975412dd804664d031ac0f2f03ed5bfb2a950fa15a321bbbcb90b833c300823fbceba0133680065a71894cc1170
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:2.30.0":
+  version: 2.30.0
+  resolution: "date-fns@npm:2.30.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.21.0"
+  checksum: e4b521fbf22bc8c3db332bbfb7b094fd3e7627de0259a9d17c7551e2d2702608a7307a449206065916538e384f37b181565447ce2637ae09828427aed9cb5581
   languageName: node
   linkType: hard
 

@@ -106,7 +106,7 @@ export async function deleteIdeation({
   const token = getAccessToken();
   const deleteIdeationAsync = () =>
     DELETE<DeleteIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideation/${ideationId}`,
+      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
     );

@@ -19,7 +19,8 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   maxLength?: number;
   errorMessage?: string | undefined;
   inputGroupContent?: JSX.Element;
-  submitButtonText?: string;
+  submitButtonText?: string | React.ReactNode;
+  buttonDisabled?: boolean;
   clearInputAction?: () => void;
 }
 
@@ -35,6 +36,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       errorMessage,
       inputGroupContent,
       submitButtonText,
+      buttonDisabled,
       clearInputAction,
       className,
       type = "text",
@@ -124,6 +126,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               type="submit"
               variant="neutral"
               size="sm"
+              disabled={buttonDisabled}
               className={cn(
                 "absolute top-1/2 -translate-y-1/2 right-[2px] h-[calc(100%-4px)] rounded-[6.2px]",
                 isClearButtonVisible && "right-[50px]",

@@ -7,6 +7,7 @@ import authReducer from "./features/auth/authSlice";
 import ideationReducer from "./features/ideation/ideationSlice";
 import resourceReducer from "./features/resources/resourcesSlice";
 import userReducer from "./features/user/userSlice";
+import directoryReducer from "./features/directory/directorySlice";
 
 const createNoopStorage = () => ({
   getItem() {
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   ideation: ideationReducer,
+  directory: directoryReducer,
   resources: resourceReducer,
 });
 
