@@ -22,7 +22,7 @@ export default function ResourceCard({
   const dispatch = useAppDispatch();
   const currentUserId = 7; //TODO: replace with id from logged in user.
 
-  function openViewModal() {
+  const openViewModal = () => {
     const hideResourceModal = localStorage.getItem("hideResourceModal");
     if (hideResourceModal) {
       window.open(url, "_blank");
@@ -34,7 +34,7 @@ export default function ResourceCard({
         }),
       );
     }
-  }
+  };
   const openDeleteModal = () => {
     // todo: replace with modal
   };
@@ -59,8 +59,8 @@ export default function ResourceCard({
           <div className="text-neutral">Added {date}</div>
         </div>
       </div>
-      {/**TODO: user id check is a placeholder. id from currently logged in user of different type to teamMemberId on a resource.
-       * is it possible to get user's actual id attached to resources they submit?
+      {/**TODO: currentUserId used in comparison check is a placeholder. <id> from currently logged in user of different type to <teamMemberId> on a resource.
+       *        change currentId to appropriate variable(s) for comparison.
        */}
       {userId === currentUserId ? (
         // TODO: replace with icon button
