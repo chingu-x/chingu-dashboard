@@ -15,7 +15,7 @@ import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 
 // If user is not logged in, nav should be updated to reflect signed out state
 // and page should render error message.
-// If user is logged in but not part of a team, they should get redirected
+// If user is logged in but not part of a team or try to access a past voyage, they should get redirected
 // to dashboard page
 export async function fetchProjectIdeas({
   teamId,
@@ -45,7 +45,7 @@ export default async function IdeationComponentWrapper({
   let projectIdeas: IdeationData[] = [];
   const teamId = Number(params.teamId);
 
-  const { errorResponse, data, shouldRedirect } = await getCurrentVoyageData({
+  const { errorResponse, data } = await getCurrentVoyageData({
     teamId,
     args: { teamId },
     func: fetchProjectIdeas,
@@ -53,10 +53,6 @@ export default async function IdeationComponentWrapper({
 
   if (errorResponse) {
     return errorResponse;
-  }
-
-  if (shouldRedirect) {
-    redirect("/");
   }
 
   if (data) {
@@ -67,6 +63,8 @@ export default async function IdeationComponentWrapper({
     }
 
     projectIdeas = res!;
+  } else {
+    redirect("/");
   }
 
   function renderProjects() {

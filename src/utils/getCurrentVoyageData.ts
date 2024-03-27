@@ -11,7 +11,6 @@ interface GetCurrentVoyageDataProps<X, Y> {
 interface GetCurrentVoyageDataResponse<X> {
   errorResponse: string;
   data: AsyncActionResponse<X> | null;
-  shouldRedirect: boolean;
 }
 
 export async function getCurrentVoyageData<X, Y>({
@@ -22,13 +21,12 @@ export async function getCurrentVoyageData<X, Y>({
   let currentVoyageTeam: VoyageTeamMember | undefined;
   let errorResponse = "";
   let data: AsyncActionResponse<X> | null = null;
-  let shouldRedirect = false;
 
   const [user, error] = await getUser();
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
     );
   }
 
@@ -38,13 +36,10 @@ export async function getCurrentVoyageData<X, Y>({
 
   if (teamId === currentVoyageTeam?.voyageTeamId) {
     data = await func({ ...args });
-  } else {
-    shouldRedirect = true;
   }
 
   return {
     errorResponse,
     data,
-    shouldRedirect,
   };
 }
