@@ -14,7 +14,7 @@ export default function ResourcesContainer() {
 
   const mapResources = (resources: ResourceData[] | null) =>
     resources?.map((item) => ({
-      key: item.id,
+      id: item.id,
       title: item.title,
       url: item.url,
       user: {
@@ -77,7 +77,8 @@ export default function ResourcesContainer() {
       ) : (
         resourceList.map((item) => (
           <ResourceCard
-            key={item.key}
+            key={item.id}
+            id={item.id}
             title={item.title}
             user={item.user}
             date={item.date}

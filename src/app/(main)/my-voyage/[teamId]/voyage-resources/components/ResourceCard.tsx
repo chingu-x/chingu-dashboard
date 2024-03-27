@@ -5,6 +5,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Badge from "@/components/badge/Badge";
 
 interface ResourceCardProps {
+  id: number;
   title: string;
   user: { name: string; image: string };
   date: string;
@@ -13,6 +14,7 @@ interface ResourceCardProps {
 }
 
 export default function ResourceCard({
+  id,
   title,
   user,
   date,
@@ -30,7 +32,9 @@ export default function ResourceCard({
       dispatch(
         onOpenModal({
           type: "viewResource",
-          content: { title: title, link: url },
+          // passing the clicked resource's id in as "title" as a part of
+          // ViewModal workaround
+          content: { title: id.toString() },
         }),
       );
     }

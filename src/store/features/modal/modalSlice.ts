@@ -38,7 +38,6 @@ export interface ContentPayload {
   message?: string;
   confirmationText?: string;
   cancelText?: string;
-  link?: string;
 }
 
 export type ModalOpenActionPayload =
