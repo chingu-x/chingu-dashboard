@@ -21,7 +21,11 @@ export default function ResourcesContainer() {
         name: item.addedBy.member.firstName,
         image: item.addedBy.member.avatar,
       },
-      date: new Date(item.updatedAt).toString(),
+      date: new Date(item.updatedAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      }),
       userId: item.teamMemberId,
     }));
 
