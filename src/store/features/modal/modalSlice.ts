@@ -6,7 +6,8 @@ export type ModalType =
   | "gettingHelp"
   | "confirmation"
   | "viewResource"
-  | "checkInSuccess";
+  | "checkInSuccess"
+  | "deleteAgendaConfirmation";
 
 interface ModalState {
   type: ModalType | undefined;
