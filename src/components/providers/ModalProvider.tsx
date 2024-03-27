@@ -8,6 +8,7 @@ import ErrorModal from "@/components/modals/ErrorModal";
 import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import ViewModal from "@/components/modals/ViewModal";
 import CheckInSuccessModal from "@/components/modals/CheckInSuccessModal";
+import DeleteAgendaTopicConfirmationModal from "@/components/modals/DeleteAgendaTopicConfirmationModal";
 
 export default function ModalProvider() {
   const [isMounted, setIsMounted] = useState(false);
@@ -26,6 +27,7 @@ export default function ModalProvider() {
       <DeleteConfirmationModal />
       <ViewModal />
       <CheckInSuccessModal />
+      <DeleteAgendaTopicConfirmationModal />
     </>
   );
 }
