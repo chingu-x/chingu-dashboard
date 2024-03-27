@@ -7,10 +7,11 @@ import { getAccessToken } from "@/utils/getCookie";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
-import { User, VoyageTeamMember } from "@/store/features/user/userSlice";
+import { User } from "@/store/features/user/userSlice";
 import { getUser } from "@/utils/getUser";
 import { getTimezone } from "@/utils/getTimezone";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 
 interface FetchTeamDirectoryProps {
   teamId: number;
@@ -28,7 +29,7 @@ export async function fetchTeamDirectory({
       `api/v1/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.directory,
+      CacheTag.directory
     );
 
   const [res, error] = await handleAsync(fetchTeamDirectoryAsync);
@@ -37,7 +38,7 @@ export async function fetchTeamDirectory({
     updateDirectoryWithCurrentTime(res);
     const teamMember = res.voyageTeamMembers;
     const elementToSort = teamMember.find(
-      (element) => element.member.discordId === user?.discordId,
+      (element) => element.member.discordId === user?.discordId
     );
     moveElementToFirst(teamMember, elementToSort);
   }
@@ -72,29 +73,30 @@ export default async function DirectoryComponentWrapper({
   params,
 }: TeamDirectoryProps) {
   let teamDirectory: TeamDirectory;
-  let currentVoyageTeam: VoyageTeamMember | undefined;
   const teamId = Number(params.teamId);
 
   const [user, error] = await getUser();
 
-  if (user) {
-    currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-    );
+  const { errorResponse, data } = await getCurrentVoyageData({
+    user,
+    error,
+    teamId,
+    args: { teamId, user },
+    func: fetchTeamDirectory,
+  });
+
+  if (errorResponse) {
+    return errorResponse;
   }
 
-  if (error) {
-    return `Error: ${error?.message}`;
-  }
+  if (data) {
+    const [res, error] = data;
 
-  if (teamId === currentVoyageTeam?.voyageTeamId) {
-    const [res, error] = await fetchTeamDirectory({ teamId, user });
-
-    if (res) {
-      teamDirectory = res;
-    } else {
-      return `Error: ${error?.message}`;
+    if (error) {
+      return `Error: ${error.message}`;
     }
+
+    teamDirectory = res!;
   } else {
     redirect("/");
   }
