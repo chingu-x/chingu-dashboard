@@ -39,7 +39,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     },
     ref,
   ) => {
-    const [isMounted, setIsMounted] = useState(false);
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const textAreaRef = useRef<ElementRef<"textarea"> | null>(null);
 
@@ -74,12 +73,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         setCurrentSuggestion(suggestion);
       }
     }
-
-    useEffect(() => {
-      setIsMounted(true);
-    }, []);
-
-    if (!isMounted) return null;
 
     return (
       <div className="w-full">

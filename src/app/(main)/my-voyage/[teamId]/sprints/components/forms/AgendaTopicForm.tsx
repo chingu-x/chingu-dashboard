@@ -35,6 +35,10 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function AgendaTopicForm() {
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const router = useRouter();
   const params = useParams<{
     teamId: string;
@@ -172,6 +176,8 @@ export default function AgendaTopicForm() {
 
     return editMode ? "Save Changes" : "Add";
   }
+
+  if (!isMounted) return null;
 
   return (
     // TODO: Create some general form wrapper component
