@@ -1,10 +1,8 @@
 import Image from "next/image";
-import Button from "@/components/Button";
 import Link from "next/link";
+import Button from "@/components/Button";
 
 function ResetCompletedContainer() {
-  console.log("reset completed");
-
   return (
     <div className="w-[400px] min-h-[349px] bg-base-200 rounded-2xl xl:ml-60 p-6 flex flex-col items-center">
       <p className="text-base-300 text-2xl text-center mt-2.5 mb-[22px] font-medium">

@@ -15,7 +15,6 @@ function ResetPasswordContainer() {
   );
 
   const handleNewPassword = () => {
-    console.log("newPassword completed");
     setContainerState(ContainerState.ResetCompleted);
   };
 
