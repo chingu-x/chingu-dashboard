@@ -1,7 +1,11 @@
 import Image from "next/image";
 import Button from "@/components/Button";
 
-function EmailCheckContainer() {
+type ResendEmailContainerProp = {
+  handleResendEmail: () => void;
+};
+
+function EmailCheckContainer({ handleResendEmail }: ResendEmailContainerProp) {
   return (
     <div className="flex flex-col items-center w-[400px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 px-6 py-9">
       <p className="text-base-300 text-2xl text-center mb-[26px] font-medium">
@@ -47,8 +51,7 @@ function EmailCheckContainer() {
         </p>
       </div>
       <Button
-        type="button"
-        title="Resend Email"
+        onClick={handleResendEmail}
         className="text-base gap-x-0 border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100 w-full"
       >
         Resend Email

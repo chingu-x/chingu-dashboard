@@ -29,7 +29,9 @@ function SignInContainer() {
       {containerState === ContainerState.ResetPassword && (
         <ResetPasswordContainer handleEmailCheck={handleEmailCheck} />
       )}
-      {containerState === ContainerState.EmailCheck && <EmailCheckContainer />}
+      {containerState === ContainerState.EmailCheck && (
+        <EmailCheckContainer handleResendEmail={handleResetPassword} />
+      )}
       {containerState === ContainerState.SignIn && (
         <SignInBlock handleResetPassword={handleResetPassword} />
       )}
