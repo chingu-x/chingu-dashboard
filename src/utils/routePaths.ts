@@ -40,11 +40,11 @@ const routePaths = {
   sprintPage(teamId: string, sprintNumber: string, meetingId: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}`;
   },
-  submitVoyage(teamId: string) {
-    return `/my-voyage/${teamId}/sprints/voyage-submission`;
+  submitVoyage(teamId: string, sprintNumber: string, meetingId: string) {
+    return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/submit-voyage`;
   },
-  weeklyCheckIn(teamId: string) {
-    return `/my-voyage/${teamId}/sprints/weekly-checkin`;
+  weeklyCheckIn(teamId: string, sprintNumber: string, meetingId: string) {
+    return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/submit-check-in`;
   },
   createMeeting(teamId: string, sprintNumber: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/create`;
