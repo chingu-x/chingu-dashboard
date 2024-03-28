@@ -28,21 +28,38 @@ export default function SprintActions({ params }: SprintActionsProps) {
   return (
     <div className="flex justify-between p-5 border shadow-md bg-base-200 rounded-2xl border-base-100">
       {/* TODO: add animated variant to Button.tsx ??? */}
-      <Link href={meetingId ? routePaths.submitVoyage(meetingId) : "/"}>
+      <Link
+        href={
+          meetingId
+            ? routePaths.submitVoyage(meetingId, sprintNumber, meetingId)
+            : "/"
+        }
+      >
         <Button
           variant="secondary"
           size="lg"
           className="group"
-          disabled={!submitVoyageIsAllowed}
+          disabled={!meetingId || !submitVoyageIsAllowed}
         >
           <RocketLaunchIcon className="h-[18px] w-[18px]" /> Submit Voyage
-          {submitVoyageIsAllowed && (
-            <ArrowRightIcon className="h-[18px] w-0 group-hover:w-[18px] transition-all" />
+          {(submitVoyageIsAllowed || !meetingId) && (
+            <ArrowRightIcon className="h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all" />
           )}
         </Button>
       </Link>
-      <Link href={meetingId ? routePaths.weeklyCheckIn(meetingId) : ""}>
-        <Button variant="primary" size="lg" className="group">
+      <Link
+        href={
+          meetingId
+            ? routePaths.weeklyCheckIn(meetingId, sprintNumber, meetingId)
+            : "/"
+        }
+      >
+        <Button
+          variant="primary"
+          size="lg"
+          className="group"
+          disabled={!meetingId}
+        >
           <DocumentCheckIcon className="h-[18px] w-[18px]" /> Submit Check-in
           <ArrowRightIcon className="h-[18px] w-0 group-hover:w-[18px] transition-all" />
         </Button>
