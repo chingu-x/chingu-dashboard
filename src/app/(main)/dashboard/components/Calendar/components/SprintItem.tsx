@@ -2,11 +2,11 @@ import Link from "next/link";
 import React from "react";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 
-interface SprintItemProps {
+type SprintItemProps = {
   title: string;
   link: string;
   time: string;
-}
+};
 function SprintItem({ title, link, time }: SprintItemProps) {
   return (
     <Link href={link}>

@@ -1,5 +1,5 @@
 import React from "react";
-import type { IdeationData } from "./mocks/voyageDashboardData";
+import type { IdeationData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
 interface IdeationStateContentProps {
   contentObject?: IdeationData;
