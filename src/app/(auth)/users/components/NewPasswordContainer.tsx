@@ -36,12 +36,8 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    try {
-      if (token) {
-        await resetPassword(data.password, token).then(() => onClick());
-      }
-    } catch (error) {
-      console.error("Error to change password: ", error);
+    if (token) {
+      await resetPassword(data.password, token).then(() => onClick());
     }
   };
 

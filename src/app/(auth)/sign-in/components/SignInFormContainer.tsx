@@ -62,7 +62,7 @@ function SignInFormContainer({
 
     if (res) {
       dispatch(clientSignIn());
-      router.push("/dashboard");
+      router.replace(routePaths.dashboardPage());
     }
 
     if (error) {
