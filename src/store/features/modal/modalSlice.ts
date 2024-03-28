@@ -9,6 +9,7 @@ export type ModalType =
   | "checkInSuccess";
 
 interface ModalState {
+  id?: number;
   type: ModalType | undefined;
   isOpen: boolean;
   isEditing?: boolean;
@@ -16,6 +17,7 @@ interface ModalState {
 }
 
 export interface BaseModalOpenActionPayload {
+  id?: number;
   type: Exclude<ModalType, "error" | "confirmation">;
   content?: ContentPayload;
   isEditing?: boolean;
@@ -46,6 +48,7 @@ export type ModalOpenActionPayload =
   | ConfirmationModalOpenActionPayload;
 
 const initialState: ModalState = {
+  id: 0,
   type: undefined,
   isOpen: false,
   isEditing: false,
@@ -57,8 +60,9 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
-      const { type, isEditing, content } = action.payload;
+      const { id, type, isEditing, content } = action.payload;
 
+      state.id = id;
       state.isOpen = true;
       state.type = type;
       state.isEditing = isEditing;

@@ -9,17 +9,13 @@ import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal, useResource } from "@/store/hooks";
 
 export default function ViewModal() {
-  // Workaround to get resource data into Modal.
-  // Passed resource id from ResourceCard to ViewModal as 'title' (part of ModalSlice).
-  // Get resources from Redux store and use 'data()' to find item by id, and return relevant properties.
   const dispatch = useAppDispatch();
   const resourceList = useResource().resources;
   const [resourceData, setResourceData] = useState({ title: "", url: "" });
-  const { isOpen, type, content } = useModal();
+  const { id, isOpen, type } = useModal();
   const isModalOpen = isOpen && type === "viewResource";
 
   const data = useCallback(() => {
-    const id = Number(content?.title);
     let title = "";
     let url = "";
 
@@ -31,7 +27,7 @@ export default function ViewModal() {
       }
     }
     return { title: title, url: url };
-  }, [content, resourceList]);
+  }, [id, resourceList]);
 
   const handleClose = () => {
     dispatch(onCloseModal());
@@ -47,7 +43,7 @@ export default function ViewModal() {
 
   useEffect(() => {
     setResourceData(data());
-  }, [content, data]);
+  }, [data]);
 
   return (
     <Modal isOpen={isModalOpen} title="View Resource?" onClose={handleClose}>

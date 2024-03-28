@@ -20,10 +20,10 @@ export async function fetchResources({ teamId }: FetchResourcesProps) {
 
   const fetchResourcesAsync = () =>
     GET<ResourceData[]>(
-      `api/v1/voyages/${teamId}/resources`,
+      `api/v1/voyages/teams/${teamId}/resources`,
       token,
       "force-cache",
-      CacheTag.resources,
+      CacheTag.resources
     );
 
   return await handleAsync(fetchResourcesAsync);
@@ -45,7 +45,7 @@ export default async function ResourcesComponentWrapper({
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
     );
   }
 
