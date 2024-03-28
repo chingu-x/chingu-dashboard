@@ -36,11 +36,7 @@ function ResetPasswordContainer({
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { email } = data;
     handleEmailCheck();
-    try {
-      await resetPasswordRequestEmail(email);
-    } catch (error) {
-      console.error("Error sending request to email: ", error);
-    }
+    await resetPasswordRequestEmail(email);
   };
 
   return (

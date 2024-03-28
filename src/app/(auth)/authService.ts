@@ -108,8 +108,6 @@ async function asyncSignIn(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // email: "l.castro@outlook.com",
-          // password: "password",
           email,
           password,
         }),
