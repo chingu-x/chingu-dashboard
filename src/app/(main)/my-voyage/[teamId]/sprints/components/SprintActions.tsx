@@ -61,7 +61,7 @@ export default function SprintActions({ params }: SprintActionsProps) {
           disabled={!meetingId}
         >
           <DocumentCheckIcon className="h-[18px] w-[18px]" /> Submit Check-in
-          <ArrowRightIcon className="h-[18px] w-0 group-hover:w-[18px] transition-all" />
+          <ArrowRightIcon className="h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all" />
         </Button>
       </Link>
       <Link
