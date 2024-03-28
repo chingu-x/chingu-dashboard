@@ -1,6 +1,6 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPassword } from "@/app/(auth)/authService";
@@ -26,7 +26,6 @@ type NewPasswordContainerProps = {
 function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-  const router = useRouter();
 
   const {
     register,
@@ -37,13 +36,9 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    onClick();
     try {
       if (token) {
-        // TODO: will need to refactor once we can figure out the issue with containerState
-        await resetPassword(data.password, token).then(() =>
-          router.push("/sign-in"),
-        );
+        await resetPassword(data.password, token).then(() => onClick());
       }
     } catch (error) {
       console.error("Error to change password: ", error);

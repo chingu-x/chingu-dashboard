@@ -1,7 +1,6 @@
-"use client";
 import React from "react";
-import NewPasswordContainer from "@/app/(auth)/sign-in/components/NewPasswordContainer";
+import ResetPasswordContainer from "../components/ResetPasswordContainer";
 
-export default function ResetPasswordFlowContainer() {
-  return <NewPasswordContainer onClick={() => console.log("something")} />;
+export default function ResetPasswordPage() {
+  return <ResetPasswordContainer />;
 }
