@@ -85,17 +85,17 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
       date.isBefore(sprintData?.endDate.endOf("day"));
 
     if (!currentMonth) {
-      classes += " text-gray-400";
+      classes += " text-neutral-content";
     }
 
     if (isSelectedDate) {
-      classes += " bg-primary text-white";
+      classes += " bg-primary text-base-200";
     } else if (isWithinSprintRange && !today) {
       classes += " bg-primary-content";
     }
 
     if (today) {
-      classes += " bg-primary text-white";
+      classes += " bg-primary text-base-200";
     }
 
     return classes;
