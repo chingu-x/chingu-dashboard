@@ -32,10 +32,8 @@ export default function ResourceCard({
       dispatch(
         onOpenModal({
           type: "viewResource",
-          // passing the clicked resource's id in as "title" as a part of
-          // ViewModal workaround
-          content: { title: id.toString() },
-        }),
+          id,
+        })
       );
     }
   };
