@@ -1,9 +1,23 @@
-import dayjs from "dayjs";
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  getDay,
+  getDate,
+  getMonth,
+  getYear,
+  isSameDay,
+  isAfter,
+  isBefore,
+  addMonths,
+  startOfDay,
+  endOfDay,
+} from "date-fns";
 import { useState } from "react";
 import { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
 export const useCalendarLogic = (sprintData?: SprintData) => {
-  const currentDate = dayjs();
+  const currentDate = new Date();
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
 
@@ -26,63 +40,60 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
 
   const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
-  const generateDate = (month = dayjs().month(), year = dayjs().year()) => {
-    const firstDateOfMonth = dayjs().year(year).month(month).startOf("month");
-    const lastDateOfMonth = dayjs().year(year).month(month).endOf("month");
+  const generateDate = (
+    month = getMonth(new Date()),
+    year = getYear(new Date()),
+  ) => {
+    const firstDateOfMonth = startOfMonth(new Date(year, month));
+    const lastDateOfMonth = endOfMonth(new Date(year, month));
 
     const arrayOfDate = [];
 
     // Create prefix date
-    for (let i = 0; i < firstDateOfMonth.day(); i++) {
-      const date = firstDateOfMonth.day(i);
+    for (let i = 1; i < getDay(firstDateOfMonth); i++) {
+      const date = new Date(year, month, -i);
 
-      arrayOfDate.push({
+      arrayOfDate.unshift({
         currentMonth: false,
         date,
       });
     }
 
     // Generate current date
-    for (let i = firstDateOfMonth.date(); i <= lastDateOfMonth.date(); i++) {
+    for (let i = 1; i <= getDate(lastDateOfMonth); i++) {
+      const date = new Date(year, month, i);
       arrayOfDate.push({
         currentMonth: true,
-        date: firstDateOfMonth.date(i),
-        today:
-          firstDateOfMonth.date(i).toDate().toDateString() ===
-          dayjs().toDate().toDateString(),
+        date,
+        today: isSameDay(date, new Date()),
       });
     }
 
     const remaining = 42 - arrayOfDate.length;
 
-    for (
-      let i = lastDateOfMonth.date() + 1;
-      i <= lastDateOfMonth.date() + remaining;
-      i++
-    ) {
+    for (let i = 1; i <= remaining; i++) {
       arrayOfDate.push({
         currentMonth: false,
-        date: lastDateOfMonth.date(i),
+        date: new Date(year, month + 1, i),
       });
     }
     return arrayOfDate;
   };
 
   const generateClassString = (
-    date: dayjs.Dayjs,
+    date: Date,
     currentMonth: boolean,
     today: boolean = false,
   ) => {
     let classes =
       "h-[50px] w-[48px] grid place-content-center hover:bg-base-100 transition-all cursor-pointer select-none";
 
-    const isSelectedDate =
-      selectDate.toDate().toDateString() === date.toDate().toDateString();
+    const isSelectedDate = isSameDay(selectDate, date);
     const isWithinSprintRange =
       sprintData &&
-      (date.isSame(sprintData?.startDate.startOf("day")) ||
-        date.isAfter(sprintData?.startDate.startOf("day"))) &&
-      date.isBefore(sprintData?.endDate.endOf("day"));
+      (isSameDay(date, startOfDay(sprintData?.startDate)) ||
+        isAfter(date, startOfDay(sprintData?.startDate))) &&
+      isBefore(date, endOfDay(sprintData?.endDate));
 
     if (!currentMonth) {
       classes += " text-neutral-content";
@@ -101,22 +112,20 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     return classes;
   };
 
-  const selectedDate = selectDate.toDate().toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
+  const selectedDate = format(selectDate, "EEEE, MMMM do");
 
-  const showDotConditions = (date: dayjs.Dayjs) => [
+  const showDotConditions = (date: Date) => [
     {
       id: 1,
-      check: sprintData?.startDate.isSame(date, "day"),
+      check: sprintData?.startDate
+        ? isSameDay(sprintData.startDate, date)
+        : false,
       color: "bg-success",
     },
     {
       id: 2,
       check: sprintData?.eventList?.some((event) =>
-        dayjs(event.date, "YYYY-MM-DD h:mm A").isSame(date, "day"),
+        isSameDay(new Date(event.date), date),
       ),
     },
   ];
@@ -131,9 +140,9 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     selectDate,
     setSelectDate,
     currentDate,
-    onArrowClick: (month: number) => setToday(today.month(month)),
-    currentMonth: months[today.month()],
-    currentYear: today.year(),
+    onArrowClick: (month: number) => setToday(addMonths(today, month)),
+    currentMonth: months[getMonth(today)],
+    currentYear: getYear(today),
     selectedDate,
     showDotConditions,
   };

@@ -1,17 +1,17 @@
-import dayjs from "dayjs";
+import { getUnixTime, getDate } from "date-fns";
 import React from "react";
 
 type CellProps = {
-  date: dayjs.Dayjs;
+  date: Date;
   currentMonth: boolean;
   today: boolean;
   cn: (...classes: string[]) => string;
   generateClassString: (
-    date: dayjs.Dayjs,
+    date: Date,
     currentMonth: boolean,
     today: boolean,
   ) => string;
-  setSelectDate: (value: React.SetStateAction<dayjs.Dayjs>) => void;
+  setSelectDate: (value: React.SetStateAction<Date>) => void;
   children?: React.ReactNode;
 };
 function Cell({
@@ -25,7 +25,7 @@ function Cell({
 }: CellProps) {
   return (
     <div
-      key={date.unix()}
+      key={getUnixTime(date)}
       className="text-center h-[52px] grid place-content-center text-sm border relative"
     >
       <h1
@@ -34,7 +34,7 @@ function Cell({
           setSelectDate(date);
         }}
       >
-        {date.date()}
+        {getDate(date)}
       </h1>
       {children}
     </div>

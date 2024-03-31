@@ -7,7 +7,7 @@ import {
   ServerStackIcon,
 } from "@heroicons/react/24/solid";
 import type { ComponentType } from "react";
-import dayjs from "dayjs";
+import { addDays, subDays, format } from "date-fns";
 
 export const CHECKIN_STATUS = "Due today";
 
@@ -38,8 +38,8 @@ export type Event = {
 
 export type SprintData = {
   number: number;
-  startDate: dayjs.Dayjs;
-  endDate: dayjs.Dayjs;
+  startDate: Date;
+  endDate: Date;
   eventList?: Event[];
 };
 
@@ -123,17 +123,17 @@ export const getMeetingsData = (): Event[] => [
   {
     title: "Sprint Planning",
     link: "https://www.agileway.it/sprint-planning-meeting/",
-    date: dayjs().format("YYYY-MM-DD h:mm A"),
+    date: format(new Date(), "yyyy-MM-dd h:mm a"),
   },
   {
     title: "Sprint Review",
     link: "https://www.nuclino.com/articles/sprint-review#:~:text=A%20sprint%20review%20is%20an,than%20a%20one%2Dsided%20presentation.",
-    date: dayjs().subtract(2, "day").format("YYYY-MM-DD h:mm A"),
+    date: format(subDays(new Date(), 2), "yyyy-MM-dd h:mm a"),
   },
 ];
 export const getSprintData = (): SprintData => ({
   number: 1,
-  startDate: dayjs().subtract(3, "day"),
-  endDate: dayjs().add(1, "day"),
+  startDate: subDays(new Date(), 3),
+  endDate: addDays(new Date(), 1),
   eventList: getMeetingsData(),
 });
