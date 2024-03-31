@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import { format, isSameDay, getUnixTime } from "date-fns";
 import React from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useCalendarLogic } from "./Calendar.logic";
@@ -37,7 +37,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
             <ArrowLeftIcon
               className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute left-[14px]"
               onClick={() => {
-                onArrowClick(today.month() - 1);
+                onArrowClick(-1);
               }}
             />
             <h1 className="text-2xl select-none font-semibold">
@@ -46,7 +46,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
             <ArrowRightIcon
               className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute right-[14px]"
               onClick={() => {
-                onArrowClick(today.month() + 1);
+                onArrowClick(1);
               }}
             />
           </div>
@@ -63,10 +63,10 @@ export default function Calendar({ sprintData }: CalendarProps) {
         </div>
 
         <div className="grid grid-cols-7 border">
-          {generateDate(today.month(), today.year()).map(
+          {generateDate(today.getMonth(), today.getFullYear()).map(
             ({ date, currentMonth, today }) => (
               <Cell
-                key={date.unix()}
+                key={getUnixTime(date)}
                 date={date}
                 currentMonth={currentMonth}
                 today={!!today}
@@ -95,22 +95,22 @@ export default function Calendar({ sprintData }: CalendarProps) {
             </p>
           ) : null}
           {sprintData?.eventList?.map((event) => {
-            const eventDate = dayjs(event.date, "YYYY-MM-DD h:mm A");
-            const isSelectedDate = selectDate.isSame(eventDate, "day");
+            const eventDate = new Date(event.date);
+            const isSelectedDate = isSameDay(selectDate, eventDate);
 
             return isSelectedDate ? (
               <SprintItem
                 key={event.title}
                 title={event.title}
                 link={event.link ?? ""}
-                time={eventDate.format("h:mm A")}
+                time={format(eventDate, "h:mm a")}
               />
             ) : null;
           })}
         </div>
         <Button
           className={`self-end p-1 rounded text-base font-medium hover:bg-neutral ${
-            selectDate.isSame(currentDate, "day")
+            isSameDay(selectDate, currentDate)
               ? "bg-primary"
               : "bg-neutral-focus"
           }`}
