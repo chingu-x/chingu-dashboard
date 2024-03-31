@@ -80,11 +80,7 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     return arrayOfDate;
   };
 
-  const generateClassString = (
-    date: Date,
-    currentMonth: boolean,
-    today: boolean = false,
-  ) => {
+  const generateClassString = (date: Date, currentMonth: boolean) => {
     let classes =
       "h-[50px] w-[48px] grid place-content-center hover:bg-base-100 transition-all cursor-pointer select-none";
 
@@ -101,12 +97,8 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
 
     if (isSelectedDate) {
       classes += " bg-primary text-base-200";
-    } else if (isWithinSprintRange && !today) {
+    } else if (isWithinSprintRange) {
       classes += " bg-primary-content";
-    }
-
-    if (today) {
-      classes += " bg-primary text-base-200";
     }
 
     return classes;

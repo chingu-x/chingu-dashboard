@@ -8,7 +8,7 @@ interface CalendarWidgetProps {
 
 function CalendarWidget({ sprintData }: CalendarWidgetProps) {
   return (
-    <div className="w-full h-full bg-base-200 rounded-2xl flex flex-row">
+    <div className="w-full h-full bg-base-200 rounded-2xl flex flex-row border-2 border-base-100">
       <div className="flex justify-center items-center w-full flex-grow-3">
         <Calendar sprintData={sprintData} />
       </div>
