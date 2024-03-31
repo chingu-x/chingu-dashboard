@@ -72,7 +72,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
                 today={!!today}
                 cn={cn}
                 generateClassString={() =>
-                  generateClassString(date, currentMonth, today)
+                  generateClassString(date, currentMonth)
                 }
                 setSelectDate={setSelectDate}
               >
