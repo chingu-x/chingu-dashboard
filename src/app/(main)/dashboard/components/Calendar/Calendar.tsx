@@ -31,7 +31,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
 
   return (
     <div className="flex h-full w-full">
-      <div className="min-w-[400px] max-w-[400px] p-6 h-full border-r-2">
+      <div className="min-w-[400px] max-w-[400px] p-6 h-full border-r-2 border-base-100">
         <div className="flex justify-center items-center">
           <div className="flex gap-10 items-center w-full justify-center relative">
             <ArrowLeftIcon
@@ -62,7 +62,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
           ))}
         </div>
 
-        <div className="grid grid-cols-7 border">
+        <div className="grid grid-cols-7 border border-base-100">
           {generateDate(today.getMonth(), today.getFullYear()).map(
             ({ date, currentMonth, today }) => (
               <Cell

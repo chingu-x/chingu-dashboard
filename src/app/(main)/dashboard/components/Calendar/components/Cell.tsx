@@ -26,7 +26,7 @@ function Cell({
   return (
     <div
       key={getUnixTime(date)}
-      className="text-center h-[52px] grid place-content-center text-sm border relative"
+      className="text-center h-[52px] grid place-content-center text-sm border border-base-100 relative"
     >
       <h1
         className={cn(generateClassString(date, currentMonth, today))}
