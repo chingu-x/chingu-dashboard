@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 
-interface VoyageStatus {
+export interface VoyageStatus {
   name: string;
 }
 
@@ -14,7 +14,7 @@ interface VoyageTeam {
   voyage: Voyage;
 }
 
-interface VoyageRole {
+export interface VoyageRole {
   name: string;
 }
 
