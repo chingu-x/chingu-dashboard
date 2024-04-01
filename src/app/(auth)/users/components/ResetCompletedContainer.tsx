@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/Button";
+import routePaths from "@/utils/routePaths";
 
 function ResetCompletedContainer() {
   return (
@@ -39,12 +40,9 @@ function ResetCompletedContainer() {
         Your password has been reset, please click the button below to sign in
         to access your Chingu account.
       </p>
-      <Button className="w-full">
-        <Link href={"/sign-in"}>Sign in</Link>
-      </Button>
-      {/* <Button className="w-full" onClick={onClick}>
-        Sign in
-      </Button> */}
+      <Link href={routePaths.signIn()} className="w-full">
+        <Button className="w-full">Sign in</Button>
+      </Link>
     </div>
   );
 }
