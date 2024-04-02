@@ -20,6 +20,7 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
   const currentDate = new Date();
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
+  const [isHoveredDate, setIsHoveredDate] = useState<Date | null>(null);
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -80,11 +81,12 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     return arrayOfDate;
   };
 
+  const isSelectedDate = (date: Date) => isSameDay(selectDate, date);
+
   const generateClassString = (date: Date, currentMonth: boolean) => {
     let classes =
       "h-[50px] w-[48px] grid place-content-center transition-all cursor-pointer select-none";
 
-    const isSelectedDate = isSameDay(selectDate, date);
     const isWithinSprintRange =
       sprintData &&
       (isSameDay(date, startOfDay(sprintData?.startDate)) ||
@@ -95,7 +97,7 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
       classes += " text-neutral-content";
     }
 
-    if (isSelectedDate) {
+    if (isSelectedDate(date)) {
       classes += " bg-primary text-base-200";
     } else {
       classes += " hover:bg-base-100";
@@ -112,18 +114,24 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
   const showDotConditions = (date: Date) => [
     {
       id: 1,
-      check: sprintData?.startDate
-        ? isSameDay(sprintData.startDate, date)
-        : false,
-      color: "bg-success",
-    },
-    {
-      id: 2,
       check: sprintData?.eventList?.some((event) =>
         isSameDay(new Date(event.date), date),
       ),
     },
   ];
+
+  const showRocketIcon = (date: Date) =>
+    sprintData?.startDate && isSameDay(sprintData.startDate, date);
+
+  const getCalendarElementColor = (date: Date) => {
+    if (isSelectedDate(date)) {
+      return "base-200";
+    } else if (date.getTime() === isHoveredDate?.getTime()) {
+      return "neutral";
+    } else {
+      return "neutral-focus";
+    }
+  };
 
   return {
     cn,
@@ -140,5 +148,8 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     currentYear: getYear(today),
     selectedDate,
     showDotConditions,
+    showRocketIcon,
+    getCalendarElementColor,
+    setIsHoveredDate,
   };
 };

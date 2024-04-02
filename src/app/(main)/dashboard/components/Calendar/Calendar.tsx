@@ -1,10 +1,12 @@
 import { format, isSameDay, getUnixTime } from "date-fns";
 import React from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { RocketLaunchIcon } from "@heroicons/react/24/solid";
 import { useCalendarLogic } from "./Calendar.logic";
 import Cell from "./components/Cell";
 import SprintItem from "./components/SprintItem";
 import Dot from "./components/Dot";
+import Legend from "./components/Legend";
 import type { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import Button from "@/components/Button";
 
@@ -27,6 +29,9 @@ export default function Calendar({ sprintData }: CalendarProps) {
     currentYear,
     selectedDate,
     showDotConditions,
+    showRocketIcon,
+    getCalendarElementColor,
+    setIsHoveredDate,
   } = useCalendarLogic(sprintData);
 
   return (
@@ -65,26 +70,43 @@ export default function Calendar({ sprintData }: CalendarProps) {
         <div className="grid grid-cols-7 border border-base-100">
           {generateDate(today.getMonth(), today.getFullYear()).map(
             ({ date, currentMonth, today }) => (
-              <Cell
+              <div
                 key={getUnixTime(date)}
-                date={date}
-                currentMonth={currentMonth}
-                today={!!today}
-                cn={cn}
-                generateClassString={() =>
-                  generateClassString(date, currentMonth)
-                }
-                setSelectDate={setSelectDate}
+                onMouseEnter={() => setIsHoveredDate(date)}
+                onMouseLeave={() => setIsHoveredDate(null)}
               >
-                {showDotConditions(date).map((condition) =>
-                  condition.check ? (
-                    <Dot key={condition.id} color={condition.color} />
-                  ) : null,
-                )}
-              </Cell>
+                <Cell
+                  date={date}
+                  currentMonth={currentMonth}
+                  today={!!today}
+                  cn={cn}
+                  generateClassString={() =>
+                    generateClassString(date, currentMonth)
+                  }
+                  setSelectDate={setSelectDate}
+                >
+                  {showDotConditions(date).map((condition) =>
+                    condition.check ? (
+                      <Dot
+                        key={condition.id}
+                        color={getCalendarElementColor(date)}
+                      />
+                    ) : null,
+                  )}
+                  {showRocketIcon(date) ? (
+                    <RocketLaunchIcon
+                      className={`w-4 h-4 absolute left-0 right-0 bottom-[2px] m-auto ${
+                        "text-" + getCalendarElementColor(date)
+                      }`}
+                    />
+                  ) : null}
+                </Cell>
+              </div>
             ),
           )}
         </div>
+
+        <Legend />
       </div>
       <div className="h-full w-full flex flex-col justify-between p-6">
         <div>
