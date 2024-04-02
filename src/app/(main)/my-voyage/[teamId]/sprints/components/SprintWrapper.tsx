@@ -20,14 +20,16 @@ import { Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
-import { CacheTag } from "@/utils/cacheTag";
+// import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { VoyageTeamMember } from "@/store/features/user/userSlice";
 
 async function fetchMeeting({
+  sprintNumber,
   meetingId,
 }: FetchMeetingProps): Promise<AsyncActionResponse<FetchMeetingResponse>> {
+  console.log("fetch meeting");
   const token = getAccessToken();
 
   const fetchMeetingAsync = () =>
@@ -35,7 +37,7 @@ async function fetchMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "force-cache",
-      CacheTag.sprint,
+      `sprint-${sprintNumber}`,
     );
 
   return await handleAsync(fetchMeetingAsync);
@@ -85,7 +87,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     )?.teamMeetings[0]?.id;
 
     if (meetingId === correspondingMeetingId) {
-      const [res, error] = await fetchMeeting({ meetingId });
+      const [res, error] = await fetchMeeting({ sprintNumber, meetingId });
 
       if (res) {
         meetingData = res;

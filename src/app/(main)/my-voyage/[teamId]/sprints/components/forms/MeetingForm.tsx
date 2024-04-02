@@ -113,6 +113,7 @@ export default function MeetingForm() {
         ...data,
         dateTime,
         meetingId,
+        sprintNumber,
       });
 
       if (res) {
@@ -221,6 +222,7 @@ export default function MeetingForm() {
       const filteredData = {
         teamId,
         meetingId,
+        sprintNumber,
         ...modifiedObject,
       };
 
@@ -254,6 +256,7 @@ export default function MeetingForm() {
     dispatch,
     params.meetingId,
     teamId,
+    sprintNumber,
     editMeetingAction,
     setEditMeetingLoading,
     title,
