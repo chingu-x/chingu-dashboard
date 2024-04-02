@@ -20,9 +20,9 @@ interface MeetingBody {
 }
 
 type FetchSprintsType = Pick<SprintProps, "teamId">;
-type FetchMeetingType = Pick<SprintProps, "meetingId">;
+type FetchMeetingType = Omit<SprintProps, "teamId">;
 type AddMeetingType = Omit<SprintProps, "meetingId">;
-type EditMeetingType = Pick<SprintProps, "meetingId">;
+type EditMeetingType = Omit<SprintProps, "teamId">;
 
 export interface SprintsResponse {
   id: number;
@@ -108,7 +108,8 @@ export async function addMeeting({
   const [res, error] = await handleAsync(addMeetingAsync);
 
   if (res) {
-    revalidateTag(CacheTag.sprint);
+    revalidateTag(CacheTag.sprints);
+    revalidateTag(`sprint-${sprintNumber}`);
   }
 
   return [res, error];
@@ -116,6 +117,7 @@ export async function addMeeting({
 
 export async function editMeeting({
   meetingId,
+  sprintNumber,
   title,
   dateTime,
   meetingLink,
@@ -134,7 +136,7 @@ export async function editMeeting({
   const [res, error] = await handleAsync(editMeetingAsync);
 
   if (res) {
-    revalidateTag(CacheTag.sprint);
+    revalidateTag(`sprint-${sprintNumber}`);
   }
 
   return [res, error];

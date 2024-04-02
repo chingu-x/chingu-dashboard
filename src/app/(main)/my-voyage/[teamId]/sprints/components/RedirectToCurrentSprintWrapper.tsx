@@ -18,6 +18,8 @@ import { VoyageTeamMember } from "@/store/features/user/userSlice";
 export async function fetchSprints({
   teamId,
 }: FetchSprintsProps): Promise<AsyncActionResponse<FetchSprintsResponse>> {
+  console.log("fetch sprints");
+
   const token = getAccessToken();
 
   const fetchSprintsAsync = () =>
@@ -25,7 +27,7 @@ export async function fetchSprints({
       `api/v1/voyages/sprints/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.sprint,
+      CacheTag.sprints,
     );
 
   return await handleAsync(fetchSprintsAsync);
