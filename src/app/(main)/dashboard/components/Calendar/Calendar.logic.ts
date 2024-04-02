@@ -82,7 +82,7 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
 
   const generateClassString = (date: Date, currentMonth: boolean) => {
     let classes =
-      "h-[50px] w-[48px] grid place-content-center hover:bg-base-100 transition-all cursor-pointer select-none";
+      "h-[50px] w-[48px] grid place-content-center transition-all cursor-pointer select-none";
 
     const isSelectedDate = isSameDay(selectDate, date);
     const isWithinSprintRange =
@@ -97,8 +97,11 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
 
     if (isSelectedDate) {
       classes += " bg-primary text-base-200";
-    } else if (isWithinSprintRange) {
-      classes += " bg-primary-content";
+    } else {
+      classes += " hover:bg-base-100";
+      if (isWithinSprintRange) {
+        classes += " bg-primary-content";
+      }
     }
 
     return classes;
