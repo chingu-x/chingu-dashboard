@@ -4,7 +4,6 @@ import ResourceInput from "./ResourceInput";
 import SortingButton from "./SortingButton";
 import ResourceCard from "./ResourceCard";
 import EmptyBanner from "./EmptyBanner";
-import { ResourceData } from "@/store/features/resources/resourcesSlice";
 import { useResource } from "@/store/hooks";
 
 export default function ResourcesContainer() {
@@ -12,38 +11,24 @@ export default function ResourcesContainer() {
   const initialResourcesState = useResource().resources;
   const [voyageResources, setVoyageResources] = useState(initialResourcesState);
 
-  const mapResources = (resources: ResourceData[] | null) =>
-    resources?.map((item) => {
-      const formattedDate = new Date(item.updatedAt).toLocaleDateString(
-        "en-US",
-        {
-          month: "short",
-          day: "2-digit",
-          year: "numeric",
-        },
-      );
-      return {
-        ...item,
-        date: formattedDate,
-      };
-    });
+  const formattedResources = voyageResources?.map((item) => ({
+    ...item,
+    date: new Date(item.updatedAt).toLocaleDateString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    }),
+  }));
 
-  const sortResources = (resources: ResourceData[] | null) =>
-    resources?.slice().sort(function (a, b) {
+  const sortResources = () => {
+    const sortedResources = [...voyageResources].sort((a, b) => {
       const prev = new Date(a.updatedAt);
       const next = new Date(b.updatedAt);
-      if (byNewest) {
-        return prev.getTime() - next.getTime();
-      } else {
-        return next.getTime() - prev.getTime();
-      }
+      return byNewest
+        ? prev.getTime() - next.getTime()
+        : next.getTime() - prev.getTime();
     });
-
-  const handleClick = () => {
-    const sortedResources = sortResources(voyageResources);
-    if (sortedResources !== undefined) {
-      setVoyageResources(sortedResources);
-    }
+    setVoyageResources(sortedResources);
     setByNewest(!byNewest);
   };
 
@@ -51,22 +36,18 @@ export default function ResourcesContainer() {
     setVoyageResources(initialResourcesState);
   }, [initialResourcesState]);
 
-  const resourceList = mapResources(voyageResources);
-
   return (
     <>
       <div className="grid grid-cols-[1fr_150px] items-center">
         <ResourceInput />
         <SortingButton
-          onClick={handleClick}
+          onClick={sortResources}
           type={byNewest}
-          isDisabled={!resourceList ? true : false}
+          isDisabled={!voyageResources?.length}
         />
       </div>
-      {!resourceList ? (
-        <EmptyBanner />
-      ) : (
-        resourceList.map((item) => (
+      {formattedResources?.length ? (
+        formattedResources.map((item) => (
           <ResourceCard
             key={item.id}
             id={item.id}
@@ -77,6 +58,8 @@ export default function ResourcesContainer() {
             url={item.url}
           />
         ))
+      ) : (
+        <EmptyBanner />
       )}
     </>
   );
