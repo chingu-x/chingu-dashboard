@@ -50,6 +50,11 @@ function ResetPasswordContainer({
     handleEmailCheck();
     const [res, error] = await resetPwdReqEmailAction(email);
 
+    // ignore for prettier
+    if (res) {
+      console.log("res: ", res);
+    }
+
     if (error) {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
