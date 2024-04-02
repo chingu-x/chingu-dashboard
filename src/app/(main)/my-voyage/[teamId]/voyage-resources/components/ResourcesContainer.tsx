@@ -13,21 +13,20 @@ export default function ResourcesContainer() {
   const [voyageResources, setVoyageResources] = useState(initialResourcesState);
 
   const mapResources = (resources: ResourceData[] | null) =>
-    resources?.map((item) => ({
-      id: item.id,
-      title: item.title,
-      url: item.url,
-      user: {
-        name: item.addedBy.member.firstName,
-        image: item.addedBy.member.avatar,
-      },
-      date: new Date(item.updatedAt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      }),
-      userId: item.teamMemberId,
-    }));
+    resources?.map((item) => {
+      const formattedDate = new Date(item.updatedAt).toLocaleDateString(
+        "en-US",
+        {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        },
+      );
+      return {
+        ...item,
+        date: formattedDate,
+      };
+    });
 
   const sortResources = (resources: ResourceData[] | null) =>
     resources?.slice().sort(function (a, b) {
@@ -72,9 +71,9 @@ export default function ResourcesContainer() {
             key={item.id}
             id={item.id}
             title={item.title}
-            user={item.user}
+            user={item.addedBy.member}
             date={item.date}
-            userId={item.userId}
+            userId={item.teamMemberId}
             url={item.url}
           />
         ))

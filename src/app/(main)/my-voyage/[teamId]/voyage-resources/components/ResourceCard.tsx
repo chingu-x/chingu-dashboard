@@ -7,7 +7,7 @@ import Badge from "@/components/badge/Badge";
 interface ResourceCardProps {
   id: number;
   title: string;
-  user: { name: string; image: string };
+  user: { firstName: string; lastName: string; avatar: string };
   date: string;
   userId: number;
   url: string;
@@ -33,7 +33,7 @@ export default function ResourceCard({
         onOpenModal({
           type: "viewResource",
           id,
-        })
+        }),
       );
     }
   };
@@ -55,7 +55,7 @@ export default function ResourceCard({
         <div className="flex mt-2 [&>*]:mr-8">
           <div className="flex items-center gap-x-2">
             <p>Shared by</p>
-            <Badge title={user.name} avatarUrlImage={user.image} />
+            <Badge title={user.firstName} avatarUrlImage={user.avatar} />
           </div>
           <div className="w-1 h-5 border border-t-0 border-b-0 border-l-0 border-r-1 border-r-neutral-content"></div>
           <div className="text-neutral">Added {date}</div>
