@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/Button";
 import routePaths from "@/utils/routePaths";
+import Banner from "@/components/banner/Banner";
 
 function ResetCompletedContainer() {
   return (
@@ -9,30 +9,13 @@ function ResetCompletedContainer() {
       <p className="text-base-300 text-2xl text-center mt-2.5 mb-[22px] font-medium">
         Password Reset!
       </p>
-      <div
-        data-hide-on-theme="dark"
-        className="flex h-[112px] w-[125px] relative justify-center items-center mb-[34px]"
-      >
-        <Image
-          src="/img/diamond_light.png"
-          alt="Reset password confirmed image"
-          fill={true}
-          style={{ objectFit: "contain" }}
-          priority={true}
-        />
-      </div>
-      <div
-        data-hide-on-theme="light"
-        className="flex h-[112px] w-[125px] relative justify-center items-center"
-      >
-        <Image
-          src="/img/diamond_dark.png"
-          alt="Reset password confirmed image"
-          fill={true}
-          style={{ objectFit: "contain" }}
-          priority={true}
-        />
-      </div>
+      <Banner
+        imageLight="/img/diamond_light.png"
+        imageDark="/img/diamond_dark.png"
+        height="h-[112px]"
+        width="w-[125px]"
+        alt="Reset Password Image"
+      />
       <p className="text-base-300 text-xl font-medium pb-8 text-center">
         Password Reset Successfully
       </p>
