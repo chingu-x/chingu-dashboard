@@ -58,19 +58,11 @@ export default function ResourcesContainer() {
     <>
       <div className="grid grid-cols-[1fr_150px] items-center">
         <ResourceInput />
-        {!resourceList ? (
-          <SortingButton
-            onClick={handleClick}
-            type={byNewest}
-            isDisabled={true}
-          />
-        ) : (
-          <SortingButton
-            onClick={handleClick}
-            type={byNewest}
-            isDisabled={false}
-          />
-        )}
+        <SortingButton
+          onClick={handleClick}
+          type={byNewest}
+          isDisabled={!resourceList ? true : false}
+        />
       </div>
       {!resourceList ? (
         <EmptyBanner />
