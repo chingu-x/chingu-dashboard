@@ -1,23 +1,21 @@
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import ModalSection from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ModalSection";
 import { CheckboxGroupItem } from "@/components/inputs/CheckBoxGroup/CheckboxGroupItem";
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
-
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal, useResource } from "@/store/hooks";
 
 export default function ViewModal() {
   const dispatch = useAppDispatch();
   const resourceList = useResource().resources;
-  const [resourceData, setResourceData] = useState({ title: "", url: "" });
   const { id, isOpen, type } = useModal();
   const isModalOpen = isOpen && type === "viewResource";
 
-  const data = useCallback(() => {
-    let title = "";
-    let url = "";
+  const { title, url } = useCallback(() => {
+    let title: string = "";
+    let url: string = "";
 
     if (resourceList && id) {
       const resource = resourceList.find((item) => item.id === id);
@@ -26,39 +24,36 @@ export default function ViewModal() {
         url = resource.url;
       }
     }
-    return { title: title, url: url };
-  }, [id, resourceList]);
+    return { title, url };
+  }, [id, resourceList])();
 
   const handleClose = () => {
     dispatch(onCloseModal());
   };
 
   const openLink = () => {
-    window.open(resourceData.url, "_blank");
+    window.open(url, "_blank");
+    dispatch(onCloseModal());
   };
 
   const handleChange = () => {
     localStorage.setItem("hideResourceModal", JSON.stringify(true));
   };
 
-  useEffect(() => {
-    setResourceData(data());
-  }, [data]);
-
   return (
     <Modal isOpen={isModalOpen} title="View Resource?" onClose={handleClose}>
       <form>
         <ModalSection heading="Are you sure you would like to visit this resource?">
-          <p className="text-neutral">{resourceData.title}</p>
+          <p className="text-neutral">{title}</p>
         </ModalSection>
         <ModalSection heading="Full link of resource:">
           <Link
             className="text-neutral"
-            href={resourceData.url}
+            href={url}
             rel="noopener noreferrer"
             target="_blank"
           >
-            {resourceData.url}
+            {url}
           </Link>
         </ModalSection>
         <div className="p-1 mb-4">
