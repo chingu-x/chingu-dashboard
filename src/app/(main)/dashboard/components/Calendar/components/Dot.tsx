@@ -7,7 +7,9 @@ type DotProps = {
 function Dot({ color = "bg-neutral-content" }: DotProps) {
   return (
     <div
-      className={`w-2 h-2 ${color} rounded-full left-0 right-0 bottom-[6px] m-auto absolute`}
+      className={`w-2 h-2 ${
+        "bg-" + color
+      } rounded-full left-0 right-0 bottom-[6px] m-auto absolute`}
     />
   );
 }
