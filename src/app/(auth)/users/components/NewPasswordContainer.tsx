@@ -6,7 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPassword } from "@/app/(auth)/authService";
 import TextInput from "@/components/inputs/TextInput";
 import Button from "@/components/Button";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { useAppDispatch } from "@/store/hooks";
 import { validateTextInput } from "@/helpers/form/validateInput";
+import useServerAction from "@/hooks/useServerAction";
+import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
   password: validateTextInput({
@@ -26,6 +30,7 @@ type NewPasswordContainerProps = {
 function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -35,11 +40,38 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
     resolver: zodResolver(validationSchema),
   });
 
+  const {
+    runAction: resetPasswordAction,
+    isLoading: resetPasswordLoading,
+    setIsLoading: setResetPassword,
+  } = useServerAction(resetPassword);
+
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     if (token) {
-      await resetPassword(data.password, token).then(() => onClick());
+      const [res, error] = await resetPasswordAction({
+        password: data.password,
+        token,
+      });
+
+      if (res) {
+        onClick();
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+        setResetPassword(false);
+      }
     }
   };
+
+  function renderButtonContent() {
+    if (resetPasswordLoading) {
+      return <Spinner />;
+    }
+    return "Update New Password";
+  }
 
   return (
     <div className="w-[400px] min-h-[349px] bg-base-200 rounded-2xl p-8">
@@ -72,7 +104,7 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
             title="submit"
             className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
           >
-            Update New Password
+            {renderButtonContent()}
           </Button>
         </div>
       </form>

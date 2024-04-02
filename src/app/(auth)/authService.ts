@@ -72,10 +72,10 @@ export async function resetPasswordRequestEmail(
   return handleAsync(asyncPasswordResetEmail);
 }
 
-export async function resetPassword(
-  password: string,
-  token: string,
-): Promise<AsyncActionResponse<void>> {
+export async function resetPassword({
+  password,
+  token,
+}: ResetPasswordRequestProps): Promise<AsyncActionResponse<void>> {
   const asyncResetPassword = async () =>
     UNAUTHPOST<ResetPasswordRequestProps, void>(
       "api/v1/auth/reset-password",
@@ -95,9 +95,6 @@ async function asyncSignIn(
   email: string,
   password: string,
 ): Promise<ServerSignInResponse> {
-  console.log("email: ", email);
-  console.log("password: ", password);
-
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
