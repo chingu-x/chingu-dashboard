@@ -90,7 +90,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
                     condition.check ? (
                       <Dot
                         key={condition.id}
-                        color={getCalendarElementColor(date)}
+                        color={getCalendarElementColor(date, currentMonth)}
                         onClick={() => onDotClick(date)}
                       />
                     ) : null,
@@ -103,7 +103,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
                     >
                       <RocketLaunchIcon
                         className={`w-4 h-4 absolute left-0 right-0 bottom-[2px] m-auto cursor-pointer ${
-                          "text-" + getCalendarElementColor(date)
+                          "text-" + getCalendarElementColor(date, currentMonth)
                         }`}
                       />
                     </div>
