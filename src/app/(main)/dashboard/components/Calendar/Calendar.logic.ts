@@ -123,11 +123,13 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
   const showRocketIcon = (date: Date) =>
     sprintData?.startDate && isSameDay(sprintData.startDate, date);
 
-  const getCalendarElementColor = (date: Date) => {
+  const getCalendarElementColor = (date: Date, currentMonth: boolean) => {
     if (isSelectedDate(date)) {
       return "base-200";
     } else if (date.getTime() === isHoveredDate?.getTime()) {
       return "neutral";
+    } else if (!currentMonth) {
+      return "neutral-content";
     } else {
       return "neutral-focus";
     }
