@@ -32,6 +32,7 @@ export default function Calendar({ sprintData }: CalendarProps) {
     showRocketIcon,
     getCalendarElementColor,
     setIsHoveredDate,
+    onDotClick,
   } = useCalendarLogic(sprintData);
 
   return (
@@ -90,15 +91,22 @@ export default function Calendar({ sprintData }: CalendarProps) {
                       <Dot
                         key={condition.id}
                         color={getCalendarElementColor(date)}
+                        onClick={() => onDotClick(date)}
                       />
                     ) : null,
                   )}
                   {showRocketIcon(date) ? (
-                    <RocketLaunchIcon
-                      className={`w-4 h-4 absolute left-0 right-0 bottom-[2px] m-auto ${
-                        "text-" + getCalendarElementColor(date)
-                      }`}
-                    />
+                    <div
+                      onClick={() => {
+                        setSelectDate(date);
+                      }}
+                    >
+                      <RocketLaunchIcon
+                        className={`w-4 h-4 absolute left-0 right-0 bottom-[2px] m-auto cursor-pointer ${
+                          "text-" + getCalendarElementColor(date)
+                        }`}
+                      />
+                    </div>
                   ) : null}
                 </Cell>
               </div>
