@@ -2,21 +2,21 @@ import { redirect } from "next/navigation";
 import IdeationContainer from "./IdeationContainer";
 import IdeationProvider from "./IdeationProvider";
 import CreateIdeationContainer from "./CreateIdeationContainer";
-import { getUser } from "@/utils/getUser";
 import { FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import Banner from "@/components/banner/Banner";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
 import { CacheTag } from "@/utils/cacheTag";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import { getUser } from "@/utils/getUser";
 // import { ideation } from "./fixtures/ideation";
 
 // If user is not logged in, nav should be updated to reflect signed out state
 // and page should render error message.
-// If user is logged in but not part of a team, they should get redirected
+// If user is logged in but not part of a team or try to access a past voyage, they should get redirected
 // to dashboard page
 export async function fetchProjectIdeas({
   teamId,
@@ -44,30 +44,30 @@ export default async function IdeationComponentWrapper({
   params,
 }: IdeationComponentWrapperProps) {
   let projectIdeas: IdeationData[] = [];
-  let currentVoyageTeam: VoyageTeamMember | undefined;
+  const teamId = Number(params.teamId);
 
   const [user, error] = await getUser();
 
-  if (user) {
-    currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-    );
+  const { errorResponse, data } = await getCurrentVoyageData({
+    user,
+    error,
+    teamId,
+    args: { teamId },
+    func: fetchProjectIdeas,
+  });
+
+  if (errorResponse) {
+    return errorResponse;
   }
 
-  if (error) {
-    return `Error: ${error?.message}`;
-  }
+  if (data) {
+    const [res, error] = data;
 
-  const teamId = currentVoyageTeam?.voyageTeamId && +params.teamId;
-
-  if (teamId) {
-    const [res, error] = await fetchProjectIdeas({ teamId });
-
-    if (res) {
-      projectIdeas = res;
-    } else {
-      return `Error: ${error?.message}`;
+    if (error) {
+      return `Error: ${error.message}`;
     }
+
+    projectIdeas = res!;
   } else {
     redirect("/");
   }
@@ -77,17 +77,17 @@ export default async function IdeationComponentWrapper({
       return (
         <div className="flex w-full mt-20 h-[290px] gap-x-48">
           <div className="flex flex-col justify-center">
-            <h1 className="text-base-300 font-medium text-xl">
+            <h1 className="text-xl font-medium text-base-300">
               Be the First to Share!
             </h1>
-            <p className="text-base-300 font-medium text-base my-4">
+            <p className="my-4 text-base font-medium text-base-300">
               It looks like no one has posted anything yet, but don’t worry, you
               can be the first to create a new project idea and vision for your
               team!
             </p>
-            <p className="text-base-300 font-medium text-base">
+            <p className="text-base font-medium text-base-300">
               Click on the{" "}
-              <b className="text-base-300 font-semibold text-base">
+              <b className="text-base font-semibold text-base-300">
                 Add Project Idea
               </b>{" "}
               button at the top to get started!
@@ -113,7 +113,7 @@ export default async function IdeationComponentWrapper({
         vision_statement={projectIdea.vision}
         users={projectIdea.projectIdeaVotes}
         contributed_by={projectIdea.contributedBy}
-        teamId={teamId!}
+        teamId={teamId}
       />
     ));
   }
