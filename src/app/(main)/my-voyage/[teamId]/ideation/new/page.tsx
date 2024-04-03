@@ -14,11 +14,13 @@ export default async function AddIdeationPage({
 }: AddIdeationPageProps) {
   const teamId = Number(params.teamId);
 
-  const data = await getCurrentVoyageTeam({ teamId });
+  const { error, currentTeam } = await getCurrentVoyageTeam({ teamId });
 
-  if (data) {
-    if (typeof data === "string") return data;
+  if (error) {
+    return error;
+  }
 
+  if (currentTeam) {
     return <IdeationForm />;
   }
 
