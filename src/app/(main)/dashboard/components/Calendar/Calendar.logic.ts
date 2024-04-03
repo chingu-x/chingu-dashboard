@@ -133,6 +133,12 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     }
   };
 
+  const onDotClick = (date: Date) => {
+    if (setSelectDate && date) {
+      setSelectDate(date);
+    }
+  };
+
   return {
     cn,
     generateDate,
@@ -151,5 +157,6 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     showRocketIcon,
     getCalendarElementColor,
     setIsHoveredDate,
+    onDotClick,
   };
 };
