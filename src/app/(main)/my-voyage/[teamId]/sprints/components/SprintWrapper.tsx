@@ -24,6 +24,7 @@ import { GET } from "@/utils/requests";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { VoyageTeamMember } from "@/store/features/user/userSlice";
+import { getSprintCache } from "@/utils/getSprintCache";
 
 async function fetchMeeting({
   sprintNumber,
@@ -31,13 +32,13 @@ async function fetchMeeting({
 }: FetchMeetingProps): Promise<AsyncActionResponse<FetchMeetingResponse>> {
   console.log("fetch meeting");
   const token = getAccessToken();
-
+  const sprintCache = getSprintCache(sprintNumber);
   const fetchMeetingAsync = () =>
     GET<FetchMeetingResponse>(
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "force-cache",
-      `sprint-${sprintNumber}`,
+      sprintCache,
     );
 
   return await handleAsync(fetchMeetingAsync);
