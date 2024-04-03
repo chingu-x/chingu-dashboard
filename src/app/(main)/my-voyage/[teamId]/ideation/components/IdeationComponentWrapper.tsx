@@ -11,7 +11,6 @@ import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import { getUser } from "@/utils/getUser";
 // import { ideation } from "./fixtures/ideation";
 
 // If user is not logged in, nav should be updated to reflect signed out state
@@ -46,11 +45,7 @@ export default async function IdeationComponentWrapper({
   let projectIdeas: IdeationData[] = [];
   const teamId = Number(params.teamId);
 
-  const [user, error] = await getUser();
-
   const { errorResponse, data } = await getCurrentVoyageData({
-    user,
-    error,
     teamId,
     args: { teamId },
     func: fetchProjectIdeas,

@@ -1,11 +1,26 @@
 import { redirect } from "next/navigation";
 import IdeationForm from "@/app/(main)/my-voyage/[teamId]/ideation/components/IdeationForm";
-import { getAccessToken } from "@/utils/getCookie";
+import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
+import routePaths from "@/utils/routePaths";
 
-export default function EditIdeationPage() {
-  const cookie = getAccessToken();
+interface EditIdeationPageProps {
+  params: {
+    teamId: string;
+  };
+}
 
-  if (!cookie) redirect("/");
+export default async function EditIdeationPage({
+  params,
+}: EditIdeationPageProps) {
+  const teamId = Number(params.teamId);
 
-  return <IdeationForm />;
+  const data = await getCurrentVoyageTeam({ teamId });
+
+  if (data) {
+    if (typeof data === "string") return data;
+
+    return <IdeationForm />;
+  } else {
+    redirect(routePaths.dashboardPage());
+  }
 }
