@@ -5,6 +5,7 @@ import { getAccessToken } from "@/utils/getCookie";
 import { PATCH, POST } from "@/utils/requests";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
+import { getSprintCache } from "@/utils/getSprintCache";
 
 interface SprintProps {
   teamId: number;
@@ -96,6 +97,7 @@ export async function addMeeting({
   notes,
 }: AddMeetingProps): Promise<AsyncActionResponse<AddMeetingResponse>> {
   const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
 
   const addMeetingAsync = () =>
     POST<AddMeetingBody, AddMeetingResponse>(
@@ -109,7 +111,7 @@ export async function addMeeting({
 
   if (res) {
     revalidateTag(CacheTag.sprints);
-    revalidateTag(`sprint-${sprintNumber}`);
+    revalidateTag(sprintCache);
   }
 
   return [res, error];
@@ -124,6 +126,7 @@ export async function editMeeting({
   notes,
 }: EditMeetingProps): Promise<AsyncActionResponse<EditMeetingResponse>> {
   const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
 
   const editMeetingAsync = () =>
     PATCH<EditMeetingBody, EditMeetingResponse>(
@@ -136,7 +139,7 @@ export async function editMeeting({
   const [res, error] = await handleAsync(editMeetingAsync);
 
   if (res) {
-    revalidateTag(`sprint-${sprintNumber}`);
+    revalidateTag(sprintCache);
   }
 
   return [res, error];
