@@ -58,10 +58,10 @@ export async function addIdeation({
 
   const addIdeationAsync = () =>
     POST<AddIdeationBody, AddIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideations`,
+      `api/v1/voyages/teams/${teamId}/ideations`,
       token,
       "default",
-      { title, description, vision },
+      { title, description, vision }
     );
 
   const [res, error] = await handleAsync(addIdeationAsync);
@@ -84,10 +84,10 @@ export async function editIdeation({
 
   const editIdeationAsync = () =>
     PATCH<EditIdeationBody, EditIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
+      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}`,
       token,
       "default",
-      { title, description, vision },
+      { title, description, vision }
     );
 
   const [res, error] = await handleAsync(editIdeationAsync);
@@ -106,9 +106,9 @@ export async function deleteIdeation({
   const token = getAccessToken();
   const deleteIdeationAsync = () =>
     DELETE<DeleteIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
+      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}`,
       token,
-      "default",
+      "default"
     );
 
   const [res, error] = await handleAsync(deleteIdeationAsync);
@@ -128,9 +128,9 @@ export async function addIdeationVote({
 
   const addIdeationVoteAsync = () =>
     POST<undefined, IdeationVoteResponse>(
-      `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
-      "default",
+      "default"
     );
 
   const [res, error] = await handleAsync(addIdeationVoteAsync);
@@ -150,9 +150,9 @@ export async function removeIdeationVote({
 
   const removeIdeationVoteAsync = () =>
     DELETE<IdeationVoteResponse>(
-      `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
-      "default",
+      "default"
     );
 
   const [res, error] = await handleAsync(removeIdeationVoteAsync);
