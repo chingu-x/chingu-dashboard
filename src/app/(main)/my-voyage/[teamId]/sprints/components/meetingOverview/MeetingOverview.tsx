@@ -23,7 +23,7 @@ export default function MeetingOverview({
       </div>
       <div className="flex flex-col w-full row-span-2 gap-y-2 2xl:row-auto">
         <h2 className="text-xl font-semibold">{title}</h2>
-        <p className="text-base font-medium">{notes}</p>
+        <p className="text-base font-medium whitespace-pre-wrap">{notes}</p>
       </div>
       <a
         href={`//${meetingLink}`}

@@ -6,7 +6,7 @@ import Agendas from "./agenda/Agendas";
 import Sections from "./sections/Sections";
 import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import SprintActions from "./SprintActions";
-import MeetingProvider from "@/sprints/providers/MeetingProvider";
+import MeetingProvider from "@/myVoyage/sprints/providers/MeetingProvider";
 
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
@@ -14,7 +14,7 @@ import Banner from "@/components/banner/Banner";
 import {
   FetchMeetingProps,
   FetchMeetingResponse,
-} from "@/sprints/sprintsService";
+} from "@/myVoyage/sprints/sprintsService";
 import { Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";

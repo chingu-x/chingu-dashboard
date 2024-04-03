@@ -7,7 +7,7 @@ import SprintActions from "./SprintActions";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
 
-import EmptySprintProvider from "@/sprints/providers/EmptySprintProvider";
+import EmptySprintProvider from "@/myVoyage/sprints/providers/EmptySprintProvider";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 import { VoyageTeamMember } from "@/store/features/user/userSlice";
