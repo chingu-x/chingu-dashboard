@@ -42,7 +42,7 @@ export default function Agendas() {
   };
 
   const editTopic = () => {
-    router.push(routePaths.addTopic("2"));
+    router.push(routePaths.addTopicPage("2"));
   };
 
   const dividerIsVisible = completedTopics.length !== 0;

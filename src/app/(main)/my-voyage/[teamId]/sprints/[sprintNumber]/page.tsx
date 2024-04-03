@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
-import EmptySprintWrapper from "@/sprints/components/EmptySprintWrapper";
+import EmptySprintWrapper from "@/myVoyage/sprints/components/EmptySprintWrapper";
 
 interface EmptySprintPageProps {
   params: {

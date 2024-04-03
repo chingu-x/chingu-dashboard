@@ -4,7 +4,7 @@ import {
   FetchSprintsProps,
   FetchSprintsResponse,
   SprintsResponse,
-} from "@/sprints/sprintsService";
+} from "@/myVoyage/sprints/sprintsService";
 
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";

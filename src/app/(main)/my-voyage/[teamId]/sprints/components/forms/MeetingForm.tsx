@@ -20,7 +20,7 @@ import { useSprint, useAppDispatch } from "@/store/hooks";
 import { Meeting } from "@/store/features/sprint/sprintSlice";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import useServerAction from "@/hooks/useServerAction";
-import { addMeeting, editMeeting } from "@/sprints/sprintsService";
+import { addMeeting, editMeeting } from "@/myVoyage//sprints/sprintsService";
 import routePaths from "@/utils/routePaths";
 import { persistor } from "@/store/store";
 
@@ -118,7 +118,7 @@ export default function MeetingForm() {
 
       if (res) {
         router.push(
-          routePaths.sprintPage(
+          routePaths.sprintWeekPage(
             teamId.toString(),
             sprintNumber.toString(),
             meetingId.toString(),
@@ -140,7 +140,7 @@ export default function MeetingForm() {
 
       if (res) {
         router.push(
-          routePaths.sprintPage(
+          routePaths.sprintWeekPage(
             teamId.toString(),
             sprintNumber.toString(),
             res.id.toString(),

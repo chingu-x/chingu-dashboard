@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
-import SprintWrapper from "@/sprints/components/SprintWrapper";
+import SprintWrapper from "@/myVoyage/sprints/components/SprintWrapper";
 
 interface SprintPageProps {
   params: {
