@@ -25,7 +25,7 @@ export async function fetchProjectIdeas({
 
   const fetchProjectIdeasAsync = () =>
     GET<IdeationData[]>(
-      `api/v1/voyages/${teamId}/ideations`,
+      `api/v1/voyages/teams/${teamId}/ideations`,
       token,
       "force-cache",
       CacheTag.ideation
