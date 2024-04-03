@@ -4,12 +4,15 @@ import ResourceInput from "./ResourceInput";
 import SortingButton from "./SortingButton";
 import ResourceCard from "./ResourceCard";
 import EmptyBanner from "./EmptyBanner";
-import { useResource } from "@/store/hooks";
+import { ResourceData } from "@/store/features/resources/resourcesSlice";
 
-export default function ResourcesContainer() {
+interface ResourceContainerProps {
+  data: ResourceData[];
+}
+
+export default function ResourcesContainer({ data }: ResourceContainerProps) {
   const [byNewest, setByNewest] = useState(true);
-  const initialResourcesState = useResource().resources;
-  const [voyageResources, setVoyageResources] = useState(initialResourcesState);
+  const [voyageResources, setVoyageResources] = useState(data);
 
   const formattedResources = voyageResources?.map((item) => ({
     ...item,
@@ -33,8 +36,8 @@ export default function ResourcesContainer() {
   };
 
   useEffect(() => {
-    setVoyageResources(initialResourcesState);
-  }, [initialResourcesState]);
+    setVoyageResources(data);
+  }, [data]);
 
   return (
     <>
