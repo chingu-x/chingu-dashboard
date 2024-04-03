@@ -9,8 +9,10 @@ export async function getCurrentVoyageTeam({
   teamId,
 }: GetCurrentVoyageTeamProps) {
   let currentVoyageTeam: VoyageTeamMember | undefined;
+  let error = "";
+  let currentTeam = false;
 
-  const [user, error] = await getUser();
+  const [user, err] = await getUser();
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
@@ -18,13 +20,16 @@ export async function getCurrentVoyageTeam({
     );
   }
 
-  if (error) {
-    return `Error: ${error?.message}`;
+  if (err) {
+    error = `Error: ${err?.message}`;
   }
 
   if (teamId === currentVoyageTeam?.voyageTeamId) {
-    return true;
+    currentTeam = true;
   }
 
-  return false;
+  return {
+    error,
+    currentTeam,
+  };
 }

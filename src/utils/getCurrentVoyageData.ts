@@ -20,13 +20,13 @@ export async function getCurrentVoyageData<X, Y>({
   let errorResponse = "";
   let data: AsyncActionResponse<X> | null = null;
 
-  const res = await getCurrentVoyageTeam({ teamId });
+  const { error, currentTeam } = await getCurrentVoyageTeam({ teamId });
 
-  if (res) {
-    if (typeof res === "string") {
-      errorResponse = res;
-    }
+  if (error) {
+    errorResponse = error;
+  }
 
+  if (currentTeam) {
     data = await func({ ...args });
   }
 
