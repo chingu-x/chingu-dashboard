@@ -20,7 +20,7 @@ export default async function EditIdeationPage({
     if (typeof data === "string") return data;
 
     return <IdeationForm />;
-  } else {
-    redirect(routePaths.dashboardPage());
   }
+
+  redirect(routePaths.dashboardPage());
 }
