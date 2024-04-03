@@ -55,7 +55,6 @@ export default async function ResourcesComponentWrapper({
     return errorResponse;
   }
   if (data) {
-    console.log(data);
     const [res, error] = data;
 
     if (error) {
@@ -82,7 +81,7 @@ export default async function ResourcesComponentWrapper({
         />
       </VoyagePageBannerContainer>
       <ResourcesProvider payload={projectResources} />
-      <ResourcesContainer />
+      <ResourcesContainer data={projectResources} />
     </>
   );
 }
