@@ -20,11 +20,10 @@ import { Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
-// import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
 import { getSprintCache } from "@/utils/getSprintCache";
+import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 
 async function fetchMeeting({
   sprintNumber,
@@ -57,49 +56,48 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   const sprintNumber = Number(params.sprintNumber);
   const meetingId = Number(params.meetingId);
 
-  let currentVoyageTeam: VoyageTeamMember | undefined;
   let sprintsData: Sprint[] = [];
   let meetingData: Meeting = { id: +params.meetingId };
 
-  // TODO: replace with a reusable function
   const [user, error] = await getUser();
 
-  if (user) {
-    currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-    );
+  const { errorResponse, data } = await getCurrentVoyageData({
+    user,
+    error,
+    teamId,
+    args: { teamId },
+    func: fetchSprints,
+  });
+
+  if (errorResponse) {
+    return errorResponse;
   }
 
-  if (error) {
-    return `Error: ${error?.message}`;
+  if (data) {
+    const [res, error] = data;
+
+    if (error) {
+      return `Error: ${error.message}`;
+    }
+    sprintsData = res!.voyage.sprints;
+  } else {
+    redirect("/");
   }
 
-  if (teamId === currentVoyageTeam?.voyageTeamId) {
-    const [res, error] = await fetchSprints({ teamId });
+  const correspondingMeetingId = sprintsData.find(
+    (sprint) => sprint.number === sprintNumber,
+  )?.teamMeetings[0]?.id;
+
+  if (meetingId === correspondingMeetingId) {
+    const [res, error] = await fetchMeeting({ sprintNumber, meetingId });
 
     if (res) {
-      sprintsData = res.voyage.sprints;
+      meetingData = res;
     } else {
       return `Error: ${error?.message}`;
     }
-
-    const correspondingMeetingId = sprintsData.find(
-      (sprint) => sprint.number === sprintNumber,
-    )?.teamMeetings[0]?.id;
-
-    if (meetingId === correspondingMeetingId) {
-      const [res, error] = await fetchMeeting({ sprintNumber, meetingId });
-
-      if (res) {
-        meetingData = res;
-      } else {
-        return `Error: ${error?.message}`;
-      }
-    } else {
-      redirect(`/my-voyage/${teamId}/sprints/`);
-    }
   } else {
-    redirect("/");
+    redirect(`/my-voyage/${teamId}/sprints/`);
   }
 
   // Get current sprint number
