@@ -1,18 +1,20 @@
-import { getUser } from "./getUser";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
+import { AppError } from "@/types/types";
+import { User, VoyageTeamMember } from "@/store/features/user/userSlice";
 
 interface GetCurrentVoyageTeamProps {
   teamId: number;
+  user: User | null;
+  error: AppError | null;
 }
 
-export async function getCurrentVoyageTeam({
+export function getCurrentVoyageTeam({
   teamId,
+  user,
+  error,
 }: GetCurrentVoyageTeamProps) {
   let currentVoyageTeam: VoyageTeamMember | undefined;
-  let error = "";
+  let err = "";
   let currentTeam = false;
-
-  const [user, err] = await getUser();
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
@@ -20,8 +22,8 @@ export async function getCurrentVoyageTeam({
     );
   }
 
-  if (err) {
-    error = `Error: ${err?.message}`;
+  if (error) {
+    err = `Error: ${error?.message}`;
   }
 
   if (teamId === currentVoyageTeam?.voyageTeamId) {
@@ -29,7 +31,8 @@ export async function getCurrentVoyageTeam({
   }
 
   return {
-    error,
+    user,
+    err,
     currentTeam,
   };
 }

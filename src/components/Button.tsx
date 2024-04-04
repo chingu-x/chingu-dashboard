@@ -57,6 +57,7 @@ const button = cva(
           "border-primary",
           "hover:bg-primary-content",
           "active:bg-primary",
+          "active:text-base-200",
           "disabled:bg-base-100",
           "disabled:text-neutral",
         ],
@@ -74,7 +75,7 @@ const button = cva(
       variant: "primary",
       size: "md",
     },
-  },
+  }
 );
 
 export interface ButtonProps

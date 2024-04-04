@@ -1,10 +1,14 @@
 import { AsyncActionResponse } from "./handleAsync";
 import { getCurrentVoyageTeam } from "./getCurrentVoyageTeam";
+import { User } from "@/store/features/user/userSlice";
+import { AppError } from "@/types/types";
 
 interface GetCurrentVoyageDataProps<X, Y> {
   teamId: number;
   func: (args: Y) => Promise<AsyncActionResponse<X>>;
   args: Y;
+  user: User | null;
+  error: AppError | null;
 }
 
 interface GetCurrentVoyageDataResponse<X> {
@@ -16,14 +20,20 @@ export async function getCurrentVoyageData<X, Y>({
   teamId,
   func,
   args,
+  user,
+  error,
 }: GetCurrentVoyageDataProps<X, Y>): Promise<GetCurrentVoyageDataResponse<X>> {
   let errorResponse = "";
   let data: AsyncActionResponse<X> | null = null;
 
-  const { error, currentTeam } = await getCurrentVoyageTeam({ teamId });
+  const { err, currentTeam } = getCurrentVoyageTeam({
+    teamId,
+    user,
+    error,
+  });
 
-  if (error) {
-    errorResponse = error;
+  if (err) {
+    errorResponse = err;
   }
 
   if (currentTeam) {
