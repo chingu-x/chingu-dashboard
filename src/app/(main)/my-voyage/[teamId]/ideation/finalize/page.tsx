@@ -2,7 +2,7 @@ import Alert from "@/components/Alert";
 
 export default function page() {
   return (
-    <div className="flex items-center w-full h-[200px] p-10 bg-base-200 rounded-2xl">
+    <div className="flex items-center w-full h-[200px] p-10 bg-base-200 rounded-2xl shadow-md">
       <div className="flex flex-col w-1/2 gap-y-4">
         <h2 className="font-semibold text-2xl text-base-300">
           Finalize your choices
