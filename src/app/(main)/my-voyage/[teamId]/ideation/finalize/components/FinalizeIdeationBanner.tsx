@@ -2,8 +2,8 @@ import Alert from "@/components/Alert";
 
 export default function FinalizeIdeationBanner() {
   return (
-    <div className="flex items-center w-full h-[200px] p-10 bg-base-200 rounded-2xl shadow-md">
-      <div className="flex flex-col w-1/2 gap-y-4">
+    <div className="flex flex-col flex-1 gap-y-4 justify-center 3xl:flex-row 3xl:items-center w-full p-10 bg-base-200 rounded-2xl shadow-md">
+      <div className="flex flex-col w-full 3xl:w-1/2 3xl:gap-y-4">
         <h2 className="font-semibold text-2xl text-base-300">
           Finalize your choices
         </h2>
@@ -12,7 +12,7 @@ export default function FinalizeIdeationBanner() {
           your Voyage!
         </p>
       </div>
-      <div className="w-1/2">
+      <div className="w-[650px] 3xl:w-1/2">
         <Alert
           context="info"
           message="Important: Your project idea will last your entire Voyage! If changes are needed, 
