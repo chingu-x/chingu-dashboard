@@ -97,31 +97,9 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
     }
 
     if (currentUserVoted) {
-      return (
-        <Button
-          type="submit"
-          size="lg"
-          variant="primary"
-          className="bg-primary-content text-base-300 w-full"
-          onClick={handleVote}
-          disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
-        >
-          Remove Vote
-        </Button>
-      );
+      return "Remove Vote";
     } else {
-      return (
-        <Button
-          type="submit"
-          size="lg"
-          variant="primary"
-          className="w-full"
-          onClick={handleVote}
-          disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
-        >
-          Add Vote
-        </Button>
-      );
+      return "Add Vote";
     }
   }
 
@@ -164,7 +142,18 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
             />
           ))}
         </AvatarGroup>
-        {currentUserVoted !== null ? buttonContent() : null}
+        <Button
+          type="submit"
+          size="lg"
+          variant="primary"
+          className={`w-full ${
+            currentUserVoted ? "bg-primary-content text-base-300" : ""
+          }`}
+          onClick={handleVote}
+          disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
+        >
+          {buttonContent()}
+        </Button>
       </section>
     </div>
   );
