@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import IdeationForm from "@/app/(main)/my-voyage/[teamId]/ideation/components/IdeationForm";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import routePaths from "@/utils/routePaths";
+import { getUser } from "@/utils/getUser";
 
 interface AddIdeationPageProps {
   params: {
@@ -14,10 +15,12 @@ export default async function AddIdeationPage({
 }: AddIdeationPageProps) {
   const teamId = Number(params.teamId);
 
-  const { error, currentTeam } = await getCurrentVoyageTeam({ teamId });
+  const [user, error] = await getUser();
 
-  if (error) {
-    return error;
+  const { err, currentTeam } = getCurrentVoyageTeam({ user, error, teamId });
+
+  if (err) {
+    return err;
   }
 
   if (currentTeam) {
