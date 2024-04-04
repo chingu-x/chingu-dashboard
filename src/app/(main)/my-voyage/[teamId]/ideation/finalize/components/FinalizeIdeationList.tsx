@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import FinalizeIdeationItem from "./FinalizeIdeationItem";
 import Button from "@/components/Button";
 import { useIdeation } from "@/store/hooks";
 
 export default function FinalizeIdeationList() {
   const { projectIdeas } = useIdeation();
+  const [finalizedIdeation, setFinalizedIdeation] = useState("");
 
   return (
     <>
@@ -17,11 +19,15 @@ export default function FinalizeIdeationList() {
               key={id}
               title={title}
               projectIdeaVotes={projectIdeaVotes}
+              finalizedIdeation={finalizedIdeation}
+              setFinalizedIdeation={setFinalizedIdeation}
             />
           );
         })}
       </div>
-      <Button variant="secondary">Finalize Project Idea Selection</Button>
+      <Button variant="secondary" disabled={!finalizedIdeation}>
+        Finalize Project Idea Selection
+      </Button>
     </>
   );
 }

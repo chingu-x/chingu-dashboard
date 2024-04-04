@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+import Button from "@/components/Button";
 import Avatar from "@/components/avatar/Avatar";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import { ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
@@ -5,15 +7,28 @@ import { ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 interface FinalizeIdeationItemProps {
   title: string;
   projectIdeaVotes: ProjectIdeaVotes[];
+  finalizedIdeation: string;
+  setFinalizedIdeation: Dispatch<SetStateAction<string>>;
 }
 
 export default function FinalizeIdeationItem({
   title,
   projectIdeaVotes,
+  finalizedIdeation,
+  setFinalizedIdeation,
 }: FinalizeIdeationItemProps) {
+  function handleClick() {
+    setFinalizedIdeation(title);
+  }
   return (
-    <div className="flex flex-col items-center w-[800px] bg-base-200 rounded-lg border border-primary gap-y-2 py-3">
-      <h2 className="font-semibold text-base text-base-300">{title}</h2>
+    <Button
+      variant="outline"
+      className={`flex-col w-[800px] gap-y-2 ${
+        finalizedIdeation === title ? "bg-primary text-base-200" : ""
+      }`}
+      onClick={handleClick}
+    >
+      <h2 className="font-semibold text-base">{title}</h2>
       <AvatarGroup>
         {projectIdeaVotes.map((votes) => {
           const {
@@ -24,6 +39,6 @@ export default function FinalizeIdeationItem({
           return <Avatar width={24} height={24} key={id} image={avatar} />;
         })}
       </AvatarGroup>
-    </div>
+    </Button>
   );
 }
