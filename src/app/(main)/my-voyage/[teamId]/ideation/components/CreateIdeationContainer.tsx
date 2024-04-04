@@ -1,6 +1,6 @@
 import VoteDescriptionCard from "./VoteDescriptionCard";
 import AddProjectIdeaButton from "./AddProjectIdeaButton";
-import FinalizeIdeation from "./FinalizeIdeation";
+import FinalizeIdeationButton from "./FinalizeIdeationButton";
 
 function CreateIdeationContainer() {
   return (
@@ -18,7 +18,7 @@ function CreateIdeationContainer() {
       </section>
       <div className="flex flex-col gap-y-4">
         <AddProjectIdeaButton />
-        <FinalizeIdeation />
+        <FinalizeIdeationButton />
       </div>
     </div>
   );
