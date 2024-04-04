@@ -22,10 +22,8 @@ export default function FinalizeIdeationItem({
   }
   return (
     <Button
-      variant="outline"
-      className={`flex-col w-[800px] gap-y-2 ${
-        finalizedIdeation === title ? "bg-primary text-base-200" : ""
-      }`}
+      variant={finalizedIdeation === title ? "primary" : "outline"}
+      className="flex-col w-[800px] gap-y-2"
       onClick={handleClick}
     >
       <h2 className="font-semibold text-base">{title}</h2>
