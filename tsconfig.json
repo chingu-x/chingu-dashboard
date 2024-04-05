@@ -27,7 +27,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@/public/*": ["./public/*"]
+      "@/public/*": ["./public/*"],
+      "@/myVoyage/*": ["./src/app/(main)/my-voyage/[teamId]/*"]
     }
   },
   "include": [

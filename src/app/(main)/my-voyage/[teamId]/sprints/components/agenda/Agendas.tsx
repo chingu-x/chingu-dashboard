@@ -4,17 +4,19 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-import EmptyState from "./EmptyState";
+import NoAgendasState from "./NoAgendasState";
 import AgendaTopic from "./AgendaTopic";
 import AgendaHeader from "./AgendaHeader";
-import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
+// import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 
 import routePaths from "@/utils/routePaths";
 
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
+import { Agenda } from "@/store/features/sprint/sprintSlice";
 
-export default function Agenda() {
+export default function Agendas() {
   const router = useRouter();
+  const topicsData: Agenda[] = [];
 
   const [incompletedTopics, setIncompletedTopics] = useState(
     topicsData.filter((topic) => topic.status === false),
@@ -40,7 +42,7 @@ export default function Agenda() {
   };
 
   const editTopic = () => {
-    router.push(routePaths.addTopic("2"));
+    router.push(routePaths.addTopicPage("2"));
   };
 
   const dividerIsVisible = completedTopics.length !== 0;
@@ -49,7 +51,7 @@ export default function Agenda() {
     <div className="flex flex-col items-center justify-between w-full p-10 border bg-base-200 rounded-2xl border-base-100">
       <AgendaHeader />
       {/* INCOMPLETED TOPICS */}
-      {topicsData.length === 0 && <EmptyState />}
+      {topicsData.length === 0 && <NoAgendasState />}
       <ul className="flex flex-col w-full gap-y-5">
         {incompletedTopics.map((topic) => (
           <AgendaTopic

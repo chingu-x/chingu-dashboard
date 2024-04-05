@@ -1,4 +1,4 @@
-export default function EmptyState() {
+export default function NoAgendasState() {
   return (
     <div className="flex flex-col w-full p-5 rounded-lg bg-base-100 gap-y-4">
       <h4 className="py-2 text-xl font-medium">Contribute to the agenda!</h4>

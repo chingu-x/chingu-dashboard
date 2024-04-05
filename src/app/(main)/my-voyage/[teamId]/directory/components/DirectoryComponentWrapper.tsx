@@ -22,6 +22,8 @@ export async function fetchTeamDirectory({
   teamId,
   user,
 }: FetchTeamDirectoryProps): Promise<AsyncActionResponse<TeamDirectory>> {
+  console.log("fetch directory");
+
   const token = getAccessToken();
 
   const fetchTeamDirectoryAsync = () =>

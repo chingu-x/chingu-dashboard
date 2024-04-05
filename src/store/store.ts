@@ -7,6 +7,7 @@ import ideationReducer from "./features/ideation/ideationSlice";
 import resourceReducer from "./features/resources/resourcesSlice";
 import userReducer from "./features/user/userSlice";
 import directoryReducer from "./features/directory/directorySlice";
+import sprintReducer from "./features/sprint/sprintSlice";
 
 const createNoopStorage = () => ({
   getItem() {
@@ -28,7 +29,7 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["ideation"],
+  whitelist: ["ideation", "sprint"],
 };
 
 const rootReducer = combineReducers({
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   ideation: ideationReducer,
   directory: directoryReducer,
   resources: resourceReducer,
+  sprint: sprintReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
