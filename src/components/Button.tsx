@@ -42,6 +42,7 @@ const button = cva(
           "bg-error-content",
           "hover:bg-error",
           "active:bg-error",
+          "active:text-base-200",
           "disabled:text-neutral-focus",
           "disabled:bg-error",
         ],
