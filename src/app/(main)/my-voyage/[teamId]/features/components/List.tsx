@@ -71,18 +71,18 @@ export default function List({ id, title, features, currentUser }: ListProps) {
             </div>
           )}
         </Droppable>
-        <div className="card-actions">
-          {/* Similiar to tech stack button, need to be a shared component */}
-          <Button
-            variant="secondary"
-            size="lg"
-            className="justify-start w-full mt-2"
-            onClick={handleClick}
-          >
-            <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
-            Add Feature
-          </Button>
-        </div>
+        {/* Similiar to tech stack button, need to be a shared component */}
+        <Button
+          variant="link"
+          size="lg"
+          className="text-base h-10 justify-between p-0 w-full outline-none rounded-lg text-base-300 shadow-md border border-base-100 mt-6"
+          onClick={handleClick}
+        >
+          <div className="pl-3">Add Feature</div>
+          <div className="flex justify-center items-center w-12 h-full bg-neutral rounded-br-lg rounded-tr-lg">
+            <PlusCircleIcon className="w-6 h-6 text-base-200" />
+          </div>
+        </Button>
       </div>
     </div>
   );
