@@ -145,10 +145,8 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
         <Button
           type="submit"
           size="lg"
-          variant="primary"
-          className={`w-full ${
-            currentUserVoted ? "bg-primary-content text-base-300" : ""
-          }`}
+          variant={`${currentUserVoted ? "error" : "primary"}`}
+          className={`w-full ${currentUserVoted ? "text-base-300" : ""}`}
           onClick={handleVote}
           disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
         >
