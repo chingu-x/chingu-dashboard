@@ -10,7 +10,7 @@ function PreVoyageDashboard() {
   return (
     <div className="flex flex-row gap-x-6">
       <div className="flex flex-col gap-y-6 flex-grow-1 w-full">
-        <div className="w-full h-full p-6 bg-base-200 rounded-2xl">
+        <div className="w-full h-full p-6 bg-base-200 rounded-2xl border-2 border-base-100">
           <div>
             <p className="text-[25px] font-semibold	">
               Before your Voyage starts...
@@ -24,7 +24,7 @@ function PreVoyageDashboard() {
         </div>
         <VoyageSupport />
       </div>
-      <div className="flex flex-grow-1 w-full">
+      <div className="flex flex-grow-1 w-full border-2 border-base-100">
         <PreVoyageBanner />
       </div>
     </div>
