@@ -23,7 +23,7 @@ export default function SprintActions({
 }: SprintActionsProps) {
   const submitVoyageIsAllowed = sprintNumber === "5" || sprintNumber === "6";
   return (
-    <div className="flex justify-between p-5 border shadow-md bg-base-200 rounded-2xl border-base-100">
+    <div className="flex justify-between p-5 border border-base-100 shadow-md bg-base-200 rounded-2xl">
       {/* TODO: add animated variant to Button.tsx ??? */}
       <Link href={meetingId ? routePaths.submitVoyagePage(meetingId) : "/"}>
         <Button
