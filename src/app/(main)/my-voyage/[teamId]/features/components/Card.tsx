@@ -26,7 +26,7 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
         type: "feature",
         content: {},
         isEditing: true,
-      }),
+      })
     );
   }
 
@@ -37,7 +37,7 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="bg-base-200 py-[14px] px-[22px] rounded-lg text-base-300 my-3"
+          className="bg-base-100 py-[14px] px-[22px] rounded-lg text-base-300 my-3"
         >
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-y-1">
