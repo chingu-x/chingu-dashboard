@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/Button";
 import Avatar from "@/components/avatar/Avatar";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
@@ -20,23 +21,33 @@ export default function FinalizeIdeationItem({
   function handleClick() {
     setFinalizedIdeation(title);
   }
+
   return (
     <Button
       variant={finalizedIdeation === title ? "primary" : "outline"}
-      className="flex-col w-[800px] gap-y-2"
+      className="w-[800px] gap-x-0"
       onClick={handleClick}
     >
-      <h2 className="font-semibold text-base">{title}</h2>
-      <AvatarGroup>
-        {projectIdeaVotes.map((votes) => {
-          const {
-            votedBy: {
-              member: { avatar, id },
-            },
-          } = votes;
-          return <Avatar width={24} height={24} key={id} image={avatar} />;
-        })}
-      </AvatarGroup>
+      <div className="flex flex-col items-center justify-center gap-y-2 w-full">
+        <h2 className="font-semibold text-base">{title}</h2>
+        <AvatarGroup>
+          {projectIdeaVotes.map((votes) => {
+            const {
+              votedBy: {
+                member: { avatar, id },
+              },
+            } = votes;
+            return <Avatar width={24} height={24} key={id} image={avatar} />;
+          })}
+        </AvatarGroup>
+      </div>
+      <div className="w-6 h-6">
+        <CheckCircleIcon
+          className={`${
+            finalizedIdeation !== title ? "hidden" : "w-6 h-6 text-base-200"
+          }`}
+        />
+      </div>
     </Button>
   );
 }
