@@ -5,28 +5,38 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Badge from "@/components/badge/Badge";
 
 interface ResourceCardProps {
+  id: number;
   title: string;
-  user: { name: string; image: string };
-  currentUser: boolean;
+  user: { firstName: string; lastName: string; avatar: string };
   date: string;
+  userId: number;
+  url: string;
 }
 
 export default function ResourceCard({
+  id,
   title,
-  currentUser,
   user,
   date,
+  userId,
+  url,
 }: ResourceCardProps) {
   const dispatch = useAppDispatch();
+  const currentUserId = 7; //TODO: replace with id from logged in user.
 
-  function openViewModal() {
-    dispatch(
-      onOpenModal({
-        type: "viewResource",
-        content: {},
-      }),
-    );
-  }
+  const openViewModal = () => {
+    const hideResourceModal = localStorage.getItem("hideResourceModal");
+    if (hideResourceModal) {
+      window.open(url, "_blank");
+    } else {
+      dispatch(
+        onOpenModal({
+          type: "viewResource",
+          id,
+        }),
+      );
+    }
+  };
   const openDeleteModal = () => {
     // todo: replace with modal
   };
@@ -45,13 +55,16 @@ export default function ResourceCard({
         <div className="flex mt-2 [&>*]:mr-8">
           <div className="flex items-center gap-x-2">
             <p>Shared by</p>
-            <Badge title={user.name} avatarUrlImage={user.image} />
+            <Badge title={user.firstName} avatarUrlImage={user.avatar} />
           </div>
           <div className="w-1 h-5 border border-t-0 border-b-0 border-l-0 border-r-1 border-r-neutral-content"></div>
           <div className="text-neutral">Added {date}</div>
         </div>
       </div>
-      {currentUser && (
+      {/**TODO: currentUserId used in comparison check is a placeholder. <id> from currently logged in user of different type to <teamMemberId> on a resource.
+       *        change currentId to appropriate variable(s) for comparison.
+       */}
+      {userId === currentUserId ? (
         // TODO: replace with icon button
         <div
           className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-base-100"
@@ -59,7 +72,7 @@ export default function ResourceCard({
         >
           <TrashIcon className="w-6 h-6" />
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
