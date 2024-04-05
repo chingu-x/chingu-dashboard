@@ -1,38 +1,59 @@
 import Link from "next/link";
+import { useCallback } from "react";
 import ModalSection from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ModalSection";
 import { CheckboxGroupItem } from "@/components/inputs/CheckBoxGroup/CheckboxGroupItem";
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
-
 import { onCloseModal } from "@/store/features/modal/modalSlice";
-import { useAppDispatch, useModal } from "@/store/hooks";
+import { useAppDispatch, useModal, useResource } from "@/store/hooks";
 
 export default function ViewModal() {
   const dispatch = useAppDispatch();
-  const { isOpen, type } = useModal();
+  const resourceList = useResource().resources;
+  const { id, isOpen, type } = useModal();
   const isModalOpen = isOpen && type === "viewResource";
 
-  //TODO: replace data with actual data.
-  const data = { title: "title here", href: "link url here" };
+  const { title, url } = useCallback(() => {
+    let title: string = "";
+    let url: string = "";
+
+    if (resourceList && id) {
+      const resource = resourceList.find((item) => item.id === id);
+      if (resource) {
+        title = resource.title;
+        url = resource.url;
+      }
+    }
+    return { title, url };
+  }, [id, resourceList])();
 
   const handleClose = () => {
     dispatch(onCloseModal());
+  };
+
+  const openLink = () => {
+    window.open(url, "_blank");
+    dispatch(onCloseModal());
+  };
+
+  const handleChange = () => {
+    localStorage.setItem("hideResourceModal", JSON.stringify(true));
   };
 
   return (
     <Modal isOpen={isModalOpen} title="View Resource?" onClose={handleClose}>
       <form>
         <ModalSection heading="Are you sure you would like to visit this resource?">
-          <p className="text-neutral">{data.title}</p>
+          <p className="text-neutral">{title}</p>
         </ModalSection>
-        <ModalSection heading="Are you sure you would like to visit this resource?">
+        <ModalSection heading="Full link of resource:">
           <Link
             className="text-neutral"
-            href={data.href}
+            href={url}
             rel="noopener noreferrer"
             target="_blank"
           >
-            {data.href}
+            {url}
           </Link>
         </ModalSection>
         <div className="p-1 mb-4">
@@ -43,6 +64,7 @@ export default function ViewModal() {
             id="confirmation"
             label="Don't ask me this again when opening resources links"
             className="text-base-300 hover:[&>*:nth-child(3)]:text-neutral-focus"
+            onChange={handleChange}
           />
         </div>
         <div className="flex justify-between w-full h-16">
@@ -54,7 +76,12 @@ export default function ViewModal() {
           >
             Go Back
           </Button>
-          <Button size="lg" variant="primary" className="w-3/6 m-1">
+          <Button
+            size="lg"
+            variant="primary"
+            className="w-3/6 m-1"
+            onClick={openLink}
+          >
             Continue
           </Button>
         </div>
