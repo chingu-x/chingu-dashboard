@@ -7,9 +7,9 @@ import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { handleAsync } from "@/utils/handleAsync";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
 import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 
 interface FetchResourcesProps {
   teamId: number;
@@ -20,7 +20,7 @@ export async function fetchResources({ teamId }: FetchResourcesProps) {
 
   const fetchResourcesAsync = () =>
     GET<ResourceData[]>(
-      `api/v1/voyages/${teamId}/resources`,
+      `api/v1/voyages/teams/${teamId}`,
       token,
       "force-cache",
       CacheTag.resources,
@@ -39,30 +39,29 @@ export default async function ResourcesComponentWrapper({
   params,
 }: ResourcesComponentWrapperProps) {
   let projectResources: ResourceData[] = [];
-  let currentVoyageTeam: VoyageTeamMember | undefined;
+  const teamId = Number(params.teamId);
 
   const [user, error] = await getUser();
 
-  if (user) {
-    currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-    );
+  const { errorResponse, data } = await getCurrentVoyageData({
+    user,
+    error,
+    teamId,
+    args: { teamId },
+    func: fetchResources,
+  });
+
+  if (errorResponse) {
+    return errorResponse;
   }
+  if (data) {
+    const [res, error] = data;
 
-  if (error) {
-    return `Error: ${error?.message}`;
-  }
-
-  const teamId = currentVoyageTeam?.voyageTeamId && Number(params.teamId);
-
-  if (teamId) {
-    const [res, error] = await fetchResources({ teamId });
-
-    if (res) {
-      projectResources = res;
-    } else {
-      return `Error: ${error?.message}`;
+    if (error) {
+      return `Error: ${error.message}`;
     }
+
+    projectResources = res!;
   } else {
     redirect("/");
   }
