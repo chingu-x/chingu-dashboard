@@ -37,7 +37,7 @@ export async function addResource({
 
   const addResourceAsync = () =>
     POST<ResourceBody, AddResourceResponse>(
-      `api/v1/voyages/${teamId}/resources`,
+      `api/v1/voyages/teams/${teamId}`,
       token,
       "default",
       { url, title },

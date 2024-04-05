@@ -9,3 +9,6 @@ export const useToast = () => useAppSelector((state) => state.toast);
 export const useAuth = () => useAppSelector((state) => state.auth);
 export const useUser = () => useAppSelector((state) => state.user);
 export const useIdeation = () => useAppSelector((state) => state.ideation);
+export const useDirectory = () => useAppSelector((state) => state.directory);
+export const useSprint = () => useAppSelector((state) => state.sprint);
+export const useResource = () => useAppSelector((state) => state.resources);

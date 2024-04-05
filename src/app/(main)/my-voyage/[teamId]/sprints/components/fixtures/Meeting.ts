@@ -1,4 +1,11 @@
-export interface Topic {
+import { addDays } from "date-fns";
+
+export interface Sprint {
+  id: number;
+  number: number;
+}
+
+export interface Agenda {
   id: number;
   title: string;
   description: string;
@@ -7,29 +14,24 @@ export interface Topic {
 
 export interface Meeting {
   id: number;
-  sprint: {
-    id: number;
-    number: number;
-    startDate: string;
-    endDate: string;
-  };
+  sprint: Sprint;
   title: string;
   dateTime: string;
   meetingLink: string;
   notes: string;
-  agendas: Topic[];
+  agendas: Agenda[];
 }
 
-export const meetingInfo: Meeting = {
-  id: 1,
+const currentDateTime = new Date();
+
+export const mockMeetingData: Meeting = {
+  id: 3,
   sprint: {
-    id: 1,
-    number: 1,
-    startDate: "2023-11-06T00:00:00.000Z",
-    endDate: "2023-11-12T00:00:00.000Z",
+    id: 3,
+    number: 3,
   },
   title: "First sprint kickoff meeting",
-  dateTime: "2023-11-07T00:00:00.000Z",
+  dateTime: `${addDays(currentDateTime, 3).toISOString()}`,
   meetingLink: "meet.google.com/abcdefg",
   notes:
     "Title\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed sollicitudin pellentesque. Nunc posuere purus rhoncus pulvinar aliquam. Ut aliquet tristique nisl vitae volutpat. Nulla aliquet porttitor venenatis. Donec a dui et dui fringilla consectetur id nec massa. Aliquam erat volutpat. Sed ut dui ut lacus dictum fermentum vel tincidunt neque. Sed sed lacinia lectus. Duis sit amet sodales felis.",
@@ -65,7 +67,8 @@ export const meetingInfo: Meeting = {
   ],
 };
 
-export const topicsData: Topic[] = [
+// TODO: DELETE
+export const topicsData: Agenda[] = [
   {
     id: 0,
     title: "Milestones for this week",

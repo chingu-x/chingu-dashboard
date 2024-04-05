@@ -13,7 +13,7 @@ export default function AgendaHeader() {
         <ClipboardDocumentListIcon className="h-[30px] w-[30px]" />
         Agenda
       </h3>
-      <Link href={routePaths.addTopic("2")}>
+      <Link href={routePaths.addTopicPage("2")}>
         <Button className="gap-x-[60px] w-[230px] justify-between" size="lg">
           Add topic <PlusIcon className="w-[20px] h-[20px]" />
         </Button>
