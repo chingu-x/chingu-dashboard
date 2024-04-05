@@ -36,14 +36,14 @@ export default function List({ id, title, features, currentUser }: ListProps) {
     );
   }
   return (
-    <div className="w-full px-8 py-10 font-semibold card bg-secondary-content rounded-2xl text-base-300">
+    <div className="flex flex-col w-full px-8 py-10 font-semibold card bg-base-200 rounded-2xl text-base-300">
       <div className="p-0 card-body gap-y-6">
         <h4 className="mb-2 text-xl capitalize card-title">{title}</h4>
         {/* Features container / drag and drop area */}
         <Droppable droppableId={id}>
           {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
             <div
-              className={`max-h-[300px] overflow-y-auto overflow-x-hidden px-2 rounded-lg ${
+              className={`max-h-[300px] overflow-y-auto overflow-x-hidden pr-2 rounded-lg ${
                 snapshot.draggingFromThisWith && "bg-secondary/20"
               } ${snapshot.isDraggingOver && "bg-base-100/40"}`}
             >
@@ -76,7 +76,7 @@ export default function List({ id, title, features, currentUser }: ListProps) {
           <Button
             variant="secondary"
             size="lg"
-            className="justify-start w-full"
+            className="justify-start w-full mt-2"
             onClick={handleClick}
           >
             <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
