@@ -1,53 +1,91 @@
 "use client";
 
+import { useParams, useRouter } from "next/navigation";
 import { RocketLaunchIcon } from "@heroicons/react/24/outline";
 import Stepper, { SteppersItem } from "@/components/Stepper";
+import { useSprint } from "@/store/hooks";
+import routePaths from "@/utils/routePaths";
+
+function getStatus(sprintNumber: number, currentSprintNumber: number) {
+  if (sprintNumber < currentSprintNumber) {
+    return "completed";
+  } else if (sprintNumber === currentSprintNumber) {
+    return "current";
+  } else {
+    return "remaining";
+  }
+}
 
 export default function ProgressStepper() {
-  // TODO: some logic (function) needs to be written here to change objects in the array (or create array) according to the current sprint
+  const router = useRouter();
+  const params = useParams<{ teamId: string; sprintNumber: string }>();
+  const { currentSprintNumber, sprints } = useSprint();
+
+  function handleClick(sprintNumber: number) {
+    const meetingId = sprints.find((sprint) => sprint.number === sprintNumber)!
+      .teamMeetings[0]?.id;
+
+    if (meetingId) {
+      router.push(
+        routePaths.sprintWeekPage(
+          params.teamId,
+          sprintNumber.toString(),
+          meetingId.toString(),
+        ),
+      );
+    } else {
+      router.push(
+        routePaths.emptySprintPage(params.teamId, sprintNumber.toString()),
+      );
+    }
+  }
+
   const steppers = [
     {
       icon: <RocketLaunchIcon className="h-[1.125rem]" />,
-      isActive: false,
+      isActive: params.sprintNumber == "1",
       name: "Sprint 1",
-      onClickEvent: () => {},
-      status: "completed",
+      onClickEvent: () => handleClick(1),
+      status: getStatus(1, currentSprintNumber),
     },
     {
       icon: <RocketLaunchIcon className="h-[1.125rem]" />,
-      isActive: false,
+      isActive: params.sprintNumber == "2",
       name: "Sprint 2",
-      onClickEvent: () => {},
-      status: "completed",
+      onClickEvent: () => handleClick(2),
+      status: getStatus(2, currentSprintNumber),
     },
     {
       icon: <RocketLaunchIcon className="h-[1.125rem]" />,
-      isActive: true,
+      isActive: params.sprintNumber == "3",
       name: "Sprint 3",
-      onClickEvent: () => {},
-      status: "current",
+      onClickEvent: () => handleClick(3),
+      status: getStatus(3, currentSprintNumber),
     },
     {
       icon: <RocketLaunchIcon className="h-[1.125rem]" />,
-      isActive: false,
+      isActive: params.sprintNumber == "4",
       name: "Sprint 4",
-      onClickEvent: () => {},
-      status: "remaining",
+      onClickEvent: () => handleClick(4),
+      status: getStatus(4, currentSprintNumber),
     },
     {
       icon: <RocketLaunchIcon className="h-[1.125rem]" />,
-      isActive: false,
+      isActive: params.sprintNumber == "5",
       name: "Sprint 5",
-      onClickEvent: () => {},
-      status: "remaining",
+      onClickEvent: () => handleClick(5),
+      status: getStatus(5, currentSprintNumber),
     },
     {
       icon: <RocketLaunchIcon className="h-[1.125rem]" />,
-      isActive: false,
+      isActive: params.sprintNumber == "6",
       name: "Sprint 6",
-      onClickEvent: () => {},
-      status: "remaining",
+      onClickEvent: () => handleClick(6),
+      status: getStatus(6, currentSprintNumber),
     },
   ] as SteppersItem[];
-  return <Stepper steppers={steppers} styleType="icons" />;
+
+  return (
+    <Stepper stepperWidth="w-full" steppers={steppers} styleType="icons" />
+  );
 }

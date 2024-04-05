@@ -25,7 +25,7 @@ export default function VoyagePageButton({
       return <LockClosedIcon className="h-[1.125rem] self-center mr-1" />;
     } else if (
       isVoyageStarted &&
-      (hoveredButton === element || selectedButton === element)
+      (hoveredButton?.startsWith(element) || selectedButton.startsWith(element))
     ) {
       return (
         <>

@@ -7,7 +7,7 @@ function VoyageSupport() {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="bg-base-200 rounded-2xl p-6 flex flex-col gap-y-4">
+    <div className="bg-base-200 rounded-2xl p-6 flex flex-col gap-y-4 border-2 border-base-100">
       <p className="text-center font-medium	text-base">
         Need support? Let’s get you back on track!
       </p>
