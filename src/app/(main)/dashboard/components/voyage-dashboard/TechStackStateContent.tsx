@@ -1,5 +1,5 @@
 import React from "react";
-import type { TechStackData } from "./mocks/voyageDashboardData";
+import type { TechStackData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
 interface TechStackStateContentProps {
   contentObject?: TechStackData[];

@@ -12,7 +12,7 @@ import routePaths from "@/utils/routePaths";
 
 export default function SprintActions() {
   return (
-    <div className="flex justify-between p-5 border shadow-md bg-base-200 rounded-2xl border-base-100">
+    <div className="flex justify-between p-5 border border-base-100 shadow-md bg-base-200 rounded-2xl">
       {/* TODO: add animated variant to Button.tsx ??? */}
       {/* TODO: fix rounting later */}
       <Link href={routePaths.submitVoyage("2")}>
