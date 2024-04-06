@@ -3,6 +3,7 @@ import { TrashIcon } from "@heroicons/react/20/solid";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Badge from "@/components/badge/Badge";
+import IconButton from "@/components/IconButton";
 
 interface ResourceCardProps {
   resourceId: number;
@@ -62,13 +63,12 @@ export default function ResourceCard({
         </div>
       </div>
       {userId === currentUserid ? (
-        // TODO: replace with icon button
-        <div
+        <IconButton
           className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-base-100"
           onClick={openDeleteModal}
         >
           <TrashIcon className="w-6 h-6" />
-        </div>
+        </IconButton>
       ) : null}
     </div>
   );
