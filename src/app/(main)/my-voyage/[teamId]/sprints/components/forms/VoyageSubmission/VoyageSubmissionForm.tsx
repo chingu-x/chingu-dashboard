@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { scaleOptions } from "./radioGroupDate";
 
-import BaseFormPage from "@/sprints/components/forms/BaseFormPage";
-import FormItem from "@/sprints/components/forms/FormItem";
+import BaseFormPage from "@/myVoyage/sprints/components/forms/BaseFormPage";
+import FormItem from "@/myVoyage/sprints/components/forms/FormItem";
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";

@@ -15,7 +15,10 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 import { useSprint, useAppDispatch } from "@/store/hooks";
 import { Agenda } from "@/store/features/sprint/sprintSlice";
 import useServerAction from "@/hooks/useServerAction";
-import { addAgendaTopic, editAgendaTopic } from "@/sprints/sprintsService";
+import {
+  addAgendaTopic,
+  editAgendaTopic,
+} from "@/myVoyage/sprints/sprintsService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
@@ -88,11 +91,12 @@ export default function AgendaTopicForm() {
       const [res, error] = await editAgendaTopicAction({
         ...data,
         agendaId,
+        sprintNumber,
       });
 
       if (res) {
         router.push(
-          routePaths.sprintPage(
+          routePaths.sprintWeekPage(
             teamId.toString(),
             sprintNumber.toString(),
             meetingId.toString(),
@@ -107,12 +111,12 @@ export default function AgendaTopicForm() {
         setEditAgendaTopicLoading(false);
       }
     } else {
-      const payload = { ...data, meetingId };
+      const payload = { ...data, meetingId, sprintNumber };
       const [res, error] = await addAgendaTopicAction(payload);
 
       if (res) {
         router.push(
-          routePaths.sprintPage(
+          routePaths.sprintWeekPage(
             teamId.toString(),
             sprintNumber.toString(),
             meetingId.toString(),

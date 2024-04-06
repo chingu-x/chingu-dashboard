@@ -5,6 +5,7 @@ import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
+import { getSprintCache } from "@/utils/getSprintCache";
 
 interface SprintProps {
   teamId: number;
@@ -27,12 +28,12 @@ interface AgendaTopicBody {
 }
 
 type FetchSprintsType = Pick<SprintProps, "teamId">;
-type FetchMeetingType = Pick<SprintProps, "meetingId">;
+type FetchMeetingType = Omit<SprintProps, "teamId" | "agendaId">;
 type AddMeetingType = Omit<SprintProps, "meetingId" | "agendaId">;
-type EditMeetingType = Pick<SprintProps, "meetingId">;
-type AddAgendaTopicType = Pick<SprintProps, "meetingId">;
-type EditAgendaTopicType = Pick<SprintProps, "agendaId">;
-type DeleteAgendaTopicType = Pick<SprintProps, "agendaId">;
+type EditMeetingType = Omit<SprintProps, "teamId" | "agendaId">;
+type AddAgendaTopicType = Pick<SprintProps, "meetingId" | "sprintNumber">;
+type EditAgendaTopicType = Pick<SprintProps, "agendaId" | "sprintNumber">;
+type DeleteAgendaTopicType = Pick<SprintProps, "agendaId" | "sprintNumber">;
 
 export interface SprintsResponse {
   id: number;
@@ -131,6 +132,7 @@ export async function addMeeting({
   notes,
 }: AddMeetingProps): Promise<AsyncActionResponse<AddMeetingResponse>> {
   const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
 
   const addMeetingAsync = () =>
     POST<AddMeetingBody, AddMeetingResponse>(
@@ -143,7 +145,8 @@ export async function addMeeting({
   const [res, error] = await handleAsync(addMeetingAsync);
 
   if (res) {
-    revalidateTag(CacheTag.sprint);
+    revalidateTag(CacheTag.sprints);
+    revalidateTag(sprintCache);
   }
 
   return [res, error];
@@ -151,12 +154,14 @@ export async function addMeeting({
 
 export async function editMeeting({
   meetingId,
+  sprintNumber,
   title,
   dateTime,
   meetingLink,
   notes,
 }: EditMeetingProps): Promise<AsyncActionResponse<EditMeetingResponse>> {
   const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
 
   const editMeetingAsync = () =>
     PATCH<EditMeetingBody, EditMeetingResponse>(
@@ -169,7 +174,7 @@ export async function editMeeting({
   const [res, error] = await handleAsync(editMeetingAsync);
 
   if (res) {
-    revalidateTag(CacheTag.sprint);
+    revalidateTag(sprintCache);
   }
 
   return [res, error];
@@ -177,10 +182,12 @@ export async function editMeeting({
 
 export async function addAgendaTopic({
   meetingId,
+  sprintNumber,
   title,
   description,
 }: AddAgendaTopicProps): Promise<AsyncActionResponse<AddAgendaTopicResponse>> {
   const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
 
   const addAgendaTopicAsync = () =>
     POST<AddAgendaTopicBody, AddAgendaTopicResponse>(
@@ -193,13 +200,14 @@ export async function addAgendaTopic({
   const [res, error] = await handleAsync(addAgendaTopicAsync);
 
   if (res) {
-    revalidateTag(CacheTag.sprint);
+    revalidateTag(sprintCache);
   }
 
   return [res, error];
 }
 
 export async function editAgendaTopic({
+  sprintNumber,
   agendaId,
   title,
   description,
@@ -208,6 +216,7 @@ export async function editAgendaTopic({
   AsyncActionResponse<EditAgendaTopicResponse>
 > {
   const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
 
   const editAgendaTopicAsync = () =>
     PATCH<EditAgendaTopicBody, EditAgendaTopicResponse>(
@@ -220,18 +229,20 @@ export async function editAgendaTopic({
   const [res, error] = await handleAsync(editAgendaTopicAsync);
 
   if (res) {
-    revalidateTag(CacheTag.sprint);
+    revalidateTag(sprintCache);
   }
 
   return [res, error];
 }
 
 export async function deleteAgendaTopic({
+  sprintNumber,
   agendaId,
 }: DeleteAgendaTopicProps): Promise<
   AsyncActionResponse<DeleteAgendaTopicResponse>
 > {
   const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
 
   const deleteAgendaTopicAsync = () =>
     DELETE<DeleteAgendaTopicResponse>(
@@ -243,19 +254,21 @@ export async function deleteAgendaTopic({
   const [res, error] = await handleAsync(deleteAgendaTopicAsync);
 
   if (res) {
-    revalidateTag(CacheTag.sprint);
+    revalidateTag(sprintCache);
   }
 
   return [res, error];
 }
 
 export async function changeAgendaTopicStatus({
+  sprintNumber,
   agendaId,
   status,
 }: ChangeAgendaTopicStatusProps): Promise<
   AsyncActionResponse<EditAgendaTopicResponse>
 > {
   const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
 
   const changeAgendaTopicStatusAsync = () =>
     PATCH<EditAgendaTopicBody, EditAgendaTopicResponse>(
@@ -268,7 +281,7 @@ export async function changeAgendaTopicStatus({
   const [res, error] = await handleAsync(changeAgendaTopicStatusAsync);
 
   if (res) {
-    revalidateTag(CacheTag.sprint);
+    revalidateTag(sprintCache);
   }
 
   return [res, error];
