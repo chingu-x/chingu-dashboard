@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { isToday, isTomorrow, parseISO } from "date-fns";
+import { getMonth, isToday, isTomorrow, parseISO } from "date-fns";
 import { format } from "date-fns-tz";
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { useUser } from "@/store/hooks";
@@ -22,6 +22,8 @@ export default function DateTimeComponent({
   const getMeetingDate = () => {
     if (isToday(dateTimeConvertedToDate)) return "today";
     if (isTomorrow(dateTimeConvertedToDate)) return "tomorrow";
+    if (getMonth(dateTimeConvertedToDate) === 4)
+      return format(dateTimeConvertedToDate, "MMM d");
     return format(dateTimeConvertedToDate, "MMM. d");
   };
 
