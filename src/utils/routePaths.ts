@@ -37,25 +37,25 @@ const routePaths = {
   emptySprintPage(teamId: string, sprintNumber: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}`;
   },
-  sprintPage(teamId: string, sprintNumber: string, meetingId: string) {
+  sprintWeekPage(teamId: string, sprintNumber: string, meetingId: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}`;
   },
-  submitVoyage(teamId: string, sprintNumber: string, meetingId: string) {
+  submitVoyagePage(teamId: string, sprintNumber: string, meetingId: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/submit-voyage`;
   },
-  weeklyCheckIn(teamId: string, sprintNumber: string, meetingId: string) {
+  weeklyCheckInPage(teamId: string, sprintNumber: string, meetingId: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/submit-check-in`;
   },
-  createMeeting(teamId: string, sprintNumber: string) {
+  createMeetingPage(teamId: string, sprintNumber: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/create`;
   },
-  editMeeting(teamId: string, sprintNumber: string, meetingId: string) {
+  editMeetingPage(teamId: string, sprintNumber: string, meetingId: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/edit`;
   },
-  addTopic(teamId: string, sprintNumber: string, meetingId: string) {
+  addTopicPage(teamId: string, sprintNumber: string, meetingId: string) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/agendas/add`;
   },
-  editTopic(
+  editTopicPage(
     teamId: string,
     sprintNumber: string,
     meetingId: string,

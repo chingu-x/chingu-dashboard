@@ -14,7 +14,7 @@ import routePaths from "@/utils/routePaths";
 
 export default function DeleteConfirmationModal() {
   const { isOpen, type } = useModal();
-  const { title, message, confirmationText } = useModal().content!;
+  const modal = useModal();
   const dispatch = useAppDispatch();
   const params = useParams<{ teamId: string; ideationId: string }>();
   const teamId = +params.teamId;
@@ -64,15 +64,19 @@ export default function DeleteConfirmationModal() {
     return (
       <>
         <TrashIcon className="w-4 h-4" />
-        {confirmationText}
+        {modal.content?.confirmationText}
       </>
     );
   }
 
-  return (
-    <Modal isOpen={isModalOpen} title={title!} onClose={handleClose}>
+  return isModalOpen ? (
+    <Modal
+      isOpen={isModalOpen}
+      title={modal.content!.title!}
+      onClose={handleClose}
+    >
       <div className="mb-10 text-base text-base-300 font-medium max-w-[650px]">
-        {message}
+        {modal.content?.message}
       </div>
       <div className="flex gap-x-10 mt-10">
         <Button
@@ -96,5 +100,5 @@ export default function DeleteConfirmationModal() {
         </Button>
       </div>
     </Modal>
-  );
+  ) : null;
 }

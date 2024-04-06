@@ -4,7 +4,7 @@ import {
   FetchSprintsProps,
   FetchSprintsResponse,
   SprintsResponse,
-} from "@/sprints/sprintsService";
+} from "@/myVoyage/sprints/sprintsService";
 
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
@@ -13,19 +13,18 @@ import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
+import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 
 export async function fetchSprints({
   teamId,
 }: FetchSprintsProps): Promise<AsyncActionResponse<FetchSprintsResponse>> {
   const token = getAccessToken();
-
   const fetchSprintsAsync = () =>
     GET<SprintsResponse>(
       `api/v1/voyages/sprints/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.sprint,
+      CacheTag.sprints,
     );
 
   return await handleAsync(fetchSprintsAsync);
@@ -42,42 +41,41 @@ export default async function RedirectToCurrentSprintWrapper({
 }: RedirectToCurrentSprintWrapperProps) {
   const teamId = Number(params.teamId);
 
-  let currentVoyageTeam: VoyageTeamMember | undefined;
   let currentSprintNumber: number;
   let currentMeetingId: number;
 
-  // TODO: replace with a reusable function
   const [user, error] = await getUser();
 
-  if (user) {
-    currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-    );
+  const { errorResponse, data } = await getCurrentVoyageData({
+    user,
+    error,
+    teamId,
+    args: { teamId },
+    func: fetchSprints,
+  });
+
+  if (errorResponse) {
+    return errorResponse;
   }
 
-  if (error) {
-    return `Error: ${error?.message}`;
-  }
+  if (data) {
+    const [res, error] = data;
 
-  if (teamId === currentVoyageTeam?.voyageTeamId) {
-    const [res, error] = await fetchSprints({ teamId });
+    if (error) {
+      return `Error: ${error.message}`;
+    }
+    const { teamMeetings, number } = getCurrentSprint(
+      res!.voyage.sprints,
+    ) as Sprint;
+    currentSprintNumber = number;
+    currentMeetingId = teamMeetings[0]?.id;
 
-    if (res) {
-      const { teamMeetings, number } = getCurrentSprint(
-        res.voyage.sprints,
-      ) as Sprint;
-      currentSprintNumber = number;
-      currentMeetingId = teamMeetings[0]?.id;
-
-      if (currentMeetingId) {
-        redirect(
-          `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`,
-        );
-      } else {
-        redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}`);
-      }
+    if (currentMeetingId) {
+      redirect(
+        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`,
+      );
     } else {
-      return `Error: ${error?.message}`;
+      redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}`);
     }
   } else {
     redirect("/");

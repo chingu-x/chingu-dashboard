@@ -9,10 +9,10 @@ import AgendaTopic from "./AgendaTopic";
 import AgendaHeader from "./AgendaHeader";
 
 import routePaths from "@/utils/routePaths";
-import Divider from "@/sprints/components/Divider";
+import Divider from "@/myVoyage/sprints/components/Divider";
 import { Agenda } from "@/store/features/sprint/sprintSlice";
 import useServerAction from "@/hooks/useServerAction";
-import { changeAgendaTopicStatus } from "@/sprints/sprintsService";
+import { changeAgendaTopicStatus } from "@/myVoyage/sprints/sprintsService";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
@@ -27,9 +27,9 @@ interface AgendasProps {
 
 export default function Agendas({ params, topics }: AgendasProps) {
   const [teamId, meetingId, sprintNumber] = [
-    params.teamId,
-    params.meetingId,
-    params.sprintNumber,
+    Number(params.teamId),
+    Number(params.meetingId),
+    Number(params.sprintNumber),
   ];
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -51,6 +51,7 @@ export default function Agendas({ params, topics }: AgendasProps) {
     const [res, error] = await changeAgendaTopicAction({
       status,
       agendaId,
+      sprintNumber,
     });
     if (res) {
       if (status === true) {
@@ -80,10 +81,10 @@ export default function Agendas({ params, topics }: AgendasProps) {
 
   const editTopic = (agendaTopicId: number) => {
     router.push(
-      routePaths.editTopic(
-        teamId,
-        sprintNumber,
-        meetingId,
+      routePaths.editTopicPage(
+        teamId.toString(),
+        sprintNumber.toString(),
+        meetingId.toString(),
         agendaTopicId.toString(),
       ),
     );

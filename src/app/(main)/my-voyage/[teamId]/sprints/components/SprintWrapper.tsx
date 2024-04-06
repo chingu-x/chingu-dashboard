@@ -6,35 +6,37 @@ import Agendas from "./agenda/Agendas";
 import Sections from "./sections/Sections";
 import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import SprintActions from "./SprintActions";
-import MeetingProvider from "@/sprints/providers/MeetingProvider";
+import MeetingProvider from "@/myVoyage/sprints/providers/MeetingProvider";
+
+import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import Banner from "@/components/banner/Banner";
 
 import {
   FetchMeetingProps,
   FetchMeetingResponse,
-} from "@/sprints/sprintsService";
+} from "@/myVoyage/sprints/sprintsService";
 import { Agenda, Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
-import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
-import Banner from "@/components/banner/Banner";
+import { getSprintCache } from "@/utils/getSprintCache";
+import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 
 async function fetchMeeting({
+  sprintNumber,
   meetingId,
 }: FetchMeetingProps): Promise<AsyncActionResponse<FetchMeetingResponse>> {
   const token = getAccessToken();
-
+  const sprintCache = getSprintCache(sprintNumber);
   const fetchMeetingAsync = () =>
     GET<FetchMeetingResponse>(
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "force-cache",
-      CacheTag.sprint,
+      sprintCache,
     );
 
   return await handleAsync(fetchMeetingAsync);
@@ -53,51 +55,50 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   const sprintNumber = Number(params.sprintNumber);
   const meetingId = Number(params.meetingId);
 
-  let currentVoyageTeam: VoyageTeamMember | undefined;
   let sprintsData: Sprint[] = [];
   let meetingData: Meeting = { id: +params.meetingId };
   let agendaData: Agenda[] = [];
 
-  // TODO: replace with a reusable function
   const [user, error] = await getUser();
 
-  if (user) {
-    currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-    );
+  const { errorResponse, data } = await getCurrentVoyageData({
+    user,
+    error,
+    teamId,
+    args: { teamId },
+    func: fetchSprints,
+  });
+
+  if (errorResponse) {
+    return errorResponse;
   }
 
-  if (error) {
-    return `Error: ${error?.message}`;
+  if (data) {
+    const [res, error] = data;
+
+    if (error) {
+      return `Error: ${error.message}`;
+    }
+    sprintsData = res!.voyage.sprints;
+  } else {
+    redirect("/");
   }
 
-  if (teamId === currentVoyageTeam?.voyageTeamId) {
-    const [res, error] = await fetchSprints({ teamId });
+  const correspondingMeetingId = sprintsData.find(
+    (sprint) => sprint.number === sprintNumber,
+  )?.teamMeetings[0]?.id;
+
+  if (meetingId === correspondingMeetingId) {
+    const [res, error] = await fetchMeeting({ sprintNumber, meetingId });
 
     if (res) {
-      sprintsData = res.voyage.sprints;
+      meetingData = res;
+      agendaData = res.agendas;
     } else {
       return `Error: ${error?.message}`;
     }
-
-    const correspondingMeetingId = sprintsData.find(
-      (sprint) => sprint.number === sprintNumber,
-    )?.teamMeetings[0]?.id;
-
-    if (meetingId === correspondingMeetingId) {
-      const [res, error] = await fetchMeeting({ meetingId });
-
-      if (res) {
-        meetingData = res;
-        agendaData = res.agendas;
-      } else {
-        return `Error: ${error?.message}`;
-      }
-    } else {
-      redirect(`/my-voyage/${teamId}/sprints/`);
-    }
   } else {
-    redirect("/");
+    redirect(`/my-voyage/${teamId}/sprints/`);
   }
 
   // Get current sprint number
@@ -123,6 +124,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
           width="w-[276px]"
         />
       </VoyagePageBannerContainer>
+
       <ProgressStepper />
       <SprintActions params={params} />
       <MeetingOverview

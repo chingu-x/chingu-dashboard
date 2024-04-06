@@ -7,9 +7,9 @@ import routePaths from "@/utils/routePaths";
 import Button from "@/components/Button";
 
 interface AgendaHeaderProps {
-  teamId: string;
-  meetingId: string;
-  sprintNumber: string;
+  teamId: number;
+  meetingId: number;
+  sprintNumber: number;
 }
 
 export default function AgendaHeader({
@@ -23,7 +23,13 @@ export default function AgendaHeader({
         <ClipboardDocumentListIcon className="h-[30px] w-[30px]" />
         Agenda
       </h3>
-      <Link href={routePaths.addTopic(teamId, sprintNumber, meetingId)}>
+      <Link
+        href={routePaths.addTopicPage(
+          teamId.toString(),
+          sprintNumber.toString(),
+          meetingId.toString(),
+        )}
+      >
         <Button className="gap-x-[60px] w-[230px] justify-between" size="lg">
           Add topic <PlusIcon className="w-[20px] h-[20px]" />
         </Button>

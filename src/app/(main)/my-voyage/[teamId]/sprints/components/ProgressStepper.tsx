@@ -27,7 +27,7 @@ export default function ProgressStepper() {
 
     if (meetingId) {
       router.push(
-        routePaths.sprintPage(
+        routePaths.sprintWeekPage(
           params.teamId,
           sprintNumber.toString(),
           meetingId.toString(),

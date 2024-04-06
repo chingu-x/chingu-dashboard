@@ -4,14 +4,14 @@ import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import ProgressStepper from "./ProgressStepper";
 import EmptySprintState from "./EmptySprintState";
 import SprintActions from "./SprintActions";
-
-import EmptySprintProvider from "@/sprints/providers/EmptySprintProvider";
-import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { Sprint } from "@/store/features/sprint/sprintSlice";
-import { VoyageTeamMember } from "@/store/features/user/userSlice";
-import { getUser } from "@/utils/getUser";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
+
+import EmptySprintProvider from "@/myVoyage/sprints/providers/EmptySprintProvider";
+import { getCurrentSprint } from "@/utils/getCurrentSprint";
+import { Sprint } from "@/store/features/sprint/sprintSlice";
+import { getUser } from "@/utils/getUser";
+import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 
 function getMeeting(sprints: Sprint[], sprintNumber: number) {
   const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
@@ -34,30 +34,29 @@ export default async function EmptySprintWrapper({
   const teamId = Number(params.teamId);
   const sprintNumber = Number(params.sprintNumber);
 
-  let currentVoyageTeam: VoyageTeamMember | undefined;
   let sprintsData: Sprint[] = [];
 
-  // TODO: replace with a reusable function
   const [user, error] = await getUser();
 
-  if (user) {
-    currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-    );
+  const { errorResponse, data } = await getCurrentVoyageData({
+    user,
+    error,
+    teamId,
+    args: { teamId },
+    func: fetchSprints,
+  });
+
+  if (errorResponse) {
+    return errorResponse;
   }
 
-  if (error) {
-    return `Error: ${error?.message}`;
-  }
+  if (data) {
+    const [res, error] = data;
 
-  if (teamId === currentVoyageTeam?.voyageTeamId) {
-    const [res, error] = await fetchSprints({ teamId });
-
-    if (res) {
-      sprintsData = res.voyage.sprints;
-    } else {
-      return `Error: ${error?.message}`;
+    if (error) {
+      return `Error: ${error.message}`;
     }
+    sprintsData = res!.voyage.sprints;
   } else {
     redirect("/");
   }

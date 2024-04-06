@@ -1,75 +1,68 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ResourceInput from "./ResourceInput";
 import SortingButton from "./SortingButton";
 import ResourceCard from "./ResourceCard";
 import EmptyBanner from "./EmptyBanner";
-import { resources } from "./fixtures/resources";
 import { ResourceData } from "@/store/features/resources/resourcesSlice";
-//const resources = null // temp var for toggling empty banner or resource cards based on 'fake data'
 
-interface ResourcesContainerProps {
+interface ResourceContainerProps {
   data: ResourceData[];
 }
 
-export default function ResourcesContainer({ data }: ResourcesContainerProps) {
+export default function ResourcesContainer({ data }: ResourceContainerProps) {
   const [byNewest, setByNewest] = useState(true);
-  {
-    /*TODO: replace 'data' with call to Redux store resources slice.*/
-  }
   const [voyageResources, setVoyageResources] = useState(data);
 
-  const handleClick = () => {
-    setVoyageResources(sortResources());
+  const formattedResources = voyageResources?.map((item) => ({
+    ...item,
+    date: new Date(item.updatedAt).toLocaleDateString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    }),
+  }));
+
+  const sortResources = () => {
+    const sortedResources = [...voyageResources].sort((a, b) => {
+      const prev = new Date(a.updatedAt);
+      const next = new Date(b.updatedAt);
+      return byNewest
+        ? prev.getTime() - next.getTime()
+        : next.getTime() - prev.getTime();
+    });
+    setVoyageResources(sortedResources);
     setByNewest(!byNewest);
   };
 
-  const sortResources = () => {
-    voyageResources.sort(function (a, b) {
-      const prev = new Date(a.updatedAt);
-      const next = new Date(b.updatedAt);
-      if (byNewest) {
-        return next.getTime() - prev.getTime();
-      } else {
-        return prev.getTime() - next.getTime();
-      }
-    });
-
-    return voyageResources;
-  };
+  useEffect(() => {
+    setVoyageResources(data);
+  }, [data]);
 
   return (
     <>
       <div className="grid grid-cols-[1fr_150px] items-center">
         <ResourceInput />
-        {/*TODO: replace 'resources' (fake data) with 'voyageResources'*/}
-        {!resources ? (
-          <SortingButton
-            onClick={handleClick}
-            type={byNewest}
-            isDisabled={true}
-          />
-        ) : (
-          <SortingButton
-            onClick={handleClick}
-            type={byNewest}
-            isDisabled={false}
-          />
-        )}
+        <SortingButton
+          onClick={sortResources}
+          type={byNewest}
+          isDisabled={!voyageResources?.length}
+        />
       </div>
-      {/*TODO: replace 'resources' (fake data) with 'voyageResources'*/}
-      {!resources ? (
-        <EmptyBanner />
-      ) : (
-        resources.map((item) => (
+      {formattedResources?.length ? (
+        formattedResources.map((item) => (
           <ResourceCard
             key={item.id}
+            id={item.id}
             title={item.title}
-            user={item.user}
-            currentUser={item.currentUser}
+            user={item.addedBy.member}
             date={item.date}
+            userId={item.teamMemberId}
+            url={item.url}
           />
         ))
+      ) : (
+        <EmptyBanner />
       )}
     </>
   );

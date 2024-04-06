@@ -12,7 +12,7 @@ import Button from "@/components/Button";
 import { onCloseModal, onOpenModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
-import { deleteAgendaTopic } from "@/sprints/sprintsService";
+import { deleteAgendaTopic } from "@/myVoyage/sprints/sprintsService";
 import routePaths from "@/utils/routePaths";
 
 export default function DeleteAgendaTopicConfirmationModal() {
@@ -47,13 +47,16 @@ export default function DeleteAgendaTopicConfirmationModal() {
   };
 
   const handleDelete = useCallback(async () => {
-    const [res, error] = await deleteAgendaTopicAction({ agendaId });
+    const [res, error] = await deleteAgendaTopicAction({
+      agendaId,
+      sprintNumber,
+    });
 
     if (res) {
       dispatch(onCloseModal());
       setDeleteAgendaTopicLoading(false);
       router.push(
-        routePaths.sprintPage(
+        routePaths.sprintWeekPage(
           teamId.toString(),
           sprintNumber.toString(),
           meetingId.toString(),

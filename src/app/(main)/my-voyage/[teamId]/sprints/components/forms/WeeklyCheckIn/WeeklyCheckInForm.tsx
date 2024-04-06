@@ -16,8 +16,8 @@ import {
 } from "./radioGroupData";
 import { TeamMembersOptions, topicsCoveredOptions } from "./checkboxGroupData";
 
-import BaseFormPage from "@/sprints/components/forms/BaseFormPage";
-import FormItem from "@/sprints/components/forms/FormItem";
+import BaseFormPage from "@/myVoyage/sprints/components/forms/BaseFormPage";
+import FormItem from "@/myVoyage/sprints/components/forms/FormItem";
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
