@@ -60,6 +60,7 @@ export default function AgendaTopicForm() {
   const { sprints } = useSprint();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [topicData, setTopicData] = useState<Agenda>();
+  const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const {
     runAction: editAgendaTopicAction,
@@ -76,7 +77,7 @@ export default function AgendaTopicForm() {
   const {
     register,
     handleSubmit,
-    // watch,
+    watch,
     reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
@@ -84,7 +85,7 @@ export default function AgendaTopicForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  // const { title, description } = watch();
+  const { title, description } = watch();
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     if (editMode) {
@@ -171,6 +172,88 @@ export default function AgendaTopicForm() {
       void persistor.purge();
     },
     [],
+  );
+
+  // This block is responsible for auto-save functionality. Right now nextjs does
+  // not have a way to intercept routes with app router. When that is implemented
+  // on their side, it will probably be better to go that method.
+
+  function asyncTimeout(ms: number) {
+    return new Promise((resolve) => {
+      setSaveTimeout(setTimeout(resolve, ms));
+    });
+  }
+
+  useEffect(() => {
+    async function autoSave() {
+      const modifiedObject: { [key: string]: string | Date } = {};
+
+      if (topicData) {
+        const watchedData = watch();
+
+        for (const key in watchedData) {
+          if (
+            watchedData.hasOwnProperty(key) &&
+            topicData[key as keyof Agenda] !==
+              watchedData[key as keyof typeof watchedData]
+          ) {
+            modifiedObject[key as keyof Agenda] =
+              watchedData[key as keyof typeof watchedData];
+          }
+        }
+      }
+
+      const filteredData = {
+        agendaId,
+        sprintNumber,
+        ...modifiedObject,
+      };
+
+      await asyncTimeout(5000);
+
+      const [res, error] = await editAgendaTopicAction(filteredData);
+
+      if (res) {
+        setEditAgendaTopicLoading(false);
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({
+            type: "error",
+            content: { message: error.message },
+          }),
+        );
+        setEditAgendaTopicLoading(false);
+      }
+    }
+
+    if (editMode && isDirty) {
+      void autoSave();
+    }
+  }, [
+    isDirty,
+    topicData,
+    watch,
+    editMode,
+    dispatch,
+    params.meetingId,
+    teamId,
+    agendaId,
+    sprintNumber,
+    editAgendaTopicAction,
+    setEditAgendaTopicLoading,
+    title,
+    description,
+  ]);
+
+  useEffect(
+    () => () => {
+      if (saveTimeout) {
+        clearTimeout(saveTimeout);
+      }
+    },
+    [saveTimeout],
   );
 
   function renderButtonContent() {
