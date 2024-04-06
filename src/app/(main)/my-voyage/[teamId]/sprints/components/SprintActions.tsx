@@ -31,7 +31,7 @@ export default function SprintActions({ params }: SprintActionsProps) {
       <Link
         href={
           meetingId
-            ? routePaths.submitVoyagePage(meetingId, sprintNumber, meetingId)
+            ? routePaths.submitVoyagePage(teamId, sprintNumber, meetingId)
             : "/"
         }
       >
@@ -50,7 +50,7 @@ export default function SprintActions({ params }: SprintActionsProps) {
       <Link
         href={
           meetingId
-            ? routePaths.weeklyCheckInPage(meetingId, sprintNumber, meetingId)
+            ? routePaths.weeklyCheckInPage(teamId, sprintNumber, meetingId)
             : "/"
         }
       >
