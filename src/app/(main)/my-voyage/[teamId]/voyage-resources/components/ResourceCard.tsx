@@ -1,20 +1,20 @@
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/20/solid";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Badge from "@/components/badge/Badge";
 
 interface ResourceCardProps {
-  id: number;
+  resourceId: number;
   title: string;
   user: { firstName: string; lastName: string; avatar: string };
   date: string;
-  userId: number;
+  userId: string;
   url: string;
 }
 
 export default function ResourceCard({
-  id,
+  resourceId,
   title,
   user,
   date,
@@ -22,7 +22,7 @@ export default function ResourceCard({
   url,
 }: ResourceCardProps) {
   const dispatch = useAppDispatch();
-  const currentUserId = 7; //TODO: replace with id from logged in user.
+  const currentUserid = useAppSelector((state) => state.user.id);
 
   const openViewModal = () => {
     const hideResourceModal = localStorage.getItem("hideResourceModal");
@@ -32,7 +32,7 @@ export default function ResourceCard({
       dispatch(
         onOpenModal({
           type: "viewResource",
-          id,
+          id: resourceId,
         }),
       );
     }
@@ -61,10 +61,7 @@ export default function ResourceCard({
           <div className="text-neutral">Added {date}</div>
         </div>
       </div>
-      {/**TODO: currentUserId used in comparison check is a placeholder. <id> from currently logged in user of different type to <teamMemberId> on a resource.
-       *        change currentId to appropriate variable(s) for comparison.
-       */}
-      {userId === currentUserId ? (
+      {userId === currentUserid ? (
         // TODO: replace with icon button
         <div
           className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-base-100"
