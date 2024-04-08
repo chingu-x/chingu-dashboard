@@ -38,8 +38,21 @@ export default function ResourceCard({
       );
     }
   };
+
   const openDeleteModal = () => {
-    // todo: replace with modal
+    dispatch(
+      onOpenModal({
+        type: "confirmation",
+        id: resourceId,
+        content: {
+          title: "Delete Resource",
+          message:
+            "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
+          confirmationText: "Delete",
+          cancelText: "Keep it",
+        },
+      }),
+    );
   };
 
   return (
