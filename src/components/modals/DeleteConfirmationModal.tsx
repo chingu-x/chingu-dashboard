@@ -22,65 +22,60 @@ export default function DeleteConfirmationModal() {
   const path = usePathname();
   const router = useRouter();
 
-  let handleDelete;
-  const {
-    runAction: deleteResourceAction,
-    isLoading: deleteResourceLoading,
-    setIsLoading: setDeleteResourceLoading,
-  } = useServerAction(deleteResource);
-
   const {
     runAction: deleteIdeationAction,
     isLoading: deleteIdeationLoading,
     setIsLoading: setDeleteIdeationLoading,
   } = useServerAction(deleteIdeation);
 
-  if (path === `/my-voyage/${teamId}/voyage-resources`) {
-    console.log("delete resource branch");
-    //delete resource logic here....
-    handleDelete = useCallback(async () => {
-      const [res, error] = await deleteResourceAction({ resourceId: id });
-
-      if (res) {
-        dispatch(onCloseModal());
-      }
-
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-        setDeleteResourceLoading(false);
-      }
-    }, [deleteResourceAction, dispatch, id, setDeleteResourceLoading]);
-  } else {
-    console.log("delete ideation branch.");
-    //delete ideation logic here....
-    handleDelete = useCallback(async () => {
-      const ideationId = +params.ideationId;
-      const [res, error] = await deleteIdeationAction({ teamId, ideationId });
-
-      if (res) {
-        dispatch(onCloseModal());
-        router.push(routePaths.ideationPage(teamId.toString()));
-      }
-
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-        setDeleteIdeationLoading(false);
-      }
-    }, [
-      dispatch,
-      deleteIdeationAction,
-      params.ideationId,
-      router,
-      setDeleteIdeationLoading,
-      teamId,
-    ]);
-  }
+  const {
+    runAction: deleteResourceAction,
+    isLoading: deleteResourceLoading,
+    setIsLoading: setDeleteResourceLoading,
+  } = useServerAction(deleteResource);
 
   const isModalOpen = isOpen && type === "confirmation";
+  const isTypeResource = path === `/my-voyage/${teamId}/voyage-resources`;
+
+  const handleDeleteResource = useCallback(async () => {
+    const [res, error] = await deleteResourceAction({ resourceId: id });
+
+    if (res) {
+      dispatch(onCloseModal());
+    }
+
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    }
+
+    setDeleteResourceLoading(false);
+  }, [deleteResourceAction, dispatch, id, setDeleteResourceLoading]);
+
+  const handleDeleteIdeation = useCallback(async () => {
+    const ideationId = +params.ideationId;
+    const [res, error] = await deleteIdeationAction({ teamId, ideationId });
+
+    if (res) {
+      dispatch(onCloseModal());
+      router.push(routePaths.ideationPage(teamId.toString()));
+    }
+
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+      setDeleteIdeationLoading(false);
+    }
+  }, [
+    dispatch,
+    deleteIdeationAction,
+    params.ideationId,
+    router,
+    setDeleteIdeationLoading,
+    teamId,
+  ]);
 
   const handleClose = () => {
     dispatch(onCloseModal());
@@ -123,7 +118,7 @@ export default function DeleteConfirmationModal() {
           variant="error"
           type="button"
           disabled={deleteIdeationLoading || deleteResourceLoading}
-          onClick={handleDelete}
+          onClick={isTypeResource ? handleDeleteResource : handleDeleteIdeation}
           className="w-1/2"
         >
           {renderDeleteButtonContent()}
