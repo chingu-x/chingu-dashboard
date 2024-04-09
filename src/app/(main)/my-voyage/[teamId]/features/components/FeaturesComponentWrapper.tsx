@@ -15,7 +15,23 @@ import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerConta
 import Banner from "@/components/banner/Banner";
 
 function transformData(features: Features[]): FeaturesList[] {
-  const transformedData: FeaturesList[] = [];
+  const transformedData: FeaturesList[] = [
+    {
+      categoryId: 1,
+      categoryName: "must have",
+      features: [],
+    },
+    {
+      categoryId: 2,
+      categoryName: "should have",
+      features: [],
+    },
+    {
+      categoryId: 3,
+      categoryName: "nice to have",
+      features: [],
+    },
+  ];
 
   features.forEach((feature) => {
     const {
@@ -43,23 +59,6 @@ function transformData(features: Features[]): FeaturesList[] {
         addedBy,
         createdAt,
         updatedAt,
-      });
-    } else {
-      transformedData.push({
-        categoryId: category.id,
-        categoryName: category.name,
-        features: [
-          {
-            id,
-            description,
-            order,
-            teamMemberId,
-            category,
-            addedBy,
-            createdAt,
-            updatedAt,
-          },
-        ],
       });
     }
   });
