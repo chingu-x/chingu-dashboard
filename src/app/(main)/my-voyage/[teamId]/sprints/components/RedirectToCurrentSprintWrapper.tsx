@@ -18,8 +18,6 @@ import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 export async function fetchSprints({
   teamId,
 }: FetchSprintsProps): Promise<AsyncActionResponse<FetchSprintsResponse>> {
-  console.log("fetch sprints");
-
   const token = getAccessToken();
 
   const fetchSprintsAsync = () =>
@@ -27,7 +25,7 @@ export async function fetchSprints({
       `api/v1/voyages/sprints/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.sprints,
+      CacheTag.sprints
     );
 
   return await handleAsync(fetchSprintsAsync);
@@ -68,14 +66,14 @@ export default async function RedirectToCurrentSprintWrapper({
       return `Error: ${error.message}`;
     }
     const { teamMeetings, number } = getCurrentSprint(
-      res!.voyage.sprints,
+      res!.voyage.sprints
     ) as Sprint;
     currentSprintNumber = number;
     currentMeetingId = teamMeetings[0]?.id;
 
     if (currentMeetingId) {
       redirect(
-        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`,
+        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`
       );
     } else {
       redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}`);

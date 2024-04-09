@@ -65,8 +65,7 @@ export default function VoyageSubmissionForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = () => {
     //TODO: fix routing later
     router.push(routePaths.sprintsPage("2"));
   };
@@ -82,7 +81,10 @@ export default function VoyageSubmissionForm() {
       >
         {/* Project Name */}
         <FormItem>
-          <Label htmlFor="projectName" className="font-semibold normal-case">
+          <Label
+            htmlFor="projectName"
+            className="font-semibold normal-case"
+          >
             What is the name of the project?
           </Label>
           <Textarea
@@ -111,7 +113,10 @@ export default function VoyageSubmissionForm() {
         </FormItem>
         {/* Github Repo */}
         <FormItem>
-          <Label htmlFor="githubRepo" className="font-semibold normal-case">
+          <Label
+            htmlFor="githubRepo"
+            className="font-semibold normal-case"
+          >
             Please link your Github repo:
           </Label>
           <TextInput
@@ -140,7 +145,10 @@ export default function VoyageSubmissionForm() {
         </FormItem>
         {/* Showcase Link*/}
         <FormItem>
-          <Label htmlFor="showcaseLink" className="font-semibold normal-case">
+          <Label
+            htmlFor="showcaseLink"
+            className="font-semibold normal-case"
+          >
             If you have a project showcase video, please provide the public
             link:
           </Label>
@@ -186,7 +194,10 @@ export default function VoyageSubmissionForm() {
         </FormItem>
         {/* Extra comment */}
         <FormItem>
-          <Label htmlFor="extraComment" className="font-semibold normal-case">
+          <Label
+            htmlFor="extraComment"
+            className="font-semibold normal-case"
+          >
             Is there anything else you&apos;d like to share or comment on
             regarding your experience?
           </Label>
