@@ -15,6 +15,7 @@ interface CardProps {
 }
 
 export default function Card({ feature, index }: CardProps) {
+  console.log(index);
   // const dispatch = useAppDispatch();
   // const userFullName =
   //   feature.addedBy.member.firstName + " " + feature.addedBy.member.lastName;
