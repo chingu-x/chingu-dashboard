@@ -5,10 +5,13 @@ import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 
 // import { FeaturesList } from "./fixtures/Features";
 import List from "./List";
+import { FeaturesList } from "@/store/features/features/featuresSlice";
 
-interface FeaturesContainerProps {}
+interface FeaturesContainerProps {
+  data: FeaturesList[];
+}
 
-export default function FeaturesContainer({}: FeaturesContainerProps) {
+export default function FeaturesContainer({ data }: FeaturesContainerProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [orderedData, setOrderedData] = useState(data);
 
@@ -100,7 +103,6 @@ export default function FeaturesContainer({}: FeaturesContainerProps) {
             key={list.categoryId}
             title={list.categoryName}
             features={list.features}
-            currentUser={currentUser}
           />
         ))}
       </DragDropContext>

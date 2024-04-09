@@ -4,18 +4,30 @@ import FeaturesContainer from "./FeaturesContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { getUser } from "@/utils/getUser";
 import { getAccessToken } from "@/utils/getCookie";
-import { FeaturesData } from "@/store/features/features/featuresSlice";
+import {
+  Features,
+  FeaturesList,
+} from "@/store/features/features/featuresSlice";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
 
-function transformData(features: FeaturesData[]) {
-  const transformedData = [];
+function transformData(features: Features[]): FeaturesList[] {
+  const transformedData: FeaturesList[] = [];
 
   features.forEach((feature) => {
-    const { id, description, order, teamMemberId, category, addedBy } = feature;
+    const {
+      id,
+      description,
+      order,
+      teamMemberId,
+      category,
+      addedBy,
+      createdAt,
+      updatedAt,
+    } = feature;
 
     const existingCategory = transformedData.find(
       (item) => item.categoryId === category.id
@@ -29,6 +41,8 @@ function transformData(features: FeaturesData[]) {
         teamMemberId,
         category,
         addedBy,
+        createdAt,
+        updatedAt,
       });
     } else {
       transformedData.push({
@@ -42,6 +56,8 @@ function transformData(features: FeaturesData[]) {
             teamMemberId,
             category,
             addedBy,
+            createdAt,
+            updatedAt,
           },
         ],
       });
@@ -51,20 +67,27 @@ function transformData(features: FeaturesData[]) {
   return transformedData;
 }
 
-export async function fetchProjectIdeas({
+export async function fetchFeatures({
   teamId,
-}): Promise<AsyncActionResponse<FeaturesData[]>> {
+}): Promise<AsyncActionResponse<FeaturesList[]>> {
+  let data: FeaturesList[] | null = [];
   const token = getAccessToken();
 
   const fetchFeaturesAsync = () =>
-    GET<FeaturesData[]>(
+    GET<Features[]>(
       `api/v1/voyages/teams/${teamId}/features`,
       token,
       "force-cache",
       CacheTag.features
     );
 
-  return await handleAsync(fetchFeaturesAsync);
+  const [res, error] = await handleAsync(fetchFeaturesAsync);
+
+  if (res) {
+    data = transformData(res);
+  }
+
+  return [data, error];
 }
 
 interface FeaturesComponentWrapperProps {
@@ -87,7 +110,7 @@ export default async function FeaturesComponentWrapper({
     error,
     teamId,
     args: { teamId },
-    func: fetchProjectIdeas,
+    func: fetchFeatures,
   });
 
   if (errorResponse) {
