@@ -1,3 +1,5 @@
+"use client";
+
 import { DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
