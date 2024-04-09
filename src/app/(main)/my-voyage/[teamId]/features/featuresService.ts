@@ -5,7 +5,7 @@ import { Features } from "@/store/features/features/featuresSlice";
 import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { PATCH } from "@/utils/requests";
+import { PATCH, POST } from "@/utils/requests";
 
 interface SaveOrderProps {
   featureId: number;
@@ -13,7 +13,25 @@ interface SaveOrderProps {
   featureCategoryId: number;
 }
 
-type SaveOrderBody = Pick<SaveOrderProps, "order" | "featureCategoryId">;
+type SaveOrderBody = Omit<SaveOrderProps, "featureId">;
+
+interface AddFeatureProps {
+  teamId: number;
+  description: string;
+  featureCategoryId: number;
+}
+
+type AddFeatureBody = Omit<AddFeatureProps, "teamId">;
+
+interface AddFeatureResponse {
+  id: number;
+  teamMemberId: number;
+  featureCategoryId: number;
+  description: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export async function saveOrder({
   featureId,
@@ -31,6 +49,30 @@ export async function saveOrder({
     );
 
   const [res, error] = await handleAsync(saveOrderAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.features);
+  }
+
+  return [res, error];
+}
+
+export async function addFeature({
+  teamId,
+  description,
+  featureCategoryId,
+}: AddFeatureProps): Promise<AsyncActionResponse<AddFeatureResponse>> {
+  const token = getAccessToken();
+
+  const addFeatureAsync = () =>
+    POST<AddFeatureBody, AddFeatureResponse>(
+      `api/v1/voyages/teams/${teamId}/features`,
+      token,
+      "default",
+      { featureCategoryId, description }
+    );
+
+  const [res, error] = await handleAsync(addFeatureAsync);
 
   if (res) {
     revalidateTag(CacheTag.features);

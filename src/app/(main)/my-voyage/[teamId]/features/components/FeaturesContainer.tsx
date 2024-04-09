@@ -18,8 +18,6 @@ export default function FeaturesContainer({ data }: FeaturesContainerProps) {
   const [orderedData, setOrderedData] = useState(data);
   const dispatch = useAppDispatch();
 
-  console.log(orderedData);
-
   const onDragEnd = async (result: DropResult) => {
     const { destination, source } = result;
 
