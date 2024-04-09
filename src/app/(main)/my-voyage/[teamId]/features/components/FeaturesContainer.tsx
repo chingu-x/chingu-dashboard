@@ -91,15 +91,28 @@ export default function FeaturesContainer({ data }: FeaturesContainerProps) {
       destList.features.splice(destination.index, 0, movedCard);
 
       sourceList.features.forEach((card, idx) => {
-        card.order = idx;
+        card.order = idx + 1;
       });
 
       // Update the order for each card in the destination list
       destList.features.forEach((card, idx) => {
-        card.order = idx;
+        card.order = idx + 1;
       });
 
       setOrderedData(newOrderedData);
+
+      const [, error] = await saveOrder({
+        featureId: movedCard.id,
+        order: movedCard.order,
+        featureCategoryId: movedCard.category.id,
+      });
+
+      if (error) {
+        setOrderedData(data);
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } })
+        );
+      }
     }
   };
 
