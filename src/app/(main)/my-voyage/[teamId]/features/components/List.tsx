@@ -5,15 +5,10 @@ import {
   DroppableProvided,
   DroppableStateSnapshot,
 } from "@hello-pangea/dnd";
-
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { useEffect, useRef, useState } from "react";
 import { Feature } from "./fixtures/Features";
 import Card from "./Card";
-
-import { useAppDispatch } from "@/store/hooks";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
-
-import Button from "@/components/Button";
+import AddFeaturesInput from "./AddFeaturesInput";
 
 interface ListProps {
   id: string;
@@ -22,15 +17,26 @@ interface ListProps {
 }
 
 export default function List({ id, title, features }: ListProps) {
-  const dispatch = useAppDispatch();
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const newRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  });
+
+  function handleOutsideClick(e: MouseEvent | TouchEvent) {
+    if (newRef.current && !newRef.current.contains(e.target as Node)) {
+      setIsEditing(false);
+    }
+  }
 
   function handleClick() {
-    dispatch(
-      onOpenModal({
-        type: "feature",
-      })
-    );
+    setIsEditing(true);
   }
+
   return (
     <div className="flex flex-col w-full px-8 py-10 font-semibold bg-base-200 rounded-2xl text-base-300">
       <h4 className="mb-2 text-xl capitalize pl-3">{title}</h4>
@@ -66,17 +72,15 @@ export default function List({ id, title, features }: ListProps) {
         )}
       </Droppable>
       {/* Similiar to tech stack button, need to be a shared component */}
-      <Button
-        variant="link"
-        size="lg"
-        className="h-10 justify-between p-0 w-full outline-none rounded-lg text-neutral-focus font-medium shadow-md border border-base-100 mt-6"
-        onClick={handleClick}
+      <div
+        ref={newRef}
+        className="mt-3"
       >
-        <div className="pl-3">Add Feature</div>
-        <div className="flex justify-center items-center w-12 h-full bg-neutral rounded-br-lg rounded-tr-lg">
-          <PlusCircleIcon className="w-6 h-6 text-base-200" />
-        </div>
-      </Button>
+        <AddFeaturesInput
+          handleClick={handleClick}
+          isEditing={isEditing}
+        />
+      </div>
     </div>
   );
 }
