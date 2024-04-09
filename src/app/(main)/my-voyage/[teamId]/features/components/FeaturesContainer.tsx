@@ -1,29 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 
 // import { FeaturesList } from "./fixtures/Features";
 import List from "./List";
 import { FeaturesList } from "@/store/features/features/featuresSlice";
+import { saveOrder } from "@/myVoyage/features/featuresService";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface FeaturesContainerProps {
   data: FeaturesList[];
 }
 
 export default function FeaturesContainer({ data }: FeaturesContainerProps) {
-  const [isMounted, setIsMounted] = useState(false);
   const [orderedData, setOrderedData] = useState(data);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    setOrderedData(data);
-  }, [data]);
-
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = async (result: DropResult) => {
     const { destination, source } = result;
 
     // dropped nowhere
@@ -39,7 +34,10 @@ export default function FeaturesContainer({ data }: FeaturesContainerProps) {
       return;
     }
 
-    const newOrderedData = [...orderedData];
+    const newOrderedData = orderedData.map((list) => ({
+      ...list,
+      features: [...list.features],
+    }));
 
     // source and destination lists
     const sourceList = newOrderedData.find(
@@ -61,11 +59,24 @@ export default function FeaturesContainer({ data }: FeaturesContainerProps) {
       reorderedCards.splice(destination.index, 0, removed);
 
       reorderedCards.forEach((card, idx) => {
-        card.order = idx;
+        card.order = idx + 1;
       });
 
       sourceList.features = reorderedCards;
       setOrderedData(newOrderedData);
+
+      const [, error] = await saveOrder({
+        featureId: removed.id,
+        order: removed.order,
+        featureCategoryId: removed.category.id,
+      });
+
+      if (error) {
+        setOrderedData(data);
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } })
+        );
+      }
     }
 
     // moving cards from one column to another
@@ -91,8 +102,6 @@ export default function FeaturesContainer({ data }: FeaturesContainerProps) {
       setOrderedData(newOrderedData);
     }
   };
-
-  if (!isMounted) return null;
 
   return (
     <div className="grid items-start grid-cols-3 gap-x-10">

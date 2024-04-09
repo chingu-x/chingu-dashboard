@@ -4,12 +4,12 @@ import { useEffect } from "react";
 import { useAppDispatch } from "@/store/hooks";
 import {
   fetchFeatures,
-  FeaturesData,
+  FeaturesList,
   setFeaturesLoadingFalse,
 } from "@/store/features/features/featuresSlice";
 
 export interface FeaturesProviderProps {
-  payload: FeaturesData[];
+  payload: FeaturesList[];
 }
 
 export default function FeaturesProvider({ payload }: FeaturesProviderProps) {

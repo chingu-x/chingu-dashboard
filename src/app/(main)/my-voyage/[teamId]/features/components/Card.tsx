@@ -1,13 +1,13 @@
 "use client";
 
-import Image from "next/image";
+// import Image from "next/image";
 import { Draggable, DraggableProvided } from "@hello-pangea/dnd";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+// import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 import { Feature } from "./fixtures/Features";
 
-import { useAppDispatch } from "@/store/hooks";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
+// import { useAppDispatch } from "@/store/hooks";
+// import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface CardProps {
   feature: Feature;
@@ -15,19 +15,19 @@ interface CardProps {
 }
 
 export default function Card({ feature, index }: CardProps) {
-  const dispatch = useAppDispatch();
-  const userFullName =
-    feature.addedBy.member.firstName + " " + feature.addedBy.member.lastName;
+  // const dispatch = useAppDispatch();
+  // const userFullName =
+  //   feature.addedBy.member.firstName + " " + feature.addedBy.member.lastName;
 
-  function handleClick() {
-    dispatch(
-      onOpenModal({
-        type: "feature",
-        content: {},
-        isEditing: true,
-      })
-    );
-  }
+  // function handleClick() {
+  //   dispatch(
+  //     onOpenModal({
+  //       type: "feature",
+  //       content: {},
+  //       isEditing: true,
+  //     })
+  //   );
+  // }
 
   return (
     <Draggable
