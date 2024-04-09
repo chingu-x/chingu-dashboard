@@ -19,13 +19,9 @@ interface ListProps {
   id: string;
   title: string;
   features: Feature[];
-  currentUser: {
-    id: string;
-    teamId: number;
-  };
 }
 
-export default function List({ id, title, features, currentUser }: ListProps) {
+export default function List({ id, title, features }: ListProps) {
   const dispatch = useAppDispatch();
 
   function handleClick() {
@@ -43,7 +39,7 @@ export default function List({ id, title, features, currentUser }: ListProps) {
         {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
           <div
             className={`max-h-[300px] overflow-y-auto overflow-x-hidden px-3 rounded-lg ${
-              snapshot.draggingFromThisWith && "bg-secondary-focus"
+              snapshot.draggingFromThisWith && "bg-base-content"
             } ${snapshot.isDraggingOver && "bg-base-content"}`}
           >
             <ul
@@ -62,7 +58,6 @@ export default function List({ id, title, features, currentUser }: ListProps) {
                   key={feature.id}
                   index={index}
                   feature={feature}
-                  currentUserId={currentUser.id}
                 />
               ))}
               {provided.placeholder}

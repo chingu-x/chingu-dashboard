@@ -11,11 +11,10 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface CardProps {
   feature: Feature;
-  currentUserId: string;
   index: number;
 }
 
-export default function Card({ feature, currentUserId, index }: CardProps) {
+export default function Card({ feature, index }: CardProps) {
   const dispatch = useAppDispatch();
   const userFullName =
     feature.addedBy.member.firstName + " " + feature.addedBy.member.lastName;
@@ -31,7 +30,10 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
   }
 
   return (
-    <Draggable draggableId={feature.id.toString()} index={index}>
+    <Draggable
+      draggableId={feature.id.toString()}
+      index={index}
+    >
       {(provided: DraggableProvided) => (
         <li
           ref={provided.innerRef}
@@ -42,13 +44,13 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-y-1">
               <h5 className="text-base font-semibold">{feature.description}</h5>
-              <span className="text-[10px] text-neutral">{`Added by ${
+              {/* <span className="text-[10px] text-neutral">{`Added by ${
                 feature.addedBy.member.id === currentUserId
                   ? "you"
                   : userFullName
-              }`}</span>
+              }`}</span> */}
             </div>
-            {feature.addedBy.member.id === currentUserId ? (
+            {/* {feature.addedBy.member.id === currentUserId ? (
               // Edit Button
               <button
                 type="button"
@@ -69,7 +71,7 @@ export default function Card({ feature, currentUserId, index }: CardProps) {
                   alt={userFullName}
                 />
               </div>
-            )}
+            )} */}
           </div>
         </li>
       )}
