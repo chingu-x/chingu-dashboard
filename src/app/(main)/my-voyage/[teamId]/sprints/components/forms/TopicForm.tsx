@@ -33,9 +33,7 @@ export default function TopicForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<ValidationSchema> = () => {};
 
   return (
     // TODO: Create some general form wrapper component
@@ -74,7 +72,12 @@ export default function TopicForm() {
         >
           Add
         </Button>
-        <Button type="button" title="cancel" size="lg" variant="link">
+        <Button
+          type="button"
+          title="cancel"
+          size="lg"
+          variant="link"
+        >
           Cancel
         </Button>
       </form>
