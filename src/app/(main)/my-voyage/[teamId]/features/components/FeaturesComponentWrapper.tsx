@@ -67,9 +67,13 @@ function transformData(features: Features[]): FeaturesList[] {
   return transformedData;
 }
 
+interface FetchFeaturesProps {
+  teamId: number;
+}
+
 export async function fetchFeatures({
   teamId,
-}): Promise<AsyncActionResponse<FeaturesList[]>> {
+}: FetchFeaturesProps): Promise<AsyncActionResponse<FeaturesList[]>> {
   let data: FeaturesList[] | null = [];
   const token = getAccessToken();
 

@@ -22,8 +22,6 @@ export async function fetchTeamDirectory({
   teamId,
   user,
 }: FetchTeamDirectoryProps): Promise<AsyncActionResponse<TeamDirectory>> {
-  console.log("fetch directory");
-
   const token = getAccessToken();
 
   const fetchTeamDirectoryAsync = () =>
@@ -31,7 +29,7 @@ export async function fetchTeamDirectory({
       `api/v1/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.directory,
+      CacheTag.directory
     );
 
   const [res, error] = await handleAsync(fetchTeamDirectoryAsync);
@@ -40,7 +38,7 @@ export async function fetchTeamDirectory({
     updateDirectoryWithCurrentTime(res);
     const teamMember = res.voyageTeamMembers;
     const elementToSort = teamMember.find(
-      (element) => element.member.discordId === user?.discordId,
+      (element) => element.member.discordId === user?.discordId
     );
     moveElementToFirst(teamMember, elementToSort);
   }
@@ -130,7 +128,10 @@ export default async function DirectoryComponentWrapper({
         </div>
         {/* data */}
         {teamDirectory.voyageTeamMembers.map((teamMember) => (
-          <TeamMember key={teamMember.id} teamMember={teamMember} />
+          <TeamMember
+            key={teamMember.id}
+            teamMember={teamMember}
+          />
         ))}
       </div>
     </>
