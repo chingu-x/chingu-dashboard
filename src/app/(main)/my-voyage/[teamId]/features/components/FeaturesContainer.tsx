@@ -3,21 +3,12 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 
-import { FeaturesList } from "./fixtures/Features";
+// import { FeaturesList } from "./fixtures/Features";
 import List from "./List";
 
-interface FeaturesContainerProps {
-  data: FeaturesList[];
-  currentUser: {
-    id: string;
-    teamId: number;
-  };
-}
+interface FeaturesContainerProps {}
 
-export default function FeaturesContainer({
-  data,
-  currentUser,
-}: FeaturesContainerProps) {
+export default function FeaturesContainer({}: FeaturesContainerProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [orderedData, setOrderedData] = useState(data);
 

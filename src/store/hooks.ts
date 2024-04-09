@@ -12,3 +12,4 @@ export const useIdeation = () => useAppSelector((state) => state.ideation);
 export const useDirectory = () => useAppSelector((state) => state.directory);
 export const useSprint = () => useAppSelector((state) => state.sprint);
 export const useResource = () => useAppSelector((state) => state.resources);
+export const useFeatures = () => useAppSelector((state) => state.features);
