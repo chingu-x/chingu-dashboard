@@ -1,3 +1,5 @@
+"use client";
+
 import { format, isSameDay, getUnixTime } from "date-fns";
 import React from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
@@ -12,8 +14,12 @@ import Button from "@/components/Button";
 
 interface CalendarProps {
   sprintData?: SprintData;
+  currentSprintNumber?: number;
 }
-export default function Calendar({ sprintData }: CalendarProps) {
+export default function Calendar({
+  sprintData,
+  currentSprintNumber,
+}: CalendarProps) {
   const {
     cn,
     generateDate,
@@ -119,9 +125,9 @@ export default function Calendar({ sprintData }: CalendarProps) {
       <div className="h-full w-full flex flex-col justify-between p-6">
         <div>
           <h1 className="text-lg font-semibold pb-3">{selectedDate}</h1>
-          {sprintData ? (
+          {currentSprintNumber ? (
             <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
-              Sprint Week {sprintData?.number}
+              Sprint Week {currentSprintNumber}
             </p>
           ) : null}
           {sprintData?.eventList?.map((event) => {

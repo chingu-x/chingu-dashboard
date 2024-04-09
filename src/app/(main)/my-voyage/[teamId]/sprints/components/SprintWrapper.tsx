@@ -25,7 +25,7 @@ import { getUser } from "@/utils/getUser";
 import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 
-async function fetchMeeting({
+export async function fetchMeeting({
   sprintNumber,
   meetingId,
 }: FetchMeetingProps): Promise<AsyncActionResponse<FetchMeetingResponse>> {

@@ -4,13 +4,20 @@ import type { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardDat
 
 interface CalendarWidgetProps {
   sprintData?: SprintData;
+  currentSprintNumber?: number;
 }
 
-function CalendarWidget({ sprintData }: CalendarWidgetProps) {
+function CalendarWidget({
+  sprintData,
+  currentSprintNumber,
+}: CalendarWidgetProps) {
   return (
     <div className="w-full h-full bg-base-200 rounded-2xl flex flex-row border-2 border-base-100">
       <div className="flex justify-center items-center w-full flex-grow-3">
-        <Calendar sprintData={sprintData} />
+        <Calendar
+          sprintData={sprintData}
+          currentSprintNumber={currentSprintNumber}
+        />
       </div>
     </div>
   );
