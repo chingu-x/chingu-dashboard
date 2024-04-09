@@ -6,8 +6,6 @@ import { POST, DELETE } from "@/utils/requests";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 
-//TODO: Cleanup TS interfaces
-console.log("clean up TS interfaces!");
 interface ResourceProps {
   teamId: number;
 }
@@ -40,7 +38,6 @@ export async function addResource({
   url,
 }: AddResourceProps): Promise<AsyncActionResponse<AddResourceResponse>> {
   const token = getAccessToken();
-
   const addResourceAsync = () =>
     POST<ResourceBody, AddResourceResponse>(
       `api/v1/voyages/teams/${teamId}`,
@@ -62,13 +59,13 @@ export async function deleteResource({
   resourceId,
 }: DeleteResourceProps): Promise<AsyncActionResponse<AddResourceResponse>> {
   const token = getAccessToken();
-  console.log(token);
   const deleteResourceAsync = () =>
     DELETE<AddResourceResponse>(
       `api/v1/voyages/resources/${resourceId}`,
       token,
       "default",
     );
+
   const [res, error] = await handleAsync(deleteResourceAsync);
 
   if (res) {
