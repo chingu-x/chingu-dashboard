@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Draggable, DraggableProvided } from "@hello-pangea/dnd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
