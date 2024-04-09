@@ -69,7 +69,7 @@ export default function List({ id, title, features }: ListProps) {
       <Button
         variant="link"
         size="lg"
-        className="text-base h-10 justify-between p-0 w-full outline-none rounded-lg text-base-300 shadow-md border border-base-100 mt-6"
+        className="h-10 justify-between p-0 w-full outline-none rounded-lg text-neutral-focus font-medium shadow-md border border-base-100 mt-6"
         onClick={handleClick}
       >
         <div className="pl-3">Add Feature</div>

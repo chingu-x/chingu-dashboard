@@ -24,7 +24,7 @@ export async function saveOrder({
 
   const saveOrderAsync = () =>
     PATCH<SaveOrderBody, Features>(
-      `api/v1/voyages/features/${featureId}/reorde`,
+      `api/v1/voyages/features/${featureId}/reorder`,
       token,
       "default",
       { order, featureCategoryId }
