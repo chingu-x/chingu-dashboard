@@ -49,7 +49,7 @@ export default function List({ id, title, features }: ListProps) {
             >
               {/* Empty list suggestion */}
               {features.length === 0 && !snapshot.isDraggingOver && (
-                <span className="text-neutral-focus bg-base-200 py-[14px] px-[22px] rounded-lg">
+                <span className="text-neutral-focus bg-base-100 py-[14px] px-[22px] rounded-lg my-3">
                   Share your suggestions!
                 </span>
               )}
