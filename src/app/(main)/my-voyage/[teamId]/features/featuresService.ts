@@ -13,7 +13,35 @@ interface SaveOrderProps {
   featureCategoryId: number;
 }
 
+interface AddFeatureProps {
+  teamId: number;
+  description: string;
+  featureCategoryId: number;
+}
+
+interface EditFeatureProps {
+  featureId: number;
+  teamMemberId: number;
+  description: string;
+}
+
+type DeleteFeatureProps = Pick<EditFeatureProps, "featureId">;
+
 type SaveOrderBody = Omit<SaveOrderProps, "featureId">;
+type AddFeatureBody = Omit<AddFeatureProps, "teamId">;
+type EditFeatureBody = Omit<EditFeatureProps, "featureId">;
+
+interface AddFeatureResponse {
+  id: number;
+  teamMemberId: number;
+  featureCategoryId: number;
+  description: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface EditFeatureResponse extends AddFeatureResponse {}
 
 export async function saveOrder({
   featureId,
@@ -37,24 +65,6 @@ export async function saveOrder({
   }
 
   return [res, error];
-}
-
-interface AddFeatureProps {
-  teamId: number;
-  description: string;
-  featureCategoryId: number;
-}
-
-type AddFeatureBody = Omit<AddFeatureProps, "teamId">;
-
-interface AddFeatureResponse {
-  id: number;
-  teamMemberId: number;
-  featureCategoryId: number;
-  description: string;
-  order: number;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export async function addFeature({
@@ -81,16 +91,6 @@ export async function addFeature({
   return [res, error];
 }
 
-interface EditFeatureProps {
-  featureId: number;
-  teamMemberId: number;
-  description: string;
-}
-
-interface EditFeatureResponse extends AddFeatureResponse {}
-
-type EditFeatureBody = Omit<EditFeatureProps, "featureId">;
-
 export async function editFeature({
   featureId,
   teamMemberId,
@@ -114,8 +114,6 @@ export async function editFeature({
 
   return [res, error];
 }
-
-type DeleteFeatureProps = Pick<EditFeatureProps, "featureId">;
 
 export async function deleteFeature({
   featureId,
