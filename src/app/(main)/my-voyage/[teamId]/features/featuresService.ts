@@ -76,7 +76,7 @@ export async function addFeature({
 
   const addFeatureAsync = () =>
     POST<AddFeatureBody, AddFeatureResponse>(
-      `api/v1/voyages/teams/${teamId}/feature`,
+      `api/v1/voyages/teams/${teamId}/features`,
       token,
       "default",
       { featureCategoryId, description }
