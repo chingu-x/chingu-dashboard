@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type ModalType =
-  | "feature"
   | "error"
   | "gettingHelp"
   | "confirmation"
@@ -12,7 +11,6 @@ interface ModalState {
   id?: number;
   type: ModalType | undefined;
   isOpen: boolean;
-  isEditing?: boolean;
   content?: ContentPayload;
 }
 
@@ -20,7 +18,6 @@ export interface BaseModalOpenActionPayload {
   id?: number;
   type: Exclude<ModalType, "error" | "confirmation">;
   content?: ContentPayload;
-  isEditing?: boolean;
 }
 
 export interface ErrorModalOpenActionPayload
@@ -51,7 +48,6 @@ const initialState: ModalState = {
   id: 0,
   type: undefined,
   isOpen: false,
-  isEditing: false,
   content: {},
 };
 
@@ -60,12 +56,11 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
-      const { id, type, isEditing, content } = action.payload;
+      const { id, type, content } = action.payload;
 
       state.id = id;
       state.isOpen = true;
       state.type = type;
-      state.isEditing = isEditing;
       state.content = content;
     },
     onCloseModal: () => initialState,
