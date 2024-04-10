@@ -5,7 +5,6 @@ import { useAppDispatch } from "@/store/hooks";
 import {
   fetchFeatures,
   FeaturesList,
-  setFeaturesLoadingFalse,
 } from "@/store/features/features/featuresSlice";
 
 export interface FeaturesProviderProps {
@@ -17,7 +16,6 @@ export default function FeaturesProvider({ payload }: FeaturesProviderProps) {
 
   useEffect(() => {
     dispatch(fetchFeatures(payload));
-    dispatch(setFeaturesLoadingFalse());
   }, [dispatch, payload]);
 
   return null;

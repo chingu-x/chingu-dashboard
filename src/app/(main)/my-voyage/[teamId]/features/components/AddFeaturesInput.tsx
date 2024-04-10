@@ -2,20 +2,28 @@ import * as z from "zod";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SetStateAction, useEffect } from "react";
+import { useParams } from "next/navigation";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
+import { useAppDispatch } from "@/store/hooks";
+import useServerAction from "@/hooks/useServerAction";
+import { addFeature } from "@/myVoyage/features/featuresService";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import Spinner from "@/components/Spinner";
 
 interface AddFeaturesInputProps {
   handleClick: () => void;
   isEditing: boolean;
+  setIsEditing: (value: SetStateAction<boolean>) => void;
+  id: number;
 }
 
 const validationSchema = z.object({
-  avgHours: validateTextInput({
-    inputName: "Average Hour/Sprint",
+  description: validateTextInput({
+    inputName: "This field",
     required: true,
-    isHours: true,
   }),
 });
 
@@ -24,7 +32,19 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function AddFeaturesInput({
   handleClick,
   isEditing,
+  setIsEditing,
+  id,
 }: AddFeaturesInputProps) {
+  const params = useParams<{ teamId: string }>();
+  const teamId = Number(params.teamId);
+  const dispatch = useAppDispatch();
+
+  const {
+    runAction: addFeatureAction,
+    isLoading: addFeatureLoading,
+    setIsLoading: setAddFeatureLoading,
+  } = useServerAction(addFeature);
+
   const {
     register,
     handleSubmit,
@@ -36,19 +56,44 @@ export default function AddFeaturesInput({
     resolver: zodResolver(validationSchema),
   });
 
-  function handleClearInputAction() {}
+  function handleClearInputAction() {
+    reset({ description: "" });
+  }
 
-  const onSubmit: SubmitHandler<ValidationSchema> = async () => {};
+  useEffect(() => {
+    if (isEditing) {
+      setFocus("description", { shouldSelect: true });
+    }
+  }, [isEditing, setFocus]);
+
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    const { description } = data;
+
+    const [, error] = await addFeatureAction({
+      teamId,
+      description,
+      featureCategoryId: id,
+    });
+
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } })
+      );
+    }
+
+    setAddFeatureLoading(false);
+    setIsEditing(false);
+  };
 
   return isEditing ? (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextInput
         clearInputAction={handleClearInputAction}
-        id="avgHours"
-        {...register("avgHours")}
-        errorMessage={errors.avgHours?.message}
+        id="description"
+        {...register("description")}
+        errorMessage={errors.description?.message}
         placeholder="Add Feature"
-        submitButtonText="Save"
+        submitButtonText={addFeatureLoading ? <Spinner /> : "Save"}
         buttonDisabled={!isDirty || !isValid}
       />
     </form>

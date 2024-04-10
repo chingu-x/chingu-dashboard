@@ -11,7 +11,7 @@ import Card from "./Card";
 import AddFeaturesInput from "./AddFeaturesInput";
 
 interface ListProps {
-  id: string;
+  id: number;
   title: string;
   features: Feature[];
 }
@@ -41,7 +41,7 @@ export default function List({ id, title, features }: ListProps) {
     <div className="flex flex-col w-full px-8 py-10 font-semibold bg-base-200 rounded-2xl text-base-300">
       <h4 className="mb-2 text-xl capitalize pl-3">{title}</h4>
       {/* Features container / drag and drop area */}
-      <Droppable droppableId={id}>
+      <Droppable droppableId={id.toString()}>
         {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
           <div
             className={`max-h-[300px] overflow-y-auto overflow-x-hidden px-3 rounded-lg ${
@@ -79,6 +79,8 @@ export default function List({ id, title, features }: ListProps) {
         <AddFeaturesInput
           handleClick={handleClick}
           isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          id={id}
         />
       </div>
     </div>

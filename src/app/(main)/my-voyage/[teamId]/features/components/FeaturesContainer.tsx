@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 
 // import { FeaturesList } from "./fixtures/Features";
@@ -116,12 +116,16 @@ export default function FeaturesContainer({ data }: FeaturesContainerProps) {
     }
   };
 
+  useEffect(() => {
+    setOrderedData(data);
+  }, [data]);
+
   return (
     <div className="grid items-start grid-cols-3 gap-x-10">
       <DragDropContext onDragEnd={onDragEnd}>
         {orderedData.map((list) => (
           <List
-            id={list.categoryId.toString()}
+            id={list.categoryId}
             key={list.categoryId}
             title={list.categoryName}
             features={list.features}
