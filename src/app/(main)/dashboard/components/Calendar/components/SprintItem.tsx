@@ -9,7 +9,7 @@ type SprintItemProps = {
 };
 function SprintItem({ title, link, time }: SprintItemProps) {
   return (
-    <Link href={link}>
+    <Link href={link} target="_blank">
       <div className="flex flex-row items-center w-full rounded-lg bg-base-100 p-3 my-4 cursor-pointer justify-between">
         <div>
           <time className="text-sm font-medium text-base-300">{time}</time>

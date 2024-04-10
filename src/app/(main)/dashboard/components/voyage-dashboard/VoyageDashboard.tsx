@@ -12,12 +12,10 @@ import {
   getFeaturesData,
   getIdeationData,
   getResourcesData,
-  getSprintData,
   getTechStackData,
 } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
-import { getUser } from "@/utils/getUser";
 
 async function VoyageDashboard() {
   //NOTE - Mocked value to show the filled state dashboard
@@ -26,25 +24,17 @@ async function VoyageDashboard() {
   const featureData = filledState ? getFeaturesData() : null;
   const techStackData = filledState ? getTechStackData() : null;
   const resourceData = filledState ? getResourcesData() : null;
-  const sprintData = filledState ? getSprintData() : null;
 
-  const [user, error] = await getUser();
-
-  if (!user) {
-    throw new Error("User not found");
-  }
-
-  const { currentSprintNumber, sprintsData, meetingData } =
-    await dashboardService(user, error);
-
-  console.log(sprintsData, meetingData);
+  const { currentSprintNumber, sprintsData, meetingsData, user } =
+    await dashboardService();
 
   return user ? (
     <div className="grid grid-cols-2 gap-x-6 w-full">
       <div className="col-span-1 flex flex-col gap-y-6 flex-grow-2">
         <CalendarWidget
-          sprintData={sprintData ?? undefined}
+          sprintsData={sprintsData ?? undefined}
           currentSprintNumber={currentSprintNumber}
+          meetingsData={meetingsData}
         />
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />

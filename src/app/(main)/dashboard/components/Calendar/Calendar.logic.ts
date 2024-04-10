@@ -14,9 +14,14 @@ import {
   endOfDay,
 } from "date-fns";
 import { useState } from "react";
-import { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
+import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/dashboardService";
+import { Sprint } from "@/store/features/sprint/sprintSlice";
 
-export const useCalendarLogic = (sprintData?: SprintData) => {
+export const useCalendarLogic = (
+  sprintsData?: Sprint[],
+  currentSprintNumber?: number,
+  meetingsData?: EventList[],
+) => {
   const currentDate = new Date();
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
@@ -38,6 +43,21 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     "November",
     "December",
   ];
+
+  const voyageStartDate = sprintsData?.find(
+    (sprint) => Number(sprint.number) === 1,
+  )?.startDate;
+  const voyageEndDate = sprintsData?.find(
+    (sprint) => Number(sprint.number) === 6,
+  )?.endDate;
+
+  const currentSprintStartDate = sprintsData?.find(
+    (sprint) => Number(sprint.number) === currentSprintNumber,
+  )?.startDate;
+
+  const currentSprintEndDate = sprintsData?.find(
+    (sprint) => Number(sprint.number) === currentSprintNumber,
+  )?.endDate;
 
   const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
@@ -88,10 +108,11 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
       "h-[50px] w-[48px] grid place-content-center transition-all cursor-pointer select-none";
 
     const isWithinSprintRange =
-      sprintData &&
-      (isSameDay(date, startOfDay(sprintData?.startDate)) ||
-        isAfter(date, startOfDay(sprintData?.startDate))) &&
-      isBefore(date, endOfDay(sprintData?.endDate));
+      currentSprintStartDate &&
+      currentSprintEndDate &&
+      (isSameDay(date, startOfDay(new Date(currentSprintStartDate))) ||
+        isAfter(date, startOfDay(new Date(currentSprintStartDate)))) &&
+      isBefore(date, endOfDay(new Date(currentSprintEndDate)));
 
     if (!currentMonth) {
       classes += " text-neutral-content";
@@ -114,14 +135,15 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
   const showDotConditions = (date: Date) => [
     {
       id: 1,
-      check: sprintData?.eventList?.some((event) =>
+      check: meetingsData?.some((event) =>
         isSameDay(new Date(event.date), date),
       ),
     },
   ];
 
   const showRocketIcon = (date: Date) =>
-    sprintData?.startDate && isSameDay(sprintData.startDate, date);
+    (voyageStartDate && isSameDay(new Date(voyageStartDate), date)) ||
+    (voyageEndDate && isSameDay(new Date(voyageEndDate), date));
 
   const getCalendarElementColor = (date: Date, currentMonth: boolean) => {
     if (isSelectedDate(date)) {
