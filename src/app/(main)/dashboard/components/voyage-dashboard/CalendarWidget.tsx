@@ -5,7 +5,7 @@ import { Sprint } from "@/store/features/sprint/sprintSlice";
 
 interface CalendarWidgetProps {
   sprintsData?: Sprint[];
-  currentSprintNumber?: number;
+  currentSprintNumber?: number | null;
   meetingsData?: EventList[];
 }
 
