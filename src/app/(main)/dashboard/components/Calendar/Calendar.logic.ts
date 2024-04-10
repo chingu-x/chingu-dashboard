@@ -19,7 +19,7 @@ import { Sprint } from "@/store/features/sprint/sprintSlice";
 
 export const useCalendarLogic = (
   sprintsData?: Sprint[],
-  currentSprintNumber?: number,
+  currentSprintNumber?: number | null,
   meetingsData?: EventList[],
 ) => {
   const currentDate = new Date();

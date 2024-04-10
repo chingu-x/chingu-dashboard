@@ -14,7 +14,7 @@ import Button from "@/components/Button";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 
 interface CalendarProps {
-  currentSprintNumber?: number;
+  currentSprintNumber?: number | null;
   sprintsData?: Sprint[];
   meetingsData?: EventList[];
 }

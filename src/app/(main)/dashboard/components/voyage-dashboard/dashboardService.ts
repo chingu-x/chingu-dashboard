@@ -8,10 +8,11 @@ import { fetchMeeting } from "@/app/(main)/my-voyage/[teamId]/sprints/components
 import { getUser } from "@/utils/getUser";
 
 interface DashboardServiceResponse {
-  currentSprintNumber: number;
+  currentSprintNumber: number | null;
   sprintsData: Sprint[];
-  user: User;
+  user: User | null;
   meetingsData: EventList[];
+  errorMessage?: string;
 }
 
 export type EventList = {
@@ -48,7 +49,13 @@ export const dashboardService = async (): Promise<DashboardServiceResponse> => {
   });
 
   if (errorResponse) {
-    return errorResponse;
+    return {
+      currentSprintNumber: null,
+      sprintsData: [],
+      user: null,
+      meetingsData: [],
+      errorMessage: errorResponse,
+    };
   }
 
   if (data) {

@@ -104,7 +104,7 @@ async function VoyageDashboard() {
       </div>
       <EmptySprintProvider
         sprints={sprintsData}
-        currentSprintNumber={currentSprintNumber}
+        currentSprintNumber={currentSprintNumber ?? 1}
       />
     </div>
   ) : null;
