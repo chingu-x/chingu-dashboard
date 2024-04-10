@@ -5,7 +5,7 @@ import { Features } from "@/store/features/features/featuresSlice";
 import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { PATCH, POST } from "@/utils/requests";
+import { DELETE, PATCH, POST } from "@/utils/requests";
 
 interface SaveOrderProps {
   featureId: number;
@@ -14,24 +14,6 @@ interface SaveOrderProps {
 }
 
 type SaveOrderBody = Omit<SaveOrderProps, "featureId">;
-
-interface AddFeatureProps {
-  teamId: number;
-  description: string;
-  featureCategoryId: number;
-}
-
-type AddFeatureBody = Omit<AddFeatureProps, "teamId">;
-
-interface AddFeatureResponse {
-  id: number;
-  teamMemberId: number;
-  featureCategoryId: number;
-  description: string;
-  order: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
 
 export async function saveOrder({
   featureId,
@@ -57,6 +39,24 @@ export async function saveOrder({
   return [res, error];
 }
 
+interface AddFeatureProps {
+  teamId: number;
+  description: string;
+  featureCategoryId: number;
+}
+
+type AddFeatureBody = Omit<AddFeatureProps, "teamId">;
+
+interface AddFeatureResponse {
+  id: number;
+  teamMemberId: number;
+  featureCategoryId: number;
+  description: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export async function addFeature({
   teamId,
   description,
@@ -73,6 +73,59 @@ export async function addFeature({
     );
 
   const [res, error] = await handleAsync(addFeatureAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.features);
+  }
+
+  return [res, error];
+}
+
+interface EditFeatureProps {
+  featureId: number;
+  teamMemberId: number;
+  description: string;
+}
+
+interface EditFeatureResponse extends AddFeatureResponse {}
+
+type EditFeatureBody = Omit<EditFeatureProps, "featureId">;
+
+export async function editFeature({
+  featureId,
+  teamMemberId,
+  description,
+}: EditFeatureProps): Promise<AsyncActionResponse<EditFeatureResponse>> {
+  const token = getAccessToken();
+
+  const editFeatureAsync = () =>
+    PATCH<EditFeatureBody, EditFeatureResponse>(
+      `api/v1/voyages/features/${featureId}`,
+      token,
+      "default",
+      { teamMemberId, description }
+    );
+
+  const [res, error] = await handleAsync(editFeatureAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.features);
+  }
+
+  return [res, error];
+}
+
+type DeleteFeatureProps = Pick<EditFeatureProps, "featureId">;
+
+export async function deleteFeature({
+  featureId,
+}: DeleteFeatureProps): Promise<AsyncActionResponse<void>> {
+  const token = getAccessToken();
+
+  const deleteFeatureAsync = () =>
+    DELETE<void>(`api/v1/voyages/features/${featureId}`, token, "default");
+
+  const [res, error] = await handleAsync(deleteFeatureAsync);
 
   if (res) {
     revalidateTag(CacheTag.features);
