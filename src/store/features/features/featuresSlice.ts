@@ -8,7 +8,7 @@ interface Category {
 
 interface FeaturesState {
   loading: boolean;
-  features: FeaturesList[];
+  featuresList: FeaturesList[];
 }
 
 export interface FeaturesList {
@@ -32,7 +32,7 @@ export interface Features {
 
 const initialState: FeaturesState = {
   loading: false,
-  features: [],
+  featuresList: [],
 };
 
 export const featuresSlice = createSlice({
@@ -41,7 +41,7 @@ export const featuresSlice = createSlice({
   reducers: {
     fetchFeatures: (state, action: PayloadAction<FeaturesList[]>) => {
       state.loading = true;
-      state.features = action.payload;
+      state.featuresList = action.payload;
     },
     setFeaturesLoadingTrue: (state) => {
       state.loading = true;
