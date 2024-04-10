@@ -1,22 +1,33 @@
+import { format, parseISO } from "date-fns";
 import { fetchSprints } from "@/app/(main)/my-voyage/[teamId]/sprints/components/RedirectToCurrentSprintWrapper";
-import { Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
+import { Sprint } from "@/store/features/sprint/sprintSlice";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { User } from "@/store/features/user/userSlice";
 import { fetchMeeting } from "@/app/(main)/my-voyage/[teamId]/sprints/components/SprintWrapper";
-import { AppError } from "@/types/types";
+import { getUser } from "@/utils/getUser";
 
 interface DashboardServiceResponse {
   currentSprintNumber: number;
   sprintsData: Sprint[];
   user: User;
-  meetingData: Meeting;
+  meetingsData: EventList[];
 }
-export const dashboardService = async (
-  user: User,
-  error: AppError | null,
-): Promise<DashboardServiceResponse> => {
+
+export type EventList = {
+  title: string;
+  date: string;
+  link: string;
+};
+
+export const dashboardService = async (): Promise<DashboardServiceResponse> => {
   let sprintsData: Sprint[] = [];
+
+  const [user, error] = await getUser();
+
+  if (!user) {
+    throw new Error("User not found");
+  }
 
   const teamMember = user?.voyageTeamMembers.find(
     (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
@@ -44,7 +55,7 @@ export const dashboardService = async (
     const [res, error] = data;
 
     if (error) {
-      return `Error: ${error.message}`;
+      throw new Error(`Error: ${error.message}`);
     }
     sprintsData = res!.voyage.sprints;
   }
@@ -52,28 +63,38 @@ export const dashboardService = async (
   const { number } = getCurrentSprint(sprintsData) as Sprint;
   const currentSprintNumber = number;
 
-  const meetingId = sprintsData.find((sprint) => sprint.number === 1)
-    ?.teamMeetings[0]?.id;
+  const meetingsData: { title: string; date: string; link: string }[] = [];
 
-  let meetingData: Meeting;
+  const fetchMeetingsPromises = sprintsData.map((sprint) =>
+    fetchMeeting({
+      sprintNumber: sprint.number,
+      meetingId: sprint.teamMeetings[0]?.id,
+    }),
+  );
 
-  if (meetingId) {
-    const [res, error] = await fetchMeeting({
-      sprintNumber: currentSprintNumber,
-      meetingId,
-    });
+  const fetchMeetingsResults = await Promise.all(fetchMeetingsPromises);
 
+  fetchMeetingsResults.forEach(([res, error], index) => {
     if (res) {
-      meetingData = res;
+      const { title, dateTime, meetingLink } = res;
+      const parsedDate = parseISO(dateTime);
+      const formattedDate = format(parsedDate, "yyyy-MM-dd h:mm a");
+      meetingsData.push({
+        title,
+        date: formattedDate,
+        link: meetingLink,
+      });
     } else {
-      return `Error: ${error?.message}`;
+      console.error(
+        `Error fetching meeting for sprint ${index + 1}: ${error?.message}`,
+      );
     }
-  }
+  });
 
   return {
     currentSprintNumber,
     sprintsData,
     user,
-    meetingData,
+    meetingsData,
   };
 };

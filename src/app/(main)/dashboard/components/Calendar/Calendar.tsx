@@ -9,16 +9,19 @@ import Cell from "./components/Cell";
 import SprintItem from "./components/SprintItem";
 import Dot from "./components/Dot";
 import Legend from "./components/Legend";
-import type { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
+import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/dashboardService";
 import Button from "@/components/Button";
+import { Sprint } from "@/store/features/sprint/sprintSlice";
 
 interface CalendarProps {
-  sprintData?: SprintData;
   currentSprintNumber?: number;
+  sprintsData?: Sprint[];
+  meetingsData?: EventList[];
 }
 export default function Calendar({
-  sprintData,
+  sprintsData,
   currentSprintNumber,
+  meetingsData,
 }: CalendarProps) {
   const {
     cn,
@@ -39,7 +42,7 @@ export default function Calendar({
     getCalendarElementColor,
     setIsHoveredDate,
     onDotClick,
-  } = useCalendarLogic(sprintData);
+  } = useCalendarLogic(sprintsData, currentSprintNumber, meetingsData);
 
   return (
     <div className="flex h-full w-full">
@@ -130,7 +133,7 @@ export default function Calendar({
               Sprint Week {currentSprintNumber}
             </p>
           ) : null}
-          {sprintData?.eventList?.map((event) => {
+          {meetingsData?.map((event) => {
             const eventDate = new Date(event.date);
             const isSelectedDate = isSameDay(selectDate, eventDate);
 
