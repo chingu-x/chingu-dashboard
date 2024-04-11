@@ -153,10 +153,14 @@ export default function IdeationForm() {
         (project) => project.id === +params.ideationId
       );
 
+      if (!ideation) {
+        router.push(routePaths.ideationPage(teamId.toString()));
+      }
+
       setIdeationData(ideation);
       setEditMode(true);
     }
-  }, [params.ideationId, projectIdeas]);
+  }, [params.ideationId, projectIdeas, router, teamId]);
 
   useEffect(() => {
     reset({
