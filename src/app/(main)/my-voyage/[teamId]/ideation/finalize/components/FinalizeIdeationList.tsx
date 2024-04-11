@@ -1,13 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import FinalizeIdeationItem from "./FinalizeIdeationItem";
 import Button from "@/components/Button";
 import { useIdeation } from "@/store/hooks";
+import routePaths from "@/utils/routePaths";
 
 export default function FinalizeIdeationList() {
   const { projectIdeas } = useIdeation();
   const [finalizedIdeation, setFinalizedIdeation] = useState("");
+  const router = useRouter();
+  const { teamId } = useParams<{ teamId: string }>();
+
+  function handleCancelClick() {
+    router.back();
+  }
+
+  useEffect(() => {
+    if (projectIdeas.length === 0) {
+      router.push(routePaths.ideationPage(teamId));
+    }
+  }, [projectIdeas, router, teamId]);
 
   return (
     <div className="w-[871px]">
@@ -35,6 +49,7 @@ export default function FinalizeIdeationList() {
       <Button
         variant="neutral"
         className="w-full"
+        onClick={handleCancelClick}
       >
         Cancel
       </Button>
