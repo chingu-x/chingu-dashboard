@@ -10,8 +10,8 @@ export default function FinalizeIdeationList() {
   const [finalizedIdeation, setFinalizedIdeation] = useState("");
 
   return (
-    <>
-      <div className="flex flex-1 flex-col justify-center py-10 gap-y-5 items-center w-full h-[200px] bg-base-100 rounded-2xl shadow-md">
+    <div className="w-[871px]">
+      <div className="flex flex-1 flex-col justify-center py-10 gap-y-5 items-center bg-base-100 rounded-2xl">
         {projectIdeas.map((projectIdea) => {
           const { id, title, projectIdeaVotes } = projectIdea;
           return (
@@ -25,9 +25,19 @@ export default function FinalizeIdeationList() {
           );
         })}
       </div>
-      <Button variant="secondary" disabled={!finalizedIdeation}>
+      <Button
+        variant="secondary"
+        disabled={!finalizedIdeation}
+        className="w-full mt-10 mb-4"
+      >
         Finalize Project Idea Selection
       </Button>
-    </>
+      <Button
+        variant="neutral"
+        className="w-full"
+      >
+        Cancel
+      </Button>
+    </div>
   );
 }
