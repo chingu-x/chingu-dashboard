@@ -341,7 +341,7 @@ export default function IdeationForm() {
             type="button"
             title="cancel"
             size="lg"
-            variant="link"
+            variant="neutral"
             onClick={() => router.back()}
           >
             Cancel
