@@ -6,7 +6,7 @@ import IdeationStateContent from "./IdeationStateContent";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
-import { dashboardService } from "./dashboardService";
+import { getDashboardData } from "./getDashboardData";
 import {
   CHECKIN_STATUS,
   getFeaturesData,
@@ -26,10 +26,10 @@ async function VoyageDashboard() {
   const resourceData = filledState ? getResourcesData() : null;
 
   const { currentSprintNumber, sprintsData, meetingsData, user } =
-    await dashboardService();
+    await getDashboardData();
 
   return user ? (
-    <div className="grid grid-cols-2 gap-x-6 w-full">
+    <div className="flex flex-col min-[1470px]:grid min-[1470px]:grid-cols-2 gap-x-6 max-[1470px]:gap-y-6 w-full">
       <div className="col-span-1 flex flex-col gap-y-6 flex-grow-2">
         <CalendarWidget
           sprintsData={sprintsData ?? undefined}
@@ -59,7 +59,7 @@ async function VoyageDashboard() {
               <IdeationStateContent contentObject={ideationData} />
             ) : null}
           </DashboardWidget>
-          <div className="flex flex-row justify-between gap-x-4">
+          <div className="flex flex-row justify-between gap-x-4 max-[1200px]:flex-col max-[1200px]:gap-y-4">
             <div className="flex flex-grow-1 w-full">
               <DashboardWidget
                 title="What features will you develop?"

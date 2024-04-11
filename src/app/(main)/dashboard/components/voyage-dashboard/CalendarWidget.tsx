@@ -1,5 +1,5 @@
 import React from "react";
-import { EventList } from "./dashboardService";
+import { EventList } from "./getDashboardData";
 import Calendar from "@/app/(main)/dashboard/components/Calendar/Calendar";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 

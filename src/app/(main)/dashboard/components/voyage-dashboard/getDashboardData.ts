@@ -7,7 +7,7 @@ import { User } from "@/store/features/user/userSlice";
 import { fetchMeeting } from "@/app/(main)/my-voyage/[teamId]/sprints/components/SprintWrapper";
 import { getUser } from "@/utils/getUser";
 
-interface DashboardServiceResponse {
+interface GetDashboardDataResponse {
   currentSprintNumber: number | null;
   sprintsData: Sprint[];
   user: User | null;
@@ -21,24 +21,25 @@ export type EventList = {
   link: string;
 };
 
-export const dashboardService = async (): Promise<DashboardServiceResponse> => {
+export const getDashboardData = async (): Promise<GetDashboardDataResponse> => {
   let sprintsData: Sprint[] = [];
 
   const [user, error] = await getUser();
-
-  if (!user) {
-    throw new Error("User not found");
-  }
 
   const teamMember = user?.voyageTeamMembers.find(
     (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
   );
 
-  if (!teamMember) {
-    throw new Error("Active team not found for user");
-  }
+  const teamId = teamMember?.voyageTeamId;
 
-  const teamId = teamMember.voyageTeamId;
+  if (!teamId) {
+    return {
+      currentSprintNumber: null,
+      sprintsData: [],
+      user: null,
+      meetingsData: [],
+    };
+  }
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,

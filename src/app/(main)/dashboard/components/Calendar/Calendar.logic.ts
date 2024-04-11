@@ -14,7 +14,7 @@ import {
   endOfDay,
 } from "date-fns";
 import { useState } from "react";
-import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/dashboardService";
+import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 
 export const useCalendarLogic = (

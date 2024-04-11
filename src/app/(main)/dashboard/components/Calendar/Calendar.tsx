@@ -9,7 +9,7 @@ import Cell from "./components/Cell";
 import SprintItem from "./components/SprintItem";
 import Dot from "./components/Dot";
 import Legend from "./components/Legend";
-import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/dashboardService";
+import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
 import Button from "@/components/Button";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 
@@ -45,12 +45,12 @@ export default function Calendar({
   } = useCalendarLogic(sprintsData, currentSprintNumber, meetingsData);
 
   return (
-    <div className="flex h-full w-full">
-      <div className="min-w-[400px] max-w-[400px] p-6 h-full border-r-2 border-base-100">
+    <div className="flex h-full w-full max-[1200px]:flex-col max-[1200px]:gap-y-4 max-[1200px]:items-center max-[1200px]:relative">
+      <div className="min-w-[400px] max-w-[400px] p-6 h-full min-[1200px]:border-r-2 border-base-100">
         <div className="flex justify-center items-center">
-          <div className="flex gap-10 items-center w-full justify-center relative">
+          <div className="flex gap-10 items-center w-full justify-center min-[1200px]:relative">
             <ArrowLeftIcon
-              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute left-[14px]"
+              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute left-[14px] max-[1200px]:left-12"
               onClick={() => {
                 onArrowClick(-1);
               }}
@@ -59,7 +59,7 @@ export default function Calendar({
               {currentMonth} {currentYear}
             </h1>
             <ArrowRightIcon
-              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute right-[14px]"
+              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute right-[14px] max-[1200px]:right-12"
               onClick={() => {
                 onArrowClick(1);
               }}
@@ -128,27 +128,29 @@ export default function Calendar({
       <div className="h-full w-full flex flex-col justify-between p-6">
         <div>
           <h1 className="text-lg font-semibold pb-3">{selectedDate}</h1>
-          {currentSprintNumber ? (
-            <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
-              Sprint Week {currentSprintNumber}
-            </p>
-          ) : null}
-          {meetingsData?.map((event) => {
-            const eventDate = new Date(event.date);
-            const isSelectedDate = isSameDay(selectDate, eventDate);
+          <div className="max-[1500px]:w-[90px] max-[1470px]:w-full">
+            {currentSprintNumber ? (
+              <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
+                Sprint Week {currentSprintNumber}
+              </p>
+            ) : null}
+            {meetingsData?.map((event) => {
+              const eventDate = new Date(event.date);
+              const isSelectedDate = isSameDay(selectDate, eventDate);
 
-            return isSelectedDate ? (
-              <SprintItem
-                key={event.title}
-                title={event.title}
-                link={event.link ?? ""}
-                time={format(eventDate, "h:mm a")}
-              />
-            ) : null;
-          })}
+              return isSelectedDate ? (
+                <SprintItem
+                  key={event.title}
+                  title={event.title}
+                  link={event.link ?? ""}
+                  time={format(eventDate, "h:mm a")}
+                />
+              ) : null;
+            })}
+          </div>
         </div>
         <Button
-          className={`self-end p-1 rounded text-base font-medium hover:bg-neutral ${
+          className={`self-end p-1 h-[27px] mt-4 rounded text-base font-medium hover:bg-neutral ${
             isSameDay(selectDate, currentDate)
               ? "bg-primary"
               : "bg-neutral-focus"
