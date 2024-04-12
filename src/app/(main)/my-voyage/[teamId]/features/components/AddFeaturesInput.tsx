@@ -101,7 +101,7 @@ export default function AddFeaturesInput({
     <Button
       variant="link"
       size="lg"
-      className="h-10 justify-between p-0 w-full outline-none rounded-lg text-neutral-focus font-medium shadow-md border border-base-100 mt-3"
+      className="h-10 justify-between p-0 w-full outline-none rounded-lg text-neutral-focus font-medium shadow-sm border border-base-100 mt-3"
       onClick={handleClick}
     >
       <div className="pl-3">Add Feature</div>
