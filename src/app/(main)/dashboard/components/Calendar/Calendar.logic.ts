@@ -12,6 +12,7 @@ import {
   addMonths,
   startOfDay,
   endOfDay,
+  parseISO,
 } from "date-fns";
 import { useState } from "react";
 import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
@@ -26,6 +27,9 @@ export const useCalendarLogic = (
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
   const [isHoveredDate, setIsHoveredDate] = useState<Date | null>(null);
+
+  const dateTimeConvertedToDate = (dateTime: string) =>
+    parseISO(dateTime.substring(0, dateTime.length - 1));
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -110,9 +114,15 @@ export const useCalendarLogic = (
     const isWithinSprintRange =
       currentSprintStartDate &&
       currentSprintEndDate &&
-      (isSameDay(date, startOfDay(new Date(currentSprintStartDate))) ||
-        isAfter(date, startOfDay(new Date(currentSprintStartDate)))) &&
-      isBefore(date, endOfDay(new Date(currentSprintEndDate)));
+      (isSameDay(
+        date,
+        startOfDay(dateTimeConvertedToDate(currentSprintStartDate)),
+      ) ||
+        isAfter(
+          date,
+          startOfDay(dateTimeConvertedToDate(currentSprintStartDate)),
+        )) &&
+      isBefore(date, endOfDay(dateTimeConvertedToDate(currentSprintEndDate)));
 
     if (!currentMonth) {
       classes += " text-neutral-content";
@@ -142,8 +152,9 @@ export const useCalendarLogic = (
   ];
 
   const showRocketIcon = (date: Date) =>
-    (voyageStartDate && isSameDay(new Date(voyageStartDate), date)) ||
-    (voyageEndDate && isSameDay(new Date(voyageEndDate), date));
+    (voyageStartDate &&
+      isSameDay(dateTimeConvertedToDate(voyageStartDate), date)) ||
+    (voyageEndDate && isSameDay(dateTimeConvertedToDate(voyageEndDate), date));
 
   const getCalendarElementColor = (date: Date, currentMonth: boolean) => {
     if (isSelectedDate(date)) {
