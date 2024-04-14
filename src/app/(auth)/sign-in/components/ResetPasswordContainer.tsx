@@ -47,17 +47,16 @@ function ResetPasswordContainer({
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { email } = data;
-    handleEmailCheck();
     const [res, error] = await resetPwdReqEmailAction(email);
 
     // ignore for prettier
     if (res) {
-      console.log("res: ", res);
+      handleEmailCheck();
     }
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
+        onOpenModal({ type: "error", content: { message: error.message } })
       );
       setResetPwdReqEmail(false);
     }
