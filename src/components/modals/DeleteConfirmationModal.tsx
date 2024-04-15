@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import Modal from "./Modal";
@@ -9,6 +9,7 @@ import Button from "@/components/Button";
 import { onCloseModal, onOpenModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
+import useDelete from "@/hooks/useDelete";
 import { deleteIdeation } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import routePaths from "@/utils/routePaths";
 import { deleteResource } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
@@ -22,70 +23,26 @@ export default function DeleteConfirmationModal() {
   const path = usePathname();
   const router = useRouter();
 
-  const {
-    runAction: deleteIdeationAction,
-    isLoading: deleteIdeationLoading,
-    setIsLoading: setDeleteIdeationLoading,
-  } = useServerAction(deleteIdeation);
+  //const isModalOpen = isOpen && type === "confirmation";
+  //const isTypeResource = path === `/my-voyage/${teamId}/voyage-resources`;
 
-  const {
-    runAction: deleteResourceAction,
-    isLoading: deleteResourceLoading,
-    setIsLoading: setDeleteResourceLoading,
-  } = useServerAction(deleteResource);
+  const types = ["fake", "not real", "confirmation", "other"];
+  const isModalOpen = isOpen && type && types.includes(type);
 
-  const isModalOpen = isOpen && type === "confirmation";
-  const isTypeResource = path === `/my-voyage/${teamId}/voyage-resources`;
-
-  const handleDeleteResource = useCallback(async () => {
-    const [res, error] = await deleteResourceAction({ resourceId: id });
-
-    if (res) {
-      dispatch(onCloseModal());
-    }
-
-    if (error) {
-      dispatch(
-        onOpenModal({
-          type: "error",
-          content: { message: "An error has occurred. Please try again." },
-        }),
-      );
-    }
-
-    setDeleteResourceLoading(false);
-  }, [deleteResourceAction, dispatch, id, setDeleteResourceLoading]);
-
-  const handleDeleteIdeation = useCallback(async () => {
-    const ideationId = +params.ideationId;
-    const [res, error] = await deleteIdeationAction({ teamId, ideationId });
-
-    if (res) {
-      dispatch(onCloseModal());
-      router.push(routePaths.ideationPage(teamId.toString()));
-    }
-
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-      setDeleteIdeationLoading(false);
-    }
-  }, [
-    dispatch,
-    deleteIdeationAction,
-    params.ideationId,
-    router,
-    setDeleteIdeationLoading,
-    teamId,
-  ]);
+  const callBackProps = {
+    teamId: teamId,
+    id: id,
+    ideationId: params.ideationId,
+  };
+  const helpers = { router: router };
+  const deleteType = useDelete(type, callBackProps, helpers);
 
   const handleClose = () => {
     dispatch(onCloseModal());
   };
 
   function renderDeleteButtonContent() {
-    if (deleteIdeationLoading || deleteResourceLoading) {
+    if (deleteType.loadingState) {
       return <Spinner />;
     }
 
@@ -96,6 +53,8 @@ export default function DeleteConfirmationModal() {
       </>
     );
   }
+
+  useEffect(() => {}, [isOpen]);
 
   return isModalOpen ? (
     <Modal
@@ -120,8 +79,8 @@ export default function DeleteConfirmationModal() {
           size="lg"
           variant="error"
           type="button"
-          disabled={deleteIdeationLoading || deleteResourceLoading}
-          onClick={isTypeResource ? handleDeleteResource : handleDeleteIdeation}
+          disabled={deleteType.loadingState}
+          onClick={deleteType.handleClick}
           className="w-1/2"
         >
           {renderDeleteButtonContent()}
