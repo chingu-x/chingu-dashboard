@@ -5,6 +5,7 @@ export type ModalType =
   | "error"
   | "gettingHelp"
   | "confirmation"
+  | "resource"
   | "viewResource"
   | "checkInSuccess";
 
@@ -18,7 +19,7 @@ interface ModalState {
 
 export interface BaseModalOpenActionPayload {
   id?: number;
-  type: Exclude<ModalType, "error" | "confirmation">;
+  type: Exclude<ModalType, "error" | "confirmation" | "resource">;
   content?: ContentPayload;
   isEditing?: boolean;
 }
@@ -35,6 +36,11 @@ export interface ConfirmationModalOpenActionPayload
   content: Required<ContentPayload>;
 }
 
+export interface DeleteResourcesModalOpenActionPayload
+  extends Omit<BaseModalOpenActionPayload, "type"> {
+  type: "resource";
+  content: Required<ContentPayload>;
+}
 export interface ContentPayload {
   title?: string;
   message?: string;
@@ -45,7 +51,8 @@ export interface ContentPayload {
 export type ModalOpenActionPayload =
   | BaseModalOpenActionPayload
   | ErrorModalOpenActionPayload
-  | ConfirmationModalOpenActionPayload;
+  | ConfirmationModalOpenActionPayload
+  | DeleteResourcesModalOpenActionPayload;
 
 const initialState: ModalState = {
   id: 0,
