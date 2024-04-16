@@ -42,7 +42,7 @@ export default function ResourceCard({
   const openDeleteModal = () => {
     dispatch(
       onOpenModal({
-        type: "confirmation",
+        type: "resource",
         id: resourceId,
         content: {
           title: "Delete Resource",
