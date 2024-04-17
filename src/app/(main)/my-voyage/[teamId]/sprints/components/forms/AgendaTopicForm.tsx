@@ -38,10 +38,6 @@ const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function AgendaTopicForm() {
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
   const router = useRouter();
   const params = useParams<{
     teamId: string;
@@ -264,8 +260,6 @@ export default function AgendaTopicForm() {
     return editMode ? "Save Changes" : "Add";
   }
 
-  if (!isMounted) return null;
-
   return (
     // TODO: Create some general form wrapper component
     <div className="flex flex-col items-center w-full bg-base-200 rounded-2xl">
@@ -290,6 +284,7 @@ export default function AgendaTopicForm() {
           {...register("title")}
           errorMessage={errors.title?.message}
           maxLength={50}
+          defaultValue={topicData?.title ?? ""}
         />
         <Textarea
           id="description"
@@ -297,6 +292,7 @@ export default function AgendaTopicForm() {
           placeholder="Please provide a description and include details, links, and actionable items for this topic."
           {...register("description")}
           errorMessage={errors.description?.message}
+          defaultValue={topicData?.description ?? ""}
         />
         <div className="flex w-full gap-x-10">
           {editMode && (
