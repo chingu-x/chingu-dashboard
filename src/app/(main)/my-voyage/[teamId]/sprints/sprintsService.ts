@@ -165,6 +165,19 @@ export interface FetchMeetingResponse extends MeetingResponse {
     description: string;
     status: boolean;
   }[];
+  formResponseMeeting: {
+    form: {
+      id: number;
+    };
+    responseGroup: {
+      responses: {
+        question: {
+          id: number;
+        };
+        text: string;
+      }[];
+    };
+  }[];
 }
 export interface AddMeetingResponse extends MeetingResponse {}
 export interface EditMeetingResponse extends MeetingResponse {}

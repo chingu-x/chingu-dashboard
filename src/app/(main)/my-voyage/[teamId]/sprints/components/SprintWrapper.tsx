@@ -15,7 +15,12 @@ import {
   FetchMeetingProps,
   FetchMeetingResponse,
 } from "@/myVoyage/sprints/sprintsService";
-import { Agenda, Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
+import {
+  Agenda,
+  Meeting,
+  Section,
+  Sprint,
+} from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
@@ -59,6 +64,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   let sprintsData: Sprint[] = [];
   let meetingData: Meeting = { id: +params.meetingId };
   let agendaData: Agenda[] = [];
+  let sectionData: Section[] = [];
 
   const [user, error] = await getUser();
 
@@ -95,6 +101,9 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     if (res) {
       meetingData = res;
       agendaData = res.agendas;
+      if (res.formResponseMeeting.length !== 0) {
+        sectionData = res.formResponseMeeting;
+      }
     } else {
       return `Error: ${error?.message}`;
     }
@@ -140,7 +149,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         currentSprintNumber={currentSprintNumber}
       />
       <Agendas params={params} topics={agendaData} />
-      <Sections />
+      <Sections sections={sectionData} />
     </div>
   );
 }

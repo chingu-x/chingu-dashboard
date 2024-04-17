@@ -3,38 +3,48 @@
 import { useState } from "react";
 import {
   ArrowPathRoundedSquareIcon,
-  DocumentTextIcon,
+  // DocumentTextIcon,
   LightBulbIcon,
 } from "@heroicons/react/24/outline";
 
-import Notes from "./Notes";
+// import Notes from "./Notes";
 import Planning from "./Planning";
 import Review from "./Review";
 import SectionBase from "./SectionBase";
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
+import { Section } from "@/store/features/sprint/sprintSlice";
 
-const sectionTemplates = [
-  {
-    title: "notes",
-    icon: <DocumentTextIcon aria-hidden="true" />,
-    isAdded: false,
-    children: <Notes />,
-  },
-  {
-    title: "sprint planning",
-    icon: <LightBulbIcon aria-hidden="true" />,
-    isAdded: false,
-    children: <Planning />,
-  },
-  {
-    title: "retrospective & review",
-    icon: <ArrowPathRoundedSquareIcon aria-hidden="true" />,
-    isAdded: false,
-    children: <Review />,
-  },
-];
+interface SectionsProps {
+  sections: Section[];
+}
 
-export default function Sections() {
+export default function Sections({ sections }: SectionsProps) {
+  const planningData = sections.find((section) => section.form.id === 2);
+  const retrospectiveData = sections.find((section) => section.form.id === 1);
+
+  const sectionTemplates = [
+    // {
+    //   title: "notes",
+    //   icon: <DocumentTextIcon aria-hidden="true" />,
+    //   isAdded: false,
+    //   children: <Notes />,
+    // },
+    {
+      id: 2,
+      title: "sprint planning",
+      icon: <LightBulbIcon aria-hidden="true" />,
+      isAdded: planningData !== undefined,
+      children: <Planning data={planningData} />,
+    },
+    {
+      id: 1,
+      title: "retrospective & review",
+      icon: <ArrowPathRoundedSquareIcon aria-hidden="true" />,
+      isAdded: retrospectiveData !== undefined,
+      children: <Review data={retrospectiveData} />,
+    },
+  ];
+
   const [addedSections, setAddedSections] = useState(
     sectionTemplates.filter((template) => template.isAdded === true),
   );

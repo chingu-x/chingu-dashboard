@@ -8,6 +8,7 @@ import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
+import { Section } from "@/store/features/sprint/sprintSlice";
 
 const validationSchema = z.object({
   goal: validateTextInput({
@@ -22,7 +23,11 @@ const validationSchema = z.object({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function Planning() {
+interface PlanningProps {
+  data?: Section;
+}
+
+export default function Planning({ data }: PlanningProps) {
   const {
     register,
     handleSubmit,
@@ -47,6 +52,11 @@ export default function Planning() {
         rows={2}
         {...register("goal")}
         errorMessage={errors.goal?.message}
+        defaultValue={
+          data?.responseGroup.responses.find(
+            (response) => response.question.id === 5,
+          )?.text ?? ""
+        }
       />
       <Textarea
         id="timeline"
@@ -55,6 +65,11 @@ export default function Planning() {
         rows={2}
         {...register("timeline")}
         errorMessage={errors.timeline?.message}
+        defaultValue={
+          data?.responseGroup.responses.find(
+            (response) => response.question.id === 4,
+          )?.text ?? ""
+        }
       />
       <Button
         type="submit"

@@ -10,6 +10,21 @@ export interface Agenda {
   status: boolean;
 }
 
+export interface Section {
+  form: {
+    id: number;
+  };
+  responseGroup: {
+    responses: {
+      question: {
+        id: number;
+      };
+      text: string;
+    }[];
+  };
+}
+
+// TODO: Notes and Description need to be fixed
 export interface Meeting {
   id: number;
   sprint?: {
@@ -21,9 +36,9 @@ export interface Meeting {
   meetingLink?: string;
   notes?: string;
   agendas?: Agenda[];
+  formResponseMeeting?: Section[];
 }
 
-// TODO: Notes/Sprint Planning/Retrospective&Review will be added later
 export interface Sprint {
   id: number;
   number: number;

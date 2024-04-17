@@ -8,6 +8,7 @@ import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
+import { Section } from "@/store/features/sprint/sprintSlice";
 
 const validationSchema = z.object({
   what_right: validateTextInput({
@@ -26,7 +27,13 @@ const validationSchema = z.object({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function Review() {
+interface ReviewProps {
+  data?: Section;
+}
+
+export default function Review({ data }: ReviewProps) {
+  console.log(data);
+
   const {
     register,
     handleSubmit,
@@ -51,6 +58,11 @@ export default function Review() {
         rows={2}
         {...register("what_right")}
         errorMessage={errors.what_right?.message}
+        defaultValue={
+          data?.responseGroup.responses.find(
+            (response) => response.question.id === 3,
+          )?.text ?? ""
+        }
       />
       <Textarea
         id="what_to_improve"
@@ -59,6 +71,11 @@ export default function Review() {
         rows={2}
         {...register("what_to_improve")}
         errorMessage={errors.what_to_improve?.message}
+        defaultValue={
+          data?.responseGroup.responses.find(
+            (response) => response.question.id === 2,
+          )?.text ?? ""
+        }
       />
       <Textarea
         id="what_to_change"
@@ -67,6 +84,11 @@ export default function Review() {
         rows={2}
         {...register("what_to_change")}
         errorMessage={errors.what_to_change?.message}
+        defaultValue={
+          data?.responseGroup.responses.find(
+            (response) => response.question.id === 1,
+          )?.text ?? ""
+        }
       />
       <Button
         type="submit"
