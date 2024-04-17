@@ -14,6 +14,7 @@ import { CacheTag } from "@/utils/cacheTag";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import routePaths from "@/utils/routePaths";
 
 export async function fetchSprints({
   teamId,
@@ -78,6 +79,6 @@ export default async function RedirectToCurrentSprintWrapper({
       redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}`);
     }
   } else {
-    redirect("/");
+    redirect(routePaths.dashboardPage());
   }
 }

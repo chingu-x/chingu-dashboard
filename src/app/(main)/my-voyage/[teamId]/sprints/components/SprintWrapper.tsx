@@ -24,6 +24,7 @@ import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import routePaths from "@/utils/routePaths";
 
 async function fetchMeeting({
   sprintNumber,
@@ -81,7 +82,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     }
     sprintsData = res!.voyage.sprints;
   } else {
-    redirect("/");
+    redirect(routePaths.dashboardPage());
   }
 
   const correspondingMeetingId = sprintsData.find(
