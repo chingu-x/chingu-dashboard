@@ -12,7 +12,7 @@ interface SprintProps {
   meetingId: number;
   sprintNumber: number;
   agendaId: number;
-  formId: 1 | 2;
+  formId: number;
 }
 
 interface MeetingBody {
