@@ -38,7 +38,7 @@ export default function useDelete({ type, payload }: UseDeleteProps) {
 
   const getDeleteFunction = useCallback(() => {
     const deleteFunctionMap = {
-      confirmation: deleteIdeation,
+      ideation: deleteIdeation,
       resource: deleteResource,
     };
     if (type && type in deleteFunctionMap) {

@@ -135,7 +135,7 @@ export default function IdeationForm() {
   function handleDelete() {
     dispatch(
       onOpenModal({
-        type: "confirmation",
+        type: "ideation",
         content: {
           title: "Confirm Deletion",
           message:
