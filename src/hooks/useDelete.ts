@@ -1,4 +1,6 @@
 import { useCallback } from "react";
+import { NextRouter } from "next/router";
+import useServerAction from "./useServerAction";
 import {
   DeleteResourceProps,
   DeleteResourceResponse,
@@ -10,39 +12,51 @@ import {
   deleteIdeation,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { useAppDispatch } from "@/store/hooks";
-import { onCloseModal, onOpenModal } from "@/store/features/modal/modalSlice";
-import useServerAction from "./useServerAction";
+import { onCloseModal, onOpenModal, ModalType } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
 import { AsyncActionResponse } from "@/utils/handleAsync";
 
 type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
-
-type ActionProps = DeleteIdeationProps | DeleteResourceProps;
-
+type ActionProps = DeleteIdeationProps | DeleteResourceProps
 type ActionrResponse = DeleteIdeationResponse | DeleteResourceResponse;
 
-export default function useDelete(type: any, payload: any) {
-  const dispatch = useAppDispatch();
-  const { deleteArgs } = payload;
-  const { redirect } = payload;
+interface RedirectProps {
+  router: NextRouter;
+  route: string
+}
+interface UseDeletePayload {
+  deleteArgs?: ActionProps
+  redirect?: RedirectProps 
+}
+interface UseDeleteProps {
+  type: string | undefined;
+  payload: UseDeletePayload ;
+}
+export default function useDelete( { type, payload } : UseDeleteProps ){
+  const dispatch = useAppDispatch()
+  const { deleteArgs, redirect } = payload
+
   const getDeleteFunction = useCallback(() => {
-    switch (type) {
-      case "confirmation":
-        return deleteIdeation;
-      case "resource":
-        return deleteResource;
-      default:
-        return null;
+    const deleteFunctionMap = {
+      "confirmation": deleteIdeation,
+      "resource": deleteResource
+    };
+    if(type && type in deleteFunctionMap){
+      return deleteFunctionMap[type as keyof typeof deleteFunctionMap];
     }
   }, [type]);
-  const deleteFunction = getDeleteFunction() as ActionType<
-    ActionProps,
-    ActionrResponse
-  >;
-  const { runAction, isLoading, setIsLoading } =
-    useServerAction(deleteFunction);
+  
+  const deleteFunction = getDeleteFunction() as ActionType< ActionProps, ActionrResponse >;
+  const { 
+    runAction, 
+    isLoading, 
+    setIsLoading 
+  } = useServerAction(deleteFunction);
 
   const handleDelete = useCallback(async () => {
+    if(!deleteArgs){
+      return
+    }
     const [res, error] = await runAction(deleteArgs);
 
     if (res) {
@@ -61,7 +75,7 @@ export default function useDelete(type: any, payload: any) {
       );
     }
     setIsLoading(false);
-  }, [type, redirect, dispatch, setIsLoading]);
+  }, [type, redirect, dispatch, setIsLoading, deleteArgs, runAction]);
 
-  return { handleClick: handleDelete, loadingState: isLoading };
+  return { handleDelete, isLoading };
 }

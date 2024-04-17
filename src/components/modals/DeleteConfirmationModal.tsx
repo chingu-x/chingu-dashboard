@@ -14,36 +14,42 @@ export default function DeleteConfirmationModal() {
   const { isOpen, type, id } = useModal();
   const modal = useModal();
   const dispatch = useAppDispatch();
-  const params = useParams<{ teamId: string; ideationId: string }>();
-  const teamId = +params.teamId;
+  const { teamId, ideationId } = useParams<{
+    teamId: string;
+    ideationId: string;
+  }>();
   const router = useRouter();
   const types = ["confirmation", "resource"];
   const isModalOpen = isOpen && type && types.includes(type);
+
   const getPayload = useCallback(() => {
-    switch (type) {
-      case "confirmation":
-        return {
-          deleteArgs: { teamId, ideationId: params.ideationId },
-          redirect: { router: router, route: teamId.toString() },
-        };
-      case "resource":
-        return {
-          deleteArgs: { resourceId: id },
-          redirect: null,
-        };
-      default:
-        return {};
+    const payloadMap = {
+      confirmation: {
+        deleteArgs: { teamId, ideationId },
+        redirect: { router, route: teamId?.toString() },
+      },
+      resource: {
+        deleteArgs: { resourceId: id },
+        redirect: null,
+      },
+    };
+
+    if (type && type in payloadMap) {
+      return payloadMap[type as keyof typeof payloadMap];
+    } else {
+      return {};
     }
-  }, [type]);
+  }, [type, id, teamId, ideationId, router]);
+
   const payload = getPayload();
-  const deleteType = useDelete(type, payload);
+  const { isLoading, handleDelete } = useDelete({ type, payload });
 
   const handleClose = () => {
     dispatch(onCloseModal());
   };
 
   function renderDeleteButtonContent() {
-    if (deleteType.loadingState) {
+    if (isLoading) {
       return <Spinner />;
     }
     return (
@@ -77,8 +83,8 @@ export default function DeleteConfirmationModal() {
           size="lg"
           variant="error"
           type="button"
-          disabled={deleteType.loadingState}
-          onClick={deleteType.handleClick}
+          disabled={isLoading}
+          onClick={handleDelete}
           className="w-1/2"
         >
           {renderDeleteButtonContent()}
