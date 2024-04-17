@@ -24,10 +24,11 @@ export default function SectionBase({
   children,
   reorderSections,
 }: SectionBaseProps) {
-  const [isOpen, setIsOpen] = useState(isAdded);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleAddSection = () => {
     reorderSections && reorderSections(title);
+    setIsOpen(true);
   };
 
   const handleToggle = () => {
