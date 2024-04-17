@@ -15,10 +15,14 @@ import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider"
 import { Section } from "@/store/features/sprint/sprintSlice";
 
 interface SectionsProps {
+  params: {
+    meetingId: string;
+    sprintNumber: string;
+  };
   sections: Section[];
 }
 
-export default function Sections({ sections }: SectionsProps) {
+export default function Sections({ params, sections }: SectionsProps) {
   const planningData = sections.find((section) => section.form.id === 2);
   const retrospectiveData = sections.find((section) => section.form.id === 1);
 
@@ -72,9 +76,11 @@ export default function Sections({ sections }: SectionsProps) {
       {addedSections.map((section) => (
         <SectionBase
           key={`${section.title}-section-added`}
+          id={section.id}
           title={section.title}
           icon={section.icon}
           isAdded={section.isAdded}
+          params={params}
         >
           {section.children}
         </SectionBase>
@@ -87,10 +93,12 @@ export default function Sections({ sections }: SectionsProps) {
       {canBeAddedSections.map((section) => (
         <SectionBase
           key={`${section.title}-section-not-added`}
+          id={section.id}
           title={section.title}
           icon={section.icon}
           isAdded={section.isAdded}
           reorderSections={reorderSections}
+          params={params}
         >
           {section.children}
         </SectionBase>

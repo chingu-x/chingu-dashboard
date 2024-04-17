@@ -149,7 +149,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         currentSprintNumber={currentSprintNumber}
       />
       <Agendas params={params} topics={agendaData} />
-      <Sections sections={sectionData} />
+      <Sections params={params} sections={sectionData} />
     </div>
   );
 }

@@ -8,8 +8,17 @@ import {
   PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
+import useServerAction from "@/hooks/useServerAction";
+import { addSection } from "@/myVoyage/sprints/sprintsService";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface SectionBaseProps {
+  params: {
+    meetingId: string;
+    sprintNumber: string;
+  };
+  id: number;
   title: string;
   icon: React.JSX.Element;
   isAdded: boolean;
@@ -18,17 +27,46 @@ interface SectionBaseProps {
 }
 
 export default function SectionBase({
+  params,
+  id,
   title,
   icon,
   isAdded,
   children,
   reorderSections,
 }: SectionBaseProps) {
+  const [meetingId, sprintNumber] = [
+    Number(params.meetingId),
+    Number(params.sprintNumber),
+  ];
+
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleAddSection = () => {
-    reorderSections && reorderSections(title);
-    setIsOpen(true);
+  const {
+    runAction: addSectionAction,
+    isLoading: addSectionLoading,
+    setIsLoading: setAddSectionLoading,
+  } = useServerAction(addSection);
+
+  const handleAddSection = async () => {
+    const [res, error] = await addSectionAction({
+      sprintNumber,
+      meetingId,
+      formId: id,
+    });
+    if (res) {
+      reorderSections && reorderSections(title);
+      setIsOpen(true);
+    }
+
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+
+      setAddSectionLoading(false);
+    }
   };
 
   const handleToggle = () => {
@@ -90,6 +128,7 @@ export default function SectionBase({
             type="button"
             onClick={handleAddSection}
             aria-label="add section"
+            disabled={addSectionLoading}
           >
             <PlusCircleIcon className="w-10 h-10 text-base-300" />
           </button>
