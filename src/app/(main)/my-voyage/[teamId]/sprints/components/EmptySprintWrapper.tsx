@@ -12,6 +12,7 @@ import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 import { getUser } from "@/utils/getUser";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import routePaths from "@/utils/routePaths";
 
 function getMeeting(sprints: Sprint[], sprintNumber: number) {
   const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
@@ -58,7 +59,7 @@ export default async function EmptySprintWrapper({
     }
     sprintsData = res!.voyage.sprints;
   } else {
-    redirect("/");
+    redirect(routePaths.dashboardPage());
   }
 
   // Check if a meeting exists
