@@ -19,12 +19,12 @@ export default function DeleteConfirmationModal() {
     ideationId: string;
   }>();
   const router = useRouter();
-  const types = ["confirmation", "resource"];
+  const types = ["confirmation", "resource", "ideation"];
   const isModalOpen = isOpen && type && types.includes(type);
 
   const getPayload = useCallback(() => {
     const payloadMap = {
-      confirmation: {
+      ideation: {
         deleteArgs: { teamId, ideationId },
         redirect: { router, route: teamId?.toString() },
       },
