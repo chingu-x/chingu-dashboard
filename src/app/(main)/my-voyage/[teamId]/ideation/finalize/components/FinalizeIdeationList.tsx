@@ -46,11 +46,7 @@ export default function FinalizeIdeationList() {
       >
         Finalize Project Idea Selection
       </Button>
-      <Button
-        variant="neutral"
-        className="w-full"
-        onClick={handleCancelClick}
-      >
+      <Button variant="neutral" className="w-full" onClick={handleCancelClick}>
         Cancel
       </Button>
     </div>
