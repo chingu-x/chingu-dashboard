@@ -25,11 +25,11 @@ export default function FinalizeIdeationItem({
   return (
     <Button
       variant={finalizedIdeation === title ? "primary" : "outline"}
-      className="max-w-[800px] w-full gap-x-0"
+      className="w-full gap-x-0"
       onClick={handleClick}
     >
-      <div className="flex flex-col items-center justify-center gap-y-2 w-full">
-        <h2 className="font-semibold text-base">{title}</h2>
+      <div className="flex flex-col items-center justify-center w-full gap-y-2">
+        <h2 className="text-base font-semibold">{title}</h2>
         <AvatarGroup>
           {projectIdeaVotes.map((votes) => {
             const {
