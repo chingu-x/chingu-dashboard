@@ -32,8 +32,6 @@ interface ReviewProps {
 }
 
 export default function Review({ data }: ReviewProps) {
-  console.log(data);
-
   const {
     register,
     handleSubmit,

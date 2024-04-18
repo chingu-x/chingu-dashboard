@@ -30,6 +30,7 @@ import { getUser } from "@/utils/getUser";
 import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
+import { SprintSections } from "@/utils/sections";
 
 async function fetchMeeting({
   sprintNumber,
@@ -64,7 +65,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   let sprintsData: Sprint[] = [];
   let meetingData: Meeting = { id: +params.meetingId };
   let agendaData: Agenda[] = [];
-  let sectionData: Section[] = [];
+  let sectionsData: Section[] = [];
 
   const [user, error] = await getUser();
 
@@ -102,7 +103,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
       meetingData = res;
       agendaData = res.agendas;
       if (res.formResponseMeeting.length !== 0) {
-        sectionData = res.formResponseMeeting;
+        sectionsData = res.formResponseMeeting;
       }
     } else {
       return `Error: ${error?.message}`;
@@ -149,7 +150,16 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         currentSprintNumber={currentSprintNumber}
       />
       <Agendas params={params} topics={agendaData} />
-      <Sections params={params} sections={sectionData} />
+      <Sections
+        params={params}
+        notes={meetingData.notes}
+        planning={sectionsData.find(
+          (section) => section.form.id === Number(SprintSections.planning),
+        )}
+        review={sectionsData.find(
+          (section) => section.form.id === Number(SprintSections.review),
+        )}
+      />
     </div>
   );
 }

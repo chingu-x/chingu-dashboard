@@ -18,7 +18,11 @@ const validationSchema = z.object({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function Notes() {
+interface NotesProps {
+  data?: string;
+}
+
+export default function Notes({ data }: NotesProps) {
   const {
     register,
     handleSubmit,
@@ -42,6 +46,7 @@ export default function Notes() {
         rows={2}
         {...register("notes")}
         errorMessage={errors.notes?.message}
+        defaultValue={data ?? ""}
       />
       <Button
         type="submit"
