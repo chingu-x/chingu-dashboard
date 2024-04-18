@@ -10,7 +10,7 @@ export default function FinalizeIdeationBanner() {
         Finalize the project idea that you and your team plan on creating for
         your Voyage!
       </p>
-      <div className="max-w-[650px] w-full">
+      <div className="w-full">
         <Alert
           context="info"
           message="Important: Your project idea will last your entire Voyage! If changes are needed, 
