@@ -9,19 +9,17 @@ import Button from "@/components/Button";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { Section } from "@/store/features/sprint/sprintSlice";
+import { ReviewQuestions } from "@/utils/sections";
 
 const validationSchema = z.object({
   what_right: validateTextInput({
     inputName: "what_right",
-    required: true,
   }),
   what_to_improve: validateTextInput({
     inputName: "what_to_improve",
-    required: true,
   }),
   what_to_change: validateTextInput({
     inputName: "what_to_change",
-    required: true,
   }),
 });
 
@@ -32,12 +30,30 @@ interface ReviewProps {
 }
 
 export default function Review({ data }: ReviewProps) {
+  const what_right = data?.responseGroup.responses.find(
+    (response) => response.question.id === Number(ReviewQuestions.what_right),
+  )?.text;
+  const what_to_improve = data?.responseGroup.responses.find(
+    (response) =>
+      response.question.id === Number(ReviewQuestions.what_to_improve),
+  )?.text;
+  const what_to_change = data?.responseGroup.responses.find(
+    (response) =>
+      response.question.id === Number(ReviewQuestions.what_to_change),
+  )?.text;
+
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
+    defaultValues: {
+      what_right: what_right ?? "",
+      what_to_improve: what_to_improve ?? "",
+      what_to_change: what_to_change ?? "",
+    },
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
@@ -56,11 +72,7 @@ export default function Review({ data }: ReviewProps) {
         rows={2}
         {...register("what_right")}
         errorMessage={errors.what_right?.message}
-        defaultValue={
-          data?.responseGroup.responses.find(
-            (response) => response.question.id === 3,
-          )?.text ?? ""
-        }
+        defaultValue={what_right ?? ""}
       />
       <Textarea
         id="what_to_improve"
@@ -69,11 +81,7 @@ export default function Review({ data }: ReviewProps) {
         rows={2}
         {...register("what_to_improve")}
         errorMessage={errors.what_to_improve?.message}
-        defaultValue={
-          data?.responseGroup.responses.find(
-            (response) => response.question.id === 2,
-          )?.text ?? ""
-        }
+        defaultValue={what_to_improve ?? ""}
       />
       <Textarea
         id="what_to_change"
@@ -82,11 +90,7 @@ export default function Review({ data }: ReviewProps) {
         rows={2}
         {...register("what_to_change")}
         errorMessage={errors.what_to_change?.message}
-        defaultValue={
-          data?.responseGroup.responses.find(
-            (response) => response.question.id === 1,
-          )?.text ?? ""
-        }
+        defaultValue={what_to_change ?? ""}
       />
       <Button
         type="submit"
