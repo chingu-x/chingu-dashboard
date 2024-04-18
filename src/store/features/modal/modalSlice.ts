@@ -5,8 +5,6 @@ export type ModalType =
   | "error"
   | "gettingHelp"
   | "confirmation"
-  | "ideation"
-  | "resource"
   | "viewResource"
   | "checkInSuccess";
 
@@ -16,13 +14,15 @@ interface ModalState {
   isOpen: boolean;
   isEditing?: boolean;
   content?: ContentPayload;
+  payload?: Payload;
 }
 
 export interface BaseModalOpenActionPayload {
   id?: number;
-  type: Exclude<ModalType, "error" | "confirmation" | "resource" | "ideation">;
+  type: Exclude<ModalType, "error" | "confirmation">;
   content?: ContentPayload;
   isEditing?: boolean;
+  payload?: Payload;
 }
 
 export interface ErrorModalOpenActionPayload
@@ -35,31 +35,31 @@ export interface ConfirmationModalOpenActionPayload
   extends Omit<BaseModalOpenActionPayload, "type"> {
   type: "confirmation";
   content: Required<ContentPayload>;
+  payload: Required<Payload>;
 }
 
-export interface DeleteResourcesModalOpenActionPayload
-  extends Omit<BaseModalOpenActionPayload, "type"> {
-  type: "resource";
-  content: Required<ContentPayload>;
-}
-export interface DeleteIdeationModalOpenActionPayload
-  extends Omit<BaseModalOpenActionPayload, "type"> {
-  type: "ideation";
-  content: Required<ContentPayload>;
-}
 export interface ContentPayload {
   title?: string;
   message?: string;
   confirmationText?: string;
   cancelText?: string;
 }
-
+export interface Payload {
+  params?: {
+    teamId?: number;
+    id: number;
+  };
+  redirect?: Redirect | null;
+  deleteFunction?: (args: any) => Promise<[any, any]>;
+}
+export interface Redirect {
+  router?: () => void; // not sure about this.
+  route?: string;
+}
 export type ModalOpenActionPayload =
   | BaseModalOpenActionPayload
   | ErrorModalOpenActionPayload
-  | ConfirmationModalOpenActionPayload
-  | DeleteResourcesModalOpenActionPayload
-  | DeleteIdeationModalOpenActionPayload;
+  | ConfirmationModalOpenActionPayload;
 
 const initialState: ModalState = {
   id: 0,
@@ -67,6 +67,7 @@ const initialState: ModalState = {
   isOpen: false,
   isEditing: false,
   content: {},
+  payload: {},
 };
 
 export const modalSlice = createSlice({
@@ -74,13 +75,14 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
-      const { id, type, isEditing, content } = action.payload;
+      const { id, type, isEditing, content, payload } = action.payload;
 
       state.id = id;
       state.isOpen = true;
       state.type = type;
       state.isEditing = isEditing;
       state.content = content;
+      state.payload = payload;
     },
     onCloseModal: () => initialState,
   },
