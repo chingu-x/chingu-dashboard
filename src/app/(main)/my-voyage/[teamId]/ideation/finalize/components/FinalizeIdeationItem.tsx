@@ -25,7 +25,7 @@ export default function FinalizeIdeationItem({
   return (
     <Button
       variant={finalizedIdeation === title ? "primary" : "outline"}
-      className="w-[800px] gap-x-0"
+      className="max-w-[800px] w-full gap-x-0"
       onClick={handleClick}
     >
       <div className="flex flex-col items-center justify-center gap-y-2 w-full">
