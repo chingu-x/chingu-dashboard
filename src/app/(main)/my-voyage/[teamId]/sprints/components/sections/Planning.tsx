@@ -9,15 +9,14 @@ import Button from "@/components/Button";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { Section } from "@/store/features/sprint/sprintSlice";
+import { PlanningQuestions } from "@/utils/sections";
 
 const validationSchema = z.object({
   goal: validateTextInput({
-    inputName: "goal",
-    required: true,
+    inputName: "Sprint Goal",
   }),
   timeline: validateTextInput({
-    inputName: "timeline",
-    required: true,
+    inputName: "Timeline/Tasks",
   }),
 });
 
@@ -28,12 +27,24 @@ interface PlanningProps {
 }
 
 export default function Planning({ data }: PlanningProps) {
+  const goal = data?.responseGroup.responses.find(
+    (response) => response.question.id === Number(PlanningQuestions.goal),
+  )?.text;
+  const timeline = data?.responseGroup.responses.find(
+    (response) => response.question.id === Number(PlanningQuestions.timeline),
+  )?.text;
+
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
+    defaultValues: {
+      goal: goal ?? "",
+      timeline: timeline ?? "",
+    },
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
@@ -52,11 +63,7 @@ export default function Planning({ data }: PlanningProps) {
         rows={2}
         {...register("goal")}
         errorMessage={errors.goal?.message}
-        defaultValue={
-          data?.responseGroup.responses.find(
-            (response) => response.question.id === 5,
-          )?.text ?? ""
-        }
+        defaultValue={goal ?? ""}
       />
       <Textarea
         id="timeline"
@@ -65,11 +72,7 @@ export default function Planning({ data }: PlanningProps) {
         rows={2}
         {...register("timeline")}
         errorMessage={errors.timeline?.message}
-        defaultValue={
-          data?.responseGroup.responses.find(
-            (response) => response.question.id === 4,
-          )?.text ?? ""
-        }
+        defaultValue={timeline ?? ""}
       />
       <Button
         type="submit"
