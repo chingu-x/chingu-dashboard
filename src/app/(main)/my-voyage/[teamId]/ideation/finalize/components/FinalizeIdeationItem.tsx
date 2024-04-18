@@ -37,14 +37,7 @@ export default function FinalizeIdeationItem({
                 member: { avatar, id },
               },
             } = votes;
-            return (
-              <Avatar
-                width={24}
-                height={24}
-                key={id}
-                image={avatar}
-              />
-            );
+            return <Avatar width={24} height={24} key={id} image={avatar} />;
           })}
         </AvatarGroup>
       </div>
