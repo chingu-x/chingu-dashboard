@@ -19,7 +19,7 @@ interface ListProps {
 
 export default function List({ id, title, features }: ListProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const newRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
@@ -29,7 +29,7 @@ export default function List({ id, title, features }: ListProps) {
   });
 
   function handleOutsideClick(e: MouseEvent | TouchEvent) {
-    if (newRef.current && !newRef.current.contains(e.target as Node)) {
+    if (listRef.current && !listRef.current.contains(e.target as Node)) {
       setIsEditing(false);
     }
   }
@@ -73,7 +73,7 @@ export default function List({ id, title, features }: ListProps) {
         )}
       </Droppable>
       <div
-        ref={newRef}
+        ref={listRef}
         className="mt-3"
       >
         <AddFeaturesInput

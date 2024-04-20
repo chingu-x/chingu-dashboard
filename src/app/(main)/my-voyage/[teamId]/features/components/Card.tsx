@@ -16,7 +16,7 @@ interface CardProps {
 
 export default function Card({ feature, index, setEditMode }: CardProps) {
   const [showPopover, setShowPopover] = useState<boolean>(false);
-  const newRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const userId = useUser().id;
   const {
     addedBy: {
@@ -31,7 +31,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
   }
 
   function handleOutsideClick(e: MouseEvent | TouchEvent) {
-    if (newRef.current && !newRef.current.contains(e.target as Node)) {
+    if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
       setShowPopover(false);
     }
   }
@@ -49,7 +49,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
       index={index}
     >
       {(provided: DraggableProvided) => (
-        <div ref={newRef}>
+        <div ref={cardRef}>
           <li
             ref={provided.innerRef}
             {...provided.draggableProps}
