@@ -4,31 +4,33 @@ import {
   CheckCircleIcon,
 } from "@heroicons/react/24/solid";
 
-import { ToastContext } from "@/store/features/toast/toastSlice";
-
 interface AlertProps {
-  context: ToastContext;
+  context: string;
   message: string;
 }
 
 function Alert({ context, message }: AlertProps) {
-  const icon = {
+  const icon: Record<string, JSX.Element> = {
     success: <CheckCircleIcon />,
+    info: <InformationCircleIcon className="w-6 h-6" />,
     error: <ExclamationTriangleIcon />,
     warning: <InformationCircleIcon />,
+    neutral: <InformationCircleIcon />,
   };
 
-  const customStyles = {
+  const customStyles: Record<string, string> = {
     success: "bg-success-content border-success",
+    info: "bg-info-content border-info",
     error: "bg-error-content border-error",
-    warning: "bg-info-content border-info",
+    warning: "bg-warning-content border-warning",
+    neutral: "bg-base-100 border-neutral",
   };
 
   return (
     <div
-      className={`flex gap-x-4 items-center p-6 min-[1920px]:text-xl min-[1920px]:font-medium border rounded-2xl text-base-300 shadow-sm ${customStyles[context]}`}
+      className={`flex gap-x-4 items-center p-6 border rounded-2xl font-medium text-base text-base-300 shadow-sm ${customStyles[context]}`}
     >
-      <div className="w-6 h-6 text-base-300">{icon[context]}</div>
+      <div>{icon[context]}</div>
       <span>{message}</span>
     </div>
   );
