@@ -74,7 +74,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
                 <button
                   type="button"
                   onClick={handleClick}
-                  className="p-0 m-0 bg-transparent border-none hover:bg-transparent gap-x-0"
+                  className="flex justify-end items-center w-12 h-10 p-0 m-0 bg-transparent border-none hover:bg-transparent gap-x-0"
                   aria-label="feature menu"
                 >
                   <EllipsisVerticalIcon className="w-5 h-5 text-base-300" />
