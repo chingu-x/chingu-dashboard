@@ -31,11 +31,11 @@ interface AgendaTopicBody {
 interface SectionBody {
   responses: {
     questionId: number;
-    optionChoiceId: number;
+    optionChoiceId?: number;
     text?: string;
     boolean?: boolean;
     numeric?: number;
-    responseGroupId: number;
+    responseGroupId?: number;
   }[];
 }
 
