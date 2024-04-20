@@ -4,8 +4,10 @@ import { Draggable, DraggableProvided } from "@hello-pangea/dnd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 import { Feature } from "./fixtures/Features";
+import EditPopover from "./EditPopover";
 import { useUser } from "@/store/hooks";
 import Avatar from "@/components/avatar/Avatar";
+import { useState } from "react";
 
 // import { useAppDispatch } from "@/store/hooks";
 // import { onOpenModal } from "@/store/features/modal/modalSlice";
@@ -16,6 +18,7 @@ interface CardProps {
 }
 
 export default function Card({ feature, index }: CardProps) {
+  const [showPopover, setShowPopover] = useState<boolean>(false);
   const userId = useUser().id;
   const {
     addedBy: {
@@ -23,19 +26,10 @@ export default function Card({ feature, index }: CardProps) {
     },
   } = feature;
   const isCurrentUser = userId === id;
-  // const dispatch = useAppDispatch();
-  // const userFullName =
-  //   feature.addedBy.member.firstName + " " + feature.addedBy.member.lastName;
 
-  // function handleClick() {
-  //   dispatch(
-  //     onOpenModal({
-  //       type: "feature",
-  //       content: {},
-  //       isEditing: true,
-  //     })
-  //   );
-  // }
+  function handleClick() {
+    setShowPopover(true);
+  }
 
   return (
     <Draggable
@@ -47,8 +41,9 @@ export default function Card({ feature, index }: CardProps) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="bg-base-100 py-[14px] px-[22px] rounded-lg text-base-300 my-3"
+          className="relative bg-base-100 py-[14px] px-[22px] rounded-lg text-base-300 my-3"
         >
+          {showPopover && <EditPopover />}
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-y-1">
               <h5 className="text-base font-semibold">{feature.description}</h5>
@@ -60,7 +55,7 @@ export default function Card({ feature, index }: CardProps) {
               // Edit Button
               <button
                 type="button"
-                // onClick={handleClick}
+                onClick={handleClick}
                 className="p-0 m-0 bg-transparent border-none hover:bg-transparent gap-x-0"
                 aria-label="feature menu"
               >
