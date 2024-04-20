@@ -3,13 +3,18 @@
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams } from "next/navigation";
 
 import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { Section } from "@/store/features/sprint/sprintSlice";
-import { PlanningQuestions } from "@/utils/sections";
+import { PlanningQuestions, SprintSections } from "@/utils/sections";
+import useServerAction from "@/hooks/useServerAction";
+import { editSection } from "@/myVoyage/sprints/sprintsService";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   goal: validateTextInput({
@@ -27,6 +32,17 @@ interface PlanningProps {
 }
 
 export default function Planning({ data }: PlanningProps) {
+  const dispatch = useAppDispatch();
+  const params = useParams<{
+    sprintNumber: string;
+    meetingId: string;
+  }>();
+
+  const [sprintNumber, meetingId] = [
+    Number(params.sprintNumber),
+    Number(params.meetingId),
+  ];
+
   const goal = data?.responseGroup.responses.find(
     (response) => response.question.id === Number(PlanningQuestions.goal),
   )?.text;
@@ -37,6 +53,7 @@ export default function Planning({ data }: PlanningProps) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
@@ -47,8 +64,38 @@ export default function Planning({ data }: PlanningProps) {
     },
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const {
+    runAction: editSectionAction,
+    isLoading: editSectionLoading,
+    setIsLoading: seteditSectionLoading,
+  } = useServerAction(editSection);
+
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    if (data.goal !== "" || data.timeline !== "") {
+      const [res, error] = await editSectionAction({
+        ...data,
+        meetingId,
+        sprintNumber,
+        formId: Number(SprintSections.planning),
+      });
+
+      if (res) {
+        reset({ ...data });
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({
+            type: "error",
+            content: { message: error.message },
+          }),
+        );
+      }
+      seteditSectionLoading(false);
+    } else {
+      // TODO: ??
+      console.log("empty fields");
+    }
   };
 
   return (
@@ -79,7 +126,7 @@ export default function Planning({ data }: PlanningProps) {
         variant="outline"
         size="md"
         className="self-center"
-        disabled={!isDirty || !isValid}
+        disabled={!isDirty || !isValid || editSectionLoading}
       >
         Save
       </Button>
