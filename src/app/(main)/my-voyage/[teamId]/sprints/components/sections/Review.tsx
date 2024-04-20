@@ -3,13 +3,18 @@
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams } from "next/navigation";
 
 import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { Section } from "@/store/features/sprint/sprintSlice";
-import { ReviewQuestions } from "@/utils/sections";
+import { ReviewQuestions, SprintSections } from "@/utils/sections";
+import useServerAction from "@/hooks/useServerAction";
+import { editSection } from "@/myVoyage/sprints/sprintsService";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { useAppDispatch } from "@/store/hooks";
 
 const validationSchema = z.object({
   what_right: validateTextInput({
@@ -30,6 +35,17 @@ interface ReviewProps {
 }
 
 export default function Review({ data }: ReviewProps) {
+  const dispatch = useAppDispatch();
+  const params = useParams<{
+    sprintNumber: string;
+    meetingId: string;
+  }>();
+
+  const [sprintNumber, meetingId] = [
+    Number(params.sprintNumber),
+    Number(params.meetingId),
+  ];
+
   const what_right = data?.responseGroup.responses.find(
     (response) => response.question.id === Number(ReviewQuestions.what_right),
   )?.text;
@@ -45,6 +61,7 @@ export default function Review({ data }: ReviewProps) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
@@ -56,8 +73,43 @@ export default function Review({ data }: ReviewProps) {
     },
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const {
+    runAction: editSectionAction,
+    isLoading: editSectionLoading,
+    setIsLoading: seteditSectionLoading,
+  } = useServerAction(editSection);
+
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    console.log();
+
+    if (
+      data.what_right !== "" ||
+      data.what_to_change !== "" ||
+      data.what_to_improve !== ""
+    ) {
+      const [res, error] = await editSectionAction({
+        ...data,
+        meetingId,
+        sprintNumber,
+        formId: Number(SprintSections.review),
+      });
+
+      if (res) {
+        reset({ ...data });
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({
+            type: "error",
+            content: { message: error.message },
+          }),
+        );
+      }
+      seteditSectionLoading(false);
+    } else {
+      console.log("empty fields");
+    }
   };
 
   return (
@@ -97,7 +149,7 @@ export default function Review({ data }: ReviewProps) {
         variant="outline"
         size="md"
         className="self-center"
-        disabled={!isDirty || !isValid}
+        disabled={!isDirty || !isValid || editSectionLoading}
       >
         Save
       </Button>

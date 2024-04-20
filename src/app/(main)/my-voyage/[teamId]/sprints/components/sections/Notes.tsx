@@ -17,6 +17,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 const validationSchema = z.object({
   notes: validateTextInput({
     inputName: "notes",
+    required: true,
   }),
 });
 
@@ -90,7 +91,6 @@ export default function Notes({ data }: NotesProps) {
         rows={2}
         {...register("notes")}
         errorMessage={errors.notes?.message}
-        defaultValue={data ?? ""}
       />
       <Button
         type="submit"
