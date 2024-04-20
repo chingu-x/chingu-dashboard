@@ -2,15 +2,11 @@
 
 import { Draggable, DraggableProvided } from "@hello-pangea/dnd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
-
+import { useState } from "react";
 import { Feature } from "./fixtures/Features";
 import EditPopover from "./EditPopover";
 import { useUser } from "@/store/hooks";
 import Avatar from "@/components/avatar/Avatar";
-import { useState } from "react";
-
-// import { useAppDispatch } from "@/store/hooks";
-// import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface CardProps {
   feature: Feature;
