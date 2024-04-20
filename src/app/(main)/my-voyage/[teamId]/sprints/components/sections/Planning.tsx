@@ -67,22 +67,37 @@ export default function Planning({ data }: PlanningProps) {
   const {
     runAction: editSectionAction,
     isLoading: editSectionLoading,
-    setIsLoading: seteditSectionLoading,
+    setIsLoading: setEditSectionLoading,
   } = useServerAction(editSection);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     if (data.goal !== "" || data.timeline !== "") {
+      type ResponseType = { questionId: number; text: string }[];
+      const responses = [] as ResponseType;
+
+      for (const [key, value] of Object.entries(data)) {
+        const question = key as keyof typeof PlanningQuestions;
+        const questionId: number = PlanningQuestions[question];
+        const text = value;
+        const response = {
+          questionId,
+          text,
+          optionChoiceId: null,
+          numeric: null,
+          boolean: null,
+        };
+        responses.push(response);
+      }
+
       const [res, error] = await editSectionAction({
-        ...data,
+        responses,
         meetingId,
         sprintNumber,
         formId: Number(SprintSections.planning),
       });
-
       if (res) {
         reset({ ...data });
       }
-
       if (error) {
         dispatch(
           onOpenModal({
@@ -91,10 +106,14 @@ export default function Planning({ data }: PlanningProps) {
           }),
         );
       }
-      seteditSectionLoading(false);
+      setEditSectionLoading(false);
     } else {
-      // TODO: ??
-      console.log("empty fields");
+      dispatch(
+        onOpenModal({
+          type: "error",
+          content: { message: "All fields are empty!" },
+        }),
+      );
     }
   };
 

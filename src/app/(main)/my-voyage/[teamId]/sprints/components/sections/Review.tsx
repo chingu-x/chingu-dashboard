@@ -76,19 +76,34 @@ export default function Review({ data }: ReviewProps) {
   const {
     runAction: editSectionAction,
     isLoading: editSectionLoading,
-    setIsLoading: seteditSectionLoading,
+    setIsLoading: setEditSectionLoading,
   } = useServerAction(editSection);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    console.log();
-
     if (
       data.what_right !== "" ||
       data.what_to_change !== "" ||
       data.what_to_improve !== ""
     ) {
+      type ResponseType = { questionId: number; text: string }[];
+      const responses = [] as ResponseType;
+
+      for (const [key, value] of Object.entries(data)) {
+        const question = key as keyof typeof ReviewQuestions;
+        const questionId: number = ReviewQuestions[question];
+        const text = value;
+        const response = {
+          questionId,
+          text,
+          optionChoiceId: null,
+          numeric: null,
+          boolean: null,
+        };
+        responses.push(response);
+      }
+
       const [res, error] = await editSectionAction({
-        ...data,
+        responses,
         meetingId,
         sprintNumber,
         formId: Number(SprintSections.review),
@@ -106,9 +121,14 @@ export default function Review({ data }: ReviewProps) {
           }),
         );
       }
-      seteditSectionLoading(false);
+      setEditSectionLoading(false);
     } else {
-      console.log("empty fields");
+      dispatch(
+        onOpenModal({
+          type: "error",
+          content: { message: "All fields are empty!" },
+        }),
+      );
     }
   };
 
