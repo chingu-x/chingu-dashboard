@@ -2,7 +2,7 @@ import * as z from "zod";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
@@ -16,7 +16,7 @@ import Spinner from "@/components/Spinner";
 interface AddFeaturesInputProps {
   handleClick: () => void;
   isEditing: boolean;
-  setIsEditing: (value: SetStateAction<boolean>) => void;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
   id: number;
 }
 
