@@ -17,6 +17,7 @@ interface SprintProps {
 
 interface MeetingBody {
   title: string;
+  description: string;
   dateTime: string;
   meetingLink: string;
   notes: string;
@@ -77,6 +78,7 @@ export interface SprintsResponse {
 interface MeetingResponse {
   id: number;
   title: string;
+  description: string;
   dateTime: string;
   meetingLink: string;
   notes: string;
@@ -107,8 +109,8 @@ interface SectionResponse {
   responseGroupId: number;
 }
 
-interface AddMeetingBody extends MeetingBody {}
-interface EditMeetingBody extends Partial<AddMeetingBody> {}
+interface AddMeetingBody extends Omit<MeetingBody, "notes"> {}
+interface EditMeetingBody extends Partial<MeetingBody> {}
 
 interface AddAgendaTopicBody extends Omit<AgendaTopicBody, "status"> {}
 interface EditAgendaTopicBody extends Partial<AgendaTopicBody> {}
@@ -193,9 +195,9 @@ export async function addMeeting({
   teamId,
   sprintNumber,
   title,
+  description,
   dateTime,
   meetingLink,
-  notes,
 }: AddMeetingProps): Promise<AsyncActionResponse<AddMeetingResponse>> {
   const token = getAccessToken();
   const sprintCache = getSprintCache(sprintNumber)!;
@@ -205,7 +207,7 @@ export async function addMeeting({
       `api/v1/voyages/sprints/${sprintNumber}/teams/${teamId}/meetings`,
       token,
       "default",
-      { title, dateTime, meetingLink, notes },
+      { title, dateTime, meetingLink, description },
     );
 
   const [res, error] = await handleAsync(addMeetingAsync);
@@ -222,6 +224,7 @@ export async function editMeeting({
   meetingId,
   sprintNumber,
   title,
+  description,
   dateTime,
   meetingLink,
   notes,
@@ -234,7 +237,7 @@ export async function editMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "default",
-      { title, dateTime, meetingLink, notes },
+      { title, dateTime, meetingLink, notes, description },
     );
 
   const [res, error] = await handleAsync(editMeetingAsync);

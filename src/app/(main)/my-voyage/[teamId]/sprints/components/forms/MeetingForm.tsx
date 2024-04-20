@@ -38,7 +38,7 @@ const validationSchema = z.object({
     required: true,
     maxLen: 50,
   }),
-  notes: validateTextInput({
+  description: validateTextInput({
     inputName: "Description",
     required: true,
   }),
@@ -95,7 +95,7 @@ export default function MeetingForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  const { title, notes, dateTime, meetingLink } = watch();
+  const { title, description, dateTime, meetingLink } = watch();
 
   const setCustomValue = (id: "dateTime", value: Date) => {
     setValue(id, value, {
@@ -175,7 +175,7 @@ export default function MeetingForm() {
       );
       reset({
         title: meetingData?.title,
-        notes: meetingData?.notes,
+        description: meetingData?.description,
         meetingLink: meetingData?.meetingLink,
         dateTime: dateTimeConvertedToDate,
       });
@@ -260,7 +260,7 @@ export default function MeetingForm() {
     editMeetingAction,
     setEditMeetingLoading,
     title,
-    notes,
+    description,
     dateTime,
     meetingLink,
   ]);
@@ -309,9 +309,9 @@ export default function MeetingForm() {
           id="description"
           label="description"
           placeholder="Please provide a brief description of the goals for this meeting."
-          {...register("notes")}
-          errorMessage={errors.notes?.message}
-          defaultValue={meetingData?.notes ?? ""}
+          {...register("description")}
+          errorMessage={errors.description?.message}
+          defaultValue={meetingData?.description ?? ""}
         />
         <DateTimePicker
           id="date"
