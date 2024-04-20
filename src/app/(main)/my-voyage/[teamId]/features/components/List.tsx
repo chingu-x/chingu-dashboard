@@ -6,14 +6,15 @@ import {
   DroppableStateSnapshot,
 } from "@hello-pangea/dnd";
 import { useEffect, useRef, useState } from "react";
-import { Feature } from "./fixtures/Features";
-import Card from "./Card";
+// import { Feature } from "./fixtures/Features";
 import AddFeaturesInput from "./AddFeaturesInput";
+import ListItem from "./ListItem";
+import { Features } from "@/store/features/features/featuresSlice";
 
 interface ListProps {
   id: number;
   title: string;
-  features: Feature[];
+  features: Features[];
 }
 
 export default function List({ id, title, features }: ListProps) {
@@ -44,7 +45,7 @@ export default function List({ id, title, features }: ListProps) {
       <Droppable droppableId={id.toString()}>
         {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
           <div
-            className={`max-h-[300px] overflow-y-auto overflow-x-hidden px-3 rounded-lg ${
+            className={`max-h-[300px] min-h-[130px] overflow-y-auto overflow-x-hidden px-3 rounded-lg ${
               snapshot.draggingFromThisWith && "bg-base-content"
             } ${snapshot.isDraggingOver && "bg-base-content"}`}
           >
@@ -60,10 +61,10 @@ export default function List({ id, title, features }: ListProps) {
                 </span>
               )}
               {features.map((feature, index) => (
-                <Card
+                <ListItem
                   key={feature.id}
-                  index={index}
                   feature={feature}
+                  index={index}
                 />
               ))}
               {provided.placeholder}
@@ -71,7 +72,6 @@ export default function List({ id, title, features }: ListProps) {
           </div>
         )}
       </Droppable>
-      {/* Similiar to tech stack button, need to be a shared component */}
       <div
         ref={newRef}
         className="mt-3"
