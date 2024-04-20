@@ -28,7 +28,7 @@ interface ListItemProps {
 
 export default function ListItem({ feature, index }: ListItemProps) {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const newRef = useRef<HTMLDivElement>(null);
+  const listItemRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const { id, description, teamMemberId } = feature;
 
@@ -73,7 +73,10 @@ export default function ListItem({ feature, index }: ListItemProps) {
   }
 
   function handleOutsideClick(e: MouseEvent | TouchEvent) {
-    if (newRef.current && !newRef.current.contains(e.target as Node)) {
+    if (
+      listItemRef.current &&
+      !listItemRef.current.contains(e.target as Node)
+    ) {
       setEditMode(false);
       reset({
         description,
@@ -105,7 +108,7 @@ export default function ListItem({ feature, index }: ListItemProps) {
       onSubmit={handleSubmit(onSubmit)}
       key={feature.id}
     >
-      <div ref={newRef}>
+      <div ref={listItemRef}>
         <TextInput
           clearInputAction={handleClearInputAction}
           id="description"
