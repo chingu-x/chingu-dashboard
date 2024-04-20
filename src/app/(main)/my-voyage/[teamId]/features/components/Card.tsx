@@ -2,7 +2,7 @@
 
 import { Draggable, DraggableProvided } from "@hello-pangea/dnd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Feature } from "./fixtures/Features";
 import EditPopover from "./EditPopover";
 import { useUser } from "@/store/hooks";
@@ -11,9 +11,10 @@ import Avatar from "@/components/avatar/Avatar";
 interface CardProps {
   feature: Feature;
   index: number;
+  setEditMode: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function Card({ feature, index }: CardProps) {
+export default function Card({ feature, index, setEditMode }: CardProps) {
   const [showPopover, setShowPopover] = useState<boolean>(false);
   const newRef = useRef<HTMLDivElement>(null);
   const userId = useUser().id;
@@ -54,7 +55,12 @@ export default function Card({ feature, index }: CardProps) {
             {...provided.dragHandleProps}
             className="relative bg-base-100 py-[14px] px-[22px] rounded-lg text-base-300 my-3"
           >
-            {showPopover && <EditPopover />}
+            {showPopover && (
+              <EditPopover
+                setEditMode={setEditMode}
+                setShowPopover={setShowPopover}
+              />
+            )}
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-y-1">
                 <h5 className="text-base font-semibold">
