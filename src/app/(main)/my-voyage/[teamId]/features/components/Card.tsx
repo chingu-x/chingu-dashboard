@@ -22,6 +22,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
     addedBy: {
       member: { id, firstName, lastName, avatar },
     },
+    description,
   } = feature;
   const isCurrentUser = userId === id;
 
@@ -63,9 +64,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
             )}
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-y-1">
-                <h5 className="text-base font-semibold">
-                  {feature.description}
-                </h5>
+                <h5 className="text-base font-semibold">{description}</h5>
                 <span className="text-[10px] text-neutral">{`Added by ${
                   isCurrentUser ? "you" : firstName + " " + lastName
                 }`}</span>

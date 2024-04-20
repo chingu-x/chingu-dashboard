@@ -1,7 +1,16 @@
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { Dispatch, SetStateAction } from "react";
 import Button from "@/components/Button";
 
-export default function EditPopover({ setEditMode, setShowPopover }) {
+interface EditPopoverProps {
+  setEditMode: Dispatch<SetStateAction<boolean>>;
+  setShowPopover: Dispatch<SetStateAction<boolean>>;
+}
+
+export default function EditPopover({
+  setEditMode,
+  setShowPopover,
+}: EditPopoverProps) {
   function handleClick() {
     setEditMode(true);
     setShowPopover(false);

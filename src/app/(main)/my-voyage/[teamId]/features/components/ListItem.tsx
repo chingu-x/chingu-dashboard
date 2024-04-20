@@ -6,6 +6,11 @@ import Card from "./Card";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { Features } from "@/store/features/features/featuresSlice";
+import useServerAction from "@/hooks/useServerAction";
+import { editFeature } from "@/myVoyage/features/featuresService";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
   description: validateTextInput({
@@ -23,8 +28,15 @@ interface ListItemProps {
 
 export default function ListItem({ feature, index }: ListItemProps) {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {};
   const newRef = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
+  const { id, description, teamMemberId } = feature;
+
+  const {
+    runAction: editFeatureAction,
+    isLoading: editFeatureLoading,
+    setIsLoading: setEditFeatureLoading,
+  } = useServerAction(editFeature);
 
   const {
     register,
@@ -37,11 +49,35 @@ export default function ListItem({ feature, index }: ListItemProps) {
     resolver: zodResolver(validationSchema),
   });
 
-  function handleClearInputAction() {}
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    const { description } = data;
+
+    const [, error] = await editFeatureAction({
+      featureId: id,
+      description,
+      teamMemberId,
+    });
+
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } })
+      );
+    }
+
+    setEditFeatureLoading(false);
+    setEditMode(false);
+  };
+
+  function handleClearInputAction() {
+    reset({ description: "" });
+  }
 
   function handleOutsideClick(e: MouseEvent | TouchEvent) {
     if (newRef.current && !newRef.current.contains(e.target as Node)) {
       setEditMode(false);
+      reset({
+        description,
+      });
     }
   }
 
@@ -52,31 +88,42 @@ export default function ListItem({ feature, index }: ListItemProps) {
     };
   });
 
-  return (
-    <div ref={newRef}>
-      {editMode ? (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          key={feature.id}
-        >
-          <TextInput
-            clearInputAction={handleClearInputAction}
-            id="description"
-            {...register("description")}
-            errorMessage={errors.description?.message}
-            placeholder="Add Feature"
-            submitButtonText="Save"
-            buttonDisabled={!isDirty || !isValid}
-          />
-        </form>
-      ) : (
-        <Card
-          key={feature.id}
-          index={index}
-          feature={feature}
-          setEditMode={setEditMode}
+  useEffect(() => {
+    reset({
+      description,
+    });
+  }, [description, reset]);
+
+  useEffect(() => {
+    if (editMode) {
+      setFocus("description", { shouldSelect: true });
+    }
+  }, [editMode, setFocus]);
+
+  return editMode ? (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      key={feature.id}
+    >
+      <div ref={newRef}>
+        <TextInput
+          clearInputAction={handleClearInputAction}
+          id="description"
+          {...register("description")}
+          errorMessage={errors.description?.message}
+          placeholder="Edit your feature"
+          defaultValue={description}
+          submitButtonText={editFeatureLoading ? <Spinner /> : "Save"}
+          buttonDisabled={!isDirty || !isValid}
         />
-      )}
-    </div>
+      </div>
+    </form>
+  ) : (
+    <Card
+      key={feature.id}
+      index={index}
+      feature={feature}
+      setEditMode={setEditMode}
+    />
   );
 }
