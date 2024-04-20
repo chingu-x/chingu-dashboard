@@ -142,7 +142,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         title={meetingData.title!}
         dateTime={meetingData.dateTime!}
         meetingLink={meetingData.meetingLink!}
-        notes={meetingData.notes!}
+        description={meetingData.description!}
       />
       <MeetingProvider
         sprints={sprintsData}

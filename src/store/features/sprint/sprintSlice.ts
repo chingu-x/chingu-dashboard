@@ -24,7 +24,6 @@ export interface Section {
   };
 }
 
-// TODO: Notes and Description need to be fixed
 export interface Meeting {
   id: number;
   sprint?: {
@@ -32,6 +31,7 @@ export interface Meeting {
     number: number;
   };
   title?: string;
+  description?: string;
   dateTime?: string;
   meetingLink?: string;
   notes?: string;
