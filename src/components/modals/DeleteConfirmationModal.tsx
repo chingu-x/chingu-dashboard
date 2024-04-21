@@ -1,7 +1,5 @@
 "use client";
 
-import { useCallback } from "react";
-import { useParams, useRouter } from "next/navigation";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import Modal from "./Modal";
 import Spinner from "@/components/Spinner";
@@ -11,38 +9,21 @@ import { useAppDispatch, useModal } from "@/store/hooks";
 import useDelete from "@/hooks/useDelete";
 
 export default function DeleteConfirmationModal() {
-  const { isOpen, type, id } = useModal();
+  const { isOpen, type } = useModal();
+  let { payload } = useModal();
   const modal = useModal();
   const dispatch = useAppDispatch();
-  const { teamId, ideationId } = useParams<{
-    teamId: string;
-    ideationId: string;
-  }>();
-  const router = useRouter();
-  const types = ["confirmation", "resource", "ideation"];
-  const isModalOpen = isOpen && type && types.includes(type);
+  //const router = useRouter();
+  const isModalOpen = isOpen && type && type === "confirmation";
 
-  const getPayload = useCallback(() => {
-    const payloadMap = {
-      ideation: {
-        deleteArgs: { teamId, ideationId },
-        redirect: { router, route: teamId?.toString() },
-      },
-      resource: {
-        deleteArgs: { resourceId: id },
-        redirect: null,
-      },
-    };
-
-    if (type && type in payloadMap) {
-      return payloadMap[type as keyof typeof payloadMap];
-    } else {
-      return {};
-    }
-  }, [type, id, teamId, ideationId, router]);
-
-  const payload = getPayload();
-  const { isLoading, handleDelete } = useDelete({ type, payload });
+  payload
+    ? payload
+    : (payload = {
+        params: undefined,
+        redirect: undefined,
+        deleteFunction: undefined,
+      });
+  const { handleDelete, isLoading } = useDelete(payload);
 
   const handleClose = () => {
     dispatch(onCloseModal());
@@ -52,6 +33,7 @@ export default function DeleteConfirmationModal() {
     if (isLoading) {
       return <Spinner />;
     }
+
     return (
       <>
         <TrashIcon className="w-4 h-4" />
