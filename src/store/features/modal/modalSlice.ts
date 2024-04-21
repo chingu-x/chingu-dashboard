@@ -1,4 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { NextRouter } from "next/router";
+import {
+  DeleteResourceProps,
+  DeleteResourceResponse,
+} from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
+import {
+  DeleteIdeationProps,
+  DeleteIdeationResponse,
+} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import { AsyncActionResponse } from "@/utils/handleAsync";
 
 export type ModalType =
   | "feature"
@@ -44,18 +54,27 @@ export interface ContentPayload {
   confirmationText?: string;
   cancelText?: string;
 }
+
 export interface Payload {
   params?: {
     teamId?: number;
-    id: number;
+    resourceId: number;
   };
   redirect?: Redirect | null;
-  deleteFunction?: (args: any) => Promise<[any, any]>;
+  deleteFunction?: ActionType<DeleteProps, DeleteResponse>;
 }
+
 export interface Redirect {
-  router?: () => void; // not sure about this.
+  router?: NextRouter;
   route?: string;
 }
+
+type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
+
+export type DeleteProps = DeleteIdeationProps | DeleteResourceProps;
+
+export type DeleteResponse = DeleteIdeationResponse | DeleteResourceResponse;
+
 export type ModalOpenActionPayload =
   | BaseModalOpenActionPayload
   | ErrorModalOpenActionPayload

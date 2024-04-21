@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Badge from "@/components/badge/Badge";
 import IconButton from "@/components/IconButton";
+import { deleteResource } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
 
 interface ResourceCardProps {
   resourceId: number;
@@ -42,7 +43,7 @@ export default function ResourceCard({
   const openDeleteModal = () => {
     dispatch(
       onOpenModal({
-        type: "resource",
+        type: "confirmation",
         id: resourceId,
         content: {
           title: "Delete Resource",
@@ -50,6 +51,13 @@ export default function ResourceCard({
             "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
           confirmationText: "Delete",
           cancelText: "Keep it",
+        },
+        payload: {
+          params: {
+            resourceId,
+          },
+          redirect: null,
+          deleteFunction: deleteResource,
         },
       }),
     );
