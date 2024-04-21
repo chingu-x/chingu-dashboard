@@ -28,6 +28,9 @@ const routePaths = {
   editIdeationPage(teamId: string, ideationId: string) {
     return `/my-voyage/${teamId}/ideation/${ideationId}/edit`;
   },
+  finalizeIdeationPage(teamId: string) {
+    return `/my-voyage/${teamId}/ideation/finalize`;
+  },
   featuresPage(teamId: string) {
     return `/my-voyage/${teamId}/features`;
   },
