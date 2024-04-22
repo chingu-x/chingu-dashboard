@@ -8,7 +8,7 @@ import { CacheTag } from "@/utils/cacheTag";
 
 interface IdeationProps {
   teamId: number;
-  resourceId: number;
+  ideationId: number;
 }
 
 interface IdeationBody {
@@ -75,7 +75,7 @@ export async function addIdeation({
 
 export async function editIdeation({
   teamId,
-  resourceId,
+  ideationId,
   title,
   description,
   vision,
@@ -84,7 +84,7 @@ export async function editIdeation({
 
   const editIdeationAsync = () =>
     PATCH<EditIdeationBody, EditIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideations/${resourceId}`,
+      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
       { title, description, vision },
@@ -101,12 +101,12 @@ export async function editIdeation({
 
 export async function deleteIdeation({
   teamId,
-  resourceId,
+  ideationId,
 }: DeleteIdeationProps): Promise<AsyncActionResponse<DeleteIdeationResponse>> {
   const token = getAccessToken();
   const deleteIdeationAsync = () =>
     DELETE<DeleteIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideations/${resourceId}`,
+      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
       token,
       "default",
     );
@@ -122,13 +122,13 @@ export async function deleteIdeation({
 
 export async function addIdeationVote({
   teamId,
-  resourceId,
+  ideationId,
 }: IdeationVoteProps): Promise<AsyncActionResponse<IdeationVoteResponse>> {
   const token = getAccessToken();
 
   const addIdeationVoteAsync = () =>
     POST<undefined, IdeationVoteResponse>(
-      `api/v1/voyages/${teamId}/ideations/${resourceId}/ideation-votes`,
+      `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
       "default",
     );
@@ -144,13 +144,13 @@ export async function addIdeationVote({
 
 export async function removeIdeationVote({
   teamId,
-  resourceId,
+  ideationId,
 }: IdeationVoteProps): Promise<AsyncActionResponse<IdeationVoteResponse>> {
   const token = getAccessToken();
 
   const removeIdeationVoteAsync = () =>
     DELETE<IdeationVoteResponse>(
-      `api/v1/voyages/${teamId}/ideations/${resourceId}/ideation-votes`,
+      `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
       "default",
     );
