@@ -15,14 +15,7 @@ export default function DeleteConfirmationModal() {
   const dispatch = useAppDispatch();
   const isModalOpen = isOpen && type && type === "confirmation";
 
-  payload
-    ? payload
-    : (payload = {
-        params: undefined,
-        redirect: undefined,
-        deleteFunction: undefined,
-      });
-  const { handleDelete, isLoading } = useDelete(payload);
+  const { handleDelete, isLoading } = useDelete(payload!);
 
   const handleClose = () => {
     dispatch(onCloseModal());
@@ -65,7 +58,7 @@ export default function DeleteConfirmationModal() {
           variant="error"
           type="button"
           disabled={isLoading}
-          onClick={handleDelete}
+          onClick={handleDelete ? handleDelete : undefined}
           className="w-1/2"
         >
           {renderDeleteButtonContent()}
