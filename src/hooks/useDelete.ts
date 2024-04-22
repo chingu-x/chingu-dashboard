@@ -18,9 +18,6 @@ interface Undefined {
 type useDeleteProps = Payload | Undefined;
 
 export default function useDelete(payload: useDeleteProps) {
-  if (!payload) {
-    return { handleDelete: null, isLoading: false };
-  }
   const dispatch = useAppDispatch();
   const { params, redirect, deleteFunction } = payload;
   const { runAction, isLoading, setIsLoading } = useServerAction(

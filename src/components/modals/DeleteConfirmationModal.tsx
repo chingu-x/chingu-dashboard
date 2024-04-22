@@ -9,8 +9,7 @@ import { useAppDispatch, useModal } from "@/store/hooks";
 import useDelete from "@/hooks/useDelete";
 
 export default function DeleteConfirmationModal() {
-  const { isOpen, type } = useModal();
-  let { payload } = useModal();
+  const { isOpen, type, payload } = useModal();
   const modal = useModal();
   const dispatch = useAppDispatch();
   const isModalOpen = isOpen && type && type === "confirmation";
@@ -58,7 +57,7 @@ export default function DeleteConfirmationModal() {
           variant="error"
           type="button"
           disabled={isLoading}
-          onClick={handleDelete ? handleDelete : undefined}
+          onClick={handleDelete}
           className="w-1/2"
         >
           {renderDeleteButtonContent()}
