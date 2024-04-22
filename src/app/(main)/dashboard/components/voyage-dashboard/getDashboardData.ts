@@ -60,11 +60,8 @@ export const getDashboardData = async (): Promise<GetDashboardDataResponse> => {
   }
 
   if (data) {
-    const [res, error] = data;
+    const [res] = data;
 
-    if (error) {
-      throw new Error(`Error: ${error.message}`);
-    }
     sprintsData = res!.voyage.sprints;
   }
 
@@ -82,7 +79,7 @@ export const getDashboardData = async (): Promise<GetDashboardDataResponse> => {
 
   const fetchMeetingsResults = await Promise.all(fetchMeetingsPromises);
 
-  fetchMeetingsResults.forEach(([res, error], index) => {
+  fetchMeetingsResults.forEach(([res]) => {
     if (res) {
       const { title, dateTime, meetingLink } = res;
       const parsedDate = parseISO(dateTime);
@@ -93,9 +90,7 @@ export const getDashboardData = async (): Promise<GetDashboardDataResponse> => {
         link: meetingLink,
       });
     } else {
-      console.error(
-        `Error fetching meeting for sprint ${index + 1}: ${error?.message}`,
-      );
+      return;
     }
   });
 
