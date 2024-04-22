@@ -14,7 +14,7 @@ import Alert from "@/components/Alert";
 import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { onCloseModal } from "@/store/features/modal/modalSlice";
-import { onOpen } from "@/store/features/toast/toastSlice";
+// import { onOpen } from "@/store/features/toast/toastSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
 
 const validationSchema = z.object({
@@ -61,11 +61,11 @@ export default function FeatureModal() {
     // TODO: temp
     console.log(data);
     handleClose();
-    if (isEditing) {
-      dispatch(onOpen({ context: "success", message: "Feature updated" }));
-    } else {
-      dispatch(onOpen({ context: "success", message: "Feature added" }));
-    }
+    // if (isEditing) {
+    //   dispatch(onOpen({ context: "success", message: "Feature updated" }));
+    // } else {
+    //   dispatch(onOpen({ context: "success", message: "Feature added" }));
+    // }
   };
 
   const onDelete = () => {
@@ -75,9 +75,9 @@ export default function FeatureModal() {
   const onDeleteConfirmed = () => {
     // TODO: temp
     handleClose();
-    dispatch(
-      onOpen({ context: "warning", message: "Your feature has been deleted" }),
-    );
+    // dispatch(
+    //   onOpen({ context: "warning", message: "Your feature has been deleted" }),
+    // );
   };
 
   return (
