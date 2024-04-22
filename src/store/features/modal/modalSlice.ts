@@ -1,12 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { NextRouter } from "next/router";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import {
   DeleteResourceProps,
   DeleteResourceResponse,
+  deleteResource,
 } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
 import {
   DeleteIdeationProps,
   DeleteIdeationResponse,
+  deleteIdeation,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { AsyncActionResponse } from "@/utils/handleAsync";
 
@@ -56,24 +58,21 @@ export interface ContentPayload {
 }
 
 export interface Payload {
-  params?: {
-    teamId?: number;
-    resourceId: number;
-  };
+  params?: DeleteProps;
   redirect?: Redirect | null;
-  deleteFunction?: ActionType<DeleteProps, DeleteResponse>;
+  deleteFunction?: typeof deleteIdeation | typeof deleteResource;
 }
 
-export interface Redirect {
-  router?: NextRouter;
-  route?: string;
-}
-
-type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
+export type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
 
 export type DeleteProps = DeleteIdeationProps | DeleteResourceProps;
 
 export type DeleteResponse = DeleteIdeationResponse | DeleteResourceResponse;
+
+export interface Redirect {
+  router?: AppRouterInstance;
+  route?: string;
+}
 
 export type ModalOpenActionPayload =
   | BaseModalOpenActionPayload
