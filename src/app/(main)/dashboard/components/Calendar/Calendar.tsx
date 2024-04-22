@@ -46,7 +46,7 @@ export default function Calendar({
 
   return (
     <div className="flex h-full w-full max-[1200px]:flex-col max-[1200px]:gap-y-4 max-[1200px]:items-center max-[1200px]:relative">
-      <div className="min-w-[400px] max-w-[400px] p-6 h-full min-[1200px]:border-r-2 border-base-100">
+      <div className="min-w-[400px] max-w-[400px] p-6 h-full min-[1200px]:border-r-2 min-[1200px]:min-w-[600px] min-[1200px]:px-28 min-[1470px]:min-w-[400px] min-[1470px]:px-6 border-base-100">
         <div className="flex justify-center items-center">
           <div className="flex gap-10 items-center w-full justify-center min-[1200px]:relative">
             <ArrowLeftIcon
