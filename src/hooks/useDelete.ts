@@ -5,11 +5,10 @@ import {
   onCloseModal,
   onOpenModal,
   Payload,
+  ActionType,
+  DeleteProps,
+  DeleteResponse,
 } from "@/store/features/modal/modalSlice";
-import routePaths from "@/utils/routePaths";
-import { AsyncActionResponse } from "@/utils/handleAsync";
-import { DeleteIdeationResponse } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
-import { DeleteResourceResponse } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
 
 interface Undefined {
   params: undefined;
@@ -18,29 +17,24 @@ interface Undefined {
 }
 type useDeleteProps = Payload | Undefined;
 
-type ResponseTypes = DeleteIdeationResponse | DeleteResourceResponse;
-
 export default function useDelete(payload: useDeleteProps) {
   const dispatch = useAppDispatch();
   const { params, redirect, deleteFunction } = payload;
   const { runAction, isLoading, setIsLoading } = useServerAction(
-    deleteFunction!,
+    deleteFunction as ActionType<DeleteProps, DeleteResponse>,
   );
 
   const handleDelete = useCallback(async () => {
     if (!params) {
       return;
     }
-    const [res, error] = (await runAction(params)) as [
-      AsyncActionResponse<ResponseTypes> | null,
-      Error | null,
-    ];
+    const [res, error] = await runAction(params);
 
     if (res) {
       dispatch(onCloseModal());
       if (redirect && redirect.route) {
         try {
-          await redirect.router?.push(routePaths.ideationPage(redirect.route));
+          redirect.router?.push(redirect.route);
         } catch (redirectError) {
           dispatch(
             onOpenModal({

@@ -28,7 +28,7 @@ export interface AddResourceResponse extends ResourceResponse {
   title: string;
 }
 export interface DeleteResourceProps {
-  resourceId: number | undefined;
+  resourceId: number;
 }
 export interface DeleteResourceResponse extends AddResourceResponse {}
 

@@ -13,7 +13,6 @@ export default function DeleteConfirmationModal() {
   let { payload } = useModal();
   const modal = useModal();
   const dispatch = useAppDispatch();
-  //const router = useRouter();
   const isModalOpen = isOpen && type && type === "confirmation";
 
   payload
