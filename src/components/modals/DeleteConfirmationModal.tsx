@@ -9,10 +9,9 @@ import { useAppDispatch, useModal } from "@/store/hooks";
 import useDelete from "@/hooks/useDelete";
 
 export default function DeleteConfirmationModal() {
-  const { isOpen, type, payload } = useModal();
+  const { isOpen, payload } = useModal();
   const modal = useModal();
   const dispatch = useAppDispatch();
-  const isModalOpen = isOpen && type && type === "confirmation";
 
   const { handleDelete, isLoading } = useDelete(payload!);
 
@@ -33,9 +32,9 @@ export default function DeleteConfirmationModal() {
     );
   }
 
-  return isModalOpen ? (
+  return (
     <Modal
-      isOpen={isModalOpen}
+      isOpen={isOpen}
       title={modal.content!.title!}
       onClose={handleClose}
     >
@@ -64,5 +63,5 @@ export default function DeleteConfirmationModal() {
         </Button>
       </div>
     </Modal>
-  ) : null;
+  );
 }
