@@ -6,7 +6,7 @@ import IdeationStateContent from "./IdeationStateContent";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
-import { getDashboardData } from "./getDashboardData";
+import { EventList, getDashboardData } from "./getDashboardData";
 import {
   CHECKIN_STATUS,
   getFeaturesData,
@@ -16,8 +16,13 @@ import {
 } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
+import { getUser } from "@/utils/getUser";
+import { Sprint } from "@/store/features/sprint/sprintSlice";
 
-async function VoyageDashboard() {
+interface VoyageDashboardProps {
+  teamId?: string;
+}
+async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   //NOTE - Mocked value to show the filled state dashboard
   const filledState = true;
   const ideationData = filledState ? getIdeationData() : null;
@@ -25,8 +30,18 @@ async function VoyageDashboard() {
   const techStackData = filledState ? getTechStackData() : null;
   const resourceData = filledState ? getResourcesData() : null;
 
-  const { currentSprintNumber, sprintsData, meetingsData, user } =
-    await getDashboardData();
+  const [user, error] = await getUser();
+
+  let currentSprintNumber: number | null = null;
+  let sprintsData: Sprint[] = [];
+  let meetingsData: EventList[] = [];
+
+  if (teamId !== undefined) {
+    const data = await getDashboardData(user, error, Number(teamId));
+    currentSprintNumber = data.currentSprintNumber;
+    sprintsData = data.sprintsData;
+    meetingsData = data.meetingsData;
+  }
 
   return user ? (
     <div className="flex flex-col min-[1470px]:grid min-[1470px]:grid-cols-2 gap-x-6 max-[1470px]:gap-y-6 w-full">
