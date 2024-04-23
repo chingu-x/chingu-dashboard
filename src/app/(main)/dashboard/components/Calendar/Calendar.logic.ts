@@ -17,15 +17,17 @@ import {
 import { useState } from "react";
 import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
+import { useUser } from "@/store/hooks";
 
 export const useCalendarLogic = (
   sprintsData?: Sprint[],
   currentSprintNumber?: number | null,
   meetingsData?: EventList[],
 ) => {
-  const currentDate = new Date();
-  const [today, setToday] = useState(currentDate);
-  const [selectDate, setSelectDate] = useState(currentDate);
+  const { currentDate } = useUser();
+  const userDate = currentDate ?? new Date();
+  const [today, setToday] = useState(userDate);
+  const [selectDate, setSelectDate] = useState(userDate);
   const [isHoveredDate, setIsHoveredDate] = useState<Date | null>(null);
 
   const dateTimeConvertedToDate = (dateTime: string) =>
@@ -183,7 +185,7 @@ export const useCalendarLogic = (
     setToday,
     selectDate,
     setSelectDate,
-    currentDate,
+    userDate,
     onArrowClick: (month: number) => setToday(addMonths(today, month)),
     currentMonth: months[getMonth(today)],
     currentYear: getYear(today),

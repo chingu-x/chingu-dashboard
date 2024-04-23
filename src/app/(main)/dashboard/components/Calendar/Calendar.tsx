@@ -32,7 +32,7 @@ export default function Calendar({
     setToday,
     selectDate,
     setSelectDate,
-    currentDate,
+    userDate,
     onArrowClick,
     currentMonth,
     currentYear,
@@ -151,13 +151,11 @@ export default function Calendar({
         </div>
         <Button
           className={`self-end p-1 h-[27px] mt-4 rounded text-base font-medium hover:bg-neutral ${
-            isSameDay(selectDate, currentDate)
-              ? "bg-primary"
-              : "bg-neutral-focus"
+            isSameDay(selectDate, userDate) ? "bg-primary" : "bg-neutral-focus"
           }`}
           onClick={() => {
-            setToday(currentDate);
-            setSelectDate(currentDate);
+            setToday(userDate);
+            setSelectDate(userDate);
           }}
         >
           Today
