@@ -18,6 +18,7 @@ import useServerAction from "@/hooks/useServerAction";
 import {
   addAgendaTopic,
   editAgendaTopic,
+  deleteAgendaTopic,
 } from "@/myVoyage/sprints/sprintsService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
@@ -131,15 +132,25 @@ export default function AgendaTopicForm() {
   };
 
   function handleDelete() {
+    const route = routePaths.sprintWeekPage(
+      teamId.toString(),
+      sprintNumber.toString(),
+      meetingId.toString(),
+    );
     dispatch(
       onOpenModal({
-        type: "deleteAgendaConfirmation",
+        type: "confirmation",
         content: {
           title: "Confirm Deletion",
           message:
             "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
           confirmationText: "Delete Agenda Topic",
           cancelText: "Keep It",
+        },
+        payload: {
+          params: { agendaId, sprintNumber },
+          redirect: { router, route },
+          deleteFunction: deleteAgendaTopic,
         },
       }),
     );
