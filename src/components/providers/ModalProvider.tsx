@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import DeleteAgendaTopicConfirmationModal from "@/components/modals/DeleteAgendaTopicConfirmationModal";
 import GettingHelpModal from "@/components/modals/GettingHelpModal";
 import FeatureModal from "@/components/modals/FeatureModal";
 import ErrorModal from "@/components/modals/ErrorModal";
@@ -28,6 +29,9 @@ export default function ModalProvider() {
       {modalType === "confirmation" && <DeleteConfirmationModal />}
       {modalType === "viewResource" && <ViewModal />}
       {modalType === "checkInSuccess" && <CheckInSuccessModal />}
+      {modalType === "deleteAgendaConfirmation" && (
+        <DeleteAgendaTopicConfirmationModal />
+      )}
     </>
   );
 }

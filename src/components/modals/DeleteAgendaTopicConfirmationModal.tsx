@@ -1,18 +1,14 @@
 "use client";
 
-import { useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { TrashIcon } from "@heroicons/react/20/solid";
-
 import Modal from "./Modal";
-
 import Spinner from "@/components/Spinner";
 import Button from "@/components/Button";
-
-import { onCloseModal, onOpenModal } from "@/store/features/modal/modalSlice";
+import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
-import useServerAction from "@/hooks/useServerAction";
 import { deleteAgendaTopic } from "@/myVoyage/sprints/sprintsService";
+import useDelete from "@/hooks/useDelete";
 import routePaths from "@/utils/routePaths";
 
 export default function DeleteAgendaTopicConfirmationModal() {
@@ -32,13 +28,19 @@ export default function DeleteAgendaTopicConfirmationModal() {
     Number(params.meetingId),
     Number(params.agendaId),
   ];
-  const router = useRouter();
 
-  const {
-    runAction: deleteAgendaTopicAction,
-    isLoading: deleteAgendaTopicLoading,
-    setIsLoading: setDeleteAgendaTopicLoading,
-  } = useServerAction(deleteAgendaTopic);
+  const route = routePaths.sprintWeekPage(
+    teamId.toString(),
+    sprintNumber.toString(),
+    meetingId.toString(),
+  );
+  const router = useRouter();
+  const payload = {
+    params: { agendaId, sprintNumber },
+    redirect: { router, route },
+    deleteFunction: deleteAgendaTopic,
+  };
+  const { handleDelete, isLoading } = useDelete(payload);
 
   const isModalOpen = isOpen && type === "deleteAgendaConfirmation";
 
@@ -46,46 +48,10 @@ export default function DeleteAgendaTopicConfirmationModal() {
     dispatch(onCloseModal());
   };
 
-  const handleDelete = useCallback(async () => {
-    const [res, error] = await deleteAgendaTopicAction({
-      agendaId,
-      sprintNumber,
-    });
-
-    if (res) {
-      dispatch(onCloseModal());
-      setDeleteAgendaTopicLoading(false);
-      router.push(
-        routePaths.sprintWeekPage(
-          teamId.toString(),
-          sprintNumber.toString(),
-          meetingId.toString(),
-        ),
-      );
-    }
-
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-      setDeleteAgendaTopicLoading(false);
-    }
-  }, [
-    dispatch,
-    deleteAgendaTopicAction,
-    setDeleteAgendaTopicLoading,
-    teamId,
-    sprintNumber,
-    meetingId,
-    agendaId,
-    router,
-  ]);
-
   function renderDeleteButtonContent() {
-    if (deleteAgendaTopicLoading) {
+    if (isLoading) {
       return <Spinner />;
     }
-
     return (
       <>
         <TrashIcon className="w-4 h-4" />
@@ -113,7 +79,7 @@ export default function DeleteAgendaTopicConfirmationModal() {
           size="lg"
           variant="error"
           type="button"
-          disabled={deleteAgendaTopicLoading}
+          disabled={isLoading}
           onClick={handleDelete}
           className="w-1/2"
         >

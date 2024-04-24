@@ -11,6 +11,11 @@ import {
   deleteIdeation,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { AsyncActionResponse } from "@/utils/handleAsync";
+import {
+  DeleteAgendaTopicProps,
+  DeleteAgendaTopicResponse,
+  deleteAgendaTopic,
+} from "@/app/(main)/my-voyage/[teamId]/sprints/sprintsService";
 
 export type ModalType =
   | "feature"
@@ -61,14 +66,23 @@ export interface ContentPayload {
 export interface Payload {
   params?: DeleteProps;
   redirect?: Redirect | null;
-  deleteFunction?: typeof deleteIdeation | typeof deleteResource;
+  deleteFunction?:
+    | typeof deleteIdeation
+    | typeof deleteResource
+    | typeof deleteAgendaTopic;
 }
 
 export type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
 
-export type DeleteProps = DeleteIdeationProps | DeleteResourceProps;
+export type DeleteProps =
+  | DeleteIdeationProps
+  | DeleteResourceProps
+  | DeleteAgendaTopicProps;
 
-export type DeleteResponse = DeleteIdeationResponse | DeleteResourceResponse;
+export type DeleteResponse =
+  | DeleteIdeationResponse
+  | DeleteResourceResponse
+  | DeleteAgendaTopicResponse;
 
 export interface Redirect {
   router?: AppRouterInstance;
