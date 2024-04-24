@@ -10,14 +10,7 @@ import {
   DeleteResponse,
 } from "@/store/features/modal/modalSlice";
 
-interface Undefined {
-  params: undefined;
-  redirect: undefined;
-  deleteFunction: undefined;
-}
-type useDeleteProps = Payload | Undefined;
-
-export default function useDelete(payload: useDeleteProps) {
+export default function useDelete(payload: Payload) {
   const dispatch = useAppDispatch();
   const { params, redirect, deleteFunction } = payload;
   const { runAction, isLoading, setIsLoading } = useServerAction(
@@ -33,19 +26,7 @@ export default function useDelete(payload: useDeleteProps) {
     if (res) {
       dispatch(onCloseModal());
       if (redirect && redirect.route) {
-        try {
-          redirect.router?.push(redirect.route);
-        } catch (redirectError) {
-          dispatch(
-            onOpenModal({
-              type: "error",
-              content: {
-                message:
-                  "Delete successful but something went wrong navigating back to page.",
-              },
-            }),
-          );
-        }
+        redirect.router?.push(redirect.route);
       }
     }
     if (error) {
