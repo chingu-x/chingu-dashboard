@@ -47,7 +47,11 @@ export const getDashboardData = async (
   }
 
   if (data) {
-    const [res] = data;
+    const [res, error] = data;
+
+    if (error) {
+      throw new Error(`Error: ${error.message}`);
+    }
 
     sprintsData = res!.voyage.sprints;
   }
@@ -76,8 +80,8 @@ export const getDashboardData = async (
         date: formattedDate,
         link: meetingLink,
       });
-    } else {
-      return;
+    } else if (error) {
+      return `Error: ${error.message}`;
     }
   });
 
