@@ -13,17 +13,19 @@ import { onCloseModal } from "@/store/features/modal/modalSlice";
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 export default function CheckInSuccessModal() {
-  const { isOpen, type } = useModal();
+  const { isOpen } = useModal();
   const dispatch = useAppDispatch();
-
-  const isModalOpen = isOpen && type === "checkInSuccess";
 
   const handleClose = useCallback(() => {
     dispatch(onCloseModal());
   }, [dispatch]);
 
   return (
-    <Modal isOpen={isModalOpen} title="" onClose={handleClose}>
+    <Modal
+      isOpen={isOpen}
+      title=""
+      onClose={handleClose}
+    >
       <div className="grid grid-cols-[1fr_200px] max-w-[700px] gap-x-10 items-center">
         <div className="flex flex-col py-10 gap-y-4 text-base-300">
           <h3 className="text-[30px] font-bold">

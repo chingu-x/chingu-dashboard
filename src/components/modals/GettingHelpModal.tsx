@@ -9,17 +9,19 @@ import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
 
 export default function GettingHelpModal() {
-  const { isOpen, type } = useModal();
+  const { isOpen } = useModal();
   const dispatch = useAppDispatch();
-
-  const isModalOpen = isOpen && type === "gettingHelp";
 
   const handleClose = useCallback(() => {
     dispatch(onCloseModal());
   }, [dispatch]);
 
   return (
-    <Modal isOpen={isModalOpen} title="Getting Help" onClose={handleClose}>
+    <Modal
+      isOpen={isOpen}
+      title="Getting Help"
+      onClose={handleClose}
+    >
       <div className="flex flex-col max-w-[700px]">
         <p className="text-base font-semibold mb-2.5">Roundtable Discussion</p>
         <p className="text-base">
