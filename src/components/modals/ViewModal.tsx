@@ -10,8 +10,7 @@ import { useAppDispatch, useModal, useResource } from "@/store/hooks";
 export default function ViewModal() {
   const dispatch = useAppDispatch();
   const resourceList = useResource().resources;
-  const { id, isOpen, type } = useModal();
-  const isModalOpen = isOpen && type === "viewResource";
+  const { id, isOpen } = useModal();
 
   const { title, url } = useCallback(() => {
     let title: string = "";
@@ -41,7 +40,11 @@ export default function ViewModal() {
   };
 
   return (
-    <Modal isOpen={isModalOpen} title="View Resource?" onClose={handleClose}>
+    <Modal
+      isOpen={isOpen}
+      title="View Resource?"
+      onClose={handleClose}
+    >
       <form>
         <ModalSection heading="Are you sure you would like to visit this resource?">
           <p className="text-neutral">{title}</p>

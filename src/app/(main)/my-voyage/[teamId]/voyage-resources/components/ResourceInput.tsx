@@ -16,15 +16,13 @@ const validationSchema = z.object({
   url: validateTextInput({
     inputName: "Url",
     required: true,
-    minLen: 2,
-    maxLen: 50,
     isUrl: true,
   }),
   title: validateTextInput({
     inputName: "Title",
     required: true,
-    minLen: 2,
-    maxLen: 50,
+    minLen: 1,
+    maxLen: 100,
   }),
 });
 
