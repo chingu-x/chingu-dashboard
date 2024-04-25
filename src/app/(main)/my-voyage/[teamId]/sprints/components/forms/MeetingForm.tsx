@@ -294,10 +294,10 @@ export default function MeetingForm() {
   }
 
   return (
-    <div className="flex flex-col items-center w-full bg-base-200 rounded-2xl">
+    <div className="flex flex-col items-center mx-auto bg-base-200 rounded-2xl max-w-[871px] w-full p-10">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-y-4 max-w-[650px] p-10 w-full"
+        className="flex flex-col w-full gap-y-4"
       >
         <div className="flex flex-col mb-6 gap-y-4">
           <h2 className="text-3xl font-bold text-base-300">
