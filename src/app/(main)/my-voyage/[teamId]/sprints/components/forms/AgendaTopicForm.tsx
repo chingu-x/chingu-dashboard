@@ -235,10 +235,11 @@ export default function AgendaTopicForm() {
       }
     }
 
-    if (editMode && isDirty) {
+    if (editMode && isDirty && isValid) {
       void autoSave();
     }
   }, [
+    isValid,
     isDirty,
     topicData,
     watch,
