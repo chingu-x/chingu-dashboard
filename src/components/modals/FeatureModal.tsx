@@ -29,10 +29,8 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function FeatureModal() {
   const dispatch = useAppDispatch();
-  const { isOpen, type, isEditing } = useModal();
+  const { isOpen, isEditing } = useModal();
   const [deleteAlertIsVisible, setDeleteAlertIsVisible] = useState(false);
-
-  const isModalOpen = isOpen && type === "feature";
 
   const {
     register,
@@ -82,7 +80,7 @@ export default function FeatureModal() {
 
   return (
     <Modal
-      isOpen={isModalOpen}
+      isOpen={isOpen}
       title={isEditing ? "edit feature" : "add feature"}
       onClose={handleClose}
     >
@@ -94,7 +92,10 @@ export default function FeatureModal() {
         {/* BODY WITHOUT VERTICAL SCROLL*/}
         <div className="flex flex-col gap-4">
           {deleteAlertIsVisible && (
-            <Alert context="error" message={"You cannot undo this action"} />
+            <Alert
+              context="error"
+              message={"You cannot undo this action"}
+            />
           )}
           <TextInput
             id="feature"

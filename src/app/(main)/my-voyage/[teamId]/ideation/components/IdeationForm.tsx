@@ -17,6 +17,7 @@ import {
   editIdeation,
   type EditIdeationProps,
   addIdeation,
+  deleteIdeation,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import useServerAction from "@/hooks/useServerAction";
 import { persistor } from "@/store/store";
@@ -51,6 +52,7 @@ export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
   const teamId = +params.teamId;
+  const ideationId = +params.ideationId;
   const { projectIdeas } = useIdeation();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
@@ -133,6 +135,7 @@ export default function IdeationForm() {
   };
 
   function handleDelete() {
+    const route = routePaths.ideationPage(teamId.toString());
     dispatch(
       onOpenModal({
         type: "confirmation",
@@ -142,6 +145,14 @@ export default function IdeationForm() {
             "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
           confirmationText: "Delete Project",
           cancelText: "Keep It",
+        },
+        payload: {
+          params: {
+            teamId,
+            ideationId,
+          },
+          redirect: { router, route },
+          deleteFunction: deleteIdeation,
         },
       }),
     );
