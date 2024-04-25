@@ -21,11 +21,7 @@ export default function CheckInSuccessModal() {
   }, [dispatch]);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      title=""
-      onClose={handleClose}
-    >
+    <Modal isOpen={isOpen} title="" onClose={handleClose}>
       <div className="grid grid-cols-[1fr_200px] max-w-[700px] gap-x-10 items-center">
         <div className="flex flex-col py-10 gap-y-4 text-base-300">
           <h3 className="text-[30px] font-bold">

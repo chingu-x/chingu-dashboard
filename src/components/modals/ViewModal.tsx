@@ -40,11 +40,7 @@ export default function ViewModal() {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      title="View Resource?"
-      onClose={handleClose}
-    >
+    <Modal isOpen={isOpen} title="View Resource?" onClose={handleClose}>
       <form>
         <ModalSection heading="Are you sure you would like to visit this resource?">
           <p className="text-neutral">{title}</p>

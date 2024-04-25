@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getMonth, isToday, isTomorrow, parseISO } from "date-fns";
+import { getMonth, isToday, isTomorrow } from "date-fns";
 import { format } from "date-fns-tz";
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { useUser } from "@/store/hooks";
+import convertStringToDate from "@/utils/convertStringToDate";
 
 interface DateTimeComponentWrapper {
   dateTime: string;
@@ -15,9 +16,7 @@ export default function DateTimeComponent({
 }: DateTimeComponentWrapper) {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const { timezone } = useUser();
-  const dateTimeConvertedToDate = parseISO(
-    dateTime.substring(0, dateTime.length - 1),
-  );
+  const dateTimeConvertedToDate = convertStringToDate(dateTime);
 
   const getMeetingDate = () => {
     if (isToday(dateTimeConvertedToDate)) return "today";
