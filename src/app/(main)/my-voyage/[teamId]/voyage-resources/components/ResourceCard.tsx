@@ -24,7 +24,7 @@ export default function ResourceCard({
   url,
 }: ResourceCardProps) {
   const dispatch = useAppDispatch();
-  const currentUserid = useAppSelector((state) => state.user.id);
+  const currentUserId = useAppSelector((state) => state.user.id);
 
   const openViewModal = () => {
     const hideResourceModal = localStorage.getItem("hideResourceModal");
@@ -35,7 +35,7 @@ export default function ResourceCard({
         onOpenModal({
           type: "viewResource",
           id: resourceId,
-        }),
+        })
       );
     }
   };
@@ -59,7 +59,7 @@ export default function ResourceCard({
           redirect: null,
           deleteFunction: deleteResource,
         },
-      }),
+      })
     );
   };
 
@@ -77,13 +77,16 @@ export default function ResourceCard({
         <div className="flex mt-2 [&>*]:mr-8">
           <div className="flex items-center gap-x-2">
             <p>Shared by</p>
-            <Badge title={user.firstName} avatarUrlImage={user.avatar} />
+            <Badge
+              title={user.firstName}
+              avatarUrlImage={user.avatar}
+            />
           </div>
           <div className="w-1 h-5 border border-t-0 border-b-0 border-l-0 border-r-1 border-r-neutral-content"></div>
           <div className="text-neutral">Added {date}</div>
         </div>
       </div>
-      {userId === currentUserid ? (
+      {userId === currentUserId ? (
         <IconButton
           className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-base-100"
           onClick={openDeleteModal}
