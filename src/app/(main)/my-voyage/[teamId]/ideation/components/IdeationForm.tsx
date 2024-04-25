@@ -17,6 +17,7 @@ import {
   editIdeation,
   type EditIdeationProps,
   addIdeation,
+  deleteIdeation,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import useServerAction from "@/hooks/useServerAction";
 import { persistor } from "@/store/store";
@@ -51,6 +52,7 @@ export default function IdeationForm() {
   const router = useRouter();
   const params = useParams<{ teamId: string; ideationId: string }>();
   const teamId = +params.teamId;
+  const ideationId = +params.ideationId;
   const { projectIdeas } = useIdeation();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [ideationData, setIdeationData] = useState<IdeationData>();
@@ -133,6 +135,7 @@ export default function IdeationForm() {
   };
 
   function handleDelete() {
+    const route = routePaths.ideationPage(teamId.toString());
     dispatch(
       onOpenModal({
         type: "confirmation",
@@ -142,6 +145,14 @@ export default function IdeationForm() {
             "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
           confirmationText: "Delete Project",
           cancelText: "Keep It",
+        },
+        payload: {
+          params: {
+            teamId,
+            ideationId,
+          },
+          redirect: { router, route },
+          deleteFunction: deleteIdeation,
         },
       }),
     );
@@ -153,10 +164,14 @@ export default function IdeationForm() {
         (project) => project.id === +params.ideationId,
       );
 
+      if (!ideation) {
+        router.push(routePaths.ideationPage(teamId.toString()));
+      }
+
       setIdeationData(ideation);
       setEditMode(true);
     }
-  }, [params.ideationId, projectIdeas]);
+  }, [params.ideationId, projectIdeas, router, teamId]);
 
   useEffect(() => {
     reset({
@@ -268,81 +283,86 @@ export default function IdeationForm() {
   }
 
   return (
-    <div className="flex flex-col items-center w-full p-10 bg-base-200 rounded-2xl">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-y-4 max-w-[650px] w-full"
-      >
-        <div className="flex flex-col gap-y-4">
-          <h1 className="text-3xl font-bold text-base-300">
-            {editMode ? "Edit Project" : "Add Project"}
-          </h1>
-          <p className="text-lg font-medium text-base-300">
-            Share your project idea with the team.
-          </p>
-        </div>
-        <TextInput
-          id="title"
-          label="title"
-          placeholder="Enter your voyage project idea"
-          {...register("title")}
-          errorMessage={errors.title?.message}
-          maxLength={50}
-          defaultValue={ideationData?.title ?? ""}
-        />
-        <Textarea
-          id="description"
-          label="description"
-          placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
-          {...register("description")}
-          errorMessage={errors.description?.message}
-          defaultValue={ideationData?.description ?? ""}
-        />
-        <Textarea
-          id="visionStatement"
-          label="vision statement"
-          placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
-          {...register("vision")}
-          errorMessage={errors.vision?.message}
-          defaultValue={ideationData?.vision ?? ""}
-        />
-        <div className="flex w-full gap-x-10">
-          {editMode && (
-            <Button
-              type="button"
-              size="lg"
-              variant="error"
-              onClick={handleDelete}
-              title="delete"
-              className="w-1/2"
-            >
-              <TrashIcon className="w-4 h-4" />
-              Delete Project
-            </Button>
-          )}
-          <Button
-            type="submit"
-            title="submit"
-            disabled={
-              !isDirty || !isValid || editIdeationLoading || addIdeationLoading
-            }
-            size="lg"
-            variant="primary"
-            className={`${editMode ? "w-1/2" : "w-full"}`}
-          >
-            {renderButtonContent()}
-          </Button>
-        </div>
-        <Button
-          type="button"
-          title="cancel"
-          size="lg"
-          variant="link"
-          onClick={() => router.back()}
+    <div className="flex justify-center">
+      <div className="flex flex-col items-center w-[871px] p-10 bg-base-200 rounded-2xl">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-y-4 max-w-[650px] w-full"
         >
-          Cancel
-        </Button>
-      </form>
+          <div className="flex flex-col gap-y-4">
+            <h1 className="text-3xl font-bold text-base-300">
+              {editMode ? "Edit Project" : "Add Project"}
+            </h1>
+            <p className="text-lg font-medium text-base-300">
+              Share your project idea with the team.
+            </p>
+          </div>
+          <TextInput
+            id="title"
+            label="title"
+            placeholder="Enter your voyage project idea"
+            {...register("title")}
+            errorMessage={errors.title?.message}
+            maxLength={50}
+            defaultValue={ideationData?.title ?? ""}
+          />
+          <Textarea
+            id="description"
+            label="description"
+            placeholder="Describe your idea. What problem or challenge do you aim to address or solve? What is the primary purpose and goal of your idea? Who are your intemded users?"
+            {...register("description")}
+            errorMessage={errors.description?.message}
+            defaultValue={ideationData?.description ?? ""}
+          />
+          <Textarea
+            id="visionStatement"
+            label="vision statement"
+            placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
+            {...register("vision")}
+            errorMessage={errors.vision?.message}
+            defaultValue={ideationData?.vision ?? ""}
+          />
+          <div className="flex w-full gap-x-10">
+            {editMode && (
+              <Button
+                type="button"
+                size="lg"
+                variant="error"
+                onClick={handleDelete}
+                title="delete"
+                className="w-1/2"
+              >
+                <TrashIcon className="w-4 h-4" />
+                Delete Project
+              </Button>
+            )}
+            <Button
+              type="submit"
+              title="submit"
+              disabled={
+                !isDirty ||
+                !isValid ||
+                editIdeationLoading ||
+                addIdeationLoading
+              }
+              size="lg"
+              variant="primary"
+              className={`${editMode ? "w-1/2" : "w-full"}`}
+            >
+              {renderButtonContent()}
+            </Button>
+          </div>
+          <Button
+            type="button"
+            title="cancel"
+            size="lg"
+            variant="neutral"
+            onClick={() => router.back()}
+          >
+            Cancel
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -8,7 +8,9 @@ export interface ResourceData {
   title: string;
   createdAt: Date;
   updatedAt: Date;
-  addedBy: { member: Pick<VoyageMember, "avatar" | "firstName" | "lastName"> };
+  addedBy: {
+    member: Pick<VoyageMember, "avatar" | "firstName" | "lastName" | "id">;
+  };
 }
 interface ResourcesState {
   //loading:
