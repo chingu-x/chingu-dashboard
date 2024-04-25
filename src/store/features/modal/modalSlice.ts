@@ -1,4 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import {
+  DeleteResourceProps,
+  DeleteResourceResponse,
+  deleteResource,
+} from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
+import {
+  DeleteIdeationProps,
+  DeleteIdeationResponse,
+  deleteIdeation,
+} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import { AsyncActionResponse } from "@/utils/handleAsync";
 
 export type ModalType =
   | "error"
@@ -12,12 +24,14 @@ interface ModalState {
   type: ModalType | undefined;
   isOpen: boolean;
   content?: ContentPayload;
+  payload?: Payload;
 }
 
 export interface BaseModalOpenActionPayload {
   id?: number;
   type: Exclude<ModalType, "error" | "confirmation">;
   content?: ContentPayload;
+  payload?: Payload;
 }
 
 export interface ErrorModalOpenActionPayload
@@ -30,6 +44,7 @@ export interface ConfirmationModalOpenActionPayload
   extends Omit<BaseModalOpenActionPayload, "type"> {
   type: "confirmation";
   content: Required<ContentPayload>;
+  payload: Required<Payload>;
 }
 
 export interface ContentPayload {
@@ -37,6 +52,23 @@ export interface ContentPayload {
   message?: string;
   confirmationText?: string;
   cancelText?: string;
+}
+
+export interface Payload {
+  params?: DeleteProps;
+  redirect?: Redirect | null;
+  deleteFunction?: typeof deleteIdeation | typeof deleteResource;
+}
+
+export type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
+
+export type DeleteProps = DeleteIdeationProps | DeleteResourceProps;
+
+export type DeleteResponse = DeleteIdeationResponse | DeleteResourceResponse;
+
+export interface Redirect {
+  router?: AppRouterInstance;
+  route?: string;
 }
 
 export type ModalOpenActionPayload =
@@ -49,6 +81,7 @@ const initialState: ModalState = {
   type: undefined,
   isOpen: false,
   content: {},
+  payload: {},
 };
 
 export const modalSlice = createSlice({
@@ -56,12 +89,13 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
-      const { id, type, content } = action.payload;
+      const { id, type, content, payload } = action.payload;
 
       state.id = id;
       state.isOpen = true;
       state.type = type;
       state.content = content;
+      state.payload = payload;
     },
     onCloseModal: () => initialState,
   },
