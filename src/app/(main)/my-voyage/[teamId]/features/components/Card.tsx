@@ -1,5 +1,3 @@
-"use client";
-
 import { Draggable, DraggableProvided } from "@hello-pangea/dnd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
