@@ -25,7 +25,7 @@ interface EditFeatureProps {
   description: string;
 }
 
-type DeleteFeatureProps = Pick<EditFeatureProps, "featureId">;
+export type DeleteFeatureProps = Pick<EditFeatureProps, "featureId">;
 
 type SaveOrderBody = Omit<SaveOrderProps, "featureId">;
 type AddFeatureBody = Omit<AddFeatureProps, "teamId">;

@@ -19,12 +19,13 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const userId = useUser().id;
   const {
+    id,
     addedBy: {
-      member: { id, firstName, lastName, avatar },
+      member: { id: addedById, firstName, lastName, avatar },
     },
     description,
   } = feature;
-  const isCurrentUser = userId === id;
+  const isCurrentUser = userId === addedById;
 
   function handleClick() {
     setShowPopover(true);
@@ -60,6 +61,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
               <EditPopover
                 setEditMode={setEditMode}
                 setShowPopover={setShowPopover}
+                featureId={id}
               />
             )}
             <div className="flex items-center justify-between">
