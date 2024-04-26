@@ -1,15 +1,19 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import {
-  DeleteResourceProps,
-  DeleteResourceResponse,
+  type DeleteResourceProps,
+  type DeleteResourceResponse,
   deleteResource,
-} from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
+} from "@/myVoyage/voyage-resources/resourcesService";
 import {
-  DeleteIdeationProps,
-  DeleteIdeationResponse,
+  type DeleteIdeationProps,
+  type DeleteIdeationResponse,
   deleteIdeation,
-} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+} from "@/myVoyage/ideation/ideationService";
+import {
+  type DeleteFeatureProps,
+  deleteFeature,
+} from "@/myVoyage/features/featuresService";
 import { AsyncActionResponse } from "@/utils/handleAsync";
 
 export type ModalType =
@@ -57,14 +61,23 @@ export interface ContentPayload {
 export interface Payload {
   params?: DeleteProps;
   redirect?: Redirect | null;
-  deleteFunction?: typeof deleteIdeation | typeof deleteResource;
+  deleteFunction?:
+    | typeof deleteIdeation
+    | typeof deleteResource
+    | typeof deleteFeature;
 }
 
 export type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
 
-export type DeleteProps = DeleteIdeationProps | DeleteResourceProps;
+export type DeleteProps =
+  | DeleteIdeationProps
+  | DeleteResourceProps
+  | DeleteFeatureProps;
 
-export type DeleteResponse = DeleteIdeationResponse | DeleteResourceResponse;
+export type DeleteResponse =
+  | DeleteIdeationResponse
+  | DeleteResourceResponse
+  | void;
 
 export interface Redirect {
   router?: AppRouterInstance;

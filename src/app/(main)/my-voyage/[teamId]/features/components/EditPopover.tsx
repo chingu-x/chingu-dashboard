@@ -1,19 +1,48 @@
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Dispatch, SetStateAction } from "react";
 import Button from "@/components/Button";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { deleteFeature } from "@/myVoyage/features/featuresService";
 
 interface EditPopoverProps {
   setEditMode: Dispatch<SetStateAction<boolean>>;
   setShowPopover: Dispatch<SetStateAction<boolean>>;
+  featureId: number;
 }
 
 export default function EditPopover({
   setEditMode,
   setShowPopover,
+  featureId,
 }: EditPopoverProps) {
+  const dispatch = useAppDispatch();
+
   function handleClick() {
     setEditMode(true);
     setShowPopover(false);
+  }
+
+  function handleDelete() {
+    dispatch(
+      onOpenModal({
+        type: "confirmation",
+        content: {
+          title: "Confirm Deletion",
+          message:
+            "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
+          confirmationText: "Delete Project",
+          cancelText: "Keep It",
+        },
+        payload: {
+          params: {
+            featureId,
+          },
+          redirect: null,
+          deleteFunction: deleteFeature,
+        },
+      })
+    );
   }
 
   return (
@@ -31,6 +60,7 @@ export default function EditPopover({
         variant="error"
         size="sm"
         className="w-[118px] h-[34px] justify-start"
+        onClick={handleDelete}
       >
         <TrashIcon className="w-4 h-4" />
         Delete
