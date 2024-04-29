@@ -33,11 +33,7 @@ export default function DeleteConfirmationModal() {
   }
 
   return (
-    <Modal
-      isOpen={isOpen}
-      title={modal.content!.title!}
-      onClose={handleClose}
-    >
+    <Modal isOpen={isOpen} title={modal.content!.title!} onClose={handleClose}>
       <div className="mb-10 text-base text-base-300 font-medium max-w-[650px]">
         {modal.content?.message}
       </div>

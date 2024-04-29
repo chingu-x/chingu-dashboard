@@ -7,58 +7,109 @@ import { useRouter } from "next/navigation";
 import NoAgendasState from "./NoAgendasState";
 import AgendaTopic from "./AgendaTopic";
 import AgendaHeader from "./AgendaHeader";
-// import { topicsData } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 
 import routePaths from "@/utils/routePaths";
-
-import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
+import Divider from "@/myVoyage/sprints/components/Divider";
 import { Agenda } from "@/store/features/sprint/sprintSlice";
+import useServerAction from "@/hooks/useServerAction";
+import { changeAgendaTopicStatus } from "@/myVoyage/sprints/sprintsService";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
-export default function Agendas() {
+interface AgendasProps {
+  params: {
+    teamId: string;
+    meetingId: string;
+    sprintNumber: string;
+  };
+  topics: Agenda[];
+}
+
+export default function Agendas({ params, topics }: AgendasProps) {
+  topics = topics.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt));
+  const [teamId, meetingId, sprintNumber] = [
+    Number(params.teamId),
+    Number(params.meetingId),
+    Number(params.sprintNumber),
+  ];
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  const topicsData: Agenda[] = [];
 
   const [incompletedTopics, setIncompletedTopics] = useState(
-    topicsData.filter((topic) => topic.status === false),
+    topics.filter((topic) => topic.status === false),
   );
   const [completedTopics, setCompletedTopics] = useState(
-    topicsData.filter((topic) => topic.status === true),
+    topics.filter((topic) => topic.status === true),
   );
 
-  const changeStatus = (id: number, status: boolean) => {
-    if (status === false) {
-      const topicIndex = incompletedTopics.findIndex(
-        (topic) => topic.id === id,
+  const {
+    runAction: changeAgendaTopicAction,
+    isLoading: changeAgendaTopicLoading,
+    setIsLoading: setChangeAgendaTopicLoading,
+  } = useServerAction(changeAgendaTopicStatus);
+
+  const changeStatus = async (agendaId: number, status: boolean) => {
+    const [res, error] = await changeAgendaTopicAction({
+      status,
+      agendaId,
+      sprintNumber,
+    });
+    if (res) {
+      if (status === true) {
+        const topicIndex = incompletedTopics.findIndex(
+          (topic) => topic.id === agendaId,
+        );
+        const topic = { ...incompletedTopics[topicIndex], status: true };
+        setIncompletedTopics([...incompletedTopics].toSpliced(topicIndex, 1));
+        setCompletedTopics([...completedTopics, topic]);
+      } else {
+        const topicIndex = completedTopics.findIndex(
+          (topic) => topic.id === agendaId,
+        );
+        const topic = { ...completedTopics[topicIndex], status: false };
+        setCompletedTopics([...completedTopics].toSpliced(topicIndex, 1));
+        setIncompletedTopics([...incompletedTopics, topic]);
+      }
+      setChangeAgendaTopicLoading(false);
+    }
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
-      const topic = { ...incompletedTopics[topicIndex], status: true };
-      setIncompletedTopics([...incompletedTopics].toSpliced(topicIndex, 1));
-      setCompletedTopics([...completedTopics, topic]);
-    } else {
-      const topicIndex = completedTopics.findIndex((topic) => topic.id === id);
-      const topic = { ...completedTopics[topicIndex], status: false };
-      setCompletedTopics([...completedTopics].toSpliced(topicIndex, 1));
-      setIncompletedTopics([...incompletedTopics, topic]);
+      setChangeAgendaTopicLoading(false);
     }
   };
 
-  const editTopic = () => {
-    router.push(routePaths.addTopicPage("2"));
+  const editTopic = (agendaTopicId: number) => {
+    router.push(
+      routePaths.editTopicPage(
+        teamId.toString(),
+        sprintNumber.toString(),
+        meetingId.toString(),
+        agendaTopicId.toString(),
+      ),
+    );
   };
 
   const dividerIsVisible = completedTopics.length !== 0;
 
   return (
     <div className="flex flex-col items-center justify-between w-full p-10 border bg-base-200 rounded-2xl border-base-100">
-      <AgendaHeader />
+      <AgendaHeader
+        teamId={teamId}
+        sprintNumber={sprintNumber}
+        meetingId={meetingId}
+      />
       {/* INCOMPLETED TOPICS */}
-      {topicsData.length === 0 && <NoAgendasState />}
+      {topics.length === 0 && <NoAgendasState />}
       <ul className="flex flex-col w-full gap-y-5">
         {incompletedTopics.map((topic) => (
           <AgendaTopic
             key={topic.id}
             topic={topic}
-            editTopic={editTopic}
+            editTopic={() => editTopic(topic.id)}
             changeStatus={changeStatus}
+            statusButtonDisabled={changeAgendaTopicLoading}
           />
         ))}
       </ul>
@@ -76,8 +127,9 @@ export default function Agendas() {
           <AgendaTopic
             key={topic.id}
             topic={topic}
-            editTopic={editTopic}
+            editTopic={() => editTopic(topic.id)}
             changeStatus={changeStatus}
+            statusButtonDisabled={changeAgendaTopicLoading}
           />
         ))}
       </ul>

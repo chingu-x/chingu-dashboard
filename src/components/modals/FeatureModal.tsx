@@ -92,10 +92,7 @@ export default function FeatureModal() {
         {/* BODY WITHOUT VERTICAL SCROLL*/}
         <div className="flex flex-col gap-4">
           {deleteAlertIsVisible && (
-            <Alert
-              context="error"
-              message={"You cannot undo this action"}
-            />
+            <Alert context="error" message={"You cannot undo this action"} />
           )}
           <TextInput
             id="feature"
