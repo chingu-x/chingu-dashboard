@@ -2,7 +2,7 @@
 
 import { revalidateTag } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
-import { PATCH, POST } from "@/utils/requests";
+import { DELETE, PATCH, POST } from "@/utils/requests";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 import { getSprintCache } from "@/utils/getSprintCache";
@@ -11,6 +11,7 @@ interface SprintProps {
   teamId: number;
   meetingId: number;
   sprintNumber: number;
+  agendaId: number;
 }
 
 interface MeetingBody {
@@ -20,10 +21,19 @@ interface MeetingBody {
   notes: string;
 }
 
+interface AgendaTopicBody {
+  title: string;
+  description: string;
+  status: boolean;
+}
+
 type FetchSprintsType = Pick<SprintProps, "teamId">;
-type FetchMeetingType = Omit<SprintProps, "teamId">;
-type AddMeetingType = Omit<SprintProps, "meetingId">;
-type EditMeetingType = Omit<SprintProps, "teamId">;
+type FetchMeetingType = Omit<SprintProps, "teamId" | "agendaId">;
+type AddMeetingType = Omit<SprintProps, "meetingId" | "agendaId">;
+type EditMeetingType = Omit<SprintProps, "teamId" | "agendaId">;
+type AddAgendaTopicType = Pick<SprintProps, "meetingId" | "sprintNumber">;
+type EditAgendaTopicType = Pick<SprintProps, "agendaId" | "sprintNumber">;
+type DeleteAgendaTopicType = Pick<SprintProps, "agendaId" | "sprintNumber">;
 
 export interface SprintsResponse {
   id: number;
@@ -49,13 +59,35 @@ interface MeetingResponse {
   notes: string;
 }
 
+interface AgendaTopicResponse {
+  id: string;
+  title: string;
+  description: string;
+  status: boolean;
+}
+
 interface AddMeetingBody extends MeetingBody {}
 interface EditMeetingBody extends Partial<AddMeetingBody> {}
+
+interface AddAgendaTopicBody extends Omit<AgendaTopicBody, "status"> {}
+interface EditAgendaTopicBody extends Partial<AgendaTopicBody> {}
 
 export interface FetchSprintsProps extends FetchSprintsType {}
 export interface FetchMeetingProps extends FetchMeetingType {}
 export interface AddMeetingProps extends AddMeetingType, AddMeetingBody {}
 export interface EditMeetingProps extends EditMeetingType, EditMeetingBody {}
+export interface AddAgendaTopicProps
+  extends AddAgendaTopicType,
+    AddAgendaTopicBody {}
+export interface EditAgendaTopicProps
+  extends EditAgendaTopicType,
+    EditAgendaTopicBody {}
+export interface ChangeAgendaTopicStatusProps
+  extends EditAgendaTopicType,
+    EditAgendaTopicBody {
+  status: boolean;
+}
+export interface DeleteAgendaTopicProps extends DeleteAgendaTopicType {}
 
 export interface FetchSprintsResponse extends SprintsResponse {
   voyage: {
@@ -83,10 +115,14 @@ export interface FetchMeetingResponse extends MeetingResponse {
     title: string;
     description: string;
     status: boolean;
+    updatedAt: string;
   }[];
 }
 export interface AddMeetingResponse extends MeetingResponse {}
-export interface EditMeetingResponse extends AddMeetingResponse {}
+export interface EditMeetingResponse extends MeetingResponse {}
+export interface AddAgendaTopicResponse extends AgendaTopicResponse {}
+export interface EditAgendaTopicResponse extends AgendaTopicResponse {}
+export interface DeleteAgendaTopicResponse extends AgendaTopicResponse {}
 
 export async function addMeeting({
   teamId,
@@ -137,6 +173,113 @@ export async function editMeeting({
     );
 
   const [res, error] = await handleAsync(editMeetingAsync);
+
+  if (res) {
+    revalidateTag(sprintCache);
+  }
+
+  return [res, error];
+}
+
+export async function addAgendaTopic({
+  meetingId,
+  sprintNumber,
+  title,
+  description,
+}: AddAgendaTopicProps): Promise<AsyncActionResponse<AddAgendaTopicResponse>> {
+  const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
+
+  const addAgendaTopicAsync = () =>
+    POST<AddAgendaTopicBody, AddAgendaTopicResponse>(
+      `api/v1/voyages/sprints/meetings/${meetingId}/agendas`,
+      token,
+      "default",
+      { title, description },
+    );
+
+  const [res, error] = await handleAsync(addAgendaTopicAsync);
+
+  if (res) {
+    revalidateTag(sprintCache);
+  }
+
+  return [res, error];
+}
+
+export async function editAgendaTopic({
+  sprintNumber,
+  agendaId,
+  title,
+  description,
+  status,
+}: EditAgendaTopicProps): Promise<
+  AsyncActionResponse<EditAgendaTopicResponse>
+> {
+  const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
+
+  const editAgendaTopicAsync = () =>
+    PATCH<EditAgendaTopicBody, EditAgendaTopicResponse>(
+      `api/v1/voyages/sprints/agendas/${agendaId}`,
+      token,
+      "default",
+      { title, description, status },
+    );
+
+  const [res, error] = await handleAsync(editAgendaTopicAsync);
+
+  if (res) {
+    revalidateTag(sprintCache);
+  }
+
+  return [res, error];
+}
+
+export async function deleteAgendaTopic({
+  sprintNumber,
+  agendaId,
+}: DeleteAgendaTopicProps): Promise<
+  AsyncActionResponse<DeleteAgendaTopicResponse>
+> {
+  const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
+
+  const deleteAgendaTopicAsync = () =>
+    DELETE<DeleteAgendaTopicResponse>(
+      `api/v1/voyages/sprints/agendas/${agendaId}`,
+      token,
+      "default",
+    );
+
+  const [res, error] = await handleAsync(deleteAgendaTopicAsync);
+
+  if (res) {
+    revalidateTag(sprintCache);
+  }
+
+  return [res, error];
+}
+
+export async function changeAgendaTopicStatus({
+  sprintNumber,
+  agendaId,
+  status,
+}: ChangeAgendaTopicStatusProps): Promise<
+  AsyncActionResponse<EditAgendaTopicResponse>
+> {
+  const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
+
+  const changeAgendaTopicStatusAsync = () =>
+    PATCH<EditAgendaTopicBody, EditAgendaTopicResponse>(
+      `api/v1/voyages/sprints/agendas/${agendaId}`,
+      token,
+      "default",
+      { status },
+    );
+
+  const [res, error] = await handleAsync(changeAgendaTopicStatusAsync);
 
   if (res) {
     revalidateTag(sprintCache);

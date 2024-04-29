@@ -17,11 +17,7 @@ export default function GettingHelpModal() {
   }, [dispatch]);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      title="Getting Help"
-      onClose={handleClose}
-    >
+    <Modal isOpen={isOpen} title="Getting Help" onClose={handleClose}>
       <div className="flex flex-col max-w-[700px]">
         <p className="text-base font-semibold mb-2.5">Roundtable Discussion</p>
         <p className="text-base">
