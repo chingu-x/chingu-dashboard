@@ -13,12 +13,14 @@ interface TopicProps {
   topic: Agenda;
   editTopic: () => void;
   changeStatus: (id: number, status: boolean) => void;
+  statusButtonDisabled: boolean;
 }
 
 export default function AgendaTopic({
   topic,
   editTopic,
   changeStatus,
+  statusButtonDisabled,
 }: TopicProps) {
   return (
     <motion.li
@@ -36,8 +38,9 @@ export default function AgendaTopic({
             <EllipsisVerticalIcon />
           </IconButton>
           <IconButton
-            onClick={() => changeStatus(topic.id, topic.status)}
+            onClick={() => changeStatus(topic.id, !topic.status)}
             aria-label="change status"
+            disabled={statusButtonDisabled}
           >
             {topic.status ? (
               <CheckCircleIconSolid className="w-5 h-5 text-base-300 stroke-[1.5px]" />

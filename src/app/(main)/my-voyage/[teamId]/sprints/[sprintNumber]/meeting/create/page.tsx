@@ -4,15 +4,15 @@ import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import routePaths from "@/utils/routePaths";
 import { getUser } from "@/utils/getUser";
 
-interface EditMeetingPageProps {
+interface CreateMeetingPageProps {
   params: {
     teamId: string;
   };
 }
 
-export default async function EditMeetingPage({
+export default async function CreateMeetingPage({
   params,
-}: EditMeetingPageProps) {
+}: CreateMeetingPageProps) {
   const teamId = Number(params.teamId);
 
   const [user, error] = await getUser();

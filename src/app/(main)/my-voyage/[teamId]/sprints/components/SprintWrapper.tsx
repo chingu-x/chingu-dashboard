@@ -15,7 +15,7 @@ import {
   FetchMeetingProps,
   FetchMeetingResponse,
 } from "@/myVoyage/sprints/sprintsService";
-import { Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
+import { Agenda, Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
@@ -24,12 +24,12 @@ import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import routePaths from "@/utils/routePaths";
 
 async function fetchMeeting({
   sprintNumber,
   meetingId,
 }: FetchMeetingProps): Promise<AsyncActionResponse<FetchMeetingResponse>> {
-  console.log("fetch meeting");
   const token = getAccessToken();
   const sprintCache = getSprintCache(sprintNumber);
   const fetchMeetingAsync = () =>
@@ -58,6 +58,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
 
   let sprintsData: Sprint[] = [];
   let meetingData: Meeting = { id: +params.meetingId };
+  let agendaData: Agenda[] = [];
 
   const [user, error] = await getUser();
 
@@ -81,7 +82,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     }
     sprintsData = res!.voyage.sprints;
   } else {
-    redirect("/");
+    redirect(routePaths.dashboardPage());
   }
 
   const correspondingMeetingId = sprintsData.find(
@@ -93,6 +94,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
 
     if (res) {
       meetingData = res;
+      agendaData = res.agendas;
     } else {
       return `Error: ${error?.message}`;
     }
@@ -125,11 +127,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
       </VoyagePageBannerContainer>
 
       <ProgressStepper />
-      <SprintActions
-        teamId={params.teamId}
-        meetingId={params.meetingId}
-        sprintNumber={params.sprintNumber}
-      />
+      <SprintActions params={params} />
       <MeetingOverview
         title={meetingData.title!}
         dateTime={meetingData.dateTime!}
@@ -141,7 +139,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         meeting={meetingData}
         currentSprintNumber={currentSprintNumber}
       />
-      <Agendas />
+      <Agendas params={params} topics={agendaData} />
       <Sections />
     </div>
   );
