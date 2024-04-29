@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { parseISO } from "date-fns";
 
 import { LinkIcon } from "@heroicons/react/24/outline";
 
@@ -15,7 +14,10 @@ import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 import Spinner from "@/components/Spinner";
 
-import { validateTextInput } from "@/helpers/form/validateInput";
+import {
+  validateDateTimeInput,
+  validateTextInput,
+} from "@/helpers/form/validateInput";
 import { useSprint, useAppDispatch } from "@/store/hooks";
 import { Meeting } from "@/store/features/sprint/sprintSlice";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
@@ -23,6 +25,7 @@ import useServerAction from "@/hooks/useServerAction";
 import { addMeeting, editMeeting } from "@/myVoyage//sprints/sprintsService";
 import routePaths from "@/utils/routePaths";
 import { persistor } from "@/store/store";
+import convertStringToDate from "@/utils/convertStringToDate";
 
 const dateWithoutTimezone = (date: Date) => {
   const tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
@@ -31,26 +34,6 @@ const dateWithoutTimezone = (date: Date) => {
     .slice(0, -1);
   return withoutTimezone;
 };
-
-const validationSchema = z.object({
-  title: validateTextInput({
-    inputName: "Title",
-    required: true,
-    maxLen: 50,
-  }),
-  notes: validateTextInput({
-    inputName: "Description",
-    required: true,
-  }),
-  dateTime: z.date(),
-  meetingLink: validateTextInput({
-    inputName: "Meeting Link",
-    required: true,
-    isUrl: true,
-  }),
-});
-
-export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function MeetingForm() {
   const router = useRouter();
@@ -70,6 +53,33 @@ export default function MeetingForm() {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [meetingData, setMeetingData] = useState<Meeting>();
   const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
+
+  const { startDate, endDate } = sprints.find(
+    (sprint) => sprint.number === sprintNumber,
+  )!;
+
+  const validationSchema = z.object({
+    title: validateTextInput({
+      inputName: "Title",
+      required: true,
+      maxLen: 50,
+    }),
+    notes: validateTextInput({
+      inputName: "Description",
+      required: true,
+    }),
+    dateTime: validateDateTimeInput({
+      minDate: convertStringToDate(startDate),
+      maxDate: convertStringToDate(endDate),
+    }),
+    meetingLink: validateTextInput({
+      inputName: "Meeting Link",
+      required: true,
+      isUrl: true,
+    }),
+  });
+
+  type ValidationSchema = z.infer<typeof validationSchema>;
 
   const {
     runAction: editMeetingAction,
@@ -170,8 +180,8 @@ export default function MeetingForm() {
 
   useEffect(() => {
     if (meetingData && meetingData.dateTime) {
-      const dateTimeConvertedToDate = parseISO(
-        meetingData?.dateTime.substring(0, meetingData?.dateTime.length - 1),
+      const dateTimeConvertedToDate = convertStringToDate(
+        meetingData?.dateTime,
       );
       reset({
         title: meetingData?.title,
@@ -245,10 +255,11 @@ export default function MeetingForm() {
       }
     }
 
-    if (editMode && isDirty) {
+    if (editMode && isDirty && isValid) {
       void autoSave();
     }
   }, [
+    isValid,
     isDirty,
     meetingData,
     watch,
@@ -283,10 +294,10 @@ export default function MeetingForm() {
   }
 
   return (
-    <div className="flex flex-col items-center w-full bg-base-200 rounded-2xl">
+    <div className="flex flex-col items-center mx-auto bg-base-200 rounded-2xl max-w-[871px] w-full p-10">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-y-4 max-w-[650px] p-10 w-full"
+        className="flex flex-col w-full gap-y-4"
       >
         <div className="flex flex-col mb-6 gap-y-4">
           <h2 className="text-3xl font-bold text-base-300">

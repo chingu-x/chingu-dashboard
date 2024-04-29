@@ -15,6 +15,11 @@ import {
   deleteFeature,
 } from "@/myVoyage/features/featuresService";
 import { AsyncActionResponse } from "@/utils/handleAsync";
+import {
+  DeleteAgendaTopicProps,
+  DeleteAgendaTopicResponse,
+  deleteAgendaTopic,
+} from "@/app/(main)/my-voyage/[teamId]/sprints/sprintsService";
 
 export type ModalType =
   | "error"
@@ -64,7 +69,8 @@ export interface Payload {
   deleteFunction?:
     | typeof deleteIdeation
     | typeof deleteResource
-    | typeof deleteFeature;
+    | typeof deleteFeature
+    | typeof deleteAgendaTopic;
 }
 
 export type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
@@ -72,11 +78,13 @@ export type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
 export type DeleteProps =
   | DeleteIdeationProps
   | DeleteResourceProps
-  | DeleteFeatureProps;
+  | DeleteFeatureProps
+  | DeleteAgendaTopicProps;
 
 export type DeleteResponse =
   | DeleteIdeationResponse
   | DeleteResourceResponse
+  | DeleteAgendaTopicResponse
   | void;
 
 export interface Redirect {

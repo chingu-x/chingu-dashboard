@@ -245,10 +245,11 @@ export default function IdeationForm() {
       }
     }
 
-    if (editMode && isDirty) {
+    if (editMode && isDirty && isValid) {
       void autoSave();
     }
   }, [
+    isValid,
     isDirty,
     ideationData,
     watch,
