@@ -115,6 +115,7 @@ export interface FetchMeetingResponse extends MeetingResponse {
     title: string;
     description: string;
     status: boolean;
+    updatedAt: string;
   }[];
 }
 export interface AddMeetingResponse extends MeetingResponse {}

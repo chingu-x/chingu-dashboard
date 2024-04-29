@@ -26,6 +26,7 @@ interface AgendasProps {
 }
 
 export default function Agendas({ params, topics }: AgendasProps) {
+  topics = topics.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt));
   const [teamId, meetingId, sprintNumber] = [
     Number(params.teamId),
     Number(params.meetingId),
