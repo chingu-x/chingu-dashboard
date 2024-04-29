@@ -23,8 +23,7 @@ export type ModalType =
   | "gettingHelp"
   | "confirmation"
   | "viewResource"
-  | "checkInSuccess"
-  | "deleteAgendaConfirmation";
+  | "checkInSuccess";
 
 interface ModalState {
   id?: number;
