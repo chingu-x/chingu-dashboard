@@ -56,8 +56,11 @@ export const getDashboardData = async (
     sprintsData = res!.voyage.sprints;
   }
 
-  const { number } = getCurrentSprint(sprintsData) as Sprint;
-  const currentSprintNumber = number;
+  let currentSprintNumber = null;
+  if (sprintsData.length > 0) {
+    const { number } = getCurrentSprint(sprintsData) as Sprint;
+    currentSprintNumber = number;
+  }
 
   const meetingsData: { title: string; date: string; link: string }[] = [];
 

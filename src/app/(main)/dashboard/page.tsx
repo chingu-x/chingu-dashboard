@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
-import PreVoyageDashboard from "./components/pre-voyage-dashboard/PreVoyageDashboard";
-import VoyageDashboardPage from "./components/voyage-dashboard/VoyageDashboardPage";
 import { getUser } from "@/utils/getUser";
+import routePaths from "@/utils/routePaths";
 
 async function DashboardPage() {
   // TODO: Mocked temporary value
@@ -13,13 +12,13 @@ async function DashboardPage() {
     (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
   );
 
-  const teamId = teamMember?.voyageTeamId;
-
-  if (teamId && isVoyageStarted) {
-    redirect(`/dashboard/${teamId}`);
+  if (teamMember && isVoyageStarted) {
+    redirect(
+      routePaths.VoyageMemberDashboardPage(teamMember?.voyageTeamId.toString()),
+    );
   }
 
-  return isVoyageStarted ? <VoyageDashboardPage /> : <PreVoyageDashboard />;
+  return <div>Default Dashboard</div>;
 }
 
 export default DashboardPage;
