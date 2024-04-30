@@ -43,7 +43,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
     meetingsData = data.meetingsData;
   }
 
-  return user ? (
+  return (
     <div className="flex flex-col min-[1470px]:grid min-[1470px]:grid-cols-2 gap-x-6 max-[1470px]:gap-y-6 w-full">
       <div className="col-span-1 flex flex-col gap-y-6 flex-grow-2">
         <CalendarWidget
@@ -122,7 +122,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
         currentSprintNumber={currentSprintNumber ?? 1}
       />
     </div>
-  ) : null;
+  );
 }
 
 export default VoyageDashboard;
