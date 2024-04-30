@@ -57,7 +57,7 @@ export default function List({ id, title, features }: ListProps) {
             <ul
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className={`max-h-[300px] overflow-y-auto overflow-x-hidden flex flex-col min-h-[100px] px-2 ${
+              className={`max-h-[300px] overflow-y-auto overflow-x-hidden flex flex-col min-h-[130px] px-2 ${
                 snapshot.draggingFromThisWith && "bg-base-content"
               } ${snapshot.isDraggingOver && "bg-base-content"}`}
             >
