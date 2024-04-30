@@ -1,18 +1,16 @@
 import { redirect } from "next/navigation";
-import MeetingForm from "@/myVoyage/sprints/components/forms/MeetingForm";
+import TopicForm from "@/myVoyage/sprints/components/forms/AgendaTopicForm";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import routePaths from "@/utils/routePaths";
 import { getUser } from "@/utils/getUser";
 
-interface EditMeetingPageProps {
+interface AddTopicPageProps {
   params: {
     teamId: string;
   };
 }
 
-export default async function EditMeetingPage({
-  params,
-}: EditMeetingPageProps) {
+export default async function AddTopicPage({ params }: AddTopicPageProps) {
   const teamId = Number(params.teamId);
 
   const [user, error] = await getUser();
@@ -24,7 +22,7 @@ export default async function EditMeetingPage({
   }
 
   if (currentTeam) {
-    return <MeetingForm />;
+    return <TopicForm />;
   }
 
   redirect(routePaths.dashboardPage());
