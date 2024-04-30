@@ -53,11 +53,11 @@ export default function ResourcesContainer({ data }: ResourceContainerProps) {
         formattedResources.map((item) => (
           <ResourceCard
             key={item.id}
-            id={item.id}
+            resourceId={item.id}
             title={item.title}
             user={item.addedBy.member}
             date={item.date}
-            userId={item.teamMemberId}
+            userId={item.addedBy.member.id}
             url={item.url}
           />
         ))

@@ -29,10 +29,8 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function FeatureModal() {
   const dispatch = useAppDispatch();
-  const { isOpen, type, isEditing } = useModal();
+  const { isOpen, isEditing } = useModal();
   const [deleteAlertIsVisible, setDeleteAlertIsVisible] = useState(false);
-
-  const isModalOpen = isOpen && type === "feature";
 
   const {
     register,
@@ -82,7 +80,7 @@ export default function FeatureModal() {
 
   return (
     <Modal
-      isOpen={isModalOpen}
+      isOpen={isOpen}
       title={isEditing ? "edit feature" : "add feature"}
       onClose={handleClose}
     >
