@@ -18,6 +18,7 @@ import useServerAction from "@/hooks/useServerAction";
 import {
   addAgendaTopic,
   editAgendaTopic,
+  deleteAgendaTopic,
 } from "@/myVoyage/sprints/sprintsService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
@@ -131,15 +132,25 @@ export default function AgendaTopicForm() {
   };
 
   function handleDelete() {
+    const route = routePaths.sprintWeekPage(
+      teamId.toString(),
+      sprintNumber.toString(),
+      meetingId.toString(),
+    );
     dispatch(
       onOpenModal({
-        type: "deleteAgendaConfirmation",
+        type: "confirmation",
         content: {
           title: "Confirm Deletion",
           message:
             "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
           confirmationText: "Delete Agenda Topic",
           cancelText: "Keep It",
+        },
+        payload: {
+          params: { agendaId, sprintNumber },
+          redirect: { router, route },
+          deleteFunction: deleteAgendaTopic,
         },
       }),
     );
@@ -224,10 +235,11 @@ export default function AgendaTopicForm() {
       }
     }
 
-    if (editMode && isDirty) {
+    if (editMode && isDirty && isValid) {
       void autoSave();
     }
   }, [
+    isValid,
     isDirty,
     topicData,
     watch,
@@ -262,10 +274,10 @@ export default function AgendaTopicForm() {
 
   return (
     // TODO: Create some general form wrapper component
-    <div className="flex flex-col items-center w-full bg-base-200 rounded-2xl">
+    <div className="flex flex-col items-center w-full bg-base-200 rounded-2xl p-10 mx-auto max-w-[871px]">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-y-4 max-w-[650px] p-10 w-full"
+        className="flex flex-col w-full p-10 gap-y-4"
       >
         <div className="flex flex-col mb-6 gap-y-4">
           <h2 className="text-3xl font-bold text-base-300">

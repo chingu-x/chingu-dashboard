@@ -8,6 +8,7 @@ export interface Agenda {
   title: string;
   description: string;
   status: boolean;
+  updatedAt: string;
 }
 
 export interface Section {
