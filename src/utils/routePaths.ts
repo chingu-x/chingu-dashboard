@@ -5,7 +5,7 @@ const routePaths = {
     return "/";
   },
   VoyageMemberDashboardPage(teamId: string) {
-    return `/${teamId}`;
+    return `/dashboard/${teamId}`;
   },
   signIn() {
     return "/sign-in";
