@@ -77,7 +77,7 @@ export default function AddFeaturesInput({
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
 
@@ -86,7 +86,7 @@ export default function AddFeaturesInput({
   };
 
   return isEditing ? (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="mx-6">
       <TextInput
         clearInputAction={handleClearInputAction}
         id="description"
@@ -98,16 +98,18 @@ export default function AddFeaturesInput({
       />
     </form>
   ) : (
-    <Button
-      variant="link"
-      size="lg"
-      className="h-10 justify-between p-0 w-full outline-none rounded-lg text-neutral-focus font-medium shadow-sm border border-base-100 mt-3"
-      onClick={handleClick}
-    >
-      <div className="pl-3">Add Feature</div>
-      <div className="flex justify-center items-center w-12 h-full bg-neutral rounded-br-lg rounded-tr-lg">
-        <PlusCircleIcon className="w-6 h-6 text-base-200" />
-      </div>
-    </Button>
+    <div className="mx-6">
+      <Button
+        variant="link"
+        size="lg"
+        className="justify-between w-full h-10 p-0 mt-3 font-medium border rounded-lg shadow-sm outline-none text-neutral-focus border-base-100"
+        onClick={handleClick}
+      >
+        <div className="pl-3">Add Feature</div>
+        <div className="flex items-center justify-center w-12 h-full rounded-tr-lg rounded-br-lg bg-neutral">
+          <PlusCircleIcon className="w-6 h-6 text-base-200" />
+        </div>
+      </Button>
+    </div>
   );
 }
