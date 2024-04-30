@@ -142,18 +142,16 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
             />
           ))}
         </AvatarGroup>
-        {currentUserVoted !== null ? (
-          <Button
-            type="submit"
-            size="lg"
-            variant="primary"
-            className="w-full"
-            onClick={handleVote}
-            disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
-          >
-            {buttonContent()}
-          </Button>
-        ) : null}
+        <Button
+          type="submit"
+          size="lg"
+          variant={`${currentUserVoted ? "error" : "primary"}`}
+          className={`w-full ${currentUserVoted ? "text-base-300" : ""}`}
+          onClick={handleVote}
+          disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
+        >
+          {buttonContent()}
+        </Button>
       </section>
     </div>
   );

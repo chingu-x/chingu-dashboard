@@ -14,7 +14,7 @@ import Alert from "@/components/Alert";
 import { validateTextInput } from "@/helpers/form/validateInput";
 
 import { onCloseModal } from "@/store/features/modal/modalSlice";
-import { onOpen } from "@/store/features/toast/toastSlice";
+// import { onOpen } from "@/store/features/toast/toastSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
 
 const validationSchema = z.object({
@@ -29,10 +29,8 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function FeatureModal() {
   const dispatch = useAppDispatch();
-  const { isOpen, type, isEditing } = useModal();
+  const { isOpen, isEditing } = useModal();
   const [deleteAlertIsVisible, setDeleteAlertIsVisible] = useState(false);
-
-  const isModalOpen = isOpen && type === "feature";
 
   const {
     register,
@@ -61,11 +59,11 @@ export default function FeatureModal() {
     // TODO: temp
     console.log(data);
     handleClose();
-    if (isEditing) {
-      dispatch(onOpen({ context: "success", message: "Feature updated" }));
-    } else {
-      dispatch(onOpen({ context: "success", message: "Feature added" }));
-    }
+    // if (isEditing) {
+    //   dispatch(onOpen({ context: "success", message: "Feature updated" }));
+    // } else {
+    //   dispatch(onOpen({ context: "success", message: "Feature added" }));
+    // }
   };
 
   const onDelete = () => {
@@ -75,14 +73,14 @@ export default function FeatureModal() {
   const onDeleteConfirmed = () => {
     // TODO: temp
     handleClose();
-    dispatch(
-      onOpen({ context: "warning", message: "Your feature has been deleted" }),
-    );
+    // dispatch(
+    //   onOpen({ context: "warning", message: "Your feature has been deleted" }),
+    // );
   };
 
   return (
     <Modal
-      isOpen={isModalOpen}
+      isOpen={isOpen}
       title={isEditing ? "edit feature" : "add feature"}
       onClose={handleClose}
     >

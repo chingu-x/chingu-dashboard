@@ -8,10 +8,8 @@ import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
 
 export default function ErrorModal() {
-  const { isOpen, type, content } = useModal();
+  const { isOpen, content } = useModal();
   const dispatch = useAppDispatch();
-
-  const isModalOpen = isOpen && type === "error";
 
   const handleClose = useCallback(() => {
     dispatch(onCloseModal());
@@ -19,7 +17,7 @@ export default function ErrorModal() {
 
   return (
     <Modal
-      isOpen={isModalOpen}
+      isOpen={isOpen}
       title="Submission Error"
       onClose={handleClose}
       icon={<ExclamationTriangleIcon className="w-8" />}
