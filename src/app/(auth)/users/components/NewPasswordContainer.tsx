@@ -74,7 +74,7 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   }
 
   return (
-    <div className="w-[400px] min-h-[349px] bg-base-200 rounded-2xl p-8 xl:ml-60">
+    <div className="w-[400px] min-h-[652px] bg-base-200 rounded-2xl p-8 xl:ml-60">
       <p className="text-base-300 text-2xl text-center mb-8 font-medium">
         Create New Password
       </p>
