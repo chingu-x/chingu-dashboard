@@ -5,7 +5,7 @@ import Banner from "@/components/banner/Banner";
 
 function ResetCompletedContainer() {
   return (
-    <div className="w-[400px] min-h-[349px] bg-base-200 rounded-2xl p-6 flex flex-col items-center">
+    <div className="w-[400px] min-h-[349px] bg-base-200 rounded-2xl p-6 flex flex-col items-center xl:ml-60">
       <p className="text-base-300 text-2xl text-center mt-2.5 mb-[22px] font-medium">
         Password Reset!
       </p>
