@@ -31,7 +31,7 @@ export default function EditPopover({
           title: "Confirm Deletion",
           message:
             "Are you sure you want to delete? You will permanently lose all the information and will not be able to recover it.",
-          confirmationText: "Delete Project",
+          confirmationText: "Delete",
           cancelText: "Keep It",
         },
         payload: {
