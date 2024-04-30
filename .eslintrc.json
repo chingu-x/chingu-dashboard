@@ -104,5 +104,13 @@
     ],
     "dot-notation": "off",
     "@typescript-eslint/dot-notation": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/stories/**/*.{js,ts,tsx}"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
 }
