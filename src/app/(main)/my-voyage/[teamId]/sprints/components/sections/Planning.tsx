@@ -140,15 +140,17 @@ export default function Planning({ data }: PlanningProps) {
         errorMessage={errors.timeline?.message}
         defaultValue={timeline ?? ""}
       />
-      <Button
-        type="submit"
-        variant="outline"
-        size="md"
-        className="self-center"
-        disabled={!isDirty || !isValid || editSectionLoading}
-      >
-        Save
-      </Button>
+      {isDirty && (
+        <Button
+          type="submit"
+          variant="outline"
+          size="md"
+          className="self-center"
+          disabled={!isDirty || !isValid || editSectionLoading}
+        >
+          Save
+        </Button>
+      )}
     </form>
   );
 }

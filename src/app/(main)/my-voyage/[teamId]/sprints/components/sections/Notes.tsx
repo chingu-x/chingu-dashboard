@@ -92,15 +92,17 @@ export default function Notes({ data }: NotesProps) {
         {...register("notes")}
         errorMessage={errors.notes?.message}
       />
-      <Button
-        type="submit"
-        variant="outline"
-        size="md"
-        className="self-center"
-        disabled={!isDirty || !isValid || editMeetingLoading}
-      >
-        Save
-      </Button>
+      {isDirty && (
+        <Button
+          type="submit"
+          variant="outline"
+          size="md"
+          className="self-center"
+          disabled={!isDirty || !isValid || editMeetingLoading}
+        >
+          Save
+        </Button>
+      )}
     </form>
   );
 }

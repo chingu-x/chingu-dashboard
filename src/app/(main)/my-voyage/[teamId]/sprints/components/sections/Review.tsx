@@ -164,15 +164,17 @@ export default function Review({ data }: ReviewProps) {
         errorMessage={errors.what_to_change?.message}
         defaultValue={what_to_change ?? ""}
       />
-      <Button
-        type="submit"
-        variant="outline"
-        size="md"
-        className="self-center"
-        disabled={!isDirty || !isValid || editSectionLoading}
-      >
-        Save
-      </Button>
+      {isDirty && (
+        <Button
+          type="submit"
+          variant="outline"
+          size="md"
+          className="self-center"
+          disabled={!isDirty || !isValid || editSectionLoading}
+        >
+          Save
+        </Button>
+      )}
     </form>
   );
 }
