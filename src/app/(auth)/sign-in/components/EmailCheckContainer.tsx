@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Button from "@/components/Button";
+import Banner from "@/components/banner/Banner";
 
 type ResendEmailContainerProp = {
   handleResendEmail: () => void;
@@ -11,28 +11,13 @@ function EmailCheckContainer({ handleResendEmail }: ResendEmailContainerProp) {
       <p className="text-base-300 text-2xl text-center mb-[26px] font-medium">
         Welcome to Chingu
       </p>
-      <div
-        data-hide-on-theme="dark"
-        className="flex h-[171px] w-[168px] relative shrink-0"
-      >
-        <Image
-          src="/img/link_retro_mac_light.png"
-          alt="Light login image"
-          fill={true}
-          style={{ objectFit: "contain" }}
-          priority={true}
-        />
-      </div>
-      <div
-        data-hide-on-theme="light"
-        className="flex h-[171px] w-[168px] relative shrink-0"
-      >
-        <Image
-          src="/img/link_retro_mac_dark.png"
-          alt="Light login image"
-          fill={true}
-          style={{ objectFit: "contain" }}
-          priority={true}
+      <div>
+        <Banner
+          imageLight="/img/link_retro_mac_light.png"
+          imageDark="/img/link_retro_mac_dark.png"
+          height="h-[171px]"
+          width="w-[168px]"
+          alt="Email confirmation image"
         />
       </div>
       <div className="flex flex-col items-center">
