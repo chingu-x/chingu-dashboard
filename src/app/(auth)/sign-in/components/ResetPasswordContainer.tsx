@@ -32,8 +32,7 @@ function ResetPasswordContainer({
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = () => {
     handleEmailCheck();
   };
 
