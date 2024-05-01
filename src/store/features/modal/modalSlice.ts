@@ -1,7 +1,27 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import {
+  type DeleteResourceProps,
+  type DeleteResourceResponse,
+  deleteResource,
+} from "@/myVoyage/voyage-resources/resourcesService";
+import {
+  type DeleteIdeationProps,
+  type DeleteIdeationResponse,
+  deleteIdeation,
+} from "@/myVoyage/ideation/ideationService";
+import {
+  type DeleteFeatureProps,
+  deleteFeature,
+} from "@/myVoyage/features/featuresService";
+import { AsyncActionResponse } from "@/utils/handleAsync";
+import {
+  DeleteAgendaTopicProps,
+  DeleteAgendaTopicResponse,
+  deleteAgendaTopic,
+} from "@/app/(main)/my-voyage/[teamId]/sprints/sprintsService";
 
 export type ModalType =
-  | "feature"
   | "error"
   | "gettingHelp"
   | "confirmation"
@@ -12,15 +32,15 @@ interface ModalState {
   id?: number;
   type: ModalType | undefined;
   isOpen: boolean;
-  isEditing?: boolean;
   content?: ContentPayload;
+  payload?: Payload;
 }
 
 export interface BaseModalOpenActionPayload {
   id?: number;
   type: Exclude<ModalType, "error" | "confirmation">;
   content?: ContentPayload;
-  isEditing?: boolean;
+  payload?: Payload;
 }
 
 export interface ErrorModalOpenActionPayload
@@ -33,6 +53,7 @@ export interface ConfirmationModalOpenActionPayload
   extends Omit<BaseModalOpenActionPayload, "type"> {
   type: "confirmation";
   content: Required<ContentPayload>;
+  payload: Required<Payload>;
 }
 
 export interface ContentPayload {
@@ -40,6 +61,35 @@ export interface ContentPayload {
   message?: string;
   confirmationText?: string;
   cancelText?: string;
+}
+
+export interface Payload {
+  params?: DeleteProps;
+  redirect?: Redirect | null;
+  deleteFunction?:
+    | typeof deleteIdeation
+    | typeof deleteResource
+    | typeof deleteFeature
+    | typeof deleteAgendaTopic;
+}
+
+export type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
+
+export type DeleteProps =
+  | DeleteIdeationProps
+  | DeleteResourceProps
+  | DeleteFeatureProps
+  | DeleteAgendaTopicProps;
+
+export type DeleteResponse =
+  | DeleteIdeationResponse
+  | DeleteResourceResponse
+  | DeleteAgendaTopicResponse
+  | void;
+
+export interface Redirect {
+  router?: AppRouterInstance;
+  route?: string;
 }
 
 export type ModalOpenActionPayload =
@@ -51,8 +101,8 @@ const initialState: ModalState = {
   id: 0,
   type: undefined,
   isOpen: false,
-  isEditing: false,
   content: {},
+  payload: {},
 };
 
 export const modalSlice = createSlice({
@@ -60,13 +110,13 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
-      const { id, type, isEditing, content } = action.payload;
+      const { id, type, content, payload } = action.payload;
 
       state.id = id;
       state.isOpen = true;
       state.type = type;
-      state.isEditing = isEditing;
       state.content = content;
+      state.payload = payload;
     },
     onCloseModal: () => initialState,
   },

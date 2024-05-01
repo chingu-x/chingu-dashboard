@@ -14,20 +14,18 @@ import { CacheTag } from "@/utils/cacheTag";
 import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import routePaths from "@/utils/routePaths";
 
 export async function fetchSprints({
   teamId,
 }: FetchSprintsProps): Promise<AsyncActionResponse<FetchSprintsResponse>> {
-  console.log("fetch sprints");
-
   const token = getAccessToken();
-
   const fetchSprintsAsync = () =>
     GET<SprintsResponse>(
       `api/v1/voyages/sprints/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.sprints,
+      CacheTag.sprints
     );
 
   return await handleAsync(fetchSprintsAsync);
@@ -68,19 +66,19 @@ export default async function RedirectToCurrentSprintWrapper({
       return `Error: ${error.message}`;
     }
     const { teamMeetings, number } = getCurrentSprint(
-      res!.voyage.sprints,
+      res!.voyage.sprints
     ) as Sprint;
     currentSprintNumber = number;
     currentMeetingId = teamMeetings[0]?.id;
 
     if (currentMeetingId) {
       redirect(
-        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`,
+        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`
       );
     } else {
       redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}`);
     }
   } else {
-    redirect("/");
+    redirect(routePaths.dashboardPage());
   }
 }

@@ -44,7 +44,7 @@ function ContributionCard({
             href={routePaths.editIdeationPage(teamId, projectIdeaId.toString())}
             className="w-full"
           >
-            <Button variant="secondary" className="w-full">
+            <Button variant="outline" className="w-full">
               Edit Project
             </Button>
           </Link>
