@@ -116,7 +116,7 @@ interface AddAgendaTopicBody extends Omit<AgendaTopicBody, "status"> {}
 interface EditAgendaTopicBody extends Partial<AgendaTopicBody> {}
 
 interface AddSectionBody {}
-interface EditSectionBody extends Partial<SectionBody> {}
+export interface EditSectionBody extends Partial<SectionBody> {}
 
 export interface FetchSprintsProps extends FetchSprintsType {}
 export interface FetchMeetingProps extends FetchMeetingType {}
