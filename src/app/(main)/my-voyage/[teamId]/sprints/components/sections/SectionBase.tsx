@@ -67,7 +67,6 @@ export default function SectionBase({
       });
       if (res) {
         reorderSections && reorderSections(title);
-        setIsOpen(true);
       }
 
       if (error) {

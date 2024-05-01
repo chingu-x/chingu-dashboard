@@ -12,16 +12,21 @@ import { validateTextInput } from "@/helpers/form/validateInput";
 import { Section } from "@/store/features/sprint/sprintSlice";
 import { PlanningQuestions, SprintSections } from "@/utils/sections";
 import useServerAction from "@/hooks/useServerAction";
-import { editSection } from "@/myVoyage/sprints/sprintsService";
+import {
+  editSection,
+  type EditSectionBody,
+} from "@/myVoyage/sprints/sprintsService";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   goal: validateTextInput({
-    inputName: "Sprint Goal",
+    inputName: "This field",
+    required: true,
   }),
   timeline: validateTextInput({
-    inputName: "Timeline/Tasks",
+    inputName: "This field",
+    required: true,
   }),
 });
 
@@ -54,7 +59,7 @@ export default function Planning({ data }: PlanningProps) {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid, dirtyFields },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
@@ -71,50 +76,52 @@ export default function Planning({ data }: PlanningProps) {
   } = useServerAction(editSection);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    if (data.goal !== "" || data.timeline !== "") {
-      type ResponseType = { questionId: number; text: string }[];
-      const responses = [] as ResponseType;
+    // Get only modified data
+    interface MyObject extends EditSectionBody {
+      [key: string]: unknown;
+    }
 
-      for (const [key, value] of Object.entries(data)) {
-        const question = key as keyof typeof PlanningQuestions;
-        const questionId: number = PlanningQuestions[question];
-        const text = value;
-        const response = {
-          questionId,
-          text,
-          optionChoiceId: null,
-          numeric: null,
-          boolean: null,
-        };
-        responses.push(response);
-      }
+    const filteredData: MyObject = {};
 
-      const [res, error] = await editSectionAction({
-        responses,
-        meetingId,
-        sprintNumber,
-        formId: Number(SprintSections.planning),
-      });
-      if (res) {
-        reset({ ...data });
+    for (const key in dirtyFields) {
+      if (dirtyFields.hasOwnProperty(key)) {
+        filteredData[key] = (data as { [key: string]: string })[key];
       }
-      if (error) {
-        dispatch(
-          onOpenModal({
-            type: "error",
-            content: { message: error.message },
-          }),
-        );
-      }
-      setEditSectionLoading(false);
-    } else {
+    }
+
+    // Create a necessary object
+    type ResponseType = { questionId: number; text: string }[];
+    const responses = [] as ResponseType;
+
+    for (const [key, value] of Object.entries(filteredData)) {
+      const question = key as keyof typeof PlanningQuestions;
+      const questionId: number = PlanningQuestions[question];
+      const text = value as string;
+      const response = {
+        questionId,
+        text,
+      };
+      responses.push(response);
+    }
+
+    const [res, error] = await editSectionAction({
+      responses,
+      meetingId,
+      sprintNumber,
+      formId: Number(SprintSections.planning),
+    });
+    if (res) {
+      reset({ ...data });
+    }
+    if (error) {
       dispatch(
         onOpenModal({
           type: "error",
-          content: { message: "All fields are empty!" },
+          content: { message: error.message },
         }),
       );
     }
+    setEditSectionLoading(false);
   };
 
   return (

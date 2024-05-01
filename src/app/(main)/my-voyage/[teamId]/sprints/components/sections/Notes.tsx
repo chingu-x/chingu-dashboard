@@ -16,7 +16,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   notes: validateTextInput({
-    inputName: "notes",
+    inputName: "This field",
     required: true,
   }),
 });
