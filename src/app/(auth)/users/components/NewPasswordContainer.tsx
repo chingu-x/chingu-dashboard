@@ -83,7 +83,7 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
       </p>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col overflow-hidden ml-0"
+        className="flex flex-col ml-0"
       >
         <div className="flex flex-col min-h-[90px]">
           <div className="flex flex-col">

@@ -16,7 +16,7 @@ export default function Layout({ children }: LayoutProps) {
       </Navbar>
       <main className="flex flex-col items-center w-full p-10 overflow-y-auto h-full">
         <div className="gap-y-9 h-full xl:flex">
-          <div className="flex flex-col xl:flex-row items-center justify-center">
+          <div className="flex items-center justify-center">
             <AuthBannerContainer />
             {children}
           </div>
