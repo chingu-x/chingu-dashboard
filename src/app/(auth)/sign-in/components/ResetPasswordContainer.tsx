@@ -49,14 +49,13 @@ function ResetPasswordContainer({
     const { email } = data;
     const [res, error] = await resetPwdReqEmailAction(email);
 
-    // ignore for prettier
     if (res) {
       handleEmailCheck();
     }
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
+        onOpenModal({ type: "error", content: { message: error.message } })
       );
       setResetPwdReqEmail(false);
     }
@@ -79,7 +78,7 @@ function ResetPasswordContainer({
       </p>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col overflow-hidden w-full"
+        className="flex flex-col w-full"
       >
         <TextInput
           id="email"
