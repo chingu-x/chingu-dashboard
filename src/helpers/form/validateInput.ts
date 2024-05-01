@@ -1,3 +1,5 @@
+import { isWithinInterval, subDays } from "date-fns";
+import { format } from "date-fns-tz";
 import { z } from "zod";
 
 interface ValidateTextInput {
@@ -8,6 +10,11 @@ interface ValidateTextInput {
   isEmail?: boolean;
   isHours?: boolean;
   isUrl?: boolean;
+}
+
+interface ValidateDateTimeInput {
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 export function validateTextInput({
@@ -36,6 +43,7 @@ export function validateTextInput({
   if (isUrl) {
     rules = rules.startsWith("https://");
   }
+
   // Minimum Length
   if (minLen && minLen > 1) {
     rules = rules.min(minLen, {
@@ -53,6 +61,28 @@ export function validateTextInput({
     rules = rules.refine(
       (val) => val.length <= maxLen,
       (val) => ({ message: `Character length ${val.length}/${maxLen}` }),
+    );
+  }
+
+  return rules;
+}
+
+export function validateDateTimeInput({
+  minDate,
+  maxDate,
+}: ValidateDateTimeInput): z.ZodDate | z.ZodEffects<z.ZodDate, Date, Date> {
+  let rules;
+  rules = z.date();
+
+  if (minDate && maxDate) {
+    rules = rules.refine(
+      (val) => isWithinInterval(val, { start: minDate, end: maxDate }),
+      () => ({
+        message: `The meeting should be between ${format(
+          minDate,
+          "MMM d",
+        )} and ${format(subDays(maxDate, 1), "MMM d")}`,
+      }),
     );
   }
 

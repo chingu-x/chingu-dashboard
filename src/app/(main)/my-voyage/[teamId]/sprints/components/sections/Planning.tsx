@@ -31,9 +31,7 @@ export default function Planning() {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<ValidationSchema> = () => {};
 
   return (
     <form

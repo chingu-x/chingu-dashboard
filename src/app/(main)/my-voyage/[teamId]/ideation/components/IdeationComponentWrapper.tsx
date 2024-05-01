@@ -11,6 +11,7 @@ import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import routePaths from "@/utils/routePaths";
 import { getUser } from "@/utils/getUser";
 // import { ideation } from "./fixtures/ideation";
 
@@ -25,10 +26,10 @@ export async function fetchProjectIdeas({
 
   const fetchProjectIdeasAsync = () =>
     GET<IdeationData[]>(
-      `api/v1/voyages/${teamId}/ideations`,
+      `api/v1/voyages/teams/${teamId}/ideations`,
       token,
       "force-cache",
-      CacheTag.ideation,
+      CacheTag.ideation
     );
 
   return await handleAsync(fetchProjectIdeasAsync);
@@ -69,13 +70,13 @@ export default async function IdeationComponentWrapper({
 
     projectIdeas = res!;
   } else {
-    redirect("/");
+    redirect(routePaths.dashboardPage());
   }
 
   function renderProjects() {
     if (projectIdeas.length === 0) {
       return (
-        <div className="flex w-full mt-20 h-[290px] gap-x-48">
+        <div className="flex w-full mt-20 mb-20 h-[290px] gap-x-48">
           <div className="flex flex-col justify-center">
             <h1 className="text-xl font-medium text-base-300">
               Be the First to Share!
