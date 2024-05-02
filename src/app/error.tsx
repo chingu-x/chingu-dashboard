@@ -12,13 +12,15 @@ export default function Error({
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
   }, [error]);
 
   return (
     <div className="flex flex-col justify-center items-center gap-y-2 mt-2">
       <h2>Something went wrong!</h2>
-      <Button type="button" onClick={() => reset()}>
+      <Button
+        type="button"
+        onClick={() => reset()}
+      >
         Try again
       </Button>
     </div>
