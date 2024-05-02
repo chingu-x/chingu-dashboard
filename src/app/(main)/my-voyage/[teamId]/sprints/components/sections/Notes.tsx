@@ -74,7 +74,7 @@ export default function Notes({ data }: NotesProps) {
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        }),
+        })
       );
     }
     setEditMeetingLoading(false);

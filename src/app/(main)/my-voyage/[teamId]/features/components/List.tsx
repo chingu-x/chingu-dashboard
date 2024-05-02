@@ -1,88 +1,81 @@
-"use client";
-
 import {
   Droppable,
   DroppableProvided,
   DroppableStateSnapshot,
 } from "@hello-pangea/dnd";
-
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { Feature } from "./fixtures/Features";
-import Card from "./Card";
-
-import { useAppDispatch } from "@/store/hooks";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
-
-import Button from "@/components/Button";
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+// import { Feature } from "./fixtures/Features";
+import AddFeaturesInput from "./AddFeaturesInput";
+import ListItem from "./ListItem";
+import { Features } from "@/store/features/features/featuresSlice";
 
 interface ListProps {
-  id: string;
+  id: number;
   title: string;
-  features: Feature[];
-  currentUser: {
-    id: string;
-    teamId: number;
-  };
+  features: Features[];
 }
 
-export default function List({ id, title, features, currentUser }: ListProps) {
-  const dispatch = useAppDispatch();
+export default function List({ id, title, features }: ListProps) {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  });
+
+  function handleOutsideClick(e: MouseEvent | TouchEvent) {
+    if (listRef.current && !listRef.current.contains(e.target as Node)) {
+      setIsEditing(false);
+    }
+  }
 
   function handleClick() {
-    dispatch(
-      onOpenModal({
-        type: "feature",
-      }),
-    );
+    setIsEditing(true);
   }
+
   return (
-    <div className="w-full px-8 py-10 font-semibold card bg-secondary-content rounded-2xl text-base-300">
-      <div className="p-0 card-body gap-y-6">
-        <h4 className="mb-2 text-xl capitalize card-title">{title}</h4>
-        {/* Features container / drag and drop area */}
-        <Droppable droppableId={id}>
-          {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
-            <div
-              className={`max-h-[300px] overflow-y-auto overflow-x-hidden px-2 rounded-lg ${
-                snapshot.draggingFromThisWith && "bg-secondary/20"
-              } ${snapshot.isDraggingOver && "bg-base-100/40"}`}
-            >
-              <ul
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className="flex flex-col"
+    <div className="flex flex-col w-full py-6 font-semibold bg-base-200 rounded-2xl text-base-300">
+      <h4 className="mx-6 mb-4 text-xl capitalize">{title}</h4>
+      {/* Features container / drag and drop area */}
+      <Droppable droppableId={id.toString()}>
+        {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
+          <div className="relative mx-4 overflow-x-hidden rounded-lg">
+            {/* Empty list suggestion */}
+            {features.length === 0 && !snapshot.isDraggingOver && (
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 0.3 } }}
+                className="absolute w-full text-neutral-focus bg-base-100 py-[18px] px-[22px] rounded-lg my-3"
               >
-                {/* Empty list suggestion */}
-                {features.length === 0 && !snapshot.isDraggingOver && (
-                  <span className="text-neutral-focus bg-base-200 py-[14px] px-[22px] rounded-lg">
-                    Share your suggestions!
-                  </span>
-                )}
-                {features.map((feature, index) => (
-                  <Card
-                    key={feature.id}
-                    index={index}
-                    feature={feature}
-                    currentUserId={currentUser.id}
-                  />
-                ))}
-                {provided.placeholder}
-              </ul>
-            </div>
-          )}
-        </Droppable>
-        <div className="card-actions">
-          {/* Similiar to tech stack button, need to be a shared component */}
-          <Button
-            variant="secondary"
-            size="lg"
-            className="justify-start w-full"
-            onClick={handleClick}
-          >
-            <PlusCircleIcon className="h-[18px] w-[18px] text-base-300" />
-            Add Feature
-          </Button>
-        </div>
+                Share your suggestions!
+              </motion.span>
+            )}
+            <ul
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={`max-h-[300px] overflow-y-auto overflow-x-hidden flex flex-col min-h-[130px] px-2 ${
+                snapshot.draggingFromThisWith && "bg-base-content"
+              } ${snapshot.isDraggingOver && "bg-base-content"}`}
+            >
+              {features.map((feature, index) => (
+                <ListItem key={feature.id} feature={feature} index={index} />
+              ))}
+              {provided.placeholder}
+            </ul>
+          </div>
+        )}
+      </Droppable>
+      <div ref={listRef} className="mt-3">
+        <AddFeaturesInput
+          handleClick={handleClick}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          id={id}
+        />
       </div>
     </div>
   );

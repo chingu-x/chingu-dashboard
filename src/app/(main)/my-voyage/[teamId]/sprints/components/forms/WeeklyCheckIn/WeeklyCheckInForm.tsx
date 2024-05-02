@@ -83,12 +83,12 @@ export default function WeeklyCheckingForm({
     for (const [key, value] of Object.entries(data)) {
       let response: ResponseType;
       const question = questions.find(
-        (question) => question.id === Number(key),
+        (question) => question.id === Number(key)
       );
 
       // TODO: create a function for this booleans, they are used at least twice
       const [isRadioGroup, isCheckboxGroup, isTextArea] = getQuestionType(
-        question!,
+        question!
       );
 
       if (isRadioGroup) {
