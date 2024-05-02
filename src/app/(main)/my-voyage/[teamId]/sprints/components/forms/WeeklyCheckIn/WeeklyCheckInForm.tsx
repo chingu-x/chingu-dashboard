@@ -68,7 +68,7 @@ export default function WeeklyCheckingForm({
   // } = useServerAction(submitCheckInForm);
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+    // console.log(data);
 
     // Create a necessary object
     type ResponseType = {
@@ -114,7 +114,7 @@ export default function WeeklyCheckingForm({
         responses.push(response);
       }
     }
-    console.log(responses);
+    // console.log(responses);
 
     //  const [res, error] = await submitCheckInFormAction({
     //   voyageTeamMemberId: idk,
