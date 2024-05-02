@@ -100,8 +100,7 @@ export default function WeeklyCheckingForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = () => {
     dispatch(onOpenModal({ type: "checkInSuccess" }));
   };
 
@@ -224,7 +223,10 @@ export default function WeeklyCheckingForm() {
         </FormItem>
         {/* Achievements */}
         <FormItem>
-          <Label htmlFor="achievements" className="font-semibold normal-case">
+          <Label
+            htmlFor="achievements"
+            className="font-semibold normal-case"
+          >
             Please share any personal or team achievements this week here. (ex.
             held a meeting, teammate got a job, had a pair programming session,
             learned a valuable team lesson, solved a challenging problem).
@@ -295,7 +297,10 @@ export default function WeeklyCheckingForm() {
         </FormItem>
         {/* Extra comment */}
         <FormItem>
-          <Label htmlFor="extraComment" className="font-semibold normal-case">
+          <Label
+            htmlFor="extraComment"
+            className="font-semibold normal-case"
+          >
             Please provide any extra other comments, concerns, lessons learned,
             something you want to learn, etc. here. The more the better since
             this helps us find ways to support teams & improve the process.

@@ -49,10 +49,10 @@ export default function Planning({ data }: PlanningProps) {
   ];
 
   const goal = data?.responseGroup.responses.find(
-    (response) => response.question.id === Number(PlanningQuestions.goal),
+    (response) => response.question.id === Number(PlanningQuestions.goal)
   )?.text;
   const timeline = data?.responseGroup.responses.find(
-    (response) => response.question.id === Number(PlanningQuestions.timeline),
+    (response) => response.question.id === Number(PlanningQuestions.timeline)
   )?.text;
 
   const {
@@ -118,7 +118,7 @@ export default function Planning({ data }: PlanningProps) {
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        }),
+        })
       );
     }
     setEditSectionLoading(false);
