@@ -97,7 +97,7 @@ export default async function WeeklyCheckInWrapper({
 
   return (
     <WeeklyCheckInForm
-      sprintNumber={sprintNumber.toString()}
+      sprintNumber={sprintNumber}
       description={description}
       questions={questions}
     />
