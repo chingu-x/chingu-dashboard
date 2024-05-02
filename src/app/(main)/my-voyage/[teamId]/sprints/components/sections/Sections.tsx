@@ -13,7 +13,7 @@ import Review from "./Review";
 import SectionBase from "./SectionBase";
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
 import { Section } from "@/store/features/sprint/sprintSlice";
-import { SprintSections } from "@/utils/sections";
+import { Forms } from "@/utils/formsEnums";
 
 interface SectionsProps {
   params: {
@@ -33,21 +33,21 @@ export default function Sections({
 }: SectionsProps) {
   const sectionTemplates = [
     {
-      id: SprintSections.notes,
+      id: Forms.notes,
       title: "notes",
       icon: <DocumentTextIcon aria-hidden="true" />,
       isAdded: notes !== undefined,
       children: <Notes data={notes} />,
     },
     {
-      id: SprintSections.planning,
+      id: Forms.planning,
       title: "sprint planning",
       icon: <LightBulbIcon aria-hidden="true" />,
       isAdded: planning !== undefined,
       children: <Planning data={planning} />,
     },
     {
-      id: SprintSections.review,
+      id: Forms.review,
       title: "retrospective & review",
       icon: <ArrowPathRoundedSquareIcon aria-hidden="true" />,
       isAdded: review !== undefined,
@@ -56,15 +56,15 @@ export default function Sections({
   ];
 
   const [addedSections, setAddedSections] = useState(
-    sectionTemplates.filter((template) => template.isAdded === true),
+    sectionTemplates.filter((template) => template.isAdded === true)
   );
   const [canBeAddedSections, setCanBeAddedSections] = useState(
-    sectionTemplates.filter((template) => template.isAdded === false),
+    sectionTemplates.filter((template) => template.isAdded === false)
   );
 
   function reorderSections(title: string) {
     const sectionIndex = canBeAddedSections.findIndex(
-      (section) => section.title === title,
+      (section) => section.title === title
     );
     const section = {
       ...canBeAddedSections[sectionIndex],

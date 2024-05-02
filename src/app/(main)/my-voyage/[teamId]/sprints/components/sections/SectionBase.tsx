@@ -12,7 +12,7 @@ import useServerAction from "@/hooks/useServerAction";
 import { addSection, editMeeting } from "@/myVoyage/sprints/sprintsService";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { SprintSections } from "@/utils/sections";
+import { Forms } from "@/utils/formsEnums";
 
 interface SectionBaseProps {
   params: {
@@ -59,7 +59,7 @@ export default function SectionBase({
   } = useServerAction(editMeeting);
 
   const handleAddSection = async () => {
-    if (id !== Number(SprintSections.notes)) {
+    if (id !== Number(Forms.notes)) {
       const [res, error] = await addSectionAction({
         sprintNumber,
         meetingId,
@@ -71,7 +71,7 @@ export default function SectionBase({
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
+          onOpenModal({ type: "error", content: { message: error.message } })
         );
 
         setAddSectionLoading(false);
@@ -90,7 +90,7 @@ export default function SectionBase({
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
+          onOpenModal({ type: "error", content: { message: error.message } })
         );
 
         setEditMeetingLoading(false);
@@ -144,7 +144,7 @@ export default function SectionBase({
     <div
       className={cn(
         "p-10 rounded-2xl bg-base-100 border border-base-100",
-        isAdded && "bg-base-200",
+        isAdded && "bg-base-200"
       )}
     >
       <div className="flex items-center justify-between">
