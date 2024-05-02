@@ -30,7 +30,7 @@ import { getUser } from "@/utils/getUser";
 import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
-import { SprintSections } from "@/utils/sections";
+import { Forms } from "@/utils/formsEnums";
 
 async function fetchMeeting({
   sprintNumber,
@@ -154,10 +154,10 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         params={params}
         notes={meetingData.notes}
         planning={sectionsData.find(
-          (section) => section.form.id === Number(SprintSections.planning),
+          (section) => section.form.id === Number(Forms.planning),
         )}
         review={sectionsData.find(
-          (section) => section.form.id === Number(SprintSections.review),
+          (section) => section.form.id === Number(Forms.review),
         )}
       />
     </div>
