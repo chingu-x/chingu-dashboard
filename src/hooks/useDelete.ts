@@ -14,7 +14,7 @@ export default function useDelete(payload: Payload) {
   const dispatch = useAppDispatch();
   const { params, redirect, deleteFunction } = payload;
   const { runAction, isLoading, setIsLoading } = useServerAction(
-    deleteFunction as ActionType<DeleteProps, DeleteResponse>,
+    deleteFunction as ActionType<DeleteProps, DeleteResponse>
   );
 
   const handleDelete = useCallback(async () => {
@@ -29,12 +29,13 @@ export default function useDelete(payload: Payload) {
         redirect.router?.push(redirect.route);
       }
     }
+
     if (error) {
       dispatch(
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        }),
+        })
       );
     }
     setIsLoading(false);
