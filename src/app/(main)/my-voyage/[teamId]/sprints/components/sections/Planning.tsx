@@ -10,7 +10,7 @@ import Button from "@/components/Button";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { Section } from "@/store/features/sprint/sprintSlice";
-import { PlanningQuestions, SprintSections } from "@/utils/sections";
+import { PlanningQuestions, Forms } from "@/utils/formsEnums";
 import useServerAction from "@/hooks/useServerAction";
 import {
   editSection,
@@ -49,10 +49,10 @@ export default function Planning({ data }: PlanningProps) {
   ];
 
   const goal = data?.responseGroup.responses.find(
-    (response) => response.question.id === Number(PlanningQuestions.goal),
+    (response) => response.question.id === Number(PlanningQuestions.goal)
   )?.text;
   const timeline = data?.responseGroup.responses.find(
-    (response) => response.question.id === Number(PlanningQuestions.timeline),
+    (response) => response.question.id === Number(PlanningQuestions.timeline)
   )?.text;
 
   const {
@@ -108,7 +108,7 @@ export default function Planning({ data }: PlanningProps) {
       responses,
       meetingId,
       sprintNumber,
-      formId: Number(SprintSections.planning),
+      formId: Number(Forms.planning),
     });
     if (res) {
       reset({ ...data });
@@ -118,7 +118,7 @@ export default function Planning({ data }: PlanningProps) {
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        }),
+        })
       );
     }
     setEditSectionLoading(false);
