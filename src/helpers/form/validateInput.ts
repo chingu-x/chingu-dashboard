@@ -17,6 +17,10 @@ interface ValidateDateTimeInput {
   maxDate?: Date;
 }
 
+interface ValidateMultipleChoiceInput {
+  required?: boolean;
+}
+
 export function validateTextInput({
   inputName,
   required,
@@ -84,6 +88,22 @@ export function validateDateTimeInput({
         )} and ${format(subDays(maxDate, 1), "MMM d")}`,
       }),
     );
+  }
+
+  return rules;
+}
+
+export function validateMultipleChoiceInput({
+  required,
+}: ValidateMultipleChoiceInput):
+  | z.ZodArray<z.ZodString, "many">
+  | z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many"> {
+  let rules;
+  rules = z.string().array();
+
+  // Required
+  if (required) {
+    rules = rules.min(1);
   }
 
   return rules;
