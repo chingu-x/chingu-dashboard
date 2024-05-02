@@ -7,23 +7,36 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import BaseFormPage from "@/myVoyage/sprints/components/forms/BaseFormPage";
 import FormItem from "@/myVoyage/sprints/components/forms/FormItem";
 import { Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
+// import { submitCheckInForm } from "@/myVoyage/sprints/sprintsService";
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
 import RadioGroupVertical from "@/components/inputs/RadioGroup/RadioGroupVertical";
 
-import {
-  validateMultipleChoiceInput,
-  validateTextInput,
-} from "@/helpers/form/validateInput";
 import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
 
-import { useAppDispatch } from "@/store/hooks";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
+// import { useAppDispatch, useUser } from "@/store/hooks";
+// import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupItem";
+import { createValidationSchema } from "@/utils/createValidationSchema";
+// import useServerAction from "@/hooks/useServerAction";
+
+function getQuestionType(question: Question) {
+  const isRadioGroup =
+    question?.optionGroup &&
+    question?.optionGroup.optionChoices.length !== 0 &&
+    !question?.multipleAllowed;
+  const isCheckboxGroup =
+    question?.optionGroup &&
+    question?.optionGroup.optionChoices.length !== 0 &&
+    question?.multipleAllowed;
+  const isTextArea =
+    !question?.optionGroup || question?.optionGroup?.optionChoices.length === 0;
+  return [isRadioGroup, isCheckboxGroup, isTextArea];
+}
 
 interface WeeklyCheckingFormProps {
-  sprintNumber: string;
+  sprintNumber: number;
   description: string;
   questions: Question[];
 }
@@ -33,44 +46,10 @@ export default function WeeklyCheckingForm({
   description,
   questions,
 }: WeeklyCheckingFormProps) {
-  const dispatch = useAppDispatch();
+  // const{voyageTeamMembers} = useUser()
+  // const dispatch = useAppDispatch();
 
-  // Create ValidationSchema
-  interface IField {
-    [key: string]:
-      | z.ZodString
-      | z.ZodEffects<z.ZodString, string, string>
-      | z.ZodArray<z.ZodString, "many">
-      | z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
-  }
-
-  const fields: IField[] = [];
-  questions.forEach((question) => {
-    const { id, answerRequired, multipleAllowed } = question;
-
-    const key = `input${id.toString()}`;
-    const field: IField = {};
-
-    if (multipleAllowed) {
-      field[key] = validateMultipleChoiceInput({
-        required: answerRequired,
-      });
-    } else {
-      field[key] = validateTextInput({
-        inputName: "This field",
-        required: answerRequired,
-      });
-    }
-    fields.push(field);
-  });
-
-  let finalObject: IField = {};
-  fields.forEach((field) => {
-    const temp = { ...finalObject };
-    finalObject = { ...temp, ...field };
-  });
-
-  const validationSchema = z.object({ ...finalObject });
+  const validationSchema = createValidationSchema(questions);
 
   type ValidationSchema = z.infer<typeof validationSchema>;
 
@@ -82,9 +61,79 @@ export default function WeeklyCheckingForm({
     resolver: zodResolver(validationSchema),
   });
 
+  // const {
+  //   runAction: submitCheckInFormAction,
+  //   isLoading: submitCheckInFormLoading,
+  //   setIsLoading: setSubmitCheckInFormLoading,
+  // } = useServerAction(submitCheckInForm);
+
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
-    dispatch(onOpenModal({ type: "checkInSuccess" }));
+
+    // Create a necessary object
+    type ResponseType = {
+      questionId: number;
+      text?: string;
+      optionChoiceId?: number;
+      boolean?: boolean;
+      numeric?: number;
+    };
+    const responses = [] as ResponseType[];
+
+    for (const [key, value] of Object.entries(data)) {
+      let response: ResponseType;
+      const question = questions.find(
+        (question) => question.id === Number(key),
+      );
+
+      // TODO: create a function for this booleans, they are used at least twice
+      const [isRadioGroup, isCheckboxGroup, isTextArea] = getQuestionType(
+        question!,
+      );
+
+      if (isRadioGroup) {
+        response = { questionId: Number(key), optionChoiceId: Number(value) };
+        responses.push(response);
+      }
+      if (isCheckboxGroup) {
+        let numeric: number;
+        if (Array.isArray(value)) {
+          numeric = Number(value.reduce((a, b) => a + b, ""));
+          response = {
+            questionId: Number(key),
+            numeric: numeric,
+          };
+          responses.push(response);
+        }
+      }
+      if (isTextArea) {
+        response = {
+          questionId: Number(key),
+          text: value as string,
+        };
+        responses.push(response);
+      }
+    }
+    console.log(responses);
+
+    //  const [res, error] = await submitCheckInFormAction({
+    //   voyageTeamMemberId: idk,
+    //   sprintId: sprintNumber,
+    //    responses,
+    //  });
+    //  if (res) {
+    //   dispatch(onOpenModal({ type: "checkInSuccess" }));
+    //   // TODO: redirect
+    //  }
+    //  if (error) {
+    //    dispatch(
+    //      onOpenModal({
+    //        type: "error",
+    //        content: { message: error.message },
+    //      })
+    //    );
+    //  }
+    //  setSubmitCheckInFormLoading(false);
   };
 
   return (
@@ -97,18 +146,9 @@ export default function WeeklyCheckingForm({
         className="flex flex-col w-full gap-y-10"
       >
         {questions.map((question) => {
-          const { id, text, description, multipleAllowed, optionGroup } =
-            question;
-          const isRadioGroup =
-            optionGroup &&
-            optionGroup.optionChoices.length !== 0 &&
-            !multipleAllowed;
-          const isCheckboxGroup =
-            optionGroup &&
-            optionGroup.optionChoices.length !== 0 &&
-            multipleAllowed;
-          const isTextArea =
-            !optionGroup || optionGroup?.optionChoices.length === 0;
+          const { id, text, description, optionGroup } = question;
+          const [isRadioGroup, isCheckboxGroup, isTextArea] =
+            getQuestionType(question);
           const options: RadioGroupItemProps[] = [];
 
           if (optionGroup && optionGroup.optionChoices.length !== 0) {
@@ -126,7 +166,7 @@ export default function WeeklyCheckingForm({
                   <Label className="font-semibold normal-case">{text}</Label>
                   <RadioGroupVertical
                     options={options}
-                    {...register(`input${id.toString()}`)}
+                    {...register(id.toString())}
                   />
                 </FormItem>
               )}
@@ -136,7 +176,7 @@ export default function WeeklyCheckingForm({
                   <Label className="font-semibold normal-case">{text}</Label>
                   <CheckboxGroupVertical
                     options={options}
-                    {...register(`input${id.toString()}`)}
+                    {...register(id.toString())}
                   />
                 </FormItem>
               )}
@@ -147,8 +187,8 @@ export default function WeeklyCheckingForm({
                   <Textarea
                     id={`input${id.toString()}`}
                     placeholder={description ? description : "Your answer"}
-                    {...register(`input${id.toString()}`)}
-                    errorMessage={errors[`input${id.toString()}`]?.message}
+                    {...register(id.toString())}
+                    errorMessage={errors[id.toString()]?.message}
                     rows={2}
                   />
                 </FormItem>

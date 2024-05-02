@@ -18,7 +18,7 @@ export function createValidationSchema(questionsData: Question[]) {
   questionsData.forEach((question) => {
     const { id, answerRequired, multipleAllowed } = question;
 
-    const key = `input${id.toString()}`;
+    const key = id.toString();
     const field: IField = {};
 
     if (multipleAllowed) {
