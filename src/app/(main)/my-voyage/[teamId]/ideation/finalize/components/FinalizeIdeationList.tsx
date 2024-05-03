@@ -15,9 +15,9 @@ export interface FinalizedIdeation {
 
 export default function FinalizeIdeationList() {
   const { projectIdeas } = useIdeation();
-  const [finalizedIdeation, setFinalizedIdeation] = useState<FinalizedIdeation>(
-    { id: 0, title: "" }
-  );
+  const [finalizedIdeation, setFinalizedIdeation] = useState<
+    FinalizedIdeation | undefined
+  >();
   const router = useRouter();
   const { teamId } = useParams<{ teamId: string }>();
 

@@ -9,7 +9,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
 
 interface ConfirmationButtonProps {
-  finalizedIdeation: FinalizedIdeation;
+  finalizedIdeation: FinalizedIdeation | undefined;
 }
 
 export default function ConfirmationButton({
@@ -19,7 +19,6 @@ export default function ConfirmationButton({
   const teamId = +params.teamId;
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { id } = finalizedIdeation;
 
   const {
     runAction: finalizeIdeationAction,
@@ -30,7 +29,7 @@ export default function ConfirmationButton({
   async function handleClick() {
     const [res, error] = await finalizeIdeationAction({
       teamId,
-      ideationId: id,
+      ideationId: finalizedIdeation!.id,
     });
 
     if (res) {
