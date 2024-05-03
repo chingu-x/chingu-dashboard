@@ -4,6 +4,7 @@ import IdeationProvider from "./IdeationProvider";
 import CreateIdeationContainer from "./CreateIdeationContainer";
 import ContributionCard from "./ContributionCard";
 import VoteCard from "./VoteCard";
+import FinalizedIdeationCard from "./FinalizedIdeationCard";
 import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getAccessToken } from "@/utils/getCookie";
@@ -81,7 +82,20 @@ export default async function IdeationComponentWrapper({
     );
 
     if (finalizedIdeation) {
-      return "Finalized Ideation";
+      return (
+        <IdeationContainer
+          title={finalizedIdeation.title}
+          project_idea={finalizedIdeation.description}
+          vision_statement={finalizedIdeation.vision}
+          firstChild={<FinalizedIdeationCard />}
+          secondChild={
+            <ContributionCard
+              contributed_by={finalizedIdeation.contributedBy}
+              isIdeationFinalized={true}
+            />
+          }
+        />
+      );
     }
 
     if (projectIdeas.length === 0) {

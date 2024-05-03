@@ -16,7 +16,7 @@ export default function ConfirmationButton({
   finalizedIdeation,
 }: ConfirmationButtonProps) {
   const params = useParams<{ teamId: string }>();
-  const teamId = +params.teamId;
+  const teamId = Number(params.teamId);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -40,9 +40,9 @@ export default function ConfirmationButton({
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } })
       );
-
-      setFinalizeIdeationLoading(false);
     }
+
+    setFinalizeIdeationLoading(false);
   }
 
   function renderButtonContent() {
