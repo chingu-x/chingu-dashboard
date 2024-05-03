@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import FinalizeIdeationItem from "./FinalizeIdeationItem";
+import ConfirmationButton from "./ConfirmationButton";
 import Button from "@/components/Button";
 import { useIdeation } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
@@ -47,13 +48,7 @@ export default function FinalizeIdeationList() {
           );
         })}
       </div>
-      <Button
-        variant="secondary"
-        disabled={!finalizedIdeation}
-        className="w-full mt-10 mb-4"
-      >
-        Finalize Project Idea Selection
-      </Button>
+      <ConfirmationButton finalizedIdeation={finalizedIdeation} />
       <Button
         variant="neutral"
         className="w-full"
