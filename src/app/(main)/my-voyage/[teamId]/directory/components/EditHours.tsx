@@ -1,9 +1,9 @@
 import * as z from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { SetStateAction, useEffect } from "react";
+import { type SetStateAction, useEffect } from "react";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";

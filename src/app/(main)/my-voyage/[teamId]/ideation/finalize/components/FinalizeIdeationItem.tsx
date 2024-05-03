@@ -1,9 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/Button";
 import Avatar from "@/components/avatar/Avatar";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
-import { ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
+import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 
 interface FinalizeIdeationItemProps {
   title: string;
@@ -37,7 +37,14 @@ export default function FinalizeIdeationItem({
                 member: { avatar, id },
               },
             } = votes;
-            return <Avatar width={24} height={24} key={id} image={avatar} />;
+            return (
+              <Avatar
+                width={24}
+                height={24}
+                key={id}
+                image={avatar}
+              />
+            );
           })}
         </AvatarGroup>
       </div>

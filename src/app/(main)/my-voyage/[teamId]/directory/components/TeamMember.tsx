@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import TeamMemberDataItemWrapper from "./TeamMemberDataItemWrapper";
 import EditHours from "./EditHours";
 import { cn } from "@/lib/utils";
-import { VoyageTeam } from "@/store/features/directory/directorySlice";
+import { type VoyageTeam } from "@/store/features/directory/directorySlice";
 import { useUser } from "@/store/hooks";
 
 interface TeamMemberProps {

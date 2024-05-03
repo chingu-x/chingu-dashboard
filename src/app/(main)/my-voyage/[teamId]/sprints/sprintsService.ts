@@ -3,7 +3,7 @@
 import { revalidateTag } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 import { getSprintCache } from "@/utils/getSprintCache";
 
@@ -140,7 +140,7 @@ export async function addMeeting({
       `api/v1/voyages/sprints/${sprintNumber}/teams/${teamId}/meetings`,
       token,
       "default",
-      { title, dateTime, meetingLink, notes },
+      { title, dateTime, meetingLink, notes }
     );
 
   const [res, error] = await handleAsync(addMeetingAsync);
@@ -169,7 +169,7 @@ export async function editMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "default",
-      { title, dateTime, meetingLink, notes },
+      { title, dateTime, meetingLink, notes }
     );
 
   const [res, error] = await handleAsync(editMeetingAsync);
@@ -195,7 +195,7 @@ export async function addAgendaTopic({
       `api/v1/voyages/sprints/meetings/${meetingId}/agendas`,
       token,
       "default",
-      { title, description },
+      { title, description }
     );
 
   const [res, error] = await handleAsync(addAgendaTopicAsync);
@@ -224,7 +224,7 @@ export async function editAgendaTopic({
       `api/v1/voyages/sprints/agendas/${agendaId}`,
       token,
       "default",
-      { title, description, status },
+      { title, description, status }
     );
 
   const [res, error] = await handleAsync(editAgendaTopicAsync);
@@ -249,7 +249,7 @@ export async function deleteAgendaTopic({
     DELETE<DeleteAgendaTopicResponse>(
       `api/v1/voyages/sprints/agendas/${agendaId}`,
       token,
-      "default",
+      "default"
     );
 
   const [res, error] = await handleAsync(deleteAgendaTopicAsync);
@@ -276,7 +276,7 @@ export async function changeAgendaTopicStatus({
       `api/v1/voyages/sprints/agendas/${agendaId}`,
       token,
       "default",
-      { status },
+      { status }
     );
 
   const [res, error] = await handleAsync(changeAgendaTopicStatusAsync);

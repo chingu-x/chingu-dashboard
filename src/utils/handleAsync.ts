@@ -1,4 +1,4 @@
-import { AppError } from "@/types/types";
+import { type AppError } from "@/types/types";
 
 type AsyncFunction<X> = () => Promise<X>;
 export type AsyncActionResponse<X> = [X | null, AppError | null];

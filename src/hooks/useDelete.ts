@@ -4,10 +4,10 @@ import { useAppDispatch } from "@/store/hooks";
 import {
   onCloseModal,
   onOpenModal,
-  Payload,
-  ActionType,
-  DeleteProps,
-  DeleteResponse,
+  type Payload,
+  type ActionType,
+  type DeleteProps,
+  type DeleteResponse,
 } from "@/store/features/modal/modalSlice";
 
 export default function useDelete(payload: Payload) {

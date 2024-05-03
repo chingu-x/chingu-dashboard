@@ -1,7 +1,7 @@
 import { isWithinInterval } from "date-fns";
 
 import convertStringToDate from "./convertStringToDate";
-import { Sprint } from "@/store/features/sprint/sprintSlice";
+import { type Sprint } from "@/store/features/sprint/sprintSlice";
 
 export function getCurrentSprint(sprints: Sprint[]) {
   // TODO: change to new Date() later

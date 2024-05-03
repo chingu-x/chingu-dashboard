@@ -1,8 +1,8 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { AnimatePresence, Variants, motion } from "framer-motion";
+import { AnimatePresence, type Variants, motion } from "framer-motion";
 
 import { SunIcon, MoonIcon } from "@heroicons/react/20/solid";
 
@@ -46,7 +46,10 @@ export default function ModeToggle() {
         onChange={toggleTheme}
         checked={theme === "light"}
       />
-      <AnimatePresence mode="wait" initial={false}>
+      <AnimatePresence
+        mode="wait"
+        initial={false}
+      >
         <div className="w-6 h-6">
           {theme === "light" && (
             <motion.div

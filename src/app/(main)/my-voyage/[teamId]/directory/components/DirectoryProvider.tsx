@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import {
-  TeamDirectory,
+  type TeamDirectory,
   fetchTeamDirectory,
 } from "@/store/features/directory/directorySlice";
 import { useAppDispatch } from "@/store/hooks";

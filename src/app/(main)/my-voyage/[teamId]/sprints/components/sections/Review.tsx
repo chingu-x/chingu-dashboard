@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import Textarea from "@/components/inputs/Textarea";
