@@ -13,6 +13,8 @@ import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerConta
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { getUser } from "@/utils/getUser";
+import VoteCard from "./VoteCard";
+import ContributionCard from "./ContributionCard";
 // import { ideation } from "./fixtures/ideation";
 
 // If user is not logged in, nav should be updated to reflect signed out state
@@ -116,13 +118,22 @@ export default async function IdeationComponentWrapper({
     return projectIdeas.map((projectIdea) => (
       <IdeationContainer
         key={projectIdea.id}
-        projectIdeaId={projectIdea.id}
         title={projectIdea.title}
         project_idea={projectIdea.description}
         vision_statement={projectIdea.vision}
-        users={projectIdea.projectIdeaVotes}
-        contributed_by={projectIdea.contributedBy}
-        teamId={teamId}
+        voteCard={
+          <VoteCard
+            teamId={teamId}
+            projectIdeaId={projectIdea.id}
+            users={projectIdea.projectIdeaVotes}
+          />
+        }
+        contributedByCard={
+          <ContributionCard
+            projectIdeaId={projectIdea.id}
+            contributed_by={projectIdea.contributedBy}
+          />
+        }
       />
     ));
   }
