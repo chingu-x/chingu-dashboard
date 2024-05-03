@@ -2,6 +2,8 @@ import { redirect } from "next/navigation";
 import IdeationContainer from "./IdeationContainer";
 import IdeationProvider from "./IdeationProvider";
 import CreateIdeationContainer from "./CreateIdeationContainer";
+import ContributionCard from "./ContributionCard";
+import VoteCard from "./VoteCard";
 import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getAccessToken } from "@/utils/getCookie";
@@ -13,8 +15,6 @@ import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerConta
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { getUser } from "@/utils/getUser";
-import VoteCard from "./VoteCard";
-import ContributionCard from "./ContributionCard";
 // import { ideation } from "./fixtures/ideation";
 
 // If user is not logged in, nav should be updated to reflect signed out state
