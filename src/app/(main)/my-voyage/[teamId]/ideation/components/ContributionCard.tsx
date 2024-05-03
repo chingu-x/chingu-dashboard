@@ -15,6 +15,7 @@ interface ContributionCardPropsBase {
   contributed_by: {
     member: VoyageMember;
   };
+  isIdeationFinalized: boolean;
 }
 
 interface IdeationFinalizedProps {
@@ -30,7 +31,7 @@ interface IdeationNotFinalizedProps {
 type ContributionCardProps = ContributionCardPropsBase &
   (IdeationFinalizedProps | IdeationNotFinalizedProps);
 
-function ContributionCard({
+export default function ContributionCard({
   contributed_by,
   className,
   projectIdeaId,
@@ -48,7 +49,7 @@ function ContributionCard({
   }, [member, id]);
 
   return (
-    <div className={cn("w-full bg-base-100 rounded-lg", className)}>
+    <div className={cn("w-[200px] bg-base-100 rounded-lg", className)}>
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
         <Badge
@@ -72,5 +73,3 @@ function ContributionCard({
     </div>
   );
 }
-
-export default ContributionCard;
