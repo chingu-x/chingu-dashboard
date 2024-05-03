@@ -57,9 +57,9 @@ export default function FinalizeIdeationItem({
       <div className="w-6 h-6">
         <CheckCircleIcon
           className={`${
-            finalizedIdeation?.title !== title
-              ? "hidden"
-              : "w-6 h-6 text-base-200"
+            finalizedIdeation?.title === title
+              ? "w-6 h-6 text-base-200"
+              : "hidden"
           }`}
         />
       </div>

@@ -124,14 +124,14 @@ export default async function IdeationComponentWrapper({
             title={projectIdea.title}
             project_idea={projectIdea.description}
             vision_statement={projectIdea.vision}
-            voteCard={
+            firstChild={
               <VoteCard
                 teamId={teamId}
                 projectIdeaId={projectIdea.id}
                 users={projectIdea.projectIdeaVotes}
               />
             }
-            contributedByCard={
+            secondChild={
               <ContributionCard
                 projectIdeaId={projectIdea.id}
                 contributed_by={projectIdea.contributedBy}
