@@ -36,13 +36,16 @@ export interface DeleteIdeationProps extends IdeationProps {}
 export interface IdeationVoteProps extends IdeationProps {}
 export type FetchIdeationsProps = Pick<IdeationProps, "teamId">;
 
-export interface AddIdeationResponse extends IdeationResponse {
-  title: string;
-  description: string;
-  vision: string;
-}
+export interface FinalizeIdeationProps extends IdeationProps {}
+
+export interface AddIdeationResponse extends IdeationResponse, IdeationBody {}
 export interface EditIdeationResponse extends AddIdeationResponse {}
 export interface DeleteIdeationResponse extends AddIdeationResponse {}
+export interface FinalizeIdeationResponse
+  extends IdeationResponse,
+    IdeationBody {
+  isSelected: boolean;
+}
 
 export interface IdeationVoteResponse extends IdeationResponse {
   projectIdeaId: number;
@@ -156,6 +159,30 @@ export async function removeIdeationVote({
     );
 
   const [res, error] = await handleAsync(removeIdeationVoteAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.ideation);
+  }
+
+  return [res, error];
+}
+
+export async function finalizeIdeation({
+  teamId,
+  ideationId,
+}: FinalizeIdeationProps): Promise<
+  AsyncActionResponse<FinalizeIdeationResponse>
+> {
+  const token = getAccessToken();
+
+  const finalizeIdeationAsync = () =>
+    POST<undefined, FinalizeIdeationResponse>(
+      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}/select`,
+      token,
+      "default"
+    );
+
+  const [res, error] = await handleAsync(finalizeIdeationAsync);
 
   if (res) {
     revalidateTag(CacheTag.ideation);
