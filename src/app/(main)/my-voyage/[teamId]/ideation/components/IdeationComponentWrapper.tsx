@@ -115,28 +115,33 @@ export default async function IdeationComponentWrapper({
       );
     }
 
-    return projectIdeas.map((projectIdea) => (
-      <IdeationContainer
-        key={projectIdea.id}
-        title={projectIdea.title}
-        project_idea={projectIdea.description}
-        vision_statement={projectIdea.vision}
-        voteCard={
-          <VoteCard
-            teamId={teamId}
-            projectIdeaId={projectIdea.id}
-            users={projectIdea.projectIdeaVotes}
+    return (
+      <>
+        <CreateIdeationContainer />
+        {projectIdeas.map((projectIdea) => (
+          <IdeationContainer
+            key={projectIdea.id}
+            title={projectIdea.title}
+            project_idea={projectIdea.description}
+            vision_statement={projectIdea.vision}
+            voteCard={
+              <VoteCard
+                teamId={teamId}
+                projectIdeaId={projectIdea.id}
+                users={projectIdea.projectIdeaVotes}
+              />
+            }
+            contributedByCard={
+              <ContributionCard
+                projectIdeaId={projectIdea.id}
+                contributed_by={projectIdea.contributedBy}
+                isIdeationFinalized={false}
+              />
+            }
           />
-        }
-        contributedByCard={
-          <ContributionCard
-            projectIdeaId={projectIdea.id}
-            contributed_by={projectIdea.contributedBy}
-            isIdeationFinalized={false}
-          />
-        }
-      />
-    ));
+        ))}
+      </>
+    );
   }
 
   return (
@@ -156,7 +161,6 @@ export default async function IdeationComponentWrapper({
         />
       </VoyagePageBannerContainer>
       <div className="flex flex-col items-center gap-y-10">
-        <CreateIdeationContainer />
         <IdeationProvider payload={projectIdeas} />
         {renderProjects()}
       </div>
