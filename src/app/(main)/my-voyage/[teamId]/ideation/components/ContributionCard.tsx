@@ -10,14 +10,25 @@ import { useUser } from "@/store/hooks";
 import { cn } from "@/lib/utils";
 import routePaths from "@/utils/routePaths";
 
-interface ContributionCardProps {
+interface ContributionCardPropsBase {
+  className?: string;
   contributed_by: {
     member: VoyageMember;
   };
-  projectIdeaId: number;
-  className?: string;
-  isIdeationFinalized: boolean;
 }
+
+interface IdeationFinalizedProps {
+  isIdeationFinalized: true;
+  projectIdeaId?: number;
+}
+
+interface IdeationNotFinalizedProps {
+  isIdeationFinalized: false;
+  projectIdeaId: number;
+}
+
+type ContributionCardProps = ContributionCardPropsBase &
+  (IdeationFinalizedProps | IdeationNotFinalizedProps);
 
 function ContributionCard({
   contributed_by,
