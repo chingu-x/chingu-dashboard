@@ -74,6 +74,14 @@ export default async function IdeationComponentWrapper({
   }
 
   function renderProjects() {
+    const finalizedIdeation = projectIdeas.find(
+      (project) => project.isSelected === true
+    );
+
+    if (finalizedIdeation) {
+      return "Finalized Ideation";
+    }
+
     if (projectIdeas.length === 0) {
       return (
         <div className="flex w-full mt-20 mb-20 h-[290px] gap-x-48">
