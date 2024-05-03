@@ -7,15 +7,24 @@ import Button from "@/components/Button";
 import { useIdeation } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 
+export interface FinalizedIdeation {
+  id: number;
+  title: string;
+}
+
 export default function FinalizeIdeationList() {
   const { projectIdeas } = useIdeation();
-  const [finalizedIdeation, setFinalizedIdeation] = useState("");
+  const [finalizedIdeation, setFinalizedIdeation] = useState<FinalizedIdeation>(
+    { id: 0, title: "" }
+  );
   const router = useRouter();
   const { teamId } = useParams<{ teamId: string }>();
 
   function handleCancelClick() {
     router.back();
   }
+
+  console.log(finalizedIdeation);
 
   useEffect(() => {
     if (projectIdeas.length === 0) {
@@ -33,6 +42,7 @@ export default function FinalizeIdeationList() {
               key={id}
               title={title}
               projectIdeaVotes={projectIdeaVotes}
+              ideationId={id}
               finalizedIdeation={finalizedIdeation}
               setFinalizedIdeation={setFinalizedIdeation}
             />
@@ -46,7 +56,11 @@ export default function FinalizeIdeationList() {
       >
         Finalize Project Idea Selection
       </Button>
-      <Button variant="neutral" className="w-full" onClick={handleCancelClick}>
+      <Button
+        variant="neutral"
+        className="w-full"
+        onClick={handleCancelClick}
+      >
         Cancel
       </Button>
     </div>

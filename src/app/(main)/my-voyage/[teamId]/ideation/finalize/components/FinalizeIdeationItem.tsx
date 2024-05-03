@@ -1,5 +1,6 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { type FinalizedIdeation } from "./FinalizeIdeationList";
 import Button from "@/components/Button";
 import Avatar from "@/components/avatar/Avatar";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
@@ -8,23 +9,28 @@ import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 interface FinalizeIdeationItemProps {
   title: string;
   projectIdeaVotes: ProjectIdeaVotes[];
-  finalizedIdeation: string;
-  setFinalizedIdeation: Dispatch<SetStateAction<string>>;
+  ideationId: number;
+  finalizedIdeation: FinalizedIdeation;
+  setFinalizedIdeation: Dispatch<SetStateAction<FinalizedIdeation>>;
 }
 
 export default function FinalizeIdeationItem({
   title,
   projectIdeaVotes,
   finalizedIdeation,
+  ideationId,
   setFinalizedIdeation,
 }: FinalizeIdeationItemProps) {
   function handleClick() {
-    setFinalizedIdeation(title);
+    setFinalizedIdeation({
+      id: ideationId,
+      title,
+    });
   }
 
   return (
     <Button
-      variant={finalizedIdeation === title ? "primary" : "outline"}
+      variant={finalizedIdeation.title === title ? "primary" : "outline"}
       className="w-full gap-x-0"
       onClick={handleClick}
     >
@@ -51,7 +57,9 @@ export default function FinalizeIdeationItem({
       <div className="w-6 h-6">
         <CheckCircleIcon
           className={`${
-            finalizedIdeation !== title ? "hidden" : "w-6 h-6 text-base-200"
+            finalizedIdeation.title !== title
+              ? "hidden"
+              : "w-6 h-6 text-base-200"
           }`}
         />
       </div>
