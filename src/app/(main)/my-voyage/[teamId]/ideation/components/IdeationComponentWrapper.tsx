@@ -87,6 +87,7 @@ export default async function IdeationComponentWrapper({
           title={finalizedIdeation.title}
           project_idea={finalizedIdeation.description}
           vision_statement={finalizedIdeation.vision}
+          isIdeationFinalized={true}
           firstChild={<FinalizedIdeationCard />}
           secondChild={
             <ContributionCard
@@ -138,6 +139,7 @@ export default async function IdeationComponentWrapper({
             title={projectIdea.title}
             project_idea={projectIdea.description}
             vision_statement={projectIdea.vision}
+            isIdeationFinalized={false}
             firstChild={
               <VoteCard
                 teamId={teamId}
