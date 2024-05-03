@@ -132,6 +132,7 @@ export default async function IdeationComponentWrapper({
           <ContributionCard
             projectIdeaId={projectIdea.id}
             contributed_by={projectIdea.contributedBy}
+            isIdeationFinalized={false}
           />
         }
       />
