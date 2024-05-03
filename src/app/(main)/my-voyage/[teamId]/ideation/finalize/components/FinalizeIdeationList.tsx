@@ -24,8 +24,6 @@ export default function FinalizeIdeationList() {
     router.back();
   }
 
-  console.log(finalizedIdeation);
-
   useEffect(() => {
     if (projectIdeas.length === 0) {
       router.push(routePaths.ideationPage(teamId));
