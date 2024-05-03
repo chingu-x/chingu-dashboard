@@ -2,7 +2,10 @@
 
 import React from "react";
 
-import { CheckboxGroupItem, CheckboxGroupItemProps } from "./CheckboxGroupItem";
+import {
+  CheckboxGroupItem,
+  type CheckboxGroupItemProps,
+} from "./CheckboxGroupItem";
 
 interface CheckboxGroupProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -23,7 +26,7 @@ const CheckboxGroup = React.forwardRef<HTMLInputElement, CheckboxGroupProps>(
         />
       ))}
     </div>
-  ),
+  )
 );
 
 CheckboxGroup.displayName = "CheckboxGroup";

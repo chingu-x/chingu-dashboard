@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Badge from "@/components/badge/Badge";
 import Button from "@/components/Button";
-import { VoyageMember } from "@/store/features/ideation/ideationSlice";
+import { type VoyageMember } from "@/store/features/ideation/ideationSlice";
 import { useUser } from "@/store/hooks";
 import { cn } from "@/lib/utils";
 import routePaths from "@/utils/routePaths";
@@ -38,13 +38,19 @@ function ContributionCard({
     <div className={cn("w-full bg-base-100 rounded-lg", className)}>
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
-        <Badge title={member.firstName} avatarUrlImage={member.avatar} />
+        <Badge
+          title={member.firstName}
+          avatarUrlImage={member.avatar}
+        />
         {ownVote ? (
           <Link
             href={routePaths.editIdeationPage(teamId, projectIdeaId.toString())}
             className="w-full"
           >
-            <Button variant="outline" className="w-full">
+            <Button
+              variant="outline"
+              className="w-full"
+            >
               Edit Project
             </Button>
           </Link>

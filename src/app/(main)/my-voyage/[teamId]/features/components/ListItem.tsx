@@ -1,11 +1,11 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import Card from "./Card";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { Features } from "@/store/features/features/featuresSlice";
+import { type Features } from "@/store/features/features/featuresSlice";
 import useServerAction from "@/hooks/useServerAction";
 import { editFeature } from "@/myVoyage/features/featuresService";
 import { useAppDispatch } from "@/store/hooks";
