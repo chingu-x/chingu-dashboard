@@ -16,12 +16,14 @@ interface ContributionCardProps {
   };
   projectIdeaId: number;
   className?: string;
+  isIdeationFinalized: boolean;
 }
 
 function ContributionCard({
   contributed_by,
   className,
   projectIdeaId,
+  isIdeationFinalized,
 }: ContributionCardProps) {
   const { teamId } = useParams<{ teamId: string }>();
   const { id } = useUser();
@@ -42,7 +44,7 @@ function ContributionCard({
           title={member.firstName}
           avatarUrlImage={member.avatar}
         />
-        {ownVote ? (
+        {ownVote && !isIdeationFinalized ? (
           <Link
             href={routePaths.editIdeationPage(teamId, projectIdeaId.toString())}
             className="w-full"
