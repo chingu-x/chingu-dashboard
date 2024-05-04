@@ -37,7 +37,7 @@ export async function fetchMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "force-cache",
-      sprintCache,
+      sprintCache
     );
 
   return await handleAsync(fetchMeetingAsync);
@@ -86,7 +86,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   }
 
   const correspondingMeetingId = sprintsData.find(
-    (sprint) => sprint.number === sprintNumber,
+    (sprint) => sprint.number === sprintNumber
   )?.teamMeetings[0]?.id;
 
   if (meetingId === correspondingMeetingId) {
