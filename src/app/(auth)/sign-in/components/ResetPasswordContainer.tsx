@@ -42,9 +42,10 @@ function ResetPasswordContainer({
 
   const {
     register,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     handleSubmit,
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
@@ -90,18 +91,19 @@ function ResetPasswordContainer({
           label="email"
           placeholder="Enter Your Email"
           {...register("email")}
-          errorMessage={errors?.email?.message}
+          errorMessage={errors.email?.message}
         />
         <Button
           type="submit"
           title="submit"
-          className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus mb-3 mt-2"
+          className="mt-3 mb-3"
+          disabled={!isDirty || !isValid || resetPwdReqEmailLoading}
         >
           {renderButtonContent()}
         </Button>
         <Link
           href={routePaths.signUp()}
-          className="font-semibold text-xs text-base-300 ml-1 self-center"
+          className="font-semibold text-xs text-neutral-focus ml-1 self-center"
         >
           Don’t have an account? Sign up for an account now
         </Link>

@@ -5,7 +5,7 @@ function ConfirmationMailContainer() {
   return (
     <div className="flex flex-col items-center w-[400px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 px-6 py-9">
       <p className="text-base-300 text-2xl text-center mb-[26px] font-medium">
-        Welcome to Chingu
+        Welcome to Chingu!
       </p>
       <div>
         <Banner
@@ -33,7 +33,8 @@ function ConfirmationMailContainer() {
       <Button
         type="button"
         title="Resend Email"
-        className="text-base gap-x-0 border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100 w-full"
+        variant="outline"
+        className="w-full"
       >
         Resend Email
       </Button>
