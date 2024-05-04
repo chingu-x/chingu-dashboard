@@ -1,38 +1,69 @@
-import Image from "next/image";
+import { Dispatch, SetStateAction } from "react";
+import { ContainerState } from "./SignInContainer";
 import Button from "@/components/Button";
+import Banner from "@/components/banner/Banner";
+import { useAppDispatch } from "@/store/hooks";
+import useServerAction from "@/hooks/useServerAction";
+import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import Spinner from "@/components/Spinner";
 
-function EmailCheckContainer() {
+type ResendEmailContainerProp = {
+  email: string;
+  setContainerState: Dispatch<SetStateAction<ContainerState>>;
+};
+
+function EmailCheckContainer({
+  email,
+  setContainerState,
+}: ResendEmailContainerProp) {
+  const dispatch = useAppDispatch();
+
+  const {
+    runAction: resetPwdReqEmailAction,
+    isLoading: resetPwdReqEmailLoading,
+    setIsLoading: setResetPwdReqEmailLoading,
+  } = useServerAction(resetPasswordRequestEmail);
+
+  async function handleResendEmail() {
+    const [, error] = await resetPwdReqEmailAction(email);
+
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } })
+      );
+    }
+
+    setResetPwdReqEmailLoading(false);
+  }
+
+  function renderButtonContent() {
+    if (resetPwdReqEmailLoading) {
+      return <Spinner />;
+    }
+    return "Resend Email";
+  }
+
+  function handleClick() {
+    setContainerState(ContainerState.SignIn);
+  }
+
   return (
     <div className="flex flex-col items-center w-[400px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 px-6 py-9">
       <p className="text-base-300 text-2xl text-center mb-[26px] font-medium">
-        Welcome to Chingu
+        Reset Link Sent
       </p>
-      <div
-        data-hide-on-theme="dark"
-        className="flex h-[171px] w-[168px] relative shrink-0"
-      >
-        <Image
-          src="/img/link_retro_mac_light.png"
-          alt="Light login image"
-          fill={true}
-          style={{ objectFit: "contain" }}
-          priority={true}
-        />
-      </div>
-      <div
-        data-hide-on-theme="light"
-        className="flex h-[171px] w-[168px] relative shrink-0"
-      >
-        <Image
-          src="/img/link_retro_mac_dark.png"
-          alt="Light login image"
-          fill={true}
-          style={{ objectFit: "contain" }}
-          priority={true}
+      <div>
+        <Banner
+          imageLight="/img/link_retro_mac_light.png"
+          imageDark="/img/link_retro_mac_dark.png"
+          height="h-[171px]"
+          width="w-[168px]"
+          alt="Email confirmation image"
         />
       </div>
       <div className="flex flex-col items-center">
-        <p className="text-base-300 text-xl font-medium mt-8">
+        <p className="text-base-300 text-xl font-medium mt-8 mb-2">
           Check Your Email Address
         </p>
         <p className="text-base-300 text-base font-medium">
@@ -40,7 +71,7 @@ function EmailCheckContainer() {
           to reset your password. Please open it and click on the link in it to
           reset your password.
         </p>
-        <p className="text-base-300 text-base font-medium mt-6 mb-[166px]">
+        <p className="text-base-300 text-base font-medium mt-6 mb-[60px] 3xl:mb-[166px]">
           If you have not received an email shortly, then please check your
           spam/trash folders or click the button below to request a new reset
           email.
@@ -48,10 +79,18 @@ function EmailCheckContainer() {
       </div>
       <Button
         type="button"
-        title="Resend Email"
-        className="text-base gap-x-0 border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100 w-full"
+        onClick={handleResendEmail}
+        variant="outline"
+        className="w-full"
       >
-        Resend Email
+        {renderButtonContent()}
+      </Button>
+      <Button
+        type="button"
+        variant="link"
+        onClick={handleClick}
+      >
+        Go Back
       </Button>
     </div>
   );

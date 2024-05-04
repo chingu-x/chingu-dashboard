@@ -3,21 +3,19 @@
 import { useState } from "react";
 import ResetPasswordContainer from "./ResetPasswordContainer";
 import SignInBlock from "./SignInBlock";
-import NewPasswordContainer from "./NewPasswordContainer";
-import ResetCompletedContainer from "./ResetCompletedContainer";
 import EmailCheckContainer from "./EmailCheckContainer";
 
+export enum ContainerState {
+  SignIn,
+  ResetPassword,
+  EmailCheck,
+}
+
 function SignInContainer() {
-  enum ContainerState {
-    SignIn,
-    ResetPassword,
-    EmailCheck,
-    NewPassword,
-    ResetCompleted,
-  }
+  const [email, setEmail] = useState<string>("");
 
   const [containerState, setContainerState] = useState<ContainerState>(
-    ContainerState.SignIn,
+    ContainerState.SignIn
   );
 
   const handleResetPassword = () => {
@@ -28,28 +26,22 @@ function SignInContainer() {
     setContainerState(ContainerState.EmailCheck);
   };
 
-  const handleNewPassword = () => {
-    setContainerState(ContainerState.ResetCompleted);
-  };
-
-  const handleResetConfirmed = () => {
-    setContainerState(ContainerState.SignIn);
-  };
-
   return (
     <>
       {containerState === ContainerState.ResetPassword && (
-        <ResetPasswordContainer handleEmailCheck={handleEmailCheck} />
+        <ResetPasswordContainer
+          handleEmailCheck={handleEmailCheck}
+          setEmail={setEmail}
+        />
       )}
-      {containerState === ContainerState.EmailCheck && <EmailCheckContainer />}
+      {containerState === ContainerState.EmailCheck && (
+        <EmailCheckContainer
+          email={email}
+          setContainerState={setContainerState}
+        />
+      )}
       {containerState === ContainerState.SignIn && (
         <SignInBlock handleResetPassword={handleResetPassword} />
-      )}
-      {containerState === ContainerState.NewPassword && (
-        <NewPasswordContainer onClick={handleNewPassword} />
-      )}
-      {containerState === ContainerState.ResetCompleted && (
-        <ResetCompletedContainer onClick={handleResetConfirmed} />
       )}
     </>
   );
