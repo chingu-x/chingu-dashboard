@@ -5,15 +5,15 @@ import ResetPasswordContainer from "./ResetPasswordContainer";
 import SignInBlock from "./SignInBlock";
 import EmailCheckContainer from "./EmailCheckContainer";
 
-function SignInContainer() {
-  enum ContainerState {
-    SignIn,
-    ResetPassword,
-    EmailCheck,
-  }
+export enum ContainerState {
+  SignIn,
+  ResetPassword,
+  EmailCheck,
+}
 
+function SignInContainer() {
   const [containerState, setContainerState] = useState<ContainerState>(
-    ContainerState.SignIn,
+    ContainerState.SignIn
   );
 
   const handleResetPassword = () => {
@@ -30,7 +30,10 @@ function SignInContainer() {
         <ResetPasswordContainer handleEmailCheck={handleEmailCheck} />
       )}
       {containerState === ContainerState.EmailCheck && (
-        <EmailCheckContainer handleResendEmail={handleResetPassword} />
+        <EmailCheckContainer
+          handleResendEmail={handleResetPassword}
+          setContainerState={setContainerState}
+        />
       )}
       {containerState === ContainerState.SignIn && (
         <SignInBlock handleResetPassword={handleResetPassword} />

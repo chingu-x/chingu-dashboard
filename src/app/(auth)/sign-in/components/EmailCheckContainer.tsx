@@ -1,11 +1,21 @@
+import { Dispatch, SetStateAction } from "react";
+import { ContainerState } from "./SignInContainer";
 import Button from "@/components/Button";
 import Banner from "@/components/banner/Banner";
 
 type ResendEmailContainerProp = {
   handleResendEmail: () => void;
+  setContainerState: Dispatch<SetStateAction<ContainerState>>;
 };
 
-function EmailCheckContainer({ handleResendEmail }: ResendEmailContainerProp) {
+function EmailCheckContainer({
+  handleResendEmail,
+  setContainerState,
+}: ResendEmailContainerProp) {
+  function handleClick() {
+    setContainerState(ContainerState.SignIn);
+  }
+
   return (
     <div className="flex flex-col items-center w-[400px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 px-6 py-9">
       <p className="text-base-300 text-2xl text-center mb-[26px] font-medium">
@@ -29,7 +39,7 @@ function EmailCheckContainer({ handleResendEmail }: ResendEmailContainerProp) {
           to reset your password. Please open it and click on the link in it to
           reset your password.
         </p>
-        <p className="text-base-300 text-base font-medium mt-6 mb-[166px]">
+        <p className="text-base-300 text-base font-medium mt-6 mb-[60px] 3xl:mb-[166px]">
           If you have not received an email shortly, then please check your
           spam/trash folders or click the button below to request a new reset
           email.
@@ -40,6 +50,12 @@ function EmailCheckContainer({ handleResendEmail }: ResendEmailContainerProp) {
         className="text-base gap-x-0 border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100 w-full"
       >
         Resend Email
+      </Button>
+      <Button
+        variant="link"
+        onClick={handleClick}
+      >
+        Go Back
       </Button>
     </div>
   );
