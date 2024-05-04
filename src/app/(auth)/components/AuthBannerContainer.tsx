@@ -2,7 +2,7 @@ import Banner from "@/components/banner/Banner";
 
 export default function AuthBannerContainer() {
   return (
-    <div className="flex min-h-[486px] flex-col justify-center">
+    <div className="flex h-[486px] flex-col justify-center">
       <div>
         <Banner
           imageLight="/img/login_image_light.png"
