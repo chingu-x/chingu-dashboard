@@ -13,18 +13,19 @@ interface VoyageMemberDashboardPageProps {
 async function VoyageMemberDashboardPage({
   params,
 }: VoyageMemberDashboardPageProps) {
-  // TODO: Mocked temporary value
-  const isVoyageStarted = true;
-
   const [user, error] = await getUser();
   const teamId = Number(params.teamId);
-  const { currentTeam } = getCurrentVoyageTeam({ user, error, teamId });
+  const { currentTeam, isStarted } = getCurrentVoyageTeam({
+    user,
+    error,
+    teamId,
+  });
 
   if (!currentTeam) {
     redirect(routePaths.dashboardPage());
   }
 
-  return isVoyageStarted ? (
+  return isStarted ? (
     <VoyageDashboardPage teamId={params.teamId} />
   ) : (
     <PreVoyageDashboard />
