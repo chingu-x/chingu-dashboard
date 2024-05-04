@@ -30,9 +30,14 @@ export function getCurrentVoyageTeam({
     currentTeam = true;
   }
 
+  const isStarted = user?.voyageTeamMembers.some(
+    (member) => member.voyageTeam.voyage.status.name === "Active",
+  );
+
   return {
     user,
     err,
     currentTeam,
+    isStarted,
   };
 }
