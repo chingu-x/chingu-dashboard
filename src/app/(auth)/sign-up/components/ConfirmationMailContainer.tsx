@@ -1,34 +1,19 @@
-import Image from "next/image";
 import Button from "@/components/Button";
+import Banner from "@/components/banner/Banner";
 
 function ConfirmationMailContainer() {
   return (
     <div className="flex flex-col items-center w-[400px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 px-6 py-9">
       <p className="text-base-300 text-2xl text-center mb-[26px] font-medium">
-        Welcome to Chingu
+        Welcome to Chingu!
       </p>
-      <div
-        data-hide-on-theme="dark"
-        className="flex h-[171px] w-[168px] relative shrink-0"
-      >
-        <Image
-          src="/img/retro_mac_light.png"
-          alt="Light login image"
-          fill={true}
-          style={{ objectFit: "contain" }}
-          priority={true}
-        />
-      </div>
-      <div
-        data-hide-on-theme="light"
-        className="flex h-[171px] w-[168px] relative shrink-0"
-      >
-        <Image
-          src="/img/retro_mac_dark.png"
-          alt="Light login image"
-          fill={true}
-          style={{ objectFit: "contain" }}
-          priority={true}
+      <div>
+        <Banner
+          imageLight="/img/retro_mac_light.png"
+          imageDark="/img/retro_mac_dark.png"
+          height="h-[171px]"
+          width="w-[168px]"
+          alt="Email verification image"
         />
       </div>
       <div className="flex flex-col items-center">
@@ -48,7 +33,8 @@ function ConfirmationMailContainer() {
       <Button
         type="button"
         title="Resend Email"
-        className="text-base gap-x-0 border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100 w-full"
+        variant="outline"
+        className="w-full"
       >
         Resend Email
       </Button>
