@@ -12,6 +12,8 @@ export enum ContainerState {
 }
 
 function SignInContainer() {
+  const [email, setEmail] = useState<string>("");
+
   const [containerState, setContainerState] = useState<ContainerState>(
     ContainerState.SignIn
   );
@@ -27,11 +29,14 @@ function SignInContainer() {
   return (
     <>
       {containerState === ContainerState.ResetPassword && (
-        <ResetPasswordContainer handleEmailCheck={handleEmailCheck} />
+        <ResetPasswordContainer
+          handleEmailCheck={handleEmailCheck}
+          setEmail={setEmail}
+        />
       )}
       {containerState === ContainerState.EmailCheck && (
         <EmailCheckContainer
-          handleResendEmail={handleResetPassword}
+          email={email}
           setContainerState={setContainerState}
         />
       )}

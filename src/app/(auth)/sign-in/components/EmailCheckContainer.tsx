@@ -2,16 +2,48 @@ import { Dispatch, SetStateAction } from "react";
 import { ContainerState } from "./SignInContainer";
 import Button from "@/components/Button";
 import Banner from "@/components/banner/Banner";
+import { useAppDispatch } from "@/store/hooks";
+import useServerAction from "@/hooks/useServerAction";
+import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import Spinner from "@/components/Spinner";
 
 type ResendEmailContainerProp = {
-  handleResendEmail: () => void;
+  email: string;
   setContainerState: Dispatch<SetStateAction<ContainerState>>;
 };
 
 function EmailCheckContainer({
-  handleResendEmail,
+  email,
   setContainerState,
 }: ResendEmailContainerProp) {
+  const dispatch = useAppDispatch();
+
+  const {
+    runAction: resetPwdReqEmailAction,
+    isLoading: resetPwdReqEmailLoading,
+    setIsLoading: setResetPwdReqEmailLoading,
+  } = useServerAction(resetPasswordRequestEmail);
+
+  async function handleResendEmail() {
+    const [, error] = await resetPwdReqEmailAction(email);
+
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } })
+      );
+    }
+
+    setResetPwdReqEmailLoading(false);
+  }
+
+  function renderButtonContent() {
+    if (resetPwdReqEmailLoading) {
+      return <Spinner />;
+    }
+    return "Resend Email";
+  }
+
   function handleClick() {
     setContainerState(ContainerState.SignIn);
   }
@@ -31,7 +63,7 @@ function EmailCheckContainer({
         />
       </div>
       <div className="flex flex-col items-center">
-        <p className="text-base-300 text-xl font-medium mt-8">
+        <p className="text-base-300 text-xl font-medium mt-8 mb-2">
           Check Your Email Address
         </p>
         <p className="text-base-300 text-base font-medium">
@@ -49,7 +81,7 @@ function EmailCheckContainer({
         onClick={handleResendEmail}
         className="text-base gap-x-0 border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100 w-full"
       >
-        Resend Email
+        {renderButtonContent()}
       </Button>
       <Button
         variant="link"

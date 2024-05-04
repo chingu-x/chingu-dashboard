@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Dispatch, SetStateAction } from "react";
 import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
@@ -24,17 +25,19 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 
 interface ResetPasswordContainerProps {
   handleEmailCheck: () => void;
+  setEmail: Dispatch<SetStateAction<string>>;
 }
 
 function ResetPasswordContainer({
   handleEmailCheck,
+  setEmail,
 }: ResetPasswordContainerProps) {
   const dispatch = useAppDispatch();
 
   const {
     runAction: resetPwdReqEmailAction,
     isLoading: resetPwdReqEmailLoading,
-    setIsLoading: setResetPwdReqEmail,
+    setIsLoading: setResetPwdReqEmailLoading,
   } = useServerAction(resetPasswordRequestEmail);
 
   const {
@@ -51,14 +54,16 @@ function ResetPasswordContainer({
 
     if (res) {
       handleEmailCheck();
+      setEmail(email);
     }
 
     if (error) {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } })
       );
-      setResetPwdReqEmail(false);
     }
+
+    setResetPwdReqEmailLoading(false);
   };
 
   function renderButtonContent() {
