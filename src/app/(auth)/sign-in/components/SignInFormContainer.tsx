@@ -1,11 +1,20 @@
-import Link from "next/link";
-import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { serverSignIn } from "@/app/(auth)/authService";
+
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
+import { clientSignIn } from "@/store/features/auth/authSlice";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
+
+import useServerAction from "@/hooks/useServerAction";
+import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -30,6 +39,15 @@ interface SignInFormContainerProps {
 function SignInFormContainer({
   handleResetPassword,
 }: SignInFormContainerProps) {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const {
+    runAction: serverSignInAction,
+    isLoading: serverSignInLoading,
+    setIsLoading: setServerSignInLoading,
+  } = useServerAction(serverSignIn);
+
   const {
     register,
     formState: { errors },
@@ -38,12 +56,34 @@ function SignInFormContainer({
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = () => {};
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    const { email, password } = data;
+    const [res, error] = await serverSignInAction({ email, password });
+
+    if (res) {
+      dispatch(clientSignIn());
+      router.replace(routePaths.dashboardPage());
+    }
+
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } })
+      );
+      setServerSignInLoading(false);
+    }
+  };
+
+  function renderButtonContent() {
+    if (serverSignInLoading) {
+      return <Spinner />;
+    }
+    return "Sign In";
+  }
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col overflow-hidden"
+      className="flex flex-col"
     >
       <div className="flex flex-col min-h-[90px]">
         <div className="flex flex-col">
@@ -77,7 +117,7 @@ function SignInFormContainer({
           title="submit"
           className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
         >
-          Sign in
+          {renderButtonContent()}
         </Button>
         <Link
           href={routePaths.signUp()}

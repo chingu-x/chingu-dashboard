@@ -44,7 +44,7 @@ function SignUpFormContainer({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col overflow-hidden"
+      className="flex flex-col"
     >
       <div className="flex flex-col min-h-[90px]">
         <div className="flex flex-col">
