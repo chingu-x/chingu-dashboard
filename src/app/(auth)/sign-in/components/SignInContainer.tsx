@@ -3,8 +3,6 @@
 import { useState } from "react";
 import ResetPasswordContainer from "./ResetPasswordContainer";
 import SignInBlock from "./SignInBlock";
-import NewPasswordContainer from "./NewPasswordContainer";
-import ResetCompletedContainer from "./ResetCompletedContainer";
 import EmailCheckContainer from "./EmailCheckContainer";
 
 function SignInContainer() {
@@ -12,8 +10,6 @@ function SignInContainer() {
     SignIn,
     ResetPassword,
     EmailCheck,
-    NewPassword,
-    ResetCompleted,
   }
 
   const [containerState, setContainerState] = useState<ContainerState>(
@@ -28,28 +24,16 @@ function SignInContainer() {
     setContainerState(ContainerState.EmailCheck);
   };
 
-  const handleNewPassword = () => {
-    setContainerState(ContainerState.ResetCompleted);
-  };
-
-  const handleResetConfirmed = () => {
-    setContainerState(ContainerState.SignIn);
-  };
-
   return (
     <>
       {containerState === ContainerState.ResetPassword && (
         <ResetPasswordContainer handleEmailCheck={handleEmailCheck} />
       )}
-      {containerState === ContainerState.EmailCheck && <EmailCheckContainer />}
+      {containerState === ContainerState.EmailCheck && (
+        <EmailCheckContainer handleResendEmail={handleResetPassword} />
+      )}
       {containerState === ContainerState.SignIn && (
         <SignInBlock handleResetPassword={handleResetPassword} />
-      )}
-      {containerState === ContainerState.NewPassword && (
-        <NewPasswordContainer onClick={handleNewPassword} />
-      )}
-      {containerState === ContainerState.ResetCompleted && (
-        <ResetCompletedContainer onClick={handleResetConfirmed} />
       )}
     </>
   );

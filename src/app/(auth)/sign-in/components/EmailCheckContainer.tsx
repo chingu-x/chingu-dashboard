@@ -1,34 +1,23 @@
-import Image from "next/image";
 import Button from "@/components/Button";
+import Banner from "@/components/banner/Banner";
 
-function EmailCheckContainer() {
+type ResendEmailContainerProp = {
+  handleResendEmail: () => void;
+};
+
+function EmailCheckContainer({ handleResendEmail }: ResendEmailContainerProp) {
   return (
     <div className="flex flex-col items-center w-[400px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 px-6 py-9">
       <p className="text-base-300 text-2xl text-center mb-[26px] font-medium">
         Welcome to Chingu
       </p>
-      <div
-        data-hide-on-theme="dark"
-        className="flex h-[171px] w-[168px] relative shrink-0"
-      >
-        <Image
-          src="/img/link_retro_mac_light.png"
-          alt="Light login image"
-          fill={true}
-          style={{ objectFit: "contain" }}
-          priority={true}
-        />
-      </div>
-      <div
-        data-hide-on-theme="light"
-        className="flex h-[171px] w-[168px] relative shrink-0"
-      >
-        <Image
-          src="/img/link_retro_mac_dark.png"
-          alt="Light login image"
-          fill={true}
-          style={{ objectFit: "contain" }}
-          priority={true}
+      <div>
+        <Banner
+          imageLight="/img/link_retro_mac_light.png"
+          imageDark="/img/link_retro_mac_dark.png"
+          height="h-[171px]"
+          width="w-[168px]"
+          alt="Email confirmation image"
         />
       </div>
       <div className="flex flex-col items-center">
@@ -47,8 +36,7 @@ function EmailCheckContainer() {
         </p>
       </div>
       <Button
-        type="button"
-        title="Resend Email"
+        onClick={handleResendEmail}
         className="text-base gap-x-0 border-none font-semibold capitalize bg-base-100 text-base-300 hover:bg-base-100 w-full"
       >
         Resend Email
