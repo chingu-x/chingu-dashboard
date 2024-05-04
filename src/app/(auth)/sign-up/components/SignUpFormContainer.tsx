@@ -34,6 +34,7 @@ function SignUpFormContainer({
     formState: { errors },
     handleSubmit,
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
@@ -53,7 +54,7 @@ function SignUpFormContainer({
             label="email"
             placeholder="Enter Your Email"
             {...register("email")}
-            errorMessage={errors?.email?.message}
+            errorMessage={errors.email?.message}
           />
           <TextInput
             type="password"
@@ -61,7 +62,7 @@ function SignUpFormContainer({
             label="password"
             placeholder="Enter Your Password"
             {...register("password")}
-            errorMessage={errors?.password?.message}
+            errorMessage={errors.password?.message}
             maxLength={30}
           />
         </div>
@@ -70,13 +71,13 @@ function SignUpFormContainer({
         <Button
           type="submit"
           title="submit"
-          className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+          disabled
         >
           Join Now
         </Button>
         <Link
           href={routePaths.signIn()}
-          className="font-semibold text-xs text-base-300 ml-1 self-center mb-[10px]"
+          className="font-semibold text-xs text-neutral-focus ml-1 self-center mb-[10px]"
         >
           Already have an account? Sign in now
         </Link>

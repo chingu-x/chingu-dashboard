@@ -1,4 +1,3 @@
-"use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import * as z from "zod";
@@ -34,16 +33,17 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
 
   const {
     register,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     handleSubmit,
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
   const {
     runAction: resetPasswordAction,
     isLoading: resetPasswordLoading,
-    setIsLoading: setResetPassword,
+    setIsLoading: setResetPasswordLoading,
   } = useServerAction(resetPassword);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
@@ -61,8 +61,9 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
         dispatch(
           onOpenModal({ type: "error", content: { message: error.message } })
         );
-        setResetPassword(false);
       }
+
+      setResetPasswordLoading(false);
     }
   };
 
@@ -93,7 +94,7 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
               label="password"
               placeholder="Enter Your Password"
               {...register("password")}
-              errorMessage={errors?.password?.message}
+              errorMessage={errors.password?.message}
               maxLength={30}
             />
           </div>
@@ -102,7 +103,7 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
           <Button
             type="submit"
             title="submit"
-            className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+            disabled={!isDirty || !isValid || resetPasswordLoading}
           >
             {renderButtonContent()}
           </Button>

@@ -50,9 +50,10 @@ function SignInFormContainer({
 
   const {
     register,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     handleSubmit,
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
@@ -86,13 +87,13 @@ function SignInFormContainer({
       className="flex flex-col"
     >
       <div className="flex flex-col min-h-[90px]">
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-y-2">
           <TextInput
             id="email"
             label="email"
             placeholder="Enter Your Email"
             {...register("email")}
-            errorMessage={errors?.email?.message}
+            errorMessage={errors.email?.message}
           />
           <TextInput
             type="password"
@@ -100,28 +101,28 @@ function SignInFormContainer({
             label="password"
             placeholder="Enter Your Password"
             {...register("password")}
-            errorMessage={errors?.password?.message}
+            errorMessage={errors.password?.message}
             maxLength={30}
           />
           <div
             onClick={handleResetPassword}
-            className="cursor-pointer font-medium text-xs text-base-300 ml-1 mt-1"
+            className="cursor-pointer font-medium text-xs text-base-300 ml-1 mt-2"
           >
             Forgot your password?
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-3 pt-8">
+      <div className="flex flex-col gap-3 pt-4">
         <Button
           type="submit"
           title="submit"
-          className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
+          disabled={!isDirty || !isValid || serverSignInLoading}
         >
           {renderButtonContent()}
         </Button>
         <Link
           href={routePaths.signUp()}
-          className="font-semibold text-xs text-base-300 ml-1 self-center mb-[10px]"
+          className="font-semibold text-xs text-neutral-focus ml-1 self-center mb-[10px]"
         >
           Don’t have an account? Sign up for an account now
         </Link>

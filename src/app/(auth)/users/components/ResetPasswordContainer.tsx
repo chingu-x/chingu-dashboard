@@ -4,14 +4,14 @@ import { useState } from "react";
 import NewPasswordContainer from "./NewPasswordContainer";
 import ResetCompletedContainer from "./ResetCompletedContainer";
 
-function ResetPasswordContainer() {
-  enum ContainerState {
-    NewPassword,
-    ResetCompleted,
-  }
+enum ContainerState {
+  NewPassword,
+  ResetCompleted,
+}
 
+function ResetPasswordContainer() {
   const [containerState, setContainerState] = useState<ContainerState>(
-    ContainerState.NewPassword,
+    ContainerState.NewPassword
   );
 
   const handleNewPassword = () => {
