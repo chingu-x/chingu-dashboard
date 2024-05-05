@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +8,7 @@ import { useParams } from "next/navigation";
 
 import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { Section } from "@/store/features/sprint/sprintSlice";
@@ -53,15 +55,15 @@ export default function Review({ data }: ReviewProps) {
   ];
 
   const what_right = data?.responseGroup.responses.find(
-    (response) => response.question.id === Number(ReviewQuestions.what_right)
+    (response) => response.question.id === Number(ReviewQuestions.what_right),
   )?.text;
   const what_to_improve = data?.responseGroup.responses.find(
     (response) =>
-      response.question.id === Number(ReviewQuestions.what_to_improve)
+      response.question.id === Number(ReviewQuestions.what_to_improve),
   )?.text;
   const what_to_change = data?.responseGroup.responses.find(
     (response) =>
-      response.question.id === Number(ReviewQuestions.what_to_change)
+      response.question.id === Number(ReviewQuestions.what_to_change),
   )?.text;
 
   const {
@@ -72,11 +74,6 @@ export default function Review({ data }: ReviewProps) {
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
-    defaultValues: {
-      what_right: what_right ?? "",
-      what_to_improve: what_to_improve ?? "",
-      what_to_change: what_to_change ?? "",
-    },
   });
 
   const {
@@ -84,6 +81,14 @@ export default function Review({ data }: ReviewProps) {
     isLoading: editSectionLoading,
     setIsLoading: setEditSectionLoading,
   } = useServerAction(editSection);
+
+  useEffect(() => {
+    reset({
+      what_right,
+      what_to_improve,
+      what_to_change,
+    });
+  }, [what_right, what_to_improve, what_to_change, reset]);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     // Get only modified data
@@ -130,7 +135,7 @@ export default function Review({ data }: ReviewProps) {
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        })
+        }),
       );
     }
     setEditSectionLoading(false);
@@ -168,17 +173,15 @@ export default function Review({ data }: ReviewProps) {
         errorMessage={errors.what_to_change?.message}
         defaultValue={what_to_change ?? ""}
       />
-      {isDirty && (
-        <Button
-          type="submit"
-          variant="outline"
-          size="md"
-          className="self-center"
-          disabled={!isDirty || !isValid || editSectionLoading}
-        >
-          Save
-        </Button>
-      )}
+      <Button
+        type="submit"
+        variant="outline"
+        size="md"
+        className="self-center min-w-[75px]"
+        disabled={!isDirty || !isValid || editSectionLoading}
+      >
+        {editSectionLoading ? <Spinner /> : "Save"}
+      </Button>
     </form>
   );
 }

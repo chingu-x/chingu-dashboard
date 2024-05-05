@@ -11,7 +11,7 @@ enum ContainerState {
 
 function ResetPasswordContainer() {
   const [containerState, setContainerState] = useState<ContainerState>(
-    ContainerState.NewPassword
+    ContainerState.NewPassword,
   );
 
   const handleNewPassword = () => {
