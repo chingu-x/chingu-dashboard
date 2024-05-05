@@ -40,9 +40,20 @@ interface SectionBody {
   }[];
 }
 
-interface FormBody {
+interface CheckInFormBody {
   voyageTeamMemberId: number;
   sprintId: number;
+  responses: {
+    questionId: number;
+    text?: string;
+    optionChoiceId?: number;
+    boolean?: boolean;
+    numeric?: number;
+  }[];
+}
+
+interface VoyageFormBody {
+  voyageTeamId: number;
   responses: {
     questionId: number;
     text?: string;
@@ -70,6 +81,8 @@ type EditSectionType = Pick<
   SprintProps,
   "sprintNumber" | "meetingId" | "formId"
 >;
+
+type SubmitVoyageFormType = Pick<SprintProps, "sprintNumber">;
 
 export interface SprintsResponse {
   id: number;
@@ -135,7 +148,8 @@ interface EditAgendaTopicBody extends Partial<AgendaTopicBody> {}
 interface AddSectionBody {}
 export interface EditSectionBody extends Partial<SectionBody> {}
 
-interface SubmitCheckInFormBody extends FormBody {}
+interface SubmitCheckInFormBody extends CheckInFormBody {}
+interface SubmitVoyageFormBody extends VoyageFormBody {}
 
 export interface FetchSprintsProps extends FetchSprintsType {}
 export interface FetchMeetingProps extends FetchMeetingType {}
@@ -159,7 +173,10 @@ export interface DeleteAgendaTopicProps extends DeleteAgendaTopicType {}
 export interface AddSectionProps extends AddSectionType {}
 export interface EditSectionProps extends EditSectionType, EditSectionBody {}
 
-export interface SubmitCheckInFormProps extends FormBody {}
+export interface SubmitCheckInFormProps extends CheckInFormBody {}
+export interface SubmitVoyageFormProps
+  extends SubmitVoyageFormType,
+    VoyageFormBody {}
 
 export interface FetchSprintsResponse extends SprintsResponse {
   voyage: {
@@ -214,6 +231,7 @@ export interface AddSectionResponse extends NewEmptySectionResponse {}
 export interface EditSectionResponse extends SectionResponse {}
 
 export interface SubmitCheckInFormResponse extends FormResponse {}
+export interface SubmitVoyageFormResponse extends FormResponse {}
 
 export async function addMeeting({
   teamId,
@@ -231,7 +249,7 @@ export async function addMeeting({
       `api/v1/voyages/sprints/${sprintNumber}/teams/${teamId}/meetings`,
       token,
       "default",
-      { title, dateTime, meetingLink, description },
+      { title, dateTime, meetingLink, description }
     );
 
   const [res, error] = await handleAsync(addMeetingAsync);
@@ -261,7 +279,7 @@ export async function editMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "default",
-      { title, dateTime, meetingLink, notes, description },
+      { title, dateTime, meetingLink, notes, description }
     );
 
   const [res, error] = await handleAsync(editMeetingAsync);
@@ -287,7 +305,7 @@ export async function addAgendaTopic({
       `api/v1/voyages/sprints/meetings/${meetingId}/agendas`,
       token,
       "default",
-      { title, description },
+      { title, description }
     );
 
   const [res, error] = await handleAsync(addAgendaTopicAsync);
@@ -316,7 +334,7 @@ export async function editAgendaTopic({
       `api/v1/voyages/sprints/agendas/${agendaId}`,
       token,
       "default",
-      { title, description, status },
+      { title, description, status }
     );
 
   const [res, error] = await handleAsync(editAgendaTopicAsync);
@@ -341,7 +359,7 @@ export async function deleteAgendaTopic({
     DELETE<DeleteAgendaTopicResponse>(
       `api/v1/voyages/sprints/agendas/${agendaId}`,
       token,
-      "default",
+      "default"
     );
 
   const [res, error] = await handleAsync(deleteAgendaTopicAsync);
@@ -368,7 +386,7 @@ export async function changeAgendaTopicStatus({
       `api/v1/voyages/sprints/agendas/${agendaId}`,
       token,
       "default",
-      { status },
+      { status }
     );
 
   const [res, error] = await handleAsync(changeAgendaTopicStatusAsync);
@@ -392,7 +410,7 @@ export async function addSection({
     POST<AddSectionBody, AddSectionResponse>(
       `api/v1/voyages/sprints/meetings/${meetingId}/forms/${formId}`,
       token,
-      "default",
+      "default"
     );
 
   const [res, error] = await handleAsync(addSectionAsync);
@@ -418,7 +436,7 @@ export async function editSection({
       `api/v1/voyages/sprints/meetings/${meetingId}/forms/${formId}`,
       token,
       "default",
-      { responses },
+      { responses }
     );
 
   const [res, error] = await handleAsync(editSectionAsync);
@@ -445,7 +463,34 @@ export async function submitCheckInForm({
       "api/v1/voyages/sprints/check-in",
       token,
       "default",
-      { voyageTeamMemberId, sprintId, responses },
+      { voyageTeamMemberId, sprintId, responses }
+    );
+
+  const [res, error] = await handleAsync(editSectionAsync);
+
+  if (res) {
+    revalidateTag(sprintCache);
+  }
+
+  return [res, error];
+}
+
+export async function submitVoyageProjectForm({
+  voyageTeamId,
+  sprintNumber,
+  responses,
+}: SubmitVoyageFormProps): Promise<
+  AsyncActionResponse<SubmitVoyageFormResponse>
+> {
+  const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
+
+  const editSectionAsync = () =>
+    POST<SubmitVoyageFormBody, SubmitVoyageFormResponse>(
+      "api/v1/voyages/sprints/submit-project",
+      token,
+      "default",
+      { voyageTeamId, responses }
     );
 
   const [res, error] = await handleAsync(editSectionAsync);
