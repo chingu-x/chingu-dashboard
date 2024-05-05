@@ -43,10 +43,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
   });
 
   return (
-    <Draggable
-      draggableId={feature.id.toString()}
-      index={index}
-    >
+    <Draggable draggableId={feature.id.toString()} index={index}>
       {(provided: DraggableProvided) => (
         <div ref={cardRef}>
           <li
@@ -81,11 +78,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
                 </button>
               ) : (
                 // Creator's avatar
-                <Avatar
-                  image={avatar}
-                  width={24}
-                  height={24}
-                />
+                <Avatar image={avatar} width={24} height={24} />
               )}
             </div>
           </li>

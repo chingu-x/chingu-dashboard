@@ -60,7 +60,7 @@ export default function ListItem({ feature, index }: ListItemProps) {
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
 
@@ -104,10 +104,7 @@ export default function ListItem({ feature, index }: ListItemProps) {
   }, [editMode, setFocus]);
 
   return editMode ? (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      key={feature.id}
-    >
+    <form onSubmit={handleSubmit(onSubmit)} key={feature.id}>
       <div ref={listItemRef}>
         <TextInput
           clearInputAction={handleClearInputAction}
