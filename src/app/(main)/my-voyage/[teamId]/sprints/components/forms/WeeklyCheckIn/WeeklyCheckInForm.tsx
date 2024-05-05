@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import BaseFormPage from "@/myVoyage/sprints/components/forms/BaseFormPage";
 import { Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
 import { submitCheckInForm } from "@/myVoyage/sprints/sprintsService";
+import FormInputs from "@/myVoyage/sprints/components/forms/FormInputs";
 
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
@@ -15,10 +16,9 @@ import Spinner from "@/components/Spinner";
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { createValidationSchema } from "@/utils/createValidationSchema";
-import { getQuestionType } from "@/utils/getQuestionType";
-import FormInputs from "../FormInputs";
 import useServerAction from "@/hooks/useServerAction";
 import routePaths from "@/utils/routePaths";
+import { createFormResponseBody } from "@/utils/createFormResponseBody";
 
 interface WeeklyCheckingFormProps {
   params: {
@@ -66,49 +66,7 @@ export default function WeeklyCheckingForm({
   } = useServerAction(submitCheckInForm);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    // Create a necessary object
-    type ResponseType = {
-      questionId: number;
-      text?: string;
-      optionChoiceId?: number;
-      boolean?: boolean;
-      numeric?: number;
-    };
-    const responses = [] as ResponseType[];
-
-    for (const [key, value] of Object.entries(data)) {
-      let response: ResponseType;
-      const question = questions.find(
-        (question) => question.id === Number(key)
-      );
-
-      const [isRadioGroup, isCheckboxGroup, isTextArea] = getQuestionType(
-        question!
-      );
-
-      if (isRadioGroup) {
-        response = { questionId: Number(key), optionChoiceId: Number(value) };
-        responses.push(response);
-      }
-      if (isCheckboxGroup) {
-        let numeric: number;
-        if (Array.isArray(value)) {
-          numeric = Number(value.reduce((a, b) => a + b, ""));
-          response = {
-            questionId: Number(key),
-            numeric: numeric,
-          };
-          responses.push(response);
-        }
-      }
-      if (isTextArea) {
-        response = {
-          questionId: Number(key),
-          text: value as string,
-        };
-        responses.push(response);
-      }
-    }
+    const responses = createFormResponseBody({ data, questions });
 
     const [res, error] = await submitCheckInFormAction({
       voyageTeamMemberId: voyageTeamMemberId,
