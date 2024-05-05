@@ -43,10 +43,7 @@ function SignUpFormContainer({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="flex flex-col min-h-[90px]">
         <div className="flex flex-col">
           <TextInput
@@ -68,11 +65,7 @@ function SignUpFormContainer({
         </div>
       </div>
       <div className="flex flex-col gap-3 pt-8">
-        <Button
-          type="submit"
-          title="submit"
-          disabled
-        >
+        <Button type="submit" title="submit" disabled>
           Join Now
         </Button>
         <Link
