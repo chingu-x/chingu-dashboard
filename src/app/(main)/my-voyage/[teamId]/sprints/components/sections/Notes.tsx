@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +8,7 @@ import { useParams } from "next/navigation";
 
 import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import useServerAction from "@/hooks/useServerAction";
@@ -47,9 +49,6 @@ export default function Notes({ data }: NotesProps) {
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
-    defaultValues: {
-      notes: data ?? "",
-    },
   });
 
   const {
@@ -57,6 +56,12 @@ export default function Notes({ data }: NotesProps) {
     isLoading: editMeetingLoading,
     setIsLoading: setEditMeetingLoading,
   } = useServerAction(editMeeting);
+
+  useEffect(() => {
+    reset({
+      notes: data,
+    });
+  }, [data, reset]);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const [res, error] = await editMeetingAction({
@@ -74,7 +79,7 @@ export default function Notes({ data }: NotesProps) {
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        })
+        }),
       );
     }
     setEditMeetingLoading(false);
@@ -92,17 +97,15 @@ export default function Notes({ data }: NotesProps) {
         {...register("notes")}
         errorMessage={errors.notes?.message}
       />
-      {isDirty && (
-        <Button
-          type="submit"
-          variant="outline"
-          size="md"
-          className="self-center"
-          disabled={!isDirty || !isValid || editMeetingLoading}
-        >
-          Save
-        </Button>
-      )}
+      <Button
+        type="submit"
+        variant="outline"
+        size="md"
+        className="self-center min-w-[75px]"
+        disabled={!isDirty || !isValid || editMeetingLoading}
+      >
+        {editMeetingLoading ? <Spinner /> : "Save"}
+      </Button>
     </form>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +8,7 @@ import { useParams } from "next/navigation";
 
 import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
 import { Section } from "@/store/features/sprint/sprintSlice";
@@ -49,10 +51,10 @@ export default function Planning({ data }: PlanningProps) {
   ];
 
   const goal = data?.responseGroup.responses.find(
-    (response) => response.question.id === Number(PlanningQuestions.goal)
+    (response) => response.question.id === Number(PlanningQuestions.goal),
   )?.text;
   const timeline = data?.responseGroup.responses.find(
-    (response) => response.question.id === Number(PlanningQuestions.timeline)
+    (response) => response.question.id === Number(PlanningQuestions.timeline),
   )?.text;
 
   const {
@@ -63,10 +65,6 @@ export default function Planning({ data }: PlanningProps) {
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
-    defaultValues: {
-      goal: goal ?? "",
-      timeline: timeline ?? "",
-    },
   });
 
   const {
@@ -74,6 +72,13 @@ export default function Planning({ data }: PlanningProps) {
     isLoading: editSectionLoading,
     setIsLoading: setEditSectionLoading,
   } = useServerAction(editSection);
+
+  useEffect(() => {
+    reset({
+      goal,
+      timeline,
+    });
+  }, [goal, timeline, reset]);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     // Get only modified data
@@ -118,7 +123,7 @@ export default function Planning({ data }: PlanningProps) {
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        })
+        }),
       );
     }
     setEditSectionLoading(false);
@@ -147,17 +152,15 @@ export default function Planning({ data }: PlanningProps) {
         errorMessage={errors.timeline?.message}
         defaultValue={timeline ?? ""}
       />
-      {isDirty && (
-        <Button
-          type="submit"
-          variant="outline"
-          size="md"
-          className="self-center"
-          disabled={!isDirty || !isValid || editSectionLoading}
-        >
-          Save
-        </Button>
-      )}
+      <Button
+        type="submit"
+        variant="outline"
+        size="md"
+        className="self-center min-w-[75px]"
+        disabled={!isDirty || !isValid || editSectionLoading}
+      >
+        {editSectionLoading ? <Spinner /> : "Save"}
+      </Button>
     </form>
   );
 }
