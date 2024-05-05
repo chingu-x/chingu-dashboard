@@ -10,7 +10,7 @@ import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/formsEnums";
 
-// TODO: move interfaces to sprintService
+// TODO: move interfaces and even fetchFormQuestions to some other place (file)
 export interface Question {
   id: number;
   order: number;
@@ -67,6 +67,7 @@ export default async function WeeklyCheckInWrapper({
   const teamId = Number(params.teamId);
   let description = "";
   let questions = [] as Question[];
+
   const [user, error] = await getUser();
 
   const { errorResponse, data } = await getCurrentVoyageData({

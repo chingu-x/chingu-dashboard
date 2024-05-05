@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
-import Spinner from "@/components/Spinner";
+
 import WeeklyCheckInWrapper from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
+import Spinner from "@/components/Spinner";
+
 import { getUser } from "@/utils/getUser";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import routePaths from "@/utils/routePaths";
