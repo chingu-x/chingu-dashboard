@@ -10,6 +10,7 @@ import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/formsEnums";
 
+// TODO: move interfaces to sprintService
 export interface Question {
   id: number;
   order: number;
@@ -46,7 +47,7 @@ export async function fetchFormQuestions({
       `api/v1/forms/${formId}`,
       token,
       "force-cache",
-      CacheTag.checkInForm,
+      CacheTag.checkInForm
     );
 
   return await handleAsync(fetchSprintsAsync);
@@ -55,6 +56,7 @@ export async function fetchFormQuestions({
 interface WeeklyCheckInWrapperProps {
   params: {
     teamId: string;
+    meetingId: string;
     sprintNumber: string;
   };
 }
@@ -62,10 +64,7 @@ interface WeeklyCheckInWrapperProps {
 export default async function WeeklyCheckInWrapper({
   params,
 }: WeeklyCheckInWrapperProps) {
-  const [teamId, sprintNumber] = [
-    Number(params.teamId),
-    Number(params.sprintNumber),
-  ];
+  const teamId = Number(params.teamId);
   let description = "";
   let questions = [] as Question[];
   const [user, error] = await getUser();
@@ -97,7 +96,7 @@ export default async function WeeklyCheckInWrapper({
 
   return (
     <WeeklyCheckInForm
-      sprintNumber={sprintNumber}
+      params={params}
       description={description}
       questions={questions}
     />
