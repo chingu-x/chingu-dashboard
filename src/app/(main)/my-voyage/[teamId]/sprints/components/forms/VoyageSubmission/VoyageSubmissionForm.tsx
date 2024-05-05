@@ -47,8 +47,8 @@ export default function VoyageSubmissionForm({
 
   const { voyageTeamMembers } = useUser();
   const voyageTeamId = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name == "Active"
-  )?.voyageTeamId!;
+    (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
+  )?.voyageTeamId;
 
   const validationSchema = createValidationSchema(questions);
   type ValidationSchema = z.infer<typeof validationSchema>;
@@ -71,7 +71,7 @@ export default function VoyageSubmissionForm({
     const responses = createFormResponseBody({ data, questions });
 
     const [res, error] = await submitVoyageProjectFormAction({
-      voyageTeamId: voyageTeamId,
+      voyageTeamId: voyageTeamId!,
       sprintNumber: Number(sprintNumber),
       responses,
     });
@@ -81,8 +81,8 @@ export default function VoyageSubmissionForm({
         routePaths.sprintWeekPage(
           teamId.toString(),
           sprintNumber.toString(),
-          meetingId.toString()
-        )
+          meetingId.toString(),
+        ),
       );
     }
 
@@ -91,7 +91,7 @@ export default function VoyageSubmissionForm({
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        })
+        }),
       );
     }
     setSubmitVoyageProjectFormLoading(false);

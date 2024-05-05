@@ -1,5 +1,5 @@
-import { Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
 import { getQuestionType } from "./getQuestionType";
+import { Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
 
 interface CreateFormResponseBody {
   data: {
@@ -26,7 +26,7 @@ export function createFormResponseBody({
     const question = questions.find((question) => question.id === Number(key));
 
     const [isRadioGroup, isCheckboxGroup, isTextArea] = getQuestionType(
-      question!
+      question!,
     );
 
     if (isRadioGroup) {
