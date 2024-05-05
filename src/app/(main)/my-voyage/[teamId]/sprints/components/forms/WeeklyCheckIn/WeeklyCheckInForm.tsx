@@ -1,56 +1,54 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import BaseFormPage from "@/myVoyage/sprints/components/forms/BaseFormPage";
-import FormItem from "@/myVoyage/sprints/components/forms/FormItem";
 import { Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
-// import { submitCheckInForm } from "@/myVoyage/sprints/sprintsService";
-import Label from "@/components/inputs/Label";
+import { submitCheckInForm } from "@/myVoyage/sprints/sprintsService";
+
 import Button from "@/components/Button";
-import Textarea from "@/components/inputs/Textarea";
-import RadioGroupVertical from "@/components/inputs/RadioGroup/RadioGroupVertical";
+import Spinner from "@/components/Spinner";
 
-import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
-
-// import { useAppDispatch, useUser } from "@/store/hooks";
-// import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupItem";
+import { useAppDispatch, useUser } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { createValidationSchema } from "@/utils/createValidationSchema";
-// import useServerAction from "@/hooks/useServerAction";
-
-function getQuestionType(question: Question) {
-  const isRadioGroup =
-    question?.optionGroup &&
-    question?.optionGroup.optionChoices.length !== 0 &&
-    !question?.multipleAllowed;
-  const isCheckboxGroup =
-    question?.optionGroup &&
-    question?.optionGroup.optionChoices.length !== 0 &&
-    question?.multipleAllowed;
-  const isTextArea =
-    !question?.optionGroup || question?.optionGroup?.optionChoices.length === 0;
-  return [isRadioGroup, isCheckboxGroup, isTextArea];
-}
+import { getQuestionType } from "@/utils/getQuestionType";
+import FormInputs from "../FormInputs";
+import useServerAction from "@/hooks/useServerAction";
+import routePaths from "@/utils/routePaths";
 
 interface WeeklyCheckingFormProps {
-  sprintNumber: number;
+  params: {
+    teamId: string;
+    meetingId: string;
+    sprintNumber: string;
+  };
   description: string;
   questions: Question[];
 }
 
 export default function WeeklyCheckingForm({
-  sprintNumber,
+  params,
   description,
   questions,
 }: WeeklyCheckingFormProps) {
-  // const{voyageTeamMembers} = useUser()
-  // const dispatch = useAppDispatch();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const [teamId, sprintNumber, meetingId] = [
+    params.teamId,
+    params.sprintNumber,
+    params.meetingId,
+  ];
+
+  const { voyageTeamMembers } = useUser();
+  const voyageTeamMemberId = voyageTeamMembers.find(
+    (voyage) => voyage.voyageTeam.voyage.status.name == "Active"
+  )?.id!;
 
   const validationSchema = createValidationSchema(questions);
-
   type ValidationSchema = z.infer<typeof validationSchema>;
 
   const {
@@ -61,15 +59,13 @@ export default function WeeklyCheckingForm({
     resolver: zodResolver(validationSchema),
   });
 
-  // const {
-  //   runAction: submitCheckInFormAction,
-  //   isLoading: submitCheckInFormLoading,
-  //   setIsLoading: setSubmitCheckInFormLoading,
-  // } = useServerAction(submitCheckInForm);
+  const {
+    runAction: submitCheckInFormAction,
+    isLoading: submitCheckInFormLoading,
+    setIsLoading: setSubmitCheckInFormLoading,
+  } = useServerAction(submitCheckInForm);
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    // console.log(data);
-
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     // Create a necessary object
     type ResponseType = {
       questionId: number;
@@ -86,7 +82,6 @@ export default function WeeklyCheckingForm({
         (question) => question.id === Number(key)
       );
 
-      // TODO: create a function for this booleans, they are used at least twice
       const [isRadioGroup, isCheckboxGroup, isTextArea] = getQuestionType(
         question!
       );
@@ -114,26 +109,33 @@ export default function WeeklyCheckingForm({
         responses.push(response);
       }
     }
-    // console.log(responses);
 
-    //  const [res, error] = await submitCheckInFormAction({
-    //   voyageTeamMemberId: idk,
-    //   sprintId: sprintNumber,
-    //    responses,
-    //  });
-    //  if (res) {
-    //   dispatch(onOpenModal({ type: "checkInSuccess" }));
-    //   // TODO: redirect
-    //  }
-    //  if (error) {
-    //    dispatch(
-    //      onOpenModal({
-    //        type: "error",
-    //        content: { message: error.message },
-    //      })
-    //    );
-    //  }
-    //  setSubmitCheckInFormLoading(false);
+    const [res, error] = await submitCheckInFormAction({
+      voyageTeamMemberId: voyageTeamMemberId,
+      sprintId: Number(sprintNumber),
+      responses,
+    });
+
+    if (res) {
+      router.push(
+        routePaths.sprintWeekPage(
+          teamId.toString(),
+          sprintNumber.toString(),
+          meetingId.toString()
+        )
+      );
+      dispatch(onOpenModal({ type: "checkInSuccess" }));
+    }
+
+    if (error) {
+      dispatch(
+        onOpenModal({
+          type: "error",
+          content: { message: error.message },
+        })
+      );
+    }
+    setSubmitCheckInFormLoading(false);
   };
 
   return (
@@ -146,64 +148,26 @@ export default function WeeklyCheckingForm({
         className="flex flex-col w-full gap-y-10"
       >
         {questions.map((question) => {
-          const { id, text, description, optionGroup } = question;
-          const [isRadioGroup, isCheckboxGroup, isTextArea] =
-            getQuestionType(question);
-          const options: RadioGroupItemProps[] = [];
-
-          if (optionGroup && optionGroup.optionChoices.length !== 0) {
-            optionGroup.optionChoices.forEach((option) => {
-              const id = option.id.toString();
-              options.push({ id, label: option.text, value: id });
-            });
-          }
+          const { id } = question;
 
           return (
             <div key={`question ${id}`}>
-              {/* Radio Group */}
-              {isRadioGroup && (
-                <FormItem>
-                  <Label className="font-semibold normal-case">{text}</Label>
-                  <RadioGroupVertical
-                    options={options}
-                    {...register(id.toString())}
-                  />
-                </FormItem>
-              )}
-              {/* CheckBox Group */}
-              {isCheckboxGroup && (
-                <FormItem>
-                  <Label className="font-semibold normal-case">{text}</Label>
-                  <CheckboxGroupVertical
-                    options={options}
-                    {...register(id.toString())}
-                  />
-                </FormItem>
-              )}
-              {/* TextArea */}
-              {isTextArea && (
-                <FormItem isTextField>
-                  <Label className="font-semibold normal-case">{text}</Label>
-                  <Textarea
-                    id={`input${id.toString()}`}
-                    placeholder={description ? description : "Your answer"}
-                    {...register(id.toString())}
-                    errorMessage={errors[id.toString()]?.message}
-                    rows={2}
-                  />
-                </FormItem>
-              )}
+              <FormInputs
+                question={question}
+                register={register}
+                errors={errors}
+              />
             </div>
           );
         })}
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid}
+          disabled={!isDirty || !isValid || submitCheckInFormLoading}
           size="lg"
           variant="primary"
         >
-          Submit Check In
+          {submitCheckInFormLoading ? <Spinner /> : "Submit Check In"}
         </Button>
       </form>
     </BaseFormPage>
