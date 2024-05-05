@@ -45,8 +45,8 @@ export default function WeeklyCheckingForm({
 
   const { voyageTeamMembers } = useUser();
   const voyageTeamMemberId = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name == "Active"
-  )?.id!;
+    (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
+  )?.id;
 
   const validationSchema = createValidationSchema(questions);
   type ValidationSchema = z.infer<typeof validationSchema>;
@@ -69,7 +69,7 @@ export default function WeeklyCheckingForm({
     const responses = createFormResponseBody({ data, questions });
 
     const [res, error] = await submitCheckInFormAction({
-      voyageTeamMemberId: voyageTeamMemberId,
+      voyageTeamMemberId: voyageTeamMemberId!,
       sprintId: Number(sprintNumber),
       responses,
     });
@@ -79,8 +79,8 @@ export default function WeeklyCheckingForm({
         routePaths.sprintWeekPage(
           teamId.toString(),
           sprintNumber.toString(),
-          meetingId.toString()
-        )
+          meetingId.toString(),
+        ),
       );
       dispatch(onOpenModal({ type: "checkInSuccess" }));
     }
@@ -90,7 +90,7 @@ export default function WeeklyCheckingForm({
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        })
+        }),
       );
     }
     setSubmitCheckInFormLoading(false);
