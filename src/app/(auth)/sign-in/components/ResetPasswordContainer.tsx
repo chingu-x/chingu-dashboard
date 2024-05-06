@@ -60,7 +60,7 @@ function ResetPasswordContainer({
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
 
@@ -82,10 +82,7 @@ function ResetPasswordContainer({
       <p className="text-base-300 text-base font-medium mb-8">
         Enter your email below and we’ll send you a link to reset your password
       </p>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
         <TextInput
           id="email"
           label="email"
