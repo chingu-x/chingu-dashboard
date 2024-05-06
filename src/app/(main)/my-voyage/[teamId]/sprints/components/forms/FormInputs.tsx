@@ -1,6 +1,7 @@
 "use client";
 
 import { FieldErrors, UseFormRegister } from "react-hook-form";
+import RocketLaunchIcon from "@heroicons/react/24/solid/RocketLaunchIcon";
 
 import FormItem from "@/myVoyage/sprints/components/forms/FormItem";
 import { Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
@@ -11,6 +12,44 @@ import RadioGroupVertical from "@/components/inputs/RadioGroup/RadioGroupVertica
 import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
 import { RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupItem";
 import RadioGroupHorizontal from "@/components/inputs/RadioGroup/RadioGroupHorizontal";
+
+// TODO: refactor and move it somewhere ???
+const Colors = {
+  green: "text-success",
+  amber: "text-warning",
+  red: "text-error",
+};
+
+function getIcon(iconName: string, color: string) {
+  console.log(iconName);
+
+  if (iconName === "rocket") {
+    return (
+      <RocketLaunchIcon
+        className={`w-6 h-5 ${Colors[color as keyof typeof Colors]}`}
+      />
+    );
+  }
+}
+
+function getLabel(text: string) {
+  const label = text.split("}} ")[1];
+  let regExp = /[^{\}]+(?=})/g;
+  let matches = regExp.exec(text);
+  if (matches && matches.length !== 0) {
+    const [color, iconName] = matches[0].split(/(?=[A-Z])/);
+    const icon = getIcon(iconName.toLowerCase(), color);
+
+    return (
+      <span className="flex items-center gap-x-4">
+        {icon}
+        {label}
+      </span>
+    );
+  }
+
+  return text;
+}
 
 interface FormInputsProps {
   question: Question;
@@ -44,11 +83,26 @@ export default function FormInputs({
   ) {
     optionGroup.optionChoices.forEach((option) => {
       const id = option.id.toString();
-      options.push({ id, label: option.text, value: id });
+      let label: string | JSX.Element;
+      if (name === "radioIcon") {
+        label = getLabel(option.text);
+        options.push({ id, label, value: id });
+      } else {
+        options.push({ id, label: option.text, value: id });
+      }
     });
   }
 
   if (name === "radio") {
+    return (
+      <FormItem isError={!!errors[id.toString()]}>
+        <Label className="font-semibold normal-case">{text}</Label>
+        <RadioGroupVertical options={options} {...register(id.toString())} />
+      </FormItem>
+    );
+  }
+
+  if (name === "radioIcon") {
     return (
       <FormItem isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
