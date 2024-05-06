@@ -12,6 +12,7 @@ interface GetDashboardDataResponse {
   sprintsData: Sprint[];
   user: User | null;
   meetingsData: EventList[];
+  voyageNumber: number | null;
   errorMessage?: string;
 }
 
@@ -19,6 +20,7 @@ export type EventList = {
   title: string;
   date: string;
   link: string;
+  sprint: number;
 };
 
 export const getDashboardData = async (
@@ -27,6 +29,7 @@ export const getDashboardData = async (
   teamId: number,
 ): Promise<GetDashboardDataResponse> => {
   let sprintsData: Sprint[] = [];
+  let voyageNumber: number | null = null;
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,
@@ -42,6 +45,7 @@ export const getDashboardData = async (
       sprintsData: [],
       user: null,
       meetingsData: [],
+      voyageNumber: null,
       errorMessage: errorResponse,
     };
   }
@@ -54,6 +58,7 @@ export const getDashboardData = async (
     }
 
     sprintsData = res!.voyage.sprints;
+    voyageNumber = Number(res!.voyage.number);
   }
 
   let currentSprintNumber = null;
@@ -62,7 +67,12 @@ export const getDashboardData = async (
     currentSprintNumber = number;
   }
 
-  const meetingsData: { title: string; date: string; link: string }[] = [];
+  const meetingsData: {
+    title: string;
+    date: string;
+    link: string;
+    sprint: number;
+  }[] = [];
 
   const fetchMeetingsPromises = sprintsData.map((sprint) =>
     fetchMeeting({
@@ -75,13 +85,14 @@ export const getDashboardData = async (
 
   fetchMeetingsResults.forEach(([res]) => {
     if (res) {
-      const { title, dateTime, meetingLink } = res;
+      const { title, dateTime, meetingLink, sprint } = res;
       const parsedDate = parseISO(dateTime);
       const formattedDate = format(parsedDate, "yyyy-MM-dd h:mm a");
       meetingsData.push({
         title,
         date: formattedDate,
         link: meetingLink,
+        sprint: sprint.number,
       });
     } else if (error) {
       return `Error: ${error.message}`;
@@ -93,5 +104,6 @@ export const getDashboardData = async (
     sprintsData,
     user,
     meetingsData,
+    voyageNumber,
   };
 };

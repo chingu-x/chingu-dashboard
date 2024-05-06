@@ -23,6 +23,7 @@ export const useCalendarLogic = (
   sprintsData?: Sprint[],
   currentSprintNumber?: number | null,
   meetingsData?: EventList[],
+  voyageNumber?: number | null,
 ) => {
   const { currentDate } = useUser();
   const userDate = currentDate ?? new Date();
@@ -176,6 +177,19 @@ export const useCalendarLogic = (
     }
   };
 
+  const getDayLabel = () => {
+    if (
+      voyageStartDate &&
+      isSameDay(dateTimeConvertedToDate(voyageStartDate), selectDate)
+    )
+      return `Start of Voyage ${voyageNumber}`;
+    if (
+      voyageEndDate &&
+      isSameDay(dateTimeConvertedToDate(voyageEndDate), selectDate)
+    )
+      return `End of Voyage ${voyageNumber}`;
+  };
+
   return {
     cn,
     generateDate,
@@ -195,5 +209,6 @@ export const useCalendarLogic = (
     getCalendarElementColor,
     setIsHoveredDate,
     onDotClick,
+    getDayLabel,
   };
 };
