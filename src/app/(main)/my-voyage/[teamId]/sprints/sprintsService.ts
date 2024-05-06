@@ -12,10 +12,12 @@ interface SprintProps {
   meetingId: number;
   sprintNumber: number;
   agendaId: number;
+  formId: number;
 }
 
 interface MeetingBody {
   title: string;
+  description: string;
   dateTime: string;
   meetingLink: string;
   notes: string;
@@ -27,13 +29,35 @@ interface AgendaTopicBody {
   status: boolean;
 }
 
+interface SectionBody {
+  responses: {
+    questionId: number;
+    optionChoiceId?: number;
+    text?: string;
+    boolean?: boolean;
+    numeric?: number;
+    responseGroupId?: number;
+  }[];
+}
+
 type FetchSprintsType = Pick<SprintProps, "teamId">;
-type FetchMeetingType = Omit<SprintProps, "teamId" | "agendaId">;
-type AddMeetingType = Omit<SprintProps, "meetingId" | "agendaId">;
-type EditMeetingType = Omit<SprintProps, "teamId" | "agendaId">;
+type FetchMeetingType = Pick<SprintProps, "meetingId" | "sprintNumber">;
+
+type AddMeetingType = Pick<SprintProps, "teamId" | "sprintNumber">;
+type EditMeetingType = Pick<SprintProps, "meetingId" | "sprintNumber">;
+
 type AddAgendaTopicType = Pick<SprintProps, "meetingId" | "sprintNumber">;
 type EditAgendaTopicType = Pick<SprintProps, "agendaId" | "sprintNumber">;
 type DeleteAgendaTopicType = Pick<SprintProps, "agendaId" | "sprintNumber">;
+
+type AddSectionType = Pick<
+  SprintProps,
+  "sprintNumber" | "meetingId" | "formId"
+>;
+type EditSectionType = Pick<
+  SprintProps,
+  "sprintNumber" | "meetingId" | "formId"
+>;
 
 export interface SprintsResponse {
   id: number;
@@ -54,28 +78,52 @@ export interface SprintsResponse {
 interface MeetingResponse {
   id: number;
   title: string;
+  description: string;
   dateTime: string;
   meetingLink: string;
   notes: string;
 }
 
 interface AgendaTopicResponse {
-  id: string;
+  id: number;
   title: string;
   description: string;
   status: boolean;
 }
 
-interface AddMeetingBody extends MeetingBody {}
-interface EditMeetingBody extends Partial<AddMeetingBody> {}
+interface NewEmptySectionResponse {
+  id: number;
+  formId: number;
+  meetingId: number;
+  responseGroupId: number;
+}
+
+interface SectionResponse {
+  id: number;
+  formId: number;
+  questionId: number;
+  optionChoiceId: number;
+  numeric: number;
+  boolean: boolean;
+  text: string;
+  responseGroupId: number;
+}
+
+interface AddMeetingBody extends Omit<MeetingBody, "notes"> {}
+interface EditMeetingBody extends Partial<MeetingBody> {}
 
 interface AddAgendaTopicBody extends Omit<AgendaTopicBody, "status"> {}
 interface EditAgendaTopicBody extends Partial<AgendaTopicBody> {}
 
+interface AddSectionBody {}
+export interface EditSectionBody extends Partial<SectionBody> {}
+
 export interface FetchSprintsProps extends FetchSprintsType {}
 export interface FetchMeetingProps extends FetchMeetingType {}
+
 export interface AddMeetingProps extends AddMeetingType, AddMeetingBody {}
 export interface EditMeetingProps extends EditMeetingType, EditMeetingBody {}
+
 export interface AddAgendaTopicProps
   extends AddAgendaTopicType,
     AddAgendaTopicBody {}
@@ -88,6 +136,9 @@ export interface ChangeAgendaTopicStatusProps
   status: boolean;
 }
 export interface DeleteAgendaTopicProps extends DeleteAgendaTopicType {}
+
+export interface AddSectionProps extends AddSectionType {}
+export interface EditSectionProps extends EditSectionType, EditSectionBody {}
 
 export interface FetchSprintsResponse extends SprintsResponse {
   voyage: {
@@ -117,20 +168,37 @@ export interface FetchMeetingResponse extends MeetingResponse {
     status: boolean;
     updatedAt: string;
   }[];
+  formResponseMeeting: {
+    form: {
+      id: number;
+    };
+    responseGroup: {
+      responses: {
+        question: {
+          id: number;
+        };
+        text: string;
+      }[];
+    };
+  }[];
 }
 export interface AddMeetingResponse extends MeetingResponse {}
 export interface EditMeetingResponse extends MeetingResponse {}
+
 export interface AddAgendaTopicResponse extends AgendaTopicResponse {}
 export interface EditAgendaTopicResponse extends AgendaTopicResponse {}
 export interface DeleteAgendaTopicResponse extends AgendaTopicResponse {}
+
+export interface AddSectionResponse extends NewEmptySectionResponse {}
+export interface EditSectionResponse extends SectionResponse {}
 
 export async function addMeeting({
   teamId,
   sprintNumber,
   title,
+  description,
   dateTime,
   meetingLink,
-  notes,
 }: AddMeetingProps): Promise<AsyncActionResponse<AddMeetingResponse>> {
   const token = getAccessToken();
   const sprintCache = getSprintCache(sprintNumber)!;
@@ -140,7 +208,7 @@ export async function addMeeting({
       `api/v1/voyages/sprints/${sprintNumber}/teams/${teamId}/meetings`,
       token,
       "default",
-      { title, dateTime, meetingLink, notes },
+      { title, dateTime, meetingLink, description },
     );
 
   const [res, error] = await handleAsync(addMeetingAsync);
@@ -157,6 +225,7 @@ export async function editMeeting({
   meetingId,
   sprintNumber,
   title,
+  description,
   dateTime,
   meetingLink,
   notes,
@@ -169,7 +238,7 @@ export async function editMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "default",
-      { title, dateTime, meetingLink, notes },
+      { title, dateTime, meetingLink, notes, description },
     );
 
   const [res, error] = await handleAsync(editMeetingAsync);
@@ -280,6 +349,56 @@ export async function changeAgendaTopicStatus({
     );
 
   const [res, error] = await handleAsync(changeAgendaTopicStatusAsync);
+
+  if (res) {
+    revalidateTag(sprintCache);
+  }
+
+  return [res, error];
+}
+
+export async function addSection({
+  sprintNumber,
+  meetingId,
+  formId,
+}: AddSectionProps): Promise<AsyncActionResponse<AddSectionResponse>> {
+  const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
+
+  const addSectionAsync = () =>
+    POST<AddSectionBody, AddSectionResponse>(
+      `api/v1/voyages/sprints/meetings/${meetingId}/forms/${formId}`,
+      token,
+      "default",
+    );
+
+  const [res, error] = await handleAsync(addSectionAsync);
+
+  if (res) {
+    revalidateTag(sprintCache);
+  }
+
+  return [res, error];
+}
+
+export async function editSection({
+  sprintNumber,
+  meetingId,
+  formId,
+  responses,
+}: EditSectionProps): Promise<AsyncActionResponse<EditSectionResponse>> {
+  const token = getAccessToken();
+  const sprintCache = getSprintCache(sprintNumber)!;
+
+  const editSectionAsync = () =>
+    PATCH<EditSectionBody, EditSectionResponse>(
+      `api/v1/voyages/sprints/meetings/${meetingId}/forms/${formId}`,
+      token,
+      "default",
+      { responses },
+    );
+
+  const [res, error] = await handleAsync(editSectionAsync);
 
   if (res) {
     revalidateTag(sprintCache);

@@ -30,7 +30,7 @@ function EmailCheckContainer({
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
 
@@ -85,11 +85,7 @@ function EmailCheckContainer({
       >
         {renderButtonContent()}
       </Button>
-      <Button
-        type="button"
-        variant="link"
-        onClick={handleClick}
-      >
+      <Button type="button" variant="link" onClick={handleClick}>
         Go Back
       </Button>
     </div>
