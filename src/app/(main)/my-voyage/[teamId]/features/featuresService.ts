@@ -55,7 +55,7 @@ export async function saveOrder({
       `api/v1/voyages/features/${featureId}/reorder`,
       token,
       "default",
-      { order, featureCategoryId }
+      { order, featureCategoryId },
     );
 
   const [res, error] = await handleAsync(saveOrderAsync);
@@ -79,7 +79,7 @@ export async function addFeature({
       `api/v1/voyages/teams/${teamId}/features`,
       token,
       "default",
-      { featureCategoryId, description }
+      { featureCategoryId, description },
     );
 
   const [res, error] = await handleAsync(addFeatureAsync);
@@ -103,7 +103,7 @@ export async function editFeature({
       `api/v1/voyages/features/${featureId}`,
       token,
       "default",
-      { teamMemberId, description }
+      { teamMemberId, description },
     );
 
   const [res, error] = await handleAsync(editFeatureAsync);

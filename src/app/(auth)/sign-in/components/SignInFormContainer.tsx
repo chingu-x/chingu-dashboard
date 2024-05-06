@@ -68,7 +68,7 @@ function SignInFormContainer({
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
       setServerSignInLoading(false);
     }
@@ -82,10 +82,7 @@ function SignInFormContainer({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="flex flex-col min-h-[90px]">
         <div className="flex flex-col gap-y-2">
           <TextInput

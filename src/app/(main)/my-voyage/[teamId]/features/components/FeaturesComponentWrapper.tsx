@@ -46,7 +46,7 @@ function transformData(features: Features[]): FeaturesList[] {
     } = feature;
 
     const existingCategory = transformedData.find(
-      (item) => item.categoryId === category.id
+      (item) => item.categoryId === category.id,
     );
 
     if (existingCategory) {
@@ -81,7 +81,7 @@ export async function fetchFeatures({
       `api/v1/voyages/teams/${teamId}/features`,
       token,
       "force-cache",
-      CacheTag.features
+      CacheTag.features,
     );
 
   const [res, error] = await handleAsync(fetchFeaturesAsync);
