@@ -35,12 +35,14 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   let currentSprintNumber: number | null = null;
   let sprintsData: Sprint[] = [];
   let meetingsData: EventList[] = [];
+  let voyageNumber: number | null = null;
 
   if (teamId !== undefined) {
     const data = await getDashboardData(user, error, Number(teamId));
     currentSprintNumber = data.currentSprintNumber;
     sprintsData = data.sprintsData;
     meetingsData = data.meetingsData;
+    voyageNumber = data.voyageNumber;
   }
 
   return (
@@ -50,6 +52,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
           sprintsData={sprintsData ?? undefined}
           currentSprintNumber={currentSprintNumber}
           meetingsData={meetingsData}
+          voyageNumber={voyageNumber}
         />
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />

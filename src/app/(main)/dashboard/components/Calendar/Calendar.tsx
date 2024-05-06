@@ -17,11 +17,13 @@ interface CalendarProps {
   currentSprintNumber?: number | null;
   sprintsData?: Sprint[];
   meetingsData?: EventList[];
+  voyageNumber?: number | null;
 }
 export default function Calendar({
   sprintsData,
   currentSprintNumber,
   meetingsData,
+  voyageNumber,
 }: CalendarProps) {
   const {
     cn,
@@ -42,7 +44,13 @@ export default function Calendar({
     getCalendarElementColor,
     setIsHoveredDate,
     onDotClick,
-  } = useCalendarLogic(sprintsData, currentSprintNumber, meetingsData);
+    getDayLabel,
+  } = useCalendarLogic(
+    sprintsData,
+    currentSprintNumber,
+    meetingsData,
+    voyageNumber,
+  );
 
   return (
     <div className="flex h-full w-full max-[1200px]:flex-col max-[1200px]:gap-y-4 max-[1200px]:items-center max-[1200px]:relative">
@@ -129,9 +137,9 @@ export default function Calendar({
         <div>
           <h1 className="text-lg font-semibold pb-3">{selectedDate}</h1>
           <div className="max-[1500px]:w-[90px] max-[1470px]:w-full">
-            {currentSprintNumber ? (
+            {getDayLabel() ? (
               <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
-                Sprint Week {currentSprintNumber}
+                {getDayLabel()}
               </p>
             ) : null}
             {meetingsData?.map((event) => {
@@ -139,12 +147,16 @@ export default function Calendar({
               const isSelectedDate = isSameDay(selectDate, eventDate);
 
               return isSelectedDate ? (
-                <SprintItem
-                  key={event.title}
-                  title={event.title}
-                  link={event.link ?? ""}
-                  time={format(eventDate, "h:mm a")}
-                />
+                <div key={event.title}>
+                  <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
+                    Sprint Week {event.sprint}
+                  </p>
+                  <SprintItem
+                    title={event.title}
+                    link={event.link ?? ""}
+                    time={format(eventDate, "h:mm a")}
+                  />
+                </div>
               ) : null;
             })}
           </div>
