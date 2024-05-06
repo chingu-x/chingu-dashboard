@@ -1,4 +1,3 @@
-import { getQuestionType } from "./getQuestionType";
 import { Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
 
 interface CreateFormResponseBody {
@@ -25,15 +24,11 @@ export function createFormResponseBody({
     let response: ResponseType;
     const question = questions.find((question) => question.id === Number(key));
 
-    const [isRadioGroup, isCheckboxGroup, isTextArea] = getQuestionType(
-      question!,
-    );
-
-    if (isRadioGroup) {
+    if (question?.inputType.name === "radio") {
       response = { questionId: Number(key), optionChoiceId: Number(value) };
       responses.push(response);
     }
-    if (isCheckboxGroup) {
+    if (question?.inputType.name === "checkbox") {
       let numeric: number;
       if (Array.isArray(value)) {
         numeric = Number(value.reduce((a, b) => a + b, ""));
@@ -44,7 +39,7 @@ export function createFormResponseBody({
         responses.push(response);
       }
     }
-    if (isTextArea) {
+    if (question?.inputType.name === "text") {
       response = {
         questionId: Number(key),
         text: value as string,

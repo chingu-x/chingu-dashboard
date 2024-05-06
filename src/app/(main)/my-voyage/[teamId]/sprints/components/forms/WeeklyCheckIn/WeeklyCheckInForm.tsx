@@ -45,7 +45,7 @@ export default function WeeklyCheckingForm({
 
   const { voyageTeamMembers } = useUser();
   const voyageTeamMemberId = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
+    (voyage) => voyage.voyageTeam.voyage.status.name == "Active"
   )?.id;
 
   const validationSchema = createValidationSchema(questions);
@@ -56,6 +56,7 @@ export default function WeeklyCheckingForm({
     handleSubmit,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
+    mode: "onSubmit",
     resolver: zodResolver(validationSchema),
   });
 
@@ -66,34 +67,38 @@ export default function WeeklyCheckingForm({
   } = useServerAction(submitCheckInForm);
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    console.log(data);
+    console.log(errors);
+
     const responses = createFormResponseBody({ data, questions });
+    console.log(responses);
 
-    const [res, error] = await submitCheckInFormAction({
-      voyageTeamMemberId: voyageTeamMemberId!,
-      sprintId: Number(sprintNumber),
-      responses,
-    });
+    // const [res, error] = await submitCheckInFormAction({
+    //   voyageTeamMemberId: voyageTeamMemberId!,
+    //   sprintId: Number(sprintNumber),
+    //   responses,
+    // });
 
-    if (res) {
-      router.push(
-        routePaths.sprintWeekPage(
-          teamId.toString(),
-          sprintNumber.toString(),
-          meetingId.toString(),
-        ),
-      );
-      dispatch(onOpenModal({ type: "checkInSuccess" }));
-    }
+    // if (res) {
+    //   router.push(
+    //     routePaths.sprintWeekPage(
+    //       teamId.toString(),
+    //       sprintNumber.toString(),
+    //       meetingId.toString(),
+    //     ),
+    //   );
+    //   dispatch(onOpenModal({ type: "checkInSuccess" }));
+    // }
 
-    if (error) {
-      dispatch(
-        onOpenModal({
-          type: "error",
-          content: { message: error.message },
-        }),
-      );
-    }
-    setSubmitCheckInFormLoading(false);
+    // if (error) {
+    //   dispatch(
+    //     onOpenModal({
+    //       type: "error",
+    //       content: { message: error.message },
+    //     }),
+    //   );
+    // }
+    // setSubmitCheckInFormLoading(false);
   };
 
   return (
@@ -121,7 +126,7 @@ export default function WeeklyCheckingForm({
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid || submitCheckInFormLoading}
+          // disabled={!isDirty || !isValid || submitCheckInFormLoading}
           size="lg"
           variant="primary"
         >

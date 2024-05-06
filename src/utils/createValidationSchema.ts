@@ -16,22 +16,39 @@ interface IField {
 export function createValidationSchema(questionsData: Question[]) {
   const fields: IField[] = [];
   questionsData.forEach((question) => {
-    const { id, answerRequired, multipleAllowed } = question;
+    const {
+      id,
+      inputType: { name },
+      answerRequired,
+      subQuestions,
+    } = question;
 
     const key = id.toString();
     const field: IField = {};
 
-    if (multipleAllowed) {
+    if (name === "radioGroup") {
+      for (const question of subQuestions) {
+        const field: IField = {};
+        const { id, answerRequired } = question;
+        const key = id.toString();
+        field[key] = validateTextInput({
+          inputName: "This field",
+          required: answerRequired,
+        });
+        fields.push(field);
+      }
+    } else if (name === "checkbox") {
       field[key] = validateMultipleChoiceInput({
         required: answerRequired,
       });
+      fields.push(field);
     } else {
       field[key] = validateTextInput({
         inputName: "This field",
         required: answerRequired,
       });
+      fields.push(field);
     }
-    fields.push(field);
   });
 
   let finalObject: IField = {};

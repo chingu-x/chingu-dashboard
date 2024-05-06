@@ -11,10 +11,20 @@ import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/formsEnums";
 
 // TODO: move interfaces and even fetchFormQuestions to some other place (file)
+type InputType =
+  | "radio"
+  | "radioGroup"
+  | "radioIcon"
+  | "checkbox"
+  | "boolean"
+  | "teamMembersCheckbox"
+  | "text"
+  | "scale";
+
 export interface Question {
   id: number;
   order: number;
-  inputType: { id: number; name: string };
+  inputType: { id: number; name: InputType };
   text: string;
   description: string | null;
   answerRequired: boolean;
@@ -22,7 +32,18 @@ export interface Question {
   optionGroup: {
     optionChoices: { id: number; text: string }[];
   } | null;
-  // subQuestions: []; TODO: not sure how should it look like, no example for now
+  subQuestions: {
+    id: number;
+    order: number;
+    inputType: { id: number; name: InputType };
+    text: string;
+    description: string | null;
+    answerRequired: boolean;
+    multipleAllowed: boolean | null;
+    optionGroup: {
+      optionChoices: { id: number; text: string }[];
+    } | null;
+  }[];
 }
 
 interface FetchFormQuestionsProps {
@@ -47,7 +68,7 @@ export async function fetchFormQuestions({
       `api/v1/forms/${formId}`,
       token,
       "force-cache",
-      CacheTag.checkInForm,
+      CacheTag.checkInForm
     );
 
   return await handleAsync(fetchSprintsAsync);
