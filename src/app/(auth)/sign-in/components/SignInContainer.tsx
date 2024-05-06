@@ -15,7 +15,7 @@ function SignInContainer() {
   const [email, setEmail] = useState<string>("");
 
   const [containerState, setContainerState] = useState<ContainerState>(
-    ContainerState.SignIn
+    ContainerState.SignIn,
   );
 
   const handleResetPassword = () => {

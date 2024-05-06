@@ -15,10 +15,12 @@ import {
   type FetchMeetingProps,
   type FetchMeetingResponse,
 } from "@/myVoyage/sprints/sprintsService";
+
 import {
   type Agenda,
   type Meeting,
   type Sprint,
+  type Section,
 } from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
@@ -29,6 +31,7 @@ import { getUser } from "@/utils/getUser";
 import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
+import { SprintSections } from "@/utils/sections";
 
 async function fetchMeeting({
   sprintNumber,
@@ -63,6 +66,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   let sprintsData: Sprint[] = [];
   let meetingData: Meeting = { id: +params.meetingId };
   let agendaData: Agenda[] = [];
+  let sectionsData: Section[] = [];
 
   const [user, error] = await getUser();
 
@@ -99,6 +103,9 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     if (res) {
       meetingData = res;
       agendaData = res.agendas;
+      if (res.formResponseMeeting.length !== 0) {
+        sectionsData = res.formResponseMeeting;
+      }
     } else {
       return `Error: ${error?.message}`;
     }
@@ -136,7 +143,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         title={meetingData.title!}
         dateTime={meetingData.dateTime!}
         meetingLink={meetingData.meetingLink!}
-        notes={meetingData.notes!}
+        description={meetingData.description!}
       />
       <MeetingProvider
         sprints={sprintsData}
@@ -147,7 +154,16 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         params={params}
         topics={agendaData}
       />
-      <Sections />
+      <Sections
+        params={params}
+        notes={meetingData.notes}
+        planning={sectionsData.find(
+          (section) => section.form.id === Number(SprintSections.planning)
+        )}
+        review={sectionsData.find(
+          (section) => section.form.id === Number(SprintSections.review)
+        )}
+      />
     </div>
   );
 }

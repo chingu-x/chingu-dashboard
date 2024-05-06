@@ -34,7 +34,7 @@ export async function editHours({
       `api/v1/teams/${teamId}/members`,
       token,
       "default",
-      { hrPerSprint }
+      { hrPerSprint },
     );
 
   const [res, error] = await handleAsync(editHoursAsync);

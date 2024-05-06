@@ -59,7 +59,7 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
       }
 
@@ -82,10 +82,7 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
       <p className="text-base-300 text-base font-medium pb-8">
         Enter in a new password below to finish resetting your password.
       </p>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col ml-0"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ml-0">
         <div className="flex flex-col min-h-[90px]">
           <div className="flex flex-col">
             <TextInput

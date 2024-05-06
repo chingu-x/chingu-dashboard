@@ -41,7 +41,7 @@ export default function EditPopover({
           redirect: null,
           deleteFunction: deleteFeature,
         },
-      })
+      }),
     );
   }
 
