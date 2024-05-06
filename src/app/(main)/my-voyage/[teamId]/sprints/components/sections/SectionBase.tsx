@@ -8,8 +8,18 @@ import {
   PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
+import useServerAction from "@/hooks/useServerAction";
+import { addSection, editMeeting } from "@/myVoyage/sprints/sprintsService";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { SprintSections } from "@/utils/sections";
 
 interface SectionBaseProps {
+  params: {
+    meetingId: string;
+    sprintNumber: string;
+  };
+  id: number;
   title: string;
   icon: React.JSX.Element;
   isAdded: boolean;
@@ -18,16 +28,74 @@ interface SectionBaseProps {
 }
 
 export default function SectionBase({
+  params,
+  id,
   title,
   icon,
   isAdded,
   children,
   reorderSections,
 }: SectionBaseProps) {
-  const [isOpen, setIsOpen] = useState(isAdded);
+  const [meetingId, sprintNumber] = [
+    Number(params.meetingId),
+    Number(params.sprintNumber),
+  ];
 
-  const handleAddSection = () => {
-    reorderSections && reorderSections(title);
+  const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Planning & Retrospective&Review Sections Action
+  const {
+    runAction: addSectionAction,
+    isLoading: addSectionLoading,
+    setIsLoading: setAddSectionLoading,
+  } = useServerAction(addSection);
+
+  // Notes Section Action
+  const {
+    runAction: editMeetingAction,
+    isLoading: editMeetingLoading,
+    setIsLoading: setEditMeetingLoading,
+  } = useServerAction(editMeeting);
+
+  const handleAddSection = async () => {
+    if (id !== Number(SprintSections.notes)) {
+      const [res, error] = await addSectionAction({
+        sprintNumber,
+        meetingId,
+        formId: id,
+      });
+      if (res) {
+        reorderSections && reorderSections(title);
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+
+        setAddSectionLoading(false);
+      }
+    } else {
+      const notes = "";
+      const [res, error] = await editMeetingAction({
+        sprintNumber,
+        meetingId,
+        notes,
+      });
+      if (res) {
+        reorderSections && reorderSections(title);
+        setIsOpen(true);
+      }
+
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+
+        setEditMeetingLoading(false);
+      }
+    }
   };
 
   const handleToggle = () => {
@@ -89,6 +157,7 @@ export default function SectionBase({
             type="button"
             onClick={handleAddSection}
             aria-label="add section"
+            disabled={addSectionLoading || editMeetingLoading}
           >
             <PlusCircleIcon className="w-10 h-10 text-base-300" />
           </button>
