@@ -11,6 +11,20 @@ export interface Agenda {
   updatedAt: string;
 }
 
+export interface Section {
+  form: {
+    id: number;
+  };
+  responseGroup: {
+    responses: {
+      question: {
+        id: number;
+      };
+      text: string;
+    }[];
+  };
+}
+
 export interface Meeting {
   id: number;
   sprint?: {
@@ -18,13 +32,14 @@ export interface Meeting {
     number: number;
   };
   title?: string;
+  description?: string;
   dateTime?: string;
   meetingLink?: string;
   notes?: string;
   agendas?: Agenda[];
+  formResponseMeeting?: Section[];
 }
 
-// TODO: Notes/Sprint Planning/Retrospective&Review will be added later
 export interface Sprint {
   id: number;
   number: number;
