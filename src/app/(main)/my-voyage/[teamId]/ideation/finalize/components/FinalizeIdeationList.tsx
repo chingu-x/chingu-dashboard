@@ -7,6 +7,15 @@ import ConfirmationButton from "./ConfirmationButton";
 import Button from "@/components/Button";
 import { useIdeation } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
+import { type IdeationData } from "@/store/features/ideation/ideationSlice";
+
+function getHighestVoteProjects(projectIdeas: IdeationData[]) {
+  const maxVotes = Math.max(
+    ...projectIdeas.map((obj) => obj.projectIdeaVotes.length)
+  );
+
+  return projectIdeas.filter((obj) => obj.projectIdeaVotes.length === maxVotes);
+}
 
 export interface FinalizedIdeation {
   id: number;
@@ -15,9 +24,10 @@ export interface FinalizedIdeation {
 
 export default function FinalizeIdeationList() {
   const { projectIdeas } = useIdeation();
-  const [finalizedIdeation, setFinalizedIdeation] = useState<
-    FinalizedIdeation | undefined
-  >();
+  const finalizeProjectList = getHighestVoteProjects(projectIdeas);
+  const [finalizedIdeation, setFinalizedIdeation] = useState<FinalizedIdeation>(
+    { id: finalizeProjectList[0].id, title: finalizeProjectList[0].title }
+  );
   const router = useRouter();
   const { teamId } = useParams<{ teamId: string }>();
 
@@ -34,7 +44,7 @@ export default function FinalizeIdeationList() {
   return (
     <div className="max-w-[871px] w-full">
       <div className="flex flex-1 flex-col justify-center p-10 gap-y-5 items-center bg-base-100 rounded-2xl">
-        {projectIdeas.map((projectIdea) => {
+        {finalizeProjectList.map((projectIdea) => {
           const { id, title, projectIdeaVotes } = projectIdea;
           return (
             <FinalizeIdeationItem

@@ -10,8 +10,8 @@ interface FinalizeIdeationItemProps {
   title: string;
   projectIdeaVotes: ProjectIdeaVotes[];
   ideationId: number;
-  finalizedIdeation: FinalizedIdeation | undefined;
-  setFinalizedIdeation: Dispatch<SetStateAction<FinalizedIdeation | undefined>>;
+  finalizedIdeation: FinalizedIdeation;
+  setFinalizedIdeation: Dispatch<SetStateAction<FinalizedIdeation>>;
 }
 
 export default function FinalizeIdeationItem({
@@ -30,7 +30,7 @@ export default function FinalizeIdeationItem({
 
   return (
     <Button
-      variant={finalizedIdeation?.title === title ? "primary" : "outline"}
+      variant={finalizedIdeation.title === title ? "primary" : "outline"}
       className="w-full gap-x-0"
       onClick={handleClick}
     >
@@ -57,7 +57,7 @@ export default function FinalizeIdeationItem({
       <div className="w-6 h-6">
         <CheckCircleIcon
           className={`${
-            finalizedIdeation?.title === title
+            finalizedIdeation.title === title
               ? "w-6 h-6 text-base-200"
               : "hidden"
           }`}
