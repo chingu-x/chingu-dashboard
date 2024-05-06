@@ -1,7 +1,14 @@
 import TechStackCard from "./TechStackCard";
 import { techStack } from "./fixtures/TechStack";
+import { TechStackData } from "@/store/features/techStack/techStackSlice";
 
-export default function TechStackContainer() {
+interface TechStackContainerProps {
+  data: TechStackData[];
+}
+
+export default function TechStackContainer({ data }: TechStackContainerProps) {
+  console.log(data);
+
   return (
     <div className="card bg-secondary-content p-10 w-full">
       <ul className="grid grid-cols-2 min-[1920px]:grid-cols-3 gap-10 place-items-center">
