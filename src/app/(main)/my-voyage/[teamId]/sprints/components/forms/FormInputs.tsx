@@ -21,8 +21,6 @@ const Colors = {
 };
 
 function getIcon(iconName: string, color: string) {
-  console.log(iconName);
-
   if (iconName === "rocket") {
     return (
       <RocketLaunchIcon
@@ -34,8 +32,8 @@ function getIcon(iconName: string, color: string) {
 
 function getLabel(text: string) {
   const label = text.split("}} ")[1];
-  let regExp = /[^{\}]+(?=})/g;
-  let matches = regExp.exec(text);
+  const regExp = /[^{\}]+(?=})/g;
+  const matches = regExp.exec(text);
   if (matches && matches.length !== 0) {
     const [color, iconName] = matches[0].split(/(?=[A-Z])/);
     const icon = getIcon(iconName.toLowerCase(), color);

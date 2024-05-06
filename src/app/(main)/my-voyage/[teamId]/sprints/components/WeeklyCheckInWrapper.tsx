@@ -68,7 +68,7 @@ export async function fetchFormQuestions({
       `api/v1/forms/${formId}`,
       token,
       "force-cache",
-      CacheTag.checkInForm
+      CacheTag.checkInForm,
     );
 
   return await handleAsync(fetchSprintsAsync);
