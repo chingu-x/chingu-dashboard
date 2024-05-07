@@ -1,13 +1,12 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import type { TechItem } from "./fixtures/TechStack";
-import myAvatar from "@/public/img/avatar.png";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
+import { TechStackItem } from "@/store/features/techStack/techStackSlice";
 
 interface TechStackCardProps {
   title: string;
-  data: TechItem[];
+  data: TechStackItem[];
 }
 
 export default function TechStackCard({ title, data }: TechStackCardProps) {
@@ -25,14 +24,12 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               className="text-base mb-5 last:mb-0 grid grid-cols-3 items-center"
               key={element.id}
             >
-              {element.value}
+              {element.name}
               <AvatarGroup>
-                {element.users.map((user) => (
+                {element.teamTechStackItemVotes.map((vote, index) => (
                   <Avatar
-                    key={user}
-                    /*TO DO: replace image={myAvatar} with {user.avatar} or {user}
-                    ...depending on data schema.*/
-                    image={myAvatar}
+                    key={index}
+                    image={vote.votedBy.member.avatar}
                     width={24}
                     height={24}
                   />

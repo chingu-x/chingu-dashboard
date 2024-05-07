@@ -6,13 +6,13 @@ export interface TechStackData {
   description: string;
   teamTechStackItems: TechStackItem[];
 }
-interface TechStackItem {
+export interface TechStackItem {
   id: number;
   name: string;
   teamTechStackItemVotes: TechStackItemVotes[];
 }
 interface TechStackItemVotes {
-  votedby: {
+  votedBy: {
     member: {
       id: string;
       firstName: string;
