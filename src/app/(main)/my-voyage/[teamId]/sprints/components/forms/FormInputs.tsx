@@ -12,6 +12,7 @@ import RadioGroupVertical from "@/components/inputs/RadioGroup/RadioGroupVertica
 import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
 import { RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupItem";
 import RadioGroupHorizontal from "@/components/inputs/RadioGroup/RadioGroupHorizontal";
+import RadioGroupRating from "@/components/inputs/RadioGroup/RadioGroupRating";
 
 // TODO: refactor and move it somewhere ???
 const Colors = {
@@ -105,6 +106,28 @@ export default function FormInputs({
       <FormItem isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
         <RadioGroupVertical options={options} {...register(id.toString())} />
+      </FormItem>
+    );
+  }
+
+  if (name === "scale") {
+    return (
+      <FormItem isError={!!errors[id.toString()]} className="px-3" isScale>
+        <div className="flex flex-col items-center w-full bg-base-100 rounded-2xl gap-y-10">
+          <Label className="w-full font-semibold text-center normal-case">
+            On a scale of 0-10, how likely are you to suggest Chingu to a friend
+            or colleague?
+          </Label>
+          {/* TOP LABELS */}
+          <div className="flex flex-col w-full">
+            <RadioGroupRating
+              leftTitle="Not Likely"
+              rightTitle="Extremely Likely"
+              options={options}
+              {...register(id.toString())}
+            />
+          </div>
+        </div>
       </FormItem>
     );
   }
