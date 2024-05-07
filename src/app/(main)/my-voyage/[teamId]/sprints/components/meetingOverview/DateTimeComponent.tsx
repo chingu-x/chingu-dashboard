@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getMonth, isToday, isTomorrow } from "date-fns";
-import { format } from "date-fns-tz";
+import { format, formatInTimeZone } from "date-fns-tz";
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { useUser } from "@/store/hooks";
 import convertStringToDate from "@/utils/convertStringToDate";
@@ -26,10 +26,16 @@ export default function DateTimeComponent({
     return format(dateTimeConvertedToDate, "MMM. d");
   };
 
-  const getMeetingTime = () =>
-    format(dateTimeConvertedToDate, "k:mm (zzz)", {
+  const getMeetingTime = () => {
+    const timezoneWithDaylightSaving = formatInTimeZone(
+      new Date(),
+      timezone,
+      "zzz"
+    );
+    return `${format(dateTimeConvertedToDate, "k:mm", {
       timeZone: timezone,
-    });
+    })} (${timezoneWithDaylightSaving})`;
+  };
 
   useEffect(() => {
     setIsMounted(true);
