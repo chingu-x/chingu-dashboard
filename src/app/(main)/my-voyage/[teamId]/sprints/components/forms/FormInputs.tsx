@@ -50,25 +50,6 @@ function getIconLabel(text: string) {
   return text;
 }
 
-function getScaleLabel(text: string) {
-  const label = text.split("}} ")[1];
-  const regExp = /[^{\}]+(?=})/g;
-  const matches = regExp.exec(text);
-  if (matches && matches.length !== 0) {
-    const [color, iconName] = matches[0].split(/(?=[A-Z])/);
-    const icon = getIcon(iconName.toLowerCase(), color);
-
-    return (
-      <span className="flex items-center gap-x-4">
-        {icon}
-        {label}
-      </span>
-    );
-  }
-
-  return text;
-}
-
 interface FormInputsProps {
   question: Question;
   register: UseFormRegister<{
