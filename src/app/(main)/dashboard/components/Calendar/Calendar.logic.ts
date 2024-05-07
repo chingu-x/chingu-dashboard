@@ -12,12 +12,12 @@ import {
   addMonths,
   startOfDay,
   endOfDay,
-  parseISO,
 } from "date-fns";
 import { useState } from "react";
 import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
 import { Sprint } from "@/store/features/sprint/sprintSlice";
 import { useUser } from "@/store/hooks";
+import convertStringToDate from "@/utils/convertStringToDate";
 
 export const useCalendarLogic = (
   sprintsData?: Sprint[],
@@ -30,9 +30,6 @@ export const useCalendarLogic = (
   const [today, setToday] = useState(userDate);
   const [selectDate, setSelectDate] = useState(userDate);
   const [isHoveredDate, setIsHoveredDate] = useState<Date | null>(null);
-
-  const dateTimeConvertedToDate = (dateTime: string) =>
-    parseISO(dateTime.substring(0, dateTime.length - 1));
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -119,13 +116,13 @@ export const useCalendarLogic = (
       currentSprintEndDate &&
       (isSameDay(
         date,
-        startOfDay(dateTimeConvertedToDate(currentSprintStartDate)),
+        startOfDay(convertStringToDate(currentSprintStartDate)),
       ) ||
         isAfter(
           date,
-          startOfDay(dateTimeConvertedToDate(currentSprintStartDate)),
+          startOfDay(convertStringToDate(currentSprintStartDate)),
         )) &&
-      isBefore(date, endOfDay(dateTimeConvertedToDate(currentSprintEndDate)));
+      isBefore(date, endOfDay(convertStringToDate(currentSprintEndDate)));
 
     if (!currentMonth) {
       classes += " text-neutral-content";
@@ -156,8 +153,8 @@ export const useCalendarLogic = (
 
   const showRocketIcon = (date: Date) =>
     (voyageStartDate &&
-      isSameDay(dateTimeConvertedToDate(voyageStartDate), date)) ||
-    (voyageEndDate && isSameDay(dateTimeConvertedToDate(voyageEndDate), date));
+      isSameDay(convertStringToDate(voyageStartDate), date)) ||
+    (voyageEndDate && isSameDay(convertStringToDate(voyageEndDate), date));
 
   const getCalendarElementColor = (date: Date, currentMonth: boolean) => {
     if (isSelectedDate(date)) {
@@ -180,12 +177,12 @@ export const useCalendarLogic = (
   const getDayLabel = () => {
     if (
       voyageStartDate &&
-      isSameDay(dateTimeConvertedToDate(voyageStartDate), selectDate)
+      isSameDay(convertStringToDate(voyageStartDate), selectDate)
     )
       return `Start of Voyage ${voyageNumber}`;
     if (
       voyageEndDate &&
-      isSameDay(dateTimeConvertedToDate(voyageEndDate), selectDate)
+      isSameDay(convertStringToDate(voyageEndDate), selectDate)
     )
       return `End of Voyage ${voyageNumber}`;
   };
