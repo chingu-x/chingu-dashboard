@@ -31,7 +31,26 @@ function getIcon(iconName: string, color: string) {
   }
 }
 
-function getLabel(text: string) {
+function getIconLabel(text: string) {
+  const label = text.split("}} ")[1];
+  const regExp = /[^{\}]+(?=})/g;
+  const matches = regExp.exec(text);
+  if (matches && matches.length !== 0) {
+    const [color, iconName] = matches[0].split(/(?=[A-Z])/);
+    const icon = getIcon(iconName.toLowerCase(), color);
+
+    return (
+      <span className="flex items-center gap-x-4">
+        {icon}
+        {label}
+      </span>
+    );
+  }
+
+  return text;
+}
+
+function getScaleLabel(text: string) {
   const label = text.split("}} ")[1];
   const regExp = /[^{\}]+(?=})/g;
   const matches = regExp.exec(text);
@@ -84,7 +103,7 @@ export default function FormInputs({
       const id = option.id.toString();
       let label: string | JSX.Element;
       if (name === "radioIcon") {
-        label = getLabel(option.text);
+        label = getIconLabel(option.text);
         options.push({ id, label, value: id });
       } else {
         options.push({ id, label: option.text, value: id });
@@ -111,18 +130,29 @@ export default function FormInputs({
   }
 
   if (name === "scale") {
+    let leftTitle = "";
+    let rightTitle = "";
+    const label = text.split("}}")[1]; // TODO: ask backend to stay consistent about a space after }}
+    const regExp = /[^{\}]+(?=})/g;
+    const matches = regExp.exec(text);
+
+    if (matches && matches.length !== 0) {
+      const [left, right] = matches[0].split(",");
+      leftTitle = left;
+      rightTitle = right;
+    }
+
     return (
       <FormItem isError={!!errors[id.toString()]} className="px-3" isScale>
         <div className="flex flex-col items-center w-full bg-base-100 rounded-2xl gap-y-10">
           <Label className="w-full font-semibold text-center normal-case">
-            On a scale of 0-10, how likely are you to suggest Chingu to a friend
-            or colleague?
+            {label}
           </Label>
           {/* TOP LABELS */}
           <div className="flex flex-col w-full">
             <RadioGroupRating
-              leftTitle="Not Likely"
-              rightTitle="Extremely Likely"
+              leftTitle={leftTitle}
+              rightTitle={rightTitle}
               options={options}
               {...register(id.toString())}
             />
