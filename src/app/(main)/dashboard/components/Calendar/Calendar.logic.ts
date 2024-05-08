@@ -14,7 +14,7 @@ import {
   endOfDay,
 } from "date-fns";
 import { useState } from "react";
-import { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
+import { type SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
 export const useCalendarLogic = (sprintData?: SprintData) => {
   const currentDate = new Date();
@@ -43,7 +43,7 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
 
   const generateDate = (
     month = getMonth(new Date()),
-    year = getYear(new Date()),
+    year = getYear(new Date())
   ) => {
     const firstDateOfMonth = startOfMonth(new Date(year, month));
     const lastDateOfMonth = endOfMonth(new Date(year, month));
@@ -115,7 +115,7 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     {
       id: 1,
       check: sprintData?.eventList?.some((event) =>
-        isSameDay(new Date(event.date), date),
+        isSameDay(new Date(event.date), date)
       ),
     },
   ];

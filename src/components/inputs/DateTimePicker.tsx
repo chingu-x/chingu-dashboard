@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DatePicker, { ReactDatePickerProps } from "react-datepicker";
+import DatePicker, { type ReactDatePickerProps } from "react-datepicker";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -27,7 +27,7 @@ const DateTimePicker = React.forwardRef<DatePicker, DatePickerInputProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const filterPassedTime = (time: Date) => {
       const currentDate = new Date();
@@ -61,7 +61,7 @@ const DateTimePicker = React.forwardRef<DatePicker, DatePickerInputProps>(
         />
       </div>
     );
-  },
+  }
 );
 
 DateTimePicker.displayName = "DateTimePicker";
