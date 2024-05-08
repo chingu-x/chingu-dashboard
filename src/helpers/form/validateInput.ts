@@ -15,6 +15,7 @@ interface ValidateTextInput {
 interface ValidateDateTimeInput {
   minDate?: Date;
   maxDate?: Date;
+  timezone?: string;
 }
 
 export function validateTextInput({
@@ -60,7 +61,7 @@ export function validateTextInput({
   if (maxLen) {
     rules = rules.refine(
       (val) => val.length <= maxLen,
-      (val) => ({ message: `Character length ${val.length}/${maxLen}` }),
+      (val) => ({ message: `Character length ${val.length}/${maxLen}` })
     );
   }
 
@@ -70,6 +71,7 @@ export function validateTextInput({
 export function validateDateTimeInput({
   minDate,
   maxDate,
+  timezone,
 }: ValidateDateTimeInput): z.ZodDate | z.ZodEffects<z.ZodDate, Date, Date> {
   let rules;
   rules = z.date();
@@ -80,9 +82,14 @@ export function validateDateTimeInput({
       () => ({
         message: `The meeting should be between ${format(
           minDate,
-          "MMM d",
-        )} and ${format(subDays(maxDate, 1), "MMM d")}`,
-      }),
+          "MMM d k:mm (zzz)",
+          {
+            timeZone: timezone,
+          }
+        )} and ${format(subDays(maxDate, 1), "MMM d k:mm (zzz)", {
+          timeZone: timezone,
+        })}`,
+      })
     );
   }
 
