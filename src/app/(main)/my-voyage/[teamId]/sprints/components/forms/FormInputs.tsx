@@ -42,7 +42,7 @@ function getTextInCurlyBrackets(text: string) {
 }
 
 function getLabel(text: string, withIcon?: boolean) {
-  let label = text.split("}}")[1].trim();
+  const label = text.split("}}")[1].trim();
   if (withIcon) {
     const textInCurlyBrackets = getTextInCurlyBrackets(text);
     if (textInCurlyBrackets) {
