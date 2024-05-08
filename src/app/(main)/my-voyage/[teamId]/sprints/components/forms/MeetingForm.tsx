@@ -49,7 +49,7 @@ export default function MeetingForm() {
   const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const { startDate, endDate } = sprints.find(
-    (sprint) => sprint.number === sprintNumber
+    (sprint) => sprint.number === sprintNumber,
   )!;
 
   const validationSchema = z.object({
@@ -128,14 +128,14 @@ export default function MeetingForm() {
           routePaths.sprintWeekPage(
             teamId.toString(),
             sprintNumber.toString(),
-            meetingId.toString()
-          )
+            meetingId.toString(),
+          ),
         );
       }
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
 
         setEditMeetingLoading(false);
@@ -150,14 +150,14 @@ export default function MeetingForm() {
           routePaths.sprintWeekPage(
             teamId.toString(),
             sprintNumber.toString(),
-            res.id.toString()
-          )
+            res.id.toString(),
+          ),
         );
       }
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
         setAddMeetingLoading(false);
       }
@@ -167,7 +167,7 @@ export default function MeetingForm() {
   useEffect(() => {
     if (params.meetingId) {
       const meeting = sprints.find(
-        (sprint) => sprint.teamMeetings[0]?.id === +params.meetingId
+        (sprint) => sprint.teamMeetings[0]?.id === +params.meetingId,
       )?.teamMeetings[0];
 
       setMeetingData(meeting as Meeting);
@@ -179,7 +179,7 @@ export default function MeetingForm() {
     if (meetingData && meetingData.dateTime) {
       const dateTimeConvertedToDate = convertStringToDate(
         meetingData?.dateTime,
-        timezone
+        timezone,
       );
 
       reset({
@@ -195,7 +195,7 @@ export default function MeetingForm() {
     () => () => {
       void persistor.purge();
     },
-    []
+    [],
   );
 
   // This block is responsible for auto-save functionality. Right now nextjs does
@@ -248,7 +248,7 @@ export default function MeetingForm() {
           onOpenModal({
             type: "error",
             content: { message: error.message },
-          })
+          }),
         );
         setEditMeetingLoading(false);
       }
@@ -281,7 +281,7 @@ export default function MeetingForm() {
         clearTimeout(saveTimeout);
       }
     },
-    [saveTimeout]
+    [saveTimeout],
   );
 
   function renderButtonContent() {

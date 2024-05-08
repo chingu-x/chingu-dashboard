@@ -61,7 +61,7 @@ export function validateTextInput({
   if (maxLen) {
     rules = rules.refine(
       (val) => val.length <= maxLen,
-      (val) => ({ message: `Character length ${val.length}/${maxLen}` })
+      (val) => ({ message: `Character length ${val.length}/${maxLen}` }),
     );
   }
 
@@ -85,11 +85,11 @@ export function validateDateTimeInput({
           "MMM d k:mm (zzz)",
           {
             timeZone: timezone,
-          }
+          },
         )} and ${format(subDays(maxDate, 1), "MMM d k:mm (zzz)", {
           timeZone: timezone,
         })}`,
-      })
+      }),
     );
   }
 
