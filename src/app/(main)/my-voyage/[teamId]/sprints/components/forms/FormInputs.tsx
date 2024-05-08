@@ -14,7 +14,7 @@ import { RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupIt
 import RadioGroupHorizontal from "@/components/inputs/RadioGroup/RadioGroupHorizontal";
 import RadioGroupRating from "@/components/inputs/RadioGroup/RadioGroupRating";
 
-// TODO: refactor and move it somewhere ???
+// TODO: ask the backend tean to change colors: green => success etc
 const Colors = {
   green: "text-success",
   amber: "text-warning",
@@ -31,22 +31,34 @@ function getIcon(iconName: string, color: string) {
   }
 }
 
-function getIconLabel(text: string) {
-  const label = text.split("}} ")[1];
+function getTextInCurlyBrackets(text: string) {
   const regExp = /[^{\}]+(?=})/g;
   const matches = regExp.exec(text);
   if (matches && matches.length !== 0) {
-    const [color, iconName] = matches[0].split(/(?=[A-Z])/);
-    const icon = getIcon(iconName.toLowerCase(), color);
-
-    return (
-      <span className="flex items-center gap-x-4">
-        {icon}
-        {label}
-      </span>
-    );
+    return matches[0];
+  } else {
+    return null;
   }
+}
 
+function getLabel(text: string, withIcon?: boolean) {
+  let label = text.split("}}")[1].trim();
+  if (withIcon) {
+    const textInCurlyBrackets = getTextInCurlyBrackets(text);
+    if (textInCurlyBrackets) {
+      const [color, iconName] = textInCurlyBrackets.split(/(?=[A-Z])/);
+      const icon = getIcon(iconName.toLowerCase(), color);
+
+      return (
+        <span className="flex items-center gap-x-4">
+          {icon}
+          {label}
+        </span>
+      );
+    }
+  } else {
+    return label;
+  }
   return text;
 }
 
@@ -76,7 +88,7 @@ export default function FormInputs({
   const options: RadioGroupItemProps[] = [];
 
   if (
-    name !== "radioGroup" &&
+    (name !== "radioGroup" || "boolean") &&
     optionGroup &&
     optionGroup.optionChoices.length !== 0
   ) {
@@ -84,7 +96,7 @@ export default function FormInputs({
       const id = option.id.toString();
       let label: string | JSX.Element;
       if (name === "radioIcon") {
-        label = getIconLabel(option.text);
+        label = getLabel(option.text, true);
         options.push({ id, label, value: id });
       } else {
         options.push({ id, label: option.text, value: id });
@@ -113,12 +125,11 @@ export default function FormInputs({
   if (name === "scale") {
     let leftTitle = "";
     let rightTitle = "";
-    const label = text.split("}}")[1]; // TODO: ask backend to stay consistent about a space after }}
-    const regExp = /[^{\}]+(?=})/g;
-    const matches = regExp.exec(text);
+    const label = getLabel(text);
+    const textInCurlyBrackets = getTextInCurlyBrackets(text);
 
-    if (matches && matches.length !== 0) {
-      const [left, right] = matches[0].split(",");
+    if (textInCurlyBrackets) {
+      const [left, right] = textInCurlyBrackets.split(",");
       leftTitle = left;
       rightTitle = right;
     }
@@ -139,6 +150,29 @@ export default function FormInputs({
             />
           </div>
         </div>
+      </FormItem>
+    );
+  }
+
+  if (name === "boolean") {
+    let trueText = "";
+    let falseText = "";
+    const label = getLabel(text);
+    const textInCurlyBrackets = getTextInCurlyBrackets(text);
+
+    if (textInCurlyBrackets) {
+      const [left, right] = textInCurlyBrackets.split(",");
+      trueText = left;
+      falseText = right;
+    }
+
+    options.push({ id: id + trueText, value: "true", label: trueText });
+    options.push({ id: id + falseText, value: "false", label: falseText });
+
+    return (
+      <FormItem isError={!!errors[id.toString()]}>
+        <Label className="font-semibold normal-case">{label}</Label>
+        <RadioGroupVertical options={options} {...register(id.toString())} />
       </FormItem>
     );
   }
