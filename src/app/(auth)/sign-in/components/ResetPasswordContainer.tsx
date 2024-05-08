@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Link from "next/link";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Dispatch, SetStateAction } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { type Dispatch, type SetStateAction } from "react";
 import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";

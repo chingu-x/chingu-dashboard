@@ -1,5 +1,5 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { VoyageMember } from "@/store/features/ideation/ideationSlice";
+import { type VoyageMember } from "@/store/features/ideation/ideationSlice";
 
 export interface ResourceData {
   id: number;

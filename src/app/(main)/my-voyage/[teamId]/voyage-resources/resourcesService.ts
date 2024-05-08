@@ -3,7 +3,7 @@
 import { revalidateTag } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
 import { POST, DELETE } from "@/utils/requests";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 
 interface ResourceProps {
@@ -43,7 +43,7 @@ export async function addResource({
       `api/v1/voyages/teams/${teamId}`,
       token,
       "default",
-      { url, title },
+      { url, title }
     );
 
   const [res, error] = await handleAsync(addResourceAsync);
@@ -63,7 +63,7 @@ export async function deleteResource({
     DELETE<AddResourceResponse>(
       `api/v1/voyages/resources/${resourceId}`,
       token,
-      "default",
+      "default"
     );
 
   const [res, error] = await handleAsync(deleteResourceAsync);

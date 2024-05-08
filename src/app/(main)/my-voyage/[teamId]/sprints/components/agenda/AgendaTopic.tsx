@@ -6,7 +6,7 @@ import {
 import { CheckCircleIcon as CheckCircleIconSolid } from "@heroicons/react/24/solid";
 
 import IconButton from "@/components/IconButton";
-import { Agenda } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
+import { type Agenda } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 import { cn } from "@/lib/utils";
 
 interface TopicProps {
@@ -28,13 +28,16 @@ export default function AgendaTopic({
       layout
       className={cn(
         "flex flex-col w-full p-5 rounded-lg bg-base-100 gap-y-4",
-        topic.status && "bg-neutral-content",
+        topic.status && "bg-neutral-content"
       )}
     >
       <div className="flex justify-between">
         <h4 className="py-2 text-xl font-medium">{topic.title}</h4>
         <div className="flex items-center gap-x-5">
-          <IconButton onClick={editTopic} aria-label="edit topic">
+          <IconButton
+            onClick={editTopic}
+            aria-label="edit topic"
+          >
             <EllipsisVerticalIcon />
           </IconButton>
           <IconButton

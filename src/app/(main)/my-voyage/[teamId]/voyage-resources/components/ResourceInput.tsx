@@ -1,4 +1,4 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { useParams } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,7 +59,7 @@ export default function ResourceInput() {
     }
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
+        onOpenModal({ type: "error", content: { message: error.message } })
       );
       setAddResourceLoading(false);
     }
