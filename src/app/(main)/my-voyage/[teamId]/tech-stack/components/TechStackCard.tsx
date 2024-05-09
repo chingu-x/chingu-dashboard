@@ -18,17 +18,14 @@ interface TechStackCardProps {
 
 export default function TechStackCard({ title, data }: TechStackCardProps) {
   const [isInput, setIsInput] = useState(false);
+  const [isEdiing, setIsEditing] = useState(-1);
   const [isDuplicate, setIsDuplicate] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const items = data.map((item) => item.name.toLowerCase());
   const userId = useUser().id;
   const [openMenuId, setOpenMenuId] = useState(-1);
 
-  const toggleInput = () => {
-    setIsInput(!isInput);
-  };
-
-  const clearAction = () => {
+  const toggleAddItemInput = () => {
     setIsInput(!isInput);
   };
 
@@ -40,7 +37,20 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     setOpenMenuId(-1);
   };
 
-  const handleOnChange = () => {
+  const clearActionEditItem = () => {
+    setIsEditing(-1);
+    setOpenMenuId(-1);
+  };
+
+  const clearActionAdditem = () => {
+    setIsInput(!isInput);
+  };
+
+  const handleOnChangeEditItem = () => {
+    console.log("editing...");
+  };
+
+  const handleOnChangeAddItem = () => {
     const currentValue = inputRef.current?.value.toLowerCase();
     if (currentValue && !isDuplicate) {
       items.includes(currentValue) ? setIsDuplicate(true) : null;
@@ -66,33 +76,54 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               className="text-base mb-5 grid grid-cols-4 items-center relative"
               key={element.id}
             >
-              {/*item name*/}
-              {element.name}
-              {openMenuId === element.id && (
-                <SettingsMenu onClose={handleMenuClose} />
+              {isEdiing === element.id && (
+                <form className="col-span-4">
+                  <TextInput
+                    id={element.id.toString()}
+                    placeholder={element.name}
+                    submitButtonText="Save"
+                    isClearBtnVisible={true}
+                    clearInputAction={clearActionEditItem}
+                    onChange={handleOnChangeEditItem}
+                  />
+                </form>
               )}
 
-              {/*Avatars of voters*/}
-              <AvatarGroup>
-                {element.teamTechStackItemVotes.map((vote, index) => (
-                  <Avatar
-                    key={index}
-                    image={vote.votedBy.member.avatar}
-                    width={24}
-                    height={24}
-                  />
-                ))}
-              </AvatarGroup>
+              {isEdiing !== element.id && (
+                <>
+                  {/*item name*/}
+                  {element.name}
+                  {openMenuId === element.id && (
+                    <SettingsMenu
+                      onClose={handleMenuClose}
+                      setIsEditing={setIsEditing}
+                      id={element.id}
+                    />
+                  )}
 
-              {/*Render corrrect button type based on 0 votes, 1+ votes or if current user has voted on item.*/}
-              {/*TODO: At the moment it isn't possible for item to have 0 votes. AddVoteBtn with ellipsis is 'hardwritten' here. 
-              change to condition once 0 votes is possible */}
-              {element.teamTechStackItemVotes
-                .map((item) => item.votedBy.member.id)
-                .includes(userId) ? (
-                <RemoveVoteBtn />
-              ) : (
-                <AddVoteBtn id={element.id} openMenu={setOpenMenuId} />
+                  {/*Avatars of voters*/}
+                  <AvatarGroup>
+                    {element.teamTechStackItemVotes.map((vote, index) => (
+                      <Avatar
+                        key={index}
+                        image={vote.votedBy.member.avatar}
+                        width={24}
+                        height={24}
+                      />
+                    ))}
+                  </AvatarGroup>
+
+                  {/*Render corrrect button type based on 0 votes, 1+ votes or if current user has voted on item.*/}
+                  {/*TODO: At the moment it isn't possible for item to have 0 votes. AddVoteBtn with ellipsis is 'hardwritten' here. 
+                change to condition once 0 votes is possible */}
+                  {element.teamTechStackItemVotes
+                    .map((item) => item.votedBy.member.id)
+                    .includes(userId) ? (
+                    <RemoveVoteBtn />
+                  ) : (
+                    <AddVoteBtn id={element.id} openMenu={setOpenMenuId} />
+                  )}
+                </>
               )}
             </li>
           ))}
@@ -108,15 +139,15 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
             submitButtonText="Save"
             errorMessage={isDuplicate ? "Duplicate Item" : ""}
             isClearBtnVisible={true}
-            clearInputAction={clearAction}
-            onChange={handleOnChange}
+            clearInputAction={clearActionAdditem}
+            onChange={handleOnChangeAddItem}
           />
         </form>
       ) : (
         <Button
           variant="outline"
           className="justify-center w-full"
-          onClick={toggleInput}
+          onClick={toggleAddItemInput}
         >
           Add Tech Stack
         </Button>
