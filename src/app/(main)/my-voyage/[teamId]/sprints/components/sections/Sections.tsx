@@ -56,15 +56,15 @@ export default function Sections({
   ];
 
   const [addedSections, setAddedSections] = useState(
-    sectionTemplates.filter((template) => template.isAdded === true)
+    sectionTemplates.filter((template) => template.isAdded === true),
   );
   const [canBeAddedSections, setCanBeAddedSections] = useState(
-    sectionTemplates.filter((template) => template.isAdded === false)
+    sectionTemplates.filter((template) => template.isAdded === false),
   );
 
   function reorderSections(title: string) {
     const sectionIndex = canBeAddedSections.findIndex(
-      (section) => section.title === title
+      (section) => section.title === title,
     );
     const section = {
       ...canBeAddedSections[sectionIndex],

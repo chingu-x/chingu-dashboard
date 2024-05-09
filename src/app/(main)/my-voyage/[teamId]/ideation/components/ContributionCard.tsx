@@ -52,19 +52,13 @@ export default function ContributionCard({
     <div className={cn("w-[200px] bg-base-100 rounded-lg", className)}>
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
-        <Badge
-          title={member.firstName}
-          avatarUrlImage={member.avatar}
-        />
+        <Badge title={member.firstName} avatarUrlImage={member.avatar} />
         {ownVote && !isIdeationFinalized ? (
           <Link
             href={routePaths.editIdeationPage(teamId, projectIdeaId.toString())}
             className="w-full"
           >
-            <Button
-              variant="outline"
-              className="w-full"
-            >
+            <Button variant="outline" className="w-full">
               Edit Project
             </Button>
           </Link>

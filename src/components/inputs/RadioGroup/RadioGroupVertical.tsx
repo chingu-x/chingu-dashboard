@@ -21,7 +21,7 @@ const RadioGroupVertical = React.forwardRef<HTMLInputElement, RadioGroupProps>(
         />
       ))}
     </div>
-  )
+  ),
 );
 
 RadioGroupVertical.displayName = "RadioGroupVertical";

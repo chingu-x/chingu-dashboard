@@ -27,7 +27,7 @@ const DateTimePicker = React.forwardRef<DatePicker, DatePickerInputProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const filterPassedTime = (time: Date) => {
       const currentDate = new Date();
@@ -61,7 +61,7 @@ const DateTimePicker = React.forwardRef<DatePicker, DatePickerInputProps>(
         />
       </div>
     );
-  }
+  },
 );
 
 DateTimePicker.displayName = "DateTimePicker";

@@ -43,7 +43,7 @@ export async function addResource({
       `api/v1/voyages/teams/${teamId}`,
       token,
       "default",
-      { url, title }
+      { url, title },
     );
 
   const [res, error] = await handleAsync(addResourceAsync);
@@ -63,7 +63,7 @@ export async function deleteResource({
     DELETE<AddResourceResponse>(
       `api/v1/voyages/resources/${resourceId}`,
       token,
-      "default"
+      "default",
     );
 
   const [res, error] = await handleAsync(deleteResourceAsync);

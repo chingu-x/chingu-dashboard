@@ -208,7 +208,7 @@ export async function addMeeting({
       `api/v1/voyages/sprints/${sprintNumber}/teams/${teamId}/meetings`,
       token,
       "default",
-      { title, dateTime, meetingLink, description }
+      { title, dateTime, meetingLink, description },
     );
 
   const [res, error] = await handleAsync(addMeetingAsync);
@@ -238,7 +238,7 @@ export async function editMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "default",
-      { title, dateTime, meetingLink, notes, description }
+      { title, dateTime, meetingLink, notes, description },
     );
 
   const [res, error] = await handleAsync(editMeetingAsync);
@@ -264,7 +264,7 @@ export async function addAgendaTopic({
       `api/v1/voyages/sprints/meetings/${meetingId}/agendas`,
       token,
       "default",
-      { title, description }
+      { title, description },
     );
 
   const [res, error] = await handleAsync(addAgendaTopicAsync);
@@ -293,7 +293,7 @@ export async function editAgendaTopic({
       `api/v1/voyages/sprints/agendas/${agendaId}`,
       token,
       "default",
-      { title, description, status }
+      { title, description, status },
     );
 
   const [res, error] = await handleAsync(editAgendaTopicAsync);
@@ -318,7 +318,7 @@ export async function deleteAgendaTopic({
     DELETE<DeleteAgendaTopicResponse>(
       `api/v1/voyages/sprints/agendas/${agendaId}`,
       token,
-      "default"
+      "default",
     );
 
   const [res, error] = await handleAsync(deleteAgendaTopicAsync);
@@ -345,7 +345,7 @@ export async function changeAgendaTopicStatus({
       `api/v1/voyages/sprints/agendas/${agendaId}`,
       token,
       "default",
-      { status }
+      { status },
     );
 
   const [res, error] = await handleAsync(changeAgendaTopicStatusAsync);
@@ -369,7 +369,7 @@ export async function addSection({
     POST<AddSectionBody, AddSectionResponse>(
       `api/v1/voyages/sprints/meetings/${meetingId}/forms/${formId}`,
       token,
-      "default"
+      "default",
     );
 
   const [res, error] = await handleAsync(addSectionAsync);
@@ -395,7 +395,7 @@ export async function editSection({
       `api/v1/voyages/sprints/meetings/${meetingId}/forms/${formId}`,
       token,
       "default",
-      { responses }
+      { responses },
     );
 
   const [res, error] = await handleAsync(editSectionAsync);

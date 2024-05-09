@@ -12,7 +12,7 @@ export function getCurrentSprint(sprints: Sprint[]) {
   const currentDate = new Date("2024-02-13T00:00:00.000Z");
   const currentSprint = sprints.find((sprint) => {
     const startDate = convertFromISOStringToDateWithoutTimezone(
-      sprint.startDate
+      sprint.startDate,
     );
     const endDate = convertFromISOStringToDateWithoutTimezone(sprint.endDate);
     if (isWithinInterval(currentDate, { start: startDate, end: endDate }))

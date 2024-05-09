@@ -1,4 +1,4 @@
-import { isWithinInterval, subDays } from "date-fns";
+import { isWithinInterval } from "date-fns";
 import { format } from "date-fns-tz";
 import { z } from "zod";
 
@@ -86,7 +86,7 @@ export function validateDateTimeInput({
           {
             timeZone: timezone,
           },
-        )} and ${format(subDays(maxDate, 1), "MMM d k:mm (zzz)", {
+        )} and ${format(maxDate, "MMM d k:mm (zzz)", {
           timeZone: timezone,
         })}`,
       }),
