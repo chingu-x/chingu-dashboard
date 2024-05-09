@@ -3,7 +3,7 @@ import Button from "@/components/Button";
 
 interface AddVoteBtnProps {
   id: number;
-  openMenu: any;
+  openMenu: (value: number) => void;
 }
 
 export default function AddVoteBtn({ id, openMenu }: AddVoteBtnProps) {

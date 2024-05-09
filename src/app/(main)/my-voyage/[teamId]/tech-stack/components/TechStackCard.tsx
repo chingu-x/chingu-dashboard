@@ -1,21 +1,19 @@
 "use client";
 import { useRef, useState, FormEvent } from "react";
+import GetIcon from "./GetIcons";
+import AddVoteBtn from "./AddVoteBtn";
+import RemoveVoteBtn from "./RemoveVoteBtn";
+import SettingsMenu from "./SettingsMenu";
+import TextInput from "@/components/inputs/TextInput";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import { TechStackItem } from "@/store/features/techStack/techStackSlice";
-import GetIcon from "./GetIcons";
-import TextInput from "@/components/inputs/TextInput";
-import AddVoteBtn from "./AddVoteBtn";
-import RemoveVoteBtn from "./RemoveVoteBtn";
-import SettingsMenu from "./SettingsMenu";
 import { useUser } from "@/store/hooks";
-import { validateHeaderValue } from "http";
 
 //map over manyVotes and assign testAvatar to Image in Avatar group to see behaviour with many votes.
-const testAvatar =
-  "https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=wavatar&r=x";
-const manyVotes = ["", "", "", "", "", "", "", ""];
+//const testAvatar = "https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=wavatar&r=x";
+//const manyVotes = ["", "", "", "", "", "", "", ""];
 
 interface TechStackCardProps {
   title: string;
@@ -117,9 +115,9 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
 
                   {/*Avatars of voters*/}
                   <AvatarGroup>
-                    {element.teamTechStackItemVotes.map((vote, index) => (
+                    {element.teamTechStackItemVotes.map((vote) => (
                       <Avatar
-                        key={index}
+                        key={vote.votedBy.member.id}
                         image={vote.votedBy.member.avatar}
                         width={24}
                         height={24}

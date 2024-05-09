@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
-import Button from "@/components/Button";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import Button from "@/components/Button";
 
 interface SettingsMenuProps {
   onClose: () => void;
