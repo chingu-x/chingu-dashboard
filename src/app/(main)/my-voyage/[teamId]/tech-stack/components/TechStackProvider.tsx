@@ -1,9 +1,7 @@
 "use client";
 import { useEffect } from "react";
-import {
-  TechStackData,
-  fetchTechStack,
-} from "@/store/features/techStack/techStackSlice";
+import { fetchTechStack } from "@/store/features/techStack/techStackSlice";
+import type { TechStackData } from "@/store/features/techStack/techStackSlice";
 import { useAppDispatch } from "@/store/hooks";
 
 export interface TechStackProviderProps {

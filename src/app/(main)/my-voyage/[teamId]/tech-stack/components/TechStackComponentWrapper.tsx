@@ -7,7 +7,7 @@ import { handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { getUser } from "@/utils/getUser";
-import { TechStackData } from "@/store/features/techStack/techStackSlice";
+import type { TechStackData } from "@/store/features/techStack/techStackSlice";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
 

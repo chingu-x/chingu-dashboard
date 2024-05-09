@@ -1,5 +1,6 @@
 "use client";
-import { useRef, useState, FormEvent } from "react";
+import { useRef, useState } from "react";
+import type { FormEvent } from "react";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
@@ -8,7 +9,7 @@ import TextInput from "@/components/inputs/TextInput";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
-import { TechStackItem } from "@/store/features/techStack/techStackSlice";
+import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
 import { useUser } from "@/store/hooks";
 
 //map over manyVotes and assign testAvatar to Image in Avatar group to see behaviour with many votes.
@@ -131,10 +132,10 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                   {element.teamTechStackItemVotes
                     .map((item) => item.votedBy.member.id)
                     .includes(userId) ? (
-                    <RemoveVoteBtn />
-                  ) : (
-                    <AddVoteBtn id={element.id} openMenu={setOpenMenuId} />
-                  )}
+                      <RemoveVoteBtn />
+                    ) : (
+                      <AddVoteBtn id={element.id} openMenu={setOpenMenuId} />
+                    )}
                 </>
               )}
             </li>

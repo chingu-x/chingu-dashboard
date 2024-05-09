@@ -1,6 +1,6 @@
 import TechStackCard from "./TechStackCard";
 import Button from "@/components/Button";
-import { TechStackData } from "@/store/features/techStack/techStackSlice";
+import type { TechStackData } from "@/store/features/techStack/techStackSlice";
 
 interface TechStackContainerProps {
   data: TechStackData[];
