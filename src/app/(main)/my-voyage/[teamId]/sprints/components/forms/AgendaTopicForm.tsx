@@ -97,14 +97,14 @@ export default function AgendaTopicForm() {
           routePaths.sprintWeekPage(
             teamId.toString(),
             sprintNumber.toString(),
-            meetingId.toString()
-          )
+            meetingId.toString(),
+          ),
         );
       }
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
         setEditAgendaTopicLoading(false);
       }
@@ -117,14 +117,14 @@ export default function AgendaTopicForm() {
           routePaths.sprintWeekPage(
             teamId.toString(),
             sprintNumber.toString(),
-            meetingId.toString()
-          )
+            meetingId.toString(),
+          ),
         );
       }
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
         setAddTopicLoading(false);
       }
@@ -135,7 +135,7 @@ export default function AgendaTopicForm() {
     const route = routePaths.sprintWeekPage(
       teamId.toString(),
       sprintNumber.toString(),
-      meetingId.toString()
+      meetingId.toString(),
     );
     dispatch(
       onOpenModal({
@@ -152,7 +152,7 @@ export default function AgendaTopicForm() {
           redirect: { router, route },
           deleteFunction: deleteAgendaTopic,
         },
-      })
+      }),
     );
   }
 
@@ -178,7 +178,7 @@ export default function AgendaTopicForm() {
     () => () => {
       void persistor.purge();
     },
-    []
+    [],
   );
 
   // This block is responsible for auto-save functionality. Right now nextjs does
@@ -229,7 +229,7 @@ export default function AgendaTopicForm() {
           onOpenModal({
             type: "error",
             content: { message: error.message },
-          })
+          }),
         );
         setEditAgendaTopicLoading(false);
       }
@@ -261,7 +261,7 @@ export default function AgendaTopicForm() {
         clearTimeout(saveTimeout);
       }
     },
-    [saveTimeout]
+    [saveTimeout],
   );
 
   function renderButtonContent() {

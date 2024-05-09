@@ -11,10 +11,7 @@ export default function FinalizeIdeationButton() {
   const ideation = useIdeation().projectIdeas;
 
   return (
-    <Link
-      href={routePaths.finalizeIdeationPage(teamId)}
-      className="w-full"
-    >
+    <Link href={routePaths.finalizeIdeationPage(teamId)} className="w-full">
       <Button
         variant="secondary"
         size="lg"

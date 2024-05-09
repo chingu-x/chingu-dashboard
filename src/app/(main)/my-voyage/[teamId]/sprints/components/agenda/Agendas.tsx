@@ -36,10 +36,10 @@ export default function Agendas({ params, topics }: AgendasProps) {
   const router = useRouter();
 
   const [incompletedTopics, setIncompletedTopics] = useState(
-    topics.filter((topic) => topic.status === false)
+    topics.filter((topic) => topic.status === false),
   );
   const [completedTopics, setCompletedTopics] = useState(
-    topics.filter((topic) => topic.status === true)
+    topics.filter((topic) => topic.status === true),
   );
 
   const {
@@ -57,14 +57,14 @@ export default function Agendas({ params, topics }: AgendasProps) {
     if (res) {
       if (status === true) {
         const topicIndex = incompletedTopics.findIndex(
-          (topic) => topic.id === agendaId
+          (topic) => topic.id === agendaId,
         );
         const topic = { ...incompletedTopics[topicIndex], status: true };
         setIncompletedTopics([...incompletedTopics].toSpliced(topicIndex, 1));
         setCompletedTopics([...completedTopics, topic]);
       } else {
         const topicIndex = completedTopics.findIndex(
-          (topic) => topic.id === agendaId
+          (topic) => topic.id === agendaId,
         );
         const topic = { ...completedTopics[topicIndex], status: false };
         setCompletedTopics([...completedTopics].toSpliced(topicIndex, 1));
@@ -74,7 +74,7 @@ export default function Agendas({ params, topics }: AgendasProps) {
     }
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
       setChangeAgendaTopicLoading(false);
     }
@@ -86,8 +86,8 @@ export default function Agendas({ params, topics }: AgendasProps) {
         teamId.toString(),
         sprintNumber.toString(),
         meetingId.toString(),
-        agendaTopicId.toString()
-      )
+        agendaTopicId.toString(),
+      ),
     );
   };
 
@@ -116,14 +116,8 @@ export default function Agendas({ params, topics }: AgendasProps) {
       {/* DIVIDER */}
       <AnimatePresence>
         {dividerIsVisible && (
-          <motion.div
-            layout
-            className="w-full"
-          >
-            <Divider
-              title="Completed Topics"
-              className="py-5 bg-base-200"
-            />
+          <motion.div layout className="w-full">
+            <Divider title="Completed Topics" className="py-5 bg-base-200" />
           </motion.div>
         )}
       </AnimatePresence>

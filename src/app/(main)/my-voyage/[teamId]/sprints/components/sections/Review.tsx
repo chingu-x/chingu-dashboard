@@ -55,15 +55,15 @@ export default function Review({ data }: ReviewProps) {
   ];
 
   const what_right = data?.responseGroup.responses.find(
-    (response) => response.question.id === Number(ReviewQuestions.what_right)
+    (response) => response.question.id === Number(ReviewQuestions.what_right),
   )?.text;
   const what_to_improve = data?.responseGroup.responses.find(
     (response) =>
-      response.question.id === Number(ReviewQuestions.what_to_improve)
+      response.question.id === Number(ReviewQuestions.what_to_improve),
   )?.text;
   const what_to_change = data?.responseGroup.responses.find(
     (response) =>
-      response.question.id === Number(ReviewQuestions.what_to_change)
+      response.question.id === Number(ReviewQuestions.what_to_change),
   )?.text;
 
   const {
@@ -135,7 +135,7 @@ export default function Review({ data }: ReviewProps) {
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        })
+        }),
       );
     }
     setEditSectionLoading(false);
