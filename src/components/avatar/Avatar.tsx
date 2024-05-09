@@ -1,4 +1,4 @@
-import Image, { StaticImageData } from "next/image";
+import Image, { type StaticImageData } from "next/image";
 
 import { cn } from "@/lib/utils";
 
@@ -19,7 +19,7 @@ export default function Avatar({
     <div
       className={cn(
         "border border-neutral px-0 rounded-full cursor-pointer overflow-hidden shrink-0",
-        customClassName,
+        customClassName
       )}
     >
       <Image

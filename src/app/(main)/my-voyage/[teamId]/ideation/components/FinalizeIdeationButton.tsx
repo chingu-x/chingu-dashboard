@@ -11,12 +11,18 @@ export default function FinalizeIdeationButton() {
   const ideation = useIdeation().projectIdeas;
 
   return (
-    <Link href={routePaths.finalizeIdeationPage(teamId)} className="w-full">
+    <Link
+      href={routePaths.finalizeIdeationPage(teamId)}
+      className="w-full"
+    >
       <Button
         variant="secondary"
         size="lg"
         className="w-full"
-        disabled={ideation.length === 0}
+        disabled={
+          ideation.length === 0 ||
+          !ideation.some((i) => i.projectIdeaVotes.length > 0)
+        }
       >
         Finalize Selection
       </Button>

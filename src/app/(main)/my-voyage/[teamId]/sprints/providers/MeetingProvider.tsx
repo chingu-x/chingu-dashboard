@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 
 import {
-  Meeting,
-  Sprint,
+  type Meeting,
+  type Sprint,
   fetchMeeting,
   fetchSprints,
   setCurrentSprintNumber,

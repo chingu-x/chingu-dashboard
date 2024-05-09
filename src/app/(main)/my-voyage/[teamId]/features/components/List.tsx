@@ -1,14 +1,14 @@
 import {
   Droppable,
-  DroppableProvided,
-  DroppableStateSnapshot,
+  type DroppableProvided,
+  type DroppableStateSnapshot,
 } from "@hello-pangea/dnd";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 // import { Feature } from "./fixtures/Features";
 import AddFeaturesInput from "./AddFeaturesInput";
 import ListItem from "./ListItem";
-import { Features } from "@/store/features/features/featuresSlice";
+import { type Features } from "@/store/features/features/featuresSlice";
 
 interface ListProps {
   id: number;
@@ -62,14 +62,21 @@ export default function List({ id, title, features }: ListProps) {
               } ${snapshot.isDraggingOver && "bg-base-content"}`}
             >
               {features.map((feature, index) => (
-                <ListItem key={feature.id} feature={feature} index={index} />
+                <ListItem
+                  key={feature.id}
+                  feature={feature}
+                  index={index}
+                />
               ))}
               {provided.placeholder}
             </ul>
           </div>
         )}
       </Droppable>
-      <div ref={listRef} className="mt-3">
+      <div
+        ref={listRef}
+        className="mt-3"
+      >
         <AddFeaturesInput
           handleClick={handleClick}
           isEditing={isEditing}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { AsyncActionResponse } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 
 type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
 
@@ -11,7 +11,7 @@ interface UseServerActionResult<X, Y> {
   setIsLoading: (isLoading: boolean) => void;
 }
 export default function useServerAction<X, Y>(
-  action: ActionType<X, Y>,
+  action: ActionType<X, Y>
 ): UseServerActionResult<X, Y> {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -21,7 +21,7 @@ export default function useServerAction<X, Y>(
 
       return await action(arg);
     },
-    [action],
+    [action]
   );
 
   return { runAction, isLoading, setIsLoading };

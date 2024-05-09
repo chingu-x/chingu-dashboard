@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { AnimatePresence, Variants, motion } from "framer-motion";
+import { AnimatePresence, type Variants, motion } from "framer-motion";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { cn } from "@/lib/utils";
 
@@ -100,14 +100,18 @@ export default function Modal({
             <div
               className={cn(
                 `flex items-center justify-between px-10 pt-10 ${headerBackground}`,
-                headerBackground && "py-6",
+                headerBackground && "py-6"
               )}
             >
               <div className="flex items-center gap-x-4">
                 {icon}
                 <h3 className="text-xl font-semibold capitalize">{title}</h3>
               </div>
-              <button type="button" aria-label="close modal" onClick={onClose}>
+              <button
+                type="button"
+                aria-label="close modal"
+                onClick={onClose}
+              >
                 <XMarkIcon className="w-6 h-6 fill-current" />
               </button>
             </div>

@@ -1,7 +1,7 @@
 import { getAccessToken } from "./getCookie";
-import { AsyncActionResponse, handleAsync } from "./handleAsync";
+import { type AsyncActionResponse, handleAsync } from "./handleAsync";
 import { GET } from "./requests";
-import { User } from "@/store/features/user/userSlice";
+import { type User } from "@/store/features/user/userSlice";
 
 export function getUser(): Promise<AsyncActionResponse<User>> {
   const token = getAccessToken();
