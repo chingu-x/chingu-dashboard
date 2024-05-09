@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import {
-  IdeationData,
+  type IdeationData,
   fetchIdeations,
   setProjectIdeasLoadingFalse,
 } from "@/store/features/ideation/ideationSlice";

@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type React from "react";
 import { usePathname } from "next/navigation";
 import {
   RectangleGroupIcon,

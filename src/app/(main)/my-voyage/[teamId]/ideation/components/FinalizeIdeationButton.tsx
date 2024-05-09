@@ -16,7 +16,10 @@ export default function FinalizeIdeationButton() {
         variant="secondary"
         size="lg"
         className="w-full"
-        disabled={ideation.length === 0}
+        disabled={
+          ideation.length === 0 ||
+          !ideation.some((i) => i.projectIdeaVotes.length > 0)
+        }
       >
         Finalize Selection
       </Button>

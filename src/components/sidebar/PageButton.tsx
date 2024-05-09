@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { MainPages, PageProperty, VoyagePageProperty } from "./Sidebar";
+import {
+  MainPages,
+  type PageProperty,
+  type VoyagePageProperty,
+} from "./Sidebar";
 import Button from "@/components/Button";
 import Tooltip from "@/components/Tooltip";
 

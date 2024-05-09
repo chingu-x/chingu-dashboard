@@ -12,18 +12,19 @@ import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerConta
 import Banner from "@/components/banner/Banner";
 
 import {
-  FetchMeetingProps,
-  FetchMeetingResponse,
+  type FetchMeetingProps,
+  type FetchMeetingResponse,
 } from "@/myVoyage/sprints/sprintsService";
+
 import {
-  Agenda,
-  Meeting,
-  Section,
-  Sprint,
+  type Agenda,
+  type Meeting,
+  type Sprint,
+  type Section,
 } from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";

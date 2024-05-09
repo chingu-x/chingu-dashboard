@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import {
-  ResourceData,
+  type ResourceData,
   fetchResources,
 } from "@/store/features/resources/resourcesSlice";
 import { useAppDispatch } from "@/store/hooks";
