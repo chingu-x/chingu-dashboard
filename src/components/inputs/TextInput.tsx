@@ -21,6 +21,7 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   inputGroupContent?: JSX.Element;
   submitButtonText?: string | React.ReactNode;
   buttonDisabled?: boolean;
+  isClearBtnVisible?: boolean;
   clearInputAction?: () => void;
 }
 
@@ -37,6 +38,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       inputGroupContent,
       submitButtonText,
       buttonDisabled,
+      isClearBtnVisible,
       clearInputAction,
       className,
       type = "text",
@@ -44,7 +46,9 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     },
     ref,
   ) => {
-    const [isClearButtonVisible, setIsClearButtonVisible] = useState(false);
+    const [isClearButtonVisible, setIsClearButtonVisible] = useState(
+      isClearBtnVisible || false,
+    );
     const [currentSuggestion, setCurrentSuggestion] = useState(suggestion);
     const [showPassword, setShowPassword] = useState(false);
 
