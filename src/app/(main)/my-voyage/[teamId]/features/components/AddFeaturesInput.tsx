@@ -77,7 +77,7 @@ export default function AddFeaturesInput({
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
 
@@ -86,10 +86,7 @@ export default function AddFeaturesInput({
   };
 
   return isEditing ? (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="mx-6"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="mx-6">
       <TextInput
         clearInputAction={handleClearInputAction}
         id="description"

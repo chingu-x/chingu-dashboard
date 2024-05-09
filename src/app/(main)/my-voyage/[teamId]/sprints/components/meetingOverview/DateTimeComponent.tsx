@@ -16,7 +16,8 @@ export default function DateTimeComponent({
 }: DateTimeComponentWrapper) {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const { timezone } = useUser();
-  const dateTimeConvertedToDate = convertStringToDate(dateTime);
+
+  const dateTimeConvertedToDate = convertStringToDate(dateTime, timezone);
 
   const getMeetingDate = () => {
     if (isToday(dateTimeConvertedToDate)) return "today";

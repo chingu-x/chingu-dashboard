@@ -30,12 +30,12 @@ export default function ProgressStepper() {
         routePaths.sprintWeekPage(
           params.teamId,
           sprintNumber.toString(),
-          meetingId.toString()
-        )
+          meetingId.toString(),
+        ),
       );
     } else {
       router.push(
-        routePaths.emptySprintPage(params.teamId, sprintNumber.toString())
+        routePaths.emptySprintPage(params.teamId, sprintNumber.toString()),
       );
     }
   }
@@ -86,10 +86,6 @@ export default function ProgressStepper() {
   ] as SteppersItem[];
 
   return (
-    <Stepper
-      stepperWidth="w-full"
-      steppers={steppers}
-      styleType="icons"
-    />
+    <Stepper stepperWidth="w-full" steppers={steppers} styleType="icons" />
   );
 }

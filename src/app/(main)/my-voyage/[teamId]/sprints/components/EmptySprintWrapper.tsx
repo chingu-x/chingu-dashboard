@@ -76,7 +76,7 @@ export default async function EmptySprintWrapper({
     // If so, redirect to the existing meeting page.
   } else if (meeting) {
     redirect(
-      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`
+      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`,
     );
   } else {
     return (

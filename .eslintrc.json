@@ -103,7 +103,7 @@
       }
     ],
     "@typescript-eslint/consistent-type-imports": [
-      "error", 
+      "error",
       {
         "prefer": "type-imports"
       }

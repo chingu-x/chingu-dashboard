@@ -11,7 +11,7 @@ import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 
 function getHighestVoteProjects(projectIdeas: IdeationData[]) {
   const maxVotes = Math.max(
-    ...projectIdeas.map((obj) => obj.projectIdeaVotes.length)
+    ...projectIdeas.map((obj) => obj.projectIdeaVotes.length),
   );
 
   return projectIdeas.filter((obj) => obj.projectIdeaVotes.length === maxVotes);
@@ -26,7 +26,7 @@ export default function FinalizeIdeationList() {
   const { projectIdeas } = useIdeation();
   const finalizeProjectList = getHighestVoteProjects(projectIdeas);
   const [finalizedIdeation, setFinalizedIdeation] = useState<FinalizedIdeation>(
-    { id: finalizeProjectList[0]?.id, title: finalizeProjectList[0]?.title }
+    { id: finalizeProjectList[0]?.id, title: finalizeProjectList[0]?.title },
   );
   const router = useRouter();
   const { teamId } = useParams<{ teamId: string }>();
@@ -59,11 +59,7 @@ export default function FinalizeIdeationList() {
         })}
       </div>
       <ConfirmationButton finalizedIdeation={finalizedIdeation} />
-      <Button
-        variant="neutral"
-        className="w-full"
-        onClick={handleCancelClick}
-      >
+      <Button variant="neutral" className="w-full" onClick={handleCancelClick}>
         Cancel
       </Button>
     </div>

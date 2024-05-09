@@ -32,7 +32,7 @@ export async function fetchProjectIdeas({
       `api/v1/voyages/teams/${teamId}/ideations`,
       token,
       "force-cache",
-      CacheTag.ideation
+      CacheTag.ideation,
     );
 
   return await handleAsync(fetchProjectIdeasAsync);
@@ -78,7 +78,7 @@ export default async function IdeationComponentWrapper({
 
   function renderProjects() {
     const finalizedIdeation = projectIdeas.find(
-      (project) => project.isSelected === true
+      (project) => project.isSelected === true,
     );
 
     if (finalizedIdeation) {

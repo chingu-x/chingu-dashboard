@@ -23,7 +23,7 @@ export async function fetchResources({ teamId }: FetchResourcesProps) {
       `api/v1/voyages/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.resources
+      CacheTag.resources,
     );
 
   return await handleAsync(fetchResourcesAsync);
