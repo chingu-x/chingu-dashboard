@@ -14,7 +14,7 @@ export const useUser = () => useAppSelector((state) => state.user);
 export const useIdeation = () => useAppSelector((state) => state.ideation);
 export const useFinalizedIdeation = () =>
   useAppSelector((state) =>
-    state.ideation.projectIdeas.find((project) => project.isSelected === true)
+    state.ideation.projectIdeas.find((project) => project.isSelected === true),
   );
 export const useDirectory = () => useAppSelector((state) => state.directory);
 export const useSprint = () => useAppSelector((state) => state.sprint);

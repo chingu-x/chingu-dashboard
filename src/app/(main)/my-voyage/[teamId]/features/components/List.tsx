@@ -62,21 +62,14 @@ export default function List({ id, title, features }: ListProps) {
               } ${snapshot.isDraggingOver && "bg-base-content"}`}
             >
               {features.map((feature, index) => (
-                <ListItem
-                  key={feature.id}
-                  feature={feature}
-                  index={index}
-                />
+                <ListItem key={feature.id} feature={feature} index={index} />
               ))}
               {provided.placeholder}
             </ul>
           </div>
         )}
       </Droppable>
-      <div
-        ref={listRef}
-        className="mt-3"
-      >
+      <div ref={listRef} className="mt-3">
         <AddFeaturesInput
           handleClick={handleClick}
           isEditing={isEditing}

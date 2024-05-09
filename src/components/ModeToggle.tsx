@@ -46,10 +46,7 @@ export default function ModeToggle() {
         onChange={toggleTheme}
         checked={theme === "light"}
       />
-      <AnimatePresence
-        mode="wait"
-        initial={false}
-      >
+      <AnimatePresence mode="wait" initial={false}>
         <div className="w-6 h-6">
           {theme === "light" && (
             <motion.div

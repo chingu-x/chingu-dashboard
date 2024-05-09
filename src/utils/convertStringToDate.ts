@@ -1,5 +1,9 @@
-import { parseISO } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 
-export default function convertStringToDate(dateTime: string) {
-  return parseISO(dateTime.substring(0, dateTime.length - 1));
+// Returns a Date which will format as a specific UTC time or date in the given time zone (a user's timezone).
+export default function convertStringToDate(
+  dateTime: string,
+  timezone: string,
+) {
+  return utcToZonedTime(dateTime, timezone);
 }
