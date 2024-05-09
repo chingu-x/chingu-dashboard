@@ -10,6 +10,12 @@ import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
 import SettingsMenu from "./SettingsMenu";
 import { useUser } from "@/store/hooks";
+import { validateHeaderValue } from "http";
+
+//map over manyVotes and assign testAvatar to Image in Avatar group to see behaviour with many votes.
+const testAvatar =
+  "https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=wavatar&r=x";
+const manyVotes = ["", "", "", "", "", "", "", ""];
 
 interface TechStackCardProps {
   title: string;
@@ -21,6 +27,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const [isEdiing, setIsEditing] = useState(-1);
   const [isDuplicate, setIsDuplicate] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const editRef = useRef<HTMLInputElement>(null);
   const items = data.map((item) => item.name.toLowerCase());
   const userId = useUser().id;
   const [openMenuId, setOpenMenuId] = useState(-1);
@@ -33,7 +40,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     event.preventDefault();
   };
 
-  const handleMenuClose = () => {
+  const handleSettingsMenuClose = () => {
     setOpenMenuId(-1);
   };
 
@@ -46,17 +53,22 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     setIsInput(!isInput);
   };
 
-  const handleOnChangeEditItem = () => {
-    console.log("editing...");
-  };
+  const handleOnChange = () => {
+    const addingItemValue = inputRef.current?.value.toLowerCase();
+    const editItemsValue = editRef.current?.value.toLowerCase();
 
-  const handleOnChangeAddItem = () => {
-    const currentValue = inputRef.current?.value.toLowerCase();
-    if (currentValue && !isDuplicate) {
-      items.includes(currentValue) ? setIsDuplicate(true) : null;
+    // Check for duplicates in both input fields
+    const isDuplicateInAdding =
+      addingItemValue && items.includes(addingItemValue);
+    const isDuplicateInEdit = editItemsValue && items.includes(editItemsValue);
+
+    // Update isDuplicate state based on duplicate status
+    if (addingItemValue && isDuplicateInAdding !== isDuplicate) {
+      setIsDuplicate(!!isDuplicateInAdding);
     }
-    if (currentValue && isDuplicate) {
-      items.includes(currentValue) ? null : setIsDuplicate(false);
+
+    if (editItemsValue && isDuplicateInEdit !== isDuplicate) {
+      setIsDuplicate(!!isDuplicateInEdit);
     }
   };
 
@@ -80,11 +92,13 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                 <form className="col-span-4">
                   <TextInput
                     id={element.id.toString()}
+                    ref={editRef}
                     placeholder={element.name}
                     submitButtonText="Save"
                     isClearBtnVisible={true}
+                    errorMessage={isDuplicate ? "Duplicate Item" : ""}
                     clearInputAction={clearActionEditItem}
-                    onChange={handleOnChangeEditItem}
+                    onChange={handleOnChange}
                   />
                 </form>
               )}
@@ -95,7 +109,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                   {element.name}
                   {openMenuId === element.id && (
                     <SettingsMenu
-                      onClose={handleMenuClose}
+                      onClose={handleSettingsMenuClose}
                       setIsEditing={setIsEditing}
                       id={element.id}
                     />
@@ -114,8 +128,8 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                   </AvatarGroup>
 
                   {/*Render corrrect button type based on 0 votes, 1+ votes or if current user has voted on item.*/}
-                  {/*TODO: At the moment it isn't possible for item to have 0 votes. AddVoteBtn with ellipsis is 'hardwritten' here. 
-                change to condition once 0 votes is possible */}
+                  {/*TODO: At the moment it isn't possible for item to have 0 votes. Move Create AddVoteBtn version with ellipsis button to open SettingsMenu
+                  and logic to render this where 0 votes.*/}
                   {element.teamTechStackItemVotes
                     .map((item) => item.votedBy.member.id)
                     .includes(userId) ? (
@@ -140,7 +154,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
             errorMessage={isDuplicate ? "Duplicate Item" : ""}
             isClearBtnVisible={true}
             clearInputAction={clearActionAdditem}
-            onChange={handleOnChangeAddItem}
+            onChange={handleOnChange}
           />
         </form>
       ) : (
