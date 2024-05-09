@@ -4,16 +4,12 @@ import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import { TechStackItem } from "@/store/features/techStack/techStackSlice";
+import GetIcon from "./GetIcons";
 import TextInput from "@/components/inputs/TextInput";
+import AddVoteBtn from "./AddVoteBtn";
+import RemoveVoteBtn from "./RemoveVoteBtn";
+import SettingsMenu from "./SettingsMenu";
 import { useUser } from "@/store/hooks";
-import {
-  ComputerDesktopIcon,
-  SwatchIcon,
-  CodeBracketSquareIcon,
-  ChartPieIcon,
-  CloudIcon,
-  ServerStackIcon,
-} from "@heroicons/react/24/solid";
 
 interface TechStackCardProps {
   title: string;
@@ -26,27 +22,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const items = data.map((item) => item.name.toLowerCase());
   const userId = useUser().id;
-
-  function getIcon(cardTitle: string) {
-    if (cardTitle === "Frontend") {
-      return <ComputerDesktopIcon className="w-1/12 h-1/12 mr-2" />;
-    }
-    if (cardTitle === "CSS Library") {
-      return <SwatchIcon className="w-1/12 h-1/12 mr-2" />;
-    }
-    if (cardTitle === "Backend") {
-      return <CodeBracketSquareIcon className="w-1/12 h-1/12 mr-2" />;
-    }
-    if (cardTitle === "Project Management") {
-      return <ChartPieIcon className="w-1/12 h-1/12 mr-2" />;
-    }
-    if (cardTitle === "Cloud Provider") {
-      return <CloudIcon className="w-1/12 h-1/12 mr-2" />;
-    }
-    if (cardTitle === "Hosting") {
-      return <ServerStackIcon className="w-1/12 h-1/12 mr-2" />;
-    }
-  }
+  const [openMenuId, setOpenMenuId] = useState(-1);
 
   const toggleInput = () => {
     setIsInput(!isInput);
@@ -58,6 +34,10 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+  };
+
+  const handleMenuClose = () => {
+    setOpenMenuId(-1);
   };
 
   const handleOnChange = () => {
@@ -73,19 +53,26 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   return (
     <div className="card min-w-[400px] sm:w-96 text-base-300 bg-base-200 rounded-lg px-6 py-5">
       <div className="flex flex-row justify-start">
-        {getIcon(title)}
+        {GetIcon(title)}
         <h3 className="self-center text-xl font-semibold text-base-300">
           {title}
         </h3>
       </div>
+
       <div className="h-40 pt-1 mt-6 overflow-y-auto">
         <ul className="text-base-300">
           {data.map((element) => (
             <li
-              className="text-base mb-5 grid grid-cols-3 items-center"
+              className="text-base mb-5 grid grid-cols-4 items-center relative"
               key={element.id}
             >
+              {/*item name*/}
               {element.name}
+              {openMenuId === element.id && (
+                <SettingsMenu onClose={handleMenuClose} />
+              )}
+
+              {/*Avatars of voters*/}
               <AvatarGroup>
                 {element.teamTechStackItemVotes.map((vote, index) => (
                   <Avatar
@@ -96,30 +83,22 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                   />
                 ))}
               </AvatarGroup>
-              {/*Check to see if current user has voted on item*/}
+
+              {/*Render corrrect button type based on 0 votes, 1+ votes or if current user has voted on item.*/}
+              {/*TODO: At the moment it isn't possible for item to have 0 votes. AddVoteBtn with ellipsis is 'hardwritten' here. 
+              change to condition once 0 votes is possible */}
               {element.teamTechStackItemVotes
                 .map((item) => item.votedBy.member.id)
                 .includes(userId) ? (
-                <Button
-                  variant="error"
-                  size="xs"
-                  className="p-2 rounded-3xl last:justify-self-end "
-                >
-                  Remove Vote
-                </Button>
+                <RemoveVoteBtn />
               ) : (
-                <Button
-                  variant="primary"
-                  size="xs"
-                  className="rounded-3xl rounded-3xl last:justify-self-end "
-                >
-                  Add Vote
-                </Button>
+                <AddVoteBtn id={element.id} openMenu={setOpenMenuId} />
               )}
             </li>
           ))}
         </ul>
       </div>
+
       {isInput ? (
         <form onSubmit={handleSubmit}>
           <TextInput
