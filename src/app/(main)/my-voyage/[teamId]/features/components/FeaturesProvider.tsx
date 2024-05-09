@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "@/store/hooks";
 import {
   fetchFeatures,
-  FeaturesList,
+  type FeaturesList,
 } from "@/store/features/features/featuresSlice";
 
 export interface FeaturesProviderProps {

@@ -1,8 +1,8 @@
 "use client";
 
 import React, {
-  ChangeEvent,
-  ElementRef,
+  type ChangeEvent,
+  type ElementRef,
   useEffect,
   useRef,
   useState,

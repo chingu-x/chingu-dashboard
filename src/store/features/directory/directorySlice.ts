@@ -1,5 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { VoyageRole, VoyageStatus } from "@/store/features/user/userSlice";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {
+  type VoyageRole,
+  type VoyageStatus,
+} from "@/store/features/user/userSlice";
 
 interface VoyageTier {
   id: number;

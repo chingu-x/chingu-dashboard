@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import ResourcesContainer from "./ResourcesContainer";
 import ResourcesProvider from "./ResourcesProvider";
 import { getUser } from "@/utils/getUser";
-import { ResourceData } from "@/store/features/resources/resourcesSlice";
+import { type ResourceData } from "@/store/features/resources/resourcesSlice";
 import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";

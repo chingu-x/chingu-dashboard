@@ -1,13 +1,13 @@
 import { redirect } from "next/navigation";
 import DirectoryProvider from "./DirectoryProvider";
 import TeamMember from "./TeamMember";
-import { TeamDirectory } from "@/store/features/directory/directorySlice";
+import { type TeamDirectory } from "@/store/features/directory/directorySlice";
 import Banner from "@/components/banner/Banner";
 import { getAccessToken } from "@/utils/getCookie";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
-import { User } from "@/store/features/user/userSlice";
+import { type User } from "@/store/features/user/userSlice";
 import { getUser } from "@/utils/getUser";
 import { getTimezone } from "@/utils/getTimezone";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";

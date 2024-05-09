@@ -3,22 +3,22 @@ import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.
 import {
   type DeleteResourceProps,
   type DeleteResourceResponse,
-  deleteResource,
+  type deleteResource,
 } from "@/myVoyage/voyage-resources/resourcesService";
 import {
   type DeleteIdeationProps,
   type DeleteIdeationResponse,
-  deleteIdeation,
+  type deleteIdeation,
 } from "@/myVoyage/ideation/ideationService";
 import {
   type DeleteFeatureProps,
-  deleteFeature,
+  type deleteFeature,
 } from "@/myVoyage/features/featuresService";
-import { AsyncActionResponse } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import {
-  DeleteAgendaTopicProps,
-  DeleteAgendaTopicResponse,
-  deleteAgendaTopic,
+  type DeleteAgendaTopicProps,
+  type DeleteAgendaTopicResponse,
+  type deleteAgendaTopic,
 } from "@/app/(main)/my-voyage/[teamId]/sprints/sprintsService";
 
 export type ModalType =

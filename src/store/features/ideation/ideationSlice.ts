@@ -26,6 +26,7 @@ export interface IdeationData {
   title: string;
   description: string;
   vision: string;
+  isSelected: boolean;
   createdAt: Date;
   updatedAt: Date;
   contributedBy: {

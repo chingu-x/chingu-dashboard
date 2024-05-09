@@ -12,7 +12,7 @@ import Planning from "./Planning";
 import Review from "./Review";
 import SectionBase from "./SectionBase";
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
-import { Section } from "@/store/features/sprint/sprintSlice";
+import { type Section } from "@/store/features/sprint/sprintSlice";
 import { SprintSections } from "@/utils/sections";
 
 interface SectionsProps {
