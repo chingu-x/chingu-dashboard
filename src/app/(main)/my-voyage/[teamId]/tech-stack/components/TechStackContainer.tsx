@@ -1,5 +1,5 @@
-import Button from "@/components/Button";
 import TechStackCard from "./TechStackCard";
+import Button from "@/components/Button";
 import { TechStackData } from "@/store/features/techStack/techStackSlice";
 
 interface TechStackContainerProps {
@@ -7,9 +7,11 @@ interface TechStackContainerProps {
 }
 
 export default function TechStackContainer({ data }: TechStackContainerProps) {
-  const techCardData = data.map((item) => {
-    return { title: item.name, techItems: item.teamTechStackItems };
-  });
+  const techCardData = data.map((item) => ({
+    id: item.id,
+    title: item.name,
+    techItems: item.teamTechStackItems,
+  }));
 
   return (
     <div className="card p-10 w-full">
@@ -17,8 +19,8 @@ export default function TechStackContainer({ data }: TechStackContainerProps) {
         <Button variant="secondary">Finalize Selection</Button>
       </div>
       <ul className="grid grid-cols-2 min-[1920px]:grid-cols-3 gap-10 place-items-center">
-        {techCardData.map((item, index) => (
-          <li key={index}>
+        {techCardData.map((item) => (
+          <li key={item.id}>
             <TechStackCard title={item.title} data={item.techItems} />
           </li>
         ))}
