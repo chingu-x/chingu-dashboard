@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import TechStackCard from "./TechStackCard";
 import { TechStackData } from "@/store/features/techStack/techStackSlice";
 
@@ -11,7 +12,10 @@ export default function TechStackContainer({ data }: TechStackContainerProps) {
   });
 
   return (
-    <div className="card bg-secondary-content p-10 w-full">
+    <div className="card p-10 w-full">
+      <div className="w-full flex justify-end mb-10">
+        <Button variant="secondary">Finalize Selection</Button>
+      </div>
       <ul className="grid grid-cols-2 min-[1920px]:grid-cols-3 gap-10 place-items-center">
         {techCardData.map((item, index) => (
           <li key={index}>
