@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { MainPages, PageProperty, VoyagePageProperty } from "./Sidebar";
+import {
+  MainPages,
+  type PageProperty,
+  type VoyagePageProperty,
+} from "./Sidebar";
 import Button from "@/components/Button";
 import Tooltip from "@/components/Tooltip";
 
@@ -57,7 +61,7 @@ export default function PageButton({
             variant="neutral"
             data-tip={element.name}
             className={`${buttonStyles} ${getButtonBackgroundStyle(
-              element.link,
+              element.link
             )} ${element.marginBottom} flex items-center`}
             onMouseEnter={() => setHoveredButton(element.name)}
             onMouseLeave={() => setHoveredButton(null)}

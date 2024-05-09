@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 import {
-  Sprint,
+  type Sprint,
   fetchSprints,
   setCurrentSprintNumber,
   setSprintsLoadingFalse,

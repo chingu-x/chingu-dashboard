@@ -1,5 +1,8 @@
-import { AppError } from "@/types/types";
-import { User, VoyageTeamMember } from "@/store/features/user/userSlice";
+import { type AppError } from "@/types/types";
+import {
+  type User,
+  type VoyageTeamMember,
+} from "@/store/features/user/userSlice";
 
 interface GetCurrentVoyageTeamProps {
   teamId: number;
@@ -18,7 +21,7 @@ export function getCurrentVoyageTeam({
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+      (voyage) => voyage.voyageTeam.voyage.status.name === "Active"
     );
   }
 

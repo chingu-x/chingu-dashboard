@@ -2,12 +2,15 @@ import { redirect } from "next/navigation";
 import IdeationContainer from "./IdeationContainer";
 import IdeationProvider from "./IdeationProvider";
 import CreateIdeationContainer from "./CreateIdeationContainer";
-import { FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
-import { IdeationData } from "@/store/features/ideation/ideationSlice";
+import ContributionCard from "./ContributionCard";
+import VoteCard from "./VoteCard";
+import FinalizedIdeationCard from "./FinalizedIdeationCard";
+import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import Banner from "@/components/banner/Banner";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
@@ -29,7 +32,7 @@ export async function fetchProjectIdeas({
       `api/v1/voyages/teams/${teamId}/ideations`,
       token,
       "force-cache",
-      CacheTag.ideation,
+      CacheTag.ideation
     );
 
   return await handleAsync(fetchProjectIdeasAsync);
@@ -74,6 +77,28 @@ export default async function IdeationComponentWrapper({
   }
 
   function renderProjects() {
+    const finalizedIdeation = projectIdeas.find(
+      (project) => project.isSelected === true
+    );
+
+    if (finalizedIdeation) {
+      return (
+        <IdeationContainer
+          title={finalizedIdeation.title}
+          project_idea={finalizedIdeation.description}
+          vision_statement={finalizedIdeation.vision}
+          isIdeationFinalized={true}
+          firstChild={<FinalizedIdeationCard />}
+          secondChild={
+            <ContributionCard
+              contributed_by={finalizedIdeation.contributedBy}
+              isIdeationFinalized={true}
+            />
+          }
+        />
+      );
+    }
+
     if (projectIdeas.length === 0) {
       return (
         <div className="flex w-full mt-20 mb-20 h-[290px] gap-x-48">
@@ -105,18 +130,34 @@ export default async function IdeationComponentWrapper({
       );
     }
 
-    return projectIdeas.map((projectIdea) => (
-      <IdeationContainer
-        key={projectIdea.id}
-        projectIdeaId={projectIdea.id}
-        title={projectIdea.title}
-        project_idea={projectIdea.description}
-        vision_statement={projectIdea.vision}
-        users={projectIdea.projectIdeaVotes}
-        contributed_by={projectIdea.contributedBy}
-        teamId={teamId}
-      />
-    ));
+    return (
+      <>
+        <CreateIdeationContainer />
+        {projectIdeas.map((projectIdea) => (
+          <IdeationContainer
+            key={projectIdea.id}
+            title={projectIdea.title}
+            project_idea={projectIdea.description}
+            vision_statement={projectIdea.vision}
+            isIdeationFinalized={false}
+            firstChild={
+              <VoteCard
+                teamId={teamId}
+                projectIdeaId={projectIdea.id}
+                users={projectIdea.projectIdeaVotes}
+              />
+            }
+            secondChild={
+              <ContributionCard
+                projectIdeaId={projectIdea.id}
+                contributed_by={projectIdea.contributedBy}
+                isIdeationFinalized={false}
+              />
+            }
+          />
+        ))}
+      </>
+    );
   }
 
   return (
@@ -136,7 +177,6 @@ export default async function IdeationComponentWrapper({
         />
       </VoyagePageBannerContainer>
       <div className="flex flex-col items-center gap-y-10">
-        <CreateIdeationContainer />
         <IdeationProvider payload={projectIdeas} />
         {renderProjects()}
       </div>

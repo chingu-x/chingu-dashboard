@@ -1,8 +1,8 @@
 import * as z from "zod";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
@@ -77,7 +77,7 @@ export default function AddFeaturesInput({
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
+        onOpenModal({ type: "error", content: { message: error.message } })
       );
     }
 
@@ -86,7 +86,10 @@ export default function AddFeaturesInput({
   };
 
   return isEditing ? (
-    <form onSubmit={handleSubmit(onSubmit)} className="mx-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="mx-6"
+    >
       <TextInput
         clearInputAction={handleClearInputAction}
         id="description"

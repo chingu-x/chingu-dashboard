@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { VoyageMember } from "@/store/features/ideation/ideationSlice";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type VoyageMember } from "@/store/features/ideation/ideationSlice";
 
 interface Category {
   id: number;
