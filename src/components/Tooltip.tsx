@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { cn } from "@/lib/utils";
 
 type Position = "top" | "bottom" | "left" | "right";
@@ -13,6 +13,7 @@ export interface TooltipProps {
   children: React.ReactNode;
   tooltipWidth: TooltipWidth;
   isDisplay: boolean;
+  hovered: boolean;
 }
 
 export default function Tooltip({
@@ -22,9 +23,8 @@ export default function Tooltip({
   children,
   tooltipWidth,
   isDisplay,
+  hovered,
 }: TooltipProps) {
-  const [hovered, setHovered] = useState(false);
-
   let nonSupportTextWidth;
 
   if (tooltipWidth === "small") {
@@ -36,11 +36,7 @@ export default function Tooltip({
   }
 
   return (
-    <div
-      className="relative cursor-pointer"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+    <div className="relative cursor-pointer">
       {children}
       <div
         className={cn(
