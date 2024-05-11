@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { clientSignIn, clientSignOut } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
-import { User, getUserState } from "@/store/features/user/userSlice";
-import { AppError } from "@/types/types";
+import { type User, getUserState } from "@/store/features/user/userSlice";
+import { type AppError } from "@/types/types";
 
 interface AuthProviderProps {
   user: User | null;

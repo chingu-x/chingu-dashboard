@@ -1,5 +1,8 @@
-import { AppError } from "@/types/types";
-import { User, VoyageTeamMember } from "@/store/features/user/userSlice";
+import { type AppError } from "@/types/types";
+import {
+  type User,
+  type VoyageTeamMember,
+} from "@/store/features/user/userSlice";
 
 interface GetCurrentVoyageTeamProps {
   teamId: number;

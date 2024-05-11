@@ -14,8 +14,8 @@ import {
   endOfDay,
 } from "date-fns";
 import { useState } from "react";
-import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
-import { Sprint } from "@/store/features/sprint/sprintSlice";
+import type { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
+import type { Sprint } from "@/store/features/sprint/sprintSlice";
 import { useUser } from "@/store/hooks";
 import convertStringToDate from "@/utils/convertStringToDate";
 
