@@ -88,7 +88,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     if (error) {
       return `Error: ${error.message}`;
     }
-    sprintsData = res!.voyage.sprints;
+    sprintsData = res!.sprints;
   } else {
     redirect(routePaths.dashboardPage());
   }

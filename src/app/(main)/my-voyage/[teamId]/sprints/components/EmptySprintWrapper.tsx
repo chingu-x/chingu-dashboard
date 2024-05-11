@@ -57,7 +57,7 @@ export default async function EmptySprintWrapper({
     if (error) {
       return `Error: ${error.message}`;
     }
-    sprintsData = res!.voyage.sprints;
+    sprintsData = res!.sprints;
   } else {
     redirect(routePaths.dashboardPage());
   }
