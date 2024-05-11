@@ -48,16 +48,26 @@ export interface Sprint {
   teamMeetings: Meeting[];
 }
 
-interface SprintState {
-  loading: boolean;
+interface VoyageState {
+  number: string;
+  soloProjectDeadline: string;
+  certificateIssueDate: string;
+  showcasePublishDate: string;
+  startDate: string;
+  endDate: string;
   sprints: Sprint[];
-  currentSprintNumber: number;
+  loading: boolean;
 }
 
-const initialState: SprintState = {
-  loading: false,
+const initialState: VoyageState = {
+  number: "",
+  soloProjectDeadline: "",
+  certificateIssueDate: "",
+  showcasePublishDate: "",
+  startDate: "",
+  endDate: "",
   sprints: [],
-  currentSprintNumber: 1,
+  loading: false,
 };
 
 export const sprintSlice = createSlice({
@@ -86,12 +96,6 @@ export const sprintSlice = createSlice({
       state.sprints = updatedSprints;
       state.loading = true;
     },
-    setCurrentSprintNumber: (
-      state,
-      action: PayloadAction<{ currentSprintNumber: number }>,
-    ) => {
-      state.currentSprintNumber = action.payload.currentSprintNumber;
-    },
     setSprintsLoadingTrue: (state) => {
       state.loading = true;
     },
@@ -110,7 +114,6 @@ export const sprintSlice = createSlice({
 export const {
   fetchSprints,
   fetchMeeting,
-  setCurrentSprintNumber,
   setSprintsLoadingTrue,
   setSprintsLoadingFalse,
 } = sprintSlice.actions;

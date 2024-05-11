@@ -7,7 +7,6 @@ import {
   type Sprint,
   fetchMeeting,
   fetchSprints,
-  setCurrentSprintNumber,
   setSprintsLoadingFalse,
 } from "@/store/features/sprint/sprintSlice";
 import { useAppDispatch } from "@/store/hooks";
@@ -28,7 +27,6 @@ export default function MeetingProvider({
   useEffect(() => {
     dispatch(fetchSprints(sprints));
     dispatch(fetchMeeting(meeting));
-    dispatch(setCurrentSprintNumber({ currentSprintNumber }));
     dispatch(setSprintsLoadingFalse());
   }, [dispatch, sprints, meeting, currentSprintNumber]);
 

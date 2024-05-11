@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import {
   type Sprint,
   fetchSprints,
-  setCurrentSprintNumber,
   setSprintsLoadingFalse,
 } from "@/store/features/sprint/sprintSlice";
 import { useAppDispatch } from "@/store/hooks";
@@ -23,7 +22,6 @@ export default function EmptySprintProvider({
 
   useEffect(() => {
     dispatch(fetchSprints(sprints));
-    dispatch(setCurrentSprintNumber({ currentSprintNumber }));
     dispatch(setSprintsLoadingFalse());
   }, [dispatch, sprints, currentSprintNumber]);
 
