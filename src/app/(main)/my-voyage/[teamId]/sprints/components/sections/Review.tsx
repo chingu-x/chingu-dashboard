@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { z } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 
@@ -11,7 +11,7 @@ import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { Section } from "@/store/features/sprint/sprintSlice";
+import { type Section } from "@/store/features/sprint/sprintSlice";
 import { ReviewQuestions, SprintSections } from "@/utils/sections";
 import useServerAction from "@/hooks/useServerAction";
 import {

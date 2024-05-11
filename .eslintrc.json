@@ -102,6 +102,12 @@
         }
       }
     ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
+      }
+    ],
     "dot-notation": "off",
     "@typescript-eslint/dot-notation": "error"
   },
@@ -109,7 +115,8 @@
     {
       "files": ["src/stories/**/*.{js,ts,tsx}"],
       "rules": {
-        "no-console": "off"
+        "no-console": "off",
+        "@typescript-eslint/consistent-type-imports": "off"
       }
     }
   ]

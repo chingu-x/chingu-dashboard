@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DragDropContext, DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
 
 // import { FeaturesList } from "./fixtures/Features";
 import List from "./List";
-import { FeaturesList } from "@/store/features/features/featuresSlice";
+import { type FeaturesList } from "@/store/features/features/featuresSlice";
 import { saveOrder } from "@/myVoyage/features/featuresService";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";

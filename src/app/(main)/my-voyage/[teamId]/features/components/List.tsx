@@ -1,14 +1,14 @@
 import {
   Droppable,
-  DroppableProvided,
-  DroppableStateSnapshot,
+  type DroppableProvided,
+  type DroppableStateSnapshot,
 } from "@hello-pangea/dnd";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 // import { Feature } from "./fixtures/Features";
 import AddFeaturesInput from "./AddFeaturesInput";
 import ListItem from "./ListItem";
-import { Features } from "@/store/features/features/featuresSlice";
+import { type Features } from "@/store/features/features/featuresSlice";
 
 interface ListProps {
   id: number;

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DatePicker, { ReactDatePickerProps } from "react-datepicker";
+import DatePicker, { type ReactDatePickerProps } from "react-datepicker";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 
 import "react-datepicker/dist/react-datepicker.css";
