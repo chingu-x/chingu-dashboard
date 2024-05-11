@@ -25,7 +25,9 @@ export default function ProgressStepper({
 }: ProgressStepperProps) {
   const router = useRouter();
   const params = useParams<{ teamId: string; sprintNumber: string }>();
-  const { sprints } = useSprint();
+  const {
+    voyage: { sprints },
+  } = useSprint();
 
   function handleClick(sprintNumber: number) {
     const meetingId = sprints.find((sprint) => sprint.number === sprintNumber)!

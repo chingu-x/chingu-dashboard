@@ -3,27 +3,25 @@
 import { useEffect } from "react";
 
 import {
-  type Sprint,
   fetchSprints,
   setSprintsLoadingFalse,
+  type Voyage,
 } from "@/store/features/sprint/sprintSlice";
 import { useAppDispatch } from "@/store/hooks";
 
 export interface EmptySprintProviderProps {
-  sprints: Sprint[];
-  currentSprintNumber: number;
+  voyage: Voyage;
 }
 
 export default function EmptySprintProvider({
-  sprints,
-  currentSprintNumber,
+  voyage,
 }: EmptySprintProviderProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchSprints(sprints));
+    dispatch(fetchSprints(voyage));
     dispatch(setSprintsLoadingFalse());
-  }, [dispatch, sprints, currentSprintNumber]);
+  }, [dispatch, voyage]);
 
   return null;
 }
