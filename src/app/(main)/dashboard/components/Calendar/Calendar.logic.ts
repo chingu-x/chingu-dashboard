@@ -25,7 +25,7 @@ export const useCalendarLogic = (
   meetingsData?: EventList[],
   voyageNumber?: number | null,
 ) => {
-  const { currentDate } = useUser();
+  const { currentDate, timezone } = useUser();
   const userDate = currentDate ?? new Date();
   const [today, setToday] = useState(userDate);
   const [selectDate, setSelectDate] = useState(userDate);
@@ -116,13 +116,16 @@ export const useCalendarLogic = (
       currentSprintEndDate &&
       (isSameDay(
         date,
-        startOfDay(convertStringToDate(currentSprintStartDate)),
+        startOfDay(convertStringToDate(currentSprintStartDate, timezone)),
       ) ||
         isAfter(
           date,
-          startOfDay(convertStringToDate(currentSprintStartDate)),
+          startOfDay(convertStringToDate(currentSprintStartDate, timezone)),
         )) &&
-      isBefore(date, endOfDay(convertStringToDate(currentSprintEndDate)));
+      isBefore(
+        date,
+        endOfDay(convertStringToDate(currentSprintEndDate, timezone)),
+      );
 
     if (!currentMonth) {
       classes += " text-neutral-content";
@@ -153,8 +156,9 @@ export const useCalendarLogic = (
 
   const showRocketIcon = (date: Date) =>
     (voyageStartDate &&
-      isSameDay(convertStringToDate(voyageStartDate), date)) ||
-    (voyageEndDate && isSameDay(convertStringToDate(voyageEndDate), date));
+      isSameDay(convertStringToDate(voyageStartDate, timezone), date)) ||
+    (voyageEndDate &&
+      isSameDay(convertStringToDate(voyageEndDate, timezone), date));
 
   const getCalendarElementColor = (date: Date, currentMonth: boolean) => {
     if (isSelectedDate(date)) {
@@ -177,12 +181,12 @@ export const useCalendarLogic = (
   const getDayLabel = () => {
     if (
       voyageStartDate &&
-      isSameDay(convertStringToDate(voyageStartDate), selectDate)
+      isSameDay(convertStringToDate(voyageStartDate, timezone), selectDate)
     )
       return `Start of Voyage ${voyageNumber}`;
     if (
       voyageEndDate &&
-      isSameDay(convertStringToDate(voyageEndDate), selectDate)
+      isSameDay(convertStringToDate(voyageEndDate, timezone), selectDate)
     )
       return `End of Voyage ${voyageNumber}`;
   };
