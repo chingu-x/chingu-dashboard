@@ -48,7 +48,7 @@ export interface Sprint {
   teamMeetings: Meeting[];
 }
 
-interface VoyageState {
+export interface Voyage {
   number: string;
   soloProjectDeadline: string;
   certificateIssueDate: string;
@@ -56,17 +56,23 @@ interface VoyageState {
   startDate: string;
   endDate: string;
   sprints: Sprint[];
+}
+
+interface SprintsState {
+  voyage: Voyage;
   loading: boolean;
 }
 
-const initialState: VoyageState = {
-  number: "",
-  soloProjectDeadline: "",
-  certificateIssueDate: "",
-  showcasePublishDate: "",
-  startDate: "",
-  endDate: "",
-  sprints: [],
+const initialState: SprintsState = {
+  voyage: {
+    number: "",
+    soloProjectDeadline: "",
+    certificateIssueDate: "",
+    showcasePublishDate: "",
+    startDate: "",
+    endDate: "",
+    sprints: [],
+  },
   loading: false,
 };
 
@@ -74,14 +80,14 @@ export const sprintSlice = createSlice({
   name: "sprint",
   initialState,
   reducers: {
-    fetchSprints: (state, action: PayloadAction<Sprint[]>) => {
-      state.sprints = action.payload;
+    fetchSprints: (state, action: PayloadAction<Voyage>) => {
+      state.voyage = action.payload;
       state.loading = true;
     },
     fetchMeeting: (state, action: PayloadAction<Meeting>) => {
       const sprintId = action.payload.sprint?.id;
 
-      const updatedSprints = state.sprints.map((sprint) => {
+      const updatedSprints = state.voyage.sprints.map((sprint) => {
         if (sprint.id === sprintId) {
           const updatedMeetings = sprint.teamMeetings.map((meeting) => {
             if (meeting.id === action.payload.id) {
@@ -93,7 +99,7 @@ export const sprintSlice = createSlice({
         }
         return sprint;
       });
-      state.sprints = updatedSprints;
+      state.voyage.sprints = updatedSprints;
       state.loading = true;
     },
     setSprintsLoadingTrue: (state) => {
