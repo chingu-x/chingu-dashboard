@@ -93,7 +93,7 @@ export default async function EmptySprintWrapper({
             width="w-[276px]"
           />
         </VoyagePageBannerContainer>
-        <ProgressStepper />
+        <ProgressStepper currentSprintNumber={currentSprintNumber} />
         <SprintActions params={params} />
         <EmptySprintState />
         <EmptySprintProvider

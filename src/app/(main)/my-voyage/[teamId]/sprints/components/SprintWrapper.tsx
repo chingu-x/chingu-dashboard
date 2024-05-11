@@ -137,7 +137,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         />
       </VoyagePageBannerContainer>
 
-      <ProgressStepper />
+      <ProgressStepper currentSprintNumber={currentSprintNumber} />
       <SprintActions params={params} />
       <MeetingOverview
         title={meetingData.title!}
