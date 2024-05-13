@@ -37,7 +37,7 @@ const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
         </span>
       </div>
     </div>
-  )
+  ),
 );
 
 RadioGroup.displayName = "RadioGroup";
