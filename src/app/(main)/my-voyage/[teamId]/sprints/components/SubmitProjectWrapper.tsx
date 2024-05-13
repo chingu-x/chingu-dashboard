@@ -23,7 +23,10 @@ export default async function WeeklyCheckInWrapper({
   let title = "";
   let description = "";
   let questions = [] as Question[];
+
   const [user, error] = await getUser();
+
+  // TODO: chech if already submitted
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,

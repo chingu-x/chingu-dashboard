@@ -9,6 +9,7 @@ import {
 
 import Button from "@/components/Button";
 import routePaths from "@/utils/routePaths";
+import { cn } from "@/lib/utils";
 
 interface SprintActionsProps {
   params: {
@@ -24,7 +25,8 @@ export default function SprintActions({ params }: SprintActionsProps) {
     params.meetingId,
     params.sprintNumber,
   ];
-  const submitVoyageIsAllowed = sprintNumber === "5" || sprintNumber === "6";
+  const submitVoyageIsAllowed =
+    meetingId && (sprintNumber === "5" || sprintNumber === "6");
   return (
     <div className="flex justify-between p-5 border shadow-md border-base-100 bg-base-200 rounded-2xl">
       {/* TODO: add animated variant to Button.tsx ??? */}
@@ -39,12 +41,16 @@ export default function SprintActions({ params }: SprintActionsProps) {
           variant="secondary"
           size="lg"
           className="group"
-          disabled={!meetingId || !submitVoyageIsAllowed}
+          disabled={!submitVoyageIsAllowed}
         >
-          <RocketLaunchIcon className="h-[18px] w-[18px]" /> Submit Voyage
-          {(submitVoyageIsAllowed || !meetingId) && (
-            <ArrowRightIcon className="h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all" />
-          )}
+          <RocketLaunchIcon className="h-[18px] w-[18px]" />
+          Submit Voyage
+          <ArrowRightIcon
+            className={cn(
+              "h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all",
+              !submitVoyageIsAllowed && "w-0"
+            )}
+          />
         </Button>
       </Link>
       <Link
@@ -72,7 +78,7 @@ export default function SprintActions({ params }: SprintActionsProps) {
         }
       >
         <Button variant="outline" size="lg" className="group">
-          <CalendarIcon className="h-[18px] w-[18px]" />{" "}
+          <CalendarIcon className="h-[18px] w-[18px]" />
           {meetingId ? "Edit Meeting" : "Create Meeting"}
           {meetingId ? null : (
             <PlusIcon className="h-[18px] w-0 group-hover:w-[18px] transition-all" />
