@@ -1,12 +1,12 @@
-import { format } from 'date-fns';
-import { fetchSprints } from '@/app/(main)/my-voyage/[teamId]/sprints/components/RedirectToCurrentSprintWrapper';
-import type { Sprint } from '@/store/features/sprint/sprintSlice';
-import { getCurrentSprint } from '@/utils/getCurrentSprint';
-import { getCurrentVoyageData } from '@/utils/getCurrentVoyageData';
-import type { User } from '@/store/features/user/userSlice';
-import { fetchMeeting } from '@/app/(main)/my-voyage/[teamId]/sprints/components/SprintWrapper';
-import type { AppError } from '@/types/types';
-import convertStringToDate from '@/utils/convertStringToDate';
+import { format } from "date-fns";
+import { fetchSprints } from "@/app/(main)/my-voyage/[teamId]/sprints/components/RedirectToCurrentSprintWrapper";
+import type { Sprint } from "@/store/features/sprint/sprintSlice";
+import { getCurrentSprint } from "@/utils/getCurrentSprint";
+import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import type { User } from "@/store/features/user/userSlice";
+import { fetchMeeting } from "@/app/(main)/my-voyage/[teamId]/sprints/components/SprintWrapper";
+import type { AppError } from "@/types/types";
+import convertStringToDate from "@/utils/convertStringToDate";
 
 interface GetDashboardDataResponse {
   currentSprintNumber: number | null;
@@ -27,7 +27,7 @@ export type EventList = {
 export const getDashboardData = async (
   user: User | null,
   error: AppError | null,
-  teamId: number
+  teamId: number,
 ): Promise<GetDashboardDataResponse> => {
   let sprintsData: Sprint[] = [];
   let voyageNumber: number | null = null;
@@ -79,7 +79,7 @@ export const getDashboardData = async (
     fetchMeeting({
       sprintNumber: sprint.number,
       meetingId: sprint.teamMeetings[0]?.id,
-    })
+    }),
   );
 
   const fetchMeetingsResults = await Promise.all(fetchMeetingsPromises);
@@ -87,8 +87,8 @@ export const getDashboardData = async (
   fetchMeetingsResults.forEach(([res]) => {
     if (res) {
       const { title, dateTime, meetingLink, sprint } = res;
-      const parsedDate = convertStringToDate(dateTime, user?.timezone ?? '');
-      const formattedDate = format(parsedDate, 'yyyy-MM-dd h:mm a');
+      const parsedDate = convertStringToDate(dateTime, user?.timezone ?? "");
+      const formattedDate = format(parsedDate, "yyyy-MM-dd h:mm a");
       meetingsData.push({
         title,
         date: formattedDate,
