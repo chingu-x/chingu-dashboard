@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { Question, fetchFormQuestions } from "./WeeklyCheckInWrapper";
+import { type Question, fetchFormQuestions } from "./WeeklyCheckInWrapper";
 import VoyageSubmissionForm from "./forms/VoyageSubmission/VoyageSubmissionForm";
 
 import { getUser } from "@/utils/getUser";

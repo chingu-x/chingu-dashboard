@@ -5,7 +5,7 @@ import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/formsEnums";

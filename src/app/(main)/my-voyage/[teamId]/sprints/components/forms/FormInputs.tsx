@@ -1,16 +1,16 @@
 "use client";
 
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { type FieldErrors, type UseFormRegister } from "react-hook-form";
 import RocketLaunchIcon from "@heroicons/react/24/solid/RocketLaunchIcon";
 
 import FormItem from "@/myVoyage/sprints/components/forms/FormItem";
-import { Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
+import { type Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
 
 import Label from "@/components/inputs/Label";
 import Textarea from "@/components/inputs/Textarea";
 import RadioGroupVertical from "@/components/inputs/RadioGroup/RadioGroupVertical";
 import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
-import { RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupItem";
+import { type RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupItem";
 import RadioGroupHorizontal from "@/components/inputs/RadioGroup/RadioGroupHorizontal";
 import RadioGroupRating from "@/components/inputs/RadioGroup/RadioGroupRating";
 
