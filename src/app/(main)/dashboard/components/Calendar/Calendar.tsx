@@ -9,9 +9,9 @@ import Cell from "./components/Cell";
 import SprintItem from "./components/SprintItem";
 import Dot from "./components/Dot";
 import Legend from "./components/Legend";
-import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
+import type { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
 import Button from "@/components/Button";
-import { Sprint } from "@/store/features/sprint/sprintSlice";
+import type { Sprint } from "@/store/features/sprint/sprintSlice";
 
 interface CalendarProps {
   currentSprintNumber?: number | null;

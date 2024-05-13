@@ -6,7 +6,7 @@ import IdeationStateContent from "./IdeationStateContent";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
-import { EventList, getDashboardData } from "./getDashboardData";
+import { type EventList, getDashboardData } from "./getDashboardData";
 import {
   CHECKIN_STATUS,
   getFeaturesData,
@@ -17,7 +17,7 @@ import {
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
 import { getUser } from "@/utils/getUser";
-import { Sprint } from "@/store/features/sprint/sprintSlice";
+import type { Sprint } from "@/store/features/sprint/sprintSlice";
 
 interface VoyageDashboardProps {
   teamId?: string;
