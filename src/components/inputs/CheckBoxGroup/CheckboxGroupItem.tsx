@@ -21,7 +21,7 @@ export const CheckboxGroupItem = React.forwardRef<
       htmlFor={id}
       className={cn(
         "flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4 group",
-        className,
+        className
       )}
     >
       <input

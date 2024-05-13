@@ -6,7 +6,10 @@ import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import BaseFormPage from "@/myVoyage/sprints/components/forms/BaseFormPage";
-import { type Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
+import {
+  type TeamMemberForCheckbox,
+  type Question,
+} from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
 import { submitCheckInForm } from "@/myVoyage/sprints/sprintsService";
 import FormInputs from "@/myVoyage/sprints/components/forms/FormInputs";
 
@@ -28,12 +31,14 @@ interface WeeklyCheckingFormProps {
   };
   description: string;
   questions: Question[];
+  teamMembers: TeamMemberForCheckbox[];
 }
 
 export default function WeeklyCheckingForm({
   params,
   description,
   questions,
+  teamMembers,
 }: WeeklyCheckingFormProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -45,16 +50,17 @@ export default function WeeklyCheckingForm({
 
   const { voyageTeamMembers } = useUser();
   const voyageTeamMemberId = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
+    (voyage) => voyage.voyageTeam.voyage.status.name == "Active"
   )?.id;
 
   const validationSchema = createValidationSchema(questions);
+
   type ValidationSchema = z.infer<typeof validationSchema>;
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
   } = useForm<ValidationSchema>({
     mode: "onSubmit",
     resolver: zodResolver(validationSchema),
@@ -80,8 +86,8 @@ export default function WeeklyCheckingForm({
         routePaths.sprintWeekPage(
           teamId.toString(),
           sprintNumber.toString(),
-          meetingId.toString(),
-        ),
+          meetingId.toString()
+        )
       );
       dispatch(onOpenModal({ type: "checkInSuccess" }));
     }
@@ -91,7 +97,7 @@ export default function WeeklyCheckingForm({
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        }),
+        })
       );
     }
     setSubmitCheckInFormLoading(false);
@@ -106,23 +112,26 @@ export default function WeeklyCheckingForm({
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-full gap-y-10"
       >
-        {questions.map((question) => {
-          const { id } = question;
+        {questions
+          .sort((a, b) => a.order - b.order)
+          .map((question) => {
+            const { id } = question;
 
-          return (
-            <div key={`question ${id}`}>
-              <FormInputs
-                question={question}
-                register={register}
-                errors={errors}
-              />
-            </div>
-          );
-        })}
+            return (
+              <div key={`question ${id}`}>
+                <FormInputs
+                  question={question}
+                  register={register}
+                  errors={errors}
+                  teamMembers={teamMembers}
+                />
+              </div>
+            );
+          })}
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid || submitCheckInFormLoading}
+          disabled={submitCheckInFormLoading}
           size="lg"
           variant="primary"
         >
