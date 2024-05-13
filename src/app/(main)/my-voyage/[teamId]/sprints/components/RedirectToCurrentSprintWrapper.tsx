@@ -65,9 +65,7 @@ export default async function RedirectToCurrentSprintWrapper({
     if (error) {
       return `Error: ${error.message}`;
     }
-    const { teamMeetings, number } = getCurrentSprint(
-      res!.voyage.sprints,
-    ) as Sprint;
+    const { teamMeetings, number } = getCurrentSprint(res!.sprints) as Sprint;
     currentSprintNumber = number;
     currentMeetingId = teamMeetings[0]?.id;
 

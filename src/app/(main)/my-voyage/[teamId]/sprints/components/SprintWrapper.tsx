@@ -21,6 +21,7 @@ import {
   type Meeting,
   type Sprint,
   type Section,
+  type Voyage,
 } from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
@@ -63,7 +64,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   const sprintNumber = Number(params.sprintNumber);
   const meetingId = Number(params.meetingId);
 
-  let sprintsData: Sprint[] = [];
+  let voyageData: Voyage;
   let meetingData: Meeting = { id: +params.meetingId };
   let agendaData: Agenda[] = [];
   let sectionsData: Section[] = [];
@@ -88,12 +89,12 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     if (error) {
       return `Error: ${error.message}`;
     }
-    sprintsData = res!.voyage.sprints;
+    voyageData = res!;
   } else {
     redirect(routePaths.dashboardPage());
   }
 
-  const correspondingMeetingId = sprintsData.find(
+  const correspondingMeetingId = voyageData.sprints.find(
     (sprint) => sprint.number === sprintNumber,
   )?.teamMeetings[0]?.id;
 
@@ -114,7 +115,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   }
 
   // Get current sprint number
-  const { number } = getCurrentSprint(sprintsData) as Sprint;
+  const { number } = getCurrentSprint(voyageData.sprints) as Sprint;
   const currentSprintNumber = number;
 
   // Redirect if a user tries to access a sprint which hasn't started yet
@@ -137,7 +138,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         />
       </VoyagePageBannerContainer>
 
-      <ProgressStepper />
+      <ProgressStepper currentSprintNumber={currentSprintNumber} />
       <SprintActions params={params} />
       <MeetingOverview
         title={meetingData.title!}
@@ -145,11 +146,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         meetingLink={meetingData.meetingLink!}
         description={meetingData.description!}
       />
-      <MeetingProvider
-        sprints={sprintsData}
-        meeting={meetingData}
-        currentSprintNumber={currentSprintNumber}
-      />
+      <MeetingProvider voyage={voyageData} meeting={meetingData} />
       <Agendas params={params} topics={agendaData} />
       <Sections
         params={params}
