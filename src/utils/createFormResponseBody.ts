@@ -22,13 +22,35 @@ export function createFormResponseBody({
 
   for (const [key, value] of Object.entries(data)) {
     let response: ResponseType;
-    const question = questions.find((question) => question.id === Number(key));
+    const question = questions.find(
+      (question) =>
+        question.id === Number(key) ||
+        question.subQuestions.find(
+          (subQuestion) => subQuestion.id === Number(key)
+        )
+    );
 
-    if (question?.inputType.name === "radio") {
+    if (question && question.inputType.name === "boolean") {
+      response = { questionId: Number(key), boolean: value === "true" };
+      responses.push(response);
+    }
+
+    if (
+      question &&
+      (question.inputType.name === "radio" ||
+        question.inputType.name === "radioIcon" ||
+        question.inputType.name === "scale" ||
+        question.inputType.name === "radioGroup")
+    ) {
       response = { questionId: Number(key), optionChoiceId: Number(value) };
       responses.push(response);
     }
-    if (question?.inputType.name === "checkbox") {
+
+    if (
+      question &&
+      (question.inputType.name === "checkbox" ||
+        question.inputType.name === "teamMembersCheckbox")
+    ) {
       let numeric: number;
       if (Array.isArray(value)) {
         numeric = Number(value.reduce((a, b) => a + b, ""));
@@ -39,7 +61,12 @@ export function createFormResponseBody({
         responses.push(response);
       }
     }
-    if (question?.inputType.name === "text") {
+
+    if (
+      question &&
+      (question.inputType.name === "text" ||
+        question.inputType.name === "shortText")
+    ) {
       response = {
         questionId: Number(key),
         text: value as string,
@@ -47,5 +74,6 @@ export function createFormResponseBody({
       responses.push(response);
     }
   }
+
   return responses;
 }

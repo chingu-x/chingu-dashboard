@@ -35,18 +35,21 @@ export function createValidationSchema(questionsData: Question[]) {
           inputName: "This field",
           required: answerRequired,
         });
+
         fields.push(field);
       }
-    } else if (name === "checkbox") {
+    } else if (name === "checkbox" || name === "teamMembersCheckbox") {
       field[key] = validateMultipleChoiceInput({
         required: answerRequired,
       });
+
       fields.push(field);
     } else {
       field[key] = validateTextInput({
         inputName: "This field",
         required: answerRequired,
       });
+
       fields.push(field);
     }
   });
