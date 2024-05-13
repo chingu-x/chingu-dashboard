@@ -48,30 +48,46 @@ export interface Sprint {
   teamMeetings: Meeting[];
 }
 
-interface SprintState {
-  loading: boolean;
+export interface Voyage {
+  number: string;
+  soloProjectDeadline: string;
+  certificateIssueDate: string;
+  showcasePublishDate: string;
+  startDate: string;
+  endDate: string;
   sprints: Sprint[];
-  currentSprintNumber: number;
 }
 
-const initialState: SprintState = {
+interface SprintsState {
+  voyage: Voyage;
+  loading: boolean;
+}
+
+const initialState: SprintsState = {
+  voyage: {
+    number: "",
+    soloProjectDeadline: "",
+    certificateIssueDate: "",
+    showcasePublishDate: "",
+    startDate: "",
+    endDate: "",
+    sprints: [],
+  },
   loading: false,
-  sprints: [],
-  currentSprintNumber: 1,
 };
 
 export const sprintSlice = createSlice({
   name: "sprint",
   initialState,
   reducers: {
-    fetchSprints: (state, action: PayloadAction<Sprint[]>) => {
-      state.sprints = action.payload;
+    fetchSprints: (state, action: PayloadAction<Voyage>) => {
+      state.voyage = action.payload;
       state.loading = true;
     },
     fetchMeeting: (state, action: PayloadAction<Meeting>) => {
       const sprintId = action.payload.sprint?.id;
 
-      const updatedSprints = state.sprints.map((sprint) => {
+      const updatedSprints = state.voyage.sprints.map((sprint) => {
         if (sprint.id === sprintId) {
           const updatedMeetings = sprint.teamMeetings.map((meeting) => {
             if (meeting.id === action.payload.id) {
@@ -83,14 +99,8 @@ export const sprintSlice = createSlice({
         }
         return sprint;
       });
-      state.sprints = updatedSprints;
+      state.voyage.sprints = updatedSprints;
       state.loading = true;
-    },
-    setCurrentSprintNumber: (
-      state,
-      action: PayloadAction<{ currentSprintNumber: number }>,
-    ) => {
-      state.currentSprintNumber = action.payload.currentSprintNumber;
     },
     setSprintsLoadingTrue: (state) => {
       state.loading = true;
@@ -110,7 +120,6 @@ export const sprintSlice = createSlice({
 export const {
   fetchSprints,
   fetchMeeting,
-  setCurrentSprintNumber,
   setSprintsLoadingTrue,
   setSprintsLoadingFalse,
 } = sprintSlice.actions;
