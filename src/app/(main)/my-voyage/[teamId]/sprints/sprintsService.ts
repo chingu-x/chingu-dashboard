@@ -61,18 +61,19 @@ type EditSectionType = Pick<
 
 export interface SprintsResponse {
   id: number;
-  name: string;
-  voyage: {
+  number: string;
+  soloProjectDeadline: string;
+  certificateIssueDate: string;
+  showcasePublishDate: string;
+  startDate: string;
+  endDate: string;
+  sprints: {
     id: number;
-    number: string;
-    sprints: {
-      id: number;
-      number: number;
-      startDate: string;
-      endDate: string;
-      teamMeetings: { id: number }[];
-    }[];
-  };
+    number: number;
+    startDate: string;
+    endDate: string;
+    teamMeetings: { id: number }[];
+  }[];
 }
 
 interface MeetingResponse {
@@ -140,19 +141,7 @@ export interface DeleteAgendaTopicProps extends DeleteAgendaTopicType {}
 export interface AddSectionProps extends AddSectionType {}
 export interface EditSectionProps extends EditSectionType, EditSectionBody {}
 
-export interface FetchSprintsResponse extends SprintsResponse {
-  voyage: {
-    id: number;
-    number: string;
-    sprints: {
-      id: number;
-      number: number;
-      startDate: string;
-      endDate: string;
-      teamMeetings: { id: number }[];
-    }[];
-  };
-}
+export interface FetchSprintsResponse extends SprintsResponse {}
 
 // TODO: will be updated later when agenda types/interfaces are added
 export interface FetchMeetingResponse extends MeetingResponse {

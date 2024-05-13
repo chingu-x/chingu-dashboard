@@ -9,7 +9,7 @@ import Banner from "@/components/banner/Banner";
 
 import EmptySprintProvider from "@/myVoyage/sprints/providers/EmptySprintProvider";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { type Sprint } from "@/store/features/sprint/sprintSlice";
+import { type Voyage, type Sprint } from "@/store/features/sprint/sprintSlice";
 import { getUser } from "@/utils/getUser";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
@@ -35,7 +35,7 @@ export default async function EmptySprintWrapper({
   const teamId = Number(params.teamId);
   const sprintNumber = Number(params.sprintNumber);
 
-  let sprintsData: Sprint[] = [];
+  let voyageData: Voyage;
 
   const [user, error] = await getUser();
 
@@ -57,16 +57,16 @@ export default async function EmptySprintWrapper({
     if (error) {
       return `Error: ${error.message}`;
     }
-    sprintsData = res!.voyage.sprints;
+    voyageData = res!;
   } else {
     redirect(routePaths.dashboardPage());
   }
 
   // Check if a meeting exists
-  const meeting = getMeeting(sprintsData, sprintNumber);
+  const meeting = getMeeting(voyageData.sprints, sprintNumber);
 
   // Get current sprint number
-  const { number } = getCurrentSprint(sprintsData) as Sprint;
+  const { number } = getCurrentSprint(voyageData.sprints) as Sprint;
   const currentSprintNumber = number;
 
   // Redirect if a user tries to access a sprint which hasn't started yet
@@ -93,13 +93,10 @@ export default async function EmptySprintWrapper({
             width="w-[276px]"
           />
         </VoyagePageBannerContainer>
-        <ProgressStepper />
+        <ProgressStepper currentSprintNumber={currentSprintNumber} />
         <SprintActions params={params} />
         <EmptySprintState />
-        <EmptySprintProvider
-          sprints={sprintsData}
-          currentSprintNumber={currentSprintNumber}
-        />
+        <EmptySprintProvider voyage={voyageData} />
       </div>
     );
   }
