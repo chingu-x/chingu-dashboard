@@ -10,7 +10,7 @@ import AgendaHeader from "./AgendaHeader";
 
 import routePaths from "@/utils/routePaths";
 import Divider from "@/myVoyage/sprints/components/Divider";
-import { Agenda } from "@/store/features/sprint/sprintSlice";
+import { type Agenda } from "@/store/features/sprint/sprintSlice";
 import useServerAction from "@/hooks/useServerAction";
 import { changeAgendaTopicStatus } from "@/myVoyage/sprints/sprintsService";
 import { useAppDispatch } from "@/store/hooks";

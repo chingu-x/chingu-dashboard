@@ -14,7 +14,7 @@ import {
   endOfDay,
 } from "date-fns";
 import { useState } from "react";
-import { SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
+import { type SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
 export const useCalendarLogic = (sprintData?: SprintData) => {
   const currentDate = new Date();

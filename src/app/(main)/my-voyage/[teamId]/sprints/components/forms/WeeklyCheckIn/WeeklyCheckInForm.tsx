@@ -1,6 +1,6 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -45,7 +45,7 @@ export default function WeeklyCheckingForm({
 
   const { voyageTeamMembers } = useUser();
   const voyageTeamMemberId = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
+    (voyage) => voyage.voyageTeam.voyage.status.name == "Active"
   )?.id;
 
   const validationSchema = createValidationSchema(questions);
@@ -80,8 +80,8 @@ export default function WeeklyCheckingForm({
         routePaths.sprintWeekPage(
           teamId.toString(),
           sprintNumber.toString(),
-          meetingId.toString(),
-        ),
+          meetingId.toString()
+        )
       );
       dispatch(onOpenModal({ type: "checkInSuccess" }));
     }
@@ -91,7 +91,7 @@ export default function WeeklyCheckingForm({
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        }),
+        })
       );
     }
     setSubmitCheckInFormLoading(false);

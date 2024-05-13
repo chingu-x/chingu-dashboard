@@ -1,4 +1,4 @@
-import { isWithinInterval, subDays } from "date-fns";
+import { isWithinInterval } from "date-fns";
 import { format } from "date-fns-tz";
 import { z } from "zod";
 
@@ -15,6 +15,7 @@ interface ValidateTextInput {
 interface ValidateDateTimeInput {
   minDate?: Date;
   maxDate?: Date;
+  timezone?: string;
 }
 
 interface ValidateMultipleChoiceInput {
@@ -74,6 +75,7 @@ export function validateTextInput({
 export function validateDateTimeInput({
   minDate,
   maxDate,
+  timezone,
 }: ValidateDateTimeInput): z.ZodDate | z.ZodEffects<z.ZodDate, Date, Date> {
   let rules;
   rules = z.date();
@@ -84,8 +86,13 @@ export function validateDateTimeInput({
       () => ({
         message: `The meeting should be between ${format(
           minDate,
-          "MMM d",
-        )} and ${format(subDays(maxDate, 1), "MMM d")}`,
+          "MMM d k:mm (zzz)",
+          {
+            timeZone: timezone,
+          },
+        )} and ${format(maxDate, "MMM d k:mm (zzz)", {
+          timeZone: timezone,
+        })}`,
       }),
     );
   }

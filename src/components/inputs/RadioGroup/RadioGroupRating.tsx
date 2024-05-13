@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import RadioGroupItem, { RadioGroupItemProps } from "./RadioGroupItem";
+import RadioGroupItem, { type RadioGroupItemProps } from "./RadioGroupItem";
 
 interface RadioGroupProps extends React.InputHTMLAttributes<HTMLInputElement> {
   options: RadioGroupItemProps[];
