@@ -12,7 +12,7 @@ import Planning from "./Planning";
 import Review from "./Review";
 import SectionBase from "./SectionBase";
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
-import { Section } from "@/store/features/sprint/sprintSlice";
+import { type Section } from "@/store/features/sprint/sprintSlice";
 import { Forms } from "@/utils/formsEnums";
 
 interface SectionsProps {
@@ -56,15 +56,15 @@ export default function Sections({
   ];
 
   const [addedSections, setAddedSections] = useState(
-    sectionTemplates.filter((template) => template.isAdded === true),
+    sectionTemplates.filter((template) => template.isAdded === true)
   );
   const [canBeAddedSections, setCanBeAddedSections] = useState(
-    sectionTemplates.filter((template) => template.isAdded === false),
+    sectionTemplates.filter((template) => template.isAdded === false)
   );
 
   function reorderSections(title: string) {
     const sectionIndex = canBeAddedSections.findIndex(
-      (section) => section.title === title,
+      (section) => section.title === title
     );
     const section = {
       ...canBeAddedSections[sectionIndex],
