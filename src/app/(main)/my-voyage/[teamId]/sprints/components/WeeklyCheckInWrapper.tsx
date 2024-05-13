@@ -103,6 +103,8 @@ export default async function WeeklyCheckInWrapper({
 
   const [user, error] = await getUser();
 
+  // TODO: chech if already submitted
+
   const { errorResponse, data } = await getCurrentVoyageData({
     user,
     error,
