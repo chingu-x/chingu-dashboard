@@ -1,34 +1,88 @@
 "use client";
 
+import { useEffect } from "react";
 import { z } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams } from "next/navigation";
 
 import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
 
 import { validateTextInput } from "@/helpers/form/validateInput";
+import useServerAction from "@/hooks/useServerAction";
+import { editMeeting } from "@/myVoyage/sprints/sprintsService";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   notes: validateTextInput({
-    inputName: "notes",
+    inputName: "This field",
     required: true,
   }),
 });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-export default function Notes() {
+interface NotesProps {
+  data?: string;
+}
+
+export default function Notes({ data }: NotesProps) {
+  const dispatch = useAppDispatch();
+  const params = useParams<{
+    sprintNumber: string;
+    meetingId: string;
+  }>();
+
+  const [sprintNumber, meetingId] = [
+    Number(params.sprintNumber),
+    Number(params.meetingId),
+  ];
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const {
+    runAction: editMeetingAction,
+    isLoading: editMeetingLoading,
+    setIsLoading: setEditMeetingLoading,
+  } = useServerAction(editMeeting);
+
+  useEffect(() => {
+    reset({
+      notes: data,
+    });
+  }, [data, reset]);
+
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    const [res, error] = await editMeetingAction({
+      ...data,
+      meetingId,
+      sprintNumber,
+    });
+
+    if (res) {
+      reset({ ...data });
+    }
+
+    if (error) {
+      dispatch(
+        onOpenModal({
+          type: "error",
+          content: { message: error.message },
+        }),
+      );
+    }
+    setEditMeetingLoading(false);
   };
 
   return (
@@ -47,10 +101,10 @@ export default function Notes() {
         type="submit"
         variant="outline"
         size="md"
-        className="self-center"
-        disabled={!isDirty || !isValid}
+        className="self-center min-w-[75px]"
+        disabled={!isDirty || !isValid || editMeetingLoading}
       >
-        Save
+        {editMeetingLoading ? <Spinner /> : "Save"}
       </Button>
     </form>
   );

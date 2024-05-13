@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { AnimatePresence, Variants, motion } from "framer-motion";
+import { AnimatePresence, type Variants, motion } from "framer-motion";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { cn } from "@/lib/utils";
 

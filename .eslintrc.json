@@ -40,6 +40,7 @@
         "namedComponents": "function-declaration"
       }
     ],
+    "no-console": "error",
     "react/destructuring-assignment": [2, "always"],
     "react/button-has-type": 2,
     "react/no-array-index-key": 2,
@@ -101,7 +102,22 @@
         }
       }
     ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
+      }
+    ],
     "dot-notation": "off",
     "@typescript-eslint/dot-notation": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/stories/**/*.{js,ts,tsx}"],
+      "rules": {
+        "no-console": "off",
+        "@typescript-eslint/consistent-type-imports": "off"
+      }
+    }
+  ]
 }

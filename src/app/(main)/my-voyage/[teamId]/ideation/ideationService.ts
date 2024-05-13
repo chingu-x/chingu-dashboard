@@ -3,7 +3,7 @@
 import { revalidateTag } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 
 interface IdeationProps {
@@ -36,13 +36,16 @@ export interface DeleteIdeationProps extends IdeationProps {}
 export interface IdeationVoteProps extends IdeationProps {}
 export type FetchIdeationsProps = Pick<IdeationProps, "teamId">;
 
-export interface AddIdeationResponse extends IdeationResponse {
-  title: string;
-  description: string;
-  vision: string;
-}
+export interface FinalizeIdeationProps extends IdeationProps {}
+
+export interface AddIdeationResponse extends IdeationResponse, IdeationBody {}
 export interface EditIdeationResponse extends AddIdeationResponse {}
 export interface DeleteIdeationResponse extends AddIdeationResponse {}
+export interface FinalizeIdeationResponse
+  extends IdeationResponse,
+    IdeationBody {
+  isSelected: boolean;
+}
 
 export interface IdeationVoteResponse extends IdeationResponse {
   projectIdeaId: number;
@@ -58,7 +61,7 @@ export async function addIdeation({
 
   const addIdeationAsync = () =>
     POST<AddIdeationBody, AddIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideations`,
+      `api/v1/voyages/teams/${teamId}/ideations`,
       token,
       "default",
       { title, description, vision },
@@ -84,7 +87,7 @@ export async function editIdeation({
 
   const editIdeationAsync = () =>
     PATCH<EditIdeationBody, EditIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
+      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}`,
       token,
       "default",
       { title, description, vision },
@@ -106,7 +109,7 @@ export async function deleteIdeation({
   const token = getAccessToken();
   const deleteIdeationAsync = () =>
     DELETE<DeleteIdeationResponse>(
-      `api/v1/voyages/${teamId}/ideations/${ideationId}`,
+      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}`,
       token,
       "default",
     );
@@ -128,7 +131,7 @@ export async function addIdeationVote({
 
   const addIdeationVoteAsync = () =>
     POST<undefined, IdeationVoteResponse>(
-      `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
       "default",
     );
@@ -150,12 +153,36 @@ export async function removeIdeationVote({
 
   const removeIdeationVoteAsync = () =>
     DELETE<IdeationVoteResponse>(
-      `api/v1/voyages/${teamId}/ideations/${ideationId}/ideation-votes`,
+      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}/ideation-votes`,
       token,
       "default",
     );
 
   const [res, error] = await handleAsync(removeIdeationVoteAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.ideation);
+  }
+
+  return [res, error];
+}
+
+export async function finalizeIdeation({
+  teamId,
+  ideationId,
+}: FinalizeIdeationProps): Promise<
+  AsyncActionResponse<FinalizeIdeationResponse>
+> {
+  const token = getAccessToken();
+
+  const finalizeIdeationAsync = () =>
+    POST<undefined, FinalizeIdeationResponse>(
+      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}/select`,
+      token,
+      "default",
+    );
+
+  const [res, error] = await handleAsync(finalizeIdeationAsync);
 
   if (res) {
     revalidateTag(CacheTag.ideation);

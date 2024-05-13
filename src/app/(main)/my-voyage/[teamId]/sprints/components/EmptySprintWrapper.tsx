@@ -9,9 +9,10 @@ import Banner from "@/components/banner/Banner";
 
 import EmptySprintProvider from "@/myVoyage/sprints/providers/EmptySprintProvider";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { Sprint } from "@/store/features/sprint/sprintSlice";
+import { type Sprint } from "@/store/features/sprint/sprintSlice";
 import { getUser } from "@/utils/getUser";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import routePaths from "@/utils/routePaths";
 
 function getMeeting(sprints: Sprint[], sprintNumber: number) {
   const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
@@ -58,7 +59,7 @@ export default async function EmptySprintWrapper({
     }
     sprintsData = res!.voyage.sprints;
   } else {
-    redirect("/");
+    redirect(routePaths.dashboardPage());
   }
 
   // Check if a meeting exists
@@ -93,10 +94,7 @@ export default async function EmptySprintWrapper({
           />
         </VoyagePageBannerContainer>
         <ProgressStepper />
-        <SprintActions
-          teamId={params.teamId}
-          sprintNumber={params.sprintNumber}
-        />
+        <SprintActions params={params} />
         <EmptySprintState />
         <EmptySprintProvider
           sprints={sprintsData}

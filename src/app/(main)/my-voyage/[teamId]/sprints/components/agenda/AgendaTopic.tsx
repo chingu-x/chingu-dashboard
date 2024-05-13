@@ -6,19 +6,21 @@ import {
 import { CheckCircleIcon as CheckCircleIconSolid } from "@heroicons/react/24/solid";
 
 import IconButton from "@/components/IconButton";
-import { Agenda } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
+import { type Agenda } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 import { cn } from "@/lib/utils";
 
 interface TopicProps {
   topic: Agenda;
   editTopic: () => void;
   changeStatus: (id: number, status: boolean) => void;
+  statusButtonDisabled: boolean;
 }
 
 export default function AgendaTopic({
   topic,
   editTopic,
   changeStatus,
+  statusButtonDisabled,
 }: TopicProps) {
   return (
     <motion.li
@@ -36,8 +38,9 @@ export default function AgendaTopic({
             <EllipsisVerticalIcon />
           </IconButton>
           <IconButton
-            onClick={() => changeStatus(topic.id, topic.status)}
+            onClick={() => changeStatus(topic.id, !topic.status)}
             aria-label="change status"
+            disabled={statusButtonDisabled}
           >
             {topic.status ? (
               <CheckCircleIconSolid className="w-5 h-5 text-base-300 stroke-[1.5px]" />

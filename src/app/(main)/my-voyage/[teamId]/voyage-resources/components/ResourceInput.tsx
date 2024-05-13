@@ -1,4 +1,4 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { useParams } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,15 +16,13 @@ const validationSchema = z.object({
   url: validateTextInput({
     inputName: "Url",
     required: true,
-    minLen: 2,
-    maxLen: 50,
     isUrl: true,
   }),
   title: validateTextInput({
     inputName: "Title",
     required: true,
-    minLen: 2,
-    maxLen: 50,
+    minLen: 1,
+    maxLen: 100,
   }),
 });
 

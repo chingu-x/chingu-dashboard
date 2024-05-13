@@ -3,14 +3,15 @@
 import { useEffect, useState } from "react";
 
 import GettingHelpModal from "@/components/modals/GettingHelpModal";
-import FeatureModal from "@/components/modals/FeatureModal";
 import ErrorModal from "@/components/modals/ErrorModal";
 import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import ViewModal from "@/components/modals/ViewModal";
 import CheckInSuccessModal from "@/components/modals/CheckInSuccessModal";
+import { useModal } from "@/store/hooks";
 
 export default function ModalProvider() {
   const [isMounted, setIsMounted] = useState(false);
+  const modalType = useModal().type;
 
   useEffect(() => {
     setIsMounted(true);
@@ -20,12 +21,11 @@ export default function ModalProvider() {
 
   return (
     <>
-      <FeatureModal />
-      <ErrorModal />
-      <GettingHelpModal />
-      <DeleteConfirmationModal />
-      <ViewModal />
-      <CheckInSuccessModal />
+      {modalType === "error" && <ErrorModal />}
+      {modalType === "gettingHelp" && <GettingHelpModal />}
+      {modalType === "confirmation" && <DeleteConfirmationModal />}
+      {modalType === "viewResource" && <ViewModal />}
+      {modalType === "checkInSuccess" && <CheckInSuccessModal />}
     </>
   );
 }

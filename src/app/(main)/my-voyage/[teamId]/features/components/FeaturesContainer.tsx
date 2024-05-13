@@ -1,35 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DragDropContext, DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
 
-import { FeaturesList } from "./fixtures/Features";
+// import { FeaturesList } from "./fixtures/Features";
 import List from "./List";
+import { type FeaturesList } from "@/store/features/features/featuresSlice";
+import { saveOrder } from "@/myVoyage/features/featuresService";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface FeaturesContainerProps {
   data: FeaturesList[];
-  currentUser: {
-    id: string;
-    teamId: number;
-  };
 }
 
-export default function FeaturesContainer({
-  data,
-  currentUser,
-}: FeaturesContainerProps) {
-  const [isMounted, setIsMounted] = useState(false);
+export default function FeaturesContainer({ data }: FeaturesContainerProps) {
   const [orderedData, setOrderedData] = useState(data);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    setOrderedData(data);
-  }, [data]);
-
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = async (result: DropResult) => {
     const { destination, source } = result;
 
     // dropped nowhere
@@ -45,7 +34,10 @@ export default function FeaturesContainer({
       return;
     }
 
-    const newOrderedData = [...orderedData];
+    const newOrderedData = orderedData.map((list) => ({
+      ...list,
+      features: [...list.features],
+    }));
 
     // source and destination lists
     const sourceList = newOrderedData.find(
@@ -67,11 +59,24 @@ export default function FeaturesContainer({
       reorderedCards.splice(destination.index, 0, removed);
 
       reorderedCards.forEach((card, idx) => {
-        card.order = idx;
+        card.order = idx + 1;
       });
 
       sourceList.features = reorderedCards;
       setOrderedData(newOrderedData);
+
+      const [, error] = await saveOrder({
+        featureId: removed.id,
+        order: removed.order,
+        featureCategoryId: removed.category.id,
+      });
+
+      if (error) {
+        setOrderedData(data);
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+      }
     }
 
     // moving cards from one column to another
@@ -86,30 +91,44 @@ export default function FeaturesContainer({
       destList.features.splice(destination.index, 0, movedCard);
 
       sourceList.features.forEach((card, idx) => {
-        card.order = idx;
+        card.order = idx + 1;
       });
 
       // Update the order for each card in the destination list
       destList.features.forEach((card, idx) => {
-        card.order = idx;
+        card.order = idx + 1;
       });
 
       setOrderedData(newOrderedData);
+
+      const [, error] = await saveOrder({
+        featureId: movedCard.id,
+        order: movedCard.order,
+        featureCategoryId: movedCard.category.id,
+      });
+
+      if (error) {
+        setOrderedData(data);
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+      }
     }
   };
 
-  if (!isMounted) return null;
+  useEffect(() => {
+    setOrderedData(data);
+  }, [data]);
 
   return (
     <div className="grid items-start grid-cols-3 gap-x-10">
       <DragDropContext onDragEnd={onDragEnd}>
         {orderedData.map((list) => (
           <List
-            id={list.categoryId.toString()}
+            id={list.categoryId}
             key={list.categoryId}
             title={list.categoryName}
             features={list.features}
-            currentUser={currentUser}
           />
         ))}
       </DragDropContext>
