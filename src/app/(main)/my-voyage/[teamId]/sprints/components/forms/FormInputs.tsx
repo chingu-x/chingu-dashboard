@@ -13,8 +13,9 @@ import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGro
 import { type RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupItem";
 import RadioGroupHorizontal from "@/components/inputs/RadioGroup/RadioGroupHorizontal";
 import RadioGroupRating from "@/components/inputs/RadioGroup/RadioGroupRating";
+import TextInput from "@/components/inputs/TextInput";
 
-// TODO: ask the backend tean to change colors: green => success etc
+// TODO: ask the backend tean to change colors: green => success etc ??
 const Colors = {
   green: "text-success",
   amber: "text-warning",
@@ -241,6 +242,20 @@ export default function FormInputs({
           {...register(id.toString())}
           errorMessage={errors[id.toString()]?.message}
           rows={2}
+        />
+      </FormItem>
+    );
+  }
+
+  if (name === "shortText") {
+    return (
+      <FormItem isTextField>
+        <Label className="font-semibold normal-case">{text}</Label>
+        <TextInput
+          id={`input${id.toString()}`}
+          placeholder={description ? description : "Your answer"}
+          {...register(id.toString())}
+          errorMessage={errors[id.toString()]?.message}
         />
       </FormItem>
     );
