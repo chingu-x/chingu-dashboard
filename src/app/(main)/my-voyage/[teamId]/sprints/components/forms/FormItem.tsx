@@ -18,16 +18,16 @@ export default function FormItem({
   return (
     <div
       className={cn(
-        "flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl",
+        "flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl border border-base-100",
         isTextField && "pb-4",
-        isError && "border border-error",
-        className,
+        isError && "border-error",
+        className
       )}
     >
       <div
         className={cn(
           "max-w-[650px] w-full flex flex-col gap-y-10",
-          isScale && "max-w-none",
+          isScale && "max-w-none"
         )}
       >
         {children}

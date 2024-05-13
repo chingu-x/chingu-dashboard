@@ -1,10 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { type FieldErrors, type UseFormRegister } from "react-hook-form";
 import RocketLaunchIcon from "@heroicons/react/24/solid/RocketLaunchIcon";
 
 import FormItem from "@/myVoyage/sprints/components/forms/FormItem";
-import { type Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
+import {
+  type TeamMemberForCheckbox,
+  type Question,
+} from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
 
 import Label from "@/components/inputs/Label";
 import Textarea from "@/components/inputs/Textarea";
@@ -14,6 +18,7 @@ import { type RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGr
 import RadioGroupHorizontal from "@/components/inputs/RadioGroup/RadioGroupHorizontal";
 import RadioGroupRating from "@/components/inputs/RadioGroup/RadioGroupRating";
 import TextInput from "@/components/inputs/TextInput";
+import { type CheckboxGroupItemProps } from "@/components/inputs/CheckBoxGroup/CheckboxGroupItem";
 
 // TODO: ask the backend tean to change colors: green => success etc ??
 const Colors = {
@@ -71,12 +76,14 @@ interface FormInputsProps {
   errors: FieldErrors<{
     [x: string]: (string | string[]) & (string | string[] | undefined);
   }>;
+  teamMembers?: TeamMemberForCheckbox[];
 }
 
 export default function FormInputs({
   question,
   register,
   errors,
+  teamMembers,
 }: FormInputsProps) {
   const {
     inputType: { name },
@@ -86,10 +93,13 @@ export default function FormInputs({
     optionGroup,
     subQuestions,
   } = question;
-  const options: RadioGroupItemProps[] = [];
+  const options: RadioGroupItemProps[] | CheckboxGroupItemProps[] = [];
 
   if (
-    (name !== "radioGroup" || "boolean") &&
+    (name === "radio" ||
+      name === "radioIcon" ||
+      name === "checkbox" ||
+      name === "scale") &&
     optionGroup &&
     optionGroup.optionChoices.length !== 0
   ) {
@@ -179,8 +189,11 @@ export default function FormInputs({
   }
 
   if (name === "radioGroup" && subQuestions.length !== 0) {
+    const ids = subQuestions.map((subQuestion) => subQuestion.id);
+    const isError = ids.find((id) => errors[id]);
+
     return (
-      <FormItem isError={!!errors[id.toString()]}>
+      <FormItem isError={!!isError}>
         <Label className="font-semibold normal-case">{text}</Label>
         {/* TOP LABELS */}
         <div className="flex flex-col gap-y-5">
@@ -197,27 +210,33 @@ export default function FormInputs({
               ))}
             </div>
           </div>
-          {subQuestions.map((question) => {
-            const { id: questionId, text } = question;
-            // Create an option group, ids must be unique even though labels and values are the same
-            const options: RadioGroupItemProps[] = [];
+          {subQuestions
+            .sort((a, b) => a.order - b.order)
+            .map((question) => {
+              const { id: questionId, text } = question;
+              // Create an option group, ids must be unique even though labels and values are the same
+              const radioGroupOptions: RadioGroupItemProps[] = [];
 
-            if (optionGroup && optionGroup.optionChoices.length !== 0) {
-              optionGroup.optionChoices.forEach((option) => {
-                const id = questionId + "" + option.id.toString();
-                options.push({ id, label: option.text, value: id });
-              });
-            }
+              if (optionGroup && optionGroup.optionChoices.length !== 0) {
+                optionGroup.optionChoices.forEach((option) => {
+                  const id = questionId + "" + option.id.toString();
+                  radioGroupOptions.push({
+                    id,
+                    label: option.text,
+                    value: option.id.toString(),
+                  });
+                });
+              }
 
-            return (
-              <RadioGroupHorizontal
-                key={text}
-                title={text}
-                options={options}
-                {...register(questionId.toString())}
-              />
-            );
-          })}
+              return (
+                <RadioGroupHorizontal
+                  key={text}
+                  title={text}
+                  options={radioGroupOptions}
+                  {...register(questionId.toString())}
+                />
+              );
+            })}
         </div>
       </FormItem>
     );
@@ -225,7 +244,43 @@ export default function FormInputs({
 
   if (name === "checkbox") {
     return (
-      <FormItem>
+      <FormItem isError={!!errors[id.toString()]}>
+        <Label className="font-semibold normal-case">{text}</Label>
+        <CheckboxGroupVertical options={options} {...register(id.toString())} />
+      </FormItem>
+    );
+  }
+
+  if (
+    name === "teamMembersCheckbox" &&
+    teamMembers &&
+    teamMembers.length !== 0
+  ) {
+    teamMembers.forEach((member) => {
+      const { firstName, lastName, avatar } = member;
+      const teamMemberId = member.id;
+
+      const option = {
+        id: `teamMember${teamMemberId.toString()}`,
+        value: teamMemberId.toString(),
+        label: (
+          <span className="flex items-center gap-x-2">
+            <Image
+              width={16}
+              height={16}
+              className="capitalize rounded-full"
+              src={avatar}
+              alt={`${firstName} ${lastName}`}
+            />
+            {firstName}
+          </span>
+        ),
+      };
+      options.push(option);
+    });
+
+    return (
+      <FormItem isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
         <CheckboxGroupVertical options={options} {...register(id.toString())} />
       </FormItem>
@@ -234,7 +289,7 @@ export default function FormInputs({
 
   if (name === "text") {
     return (
-      <FormItem isTextField>
+      <FormItem isTextField isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
         <Textarea
           id={`input${id.toString()}`}
@@ -249,7 +304,7 @@ export default function FormInputs({
 
   if (name === "shortText") {
     return (
-      <FormItem isTextField>
+      <FormItem isTextField isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
         <TextInput
           id={`input${id.toString()}`}

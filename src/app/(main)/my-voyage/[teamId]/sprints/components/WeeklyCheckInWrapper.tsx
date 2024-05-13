@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 
 import WeeklyCheckInForm from "./forms/WeeklyCheckIn/WeeklyCheckInForm";
+
+import { fetchTeamDirectory } from "@/myVoyage/directory/components/DirectoryComponentWrapper";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { GET } from "@/utils/requests";
@@ -76,6 +78,13 @@ export async function fetchFormQuestions({
   return await handleAsync(fetchSprintsAsync);
 }
 
+export interface TeamMemberForCheckbox {
+  id: number;
+  avatar: string;
+  firstName: string;
+  lastName: string;
+}
+
 interface WeeklyCheckInWrapperProps {
   params: {
     teamId: string;
@@ -88,6 +97,7 @@ export default async function WeeklyCheckInWrapper({
   params,
 }: WeeklyCheckInWrapperProps) {
   const teamId = Number(params.teamId);
+  let teamMembers = [] as TeamMemberForCheckbox[];
   let description = "";
   let questions = [] as Question[];
 
@@ -97,8 +107,8 @@ export default async function WeeklyCheckInWrapper({
     user,
     error,
     teamId,
-    args: { formId: Forms.checkIn },
-    func: fetchFormQuestions,
+    args: { teamId, user },
+    func: fetchTeamDirectory,
   });
 
   if (errorResponse) {
@@ -108,12 +118,27 @@ export default async function WeeklyCheckInWrapper({
   if (data) {
     const [res, error] = data;
 
-    if (res?.description) description = res?.description;
-    if (res?.questions) questions = res?.questions;
-
     if (error) {
       return `Error: ${error.message}`;
     }
+    if (res) {
+      teamMembers = res.voyageTeamMembers.map((member) => ({
+        id: member.id,
+        avatar: member.member.avatar,
+        firstName: member.member.firstName,
+        lastName: member.member.lastName,
+      }));
+    }
+
+    const [formrRes, formError] = await fetchFormQuestions({
+      formId: Forms.checkIn,
+    });
+
+    if (formError) {
+      return `Error: ${formError.message}`;
+    }
+    if (formrRes && formrRes?.description) description = formrRes.description;
+    if (formrRes && formrRes?.questions) questions = formrRes.questions;
   } else {
     redirect(routePaths.dashboardPage());
   }
@@ -123,6 +148,7 @@ export default async function WeeklyCheckInWrapper({
       params={params}
       description={description}
       questions={questions}
+      teamMembers={teamMembers}
     />
   );
 }
