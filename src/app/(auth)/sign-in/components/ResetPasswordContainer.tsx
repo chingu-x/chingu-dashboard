@@ -1,11 +1,17 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import Link from "next/link";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { type Dispatch, type SetStateAction } from "react";
+import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { useAppDispatch } from "@/store/hooks";
 import { validateTextInput } from "@/helpers/form/validateInput";
 import routePaths from "@/utils/routePaths";
+import useServerAction from "@/hooks/useServerAction";
+import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -19,23 +25,54 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 
 interface ResetPasswordContainerProps {
   handleEmailCheck: () => void;
+  setEmail: Dispatch<SetStateAction<string>>;
 }
 
 function ResetPasswordContainer({
   handleEmailCheck,
+  setEmail,
 }: ResetPasswordContainerProps) {
+  const dispatch = useAppDispatch();
+
+  const {
+    runAction: resetPwdReqEmailAction,
+    isLoading: resetPwdReqEmailLoading,
+    setIsLoading: setResetPwdReqEmailLoading,
+  } = useServerAction(resetPasswordRequestEmail);
+
   const {
     register,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     handleSubmit,
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
-    handleEmailCheck();
+  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+    const { email } = data;
+    const [res, error] = await resetPwdReqEmailAction(email);
+
+    if (res) {
+      handleEmailCheck();
+      setEmail(email);
+    }
+
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    }
+
+    setResetPwdReqEmailLoading(false);
   };
+
+  function renderButtonContent() {
+    if (resetPwdReqEmailLoading) {
+      return <Spinner />;
+    }
+    return "Send reset link";
+  }
 
   return (
     <div className="flex flex-col items-center w-[400px] min-h-[377px] bg-base-200 rounded-2xl xl:ml-60 px-6 py-9">
@@ -45,27 +82,25 @@ function ResetPasswordContainer({
       <p className="text-base-300 text-base font-medium mb-8">
         Enter your email below and we’ll send you a link to reset your password
       </p>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col overflow-hidden w-full"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
         <TextInput
           id="email"
           label="email"
           placeholder="Enter Your Email"
           {...register("email")}
-          errorMessage={errors?.email?.message}
+          errorMessage={errors.email?.message}
         />
         <Button
           type="submit"
           title="submit"
-          className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus mb-3 mt-2"
+          className="mt-3 mb-3"
+          disabled={!isDirty || !isValid || resetPwdReqEmailLoading}
         >
-          Send reset link
+          {renderButtonContent()}
         </Button>
         <Link
           href={routePaths.signUp()}
-          className="font-semibold text-xs text-base-300 ml-1 self-center"
+          className="font-semibold text-xs text-neutral-focus ml-1 self-center"
         >
           Don’t have an account? Sign up for an account now
         </Link>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button";
@@ -34,19 +34,16 @@ function SignUpFormContainer({
     formState: { errors },
     handleSubmit,
   } = useForm<ValidationSchema>({
+    mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = () => {
     handleConfirmationContainer();
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col overflow-hidden"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="flex flex-col min-h-[90px]">
         <div className="flex flex-col">
           <TextInput
@@ -54,7 +51,7 @@ function SignUpFormContainer({
             label="email"
             placeholder="Enter Your Email"
             {...register("email")}
-            errorMessage={errors?.email?.message}
+            errorMessage={errors.email?.message}
           />
           <TextInput
             type="password"
@@ -62,22 +59,18 @@ function SignUpFormContainer({
             label="password"
             placeholder="Enter Your Password"
             {...register("password")}
-            errorMessage={errors?.password?.message}
+            errorMessage={errors.password?.message}
             maxLength={30}
           />
         </div>
       </div>
       <div className="flex flex-col gap-3 pt-8">
-        <Button
-          type="submit"
-          title="submit"
-          className="text-base gap-x-0 border-none font-semibold capitalize bg-primary text-base-300 hover:bg-primary-focus"
-        >
+        <Button type="submit" title="submit" disabled>
           Join Now
         </Button>
         <Link
           href={routePaths.signIn()}
-          className="font-semibold text-xs text-base-300 ml-1 self-center mb-[10px]"
+          className="font-semibold text-xs text-neutral-focus ml-1 self-center mb-[10px]"
         >
           Already have an account? Sign in now
         </Link>

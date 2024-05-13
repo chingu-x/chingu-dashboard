@@ -1,6 +1,6 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -16,8 +16,8 @@ import {
 } from "./radioGroupData";
 import { TeamMembersOptions, topicsCoveredOptions } from "./checkboxGroupData";
 
-import BaseFormPage from "@/app/(main)/my-voyage/[teamId]/sprints/components/forms/BaseFormPage";
-import FormItem from "@/app/(main)/my-voyage/[teamId]/sprints/components/forms/FormItem";
+import BaseFormPage from "@/myVoyage/sprints/components/forms/BaseFormPage";
+import FormItem from "@/myVoyage/sprints/components/forms/FormItem";
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
@@ -100,8 +100,7 @@ export default function WeeklyCheckingForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = () => {
     dispatch(onOpenModal({ type: "checkInSuccess" }));
   };
 

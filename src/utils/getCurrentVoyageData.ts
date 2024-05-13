@@ -1,13 +1,14 @@
-import { AsyncActionResponse } from "./handleAsync";
-import { AppError } from "@/types/types";
-import { User, VoyageTeamMember } from "@/store/features/user/userSlice";
+import { type AsyncActionResponse } from "./handleAsync";
+import { getCurrentVoyageTeam } from "./getCurrentVoyageTeam";
+import { type User } from "@/store/features/user/userSlice";
+import { type AppError } from "@/types/types";
 
 interface GetCurrentVoyageDataProps<X, Y> {
-  user: User | null;
-  error: AppError | null;
   teamId: number;
   func: (args: Y) => Promise<AsyncActionResponse<X>>;
   args: Y;
+  user: User | null;
+  error: AppError | null;
 }
 
 interface GetCurrentVoyageDataResponse<X> {
@@ -16,27 +17,26 @@ interface GetCurrentVoyageDataResponse<X> {
 }
 
 export async function getCurrentVoyageData<X, Y>({
-  user,
-  error,
   teamId,
   func,
   args,
+  user,
+  error,
 }: GetCurrentVoyageDataProps<X, Y>): Promise<GetCurrentVoyageDataResponse<X>> {
-  let currentVoyageTeam: VoyageTeamMember | undefined;
   let errorResponse = "";
   let data: AsyncActionResponse<X> | null = null;
 
-  if (user) {
-    currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-    );
+  const { err, currentTeam } = getCurrentVoyageTeam({
+    teamId,
+    user,
+    error,
+  });
+
+  if (err) {
+    errorResponse = err;
   }
 
-  if (error) {
-    errorResponse = `Error: ${error?.message}`;
-  }
-
-  if (teamId === currentVoyageTeam?.voyageTeamId) {
+  if (currentTeam) {
     data = await func({ ...args });
   }
 

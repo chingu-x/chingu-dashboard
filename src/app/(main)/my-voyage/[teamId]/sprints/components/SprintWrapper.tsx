@@ -12,24 +12,31 @@ import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerConta
 import Banner from "@/components/banner/Banner";
 
 import {
-  FetchMeetingProps,
-  FetchMeetingResponse,
+  type FetchMeetingProps,
+  type FetchMeetingResponse,
 } from "@/myVoyage/sprints/sprintsService";
-import { Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
+
+import {
+  type Agenda,
+  type Meeting,
+  type Sprint,
+  type Section,
+} from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import routePaths from "@/utils/routePaths";
+import { SprintSections } from "@/utils/sections";
 
 export async function fetchMeeting({
   sprintNumber,
   meetingId,
 }: FetchMeetingProps): Promise<AsyncActionResponse<FetchMeetingResponse>> {
-  console.log("fetch meeting");
   const token = getAccessToken();
   const sprintCache = getSprintCache(sprintNumber);
   const fetchMeetingAsync = () =>
@@ -58,6 +65,8 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
 
   let sprintsData: Sprint[] = [];
   let meetingData: Meeting = { id: +params.meetingId };
+  let agendaData: Agenda[] = [];
+  let sectionsData: Section[] = [];
 
   const [user, error] = await getUser();
 
@@ -81,7 +90,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     }
     sprintsData = res!.voyage.sprints;
   } else {
-    redirect("/");
+    redirect(routePaths.dashboardPage());
   }
 
   const correspondingMeetingId = sprintsData.find(
@@ -93,6 +102,10 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
 
     if (res) {
       meetingData = res;
+      agendaData = res.agendas;
+      if (res.formResponseMeeting.length !== 0) {
+        sectionsData = res.formResponseMeeting;
+      }
     } else {
       return `Error: ${error?.message}`;
     }
@@ -125,24 +138,29 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
       </VoyagePageBannerContainer>
 
       <ProgressStepper />
-      <SprintActions
-        teamId={params.teamId}
-        meetingId={params.meetingId}
-        sprintNumber={params.sprintNumber}
-      />
+      <SprintActions params={params} />
       <MeetingOverview
         title={meetingData.title!}
         dateTime={meetingData.dateTime!}
         meetingLink={meetingData.meetingLink!}
-        notes={meetingData.notes!}
+        description={meetingData.description!}
       />
       <MeetingProvider
         sprints={sprintsData}
         meeting={meetingData}
         currentSprintNumber={currentSprintNumber}
       />
-      <Agendas />
-      <Sections />
+      <Agendas params={params} topics={agendaData} />
+      <Sections
+        params={params}
+        notes={meetingData.notes}
+        planning={sectionsData.find(
+          (section) => section.form.id === Number(SprintSections.planning),
+        )}
+        review={sectionsData.find(
+          (section) => section.form.id === Number(SprintSections.review),
+        )}
+      />
     </div>
   );
 }

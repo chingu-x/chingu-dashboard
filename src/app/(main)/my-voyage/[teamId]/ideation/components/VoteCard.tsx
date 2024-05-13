@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/Button";
 import {
-  ProjectIdeaVotes,
+  type ProjectIdeaVotes,
   setProjectIdeasLoadingTrue,
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useIdeation, useModal, useUser } from "@/store/hooks";
@@ -126,7 +126,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   }, [id, getVoteUsers]);
 
   return (
-    <div className={cn("w-full bg-base-100 rounded-lg", className)}>
+    <div className={cn("w-[200px] bg-base-100 rounded-lg", className)}>
       <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-3xl font-semibold text-base-300">{users.length}</h1>
         <h2 className="text-xl font-semibold text-base-300">{`Vote${
@@ -142,18 +142,16 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
             />
           ))}
         </AvatarGroup>
-        {currentUserVoted !== null ? (
-          <Button
-            type="submit"
-            size="lg"
-            variant="primary"
-            className="w-full"
-            onClick={handleVote}
-            disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
-          >
-            {buttonContent()}
-          </Button>
-        ) : null}
+        <Button
+          type="submit"
+          size="lg"
+          variant={`${currentUserVoted ? "error" : "primary"}`}
+          className={`w-full ${currentUserVoted ? "text-base-300" : ""}`}
+          onClick={handleVote}
+          disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
+        >
+          {buttonContent()}
+        </Button>
       </section>
     </div>
   );

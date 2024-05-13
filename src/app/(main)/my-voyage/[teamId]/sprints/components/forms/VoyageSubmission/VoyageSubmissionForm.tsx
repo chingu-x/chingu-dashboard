@@ -1,14 +1,14 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { scaleOptions } from "./radioGroupDate";
 
-import BaseFormPage from "@/app/(main)/my-voyage/[teamId]/sprints/components/forms/BaseFormPage";
-import FormItem from "@/app/(main)/my-voyage/[teamId]/sprints/components/forms/FormItem";
+import BaseFormPage from "@/myVoyage/sprints/components/forms/BaseFormPage";
+import FormItem from "@/myVoyage/sprints/components/forms/FormItem";
 import Label from "@/components/inputs/Label";
 import Button from "@/components/Button";
 import Textarea from "@/components/inputs/Textarea";
@@ -65,8 +65,7 @@ export default function VoyageSubmissionForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ValidationSchema> = () => {
     //TODO: fix routing later
     router.push(routePaths.sprintsPage("2"));
   };
