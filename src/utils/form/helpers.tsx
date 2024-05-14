@@ -2,10 +2,10 @@ import Image from "next/image";
 import RocketLaunchIcon from "@heroicons/react/24/solid/RocketLaunchIcon";
 
 import {
-  type TeamMemberForCheckbox,
   type Question,
   type SubQuestion,
-} from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
+  type TeamMemberForCheckbox,
+} from "./types";
 
 import { type RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupItem";
 import { type CheckboxGroupItemProps } from "@/components/inputs/CheckBoxGroup/CheckboxGroupItem";
