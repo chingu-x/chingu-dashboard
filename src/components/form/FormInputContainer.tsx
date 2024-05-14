@@ -8,7 +8,7 @@ interface FormItemProps {
   className?: string;
 }
 
-export default function FormItem({
+export default function FormInputContainer({
   children,
   isTextField,
   isError,
