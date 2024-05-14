@@ -4,7 +4,7 @@ import { type FieldErrors, type UseFormRegister } from "react-hook-form";
 
 import { LabelContent } from "./LabelContent";
 
-import FormItem from "@/components/form/FormItem";
+import FormInputContainer from "@/components/form/FormInputContainer";
 import Label from "@/components/inputs/Label";
 import Textarea from "@/components/inputs/Textarea";
 import RadioGroupVertical from "@/components/inputs/RadioGroup/RadioGroupVertical";
@@ -43,25 +43,25 @@ export default function FormInput({
 
   if (name === "radio") {
     return (
-      <FormItem isError={!!errors[id.toString()]}>
+      <FormInputContainer isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
         <RadioGroupVertical
           options={getOptions({ question })}
           {...register(id.toString())}
         />
-      </FormItem>
+      </FormInputContainer>
     );
   }
 
   if (name === "radioIcon") {
     return (
-      <FormItem isError={!!errors[id.toString()]}>
+      <FormInputContainer isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
         <RadioGroupVertical
           options={getOptions({ question })}
           {...register(id.toString())}
         />
-      </FormItem>
+      </FormInputContainer>
     );
   }
 
@@ -77,7 +77,11 @@ export default function FormInput({
     }
 
     return (
-      <FormItem isError={!!errors[id.toString()]} className="px-3" isScale>
+      <FormInputContainer
+        isError={!!errors[id.toString()]}
+        className="px-3"
+        isScale
+      >
         <div className="flex flex-col items-center w-full bg-base-100 rounded-2xl gap-y-10">
           <Label className="w-full font-semibold text-center normal-case">
             <LabelContent text={text} />
@@ -92,13 +96,13 @@ export default function FormInput({
             />
           </div>
         </div>
-      </FormItem>
+      </FormInputContainer>
     );
   }
 
   if (name === "boolean") {
     return (
-      <FormItem isError={!!errors[id.toString()]}>
+      <FormInputContainer isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">
           <LabelContent text={text} />
         </Label>
@@ -106,7 +110,7 @@ export default function FormInput({
           options={getOptions({ question })}
           {...register(id.toString())}
         />
-      </FormItem>
+      </FormInputContainer>
     );
   }
 
@@ -115,7 +119,7 @@ export default function FormInput({
     const isError = ids.find((id) => errors[id]);
 
     return (
-      <FormItem isError={!!isError}>
+      <FormInputContainer isError={!!isError}>
         <Label className="font-semibold normal-case">{text}</Label>
         {/* TOP LABELS */}
         <div className="flex flex-col gap-y-5">
@@ -146,37 +150,37 @@ export default function FormInput({
               );
             })}
         </div>
-      </FormItem>
+      </FormInputContainer>
     );
   }
 
   if (name === "checkbox") {
     return (
-      <FormItem isError={!!errors[id.toString()]}>
+      <FormInputContainer isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
         <CheckboxGroupVertical
           options={getOptions({ question })}
           {...register(id.toString())}
         />
-      </FormItem>
+      </FormInputContainer>
     );
   }
 
   if (name === "teamMembersCheckbox") {
     return (
-      <FormItem isError={!!errors[id.toString()]}>
+      <FormInputContainer isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
         <CheckboxGroupVertical
           options={getOptions({ question, teamMembers })}
           {...register(id.toString())}
         />
-      </FormItem>
+      </FormInputContainer>
     );
   }
 
   if (name === "text") {
     return (
-      <FormItem isTextField isError={!!errors[id.toString()]}>
+      <FormInputContainer isTextField isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
         <Textarea
           id={`input${id.toString()}`}
@@ -185,13 +189,13 @@ export default function FormInput({
           errorMessage={errors[id.toString()]?.message}
           rows={2}
         />
-      </FormItem>
+      </FormInputContainer>
     );
   }
 
   if (name === "shortText") {
     return (
-      <FormItem isTextField isError={!!errors[id.toString()]}>
+      <FormInputContainer isTextField isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
         <TextInput
           id={`input${id.toString()}`}
@@ -199,7 +203,7 @@ export default function FormInput({
           {...register(id.toString())}
           errorMessage={errors[id.toString()]?.message}
         />
-      </FormItem>
+      </FormInputContainer>
     );
   }
 }
