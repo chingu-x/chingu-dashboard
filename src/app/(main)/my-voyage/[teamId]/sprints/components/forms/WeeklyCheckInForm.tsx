@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import BaseFormPage from "@/components/form/BaseFormPage";
 import { submitCheckInForm } from "@/myVoyage/sprints/sprintsService";
-import FormInputs from "@/components/form/FormInputs";
+import FormInput from "@/components/form/FormInput";
 
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
@@ -116,7 +116,7 @@ export default function WeeklyCheckingForm({
 
             return (
               <div key={`question ${id}`}>
-                <FormInputs
+                <FormInput
                   question={question}
                   register={register}
                   errors={errors}
