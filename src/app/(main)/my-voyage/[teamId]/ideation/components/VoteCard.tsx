@@ -2,11 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/Button";
-import {
-  type ProjectIdeaVotes,
-  setProjectIdeasLoadingTrue,
-} from "@/store/features/ideation/ideationSlice";
-import { useAppDispatch, useIdeation, useModal, useUser } from "@/store/hooks";
+import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
+import { useAppDispatch, useModal, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
@@ -30,10 +27,8 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
     null
   );
   const { id } = useUser();
-  const { loading } = useIdeation();
   const { isOpen } = useModal();
   const dispatch = useAppDispatch();
-  const [voteChanged, setVoteChanged] = useState<boolean>(false);
 
   const {
     runAction: addIdeationVoteAction,
@@ -49,8 +44,6 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
   async function handleVote() {
     if (currentUserVoted) {
-      dispatch(setProjectIdeasLoadingTrue());
-
       const [, error] = await removeIdeationVoteAction({
         teamId,
         ideationId: projectIdeaId,
@@ -62,10 +55,8 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      setVoteChanged(true);
       setRemoveIdeationVoteLoading(false);
     } else {
-      dispatch(setProjectIdeasLoadingTrue());
       const [, error] = await addIdeationVoteAction({
         teamId,
         ideationId: projectIdeaId,
@@ -77,7 +68,6 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      setVoteChanged(true);
       setAddIdeationVoteLoading(false);
     }
   }
@@ -103,15 +93,8 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
     if (isOpen === false) {
       setAddIdeationVoteLoading(false);
       setRemoveIdeationVoteLoading(false);
-      setVoteChanged(false);
     }
   }, [isOpen, setAddIdeationVoteLoading, setRemoveIdeationVoteLoading]);
-
-  useEffect(() => {
-    if (voteChanged && !loading) {
-      setVoteChanged(false);
-    }
-  }, [voteChanged, loading]);
 
   useEffect(() => {
     if (getVoteUsers().includes(id) === true) {
