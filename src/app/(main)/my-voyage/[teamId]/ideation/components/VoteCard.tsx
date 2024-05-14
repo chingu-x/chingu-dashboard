@@ -88,11 +88,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   );
 
   function buttonContent() {
-    if (
-      addIdeationVoteLoading ||
-      removeIdeationVoteLoading ||
-      (loading && voteChanged)
-    ) {
+    if (addIdeationVoteLoading || removeIdeationVoteLoading) {
       return <Spinner />;
     }
 
