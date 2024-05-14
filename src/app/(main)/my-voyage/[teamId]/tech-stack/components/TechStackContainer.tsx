@@ -15,12 +15,12 @@ export default function TechStackContainer({ data }: TechStackContainerProps) {
 
   return (
     <div className="card p-10 w-full">
-      <div className="grid grid-cols-2 min-[1920px]:grid-cols-3 gap-10 place-items-center mb-10">
-        <div className="col-start-2 min-[1920px]:col-start-3 min-w-[400px] sm:w-96 flex flex-row-reverse">
+      <div className="grid grid-cols-2 min-[1920px]:grid-cols-3 place-items-center mb-10">
+        <div className="col-start-2 min-[1920px]:col-start-3 min-w-[450px] sm:w-96 flex flex-row-reverse">
           <Button variant="secondary">Finalize Selection</Button>
         </div>
       </div>
-      <ul className="grid grid-cols-2 min-[1920px]:grid-cols-3 gap-10 place-items-center">
+      <ul className="grid grid-cols-2 min-[1920px]:grid-cols-3 gap-y-10 place-items-center">
         {techCardData.map((item) => (
           <li key={item.id}>
             <TechStackCard title={item.title} data={item.techItems} />

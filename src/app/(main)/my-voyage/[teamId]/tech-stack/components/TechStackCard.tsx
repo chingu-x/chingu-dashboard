@@ -72,7 +72,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   };
 
   return (
-    <div className="card min-w-[400px] sm:w-96 text-base-300 bg-base-200 rounded-lg px-6 py-5">
+    <div className="card min-w-[450px] sm:w-96 text-base-300 bg-base-200 rounded-lg px-6 py-5">
       <div className="flex flex-row justify-start">
         {GetIcon(title)}
         <h3 className="self-center text-xl font-semibold text-base-300">
