@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import BaseFormPage from "@/components/form/BaseFormPage";
 import { submitVoyageProjectForm } from "@/myVoyage/sprints/sprintsService";
-import FormInputs from "@/components/form/FormInputs";
+import FormInput from "@/components/form/FormInput";
 
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
@@ -108,7 +108,7 @@ export default function VoyageSubmissionForm({
 
           return (
             <div key={`question ${id}`}>
-              <FormInputs
+              <FormInput
                 question={question}
                 register={register}
                 errors={errors}

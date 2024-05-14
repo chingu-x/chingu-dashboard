@@ -26,7 +26,7 @@ interface FormInputsProps {
   teamMembers?: TeamMemberForCheckbox[];
 }
 
-export default function FormInputs({
+export default function FormInput({
   question,
   register,
   errors,
