@@ -105,7 +105,9 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               {isEdiing !== element.id && (
                 <>
                   {/*item name*/}
-                  {element.name}
+                  <p className="font-medium text-base leading-5">
+                    {element.name}
+                  </p>
                   {openMenuId === element.id && (
                     <SettingsMenu
                       onClose={handleSettingsMenuClose}
