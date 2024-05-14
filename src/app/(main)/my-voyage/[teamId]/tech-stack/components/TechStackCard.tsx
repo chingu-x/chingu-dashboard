@@ -132,10 +132,10 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                   {element.teamTechStackItemVotes
                     .map((item) => item.votedBy.member.id)
                     .includes(userId) ? (
-                      <RemoveVoteBtn />
-                    ) : (
-                      <AddVoteBtn id={element.id} openMenu={setOpenMenuId} />
-                    )}
+                    <RemoveVoteBtn id={element.id} openMenu={setOpenMenuId} />
+                  ) : (
+                    <AddVoteBtn />
+                  )}
                 </>
               )}
             </li>
