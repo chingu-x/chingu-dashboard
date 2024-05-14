@@ -55,7 +55,9 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      setRemoveIdeationVoteLoading(false);
+      setTimeout(() => {
+        setRemoveIdeationVoteLoading(false);
+      }, 200);
     } else {
       const [, error] = await addIdeationVoteAction({
         teamId,
@@ -68,7 +70,9 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      setAddIdeationVoteLoading(false);
+      setTimeout(() => {
+        setAddIdeationVoteLoading(false);
+      }, 200);
     }
   }
 
