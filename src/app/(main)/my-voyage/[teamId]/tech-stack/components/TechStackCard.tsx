@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import type { FormEvent } from "react";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
@@ -13,9 +13,9 @@ import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
 import { useUser } from "@/store/hooks";
 
 //map over manyVotes and assign testAvatar to Image in Avatar group to see behaviour with many votes.
-const testAvatar =
-  "https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=wavatar&r=x";
-const manyVotes = ["", "", "", "", "", "", "", ""];
+//const testAvatar =
+//  "https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=wavatar&r=x";
+//const manyVotes = ["", "", "", "", "", "", "", ""];
 
 interface TechStackCardProps {
   title: string;
@@ -71,6 +71,25 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       setIsDuplicate(!!isDuplicateInEdit);
     }
   };
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(event.target as Node)
+      ) {
+        setIsInput(false);
+      }
+      if (editRef.current && !editRef.current.contains(event.target as Node)) {
+        setIsEditing(-1);
+        setOpenMenuId(-1);
+      }
+    }
+    document.body.addEventListener("click", handleClickOutside);
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, [isInput, isEditing]);
 
   return (
     <div className="card min-w-[450px] sm:w-96 text-base-300 bg-base-200 rounded-lg px-6 py-5">
