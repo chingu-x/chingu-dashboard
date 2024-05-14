@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { type Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
+import { type Question } from "./types";
 import {
   validateMultipleChoiceInput,
   validateTextInput,
