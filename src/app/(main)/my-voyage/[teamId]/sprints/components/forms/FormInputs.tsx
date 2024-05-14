@@ -8,8 +8,7 @@ import FormItem from "@/myVoyage/sprints/components/forms/FormItem";
 import {
   type TeamMemberForCheckbox,
   type Question,
-  InputType,
-  SubQuestion,
+  type SubQuestion,
 } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
 
 import Label from "@/components/inputs/Label";

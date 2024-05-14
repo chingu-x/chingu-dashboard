@@ -76,12 +76,12 @@ export default async function EmptySprintWrapper({
     // If so, redirect to the existing meeting page.
   } else if (meeting) {
     redirect(
-      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`
+      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`,
     );
   } else {
     // Check if a checkin form for the current sprint has been submitted already
     const sprintCheckinIsSubmitted = !!user?.sprintCheckIn.find(
-      (sprintNumber) => sprintNumber === currentSprintNumber
+      (sprintNumber) => sprintNumber === currentSprintNumber,
     );
 
     return (

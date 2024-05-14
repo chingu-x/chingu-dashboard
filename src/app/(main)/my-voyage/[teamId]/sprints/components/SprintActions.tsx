@@ -53,7 +53,7 @@ export default function SprintActions({
           <ArrowRightIcon
             className={cn(
               "h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all",
-              !submitVoyageIsAllowed && "w-0"
+              !submitVoyageIsAllowed && "w-0",
             )}
           />
         </Button>
