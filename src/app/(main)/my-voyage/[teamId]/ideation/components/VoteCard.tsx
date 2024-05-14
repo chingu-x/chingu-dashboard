@@ -27,7 +27,7 @@ interface VoteCardProps {
 
 function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
-    null,
+    null
   );
   const { id } = useUser();
   const { loading } = useIdeation();
@@ -58,7 +58,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
+          onOpenModal({ type: "error", content: { message: error.message } })
         );
       }
 
@@ -73,7 +73,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
+          onOpenModal({ type: "error", content: { message: error.message } })
         );
       }
 
@@ -84,15 +84,11 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users],
+    [users]
   );
 
   function buttonContent() {
-    if (
-      addIdeationVoteLoading ||
-      removeIdeationVoteLoading ||
-      (loading && voteChanged)
-    ) {
+    if (addIdeationVoteLoading || removeIdeationVoteLoading) {
       return <Spinner />;
     }
 
