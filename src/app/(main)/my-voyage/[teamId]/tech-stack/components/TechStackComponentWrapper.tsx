@@ -62,7 +62,7 @@ export default async function TechStackComponentWrapper({
 
     techStackData = res!;
   } else {
-    redirect("/");
+    redirect("/dashboard");
   }
 
   return (

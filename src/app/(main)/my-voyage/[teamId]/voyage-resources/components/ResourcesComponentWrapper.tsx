@@ -63,7 +63,7 @@ export default async function ResourcesComponentWrapper({
 
     projectResources = res!;
   } else {
-    redirect("/");
+    redirect("/dashboard");
   }
 
   return (
