@@ -38,6 +38,7 @@ export interface User {
   timezone: string;
   avatar: string;
   voyageTeamMembers: VoyageTeamMember[];
+  sprintCheckIn: number[];
 }
 
 const initialState: User = {
@@ -53,6 +54,7 @@ const initialState: User = {
   timezone: "",
   avatar: "",
   voyageTeamMembers: [],
+  sprintCheckIn: [],
 };
 
 export const userSlice = createSlice({

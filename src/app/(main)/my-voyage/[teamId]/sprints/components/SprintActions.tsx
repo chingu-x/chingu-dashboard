@@ -17,14 +17,19 @@ interface SprintActionsProps {
     meetingId?: string;
     sprintNumber: string;
   };
+  sprintCheckinIsSubmitted: boolean;
 }
 
-export default function SprintActions({ params }: SprintActionsProps) {
+export default function SprintActions({
+  params,
+  sprintCheckinIsSubmitted,
+}: SprintActionsProps) {
   const [teamId, meetingId, sprintNumber] = [
     params.teamId,
     params.meetingId,
     params.sprintNumber,
   ];
+  const submitCheckinIsAllowed = !sprintCheckinIsSubmitted && meetingId;
   const submitVoyageIsAllowed =
     meetingId && (sprintNumber === "5" || sprintNumber === "6");
   return (
@@ -64,7 +69,7 @@ export default function SprintActions({ params }: SprintActionsProps) {
           variant="primary"
           size="lg"
           className="group"
-          disabled={!meetingId}
+          disabled={!submitCheckinIsAllowed}
         >
           <DocumentCheckIcon className="h-[18px] w-[18px]" /> Submit Check-in
           <ArrowRightIcon className="h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all" />

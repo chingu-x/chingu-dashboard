@@ -76,9 +76,14 @@ export default async function EmptySprintWrapper({
     // If so, redirect to the existing meeting page.
   } else if (meeting) {
     redirect(
-      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`,
+      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`
     );
   } else {
+    // Check if a checkin form for the current sprint has been submitted already
+    const sprintCheckinIsSubmitted = !!user?.sprintCheckIn.find(
+      (sprintNumber) => sprintNumber === currentSprintNumber
+    );
+
     return (
       <div className="flex flex-col w-full gap-y-10">
         <VoyagePageBannerContainer
@@ -94,7 +99,10 @@ export default async function EmptySprintWrapper({
           />
         </VoyagePageBannerContainer>
         <ProgressStepper currentSprintNumber={currentSprintNumber} />
-        <SprintActions params={params} />
+        <SprintActions
+          params={params}
+          sprintCheckinIsSubmitted={sprintCheckinIsSubmitted}
+        />
         <EmptySprintState />
         <EmptySprintProvider voyage={voyageData} />
       </div>

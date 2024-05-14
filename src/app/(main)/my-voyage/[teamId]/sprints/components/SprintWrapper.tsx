@@ -45,7 +45,7 @@ async function fetchMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "force-cache",
-      sprintCache,
+      sprintCache
     );
 
   return await handleAsync(fetchMeetingAsync);
@@ -95,7 +95,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   }
 
   const correspondingMeetingId = voyageData.sprints.find(
-    (sprint) => sprint.number === sprintNumber,
+    (sprint) => sprint.number === sprintNumber
   )?.teamMeetings[0]?.id;
 
   if (meetingId === correspondingMeetingId) {
@@ -123,6 +123,11 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
   }
 
+  // Check if a checkin form for the current sprint has been submitted already
+  const sprintCheckinIsSubmitted = !!user?.sprintCheckIn.find(
+    (num) => num === sprintNumber
+  );
+
   return (
     <div className="flex flex-col w-full gap-y-10">
       <VoyagePageBannerContainer
@@ -139,7 +144,10 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
       </VoyagePageBannerContainer>
 
       <ProgressStepper currentSprintNumber={currentSprintNumber} />
-      <SprintActions params={params} />
+      <SprintActions
+        params={params}
+        sprintCheckinIsSubmitted={sprintCheckinIsSubmitted}
+      />
       <MeetingOverview
         title={meetingData.title!}
         dateTime={meetingData.dateTime!}
@@ -152,10 +160,10 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         params={params}
         notes={meetingData.notes}
         planning={sectionsData.find(
-          (section) => section.form.id === Number(Forms.planning),
+          (section) => section.form.id === Number(Forms.planning)
         )}
         review={sectionsData.find(
-          (section) => section.form.id === Number(Forms.review),
+          (section) => section.form.id === Number(Forms.review)
         )}
       />
     </div>

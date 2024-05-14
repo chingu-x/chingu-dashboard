@@ -181,7 +181,6 @@ export interface SubmitVoyageFormProps
 
 export interface FetchSprintsResponse extends SprintsResponse {}
 
-// TODO: will be updated later when agenda types/interfaces are added
 export interface FetchMeetingResponse extends MeetingResponse {
   id: number;
   title: string;
@@ -459,6 +458,7 @@ export async function submitCheckInForm({
 
   if (res) {
     revalidateTag(sprintCache);
+    revalidateTag(CacheTag.me);
   }
 
   return [res, error];
