@@ -74,7 +74,7 @@ export async function fetchFormQuestions({
       `api/v1/forms/${formId}`,
       token,
       "force-cache",
-      CacheTag.checkInForm
+      CacheTag.checkInForm,
     );
 
   return await handleAsync(fetchSprintsAsync);
@@ -122,7 +122,7 @@ export default async function WeeklyCheckInWrapper({
   if (data) {
     // Check if a checkin form for the current sprint has been submitted already
     const sprintCheckinIsSubmitted = !!user?.sprintCheckIn.find(
-      (num) => num === sprintNumber
+      (num) => num === sprintNumber,
     );
 
     if (sprintCheckinIsSubmitted) {
@@ -130,8 +130,8 @@ export default async function WeeklyCheckInWrapper({
         routePaths.sprintWeekPage(
           teamId.toString(),
           sprintNumber.toString(),
-          meetingId.toString()
-        )
+          meetingId.toString(),
+        ),
       );
     }
 
@@ -142,7 +142,7 @@ export default async function WeeklyCheckInWrapper({
     }
     if (res) {
       const voyageTeamMemberId = user?.voyageTeamMembers.find(
-        (voyage) => voyage.voyageTeam.voyage.status.name == "Active"
+        (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
       )?.id;
 
       // Get all teamMembers except for the current user
