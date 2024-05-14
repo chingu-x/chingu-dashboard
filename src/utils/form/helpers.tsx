@@ -1,5 +1,4 @@
 import Image from "next/image";
-import RocketLaunchIcon from "@heroicons/react/24/solid/RocketLaunchIcon";
 
 import {
   type Question,
@@ -9,22 +8,7 @@ import {
 
 import { type RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupItem";
 import { type CheckboxGroupItemProps } from "@/components/inputs/CheckBoxGroup/CheckboxGroupItem";
-
-const Colors = {
-  green: "text-success",
-  amber: "text-warning",
-  red: "text-error",
-};
-
-function getIcon(iconName: string, color: string) {
-  if (iconName === "rocket") {
-    return (
-      <RocketLaunchIcon
-        className={`w-6 h-5 ${Colors[color as keyof typeof Colors]}`}
-      />
-    );
-  }
-}
+import { LabelContent } from "@/components/form/LabelContent";
 
 export function getTextInCurlyBrackets(text: string) {
   const regExp = /[^{\}]+(?=})/g;
@@ -34,27 +18,6 @@ export function getTextInCurlyBrackets(text: string) {
   } else {
     return null;
   }
-}
-
-export function getLabel(text: string, withIcon?: boolean) {
-  const label = text.split("}}")[1].trim();
-  if (withIcon) {
-    const textInCurlyBrackets = getTextInCurlyBrackets(text);
-    if (textInCurlyBrackets) {
-      const [color, iconName] = textInCurlyBrackets.split(/(?=[A-Z])/);
-      const icon = getIcon(iconName.toLowerCase(), color);
-
-      return (
-        <span className="flex items-center gap-x-4">
-          {icon}
-          {label}
-        </span>
-      );
-    }
-  } else {
-    return label;
-  }
-  return text;
 }
 
 interface GetOptionsProps {
@@ -86,10 +49,12 @@ export function getOptions({
   ) {
     optionGroup.optionChoices.forEach((option) => {
       const id = option.id.toString();
-      let label: string | JSX.Element;
       if (name === "radioIcon") {
-        label = getLabel(option.text, true);
-        options.push({ id, label, value: id });
+        options.push({
+          id,
+          label: <LabelContent text={option.text} withIcon={true} />,
+          value: id,
+        });
       } else {
         options.push({ id, label: option.text, value: id });
       }
