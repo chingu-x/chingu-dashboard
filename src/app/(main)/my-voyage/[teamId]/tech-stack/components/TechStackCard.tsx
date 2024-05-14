@@ -23,7 +23,7 @@ interface TechStackCardProps {
 
 export default function TechStackCard({ title, data }: TechStackCardProps) {
   const [isInput, setIsInput] = useState(false);
-  const [isEdiing, setIsEditing] = useState(-1);
+  const [isEditing, setIsEditing] = useState(-1);
   const [isDuplicate, setIsDuplicate] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const editRef = useRef<HTMLInputElement>(null);
@@ -87,7 +87,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               className="text-base mb-5 grid grid-cols-4 items-center relative"
               key={element.id}
             >
-              {isEdiing === element.id && (
+              {isEditing === element.id && (
                 <form className="col-span-4">
                   <TextInput
                     id={element.id.toString()}
@@ -102,7 +102,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                 </form>
               )}
 
-              {isEdiing !== element.id && (
+              {isEditing !== element.id && (
                 <>
                   {/*item name*/}
                   <p className="font-medium text-base leading-5">
