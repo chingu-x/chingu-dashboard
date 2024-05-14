@@ -125,14 +125,14 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                       />
                     ))}
                   </AvatarGroup>
-
-                  {/*Render corrrect button type based on 0 votes, 1+ votes or if current user has voted on item.*/}
-                  {/*TODO: At the moment it isn't possible for item to have 0 votes. Move Create AddVoteBtn version with ellipsis button to open SettingsMenu
-                  and logic to render this where 0 votes.*/}
                   {element.teamTechStackItemVotes
                     .map((item) => item.votedBy.member.id)
                     .includes(userId) ? (
-                    <RemoveVoteBtn id={element.id} openMenu={setOpenMenuId} />
+                    <RemoveVoteBtn
+                      id={element.id}
+                      openMenu={setOpenMenuId}
+                      numberOfVotes={element.teamTechStackItemVotes.length}
+                    />
                   ) : (
                     <AddVoteBtn />
                   )}
