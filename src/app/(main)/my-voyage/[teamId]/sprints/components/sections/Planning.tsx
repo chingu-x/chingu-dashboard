@@ -10,9 +10,9 @@ import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import { type Section } from "@/store/features/sprint/sprintSlice";
-import { PlanningQuestions, Forms } from "@/utils/formsEnums";
+import { PlanningQuestions, Forms } from "@/utils/form/formsEnums";
 import useServerAction from "@/hooks/useServerAction";
 import {
   editSection,

@@ -3,7 +3,7 @@ import { type Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrappe
 import {
   validateMultipleChoiceInput,
   validateTextInput,
-} from "@/helpers/form/validateInput";
+} from "@/utils/form/validateInput";
 
 interface IField {
   [key: string]:

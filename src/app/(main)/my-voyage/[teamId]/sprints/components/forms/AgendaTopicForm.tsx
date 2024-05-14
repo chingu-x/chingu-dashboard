@@ -11,7 +11,7 @@ import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import { useSprint, useAppDispatch } from "@/store/hooks";
 import { type Agenda } from "@/store/features/sprint/sprintSlice";
 import useServerAction from "@/hooks/useServerAction";

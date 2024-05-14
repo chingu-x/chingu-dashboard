@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import WeeklyCheckInForm from "./forms/WeeklyCheckIn/WeeklyCheckInForm";
+import WeeklyCheckInForm from "./forms/WeeklyCheckInForm";
 
 import { fetchTeamDirectory } from "@/myVoyage/directory/components/DirectoryComponentWrapper";
 import { getAccessToken } from "@/utils/getCookie";
@@ -10,47 +10,8 @@ import { CacheTag } from "@/utils/cacheTag";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
-import { Forms } from "@/utils/formsEnums";
-
-// TODO: move interfaces and even fetchFormQuestions to some other place (file) in future, goona be used in other pages too
-export type InputType =
-  | "radio"
-  | "radioGroup"
-  | "radioIcon"
-  | "checkbox"
-  | "boolean"
-  | "teamMembersCheckbox"
-  | "text"
-  | "shortText"
-  | "url"
-  | "scale";
-
-export interface SubQuestion {
-  id: number;
-  order: number;
-  inputType: { id: number; name: InputType };
-  text: string;
-  description: string | null;
-  answerRequired: boolean;
-  multipleAllowed: boolean | null;
-  optionGroup: {
-    optionChoices: { id: number; text: string }[];
-  } | null;
-}
-
-export interface Question {
-  id: number;
-  order: number;
-  inputType: { id: number; name: InputType };
-  text: string;
-  description: string | null;
-  answerRequired: boolean;
-  multipleAllowed: boolean | null;
-  optionGroup: {
-    optionChoices: { id: number; text: string }[];
-  } | null;
-  subQuestions: SubQuestion[];
-}
+import { Forms } from "@/utils/form/formsEnums";
+import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
 
 interface FetchFormQuestionsProps {
   formId: number;
@@ -80,13 +41,6 @@ export async function fetchFormQuestions({
   return await handleAsync(fetchSprintsAsync);
 }
 
-export interface TeamMemberForCheckbox {
-  id: number;
-  avatar: string;
-  firstName: string;
-  lastName: string;
-}
-
 interface WeeklyCheckInWrapperProps {
   params: {
     teamId: string;
@@ -101,7 +55,9 @@ export default async function WeeklyCheckInWrapper({
   const sprintNumber = Number(params.sprintNumber);
   const teamId = Number(params.teamId);
   const meetingId = Number(params.meetingId);
+
   let teamMembers = [] as TeamMemberForCheckbox[];
+
   let description = "";
   let questions = [] as Question[];
 

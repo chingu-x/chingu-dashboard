@@ -1,12 +1,13 @@
 import { redirect } from "next/navigation";
 
-import { type Question, fetchFormQuestions } from "./WeeklyCheckInWrapper";
-import VoyageSubmissionForm from "./forms/VoyageSubmission/VoyageSubmissionForm";
+import { fetchFormQuestions } from "./WeeklyCheckInWrapper";
+import VoyageSubmissionForm from "./forms/VoyageSubmissionForm";
 
 import { getUser } from "@/utils/getUser";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
-import { Forms } from "@/utils/formsEnums";
+import { Forms } from "@/utils/form/formsEnums";
+import { type Question } from "@/utils/form/types";
 
 interface SubmitProjectWrapperProps {
   params: {

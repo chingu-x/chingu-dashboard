@@ -7,7 +7,7 @@ import TextInput from "@/components/inputs/TextInput";
 import Button from "@/components/Button";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch } from "@/store/hooks";
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import useServerAction from "@/hooks/useServerAction";
 import Spinner from "@/components/Spinner";
 

@@ -13,7 +13,7 @@ import Review from "./Review";
 import SectionBase from "./SectionBase";
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
 import { type Section } from "@/store/features/sprint/sprintSlice";
-import { Forms } from "@/utils/formsEnums";
+import { Forms } from "@/utils/form/formsEnums";
 
 interface SectionsProps {
   params: {
