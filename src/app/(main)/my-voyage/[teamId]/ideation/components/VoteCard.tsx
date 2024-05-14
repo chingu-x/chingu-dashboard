@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/Button";
 import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
-import { useAppDispatch, useModal, useUser } from "@/store/hooks";
+import { useAppDispatch, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
@@ -27,7 +27,6 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
     null
   );
   const { id } = useUser();
-  const { isOpen } = useModal();
   const dispatch = useAppDispatch();
 
   const {
@@ -57,7 +56,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
       setTimeout(() => {
         setRemoveIdeationVoteLoading(false);
-      }, 200);
+      }, 500);
     } else {
       const [, error] = await addIdeationVoteAction({
         teamId,
@@ -72,7 +71,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
       setTimeout(() => {
         setAddIdeationVoteLoading(false);
-      }, 200);
+      }, 500);
     }
   }
 
@@ -94,17 +93,14 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   }
 
   useEffect(() => {
-    if (isOpen === false) {
-      setAddIdeationVoteLoading(false);
-      setRemoveIdeationVoteLoading(false);
-    }
-  }, [isOpen, setAddIdeationVoteLoading, setRemoveIdeationVoteLoading]);
-
-  useEffect(() => {
     if (getVoteUsers().includes(id) === true) {
-      setCurrentUserVoted(true);
+      setTimeout(() => {
+        setCurrentUserVoted(true);
+      }, 500);
     } else {
-      setCurrentUserVoted(false);
+      setTimeout(() => {
+        setCurrentUserVoted(false);
+      }, 500);
     }
   }, [id, getVoteUsers]);
 
