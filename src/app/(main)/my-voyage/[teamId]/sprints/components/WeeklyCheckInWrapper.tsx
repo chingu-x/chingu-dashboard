@@ -13,7 +13,7 @@ import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/formsEnums";
 
 // TODO: move interfaces and even fetchFormQuestions to some other place (file) in future, goona be used in other pages too
-type InputType =
+export type InputType =
   | "radio"
   | "radioGroup"
   | "radioIcon"
@@ -24,6 +24,19 @@ type InputType =
   | "shortText"
   | "url"
   | "scale";
+
+export interface SubQuestion {
+  id: number;
+  order: number;
+  inputType: { id: number; name: InputType };
+  text: string;
+  description: string | null;
+  answerRequired: boolean;
+  multipleAllowed: boolean | null;
+  optionGroup: {
+    optionChoices: { id: number; text: string }[];
+  } | null;
+}
 
 export interface Question {
   id: number;
@@ -36,18 +49,7 @@ export interface Question {
   optionGroup: {
     optionChoices: { id: number; text: string }[];
   } | null;
-  subQuestions: {
-    id: number;
-    order: number;
-    inputType: { id: number; name: InputType };
-    text: string;
-    description: string | null;
-    answerRequired: boolean;
-    multipleAllowed: boolean | null;
-    optionGroup: {
-      optionChoices: { id: number; text: string }[];
-    } | null;
-  }[];
+  subQuestions: SubQuestion[];
 }
 
 interface FetchFormQuestionsProps {
