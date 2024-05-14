@@ -2,8 +2,9 @@
 
 import { type FieldErrors, type UseFormRegister } from "react-hook-form";
 
-import FormItem from "@/components/form/FormItem";
+import { LabelContent } from "./LabelContent";
 
+import FormItem from "@/components/form/FormItem";
 import Label from "@/components/inputs/Label";
 import Textarea from "@/components/inputs/Textarea";
 import RadioGroupVertical from "@/components/inputs/RadioGroup/RadioGroupVertical";
@@ -11,11 +12,7 @@ import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGro
 import RadioGroupHorizontal from "@/components/inputs/RadioGroup/RadioGroupHorizontal";
 import RadioGroupRating from "@/components/inputs/RadioGroup/RadioGroupRating";
 import TextInput from "@/components/inputs/TextInput";
-import {
-  getLabel,
-  getOptions,
-  getTextInCurlyBrackets,
-} from "@/utils/form/helpers";
+import { getOptions, getTextInCurlyBrackets } from "@/utils/form/helpers";
 import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
 
 interface FormInputsProps {
@@ -71,7 +68,6 @@ export default function FormInputs({
   if (name === "scale") {
     let leftTitle = "";
     let rightTitle = "";
-    const label = getLabel(text);
     const textInCurlyBrackets = getTextInCurlyBrackets(text);
 
     if (textInCurlyBrackets) {
@@ -84,7 +80,7 @@ export default function FormInputs({
       <FormItem isError={!!errors[id.toString()]} className="px-3" isScale>
         <div className="flex flex-col items-center w-full bg-base-100 rounded-2xl gap-y-10">
           <Label className="w-full font-semibold text-center normal-case">
-            {label}
+            <LabelContent text={text} />
           </Label>
           {/* TOP LABELS */}
           <div className="flex flex-col w-full">
@@ -101,11 +97,11 @@ export default function FormInputs({
   }
 
   if (name === "boolean") {
-    const label = getLabel(text);
-
     return (
       <FormItem isError={!!errors[id.toString()]}>
-        <Label className="font-semibold normal-case">{label}</Label>
+        <Label className="font-semibold normal-case">
+          <LabelContent text={text} />
+        </Label>
         <RadioGroupVertical
           options={getOptions({ question })}
           {...register(id.toString())}
