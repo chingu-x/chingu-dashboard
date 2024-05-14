@@ -5,20 +5,20 @@ import { useRouter } from "next/navigation";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import BaseFormPage from "@/myVoyage/sprints/components/forms/BaseFormPage";
-import { type Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
+import BaseFormPage from "@/components/form/BaseFormPage";
 import { submitVoyageProjectForm } from "@/myVoyage/sprints/sprintsService";
-import FormInputs from "@/myVoyage/sprints/components/forms/FormInputs";
+import FormInputs from "@/components/form/FormInputs";
 
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { createValidationSchema } from "@/utils/createValidationSchema";
+import { createValidationSchema } from "@/utils/form/createValidationSchema";
 import useServerAction from "@/hooks/useServerAction";
 import routePaths from "@/utils/routePaths";
-import { createFormResponseBody } from "@/utils/createFormResponseBody";
+import { createFormResponseBody } from "@/utils/form/createFormResponseBody";
+import { type Question } from "@/utils/form/types";
 
 interface VoyageSubmissionFormProps {
   params: {

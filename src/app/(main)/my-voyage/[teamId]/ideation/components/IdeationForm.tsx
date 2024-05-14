@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch, useIdeation } from "@/store/hooks";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";

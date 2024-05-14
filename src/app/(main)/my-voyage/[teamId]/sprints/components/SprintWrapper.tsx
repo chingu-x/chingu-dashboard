@@ -32,7 +32,7 @@ import { getUser } from "@/utils/getUser";
 import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
-import { Forms } from "@/utils/formsEnums";
+import { Forms } from "@/utils/form/formsEnums";
 
 async function fetchMeeting({
   sprintNumber,

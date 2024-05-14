@@ -1,4 +1,4 @@
-import { type Question } from "@/myVoyage/sprints/components/WeeklyCheckInWrapper";
+import { type Question } from "./types";
 
 interface CreateFormResponseBody {
   data: {

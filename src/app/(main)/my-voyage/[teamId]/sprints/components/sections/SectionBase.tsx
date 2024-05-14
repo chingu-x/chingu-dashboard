@@ -12,7 +12,7 @@ import useServerAction from "@/hooks/useServerAction";
 import { addSection, editMeeting } from "@/myVoyage/sprints/sprintsService";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { Forms } from "@/utils/formsEnums";
+import { Forms } from "@/utils/form/formsEnums";
 
 interface SectionBaseProps {
   params: {
