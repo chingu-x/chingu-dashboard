@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Link from "next/link";
 import {
   MainPages,
@@ -39,6 +40,8 @@ export default function PageButton({
 
   const getButtonText = (page: string) => (isOpen ? page : "");
 
+  const [tooltipHovered, setTooltipHovered] = useState(false);
+
   return (
     <li>
       <Link
@@ -54,6 +57,7 @@ export default function PageButton({
           position="right"
           tooltipWidth="small"
           isDisplay={!isOpen}
+          hovered={tooltipHovered}
         >
           <Button
             type="button"
@@ -63,8 +67,14 @@ export default function PageButton({
             className={`${buttonStyles} ${getButtonBackgroundStyle(
               element.link,
             )} ${element.marginBottom} flex items-center`}
-            onMouseEnter={() => setHoveredButton(element.name)}
-            onMouseLeave={() => setHoveredButton(null)}
+            onMouseEnter={() => {
+              setHoveredButton(element.name);
+              setTooltipHovered(true);
+            }}
+            onMouseLeave={() => {
+              setTooltipHovered(false);
+              setHoveredButton(null);
+            }}
             onClick={() => onClick(element)}
           >
             {element.icon}

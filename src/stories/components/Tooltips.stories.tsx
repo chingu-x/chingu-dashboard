@@ -47,6 +47,7 @@ const BaseTemplate: Story = {
     tooltipWidth: "small",
     children: "Hover here",
     isDisplay: true,
+    hovered: false,
   },
 };
 
