@@ -28,7 +28,7 @@ export default function RemoveVoteBtn({
       <Button
         variant="error"
         size="xs"
-        className="rounded-3xl col-span-2 justify-self-end"
+        className="rounded-3xl col-span-2 justify-self-end font-semibold"
       >
         Remove Vote
       </Button>
