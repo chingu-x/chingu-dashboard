@@ -2,8 +2,9 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/Button";
 
 interface EditMenuProps {
-  handleClick: any;
-  handleDelete: any;
+  handleClick: () => void;
+  //TODO: handleDelete will be changed to required.
+  handleDelete?: () => void;
 }
 
 export default function EditMenu({ handleClick, handleDelete }: EditMenuProps) {
