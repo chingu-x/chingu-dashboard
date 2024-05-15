@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
-import Button from "@/components/Button";
+import EditMenu from "@/components/EditMenu";
 
 interface SettingsMenuProps {
   onClose: () => void;
@@ -33,25 +32,8 @@ export default function SettingsMenu({
   }, [onClose]);
 
   return (
-    <>
-      <div
-        ref={menuRef}
-        className="absolute z-10 ml-20 mt-28 bg-base-200 border-2 border-base-100 rounded-xl  w-40 h-36 flex flex-col justify-evenly p-2"
-      >
-        <Button
-          variant="outline"
-          size="xs"
-          className="flex justify-start"
-          onClick={openEdit}
-        >
-          <PencilSquareIcon className="w-3/12 h-3/12 " />
-          Edit
-        </Button>
-        <Button variant="error" size="xs" className="flex justify-start">
-          <TrashIcon className="w-3/12 h-3/12" />
-          Delete
-        </Button>
-      </div>
-    </>
+    <div ref={menuRef}>
+      <EditMenu handleClick={openEdit} />
+    </div>
   );
 }
