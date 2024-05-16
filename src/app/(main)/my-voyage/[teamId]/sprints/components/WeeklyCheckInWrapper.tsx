@@ -29,13 +29,21 @@ export async function fetchFormQuestions({
 }: FetchFormQuestionsProps): Promise<
   AsyncActionResponse<FetchFormQuestionsResponse>
 > {
+  let cache: CacheTag;
+
+  if (formId === Number(Forms.checkIn)) {
+    cache = CacheTag.checkInForm;
+  } else if (formId === Number(Forms.submitProject)) {
+    cache = CacheTag.submitVoyageForm;
+  }
+
   const token = getAccessToken();
   const fetchSprintsAsync = () =>
     GET<FetchFormQuestionsResponse>(
       `api/v1/forms/${formId}`,
       token,
       "force-cache",
-      CacheTag.checkInForm,
+      cache,
     );
 
   return await handleAsync(fetchSprintsAsync);
@@ -76,7 +84,7 @@ export default async function WeeklyCheckInWrapper({
   }
 
   if (data) {
-    // Check if a checkin form for the current sprint has been submitted already
+    // Check if a checkin form for the current sprint has been submitted
     const sprintCheckinIsSubmitted = !!user?.sprintCheckIn.find(
       (num) => num === sprintNumber,
     );

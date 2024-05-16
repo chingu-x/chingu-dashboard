@@ -123,7 +123,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
   }
 
-  // Check if a checkin form for the current sprint has been submitted already
+  // Check if a checkin form for the current sprint has been submitted
   const sprintCheckinIsSubmitted = !!user?.sprintCheckIn.find(
     (num) => num === sprintNumber,
   );
