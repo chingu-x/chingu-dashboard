@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { format } from "date-fns-tz";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -18,22 +19,14 @@ import {
   validateDateTimeInput,
   validateTextInput,
 } from "@/helpers/form/validateInput";
-import { useSprint, useAppDispatch } from "@/store/hooks";
-import { Meeting } from "@/store/features/sprint/sprintSlice";
+import { useSprint, useAppDispatch, useUser } from "@/store/hooks";
+import { type Meeting } from "@/store/features/sprint/sprintSlice";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import useServerAction from "@/hooks/useServerAction";
 import { addMeeting, editMeeting } from "@/myVoyage//sprints/sprintsService";
 import routePaths from "@/utils/routePaths";
 import { persistor } from "@/store/store";
 import convertStringToDate from "@/utils/convertStringToDate";
-
-const dateWithoutTimezone = (date: Date) => {
-  const tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
-  const withoutTimezone = new Date(date.valueOf() - tzoffset)
-    .toISOString()
-    .slice(0, -1);
-  return withoutTimezone;
-};
 
 export default function MeetingForm() {
   const router = useRouter();
@@ -49,7 +42,10 @@ export default function MeetingForm() {
   ];
 
   const dispatch = useAppDispatch();
-  const { sprints } = useSprint();
+  const {
+    voyage: { sprints },
+  } = useSprint();
+  const { timezone } = useUser();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [meetingData, setMeetingData] = useState<Meeting>();
   const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -64,13 +60,14 @@ export default function MeetingForm() {
       required: true,
       maxLen: 50,
     }),
-    notes: validateTextInput({
+    description: validateTextInput({
       inputName: "Description",
       required: true,
     }),
     dateTime: validateDateTimeInput({
-      minDate: convertStringToDate(startDate),
-      maxDate: convertStringToDate(endDate),
+      minDate: convertStringToDate(startDate, timezone),
+      maxDate: convertStringToDate(endDate, timezone),
+      timezone,
     }),
     meetingLink: validateTextInput({
       inputName: "Meeting Link",
@@ -105,7 +102,7 @@ export default function MeetingForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  const { title, notes, dateTime, meetingLink } = watch();
+  const { title, description, dateTime, meetingLink } = watch();
 
   const setCustomValue = (id: "dateTime", value: Date) => {
     setValue(id, value, {
@@ -116,7 +113,9 @@ export default function MeetingForm() {
   };
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    const dateTime = dateWithoutTimezone(data.dateTime);
+    const dateTime = format(data.dateTime, "yyyy-MM-dd HH:mm:ssXXX", {
+      timeZone: timezone,
+    });
 
     if (editMode) {
       const [res, error] = await editMeetingAction({
@@ -182,15 +181,17 @@ export default function MeetingForm() {
     if (meetingData && meetingData.dateTime) {
       const dateTimeConvertedToDate = convertStringToDate(
         meetingData?.dateTime,
+        timezone,
       );
+
       reset({
         title: meetingData?.title,
-        notes: meetingData?.notes,
+        description: meetingData?.description,
         meetingLink: meetingData?.meetingLink,
         dateTime: dateTimeConvertedToDate,
       });
     }
-  }, [meetingData, reset]);
+  }, [meetingData, reset, timezone]);
 
   useEffect(
     () => () => {
@@ -271,7 +272,7 @@ export default function MeetingForm() {
     editMeetingAction,
     setEditMeetingLoading,
     title,
-    notes,
+    description,
     dateTime,
     meetingLink,
   ]);
@@ -320,9 +321,9 @@ export default function MeetingForm() {
           id="description"
           label="description"
           placeholder="Please provide a brief description of the goals for this meeting."
-          {...register("notes")}
-          errorMessage={errors.notes?.message}
-          defaultValue={meetingData?.notes ?? ""}
+          {...register("description")}
+          errorMessage={errors.description?.message}
+          defaultValue={meetingData?.description ?? ""}
         />
         <DateTimePicker
           id="date"

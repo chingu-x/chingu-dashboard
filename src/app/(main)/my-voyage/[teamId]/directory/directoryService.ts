@@ -2,7 +2,7 @@
 
 import { revalidateTag } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { PATCH } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 
@@ -34,7 +34,7 @@ export async function editHours({
       `api/v1/teams/${teamId}/members`,
       token,
       "default",
-      { hrPerSprint }
+      { hrPerSprint },
     );
 
   const [res, error] = await handleAsync(editHoursAsync);

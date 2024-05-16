@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer, { User } from "@/store/features/user/userSlice";
+import userReducer, { type User } from "@/store/features/user/userSlice";
 import authReducer from "@/store/features/auth/authSlice";
 
 const user1: Partial<User> = {

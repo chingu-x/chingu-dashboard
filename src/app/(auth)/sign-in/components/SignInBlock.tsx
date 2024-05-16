@@ -16,7 +16,7 @@ function SignInBlock({ handleResetPassword }: SignInBlockProps) {
           <SocialLoginButtonsContainer />
           <div className="flex items-center mt-6 mb-8 w-full">
             <hr className="flex-grow border-neutral-content w-11/12" />
-            <p className="mx-4 text-base-300 font-semibold">Or</p>
+            <p className="mx-4 text-base-300 font-medium text-base">Or</p>
             <hr className="flex-grow border-neutral-content w-11/12" />
           </div>
         </div>

@@ -12,19 +12,27 @@ import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerConta
 import Banner from "@/components/banner/Banner";
 
 import {
-  FetchMeetingProps,
-  FetchMeetingResponse,
+  type FetchMeetingProps,
+  type FetchMeetingResponse,
 } from "@/myVoyage/sprints/sprintsService";
-import { Agenda, Meeting, Sprint } from "@/store/features/sprint/sprintSlice";
+
+import {
+  type Agenda,
+  type Meeting,
+  type Sprint,
+  type Section,
+  type Voyage,
+} from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
+import { SprintSections } from "@/utils/sections";
 
 async function fetchMeeting({
   sprintNumber,
@@ -37,7 +45,7 @@ async function fetchMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "force-cache",
-      sprintCache
+      sprintCache,
     );
 
   return await handleAsync(fetchMeetingAsync);
@@ -56,9 +64,10 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   const sprintNumber = Number(params.sprintNumber);
   const meetingId = Number(params.meetingId);
 
-  let sprintsData: Sprint[] = [];
+  let voyageData: Voyage;
   let meetingData: Meeting = { id: +params.meetingId };
   let agendaData: Agenda[] = [];
+  let sectionsData: Section[] = [];
 
   const [user, error] = await getUser();
 
@@ -80,13 +89,13 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     if (error) {
       return `Error: ${error.message}`;
     }
-    sprintsData = res!.voyage.sprints;
+    voyageData = res!;
   } else {
     redirect(routePaths.dashboardPage());
   }
 
-  const correspondingMeetingId = sprintsData.find(
-    (sprint) => sprint.number === sprintNumber
+  const correspondingMeetingId = voyageData.sprints.find(
+    (sprint) => sprint.number === sprintNumber,
   )?.teamMeetings[0]?.id;
 
   if (meetingId === correspondingMeetingId) {
@@ -95,6 +104,9 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     if (res) {
       meetingData = res;
       agendaData = res.agendas;
+      if (res.formResponseMeeting.length !== 0) {
+        sectionsData = res.formResponseMeeting;
+      }
     } else {
       return `Error: ${error?.message}`;
     }
@@ -103,7 +115,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   }
 
   // Get current sprint number
-  const { number } = getCurrentSprint(sprintsData) as Sprint;
+  const { number } = getCurrentSprint(voyageData.sprints) as Sprint;
   const currentSprintNumber = number;
 
   // Redirect if a user tries to access a sprint which hasn't started yet
@@ -126,21 +138,26 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         />
       </VoyagePageBannerContainer>
 
-      <ProgressStepper />
+      <ProgressStepper currentSprintNumber={currentSprintNumber} />
       <SprintActions params={params} />
       <MeetingOverview
         title={meetingData.title!}
         dateTime={meetingData.dateTime!}
         meetingLink={meetingData.meetingLink!}
-        notes={meetingData.notes!}
+        description={meetingData.description!}
       />
-      <MeetingProvider
-        sprints={sprintsData}
-        meeting={meetingData}
-        currentSprintNumber={currentSprintNumber}
-      />
+      <MeetingProvider voyage={voyageData} meeting={meetingData} />
       <Agendas params={params} topics={agendaData} />
-      <Sections />
+      <Sections
+        params={params}
+        notes={meetingData.notes}
+        planning={sectionsData.find(
+          (section) => section.form.id === Number(SprintSections.planning),
+        )}
+        review={sectionsData.find(
+          (section) => section.form.id === Number(SprintSections.review),
+        )}
+      />
     </div>
   );
 }

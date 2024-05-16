@@ -5,12 +5,12 @@ import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { getUser } from "@/utils/getUser";
 import { getAccessToken } from "@/utils/getCookie";
 import {
-  Features,
-  FeaturesList,
+  type Features,
+  type FeaturesList,
 } from "@/store/features/features/featuresSlice";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
 
@@ -46,7 +46,7 @@ function transformData(features: Features[]): FeaturesList[] {
     } = feature;
 
     const existingCategory = transformedData.find(
-      (item) => item.categoryId === category.id
+      (item) => item.categoryId === category.id,
     );
 
     if (existingCategory) {
@@ -81,7 +81,7 @@ export async function fetchFeatures({
       `api/v1/voyages/teams/${teamId}/features`,
       token,
       "force-cache",
-      CacheTag.features
+      CacheTag.features,
     );
 
   const [res, error] = await handleAsync(fetchFeaturesAsync);
