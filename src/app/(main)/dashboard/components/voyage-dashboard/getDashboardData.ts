@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { fetchSprints } from "@/app/(main)/my-voyage/[teamId]/sprints/components/RedirectToCurrentSprintWrapper";
-import type { Sprint } from "@/store/features/sprint/sprintSlice";
+import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import type { User } from "@/store/features/user/userSlice";
@@ -14,6 +14,7 @@ interface GetDashboardDataResponse {
   user: User | null;
   meetingsData: EventList[];
   voyageNumber: number | null;
+  voyageData: Voyage;
   errorMessage?: string;
 }
 
@@ -31,6 +32,7 @@ export const getDashboardData = async (
 ): Promise<GetDashboardDataResponse> => {
   let sprintsData: Sprint[] = [];
   let voyageNumber: number | null = null;
+  let voyageData: Voyage = {} as Voyage;
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,
@@ -47,6 +49,7 @@ export const getDashboardData = async (
       user: null,
       meetingsData: [],
       voyageNumber: null,
+      voyageData: {} as Voyage,
       errorMessage: errorResponse,
     };
   }
@@ -60,6 +63,7 @@ export const getDashboardData = async (
 
     sprintsData = res!.sprints;
     voyageNumber = Number(res!.number);
+    voyageData = res!;
   }
 
   let currentSprintNumber = null;
@@ -106,5 +110,6 @@ export const getDashboardData = async (
     user,
     meetingsData,
     voyageNumber,
+    voyageData,
   };
 };

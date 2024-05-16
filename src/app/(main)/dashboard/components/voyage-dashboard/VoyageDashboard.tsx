@@ -17,7 +17,7 @@ import {
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
 import { getUser } from "@/utils/getUser";
-import type { Sprint } from "@/store/features/sprint/sprintSlice";
+import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
 
 interface VoyageDashboardProps {
   teamId?: string;
@@ -36,6 +36,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   let sprintsData: Sprint[] = [];
   let meetingsData: EventList[] = [];
   let voyageNumber: number | null = null;
+  let voyageData: Voyage = {} as Voyage;
 
   if (teamId !== undefined) {
     const data = await getDashboardData(user, error, Number(teamId));
@@ -43,6 +44,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
     sprintsData = data.sprintsData;
     meetingsData = data.meetingsData;
     voyageNumber = data.voyageNumber;
+    voyageData = data.voyageData;
   }
 
   return (
@@ -120,10 +122,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
           </DashboardWidget>
         </div>
       </div>
-      <EmptySprintProvider
-        sprints={sprintsData}
-        currentSprintNumber={currentSprintNumber ?? 1}
-      />
+      <EmptySprintProvider voyage={voyageData} />
     </div>
   );
 }
