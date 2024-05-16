@@ -40,6 +40,7 @@ export type PageProperty = {
   marginBottom: string;
   icon: React.JSX.Element;
   link: string;
+  "aria-label": string;
 };
 
 const pagesProperties: PageProperty[] = [
@@ -48,24 +49,28 @@ const pagesProperties: PageProperty[] = [
     marginBottom: "mb-4",
     icon: <RectangleGroupIcon className="h-[1.125rem]" />,
     link: routePaths.dashboardPage(),
+    "aria-label": "Dashboard Page",
   },
   {
     name: MainPages.assessment,
     marginBottom: "mb-4",
     icon: <ChartBarIcon className="h-[1.125rem]" />,
     link: "/assessment",
+    "aria-label": "Assessment Page",
   },
   {
     name: MainPages.resources,
     marginBottom: "mb-[3.75rem]",
     icon: <BookmarkSquareIcon className="h-[1.125rem]" />,
     link: "/resources",
+    "aria-label": "Resources Page",
   },
   {
     name: MainPages.myVoyage,
     marginBottom: "mb-4",
     icon: <RocketLaunchIcon className="h-[1.125rem]" />,
     link: "",
+    "aria-label": "Voyage Main Page",
   },
 ];
 
@@ -160,6 +165,7 @@ export default function Sidebar() {
               link={element.link}
               setHoveredButton={setHoveredButton}
               voyagePages={voyagePages}
+              ariaLabel={element["aria-label"]}
             />
           ))}
         </ul>
