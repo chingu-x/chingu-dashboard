@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 
 import {
-  FetchSprintsProps,
-  FetchSprintsResponse,
-  SprintsResponse,
+  type FetchSprintsProps,
+  type FetchSprintsResponse,
+  type SprintsResponse,
 } from "@/myVoyage/sprints/sprintsService";
 
 import { getAccessToken } from "@/utils/getCookie";
@@ -11,8 +11,8 @@ import { getUser } from "@/utils/getUser";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { Sprint } from "@/store/features/sprint/sprintSlice";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type Sprint } from "@/store/features/sprint/sprintSlice";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 
@@ -25,7 +25,7 @@ export async function fetchSprints({
       `api/v1/voyages/sprints/teams/${teamId}`,
       token,
       "force-cache",
-      CacheTag.sprints
+      CacheTag.sprints,
     );
 
   return await handleAsync(fetchSprintsAsync);
@@ -65,15 +65,13 @@ export default async function RedirectToCurrentSprintWrapper({
     if (error) {
       return `Error: ${error.message}`;
     }
-    const { teamMeetings, number } = getCurrentSprint(
-      res!.voyage.sprints
-    ) as Sprint;
+    const { teamMeetings, number } = getCurrentSprint(res!.sprints) as Sprint;
     currentSprintNumber = number;
     currentMeetingId = teamMeetings[0]?.id;
 
     if (currentMeetingId) {
       redirect(
-        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`
+        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`,
       );
     } else {
       redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}`);

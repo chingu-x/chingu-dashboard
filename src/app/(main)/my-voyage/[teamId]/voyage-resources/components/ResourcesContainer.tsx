@@ -4,7 +4,7 @@ import ResourceInput from "./ResourceInput";
 import SortingButton from "./SortingButton";
 import ResourceCard from "./ResourceCard";
 import EmptyBanner from "./EmptyBanner";
-import { ResourceData } from "@/store/features/resources/resourcesSlice";
+import { type ResourceData } from "@/store/features/resources/resourcesSlice";
 
 interface ResourceContainerProps {
   data: ResourceData[];

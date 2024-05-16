@@ -1,11 +1,11 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import Card from "./Card";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/helpers/form/validateInput";
-import { Features } from "@/store/features/features/featuresSlice";
+import { type Features } from "@/store/features/features/featuresSlice";
 import useServerAction from "@/hooks/useServerAction";
 import { editFeature } from "@/myVoyage/features/featuresService";
 import { useAppDispatch } from "@/store/hooks";
@@ -60,7 +60,7 @@ export default function ListItem({ feature, index }: ListItemProps) {
 
     if (error) {
       dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } })
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
 
@@ -104,10 +104,7 @@ export default function ListItem({ feature, index }: ListItemProps) {
   }, [editMode, setFocus]);
 
   return editMode ? (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      key={feature.id}
-    >
+    <form onSubmit={handleSubmit(onSubmit)} key={feature.id}>
       <div ref={listItemRef}>
         <TextInput
           clearInputAction={handleClearInputAction}

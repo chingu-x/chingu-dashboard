@@ -1,7 +1,13 @@
-import { Draggable, DraggableProvided } from "@hello-pangea/dnd";
+import { Draggable, type DraggableProvided } from "@hello-pangea/dnd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { Feature } from "./fixtures/Features";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { type Feature } from "./fixtures/Features";
 import EditPopover from "./EditPopover";
 import { useUser } from "@/store/hooks";
 import Avatar from "@/components/avatar/Avatar";
@@ -43,10 +49,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
   });
 
   return (
-    <Draggable
-      draggableId={feature.id.toString()}
-      index={index}
-    >
+    <Draggable draggableId={feature.id.toString()} index={index}>
       {(provided: DraggableProvided) => (
         <div ref={cardRef}>
           <li
@@ -81,11 +84,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
                 </button>
               ) : (
                 // Creator's avatar
-                <Avatar
-                  image={avatar}
-                  width={24}
-                  height={24}
-                />
+                <Avatar image={avatar} width={24} height={24} />
               )}
             </div>
           </li>

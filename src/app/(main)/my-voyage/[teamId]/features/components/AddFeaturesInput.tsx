@@ -1,8 +1,8 @@
 import * as z from "zod";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";

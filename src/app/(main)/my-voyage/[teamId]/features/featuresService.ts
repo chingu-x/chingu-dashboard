@@ -1,10 +1,10 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
-import { Features } from "@/store/features/features/featuresSlice";
+import { type Features } from "@/store/features/features/featuresSlice";
 import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
-import { AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 
 interface SaveOrderProps {
@@ -55,7 +55,7 @@ export async function saveOrder({
       `api/v1/voyages/features/${featureId}/reorder`,
       token,
       "default",
-      { order, featureCategoryId }
+      { order, featureCategoryId },
     );
 
   const [res, error] = await handleAsync(saveOrderAsync);
@@ -79,7 +79,7 @@ export async function addFeature({
       `api/v1/voyages/teams/${teamId}/features`,
       token,
       "default",
-      { featureCategoryId, description }
+      { featureCategoryId, description },
     );
 
   const [res, error] = await handleAsync(addFeatureAsync);
@@ -103,7 +103,7 @@ export async function editFeature({
       `api/v1/voyages/features/${featureId}`,
       token,
       "default",
-      { teamMemberId, description }
+      { teamMemberId, description },
     );
 
   const [res, error] = await handleAsync(editFeatureAsync);

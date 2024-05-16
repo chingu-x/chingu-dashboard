@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DragDropContext, DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
 
 // import { FeaturesList } from "./fixtures/Features";
 import List from "./List";
-import { FeaturesList } from "@/store/features/features/featuresSlice";
+import { type FeaturesList } from "@/store/features/features/featuresSlice";
 import { saveOrder } from "@/myVoyage/features/featuresService";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
@@ -41,10 +41,10 @@ export default function FeaturesContainer({ data }: FeaturesContainerProps) {
 
     // source and destination lists
     const sourceList = newOrderedData.find(
-      (list) => list.categoryId.toString() === source.droppableId
+      (list) => list.categoryId.toString() === source.droppableId,
     );
     const destList = newOrderedData.find(
-      (list) => list.categoryId.toString() === destination.droppableId
+      (list) => list.categoryId.toString() === destination.droppableId,
     );
 
     if (!sourceList || !destList) {
@@ -74,7 +74,7 @@ export default function FeaturesContainer({ data }: FeaturesContainerProps) {
       if (error) {
         setOrderedData(data);
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
       }
     }
@@ -110,7 +110,7 @@ export default function FeaturesContainer({ data }: FeaturesContainerProps) {
       if (error) {
         setOrderedData(data);
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
       }
     }

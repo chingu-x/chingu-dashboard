@@ -3,34 +3,30 @@
 import { useEffect } from "react";
 
 import {
-  Meeting,
-  Sprint,
+  type Meeting,
   fetchMeeting,
   fetchSprints,
-  setCurrentSprintNumber,
   setSprintsLoadingFalse,
+  type Voyage,
 } from "@/store/features/sprint/sprintSlice";
 import { useAppDispatch } from "@/store/hooks";
 
 export interface MeetingProviderProps {
-  sprints: Sprint[];
+  voyage: Voyage;
   meeting: Meeting;
-  currentSprintNumber: number;
 }
 
 export default function MeetingProvider({
-  sprints,
+  voyage,
   meeting,
-  currentSprintNumber,
 }: MeetingProviderProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchSprints(sprints));
+    dispatch(fetchSprints(voyage));
     dispatch(fetchMeeting(meeting));
-    dispatch(setCurrentSprintNumber({ currentSprintNumber }));
     dispatch(setSprintsLoadingFalse());
-  }, [dispatch, sprints, meeting, currentSprintNumber]);
+  }, [dispatch, voyage, meeting]);
 
   return null;
 }
