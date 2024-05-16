@@ -82,8 +82,6 @@ type EditSectionType = Pick<
   "sprintNumber" | "meetingId" | "formId"
 >;
 
-type SubmitVoyageFormType = Pick<SprintProps, "sprintNumber">;
-
 export interface SprintsResponse {
   id: number;
   number: string;
@@ -175,9 +173,7 @@ export interface AddSectionProps extends AddSectionType {}
 export interface EditSectionProps extends EditSectionType, EditSectionBody {}
 
 export interface SubmitCheckInFormProps extends CheckInFormBody {}
-export interface SubmitVoyageFormProps
-  extends SubmitVoyageFormType,
-    VoyageFormBody {}
+export interface SubmitVoyageFormProps extends VoyageFormBody {}
 
 export interface FetchSprintsResponse extends SprintsResponse {}
 
@@ -444,7 +440,6 @@ export async function submitCheckInForm({
   AsyncActionResponse<SubmitCheckInFormResponse>
 > {
   const token = getAccessToken();
-  const sprintCache = getSprintCache(sprintId)!;
 
   const editSectionAsync = () =>
     POST<SubmitCheckInFormBody, SubmitCheckInFormResponse>(
@@ -457,7 +452,6 @@ export async function submitCheckInForm({
   const [res, error] = await handleAsync(editSectionAsync);
 
   if (res) {
-    revalidateTag(sprintCache);
     revalidateTag(CacheTag.me);
   }
 
@@ -466,13 +460,11 @@ export async function submitCheckInForm({
 
 export async function submitVoyageProjectForm({
   voyageTeamId,
-  sprintNumber,
   responses,
 }: SubmitVoyageFormProps): Promise<
   AsyncActionResponse<SubmitVoyageFormResponse>
 > {
   const token = getAccessToken();
-  const sprintCache = getSprintCache(sprintNumber)!;
 
   const editSectionAsync = () =>
     POST<SubmitVoyageFormBody, SubmitVoyageFormResponse>(
@@ -485,7 +477,7 @@ export async function submitVoyageProjectForm({
   const [res, error] = await handleAsync(editSectionAsync);
 
   if (res) {
-    revalidateTag(sprintCache);
+    revalidateTag(CacheTag.me);
   }
 
   return [res, error];

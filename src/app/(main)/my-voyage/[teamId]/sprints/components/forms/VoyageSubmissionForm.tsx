@@ -72,7 +72,6 @@ export default function VoyageSubmissionForm({
 
     const [res, error] = await submitVoyageProjectFormAction({
       voyageTeamId: voyageTeamId!,
-      sprintNumber: Number(sprintNumber),
       responses,
     });
 

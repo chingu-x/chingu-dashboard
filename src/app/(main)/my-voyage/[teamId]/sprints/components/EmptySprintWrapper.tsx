@@ -79,7 +79,7 @@ export default async function EmptySprintWrapper({
       `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`,
     );
   } else {
-    // Check if a checkin form for the current sprint has been submitted already
+    // Check if a checkin form for the current sprint has been submitted
     const sprintCheckinIsSubmitted = !!user?.sprintCheckIn.find(
       (sprintNumber) => sprintNumber === currentSprintNumber,
     );

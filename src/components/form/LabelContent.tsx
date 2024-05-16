@@ -10,7 +10,7 @@ interface CustomLabelProps {
 }
 
 export function LabelContent({ text, withIcon }: CustomLabelProps) {
-  const label = text.split("}}")[1]?.trim();
+  const labelText = text.split("}}")[1].trim();
   if (withIcon) {
     const textInCurlyBrackets = getTextInCurlyBrackets(text);
     if (textInCurlyBrackets) {
@@ -18,12 +18,11 @@ export function LabelContent({ text, withIcon }: CustomLabelProps) {
       return (
         <span className="flex items-center gap-x-4">
           <Icon iconName={iconName} color={color} />
-          {label}
+          {labelText}
         </span>
       );
     }
   } else {
-    return label;
+    return labelText;
   }
-  return text;
 }
