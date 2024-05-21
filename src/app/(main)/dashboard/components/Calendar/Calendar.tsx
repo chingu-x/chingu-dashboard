@@ -148,7 +148,11 @@ export default function Calendar({
 
               return isSelectedDate ? (
                 <div key={event.title}>
-                  <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
+                  <p
+                    className={`rounded-lg bg-primary-content p-3 text-base font-medium w-full ${
+                      getDayLabel() ? "mt-4" : ""
+                    }`}
+                  >
                     Sprint Week {event.sprint}
                   </p>
                   <SprintItem
