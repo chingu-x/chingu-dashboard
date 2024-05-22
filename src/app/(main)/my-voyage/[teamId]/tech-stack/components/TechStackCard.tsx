@@ -50,20 +50,12 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
 
   const handleOnChange = () => {
     const addingItemValue = inputRef.current?.value.toLowerCase();
-    const editItemsValue = editRef.current?.value.toLowerCase();
 
-    // Check for duplicates in both input fields
     const isDuplicateInAdding =
       addingItemValue && items.includes(addingItemValue);
-    const isDuplicateInEdit = editItemsValue && items.includes(editItemsValue);
 
-    // Update isDuplicate state based on duplicate status
     if (addingItemValue && isDuplicateInAdding !== isDuplicate) {
       setIsDuplicate(!!isDuplicateInAdding);
-    }
-
-    if (editItemsValue && isDuplicateInEdit !== isDuplicate) {
-      setIsDuplicate(!!isDuplicateInEdit);
     }
   };
 
@@ -87,7 +79,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   }, [isInput, isEditing]);
 
   return (
-    <div className="card min-w-[450px] sm:w-96 text-base-300 bg-base-200 rounded-lg px-6 py-5">
+    <div className="card min-w-[450px] h-80 text-base-300 bg-base-200 rounded-lg px-6 py-5 sm:w-96">
       <div className="flex flex-row justify-start">
         {GetIcon(title)}
         <h3 className="self-center text-xl font-semibold text-base-300">
@@ -99,20 +91,19 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <ul className="text-base-300">
           {data.map((element) => (
             <li
-              className="text-base mb-5 grid grid-cols-5 items-center relative "
+              className="text-base mb-8 grid grid-cols-5 items-center relative "
               key={element.id}
             >
               {isEditing === element.id && (
-                <form className="col-span-4">
+                <form className="col-span-5 h-12 -my-2">
                   <TextInput
                     id={element.id.toString()}
                     ref={editRef}
                     placeholder={element.name}
                     submitButtonText="Save"
                     isClearBtnVisible={true}
-                    errorMessage={isDuplicate ? "Duplicate Item" : ""}
                     clearInputAction={clearActionEditItem}
-                    onChange={handleOnChange}
+                    onChange={handleOnChange}        
                   />
                 </form>
               )}
@@ -145,14 +136,14 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                   {element.teamTechStackItemVotes
                     .map((item) => item.votedBy.member.id)
                     .includes(userId) ? (
-                    <RemoveVoteBtn
-                      id={element.id}
-                      openMenu={setOpenMenuId}
-                      numberOfVotes={element.teamTechStackItemVotes.length}
-                    />
-                  ) : (
-                    <AddVoteBtn />
-                  )}
+                      <RemoveVoteBtn
+                        id={element.id}
+                        openMenu={setOpenMenuId}
+                        numberOfVotes={element.teamTechStackItemVotes.length}
+                      />
+                    ) : (
+                      <AddVoteBtn />
+                    )}
                 </>
               )}
             </li>
@@ -171,16 +162,19 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
             isClearBtnVisible={true}
             clearInputAction={clearActionAdditem}
             onChange={handleOnChange}
+            className="z-10"
           />
         </form>
       ) : (
-        <Button
-          variant="outline"
-          className="justify-center w-full"
-          onClick={toggleAddItemInput}
-        >
-          Add Tech Stack
-        </Button>
+        <div className="px-3.5 py-2.5">
+          <Button
+            variant="outline"
+            className="justify-center w-full border-2"
+            onClick={toggleAddItemInput}
+          >
+            Add Tech Stack
+          </Button>
+        </div>
       )}
     </div>
   );
