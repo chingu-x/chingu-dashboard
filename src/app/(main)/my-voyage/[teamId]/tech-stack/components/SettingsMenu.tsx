@@ -32,7 +32,7 @@ export default function SettingsMenu({
   }, [onClose]);
 
   return (
-    <div ref={menuRef}>
+    <div className="ml-52 -mt-10 absolute" ref={menuRef}>
       <EditMenu handleClick={openEdit} />
     </div>
   );
