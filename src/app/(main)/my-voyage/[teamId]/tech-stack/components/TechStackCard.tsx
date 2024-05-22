@@ -12,11 +12,6 @@ import Button from "@/components/Button";
 import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
 import { useUser } from "@/store/hooks";
 
-//map over manyVotes and assign testAvatar to Image in Avatar group to see behaviour with many votes.
-//const testAvatar =
-//  "https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=wavatar&r=x";
-//const manyVotes = ["", "", "", "", "", "", "", ""];
-
 interface TechStackCardProps {
   title: string;
   data: TechStackItem[];
@@ -104,7 +99,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <ul className="text-base-300">
           {data.map((element) => (
             <li
-              className="text-base mb-5 grid grid-cols-5 items-center relative"
+              className="text-base mb-5 grid grid-cols-5 items-center relative "
               key={element.id}
             >
               {isEditing === element.id && (
@@ -150,14 +145,14 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                   {element.teamTechStackItemVotes
                     .map((item) => item.votedBy.member.id)
                     .includes(userId) ? (
-                      <RemoveVoteBtn
-                        id={element.id}
-                        openMenu={setOpenMenuId}
-                        numberOfVotes={element.teamTechStackItemVotes.length}
-                      />
-                    ) : (
-                      <AddVoteBtn />
-                    )}
+                    <RemoveVoteBtn
+                      id={element.id}
+                      openMenu={setOpenMenuId}
+                      numberOfVotes={element.teamTechStackItemVotes.length}
+                    />
+                  ) : (
+                    <AddVoteBtn />
+                  )}
                 </>
               )}
             </li>
