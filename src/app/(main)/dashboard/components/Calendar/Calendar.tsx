@@ -45,6 +45,7 @@ export default function Calendar({
     setIsHoveredDate,
     onDotClick,
     getDayLabel,
+    selectedSprint,
   } = useCalendarLogic(
     sprintsData,
     currentSprintNumber,
@@ -142,19 +143,21 @@ export default function Calendar({
                 {getDayLabel()}
               </p>
             ) : null}
+            {selectedDate && selectedSprint ? (
+              <p
+                className={`rounded-lg bg-primary-content p-3 text-base font-medium w-full ${
+                  getDayLabel() ? "mt-4" : ""
+                }`}
+              >
+                Sprint Week {selectedSprint}
+              </p>
+            ) : null}
             {meetingsData?.map((event) => {
               const eventDate = new Date(event.date);
               const isSelectedDate = isSameDay(selectDate, eventDate);
 
               return isSelectedDate ? (
                 <div key={event.title}>
-                  <p
-                    className={`rounded-lg bg-primary-content p-3 text-base font-medium w-full ${
-                      getDayLabel() ? "mt-4" : ""
-                    }`}
-                  >
-                    Sprint Week {event.sprint}
-                  </p>
                   <SprintItem
                     title={event.title}
                     link={event.link ?? ""}

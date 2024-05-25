@@ -12,6 +12,7 @@ import {
   addMonths,
   startOfDay,
   endOfDay,
+  subDays,
 } from "date-fns";
 import { useState } from "react";
 import type { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
@@ -75,14 +76,16 @@ export const useCalendarLogic = (
     const arrayOfDate = [];
 
     // Create prefix date
-    for (let i = 1; i < getDay(firstDateOfMonth); i++) {
-      const date = new Date(year, month, -i);
-
+    let firstDayOfWeek = getDay(firstDateOfMonth);
+    while (firstDayOfWeek > 0) {
+      const date = subDays(firstDateOfMonth, firstDayOfWeek);
       arrayOfDate.unshift({
         currentMonth: false,
         date,
       });
+      firstDayOfWeek--;
     }
+    arrayOfDate.reverse();
 
     // Generate current date
     for (let i = 1; i <= getDate(lastDateOfMonth); i++) {
@@ -102,6 +105,7 @@ export const useCalendarLogic = (
         date: new Date(year, month + 1, i),
       });
     }
+
     return arrayOfDate;
   };
 
@@ -144,6 +148,16 @@ export const useCalendarLogic = (
   };
 
   const selectedDate = format(selectDate, "EEEE, MMMM do");
+
+  let selectedSprint = null;
+  for (const sprint of sprintsData!) {
+    const startDate = new Date(sprint.startDate);
+    const endDate = new Date(sprint.endDate);
+    if (selectDate >= startDate && selectDate <= endDate) {
+      selectedSprint = sprint.number;
+      break;
+    }
+  }
 
   const showDotConditions = (date: Date) => [
     {
@@ -211,5 +225,6 @@ export const useCalendarLogic = (
     setIsHoveredDate,
     onDotClick,
     getDayLabel,
+    selectedSprint,
   };
 };
