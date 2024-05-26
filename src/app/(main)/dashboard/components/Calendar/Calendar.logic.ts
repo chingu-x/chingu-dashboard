@@ -166,6 +166,14 @@ export const useCalendarLogic = (
         isSameDay(new Date(event.date), date),
       ),
     },
+    {
+      id: 2,
+      check: sprintsData?.some((day) => isSameDay(new Date(day.endDate), date)),
+    },
+    {
+      id: 3,
+      check: isSameDay(new Date(voyageEndDate!), date),
+    },
   ];
 
   const showRocketIcon = (date: Date) =>
