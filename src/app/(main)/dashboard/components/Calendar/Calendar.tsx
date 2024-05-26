@@ -105,7 +105,7 @@ export default function Calendar({
                   setSelectDate={setSelectDate}
                 >
                   {showDotConditions(date).map((condition) =>
-                    condition.check ? (
+                    condition.check && !showRocketIcon(date) ? (
                       <Dot
                         key={condition.id}
                         color={getCalendarElementColor(date, currentMonth)}
