@@ -4,7 +4,6 @@ import type { FormEvent } from "react";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
-import SettingsMenu from "./SettingsMenu";
 import TextInput from "@/components/inputs/TextInput";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
@@ -114,14 +113,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                   <p className="font-medium text-base leading-5">
                     {element.name}
                   </p>
-                  {openMenuId === element.id && (
-                    <SettingsMenu
-                      onClose={handleSettingsMenuClose}
-                      setIsEditing={setIsEditing}
-                      id={element.id}
-                    />
-                  )}
-
                   {/*Avatars of voters*/}
                   <div className="ml-8 col-span-2 bg-base-200">
                     <AvatarGroup>
@@ -142,6 +133,9 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                       id={element.id}
                       openMenu={setOpenMenuId}
                       numberOfVotes={element.teamTechStackItemVotes.length}
+                      closeMenu={handleSettingsMenuClose}
+                      setIsEditing={setIsEditing}
+                      isMenuOpen={openMenuId}
                     />
                   ) : (
                     <AddVoteBtn />
