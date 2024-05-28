@@ -10,6 +10,7 @@ import { handleAsync } from "@/utils/handleAsync";
 import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import routePaths from "@/utils/routePaths";
 
 interface FetchResourcesProps {
   teamId: number;
@@ -63,7 +64,7 @@ export default async function ResourcesComponentWrapper({
 
     projectResources = res!;
   } else {
-    redirect("/dashboard");
+    redirect(routePaths.dashboardPage());
   }
 
   return (

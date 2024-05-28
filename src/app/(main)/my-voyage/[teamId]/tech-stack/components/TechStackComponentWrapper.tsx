@@ -10,6 +10,7 @@ import { getUser } from "@/utils/getUser";
 import type { TechStackData } from "@/store/features/techStack/techStackSlice";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
+import routePaths from "@/utils/routePaths";
 
 interface FetchTechStackProps {
   teamId: number;
@@ -62,7 +63,7 @@ export default async function TechStackComponentWrapper({
 
     techStackData = res!;
   } else {
-    redirect("/dashboard");
+    redirect(routePaths.dashboardPage());
   }
 
   return (
