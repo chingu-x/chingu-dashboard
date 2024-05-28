@@ -100,7 +100,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                     ref={editRef}
                     placeholder={element.name}
                     submitButtonText="Save"
-                    isClearBtnVisible={true}
                     clearInputAction={clearActionEditItem}
                     onChange={handleOnChange}
                   />
@@ -155,7 +154,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
             placeholder="Add Tech Stack"
             submitButtonText="Save"
             errorMessage={isDuplicate ? "Duplicate Item" : ""}
-            isClearBtnVisible={true}
             clearInputAction={clearActionAdditem}
             onChange={handleOnChange}
             className="z-10"
