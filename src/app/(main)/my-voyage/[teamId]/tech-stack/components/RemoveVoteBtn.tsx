@@ -17,18 +17,17 @@ export default function RemoveVoteBtn({
   };
 
   return (
-    <div className="flex justify-end col-span-2">
+    <div className="flex justify-end items-center w-[165px] col-span-2">
       {numberOfVotes < 2 && (
         <EllipsisVerticalIcon
-          className="w-1/6 h-1/6 hover:cursor-pointer"
+          className=" rounded-xl hover:bg-base-100 mr-2 w-1/6 h-1/6 hover:cursor-pointer"
           onClick={handleClick}
         />
       )}
-
       <Button
         variant="error"
         size="xs"
-        className="rounded-3xl col-span-2 justify-self-end font-semibold"
+        className="rounded-3xl justify-self-end font-semibold"
       >
         Remove Vote
       </Button>
