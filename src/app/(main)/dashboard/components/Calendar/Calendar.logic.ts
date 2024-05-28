@@ -169,10 +169,12 @@ export const useCalendarLogic = (
     {
       id: 2,
       check: sprintsData?.some((day) => isSameDay(new Date(day.endDate), date)),
+      label: "Weekly Check-in Due",
     },
     {
       id: 3,
       check: isSameDay(new Date(voyageEndDate!), date),
+      label: "Voyage Submission Due",
     },
   ];
 
