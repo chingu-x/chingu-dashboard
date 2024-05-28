@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type { VoyageMember } from "@/store/features/ideation/ideationSlice";
 
 export interface TechStackData {
   id: number;
@@ -14,12 +15,7 @@ export interface TechStackItem {
 }
 interface TechStackItemVotes {
   votedBy: {
-    member: {
-      id: string;
-      firstName: string;
-      lastName: string;
-      avatar: string;
-    };
+    member: VoyageMember;
   };
 }
 interface TechStackState {
