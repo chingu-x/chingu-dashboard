@@ -79,7 +79,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   }, [isInput, isEditing]);
 
   return (
-    <div className="card min-w-[450px] h-80 text-base-300 bg-base-200 rounded-lg px-6 py-5 sm:w-96">
+    <div className="card min-w-[420px] h-80 text-base-300 bg-base-200 rounded-lg px-6 py-5 sm:w-96">
       <div className="flex flex-row justify-start">
         {GetIcon(title)}
         <h3 className="self-center text-xl font-semibold text-base-300">
@@ -91,11 +91,11 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <ul className="text-base-300">
           {data.map((element) => (
             <li
-              className="text-base mb-8 grid grid-cols-5 items-center relative "
+              className="text-base mb-8 grid grid-cols-6 items-center relative "
               key={element.id}
             >
               {isEditing === element.id && (
-                <form className="col-span-5 h-12 -my-2">
+                <form className="col-span-6 h-12 -my-2">
                   <TextInput
                     id={element.id.toString()}
                     ref={editRef}
@@ -103,7 +103,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                     submitButtonText="Save"
                     isClearBtnVisible={true}
                     clearInputAction={clearActionEditItem}
-                    onChange={handleOnChange}        
+                    onChange={handleOnChange}
                   />
                 </form>
               )}
@@ -123,27 +123,29 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                   )}
 
                   {/*Avatars of voters*/}
-                  <AvatarGroup>
-                    {element.teamTechStackItemVotes.map((vote) => (
-                      <Avatar
-                        key={vote.votedBy.member.id}
-                        image={vote.votedBy.member.avatar}
-                        width={24}
-                        height={24}
-                      />
-                    ))}
-                  </AvatarGroup>
+                  <div className="ml-8 col-span-2 bg-base-200">
+                    <AvatarGroup>
+                      {element.teamTechStackItemVotes.map((vote) => (
+                        <Avatar
+                          key={vote.votedBy.member.id}
+                          image={vote.votedBy.member.avatar}
+                          width={24}
+                          height={24}
+                        />
+                      ))}
+                    </AvatarGroup>
+                  </div>
                   {element.teamTechStackItemVotes
                     .map((item) => item.votedBy.member.id)
                     .includes(userId) ? (
-                      <RemoveVoteBtn
-                        id={element.id}
-                        openMenu={setOpenMenuId}
-                        numberOfVotes={element.teamTechStackItemVotes.length}
-                      />
-                    ) : (
-                      <AddVoteBtn />
-                    )}
+                    <RemoveVoteBtn
+                      id={element.id}
+                      openMenu={setOpenMenuId}
+                      numberOfVotes={element.teamTechStackItemVotes.length}
+                    />
+                  ) : (
+                    <AddVoteBtn />
+                  )}
                 </>
               )}
             </li>
