@@ -166,6 +166,13 @@ export default function Calendar({
                 </div>
               ) : null;
             })}
+            {showDotConditions(selectDate).map((condition) =>
+              condition.check && condition.label ? (
+                <div key={condition.id}>
+                  <SprintItem title={condition.label} link={""} />
+                </div>
+              ) : null,
+            )}
           </div>
         </div>
         <Button
