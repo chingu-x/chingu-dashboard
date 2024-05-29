@@ -88,11 +88,14 @@ export default function Button({
   variant,
   size,
   children,
+  role,
   ...props
 }: ButtonProps) {
   return (
     <button
       type="button"
+      role={role}
+      aria-label={props["aria-label"]}
       className={cn(button({ variant, size, className }))}
       {...props}
     >
