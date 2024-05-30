@@ -1,6 +1,7 @@
 "use client";
 
 import { type FieldErrors, type UseFormRegister } from "react-hook-form";
+import { LinkIcon } from "@heroicons/react/24/outline";
 
 import { LabelContent } from "./LabelContent";
 
@@ -15,7 +16,7 @@ import TextInput from "@/components/inputs/TextInput";
 import { getOptions, getTextInCurlyBrackets } from "@/utils/form/helpers";
 import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
 
-interface FormInputsProps {
+interface FormInputProps {
   question: Question;
   register: UseFormRegister<{
     [x: string]: (string | string[]) & (string | string[] | undefined);
@@ -31,7 +32,7 @@ export default function FormInput({
   register,
   errors,
   teamMembers,
-}: FormInputsProps) {
+}: FormInputProps) {
   const {
     inputType: { name },
     id,
@@ -41,19 +42,7 @@ export default function FormInput({
     subQuestions,
   } = question;
 
-  if (name === "radio") {
-    return (
-      <FormInputContainer isError={!!errors[id.toString()]}>
-        <Label className="font-semibold normal-case">{text}</Label>
-        <RadioGroupVertical
-          options={getOptions({ question })}
-          {...register(id.toString())}
-        />
-      </FormInputContainer>
-    );
-  }
-
-  if (name === "radioIcon") {
+  if (name === "radio" || name === "radioIcon") {
     return (
       <FormInputContainer isError={!!errors[id.toString()]}>
         <Label className="font-semibold normal-case">{text}</Label>
@@ -86,7 +75,6 @@ export default function FormInput({
           <Label className="w-full font-semibold text-center normal-case">
             <LabelContent text={text} />
           </Label>
-          {/* TOP LABELS */}
           <div className="flex flex-col w-full">
             <RadioGroupRating
               leftTitle={leftTitle}
@@ -200,6 +188,21 @@ export default function FormInput({
         <TextInput
           id={`input${id.toString()}`}
           placeholder={description ? description : "Your answer"}
+          {...register(id.toString())}
+          errorMessage={errors[id.toString()]?.message}
+        />
+      </FormInputContainer>
+    );
+  }
+
+  if (name === "url") {
+    return (
+      <FormInputContainer isTextField isError={!!errors[id.toString()]}>
+        <Label className="font-semibold normal-case">{text}</Label>
+        <TextInput
+          id={`input${id.toString()}`}
+          inputGroupContent={<LinkIcon />}
+          placeholder={description ? description : "Please provide a link"}
           {...register(id.toString())}
           errorMessage={errors[id.toString()]?.message}
         />

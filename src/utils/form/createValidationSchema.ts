@@ -48,6 +48,7 @@ export function createValidationSchema(questionsData: Question[]) {
       field[key] = validateTextInput({
         inputName: "This field",
         required: answerRequired,
+        isUrl: name === "url",
       });
 
       fields.push(field);

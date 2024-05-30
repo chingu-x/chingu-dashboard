@@ -65,7 +65,8 @@ export function createFormResponseBody({
     if (
       question &&
       (question.inputType.name === "text" ||
-        question.inputType.name === "shortText")
+        question.inputType.name === "shortText" ||
+        question.inputType.name === "url")
     ) {
       response = {
         questionId: Number(key),
