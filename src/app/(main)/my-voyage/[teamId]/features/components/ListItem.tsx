@@ -103,27 +103,31 @@ export default function ListItem({ feature, index }: ListItemProps) {
     }
   }, [editMode, setFocus]);
 
-  return editMode ? (
-    <form onSubmit={handleSubmit(onSubmit)} key={feature.id}>
-      <div ref={listItemRef}>
-        <TextInput
-          clearInputAction={handleClearInputAction}
-          id="description"
-          {...register("description")}
-          errorMessage={errors.description?.message}
-          placeholder="Edit your feature"
-          defaultValue={description}
-          submitButtonText={editFeatureLoading ? <Spinner /> : "Save"}
-          buttonDisabled={!isDirty || !isValid}
+  return (
+    <li>
+      {editMode ? (
+        <form onSubmit={handleSubmit(onSubmit)} key={feature.id}>
+          <div ref={listItemRef}>
+            <TextInput
+              clearInputAction={handleClearInputAction}
+              id="description"
+              {...register("description")}
+              errorMessage={errors.description?.message}
+              placeholder="Edit your feature"
+              defaultValue={description}
+              submitButtonText={editFeatureLoading ? <Spinner /> : "Save"}
+              buttonDisabled={!isDirty || !isValid}
+            />
+          </div>
+        </form>
+      ) : (
+        <Card
+          key={feature.id}
+          index={index}
+          feature={feature}
+          setEditMode={setEditMode}
         />
-      </div>
-    </form>
-  ) : (
-    <Card
-      key={feature.id}
-      index={index}
-      feature={feature}
-      setEditMode={setEditMode}
-    />
+      )}
+    </li>
   );
 }
