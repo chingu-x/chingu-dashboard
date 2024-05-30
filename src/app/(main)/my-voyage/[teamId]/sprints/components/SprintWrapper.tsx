@@ -34,7 +34,7 @@ import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/form/formsEnums";
 
-async function fetchMeeting({
+export async function fetchMeeting({
   sprintNumber,
   meetingId,
 }: FetchMeetingProps): Promise<AsyncActionResponse<FetchMeetingResponse>> {

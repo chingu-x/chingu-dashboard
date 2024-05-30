@@ -17,7 +17,10 @@ export default function AuthProvider({ user, error }: AuthProviderProps) {
   useEffect(() => {
     if (user) {
       dispatch(clientSignIn());
-      dispatch(getUserState(user));
+      // Add the currentDate field to the user object
+      const userWithDate = { ...user, currentDate: new Date() };
+      // Dispatch the getUserState action with the user object
+      dispatch(getUserState(userWithDate));
     }
 
     if (error) {

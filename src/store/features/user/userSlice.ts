@@ -39,6 +39,7 @@ export interface User {
   avatar: string;
   voyageTeamMembers: VoyageTeamMember[];
   sprintCheckIn: number[];
+  currentDate: Date | null;
 }
 
 const initialState: User = {
@@ -55,6 +56,7 @@ const initialState: User = {
   avatar: "",
   voyageTeamMembers: [],
   sprintCheckIn: [],
+  currentDate: null,
 };
 
 export const userSlice = createSlice({
