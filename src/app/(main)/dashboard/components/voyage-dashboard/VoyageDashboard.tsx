@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import DashboardWidget from "./DashboardWidget";
 import CheckInWidget from "./CheckInWidget";
@@ -8,20 +6,56 @@ import IdeationStateContent from "./IdeationStateContent";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
-import useVoyageDashboardLogic from "./useVoyageDashboardLogic";
-import { CHECKIN_STATUS } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
+import { type EventList, getDashboardData } from "./getDashboardData";
+import {
+  CHECKIN_STATUS,
+  getFeaturesData,
+  getIdeationData,
+  getResourcesData,
+  getTechStackData,
+} from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
-import { useAuth } from "@/store/hooks";
+import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
+import { getUser } from "@/utils/getUser";
+import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
 
-function VoyageDashboard() {
-  //NOTE - This is a custom hook that returns mock data based on the filledState
-  const { ideationData, featureData, techStackData, resourceData, sprintData } =
-    useVoyageDashboardLogic(true);
+interface VoyageDashboardProps {
+  teamId?: string;
+}
+async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
+  //NOTE - Mocked value to show the filled state dashboard
+  const filledState = true;
+  const ideationData = filledState ? getIdeationData() : null;
+  const featureData = filledState ? getFeaturesData() : null;
+  const techStackData = filledState ? getTechStackData() : null;
+  const resourceData = filledState ? getResourcesData() : null;
+
+  const [user, error] = await getUser();
+
+  let currentSprintNumber: number | null = null;
+  let sprintsData: Sprint[] = [];
+  let meetingsData: EventList[] = [];
+  let voyageNumber: number | null = null;
+  let voyageData: Voyage = {} as Voyage;
+
+  if (teamId !== undefined) {
+    const data = await getDashboardData(user, error, Number(teamId));
+    currentSprintNumber = data.currentSprintNumber;
+    sprintsData = data.sprintsData;
+    meetingsData = data.meetingsData;
+    voyageNumber = data.voyageNumber;
+    voyageData = data.voyageData;
+  }
 
   return (
-    <div className="grid grid-cols-2 gap-x-6 w-full">
+    <div className="flex flex-col min-[1470px]:grid min-[1470px]:grid-cols-2 gap-x-6 max-[1470px]:gap-y-6 w-full">
       <div className="col-span-1 flex flex-col gap-y-6 flex-grow-2">
-        <CalendarWidget sprintData={sprintData ?? undefined} />
+        <CalendarWidget
+          sprintsData={sprintsData ?? undefined}
+          currentSprintNumber={currentSprintNumber}
+          meetingsData={meetingsData}
+          voyageNumber={voyageNumber}
+        />
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />
       </div>
@@ -45,7 +79,7 @@ function VoyageDashboard() {
               <IdeationStateContent contentObject={ideationData} />
             ) : null}
           </DashboardWidget>
-          <div className="flex flex-row justify-between gap-x-4">
+          <div className="flex flex-row justify-between gap-x-4 max-[1200px]:flex-col max-[1200px]:gap-y-4">
             <div className="flex flex-grow-1 w-full">
               <DashboardWidget
                 title="What features will you develop?"
@@ -88,17 +122,9 @@ function VoyageDashboard() {
           </DashboardWidget>
         </div>
       </div>
+      <EmptySprintProvider voyage={voyageData} />
     </div>
   );
 }
 
-function VoyageDashboardWrapper() {
-  const { isAuthenticated } = useAuth();
-  if (isAuthenticated) {
-    return <VoyageDashboard />;
-  }
-
-  return null;
-}
-
-export default VoyageDashboardWrapper;
+export default VoyageDashboard;
