@@ -105,7 +105,7 @@ export default function Calendar({
                   setSelectDate={setSelectDate}
                 >
                   {showDotConditions(date).map((condition) =>
-                    condition.check && !showRocketIcon(date) ? (
+                    condition.check ? (
                       <Dot
                         key={condition.id}
                         color={getCalendarElementColor(date, currentMonth)}
@@ -120,7 +120,7 @@ export default function Calendar({
                       }}
                     >
                       <RocketLaunchIcon
-                        className={`w-4 h-4 absolute left-0 right-0 bottom-[2px] m-auto cursor-pointer ${
+                        className={`w-4 h-4 absolute left-0 right-0 top-[1px] m-auto cursor-pointer ${
                           "text-" + getCalendarElementColor(date, currentMonth)
                         }`}
                       />
