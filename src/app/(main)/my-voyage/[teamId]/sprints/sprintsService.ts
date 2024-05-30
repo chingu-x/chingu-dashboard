@@ -179,6 +179,10 @@ export interface FetchSprintsResponse extends SprintsResponse {}
 
 export interface FetchMeetingResponse extends MeetingResponse {
   id: number;
+  sprint: {
+    id: number;
+    number: number;
+  };
   title: string;
   dateTime: string;
   meetingLink: string;
