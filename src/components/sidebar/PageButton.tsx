@@ -16,6 +16,7 @@ interface PageButtonProps {
   link: string;
   setHoveredButton: (element: string | null) => void;
   voyagePages: VoyagePageProperty[];
+  ariaLabel: string;
 }
 
 export default function PageButton({
@@ -26,6 +27,7 @@ export default function PageButton({
   link,
   setHoveredButton,
   voyagePages,
+  ariaLabel,
 }: PageButtonProps) {
   const buttonStyles = `${
     isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem] px-0"
@@ -64,6 +66,7 @@ export default function PageButton({
             size="lg"
             variant="neutral"
             data-tip={element.name}
+            aria-label={ariaLabel}
             className={`${buttonStyles} ${getButtonBackgroundStyle(
               element.link,
             )} ${element.marginBottom} flex items-center`}
