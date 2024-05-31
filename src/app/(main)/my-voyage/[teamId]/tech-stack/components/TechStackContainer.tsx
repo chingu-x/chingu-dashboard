@@ -1,16 +1,29 @@
 import TechStackCard from "./TechStackCard";
-import { techStack } from "./fixtures/TechStack";
+import Button from "@/components/Button";
+import type { TechStackData } from "@/store/features/techStack/techStackSlice";
 
-export default function TechStackContainer() {
+interface TechStackContainerProps {
+  data: TechStackData[];
+}
+
+export default function TechStackContainer({ data }: TechStackContainerProps) {
+  const techCardData = data.map((item) => ({
+    id: item.id,
+    title: item.name,
+    techItems: item.teamTechStackItems,
+  }));
+
   return (
-    <div className="card bg-secondary-content p-10 w-full">
-      <ul className="grid grid-cols-2 min-[1920px]:grid-cols-3 gap-10 place-items-center">
-        {Object.keys(techStack).map((cardType) => (
-          <li key={cardType}>
-            <TechStackCard
-              title={cardType}
-              data={techStack[cardType as keyof typeof techStack]}
-            />
+    <div className="card p-10 w-full">
+      <div className="grid grid-cols-2 min-[1920px]:grid-cols-3 place-items-center mb-10">
+        <div className="col-start-2 min-[1920px]:col-start-3 min-w-[420px] sm:w-96 flex flex-row-reverse">
+          <Button variant="secondary">Finalize Selection</Button>
+        </div>
+      </div>
+      <ul className="grid grid-cols-2 min-[1920px]:grid-cols-3 gap-y-10 place-items-center">
+        {techCardData.map((item) => (
+          <li key={item.id}>
+            <TechStackCard title={item.title} data={item.techItems} />
           </li>
         ))}
       </ul>

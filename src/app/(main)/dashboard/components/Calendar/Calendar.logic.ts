@@ -12,14 +12,24 @@ import {
   addMonths,
   startOfDay,
   endOfDay,
+  subDays,
 } from "date-fns";
 import { useState } from "react";
-import { type SprintData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
+import type { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
+import type { Sprint } from "@/store/features/sprint/sprintSlice";
+import { useUser } from "@/store/hooks";
+import convertStringToDate from "@/utils/convertStringToDate";
 
-export const useCalendarLogic = (sprintData?: SprintData) => {
-  const currentDate = new Date();
-  const [today, setToday] = useState(currentDate);
-  const [selectDate, setSelectDate] = useState(currentDate);
+export const useCalendarLogic = (
+  sprintsData?: Sprint[],
+  currentSprintNumber?: number | null,
+  meetingsData?: EventList[],
+  voyageNumber?: number | null,
+) => {
+  const { currentDate, timezone } = useUser();
+  const userDate = currentDate ?? new Date();
+  const [today, setToday] = useState(userDate);
+  const [selectDate, setSelectDate] = useState(userDate);
   const [isHoveredDate, setIsHoveredDate] = useState<Date | null>(null);
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -39,6 +49,21 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     "December",
   ];
 
+  const voyageStartDate = sprintsData?.find(
+    (sprint) => Number(sprint.number) === 1,
+  )?.startDate;
+  const voyageEndDate = sprintsData?.find(
+    (sprint) => Number(sprint.number) === 6,
+  )?.endDate;
+
+  const currentSprintStartDate = sprintsData?.find(
+    (sprint) => Number(sprint.number) === currentSprintNumber,
+  )?.startDate;
+
+  const currentSprintEndDate = sprintsData?.find(
+    (sprint) => Number(sprint.number) === currentSprintNumber,
+  )?.endDate;
+
   const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
   const generateDate = (
@@ -51,14 +76,16 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     const arrayOfDate = [];
 
     // Create prefix date
-    for (let i = 1; i < getDay(firstDateOfMonth); i++) {
-      const date = new Date(year, month, -i);
-
+    let firstDayOfWeek = getDay(firstDateOfMonth);
+    while (firstDayOfWeek > 0) {
+      const date = subDays(firstDateOfMonth, firstDayOfWeek);
       arrayOfDate.unshift({
         currentMonth: false,
         date,
       });
+      firstDayOfWeek--;
     }
+    arrayOfDate.reverse();
 
     // Generate current date
     for (let i = 1; i <= getDate(lastDateOfMonth); i++) {
@@ -78,6 +105,7 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
         date: new Date(year, month + 1, i),
       });
     }
+
     return arrayOfDate;
   };
 
@@ -88,10 +116,20 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
       "h-[50px] w-[48px] grid place-content-center transition-all cursor-pointer select-none";
 
     const isWithinSprintRange =
-      sprintData &&
-      (isSameDay(date, startOfDay(sprintData?.startDate)) ||
-        isAfter(date, startOfDay(sprintData?.startDate))) &&
-      isBefore(date, endOfDay(sprintData?.endDate));
+      currentSprintStartDate &&
+      currentSprintEndDate &&
+      (isSameDay(
+        date,
+        startOfDay(convertStringToDate(currentSprintStartDate, timezone)),
+      ) ||
+        isAfter(
+          date,
+          startOfDay(convertStringToDate(currentSprintStartDate, timezone)),
+        )) &&
+      isBefore(
+        date,
+        endOfDay(convertStringToDate(currentSprintEndDate, timezone)),
+      );
 
     if (!currentMonth) {
       classes += " text-neutral-content";
@@ -111,17 +149,40 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
 
   const selectedDate = format(selectDate, "EEEE, MMMM do");
 
+  let selectedSprint = null;
+  for (const sprint of sprintsData!) {
+    const startDate = new Date(sprint.startDate);
+    const endDate = new Date(sprint.endDate);
+    if (selectDate >= startDate && selectDate <= endDate) {
+      selectedSprint = sprint.number;
+      break;
+    }
+  }
+
   const showDotConditions = (date: Date) => [
     {
       id: 1,
-      check: sprintData?.eventList?.some((event) =>
+      check: meetingsData?.some((event) =>
         isSameDay(new Date(event.date), date),
       ),
+    },
+    {
+      id: 2,
+      check: sprintsData?.some((day) => isSameDay(new Date(day.endDate), date)),
+      label: "Weekly Check-in Due",
+    },
+    {
+      id: 3,
+      check: isSameDay(new Date(voyageEndDate!), date),
+      label: "Voyage Submission Due",
     },
   ];
 
   const showRocketIcon = (date: Date) =>
-    sprintData?.startDate && isSameDay(sprintData.startDate, date);
+    (voyageStartDate &&
+      isSameDay(convertStringToDate(voyageStartDate, timezone), date)) ||
+    (voyageEndDate &&
+      isSameDay(convertStringToDate(voyageEndDate, timezone), date));
 
   const getCalendarElementColor = (date: Date, currentMonth: boolean) => {
     if (isSelectedDate(date)) {
@@ -141,6 +202,19 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     }
   };
 
+  const getDayLabel = () => {
+    if (
+      voyageStartDate &&
+      isSameDay(convertStringToDate(voyageStartDate, timezone), selectDate)
+    )
+      return `Start of Voyage ${voyageNumber}`;
+    if (
+      voyageEndDate &&
+      isSameDay(convertStringToDate(voyageEndDate, timezone), selectDate)
+    )
+      return `End of Voyage ${voyageNumber}`;
+  };
+
   return {
     cn,
     generateDate,
@@ -150,7 +224,7 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     setToday,
     selectDate,
     setSelectDate,
-    currentDate,
+    userDate,
     onArrowClick: (month: number) => setToday(addMonths(today, month)),
     currentMonth: months[getMonth(today)],
     currentYear: getYear(today),
@@ -160,5 +234,7 @@ export const useCalendarLogic = (sprintData?: SprintData) => {
     getCalendarElementColor,
     setIsHoveredDate,
     onDotClick,
+    getDayLabel,
+    selectedSprint,
   };
 };
