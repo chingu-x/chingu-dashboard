@@ -79,7 +79,7 @@ export default function ResourceCard({
             <p>Shared by</p>
             <Badge title={user.firstName} avatarUrlImage={user.avatar} />
           </div>
-          <div className="border-r-1 h-5 w-1 border border-b-0 border-l-0 border-t-0 border-r-neutral-content"></div>
+          <div className="h-5 w-1 border border-y-0 border-l-0 border-r-neutral-content"></div>
           <div className="text-neutral">Added {date}</div>
         </div>
       </div>
