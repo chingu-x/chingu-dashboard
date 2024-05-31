@@ -106,7 +106,7 @@ export default function AddFeaturesInput({
         onClick={handleClick}
       >
         <div className="pl-3">Add Feature</div>
-        <div className="flex h-full w-12 items-center justify-center rounded-br-lg rounded-tr-lg bg-neutral">
+        <div className="flex h-full w-12 items-center justify-center rounded-r-lg bg-neutral">
           <PlusCircleIcon className="h-6 w-6 text-base-200" />
         </div>
       </Button>
