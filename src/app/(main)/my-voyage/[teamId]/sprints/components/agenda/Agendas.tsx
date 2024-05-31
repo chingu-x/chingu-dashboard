@@ -94,7 +94,7 @@ export default function Agendas({ params, topics }: AgendasProps) {
   const dividerIsVisible = completedTopics.length !== 0;
 
   return (
-    <div className="flex flex-col items-center justify-between w-full p-10 border bg-base-200 rounded-2xl border-base-100">
+    <div className="flex w-full flex-col items-center justify-between rounded-2xl border border-base-100 bg-base-200 p-10">
       <AgendaHeader
         teamId={teamId}
         sprintNumber={sprintNumber}
@@ -102,7 +102,7 @@ export default function Agendas({ params, topics }: AgendasProps) {
       />
       {/* INCOMPLETED TOPICS */}
       {topics.length === 0 && <NoAgendasState />}
-      <ul className="flex flex-col w-full gap-y-5">
+      <ul className="flex w-full flex-col gap-y-5">
         {incompletedTopics.map((topic) => (
           <AgendaTopic
             key={topic.id}
@@ -117,12 +117,12 @@ export default function Agendas({ params, topics }: AgendasProps) {
       <AnimatePresence>
         {dividerIsVisible && (
           <motion.div layout className="w-full">
-            <Divider title="Completed Topics" className="py-5 bg-base-200" />
+            <Divider title="Completed Topics" className="bg-base-200 py-5" />
           </motion.div>
         )}
       </AnimatePresence>
       {/* COMPLETED TOPICS */}
-      <ul className="flex flex-col w-full gap-y-5">
+      <ul className="flex w-full flex-col gap-y-5">
         {completedTopics.map((topic) => (
           <AgendaTopic
             key={topic.id}

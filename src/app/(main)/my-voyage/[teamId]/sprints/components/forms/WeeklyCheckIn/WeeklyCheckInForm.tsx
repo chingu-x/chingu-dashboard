@@ -111,7 +111,7 @@ export default function WeeklyCheckingForm() {
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full gap-y-10"
+        className="flex w-full flex-col gap-y-10"
       >
         {/* Communication */}
         <FormItem>
@@ -150,7 +150,7 @@ export default function WeeklyCheckingForm() {
           </Label>
           {/* TOP LABELS */}
           <div className="flex flex-col gap-y-5">
-            <div className="w-full grid grid-cols-[150px_1fr] gap-x-4 items-center justify-between">
+            <div className="grid w-full grid-cols-[150px_1fr] items-center justify-between gap-x-4">
               <span></span>
               <div className="flex justify-between pl-6 pr-4">
                 {pairProgrammingTimeOptions.map(({ label }) => (

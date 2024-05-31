@@ -40,22 +40,22 @@ export default function Tooltip({
       {children}
       <div
         className={cn(
-          "absolute transition shadow-md ease-in-out duration-300 z-[2] break-all",
+          "absolute z-[2] break-all shadow-md transition duration-300 ease-in-out",
           supportText ? "text-left" : "text-center",
           (!hovered || !isDisplay) && "hidden",
           supportText ? "w-[320px]" : nonSupportTextWidth,
-          "text-base-300 bg-base-100 rounded-lg py-2 px-3 after:absolute after:content-[''] after:border-base-100 after:border-8 after:border-solid",
+          "rounded-lg bg-base-100 px-3 py-2 text-base-300 after:absolute after:border-8 after:border-solid after:border-base-100 after:content-['']",
           position === "top" || position === "bottom"
-            ? "-translate-x-1/2 after:border-x-transparent after:-translate-x-1/2 after:left-1/2"
-            : "-translate-y-1/2 after:border-y-transparent after:-translate-y-1/2 after:top-1/2",
+            ? "-translate-x-1/2 after:left-1/2 after:-translate-x-1/2 after:border-x-transparent"
+            : "-translate-y-1/2 after:top-1/2 after:-translate-y-1/2 after:border-y-transparent",
           position === "top" &&
             "bottom-full left-1/2 -translate-y-3 after:top-full after:border-b-transparent",
           position === "bottom" &&
-            "top-full left-1/2 translate-y-3 after:bottom-full after:border-t-transparent",
+            "left-1/2 top-full translate-y-3 after:bottom-full after:border-t-transparent",
           position === "right" &&
-            "top-1/2 left-full translate-x-3 after:right-full after:border-l-transparent",
+            "left-full top-1/2 translate-x-3 after:right-full after:border-l-transparent",
           position === "left" &&
-            "top-1/2 right-full -translate-x-3 after:left-full after:border-r-transparent",
+            "right-full top-1/2 -translate-x-3 after:left-full after:border-r-transparent",
         )}
       >
         <div className={`${supportText && "mb-2"}`}>{content}</div>

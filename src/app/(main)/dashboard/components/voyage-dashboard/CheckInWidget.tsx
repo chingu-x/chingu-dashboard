@@ -13,19 +13,19 @@ function CheckInWidget({ status }: CheckInWidgetProps) {
   const [checkInSubmitted, setCheckInSubmitted] = useState<boolean>(false);
 
   return (
-    <div className="bg-base-200 rounded-2xl flex flex-col p-6 border-2 border-base-100">
-      <div className="flex flex-row pb-[9px] justify-between">
+    <div className="flex flex-col rounded-2xl border-2 border-base-100 bg-base-200 p-6">
+      <div className="flex flex-row justify-between pb-[9px]">
         <p className="text-xl font-semibold">Weekly Check-in</p>
         <Badge
           title={status}
           variant={status === "Due today" ? "error" : "warning"}
         />
       </div>
-      <p className="pb-6 font-medium text-base">
+      <p className="pb-6 text-base font-medium">
         How did that last sprint with your team go?
       </p>
       <Button
-        className="w-max-[200px] self-center text-base font-semibold"
+        className="max-w-[200px] self-center text-base font-semibold"
         disabled={checkInSubmitted}
         onClick={() => setCheckInSubmitted(true)}
       >

@@ -10,8 +10,8 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 export default function VoyageSubmittedMessage() {
   return (
-    <div className="grid w-full gris-rows-2 lg:grid-cols-[1fr_300px] gap-x-10 pt-[96px] px-8 xl:px-[80px]">
-      <div className="flex flex-col py-10 gap-y-4 text-base-300 max-w-[650px] order-2 lg:order-1">
+    <div className="gris-rows-2 grid w-full gap-x-10 px-8 pt-[96px] lg:grid-cols-[1fr_300px] xl:px-[80px]">
+      <div className="order-2 flex max-w-[650px] flex-col gap-y-4 py-10 text-base-300 lg:order-1">
         <h3 className="text-[30px] font-bold">Congratulations!</h3>
         <p className="text-lg font-medium">
           Big high-fives and a virtual standing ovation for completing your
@@ -27,7 +27,7 @@ export default function VoyageSubmittedMessage() {
           Discord community and updating your portfolio.
         </p>
       </div>
-      <div className="relative flex items-center justify-center order-1 w-full h-full lg:order-2">
+      <div className="relative order-1 flex h-full w-full items-center justify-center lg:order-2">
         <Lottie
           animationData={rocketLight}
           loop={true}
@@ -38,7 +38,7 @@ export default function VoyageSubmittedMessage() {
           loop={true}
           data-hide-on-theme="light"
         />
-        <div className="absolute top-0 left-0 w-full h-full">
+        <div className="absolute left-0 top-0 h-full w-full">
           <Lottie animationData={confetti} loop={false} />
         </div>
       </div>
