@@ -78,7 +78,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   }, [isInput, isEditing]);
 
   return (
-    <div className="card h-80 min-w-[420px] rounded-lg bg-base-200 px-6 py-5 text-base-300 sm:w-96">
+    <div className="h-80 min-w-[420px] rounded-lg bg-base-200 px-6 py-5 text-base-300 sm:w-96">
       <div className="flex flex-row justify-start">
         {GetIcon(title)}
         <h3 className="self-center text-xl font-semibold text-base-300">
@@ -125,20 +125,24 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                       ))}
                     </AvatarGroup>
                   </div>
-                  {element.teamTechStackItemVotes
-                    .map((item) => item.votedBy.member.id)
-                    .includes(userId) ? (
-                    <RemoveVoteBtn
-                      id={element.id}
-                      openMenu={setOpenMenuId}
-                      numberOfVotes={element.teamTechStackItemVotes.length}
-                      closeMenu={handleSettingsMenuClose}
-                      setIsEditing={setIsEditing}
-                      isMenuOpen={openMenuId}
-                    />
-                  ) : (
-                    <AddVoteBtn />
-                  )}
+                  {
+                    /* prettier-ignore */
+                    // prettier causing issues here with eslint rules
+                    element.teamTechStackItemVotes
+                      .map((item) => item.votedBy.member.id)
+                      .includes(userId) ? (
+                        <RemoveVoteBtn
+                          id={element.id}
+                          openMenu={setOpenMenuId}
+                          numberOfVotes={element.teamTechStackItemVotes.length}
+                          closeMenu={handleSettingsMenuClose}
+                          setIsEditing={setIsEditing}
+                          isMenuOpen={openMenuId}
+                        />
+                      ) : (
+                        <AddVoteBtn />
+                      )
+                  }
                 </>
               )}
             </li>

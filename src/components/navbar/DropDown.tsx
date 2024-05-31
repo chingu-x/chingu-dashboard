@@ -43,7 +43,7 @@ export default function DropDown({ openState }: { openState?: boolean }) {
     <div className="relative mx-2 py-0">
       <label
         tabIndex={0}
-        className="btn m-0 flex border-none bg-transparent p-0 text-base-300 hover:border-none hover:bg-transparent"
+        className="m-0 flex border-none bg-transparent p-0 text-base-300 hover:border-none hover:bg-transparent"
       >
         <ChevronDownIcon className="w-4 cursor-pointer text-base-300" />
       </label>
@@ -55,11 +55,11 @@ export default function DropDown({ openState }: { openState?: boolean }) {
         <li className="rounded-lg bg-secondary-content p-2 text-xs [&>*]:m-1">
           <p className="text-xs text-neutral">My Status:</p>
           {currentVoyage ? (
-            <p className="border-[1px] border-transparent font-semibold text-base-300">
+            <p className="border border-transparent font-semibold text-base-300">
               {currentVoyage}
             </p>
           ) : (
-            <p className="border-[1px] border-transparent font-semibold text-base-300">
+            <p className="border-transparent font-semibold text-base-300">
               {currentVoyage}
             </p>
           )}
