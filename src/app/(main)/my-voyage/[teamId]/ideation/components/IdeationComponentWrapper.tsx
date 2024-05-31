@@ -101,7 +101,7 @@ export default async function IdeationComponentWrapper({
 
     if (projectIdeas.length === 0) {
       return (
-        <div className="mb-20 mt-20 flex h-[290px] w-full gap-x-48">
+        <div className="my-20 flex h-[290px] w-full gap-x-48">
           <div className="flex flex-col justify-center">
             <h1 className="text-xl font-medium text-base-300">
               Be the First to Share!

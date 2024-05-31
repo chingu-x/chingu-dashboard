@@ -13,9 +13,9 @@ export default function Divider({ title, className }: DividerProps) {
         className,
       )}
     >
-      <span className="h-[1px] w-full bg-neutral" />
+      <span className="h-px w-full bg-neutral" />
       {title}
-      <span className="h-[1px] w-full bg-neutral" />
+      <span className="h-px w-full bg-neutral" />
     </p>
   );
 }
