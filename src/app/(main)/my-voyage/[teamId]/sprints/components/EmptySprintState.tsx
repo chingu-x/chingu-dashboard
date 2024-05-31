@@ -5,7 +5,7 @@ export default function EmptySprintState() {
     <div className="w-full">
       <div
         data-hide-on-theme="dark"
-        className="relative h-[390px] 3xl:w-9/12 w-11/12 mx-auto"
+        className="relative mx-auto h-[390px] w-11/12 3xl:w-9/12"
       >
         <Image
           src="/img/sprints_empty_light.png"
@@ -17,7 +17,7 @@ export default function EmptySprintState() {
       </div>
       <div
         data-hide-on-theme="light"
-        className="relative 3xl:w-9/12 w-11/12 h-[390px] mx-auto"
+        className="relative mx-auto h-[390px] w-11/12 3xl:w-9/12"
       >
         <Image
           src="/img/sprints_empty_light.png"

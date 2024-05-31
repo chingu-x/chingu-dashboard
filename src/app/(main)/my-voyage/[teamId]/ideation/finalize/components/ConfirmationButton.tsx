@@ -57,7 +57,7 @@ export default function ConfirmationButton({
     <Button
       variant="secondary"
       disabled={!finalizedIdeation}
-      className="w-full mt-10 mb-4"
+      className="mb-4 mt-10 w-full"
       onClick={handleClick}
     >
       {renderButtonContent()}

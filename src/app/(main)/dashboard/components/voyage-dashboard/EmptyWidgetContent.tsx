@@ -20,18 +20,18 @@ function EmptyWidgetContent({
   imageDark,
 }: EmptyWidgetContentProps) {
   return (
-    <div className="flex flex-row flex-grow">
-      <div className="flex flex-col gap-y-4 h-full justify-between">
-        <p className="text-xl font-semibold mt-3">{title}</p>
+    <div className="flex grow flex-row">
+      <div className="flex h-full flex-col justify-between gap-y-4">
+        <p className="mt-3 text-xl font-semibold">{title}</p>
         <p className="text-base font-medium">{description}</p>
         <Link href={link}>
-          <Button variant="outline" className="text-base font-semibold w-full">
+          <Button variant="outline" className="w-full text-base font-semibold">
             {buttonTitle}
           </Button>
         </Link>
       </div>
       {imageLight && imageDark ? (
-        <div className="w-full h-full flex flex-col justify-center">
+        <div className="flex h-full w-full flex-col justify-center">
           <Banner
             imageLight={imageLight}
             imageDark={imageDark}

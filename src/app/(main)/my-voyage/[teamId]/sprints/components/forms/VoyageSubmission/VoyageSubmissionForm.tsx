@@ -77,7 +77,7 @@ export default function VoyageSubmissionForm() {
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full gap-y-10"
+        className="flex w-full flex-col gap-y-10"
       >
         {/* Project Name */}
         <FormItem>
@@ -198,13 +198,13 @@ export default function VoyageSubmissionForm() {
           />
         </FormItem>
         {/* Scale */}
-        <div className="flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl gap-y-10">
-          <Label className="font-semibold normal-case max-w-[650px] w-full">
+        <div className="flex w-full flex-col items-center gap-y-10 rounded-2xl bg-base-100 p-10">
+          <Label className="w-full max-w-[650px] font-semibold normal-case">
             On a scale of 0-10, how likely are you to suggest Chingu to a friend
             or colleague?
           </Label>
           {/* TOP LABELS */}
-          <div className="flex flex-col max-w-[880px] w-full">
+          <div className="flex w-full max-w-[880px] flex-col">
             <RadioGroupRating
               leftTitle="Not Likely"
               rightTitle="Extremely Likely"
