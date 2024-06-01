@@ -13,6 +13,10 @@ import { type Voyage, type Sprint } from "@/store/features/sprint/sprintSlice";
 import { getUser } from "@/utils/getUser";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
+import {
+  getSprintCheckinIsStatus,
+  getVoyageProjectStatus,
+} from "@/utils/getFormStatus";
 
 function getMeeting(sprints: Sprint[], sprintNumber: number) {
   const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
@@ -76,13 +80,17 @@ export default async function EmptySprintWrapper({
     // If so, redirect to the existing meeting page.
   } else if (meeting) {
     redirect(
-      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`,
+      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`
     );
   } else {
     // Check if a checkin form for the current sprint has been submitted
-    const sprintCheckinIsSubmitted = !!user?.sprintCheckIn.find(
-      (sprintNumber) => sprintNumber === currentSprintNumber,
+    const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
+      user,
+      currentSprintNumber
     );
+
+    // Check if a voyage project has been submitted
+    const voyageProjectIsSubmitted = getVoyageProjectStatus(user, teamId);
 
     return (
       <div className="flex flex-col w-full gap-y-10">
@@ -102,6 +110,7 @@ export default async function EmptySprintWrapper({
         <SprintActions
           params={params}
           sprintCheckinIsSubmitted={sprintCheckinIsSubmitted}
+          voyageProjectIsSubmitted={voyageProjectIsSubmitted}
         />
         <EmptySprintState />
         <EmptySprintProvider voyage={voyageData} />

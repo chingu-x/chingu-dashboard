@@ -22,11 +22,13 @@ interface SprintActionsProps {
     sprintNumber: string;
   };
   sprintCheckinIsSubmitted: boolean;
+  voyageProjectIsSubmitted: boolean;
 }
 
 export default function SprintActions({
   params,
   sprintCheckinIsSubmitted,
+  voyageProjectIsSubmitted,
 }: SprintActionsProps) {
   const [teamId, meetingId, sprintNumber] = [
     params.teamId,
@@ -34,7 +36,8 @@ export default function SprintActions({
     params.sprintNumber,
   ];
   const submitCheckinIsAllowed = !sprintCheckinIsSubmitted;
-  const submitVoyageIsAllowed = sprintNumber === "5" || sprintNumber === "6";
+  const submitVoyageIsAllowed =
+    !voyageProjectIsSubmitted && (sprintNumber === "5" || sprintNumber === "6");
   return (
     <div className="flex justify-between p-5 border shadow-md border-base-100 bg-base-200 rounded-2xl">
       {/* TODO: add animated variant to Button.tsx ??? */}

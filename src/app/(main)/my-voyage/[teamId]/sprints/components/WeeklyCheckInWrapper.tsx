@@ -12,6 +12,7 @@ import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/form/formsEnums";
 import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
+import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
 
 interface FetchFormQuestionsProps {
   formId: number;
@@ -43,7 +44,7 @@ export async function fetchFormQuestions({
       `api/v1/forms/${formId}`,
       token,
       "force-cache",
-      cache,
+      cache
     );
 
   return await handleAsync(fetchSprintsAsync);
@@ -85,8 +86,9 @@ export default async function WeeklyCheckInWrapper({
 
   if (data) {
     // Check if a checkin form for the current sprint has been submitted
-    const sprintCheckinIsSubmitted = !!user?.sprintCheckIn.find(
-      (num) => num === sprintNumber,
+    const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
+      user,
+      sprintNumber
     );
 
     if (sprintCheckinIsSubmitted) {
@@ -94,8 +96,8 @@ export default async function WeeklyCheckInWrapper({
         routePaths.sprintWeekPage(
           teamId.toString(),
           sprintNumber.toString(),
-          meetingId.toString(),
-        ),
+          meetingId.toString()
+        )
       );
     }
 
@@ -106,7 +108,7 @@ export default async function WeeklyCheckInWrapper({
     }
     if (res) {
       const voyageTeamMemberId = user?.voyageTeamMembers.find(
-        (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
+        (voyage) => voyage.voyageTeam.voyage.status.name == "Active"
       )?.id;
 
       // Get all teamMembers except for the current user
