@@ -35,7 +35,9 @@ export default function SprintActions({
     params.meetingId,
     params.sprintNumber,
   ];
+
   const submitCheckinIsAllowed = !sprintCheckinIsSubmitted;
+
   const submitVoyageIsAllowed =
     !voyageProjectIsSubmitted && (sprintNumber === "5" || sprintNumber === "6");
   return (
@@ -44,7 +46,7 @@ export default function SprintActions({
       <Link
         href={
           meetingId
-            ? routePaths.submitVoyagePage(teamId, sprintNumber, meetingId)
+            ? routePaths.submitVoyagePage(teamId, sprintNumber)
             : routePaths.dashboardPage()
         }
       >
@@ -71,7 +73,7 @@ export default function SprintActions({
       <Link
         href={
           meetingId
-            ? routePaths.weeklyCheckInPage(teamId, sprintNumber, meetingId)
+            ? routePaths.weeklyCheckInPage(teamId, sprintNumber)
             : routePaths.dashboardPage()
         }
       >

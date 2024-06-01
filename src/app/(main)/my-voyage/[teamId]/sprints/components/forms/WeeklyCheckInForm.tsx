@@ -23,7 +23,6 @@ import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
 interface WeeklyCheckingFormProps {
   params: {
     teamId: string;
-    meetingId: string;
     sprintNumber: string;
   };
   description: string;
@@ -39,15 +38,11 @@ export default function WeeklyCheckingForm({
 }: WeeklyCheckingFormProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [teamId, sprintNumber, meetingId] = [
-    params.teamId,
-    params.sprintNumber,
-    params.meetingId,
-  ];
+  const [teamId, sprintNumber] = [params.teamId, params.sprintNumber];
 
   const { voyageTeamMembers } = useUser();
   const voyageTeamMemberId = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
+    (voyage) => voyage.voyageTeam.voyage.status.name == "Active"
   )?.id;
 
   const validationSchema = createValidationSchema(questions);
@@ -80,11 +75,7 @@ export default function WeeklyCheckingForm({
 
     if (res) {
       router.push(
-        routePaths.sprintWeekPage(
-          teamId.toString(),
-          sprintNumber.toString(),
-          meetingId.toString(),
-        ),
+        routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString())
       );
       dispatch(onOpenModal({ type: "checkInSuccess" }));
     }
@@ -94,7 +85,7 @@ export default function WeeklyCheckingForm({
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        }),
+        })
       );
     }
     setSubmitCheckInFormLoading(false);

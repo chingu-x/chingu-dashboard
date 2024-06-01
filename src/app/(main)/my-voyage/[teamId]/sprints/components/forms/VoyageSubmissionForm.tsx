@@ -23,7 +23,6 @@ import { type Question } from "@/utils/form/types";
 interface VoyageSubmissionFormProps {
   params: {
     teamId: string;
-    meetingId: string;
     sprintNumber: string;
   };
   title: string;
@@ -39,15 +38,11 @@ export default function VoyageSubmissionForm({
 }: VoyageSubmissionFormProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [teamId, sprintNumber, meetingId] = [
-    params.teamId,
-    params.sprintNumber,
-    params.meetingId,
-  ];
+  const [teamId, sprintNumber] = [params.teamId, params.sprintNumber];
 
   const { voyageTeamMembers } = useUser();
   const voyageTeamId = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
+    (voyage) => voyage.voyageTeam.voyage.status.name == "Active"
   )?.voyageTeamId;
 
   const validationSchema = createValidationSchema(questions);
@@ -77,11 +72,7 @@ export default function VoyageSubmissionForm({
 
     if (res) {
       router.push(
-        routePaths.sprintWeekPage(
-          teamId.toString(),
-          sprintNumber.toString(),
-          meetingId.toString(),
-        ),
+        routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString())
       );
     }
 
@@ -90,7 +81,7 @@ export default function VoyageSubmissionForm({
         onOpenModal({
           type: "error",
           content: { message: error.message },
-        }),
+        })
       );
     }
     setSubmitVoyageProjectFormLoading(false);

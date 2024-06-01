@@ -53,7 +53,6 @@ export async function fetchFormQuestions({
 interface WeeklyCheckInWrapperProps {
   params: {
     teamId: string;
-    meetingId: string;
     sprintNumber: string;
   };
 }
@@ -63,7 +62,6 @@ export default async function WeeklyCheckInWrapper({
 }: WeeklyCheckInWrapperProps) {
   const sprintNumber = Number(params.sprintNumber);
   const teamId = Number(params.teamId);
-  const meetingId = Number(params.meetingId);
 
   let teamMembers = [] as TeamMemberForCheckbox[];
 
@@ -93,11 +91,7 @@ export default async function WeeklyCheckInWrapper({
 
     if (sprintCheckinIsSubmitted) {
       redirect(
-        routePaths.sprintWeekPage(
-          teamId.toString(),
-          sprintNumber.toString(),
-          meetingId.toString()
-        )
+        routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString())
       );
     }
 
