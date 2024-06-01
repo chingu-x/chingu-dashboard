@@ -113,7 +113,7 @@ export default function VoyageSubmissionForm({
           size="lg"
           variant="primary"
         >
-          {submitVoyageProjectFormLoading ? <Spinner /> : "Submit Check In"}
+          {submitVoyageProjectFormLoading ? <Spinner /> : "Submit Voyage"}
         </Button>
       </form>
     </BaseFormPage>
