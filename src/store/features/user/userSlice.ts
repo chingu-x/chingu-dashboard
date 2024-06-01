@@ -12,6 +12,7 @@ interface Voyage {
 interface VoyageTeam {
   name: string;
   voyage: Voyage;
+  projectSubmitted: boolean;
 }
 
 export interface VoyageRole {

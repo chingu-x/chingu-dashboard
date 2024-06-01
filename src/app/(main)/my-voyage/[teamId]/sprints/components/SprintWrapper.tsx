@@ -33,6 +33,10 @@ import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/form/formsEnums";
+import {
+  getSprintCheckinIsStatus,
+  getVoyageProjectStatus,
+} from "@/utils/getFormStatus";
 
 export async function fetchMeeting({
   sprintNumber,
@@ -45,7 +49,7 @@ export async function fetchMeeting({
       `api/v1/voyages/sprints/meetings/${meetingId}`,
       token,
       "force-cache",
-      sprintCache,
+      sprintCache
     );
 
   return await handleAsync(fetchMeetingAsync);
@@ -95,7 +99,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   }
 
   const correspondingMeetingId = voyageData.sprints.find(
-    (sprint) => sprint.number === sprintNumber,
+    (sprint) => sprint.number === sprintNumber
   )?.teamMeetings[0]?.id;
 
   if (meetingId === correspondingMeetingId) {
@@ -124,9 +128,13 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   }
 
   // Check if a checkin form for the current sprint has been submitted
-  const sprintCheckinIsSubmitted = !!user?.sprintCheckIn.find(
-    (num) => num === sprintNumber,
+  const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
+    user,
+    currentSprintNumber
   );
+
+  // Check if a voyage project has been submitted
+  const voyageProjectIsSubmitted = getVoyageProjectStatus(user, teamId);
 
   return (
     <div className="flex flex-col w-full gap-y-10">
@@ -147,6 +155,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
       <SprintActions
         params={params}
         sprintCheckinIsSubmitted={sprintCheckinIsSubmitted}
+        voyageProjectIsSubmitted={voyageProjectIsSubmitted}
       />
       <MeetingOverview
         title={meetingData.title!}
@@ -160,10 +169,10 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         params={params}
         notes={meetingData.notes}
         planning={sectionsData.find(
-          (section) => section.form.id === Number(Forms.planning),
+          (section) => section.form.id === Number(Forms.planning)
         )}
         review={sectionsData.find(
-          (section) => section.form.id === Number(Forms.review),
+          (section) => section.form.id === Number(Forms.review)
         )}
       />
     </div>
