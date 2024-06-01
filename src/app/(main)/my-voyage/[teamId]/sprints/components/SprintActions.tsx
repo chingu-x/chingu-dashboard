@@ -6,6 +6,10 @@ import {
   ArrowRightIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
+import {
+  CheckCircleIcon,
+  RocketLaunchIcon as SolidRocketLaunchIcon,
+} from "@heroicons/react/24/solid";
 
 import Button from "@/components/Button";
 import routePaths from "@/utils/routePaths";
@@ -29,9 +33,8 @@ export default function SprintActions({
     params.meetingId,
     params.sprintNumber,
   ];
-  const submitCheckinIsAllowed = !sprintCheckinIsSubmitted && meetingId;
-  const submitVoyageIsAllowed =
-    meetingId && (sprintNumber === "5" || sprintNumber === "6");
+  const submitCheckinIsAllowed = !sprintCheckinIsSubmitted;
+  const submitVoyageIsAllowed = sprintNumber === "5" || sprintNumber === "6";
   return (
     <div className="flex justify-between p-5 border shadow-md border-base-100 bg-base-200 rounded-2xl">
       {/* TODO: add animated variant to Button.tsx ??? */}
@@ -48,12 +51,16 @@ export default function SprintActions({
           className="group"
           disabled={!submitVoyageIsAllowed}
         >
-          <RocketLaunchIcon className="h-[18px] w-[18px]" />
-          Submit Voyage
+          {submitVoyageIsAllowed ? (
+            <RocketLaunchIcon className="h-[18px] w-[18px]" />
+          ) : (
+            <SolidRocketLaunchIcon className="h-[18px] w-[18px]" />
+          )}
+          {submitVoyageIsAllowed ? "Submit Voyage" : "Voyage Submitted"}
           <ArrowRightIcon
             className={cn(
               "h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all",
-              !submitVoyageIsAllowed && "w-0",
+              !submitVoyageIsAllowed && "w-0"
             )}
           />
         </Button>
@@ -71,7 +78,12 @@ export default function SprintActions({
           className="group"
           disabled={!submitCheckinIsAllowed}
         >
-          <DocumentCheckIcon className="h-[18px] w-[18px]" /> Submit Check-in
+          {submitCheckinIsAllowed ? (
+            <DocumentCheckIcon className="h-[18px] w-[18px]" />
+          ) : (
+            <CheckCircleIcon className="h-[18px] w-[18px]" />
+          )}
+          {submitCheckinIsAllowed ? "Submit Check-in" : "Check-in Submitted"}
           <ArrowRightIcon className="h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all" />
         </Button>
       </Link>
