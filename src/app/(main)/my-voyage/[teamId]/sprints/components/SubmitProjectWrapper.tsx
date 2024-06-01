@@ -12,12 +12,11 @@ import { type Question } from "@/utils/form/types";
 interface SubmitProjectWrapperProps {
   params: {
     teamId: string;
-    meetingId: string;
     sprintNumber: string;
   };
 }
 
-export default async function WeeklyCheckInWrapper({
+export default async function SubmitProjectWrapper({
   params,
 }: SubmitProjectWrapperProps) {
   const teamId = Number(params.teamId);

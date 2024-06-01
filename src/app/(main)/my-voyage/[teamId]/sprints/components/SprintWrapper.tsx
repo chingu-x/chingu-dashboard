@@ -128,10 +128,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   }
 
   // Check if a checkin form for the current sprint has been submitted
-  const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
-    user,
-    currentSprintNumber
-  );
+  const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(user, sprintNumber);
 
   // Check if a voyage project has been submitted
   const voyageProjectIsSubmitted = getVoyageProjectStatus(user, teamId);
