@@ -41,12 +41,15 @@ export function validateTextInput({
 
   // Must be email
   if (isEmail) {
-    rules = rules.email("This is not a valid email.");
+    rules = rules.regex(/^$|^\S+@\S+\.\S+$/, "This is not a valid email.");
   }
 
-  //Must be a url
+  // Must be a url
   if (isUrl) {
-    rules = rules.startsWith("https://");
+    rules = rules.regex(
+      /^$|https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+      "This is not a valid URL."
+    );
   }
 
   // Minimum Length
@@ -57,15 +60,15 @@ export function validateTextInput({
   }
 
   // Only whole numbers
-  if (isHours) {
-    rules = rules.regex(/^[1-9][0-9]?$/, "Whole numbers only");
+  if (isHours && required) {
+    rules = rules.regex(/^$|^[1-9][0-9]?$/, "Whole numbers only");
   }
 
   // Maximum Length
   if (maxLen) {
     rules = rules.refine(
       (val) => val.length <= maxLen,
-      (val) => ({ message: `Character length ${val.length}/${maxLen}` }),
+      (val) => ({ message: `Character length ${val.length}/${maxLen}` })
     );
   }
 
@@ -89,11 +92,11 @@ export function validateDateTimeInput({
           "MMM d k:mm (zzz)",
           {
             timeZone: timezone,
-          },
+          }
         )} and ${format(maxDate, "MMM d k:mm (zzz)", {
           timeZone: timezone,
         })}`,
-      }),
+      })
     );
   }
 
