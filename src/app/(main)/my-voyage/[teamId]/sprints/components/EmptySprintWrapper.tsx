@@ -80,13 +80,13 @@ export default async function EmptySprintWrapper({
     // If so, redirect to the existing meeting page.
   } else if (meeting) {
     redirect(
-      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`
+      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`,
     );
   } else {
     // Check if a checkin form for the current sprint has been submitted
     const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
       user,
-      sprintNumber
+      sprintNumber,
     );
 
     // Check if a voyage project has been submitted

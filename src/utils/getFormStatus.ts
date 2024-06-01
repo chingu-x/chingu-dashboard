@@ -1,12 +1,12 @@
-import { User } from "@/store/features/user/userSlice";
+import { type User } from "@/store/features/user/userSlice";
 
 export function getSprintCheckinIsStatus(
   user: User | null,
-  sprintNum: number
+  sprintNum: number,
 ): boolean {
   if (user) {
     return !!user.sprintCheckIn.find(
-      (sprintNumber) => sprintNumber === sprintNum
+      (sprintNumber) => sprintNumber === sprintNum,
     );
   } else {
     return false;
@@ -14,11 +14,11 @@ export function getSprintCheckinIsStatus(
 }
 export function getVoyageProjectStatus(
   user: User | null,
-  teamId: number
+  teamId: number,
 ): boolean {
   if (user) {
     const currentVoyage = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeamId === teamId
+      (voyage) => voyage.voyageTeamId === teamId,
     );
 
     if (currentVoyage) {

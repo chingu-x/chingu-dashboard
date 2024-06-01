@@ -48,7 +48,7 @@ export function validateTextInput({
   if (isUrl) {
     rules = rules.regex(
       /^$|https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
-      "This is not a valid URL."
+      "This is not a valid URL.",
     );
   }
 
@@ -68,7 +68,7 @@ export function validateTextInput({
   if (maxLen) {
     rules = rules.refine(
       (val) => val.length <= maxLen,
-      (val) => ({ message: `Character length ${val.length}/${maxLen}` })
+      (val) => ({ message: `Character length ${val.length}/${maxLen}` }),
     );
   }
 
@@ -92,11 +92,11 @@ export function validateDateTimeInput({
           "MMM d k:mm (zzz)",
           {
             timeZone: timezone,
-          }
+          },
         )} and ${format(maxDate, "MMM d k:mm (zzz)", {
           timeZone: timezone,
         })}`,
-      })
+      }),
     );
   }
 

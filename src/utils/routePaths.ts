@@ -65,7 +65,7 @@ const routePaths = {
     teamId: string,
     sprintNumber: string,
     meetingId: string,
-    agendaId: string
+    agendaId: string,
   ) {
     return `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}/agendas/${agendaId}/edit`;
   },
