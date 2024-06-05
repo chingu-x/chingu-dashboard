@@ -19,12 +19,15 @@ import type { EventList } from "@/app/(main)/dashboard/components/voyage-dashboa
 import type { Sprint } from "@/store/features/sprint/sprintSlice";
 import { useUser } from "@/store/hooks";
 import convertStringToDate from "@/utils/convertStringToDate";
+import routePaths from "@/utils/routePaths";
 
 export const useCalendarLogic = (
   sprintsData?: Sprint[],
   currentSprintNumber?: number | null,
   meetingsData?: EventList[],
   voyageNumber?: number | null,
+  teamId?: string,
+  currentMeetingId?: number | null,
 ) => {
   const { currentDate, timezone } = useUser();
   const userDate = currentDate ?? new Date();
@@ -159,6 +162,30 @@ export const useCalendarLogic = (
     }
   }
 
+  const weeklyCheckInLink = () => {
+    if (currentMeetingId && teamId && currentSprintNumber) {
+      return routePaths.weeklyCheckInPage(
+        teamId,
+        currentSprintNumber?.toString(),
+        currentMeetingId?.toString(),
+      );
+    } else {
+      return "";
+    }
+  };
+
+  const submitVoyageLink = () => {
+    if (currentMeetingId && teamId && currentSprintNumber) {
+      return routePaths.submitVoyagePage(
+        teamId,
+        currentSprintNumber?.toString(),
+        currentMeetingId?.toString(),
+      );
+    } else {
+      return "";
+    }
+  };
+
   const showDotConditions = (date: Date) => [
     {
       id: 1,
@@ -170,11 +197,13 @@ export const useCalendarLogic = (
       id: 2,
       check: sprintsData?.some((day) => isSameDay(new Date(day.endDate), date)),
       label: "Weekly Check-in Due",
+      link: weeklyCheckInLink(),
     },
     {
       id: 3,
       check: isSameDay(new Date(voyageEndDate!), date),
       label: "Voyage Submission Due",
+      link: submitVoyageLink(),
     },
   ];
 

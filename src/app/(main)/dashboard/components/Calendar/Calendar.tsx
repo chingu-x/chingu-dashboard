@@ -18,12 +18,16 @@ interface CalendarProps {
   sprintsData?: Sprint[];
   meetingsData?: EventList[];
   voyageNumber?: number | null;
+  teamId?: string;
+  currentMeetingId?: number | null;
 }
 export default function Calendar({
   sprintsData,
   currentSprintNumber,
   meetingsData,
   voyageNumber,
+  teamId,
+  currentMeetingId,
 }: CalendarProps) {
   const {
     cn,
@@ -51,6 +55,8 @@ export default function Calendar({
     currentSprintNumber,
     meetingsData,
     voyageNumber,
+    teamId,
+    currentMeetingId,
   );
 
   return (
@@ -169,7 +175,11 @@ export default function Calendar({
             {showDotConditions(selectDate).map((condition) =>
               condition.check && condition.label ? (
                 <div key={condition.id}>
-                  <SprintItem title={condition.label} link={""} />
+                  <SprintItem
+                    title={condition.label}
+                    link={condition?.link}
+                    useTargetBlank={false}
+                  />
                 </div>
               ) : null,
             )}
