@@ -18,7 +18,7 @@ export default function FormInputContainer({
   return (
     <div
       className={cn(
-        "flex flex-col items-center w-full p-10 bg-base-100 rounded-2xl border border-base-100",
+        "flex w-full flex-col items-center rounded-2xl border border-base-100 bg-base-100 p-10",
         isTextField && "pb-4",
         isError && "border-error",
         className,
@@ -26,7 +26,7 @@ export default function FormInputContainer({
     >
       <div
         className={cn(
-          "max-w-[650px] w-full flex flex-col gap-y-10",
+          "flex w-full max-w-[650px] flex-col gap-y-10",
           isScale && "max-w-none",
         )}
       >

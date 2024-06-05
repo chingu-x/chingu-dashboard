@@ -83,7 +83,7 @@ function SignInFormContainer({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      <div className="flex flex-col min-h-[90px]">
+      <div className="flex min-h-[90px] flex-col">
         <div className="flex flex-col gap-y-2">
           <TextInput
             id="email"
@@ -103,7 +103,7 @@ function SignInFormContainer({
           />
           <div
             onClick={handleResetPassword}
-            className="cursor-pointer font-medium text-xs text-base-300 ml-1 mt-2"
+            className="ml-1 mt-2 cursor-pointer text-xs font-medium text-base-300"
           >
             Forgot your password?
           </div>
@@ -119,7 +119,7 @@ function SignInFormContainer({
         </Button>
         <Link
           href={routePaths.signUp()}
-          className="font-semibold text-xs text-neutral-focus ml-1 self-center mb-[10px]"
+          className="mb-[10px] ml-1 self-center text-xs font-semibold text-neutral-focus"
         >
           Don’t have an account? Sign up for an account now
         </Link>

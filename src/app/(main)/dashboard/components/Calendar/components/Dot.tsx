@@ -8,9 +8,9 @@ type DotProps = {
 function Dot({ color = "bg-neutral-content", onClick }: DotProps) {
   return (
     <div
-      className={`w-2 h-2 ${
+      className={`h-2 w-2 ${
         "bg-" + color
-      } rounded-full left-0 right-0 bottom-[6px] m-auto absolute cursor-pointer`}
+      } absolute inset-x-0 bottom-[6px] m-auto cursor-pointer rounded-full`}
       onClick={onClick}
     />
   );

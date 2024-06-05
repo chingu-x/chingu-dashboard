@@ -6,13 +6,13 @@ interface IdeationStateContentProps {
 }
 function IdeationStateContent({ contentObject }: IdeationStateContentProps) {
   return (
-    <div className="flex flex-row flex-grow max-h-[255px]">
-      <div className="flex flex-col gap-y-4 h-full justify-between">
+    <div className="flex max-h-[255px] grow flex-row">
+      <div className="flex h-full flex-col justify-between gap-y-4">
         <p className="text-xl font-semibold">{contentObject?.title}</p>
-        <p className="text-base text-neutral-focus font-semibold">
+        <p className="text-base font-semibold text-neutral-focus">
           {contentObject?.topic}
         </p>
-        <p className="text-base font-medium overflow-auto">
+        <p className="overflow-auto text-base font-medium">
           {contentObject?.description}
         </p>
       </div>

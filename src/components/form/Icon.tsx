@@ -17,7 +17,7 @@ export default function Icon({ iconName, color }: IconProps) {
   if (iconName.toLowerCase() === "rocket") {
     return (
       <RocketLaunchIcon
-        className={`w-6 h-5 ${Colors[color as keyof typeof Colors]}`}
+        className={`h-5 w-6 ${Colors[color as keyof typeof Colors]}`}
       />
     );
   }

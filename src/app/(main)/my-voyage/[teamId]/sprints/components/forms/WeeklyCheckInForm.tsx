@@ -99,7 +99,7 @@ export default function WeeklyCheckingForm({
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full gap-y-10"
+        className="flex w-full flex-col gap-y-10"
       >
         {questions
           .sort((a, b) => a.order - b.order)

@@ -38,16 +38,16 @@ export default function ModeToggle() {
   };
 
   return (
-    <label className="flex items-center cursor-pointer">
+    <label className="flex cursor-pointer items-center">
       <input
-        className="invisible w-0 h-0"
+        className="invisible h-0 w-0"
         data-testid="mode-toggle"
         type="checkbox"
         onChange={toggleTheme}
         checked={theme === "light"}
       />
       <AnimatePresence mode="wait" initial={false}>
-        <div className="w-6 h-6">
+        <div className="h-6 w-6">
           {theme === "light" && (
             <motion.div
               key="moneIcon"
@@ -55,7 +55,7 @@ export default function ModeToggle() {
               initial="hidden"
               animate="show"
             >
-              <MoonIcon className="w-full h-full fill-current text-base-300" />
+              <MoonIcon className="h-full w-full fill-current text-base-300" />
             </motion.div>
           )}
           {theme === "dark" && (
@@ -65,7 +65,7 @@ export default function ModeToggle() {
               initial="hidden"
               animate="show"
             >
-              <SunIcon className="w-full h-full fill-current text-base-300" />
+              <SunIcon className="h-full w-full fill-current text-base-300" />
             </motion.div>
           )}
         </div>

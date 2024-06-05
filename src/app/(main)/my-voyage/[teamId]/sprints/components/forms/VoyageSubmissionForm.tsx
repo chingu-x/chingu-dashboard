@@ -92,7 +92,7 @@ export default function VoyageSubmissionForm({
     <BaseFormPage title={title} description={description}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full gap-y-10"
+        className="flex w-full flex-col gap-y-10"
       >
         {questions.map((question) => {
           const { id } = question;

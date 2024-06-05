@@ -71,11 +71,11 @@ export default function FormInput({
         className="px-3"
         isScale
       >
-        <div className="flex flex-col items-center w-full bg-base-100 rounded-2xl gap-y-10">
-          <Label className="w-full font-semibold text-center normal-case">
+        <div className="flex w-full flex-col items-center gap-y-10 rounded-2xl bg-base-100">
+          <Label className="w-full text-center font-semibold normal-case">
             <LabelContent text={text} />
           </Label>
-          <div className="flex flex-col w-full">
+          <div className="flex w-full flex-col">
             <RadioGroupRating
               leftTitle={leftTitle}
               rightTitle={rightTitle}
@@ -111,7 +111,7 @@ export default function FormInput({
         <Label className="font-semibold normal-case">{text}</Label>
         {/* TOP LABELS */}
         <div className="flex flex-col gap-y-5">
-          <div className="w-full grid grid-cols-[150px_1fr] gap-x-4 items-center justify-between">
+          <div className="grid w-full grid-cols-[150px_1fr] items-center justify-between gap-x-4">
             <span></span>
             <div className="flex justify-between pl-6 pr-4">
               {optionGroup?.optionChoices.map(({ text }) => (

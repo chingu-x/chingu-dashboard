@@ -276,12 +276,12 @@ export default function AgendaTopicForm() {
 
   return (
     // TODO: Create some general form wrapper component
-    <div className="flex flex-col items-center w-full bg-base-200 rounded-2xl p-10 mx-auto max-w-[871px]">
+    <div className="mx-auto flex w-full max-w-[871px] flex-col items-center rounded-2xl bg-base-200 p-10">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full p-10 gap-y-4"
+        className="flex w-full flex-col gap-y-4 p-10"
       >
-        <div className="flex flex-col mb-6 gap-y-4">
+        <div className="mb-6 flex flex-col gap-y-4">
           <h2 className="text-3xl font-bold text-base-300">
             {editMode ? "Edit Topic on the Agenda" : "Add Agenda Topic"}
           </h2>
@@ -318,7 +318,7 @@ export default function AgendaTopicForm() {
               title="delete"
               className="w-1/2"
             >
-              <TrashIcon className="w-4 h-4" />
+              <TrashIcon className="h-4 w-4" />
               Delete
             </Button>
           )}
