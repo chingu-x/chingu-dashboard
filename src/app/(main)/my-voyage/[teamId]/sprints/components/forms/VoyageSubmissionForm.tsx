@@ -45,7 +45,7 @@ export default function VoyageSubmissionForm({
     (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
   )?.voyageTeamId;
 
-  const validationSchema = createValidationSchema(questions);
+  const { validationSchema, defaultValues } = createValidationSchema(questions);
   type ValidationSchema = z.infer<typeof validationSchema>;
 
   const {
@@ -54,6 +54,7 @@ export default function VoyageSubmissionForm({
     formState: { errors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
+    defaultValues,
   });
 
   const {

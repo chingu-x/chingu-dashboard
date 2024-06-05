@@ -31,8 +31,10 @@ export function createFormResponseBody({
     );
 
     if (question && question.inputType.name === "boolean") {
-      response = { questionId: Number(key), boolean: value === "true" };
-      responses.push(response);
+      if (value !== "") {
+        response = { questionId: Number(key), boolean: value === "true" };
+        responses.push(response);
+      }
     }
 
     if (
@@ -42,8 +44,10 @@ export function createFormResponseBody({
         question.inputType.name === "scale" ||
         question.inputType.name === "radioGroup")
     ) {
-      response = { questionId: Number(key), optionChoiceId: Number(value) };
-      responses.push(response);
+      if (value !== "") {
+        response = { questionId: Number(key), optionChoiceId: Number(value) };
+        responses.push(response);
+      }
     }
 
     if (
@@ -51,14 +55,16 @@ export function createFormResponseBody({
       (question.inputType.name === "checkbox" ||
         question.inputType.name === "teamMembersCheckbox")
     ) {
-      let numeric: number;
-      if (Array.isArray(value)) {
-        numeric = Number(value.reduce((a, b) => a + b, ""));
-        response = {
-          questionId: Number(key),
-          numeric: numeric,
-        };
-        responses.push(response);
+      if (value.length !== 0) {
+        let numeric: number;
+        if (Array.isArray(value)) {
+          numeric = Number(value.reduce((a, b) => a + b, ""));
+          response = {
+            questionId: Number(key),
+            numeric: numeric,
+          };
+          responses.push(response);
+        }
       }
     }
 
@@ -68,11 +74,13 @@ export function createFormResponseBody({
         question.inputType.name === "shortText" ||
         question.inputType.name === "url")
     ) {
-      response = {
-        questionId: Number(key),
-        text: value as string,
-      };
-      responses.push(response);
+      if (value !== "") {
+        response = {
+          questionId: Number(key),
+          text: value as string,
+        };
+        responses.push(response);
+      }
     }
   }
 
