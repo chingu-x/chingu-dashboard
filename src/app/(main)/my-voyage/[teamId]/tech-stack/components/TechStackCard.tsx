@@ -88,65 +88,64 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
 
       <div className="mt-6 h-40 overflow-y-auto pt-1">
         <ul className="text-base-300">
-          {data.map((element) => (
-            <li
-              className="relative mb-8 grid grid-cols-6 items-center text-base"
-              key={element.id}
-            >
-              {isEditing === element.id && (
-                <form className="col-span-6 -my-2 h-12">
-                  <TextInput
-                    id={element.id.toString()}
-                    ref={editRef}
-                    placeholder={element.name}
-                    submitButtonText="Save"
-                    clearInputAction={clearActionEditItem}
-                    onChange={handleOnChange}
-                  />
-                </form>
-              )}
+          {data.map((element) => {
+            const voteIsSubmitted = element.teamTechStackItemVotes.find(
+              (item) => item.votedBy.member.id === userId,
+            );
+            return (
+              <li
+                className="relative mb-8 grid grid-cols-6 items-center text-base"
+                key={element.id}
+              >
+                {isEditing === element.id && (
+                  <form className="col-span-6 -my-2 h-12">
+                    <TextInput
+                      id={element.id.toString()}
+                      ref={editRef}
+                      placeholder={element.name}
+                      submitButtonText="Save"
+                      clearInputAction={clearActionEditItem}
+                      onChange={handleOnChange}
+                    />
+                  </form>
+                )}
 
-              {isEditing !== element.id && (
-                <>
-                  {/*item name*/}
-                  <p className="text-base font-medium leading-5">
-                    {element.name}
-                  </p>
-                  {/*Avatars of voters*/}
-                  <div className="col-span-2 ml-8 bg-base-200">
-                    <AvatarGroup>
-                      {element.teamTechStackItemVotes.map((vote) => (
-                        <Avatar
-                          key={vote.votedBy.member.id}
-                          image={vote.votedBy.member.avatar}
-                          width={24}
-                          height={24}
-                        />
-                      ))}
-                    </AvatarGroup>
-                  </div>
-                  {
-                    /* prettier-ignore */
-                    // prettier causing issues here with eslint rules
-                    element.teamTechStackItemVotes
-                      .map((item) => item.votedBy.member.id)
-                      .includes(userId) ? (
-                        <RemoveVoteBtn
-                          id={element.id}
-                          openMenu={setOpenMenuId}
-                          numberOfVotes={element.teamTechStackItemVotes.length}
-                          closeMenu={handleSettingsMenuClose}
-                          setIsEditing={setIsEditing}
-                          isMenuOpen={openMenuId}
-                        />
-                      ) : (
-                        <AddVoteBtn />
-                      )
-                  }
-                </>
-              )}
-            </li>
-          ))}
+                {isEditing !== element.id && (
+                  <>
+                    {/*item name*/}
+                    <p className="text-base font-medium leading-5">
+                      {element.name}
+                    </p>
+                    {/*Avatars of voters*/}
+                    <div className="col-span-2 ml-8 bg-base-200">
+                      <AvatarGroup>
+                        {element.teamTechStackItemVotes.map((vote) => (
+                          <Avatar
+                            key={vote.votedBy.member.id}
+                            image={vote.votedBy.member.avatar}
+                            width={24}
+                            height={24}
+                          />
+                        ))}
+                      </AvatarGroup>
+                    </div>
+                    {voteIsSubmitted ? (
+                      <RemoveVoteBtn
+                        id={element.id}
+                        openMenu={setOpenMenuId}
+                        numberOfVotes={element.teamTechStackItemVotes.length}
+                        closeMenu={handleSettingsMenuClose}
+                        setIsEditing={setIsEditing}
+                        isMenuOpen={openMenuId}
+                      />
+                    ) : (
+                      <AddVoteBtn />
+                    )}
+                  </>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
 
