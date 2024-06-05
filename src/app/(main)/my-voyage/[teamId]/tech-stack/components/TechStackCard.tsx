@@ -32,6 +32,12 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("submitting")
+    if(inputRef.current){
+      console.log(inputRef.current.value)
+    }else{
+      console.log("input ref is not attached.")
+    }
   };
 
   const handleSettingsMenuClose = () => {
@@ -58,24 +64,34 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     }
   };
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(event.target as Node)
-      ) {
-        setIsInput(false);
-      }
-      if (editRef.current && !editRef.current.contains(event.target as Node)) {
-        setIsEditing(-1);
-        setOpenMenuId(-1);
-      }
+useEffect(() => {
+  function handleClickOutside(event: MouseEvent) {
+    const targetNode = event.target as Node;
+
+    if (
+      inputRef.current &&
+      !inputRef.current.contains(targetNode) &&
+      !(targetNode instanceof HTMLElement && targetNode.closest('form'))
+    ) {
+      setIsInput(false);
     }
-    document.body.addEventListener("click", handleClickOutside);
-    return () => {
-      document.body.removeEventListener("click", handleClickOutside);
-    };
-  }, [isInput, isEditing]);
+
+    if (
+      editRef.current &&
+      !editRef.current.contains(targetNode) &&
+      !(targetNode instanceof HTMLElement && targetNode.closest('form'))
+    ) {
+      setIsEditing(-1);
+      setOpenMenuId(-1);
+    }
+  }
+
+  document.body.addEventListener("click", handleClickOutside);
+
+  return () => {
+    document.body.removeEventListener("click", handleClickOutside);
+  };
+}, [isInput, isEditing]);
 
   return (
     <div className="h-80 min-w-[420px] rounded-lg bg-base-200 px-6 py-5 text-base-300 sm:w-96">
