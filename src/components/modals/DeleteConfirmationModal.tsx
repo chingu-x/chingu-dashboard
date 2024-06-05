@@ -26,7 +26,7 @@ export default function DeleteConfirmationModal() {
 
     return (
       <>
-        <TrashIcon className="w-4 h-4" />
+        <TrashIcon className="h-4 w-4" />
         {modal.content?.confirmationText}
       </>
     );
@@ -34,10 +34,10 @@ export default function DeleteConfirmationModal() {
 
   return (
     <Modal isOpen={isOpen} title={modal.content!.title!} onClose={handleClose}>
-      <div className="mb-10 text-base text-base-300 font-medium max-w-[650px]">
+      <div className="mb-10 max-w-[650px] text-base font-medium text-base-300">
         {modal.content?.message}
       </div>
-      <div className="flex gap-x-10 mt-10">
+      <div className="mt-10 flex gap-x-10">
         <Button
           size="lg"
           variant="neutral"

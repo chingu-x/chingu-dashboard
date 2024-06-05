@@ -13,10 +13,10 @@ export default function AuthBannerContainer() {
         />
       </div>
 
-      <h3 className="text-primary-focus text-2xl text-center mt-[27px] font-semibold">
+      <h3 className="mt-[27px] text-center text-2xl font-semibold text-primary-focus">
         Ready to dive in?
       </h3>
-      <h2 className="text-primary text-3xl text-center font-semibold">
+      <h2 className="text-center text-3xl font-semibold text-primary">
         Join Chingu today!
       </h2>
     </div>

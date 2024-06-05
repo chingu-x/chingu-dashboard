@@ -22,19 +22,19 @@ export default function FieldMessage({
     <div id={id} aria-live="polite" aria-atomic="true">
       <span
         className={cn(
-          "flex items-center h-4 gap-1 text-[13px] font-medium text-base-300",
+          "flex h-4 items-center gap-1 text-[13px] font-medium text-base-300",
           errorMessage && "text-error",
         )}
       >
         {errorMessage && (
           <>
-            <QuestionMarkCircleIcon className="w-[10.5px] h-[10.5px] stroke-[1.5px] stroke-error fill-transparent" />
+            <QuestionMarkCircleIcon className="h-[10.5px] w-[10.5px] fill-transparent stroke-error stroke-[1.5px]" />
             {errorMessage}
           </>
         )}
         {suggestionMessage && (
           <>
-            <ExclamationCircleIcon className="w-[10.5px] h-[10.5px] stroke-[1.5px] stroke-base-300 fill-transparent" />
+            <ExclamationCircleIcon className="h-[10.5px] w-[10.5px] fill-transparent stroke-base-300 stroke-[1.5px]" />
             {suggestionMessage}
           </>
         )}

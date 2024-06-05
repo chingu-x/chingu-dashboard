@@ -22,7 +22,7 @@ export default function VoyagePageButton({
 }: VoyagePageButtonProps) {
   const showIcon = (element: string) => {
     if (!isVoyageStarted) {
-      return <LockClosedIcon className="h-[1.125rem] self-center mr-1" />;
+      return <LockClosedIcon className="mr-1 h-[1.125rem] self-center" />;
     } else if (
       isVoyageStarted &&
       (hoveredButton?.startsWith(element) || selectedButton.startsWith(element))
@@ -45,9 +45,9 @@ export default function VoyagePageButton({
       >
         <button
           type="button"
-          className={`bg-transparent hover:bg-transparent w-[9.375rem] h-[1.1875rem] min-h-0 mb-2.5 flex justify-start ${
+          className={`mb-2.5 flex h-[1.1875rem] min-h-0 w-[9.375rem] justify-start bg-transparent hover:bg-transparent ${
             isVoyageStarted ? "pl-11" : "pl-6"
-          } text-neutral-focus capitalize border-none relative`}
+          } relative border-none capitalize text-neutral-focus`}
           onMouseEnter={() => setHoveredButton(element.link)}
           onMouseLeave={() => setHoveredButton(null)}
           onClick={() => isVoyageStarted && onClick(element.link)}

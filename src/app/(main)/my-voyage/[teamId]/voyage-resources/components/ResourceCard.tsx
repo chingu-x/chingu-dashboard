@@ -64,31 +64,31 @@ export default function ResourceCard({
   };
 
   return (
-    <div className="group [&>*]:cursor-pointer flex items-center w-full p-2 bg-base-200 border border-base-200 rounded-xl shadow-sm transition-all hover:shadow-md hover:border-base-100">
+    <div className="group flex w-full items-center rounded-xl border border-base-200 bg-base-200 p-2 shadow-sm transition-all hover:border-base-100 hover:shadow-md [&>*]:cursor-pointer">
       <ArrowTopRightOnSquareIcon
         onClick={openViewModal}
-        className="w-8 h-8 ml-2 mr-4 transition-all stroke-1 group-hover:stroke-2"
+        className="ml-2 mr-4 h-8 w-8 stroke-1 transition-all group-hover:stroke-2"
       />
       <div
         onClick={openViewModal}
-        className="flex flex-col justify-center w-full p-2 overflow-hidden"
+        className="flex w-full flex-col justify-center overflow-hidden p-2"
       >
-        <h1 className="w-1/2 text-xl font-bold truncate">{title}</h1>
-        <div className="flex mt-2 [&>*]:mr-8">
+        <h1 className="w-1/2 truncate text-xl font-bold">{title}</h1>
+        <div className="mt-2 flex [&>*]:mr-8">
           <div className="flex items-center gap-x-2">
             <p>Shared by</p>
             <Badge title={user.firstName} avatarUrlImage={user.avatar} />
           </div>
-          <div className="w-1 h-5 border border-t-0 border-b-0 border-l-0 border-r-1 border-r-neutral-content"></div>
+          <div className="h-5 w-1 border border-y-0 border-l-0 border-r-neutral-content"></div>
           <div className="text-neutral">Added {date}</div>
         </div>
       </div>
       {userId === currentUserId ? (
         <IconButton
-          className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-base-100"
+          className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-base-100"
           onClick={openDeleteModal}
         >
-          <TrashIcon className="w-6 h-6" />
+          <TrashIcon className="h-6 w-6" />
         </IconButton>
       ) : null}
     </div>
