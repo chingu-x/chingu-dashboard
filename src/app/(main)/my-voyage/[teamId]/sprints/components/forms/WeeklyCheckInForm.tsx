@@ -45,7 +45,7 @@ export default function WeeklyCheckingForm({
     (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
   )?.id;
 
-  const validationSchema = createValidationSchema(questions);
+  const { validationSchema, defaultValues } = createValidationSchema(questions);
 
   type ValidationSchema = z.infer<typeof validationSchema>;
 
@@ -56,6 +56,7 @@ export default function WeeklyCheckingForm({
   } = useForm<ValidationSchema>({
     mode: "onSubmit",
     resolver: zodResolver(validationSchema),
+    defaultValues,
   });
 
   const {

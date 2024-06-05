@@ -13,8 +13,14 @@ interface IField {
     | z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
 }
 
+interface IDefaultValue {
+  [key: string]: string | string[];
+}
+
 export function createValidationSchema(questionsData: Question[]) {
-  const fields: IField[] = [];
+  const fields: IField = {};
+  const defaultValues: IDefaultValue = {};
+
   questionsData.forEach((question) => {
     const {
       id,
@@ -24,42 +30,31 @@ export function createValidationSchema(questionsData: Question[]) {
     } = question;
 
     const key = id.toString();
-    const field: IField = {};
 
     if (name === "radioGroup") {
       for (const question of subQuestions) {
-        const field: IField = {};
         const { id, answerRequired } = question;
         const key = id.toString();
-        field[key] = validateTextInput({
+        fields[key] = validateTextInput({
           inputName: "This field",
           required: answerRequired,
         });
-
-        fields.push(field);
+        defaultValues[key] = "";
       }
     } else if (name === "checkbox" || name === "teamMembersCheckbox") {
-      field[key] = validateMultipleChoiceInput({
+      fields[key] = validateMultipleChoiceInput({
         required: answerRequired,
       });
-
-      fields.push(field);
+      defaultValues[key] = [];
     } else {
-      field[key] = validateTextInput({
+      fields[key] = validateTextInput({
         inputName: "This field",
         required: answerRequired,
         isUrl: name === "url",
       });
-
-      fields.push(field);
+      defaultValues[key] = "";
     }
   });
 
-  let finalObject: IField = {};
-  fields.forEach((field) => {
-    const temp = { ...finalObject };
-    finalObject = { ...temp, ...field };
-  });
-
-  return z.object({ ...finalObject });
+  return { validationSchema: z.object({ ...fields }), defaultValues };
 }
