@@ -111,7 +111,7 @@ export const WithFormInsideWithVerticalScroll: Story = {
     title: "A modal form",
     children: (
       <form className="flex flex-col overflow-hidden">
-        <div className="flex flex-col pr-2 mr-1 overflow-y-auto min-h-[90px]">
+        <div className="mr-1 flex min-h-[90px] flex-col overflow-y-auto pr-2">
           <div className="flex flex-col gap-4">
             <TextInput
               id="title"
@@ -148,7 +148,7 @@ export const WithFormInsideWithVerticalScroll: Story = {
             Submit
           </Button>
           <Button variant="error" size="lg" title="delete" aria-label="delete">
-            <TrashIcon className="w-4 h-4" />
+            <TrashIcon className="h-4 w-4" />
             Delete
           </Button>
         </div>

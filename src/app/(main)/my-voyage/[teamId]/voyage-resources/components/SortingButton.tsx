@@ -22,7 +22,7 @@ export default function SortingButton({
       disabled={isDisabled}
     >
       {buttonText}
-      <div className="w-4 h-4">{ArrowIcon}</div>
+      <div className="h-4 w-4">{ArrowIcon}</div>
     </Button>
   );
 }
