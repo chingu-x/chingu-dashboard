@@ -153,6 +153,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         params={params}
         sprintCheckinIsSubmitted={sprintCheckinIsSubmitted}
         voyageProjectIsSubmitted={voyageProjectIsSubmitted}
+        currentSprintNumber={currentSprintNumber}
       />
       <MeetingOverview
         title={meetingData.title!}
