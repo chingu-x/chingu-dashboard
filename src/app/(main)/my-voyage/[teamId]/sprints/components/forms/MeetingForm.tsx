@@ -42,7 +42,9 @@ export default function MeetingForm() {
   ];
 
   const dispatch = useAppDispatch();
-  const { sprints } = useSprint();
+  const {
+    voyage: { sprints },
+  } = useSprint();
   const { timezone } = useUser();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [meetingData, setMeetingData] = useState<Meeting>();

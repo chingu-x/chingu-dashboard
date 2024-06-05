@@ -68,7 +68,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-y-1">
                 <h5 className="text-base font-semibold">{description}</h5>
-                <span className="text-[10px] text-neutral">{`Added by ${
+                <span className="text-[10px] text-neutral-focus">{`Added by ${
                   isCurrentUser ? "you" : firstName + " " + lastName
                 }`}</span>
               </div>
@@ -77,7 +77,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
                 <button
                   type="button"
                   onClick={handleClick}
-                  className="flex justify-end items-center w-12 h-10 p-0 m-0 bg-transparent border-none hover:bg-transparent gap-x-0"
+                  className="flex justify-end items-center w-12 h-10 p-0 m-0 bg-transparent border-none  hover:bg-transparent gap-x-0"
                   aria-label="feature menu"
                 >
                   <EllipsisVerticalIcon className="w-5 h-5 text-base-300" />

@@ -9,19 +9,21 @@ import Cell from "./components/Cell";
 import SprintItem from "./components/SprintItem";
 import Dot from "./components/Dot";
 import Legend from "./components/Legend";
-import { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
+import type { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
 import Button from "@/components/Button";
-import { Sprint } from "@/store/features/sprint/sprintSlice";
+import type { Sprint } from "@/store/features/sprint/sprintSlice";
 
 interface CalendarProps {
   currentSprintNumber?: number | null;
   sprintsData?: Sprint[];
   meetingsData?: EventList[];
+  voyageNumber?: number | null;
 }
 export default function Calendar({
   sprintsData,
   currentSprintNumber,
   meetingsData,
+  voyageNumber,
 }: CalendarProps) {
   const {
     cn,
@@ -32,7 +34,7 @@ export default function Calendar({
     setToday,
     selectDate,
     setSelectDate,
-    currentDate,
+    userDate,
     onArrowClick,
     currentMonth,
     currentYear,
@@ -42,12 +44,19 @@ export default function Calendar({
     getCalendarElementColor,
     setIsHoveredDate,
     onDotClick,
-  } = useCalendarLogic(sprintsData, currentSprintNumber, meetingsData);
+    getDayLabel,
+    selectedSprint,
+  } = useCalendarLogic(
+    sprintsData,
+    currentSprintNumber,
+    meetingsData,
+    voyageNumber,
+  );
 
   return (
     <div className="flex h-full w-full max-[1200px]:flex-col max-[1200px]:gap-y-4 max-[1200px]:items-center max-[1200px]:relative">
-      <div className="min-w-[400px] max-w-[400px] p-6 h-full min-[1200px]:border-r-2 border-base-100">
-        <div className="flex justify-center items-center">
+      <div className="min-w-[400px] max-w-[400px] p-6 h-full min-[1200px]:border-r-2 min-[1200px]:min-w-[600px] min-[1200px]:px-28 min-[1470px]:min-w-[400px] min-[1470px]:px-6 border-base-100 flex flex-col items-center">
+        <div className="flex w-full items-center">
           <div className="flex gap-10 items-center w-full justify-center min-[1200px]:relative">
             <ArrowLeftIcon
               className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute left-[14px] max-[1200px]:left-12"
@@ -77,7 +86,7 @@ export default function Calendar({
           ))}
         </div>
 
-        <div className="grid grid-cols-7 border border-base-100">
+        <div className="grid grid-cols-7 border border-base-100 max-w-[352px]">
           {generateDate(today.getMonth(), today.getFullYear()).map(
             ({ date, currentMonth, today }) => (
               <div
@@ -111,7 +120,7 @@ export default function Calendar({
                       }}
                     >
                       <RocketLaunchIcon
-                        className={`w-4 h-4 absolute left-0 right-0 bottom-[2px] m-auto cursor-pointer ${
+                        className={`w-4 h-4 absolute left-0 right-0 top-[1px] m-auto cursor-pointer ${
                           "text-" + getCalendarElementColor(date, currentMonth)
                         }`}
                       />
@@ -129,9 +138,18 @@ export default function Calendar({
         <div>
           <h1 className="text-lg font-semibold pb-3">{selectedDate}</h1>
           <div className="max-[1500px]:w-[90px] max-[1470px]:w-full">
-            {currentSprintNumber ? (
+            {getDayLabel() ? (
               <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
-                Sprint Week {currentSprintNumber}
+                {getDayLabel()}
+              </p>
+            ) : null}
+            {selectedDate && selectedSprint ? (
+              <p
+                className={`rounded-lg bg-primary-content p-3 text-base font-medium w-full ${
+                  getDayLabel() ? "mt-4" : ""
+                }`}
+              >
+                Sprint Week {selectedSprint}
               </p>
             ) : null}
             {meetingsData?.map((event) => {
@@ -139,25 +157,31 @@ export default function Calendar({
               const isSelectedDate = isSameDay(selectDate, eventDate);
 
               return isSelectedDate ? (
-                <SprintItem
-                  key={event.title}
-                  title={event.title}
-                  link={event.link ?? ""}
-                  time={format(eventDate, "h:mm a")}
-                />
+                <div key={event.title}>
+                  <SprintItem
+                    title={event.title}
+                    link={event.link ?? ""}
+                    time={format(eventDate, "h:mm a")}
+                  />
+                </div>
               ) : null;
             })}
+            {showDotConditions(selectDate).map((condition) =>
+              condition.check && condition.label ? (
+                <div key={condition.id}>
+                  <SprintItem title={condition.label} link={""} />
+                </div>
+              ) : null,
+            )}
           </div>
         </div>
         <Button
           className={`self-end p-1 h-[27px] mt-4 rounded text-base font-medium hover:bg-neutral ${
-            isSameDay(selectDate, currentDate)
-              ? "bg-primary"
-              : "bg-neutral-focus"
+            isSameDay(selectDate, userDate) ? "bg-primary" : "bg-neutral-focus"
           }`}
           onClick={() => {
-            setToday(currentDate);
-            setSelectDate(currentDate);
+            setToday(userDate);
+            setSelectDate(userDate);
           }}
         >
           Today

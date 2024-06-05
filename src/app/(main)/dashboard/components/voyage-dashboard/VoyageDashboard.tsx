@@ -6,7 +6,7 @@ import IdeationStateContent from "./IdeationStateContent";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
-import { getDashboardData } from "./getDashboardData";
+import { type EventList, getDashboardData } from "./getDashboardData";
 import {
   CHECKIN_STATUS,
   getFeaturesData,
@@ -16,8 +16,13 @@ import {
 } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
+import { getUser } from "@/utils/getUser";
+import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
 
-async function VoyageDashboard() {
+interface VoyageDashboardProps {
+  teamId?: string;
+}
+async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   //NOTE - Mocked value to show the filled state dashboard
   const filledState = true;
   const ideationData = filledState ? getIdeationData() : null;
@@ -25,16 +30,31 @@ async function VoyageDashboard() {
   const techStackData = filledState ? getTechStackData() : null;
   const resourceData = filledState ? getResourcesData() : null;
 
-  const { currentSprintNumber, sprintsData, meetingsData, user } =
-    await getDashboardData();
+  const [user, error] = await getUser();
 
-  return user ? (
+  let currentSprintNumber: number | null = null;
+  let sprintsData: Sprint[] = [];
+  let meetingsData: EventList[] = [];
+  let voyageNumber: number | null = null;
+  let voyageData: Voyage = {} as Voyage;
+
+  if (teamId !== undefined) {
+    const data = await getDashboardData(user, error, Number(teamId));
+    currentSprintNumber = data.currentSprintNumber;
+    sprintsData = data.sprintsData;
+    meetingsData = data.meetingsData;
+    voyageNumber = data.voyageNumber;
+    voyageData = data.voyageData;
+  }
+
+  return (
     <div className="flex flex-col min-[1470px]:grid min-[1470px]:grid-cols-2 gap-x-6 max-[1470px]:gap-y-6 w-full">
       <div className="col-span-1 flex flex-col gap-y-6 flex-grow-2">
         <CalendarWidget
           sprintsData={sprintsData ?? undefined}
           currentSprintNumber={currentSprintNumber}
           meetingsData={meetingsData}
+          voyageNumber={voyageNumber}
         />
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />
@@ -102,12 +122,9 @@ async function VoyageDashboard() {
           </DashboardWidget>
         </div>
       </div>
-      <EmptySprintProvider
-        sprints={sprintsData}
-        currentSprintNumber={currentSprintNumber ?? 1}
-      />
+      <EmptySprintProvider voyage={voyageData} />
     </div>
-  ) : null;
+  );
 }
 
 export default VoyageDashboard;

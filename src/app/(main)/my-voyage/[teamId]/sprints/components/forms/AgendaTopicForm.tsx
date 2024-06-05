@@ -54,7 +54,9 @@ export default function AgendaTopicForm() {
   ];
 
   const dispatch = useAppDispatch();
-  const { sprints } = useSprint();
+  const {
+    voyage: { sprints },
+  } = useSprint();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [topicData, setTopicData] = useState<Agenda>();
   const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);

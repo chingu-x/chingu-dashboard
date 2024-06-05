@@ -3,5 +3,9 @@ interface AvatarGroupProps {
 }
 
 export default function AvatarGroup({ children }: AvatarGroupProps) {
-  return <div className="flex -space-x-2 left-28">{children}</div>;
+  return (
+    <div className="flex flex-wrap -space-x-2 ml-1 left-28 col-span-2 ">
+      {children}
+    </div>
+  );
 }

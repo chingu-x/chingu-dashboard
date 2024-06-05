@@ -1,10 +1,7 @@
-"use client";
-
 import React from "react";
 import PreVoyageLinks from "./PreVoyageLinks";
 import PreVoyageBanner from "./PreVoyageBanner";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
-import { useAuth } from "@/store/hooks";
 
 function PreVoyageDashboard() {
   return (
@@ -31,13 +28,4 @@ function PreVoyageDashboard() {
   );
 }
 
-function PreVoyageDashboardWrapper() {
-  const { isAuthenticated } = useAuth();
-  if (isAuthenticated) {
-    return <PreVoyageDashboard />;
-  }
-
-  return null;
-}
-
-export default PreVoyageDashboardWrapper;
+export default PreVoyageDashboard;

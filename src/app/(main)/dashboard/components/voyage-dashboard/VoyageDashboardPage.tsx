@@ -2,10 +2,13 @@ import React, { Suspense } from "react";
 import VoyageDashboard from "./VoyageDashboard";
 import Spinner from "@/components/Spinner";
 
-function VoyageDashboardPage() {
+interface VoyageDashboardPageProps {
+  teamId?: string;
+}
+function VoyageDashboardPage({ teamId }: VoyageDashboardPageProps) {
   return (
     <Suspense fallback={<Spinner />}>
-      <VoyageDashboard />
+      <VoyageDashboard teamId={teamId} />
     </Suspense>
   );
 }
