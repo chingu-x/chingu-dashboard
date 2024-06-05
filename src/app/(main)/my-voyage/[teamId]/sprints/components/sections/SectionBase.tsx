@@ -143,12 +143,12 @@ export default function SectionBase({
   return (
     <div
       className={cn(
-        "p-10 rounded-2xl bg-base-100 border border-base-100",
+        "rounded-2xl border border-base-100 bg-base-100 p-10",
         isAdded && "bg-base-200",
       )}
     >
       <div className="flex items-center justify-between">
-        <h2 className="flex items-center gap-x-2 text-base-300 text-[25px] font-medium capitalize [&>*:first-child]:h-[30px] [&>*:first-child]:w-[30px]">
+        <h2 className="flex items-center gap-x-2 text-[25px] font-medium capitalize text-base-300 [&>*:first-child]:h-[30px] [&>*:first-child]:w-[30px]">
           {icon}
           {title}
         </h2>
@@ -159,7 +159,7 @@ export default function SectionBase({
             aria-label="add section"
             disabled={addSectionLoading || editMeetingLoading}
           >
-            <PlusCircleIcon className="w-10 h-10 text-base-300" />
+            <PlusCircleIcon className="h-10 w-10 text-base-300" />
           </button>
         )}
         <AnimatePresence mode="popLayout">
@@ -177,7 +177,7 @@ export default function SectionBase({
               onClick={handleToggle}
               aria-label={`close ${title} panel`}
             >
-              <ChevronUpIcon className="w-10 h-10 text-base-300" />
+              <ChevronUpIcon className="h-10 w-10 text-base-300" />
             </motion.button>
           )}
           {isAdded && !isOpen && (
@@ -194,7 +194,7 @@ export default function SectionBase({
               onClick={handleToggle}
               aria-label={`open ${title} panel`}
             >
-              <ChevronDownIcon className="w-10 h-10 text-base-300" />
+              <ChevronDownIcon className="h-10 w-10 text-base-300" />
             </motion.button>
           )}
         </AnimatePresence>

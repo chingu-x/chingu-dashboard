@@ -22,8 +22,8 @@ export default function CheckInSuccessModal() {
 
   return (
     <Modal isOpen={isOpen} title="" onClose={handleClose}>
-      <div className="grid grid-cols-[1fr_200px] max-w-[700px] gap-x-10 items-center">
-        <div className="flex flex-col py-10 gap-y-4 text-base-300">
+      <div className="grid max-w-[700px] grid-cols-[1fr_200px] items-center gap-x-10">
+        <div className="flex flex-col gap-y-4 py-10 text-base-300">
           <h3 className="text-[30px] font-bold">
             Check In Submission Recieved
           </h3>

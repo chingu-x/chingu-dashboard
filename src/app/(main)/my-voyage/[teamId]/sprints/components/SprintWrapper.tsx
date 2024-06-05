@@ -134,7 +134,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   const voyageProjectIsSubmitted = getVoyageProjectStatus(user, teamId);
 
   return (
-    <div className="flex flex-col w-full gap-y-10">
+    <div className="flex w-full flex-col gap-y-10">
       <VoyagePageBannerContainer
         title="Sprints"
         description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."

@@ -108,7 +108,7 @@ export function getOptions({
             <Image
               width={16}
               height={16}
-              className="capitalize rounded-full"
+              className="rounded-full capitalize"
               src={avatar}
               alt={`${firstName} ${lastName}`}
             />

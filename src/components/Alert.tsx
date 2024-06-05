@@ -12,7 +12,7 @@ interface AlertProps {
 function Alert({ context, message }: AlertProps) {
   const icon: Record<string, JSX.Element> = {
     success: <CheckCircleIcon />,
-    info: <InformationCircleIcon className="w-6 h-6" />,
+    info: <InformationCircleIcon className="h-6 w-6" />,
     error: <ExclamationTriangleIcon />,
     warning: <InformationCircleIcon />,
     neutral: <InformationCircleIcon />,
@@ -28,7 +28,7 @@ function Alert({ context, message }: AlertProps) {
 
   return (
     <div
-      className={`flex gap-x-4 items-center p-6 border rounded-2xl font-medium text-base text-base-300 shadow-sm ${customStyles[context]}`}
+      className={`flex items-center gap-x-4 rounded-2xl border p-6 text-base font-medium text-base-300 shadow-sm ${customStyles[context]}`}
     >
       <div>{icon[context]}</div>
       <span>{message}</span>

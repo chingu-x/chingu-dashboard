@@ -12,9 +12,9 @@ interface RadioGroupProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
   ({ options, leftTitle, rightTitle, ...props }, ref) => (
     <div className="flex flex-col gap-y-5">
-      <div className="h-[80px] w-full grid gap-x-4 items-center justify-between grid-cols-[min-content_1fr_min-content]">
+      <div className="grid h-[80px] w-full grid-cols-[min-content_1fr_min-content] items-center justify-between gap-x-4">
         {/* LEFT TITLE */}
-        <span className="text-base font-medium text-right text-base-300 whitespace-nowrap">
+        <span className="whitespace-nowrap text-right text-base font-medium text-base-300">
           {leftTitle}
         </span>
         {/* RADIO GROUP */}
@@ -32,7 +32,7 @@ const RadioGroup = React.forwardRef<HTMLInputElement, RadioGroupProps>(
           ))}
         </div>
         {/* RIGHT TITLE */}
-        <span className="text-base font-medium text-base-300 whitespace-nowrap">
+        <span className="whitespace-nowrap text-base font-medium text-base-300">
           {rightTitle}
         </span>
       </div>

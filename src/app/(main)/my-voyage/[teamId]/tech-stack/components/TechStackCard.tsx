@@ -78,7 +78,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   }, [isInput, isEditing]);
 
   return (
-    <div className="card min-w-[420px] h-80 text-base-300 bg-base-200 rounded-lg px-6 py-5 sm:w-96">
+    <div className="h-80 min-w-[420px] rounded-lg bg-base-200 px-6 py-5 text-base-300 sm:w-96">
       <div className="flex flex-row justify-start">
         {GetIcon(title)}
         <h3 className="self-center text-xl font-semibold text-base-300">
@@ -86,20 +86,19 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         </h3>
       </div>
 
-      <div className="h-40 pt-1 mt-6 overflow-y-auto">
+      <div className="mt-6 h-40 overflow-y-auto pt-1">
         <ul className="text-base-300">
           {data.map((element) => {
             const voteIsSubmitted = element.teamTechStackItemVotes.find(
               (item) => item.votedBy.member.id === userId,
             );
-
             return (
               <li
-                className="relative grid items-center grid-cols-6 mb-8 text-base "
+                className="relative mb-8 grid grid-cols-6 items-center text-base"
                 key={element.id}
               >
                 {isEditing === element.id && (
-                  <form className="h-12 col-span-6 -my-2">
+                  <form className="col-span-6 -my-2 h-12">
                     <TextInput
                       id={element.id.toString()}
                       ref={editRef}
@@ -130,7 +129,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                         ))}
                       </AvatarGroup>
                     </div>
-                    {voteIsSubmitted && (
+                    {voteIsSubmitted ? (
                       <RemoveVoteBtn
                         id={element.id}
                         openMenu={setOpenMenuId}
@@ -139,8 +138,9 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                         setIsEditing={setIsEditing}
                         isMenuOpen={openMenuId}
                       />
+                    ) : (
+                      <AddVoteBtn />
                     )}
-                    {!voteIsSubmitted && <AddVoteBtn />}
                   </>
                 )}
               </li>
@@ -166,7 +166,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <div className="px-3.5 py-2.5">
           <Button
             variant="outline"
-            className="justify-center w-full border-2"
+            className="w-full justify-center border-2"
             onClick={toggleAddItemInput}
           >
             Add Tech Stack

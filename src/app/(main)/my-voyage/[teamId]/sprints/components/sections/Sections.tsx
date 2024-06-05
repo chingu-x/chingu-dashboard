@@ -77,7 +77,7 @@ export default function Sections({
   const dividerIsVisible = canBeAddedSections.length !== 0;
 
   return (
-    <div className="flex flex-col overflow-hidden gap-y-10">
+    <div className="flex flex-col gap-y-10 overflow-hidden">
       {/* ADDED SECTIONS */}
       {addedSections.map((section) => (
         <SectionBase

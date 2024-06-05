@@ -44,7 +44,7 @@ function SignUpFormContainer({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      <div className="flex flex-col min-h-[90px]">
+      <div className="flex min-h-[90px] flex-col">
         <div className="flex flex-col">
           <TextInput
             id="email"
@@ -70,7 +70,7 @@ function SignUpFormContainer({
         </Button>
         <Link
           href={routePaths.signIn()}
-          className="font-semibold text-xs text-neutral-focus ml-1 self-center mb-[10px]"
+          className="mb-[10px] ml-1 self-center text-xs font-semibold text-neutral-focus"
         >
           Already have an account? Sign in now
         </Link>
