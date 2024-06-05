@@ -39,7 +39,7 @@ export async function fetchFormQuestions({
   }
 
   const token = getAccessToken();
-  const fetchSprintsAsync = () =>
+  const fetchFormAsync = () =>
     GET<FetchFormQuestionsResponse>(
       `api/v1/forms/${formId}`,
       token,
@@ -47,7 +47,7 @@ export async function fetchFormQuestions({
       cache,
     );
 
-  return await handleAsync(fetchSprintsAsync);
+  return await handleAsync(fetchFormAsync);
 }
 
 interface WeeklyCheckInWrapperProps {

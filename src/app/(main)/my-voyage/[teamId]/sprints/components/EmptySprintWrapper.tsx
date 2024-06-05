@@ -111,6 +111,7 @@ export default async function EmptySprintWrapper({
           params={params}
           sprintCheckinIsSubmitted={sprintCheckinIsSubmitted}
           voyageProjectIsSubmitted={voyageProjectIsSubmitted}
+          currentSprintNumber={currentSprintNumber}
         />
         <EmptySprintState />
         <EmptySprintProvider voyage={voyageData} />

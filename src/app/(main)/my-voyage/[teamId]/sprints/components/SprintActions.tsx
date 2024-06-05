@@ -13,7 +13,6 @@ import {
 
 import Button from "@/components/Button";
 import routePaths from "@/utils/routePaths";
-import { cn } from "@/lib/utils";
 
 interface SprintActionsProps {
   params: {
@@ -23,12 +22,14 @@ interface SprintActionsProps {
   };
   sprintCheckinIsSubmitted: boolean;
   voyageProjectIsSubmitted: boolean;
+  currentSprintNumber: number;
 }
 
 export default function SprintActions({
   params,
   sprintCheckinIsSubmitted,
   voyageProjectIsSubmitted,
+  currentSprintNumber,
 }: SprintActionsProps) {
   const [teamId, meetingId, sprintNumber] = [
     params.teamId,
@@ -36,13 +37,87 @@ export default function SprintActions({
     params.sprintNumber,
   ];
 
-  const submitCheckinIsAllowed = !sprintCheckinIsSubmitted;
+  const isCurrentSprint = sprintNumber === currentSprintNumber.toString();
+  const submitVoyageIsAllowed = sprintNumber === "5" || sprintNumber === "6";
 
-  const submitVoyageIsAllowed =
-    !voyageProjectIsSubmitted && (sprintNumber === "5" || sprintNumber === "6");
+  function renderWeeklyCheckinButton() {
+    if (sprintCheckinIsSubmitted) {
+      return (
+        <Button variant="primary" size="lg" className="group" disabled={true}>
+          <CheckCircleIcon className="h-[18px] w-[18px]" />
+          Check-in Submitted
+        </Button>
+      );
+    } else {
+      if (isCurrentSprint) {
+        return (
+          <Button
+            variant="primary"
+            size="lg"
+            className="group"
+            disabled={false}
+          >
+            <DocumentCheckIcon className="h-[18px] w-[18px]" />
+            Submit Check-in
+            <ArrowRightIcon className="h-[18px] w-0 group-hover:w-[18px] transition-all" />
+          </Button>
+        );
+      } else {
+        return (
+          <Button variant="primary" size="lg" className="group" disabled={true}>
+            <DocumentCheckIcon className="h-[18px] w-[18px]" />
+            Submit Check-in
+          </Button>
+        );
+      }
+    }
+  }
+
+  function renderSubmitVoyageButton() {
+    if (submitVoyageIsAllowed) {
+      return (
+        <Button
+          variant="secondary"
+          size="lg"
+          className="group"
+          disabled={false}
+        >
+          <RocketLaunchIcon className="h-[18px] w-[18px]" />
+          Submit Voyage
+          <ArrowRightIcon className="h-[18px] w-0 group-hover:w-[18px] transition-all" />
+        </Button>
+      );
+    } else {
+      if (voyageProjectIsSubmitted) {
+        return (
+          <Button
+            variant="secondary"
+            size="lg"
+            className="group"
+            disabled={true}
+          >
+            <RocketLaunchIcon className="h-[18px] w-[18px]" />
+            Voyage Submitted
+          </Button>
+        );
+      } else {
+        return (
+          <Button
+            variant="secondary"
+            size="lg"
+            className="group"
+            disabled={true}
+          >
+            <SolidRocketLaunchIcon className="h-[18px] w-[18px]" />
+            Submit Voyage
+          </Button>
+        );
+      }
+    }
+  }
+
   return (
     <div className="flex justify-between p-5 border shadow-md border-base-100 bg-base-200 rounded-2xl">
-      {/* TODO: add animated variant to Button.tsx ??? */}
       <Link
         href={
           meetingId
@@ -50,25 +125,7 @@ export default function SprintActions({
             : routePaths.dashboardPage()
         }
       >
-        <Button
-          variant="secondary"
-          size="lg"
-          className="group"
-          disabled={!submitVoyageIsAllowed}
-        >
-          {submitVoyageIsAllowed ? (
-            <RocketLaunchIcon className="h-[18px] w-[18px]" />
-          ) : (
-            <SolidRocketLaunchIcon className="h-[18px] w-[18px]" />
-          )}
-          {submitVoyageIsAllowed ? "Submit Voyage" : "Voyage Submitted"}
-          <ArrowRightIcon
-            className={cn(
-              "h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all",
-              !submitVoyageIsAllowed && "w-0",
-            )}
-          />
-        </Button>
+        {renderSubmitVoyageButton()}
       </Link>
       <Link
         href={
@@ -77,20 +134,7 @@ export default function SprintActions({
             : routePaths.dashboardPage()
         }
       >
-        <Button
-          variant="primary"
-          size="lg"
-          className="group"
-          disabled={!submitCheckinIsAllowed}
-        >
-          {submitCheckinIsAllowed ? (
-            <DocumentCheckIcon className="h-[18px] w-[18px]" />
-          ) : (
-            <CheckCircleIcon className="h-[18px] w-[18px]" />
-          )}
-          {submitCheckinIsAllowed ? "Submit Check-in" : "Check-in Submitted"}
-          <ArrowRightIcon className="h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all" />
-        </Button>
+        {renderWeeklyCheckinButton()}
       </Link>
       <Link
         href={
