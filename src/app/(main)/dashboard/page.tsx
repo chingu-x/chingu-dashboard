@@ -1,12 +1,21 @@
-import React from "react";
-import PreVoyageDashboard from "./components/pre-voyage-dashboard/PreVoyageDashboard";
-import VoyageDashboardPage from "./components/voyage-dashboard/VoyageDashboardPage";
+import { redirect } from "next/navigation";
+import { getUser } from "@/utils/getUser";
+import routePaths from "@/utils/routePaths";
 
-function DashboardPage() {
-  // TODO: Mocked temporary value
-  const isVoyageStarted = true;
+async function DashboardPage() {
+  const [user] = await getUser();
 
-  return isVoyageStarted ? <VoyageDashboardPage /> : <PreVoyageDashboard />;
+  const teamMember = user?.voyageTeamMembers.find(
+    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+  );
+
+  if (teamMember) {
+    redirect(
+      routePaths.VoyageMemberDashboardPage(teamMember?.voyageTeamId.toString()),
+    );
+  }
+
+  return <div>Default Dashboard</div>;
 }
 
 export default DashboardPage;

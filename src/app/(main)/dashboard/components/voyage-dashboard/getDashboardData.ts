@@ -1,17 +1,20 @@
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import { fetchSprints } from "@/app/(main)/my-voyage/[teamId]/sprints/components/RedirectToCurrentSprintWrapper";
-import { Sprint } from "@/store/features/sprint/sprintSlice";
+import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import { User } from "@/store/features/user/userSlice";
+import type { User } from "@/store/features/user/userSlice";
 import { fetchMeeting } from "@/app/(main)/my-voyage/[teamId]/sprints/components/SprintWrapper";
-import { getUser } from "@/utils/getUser";
+import type { AppError } from "@/types/types";
+import convertStringToDate from "@/utils/convertStringToDate";
 
 interface GetDashboardDataResponse {
   currentSprintNumber: number | null;
   sprintsData: Sprint[];
   user: User | null;
   meetingsData: EventList[];
+  voyageNumber: number | null;
+  voyageData: Voyage;
   errorMessage?: string;
 }
 
@@ -19,27 +22,17 @@ export type EventList = {
   title: string;
   date: string;
   link: string;
+  sprint: number;
 };
 
-export const getDashboardData = async (): Promise<GetDashboardDataResponse> => {
+export const getDashboardData = async (
+  user: User | null,
+  error: AppError | null,
+  teamId: number,
+): Promise<GetDashboardDataResponse> => {
   let sprintsData: Sprint[] = [];
-
-  const [user, error] = await getUser();
-
-  const teamMember = user?.voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-  );
-
-  const teamId = teamMember?.voyageTeamId;
-
-  if (!teamId) {
-    return {
-      currentSprintNumber: null,
-      sprintsData: [],
-      user: null,
-      meetingsData: [],
-    };
-  }
+  let voyageNumber: number | null = null;
+  let voyageData: Voyage = {} as Voyage;
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,
@@ -55,6 +48,8 @@ export const getDashboardData = async (): Promise<GetDashboardDataResponse> => {
       sprintsData: [],
       user: null,
       meetingsData: [],
+      voyageNumber: null,
+      voyageData: {} as Voyage,
       errorMessage: errorResponse,
     };
   }
@@ -65,13 +60,24 @@ export const getDashboardData = async (): Promise<GetDashboardDataResponse> => {
     if (error) {
       throw new Error(`Error: ${error.message}`);
     }
-    sprintsData = res!.voyage.sprints;
+
+    sprintsData = res!.sprints;
+    voyageNumber = Number(res!.number);
+    voyageData = res!;
   }
 
-  const { number } = getCurrentSprint(sprintsData) as Sprint;
-  const currentSprintNumber = number;
+  let currentSprintNumber = null;
+  if (sprintsData.length > 0) {
+    const { number } = getCurrentSprint(sprintsData) as Sprint;
+    currentSprintNumber = number;
+  }
 
-  const meetingsData: { title: string; date: string; link: string }[] = [];
+  const meetingsData: {
+    title: string;
+    date: string;
+    link: string;
+    sprint: number;
+  }[] = [];
 
   const fetchMeetingsPromises = sprintsData.map((sprint) =>
     fetchMeeting({
@@ -82,20 +88,19 @@ export const getDashboardData = async (): Promise<GetDashboardDataResponse> => {
 
   const fetchMeetingsResults = await Promise.all(fetchMeetingsPromises);
 
-  fetchMeetingsResults.forEach(([res, error], index) => {
+  fetchMeetingsResults.forEach(([res]) => {
     if (res) {
-      const { title, dateTime, meetingLink } = res;
-      const parsedDate = parseISO(dateTime);
+      const { title, dateTime, meetingLink, sprint } = res;
+      const parsedDate = convertStringToDate(dateTime, user?.timezone ?? "");
       const formattedDate = format(parsedDate, "yyyy-MM-dd h:mm a");
       meetingsData.push({
         title,
         date: formattedDate,
         link: meetingLink,
+        sprint: sprint.number,
       });
-    } else {
-      console.error(
-        `Error fetching meeting for sprint ${index + 1}: ${error?.message}`,
-      );
+    } else if (error) {
+      return `Error: ${error.message}`;
     }
   });
 
@@ -104,5 +109,7 @@ export const getDashboardData = async (): Promise<GetDashboardDataResponse> => {
     sprintsData,
     user,
     meetingsData,
+    voyageNumber,
+    voyageData,
   };
 };
