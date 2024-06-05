@@ -1,8 +1,10 @@
 import { redirect } from "next/navigation";
 
+import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import WeeklyCheckInForm from "./forms/WeeklyCheckInForm";
 
 import { fetchTeamDirectory } from "@/myVoyage/directory/components/DirectoryComponentWrapper";
+import { type Sprint, type Voyage } from "@/store/features/sprint/sprintSlice";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { GET } from "@/utils/requests";
@@ -13,6 +15,7 @@ import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/form/formsEnums";
 import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
 import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
+import { getCurrentSprint } from "@/utils/getCurrentSprint";
 
 interface FetchFormQuestionsProps {
   formId: number;
@@ -63,6 +66,7 @@ export default async function WeeklyCheckInWrapper({
   const sprintNumber = Number(params.sprintNumber);
   const teamId = Number(params.teamId);
 
+  let voyageData: Voyage;
   let teamMembers = [] as TeamMemberForCheckbox[];
 
   let description = "";
@@ -74,8 +78,8 @@ export default async function WeeklyCheckInWrapper({
     user,
     error,
     teamId,
-    args: { teamId, user },
-    func: fetchTeamDirectory,
+    args: { teamId },
+    func: fetchSprints,
   });
 
   if (errorResponse) {
@@ -83,48 +87,67 @@ export default async function WeeklyCheckInWrapper({
   }
 
   if (data) {
-    // Check if a checkin form for the current sprint has been submitted
-    const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
-      user,
-      sprintNumber,
-    );
-
-    if (sprintCheckinIsSubmitted) {
-      redirect(
-        routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString()),
-      );
-    }
-
     const [res, error] = data;
 
     if (error) {
       return `Error: ${error.message}`;
     }
-    if (res) {
-      const voyageTeamMemberId = user?.voyageTeamMembers.find(
-        (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
-      )?.id;
+    voyageData = res!;
 
-      // Get all teamMembers except for the current user
-      teamMembers = res.voyageTeamMembers
-        .map((member) => ({
-          id: member.id,
-          avatar: member.member.avatar,
-          firstName: member.member.firstName,
-          lastName: member.member.lastName,
-        }))
-        .filter((member) => member.id !== voyageTeamMemberId);
+    // Check if a user wants to submit a checkin form for the current sprint.
+    const { number } = getCurrentSprint(voyageData.sprints) as Sprint;
+    const currentSprintNumber = number;
+
+    if (currentSprintNumber !== sprintNumber) {
+      redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
+    } else {
+      // Check if a checkin form for the current sprint has been submitted.
+      const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
+        user,
+        sprintNumber,
+      );
+
+      if (sprintCheckinIsSubmitted) {
+        redirect(
+          routePaths.emptySprintPage(
+            teamId.toString(),
+            sprintNumber.toString(),
+          ),
+        );
+      }
+
+      // Fetch teamDirectory
+      const [res, error] = await fetchTeamDirectory({ teamId, user });
+      if (error) {
+        return `Error: ${error.message}`;
+      }
+      if (res) {
+        const voyageTeamMemberId = user?.voyageTeamMembers.find(
+          (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
+        )?.id;
+
+        // Get all teamMembers except for the current user
+        teamMembers = res.voyageTeamMembers
+          .map((member) => ({
+            id: member.id,
+            avatar: member.member.avatar,
+            firstName: member.member.firstName,
+            lastName: member.member.lastName,
+          }))
+          .filter((member) => member.id !== voyageTeamMemberId);
+      }
+
+      // Fetch form
+      const [formRes, formError] = await fetchFormQuestions({
+        formId: Forms.checkIn,
+      });
+
+      if (formError) {
+        return `Error: ${formError.message}`;
+      }
+      if (formRes && formRes?.description) description = formRes.description;
+      if (formRes && formRes?.questions) questions = formRes.questions;
     }
-
-    const [formRes, formError] = await fetchFormQuestions({
-      formId: Forms.checkIn,
-    });
-
-    if (formError) {
-      return `Error: ${formError.message}`;
-    }
-    if (formRes && formRes?.description) description = formRes.description;
-    if (formRes && formRes?.questions) questions = formRes.questions;
   } else {
     redirect(routePaths.dashboardPage());
   }
