@@ -2,7 +2,7 @@ import Alert from "@/components/Alert";
 
 export default function FinalizeIdeationBanner() {
   return (
-    <div className="flex flex-col flex-1 gap-y-4 justify-center max-w-[871px] w-full p-10 bg-base-200 rounded-2xl shadow-md">
+    <div className="flex w-full max-w-[871px] flex-1 flex-col justify-center gap-y-4 rounded-2xl bg-base-200 p-10 shadow-md">
       <h2 className="text-2xl font-semibold text-base-300">
         Finalize your choices
       </h2>

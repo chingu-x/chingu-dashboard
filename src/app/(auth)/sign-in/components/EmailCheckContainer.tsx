@@ -49,8 +49,8 @@ function EmailCheckContainer({
   }
 
   return (
-    <div className="flex flex-col items-center w-[400px] min-h-[652px] bg-base-200 rounded-2xl xl:ml-60 px-6 py-9">
-      <p className="text-base-300 text-2xl text-center mb-[26px] font-medium">
+    <div className="flex min-h-[652px] w-[400px] flex-col items-center rounded-2xl bg-base-200 px-6 py-9 xl:ml-60">
+      <p className="mb-[26px] text-center text-2xl font-medium text-base-300">
         Reset Link Sent
       </p>
       <div>
@@ -63,15 +63,15 @@ function EmailCheckContainer({
         />
       </div>
       <div className="flex flex-col items-center">
-        <p className="text-base-300 text-xl font-medium mt-8 mb-2">
+        <p className="mb-2 mt-8 text-xl font-medium text-base-300">
           Check Your Email Address
         </p>
-        <p className="text-base-300 text-base font-medium">
+        <p className="text-base font-medium text-base-300">
           If that email address exists, we will send an email to it with a link
           to reset your password. Please open it and click on the link in it to
           reset your password.
         </p>
-        <p className="text-base-300 text-base font-medium mt-6 mb-[60px] 3xl:mb-[166px]">
+        <p className="mb-[60px] mt-6 text-base font-medium text-base-300 3xl:mb-[166px]">
           If you have not received an email shortly, then please check your
           spam/trash folders or click the button below to request a new reset
           email.

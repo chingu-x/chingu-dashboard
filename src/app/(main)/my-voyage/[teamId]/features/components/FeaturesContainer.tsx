@@ -121,7 +121,7 @@ export default function FeaturesContainer({ data }: FeaturesContainerProps) {
   }, [data]);
 
   return (
-    <div className="grid items-start grid-cols-3 gap-x-10">
+    <div className="grid grid-cols-3 items-start gap-x-10">
       <DragDropContext onDragEnd={onDragEnd}>
         {orderedData.map((list) => (
           <List

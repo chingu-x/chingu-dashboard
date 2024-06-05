@@ -117,9 +117,9 @@ export default async function DirectoryComponentWrapper({
       </VoyagePageBannerContainer>
       <DirectoryProvider payload={teamDirectory} />
       {/* For screens > 1920px */}
-      <div className="flex flex-col w-full p-10 pb-4 bg-transparent border border-transparent border-base-100 rounded-2xl 3xl:bg-base-200 text-base-300 gap-y-10 3xl:gap-y-0">
+      <div className="flex w-full flex-col gap-y-10 rounded-2xl border border-transparent bg-transparent p-10 pb-4 text-base-300 3xl:gap-y-0 3xl:bg-base-200">
         {/* header - table only */}
-        <div className="items-center hidden mb-6 text-xl font-semibold text-base-300 3xl:grid 3xl:grid-cols-5">
+        <div className="mb-6 hidden items-center text-xl font-semibold text-base-300 3xl:grid 3xl:grid-cols-5">
           <h2>Name</h2>
           <h2>Discord ID</h2>
           <h2>Time Zone</h2>

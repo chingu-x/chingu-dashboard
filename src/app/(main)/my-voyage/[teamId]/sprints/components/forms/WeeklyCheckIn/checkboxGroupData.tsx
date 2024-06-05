@@ -54,7 +54,7 @@ export const TeamMembersOptions = [
         <Image
           width={16}
           height={16}
-          className="w-4 h-4 rounded-full"
+          className="h-4 w-4 rounded-full"
           src="https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=monsterid&r=x"
           alt="Larry"
         />
@@ -70,7 +70,7 @@ export const TeamMembersOptions = [
         <Image
           width={16}
           height={16}
-          className="w-4 h-4 rounded-full"
+          className="h-4 w-4 rounded-full"
           src="https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=identicon&r=x"
           alt="Leonardo"
         />
@@ -86,7 +86,7 @@ export const TeamMembersOptions = [
         <Image
           width={16}
           height={16}
-          className="w-4 h-4 rounded-full"
+          className="h-4 w-4 rounded-full"
           src="https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=robohash&r=x"
           alt="Jessica"
         />
