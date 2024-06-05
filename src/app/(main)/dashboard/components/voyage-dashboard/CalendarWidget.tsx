@@ -8,6 +8,8 @@ interface CalendarWidgetProps {
   currentSprintNumber?: number | null;
   meetingsData?: EventList[];
   voyageNumber?: number | null;
+  teamId?: string;
+  currentMeetingId?: number | null;
 }
 
 function CalendarWidget({
@@ -15,6 +17,8 @@ function CalendarWidget({
   currentSprintNumber,
   meetingsData,
   voyageNumber,
+  teamId,
+  currentMeetingId,
 }: CalendarWidgetProps) {
   return (
     <div className="w-full h-full bg-base-200 rounded-2xl flex flex-row border-2 border-base-100">
@@ -24,6 +28,8 @@ function CalendarWidget({
           currentSprintNumber={currentSprintNumber}
           meetingsData={meetingsData}
           voyageNumber={voyageNumber}
+          teamId={teamId}
+          currentMeetingId={currentMeetingId}
         />
       </div>
     </div>
