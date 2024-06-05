@@ -144,7 +144,7 @@ export default function Review({ data }: ReviewProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col pt-10 gap-y-2"
+      className="flex flex-col gap-y-2 pt-10"
     >
       <Textarea
         id="what_right"
@@ -177,7 +177,7 @@ export default function Review({ data }: ReviewProps) {
         type="submit"
         variant="outline"
         size="md"
-        className="self-center min-w-[75px]"
+        className="min-w-[75px] self-center"
         disabled={!isDirty || !isValid || editSectionLoading}
       >
         {editSectionLoading ? <Spinner /> : "Save"}

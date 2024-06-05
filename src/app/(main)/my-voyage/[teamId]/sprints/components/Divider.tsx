@@ -9,13 +9,13 @@ export default function Divider({ title, className }: DividerProps) {
   return (
     <p
       className={cn(
-        "flex items-center w-full text-base font-medium rounded-lg gap-x-10 text-neutral whitespace-nowrap",
+        "flex w-full items-center gap-x-10 whitespace-nowrap rounded-lg text-base font-medium text-neutral",
         className,
       )}
     >
-      <span className="w-full bg-neutral h-[1px]" />
+      <span className="h-px w-full bg-neutral" />
       {title}
-      <span className="w-full bg-neutral h-[1px]" />
+      <span className="h-px w-full bg-neutral" />
     </p>
   );
 }

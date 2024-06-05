@@ -15,7 +15,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-y-2 mt-2">
+    <div className="mt-2 flex flex-col items-center justify-center gap-y-2">
       <h2>Something went wrong!</h2>
       <Button type="button" onClick={() => reset()}>
         Try again

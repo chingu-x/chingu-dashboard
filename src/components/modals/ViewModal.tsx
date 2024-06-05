@@ -55,7 +55,7 @@ export default function ViewModal() {
             {url}
           </Link>
         </ModalSection>
-        <div className="p-1 mb-4">
+        <div className="mb-4 p-1">
           <p className="mb-2 font-bold">
             Would you like to see this message again?
           </p>
@@ -66,19 +66,19 @@ export default function ViewModal() {
             onChange={handleChange}
           />
         </div>
-        <div className="flex justify-between w-full h-16">
+        <div className="flex h-16 w-full justify-between">
           <Button
             size="lg"
             variant="neutral"
             onClick={handleClose}
-            className="w-3/6 m-1"
+            className="m-1 w-3/6"
           >
             Go Back
           </Button>
           <Button
             size="lg"
             variant="primary"
-            className="w-3/6 m-1"
+            className="m-1 w-3/6"
             onClick={openLink}
           >
             Continue

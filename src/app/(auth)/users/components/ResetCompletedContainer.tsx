@@ -5,8 +5,8 @@ import Banner from "@/components/banner/Banner";
 
 function ResetCompletedContainer() {
   return (
-    <div className="w-[400px] min-h-[349px] bg-base-200 rounded-2xl p-6 flex flex-col items-center xl:ml-60">
-      <p className="text-base-300 text-2xl text-center mt-2.5 mb-[22px] font-medium">
+    <div className="flex min-h-[349px] w-[400px] flex-col items-center rounded-2xl bg-base-200 p-6 xl:ml-60">
+      <p className="mb-[22px] mt-2.5 text-center text-2xl font-medium text-base-300">
         Password Reset!
       </p>
       <Banner
@@ -16,10 +16,10 @@ function ResetCompletedContainer() {
         width="w-[125px]"
         alt="Reset Password Image"
       />
-      <p className="text-base-300 text-xl font-medium pb-8 text-center">
+      <p className="pb-8 text-center text-xl font-medium text-base-300">
         Password Reset Successfully
       </p>
-      <p className="text-base-300 text-base font-medium pb-8">
+      <p className="pb-8 text-base font-medium text-base-300">
         Your password has been reset, please click the button below to sign in
         to access your Chingu account.
       </p>

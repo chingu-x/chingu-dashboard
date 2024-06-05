@@ -126,8 +126,8 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
   }, [id, getVoteUsers]);
 
   return (
-    <div className={cn("w-[200px] bg-base-100 rounded-lg", className)}>
-      <section className="flex flex-col items-start p-4 gap-y-4">
+    <div className={cn("w-[200px] rounded-lg bg-base-100", className)}>
+      <section className="flex flex-col items-start gap-y-4 p-4">
         <h1 className="text-3xl font-semibold text-base-300">{users.length}</h1>
         <h2 className="text-xl font-semibold text-base-300">{`Vote${
           users.length > 1 ? "s" : ""

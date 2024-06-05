@@ -48,7 +48,7 @@ export default function Stepper({
               <div
                 key={name}
                 className={cn(
-                  "flex flex-1 last:flex-none relative last:after:contents-none after:absolute after:content-[''] after:h-[7px] after:w-full after:top-1/2 after:-translate-y-1/2 after:-z-10",
+                  "last:after:contents-none relative flex flex-1 after:absolute after:top-1/2 after:-z-10 after:h-[7px] after:w-full after:-translate-y-1/2 after:content-[''] last:flex-none",
                   "after:bg-base-100",
                 )}
               >
@@ -65,9 +65,9 @@ export default function Stepper({
                 ) : (
                   <div
                     className={cn(
-                      "text-center w-[100px] h-[18px] rounded-full",
+                      "h-[18px] w-[100px] rounded-full text-center",
                       status === "current" &&
-                        "border-2 border-neutral h-[20px]",
+                        "h-[20px] border-2 border-neutral",
                       statusColor[status],
                     )}
                   ></div>

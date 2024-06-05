@@ -16,11 +16,11 @@ export const CheckboxGroupItem = React.forwardRef<
   HTMLInputElement,
   CheckboxGroupItemProps
 >(({ id, label, className, ...props }, ref) => (
-  <div className="relative flex items-center w-full gap-x-4">
+  <div className="relative flex w-full items-center gap-x-4">
     <Label
       htmlFor={id}
       className={cn(
-        "flex items-center normal-case cursor-pointer text-neutral-focus gap-x-4 group",
+        "group flex cursor-pointer items-center gap-x-4 normal-case text-neutral-focus",
         className,
       )}
     >
@@ -29,9 +29,9 @@ export const CheckboxGroupItem = React.forwardRef<
         type="checkbox"
         ref={ref}
         {...props}
-        className="hidden peer"
+        className="peer hidden"
       />
-      <span className="flex items-center justify-center w-6 h-6 border rounded bg-base-200 border-neutral/40 transition-all [&>*]:hidden group-hover:bg-base-100 peer-checked:border-base-300 [&>*]:text-base-300 peer-checked:[&>*]:block group-hover:peer-checked:[&>*]:text-neutral-content group-hover:peer-checked:border-neutral-content">
+      <span className="flex h-6 w-6 items-center justify-center rounded border border-neutral/40 bg-base-200 transition-all group-hover:bg-base-100 peer-checked:border-base-300 group-hover:peer-checked:border-neutral-content [&>*]:hidden [&>*]:text-base-300 peer-checked:[&>*]:block group-hover:peer-checked:[&>*]:text-neutral-content">
         <CheckIcon className="hidden transition-all" />
       </span>
       <span className="transition-all peer-checked:text-base-300">{label}</span>
