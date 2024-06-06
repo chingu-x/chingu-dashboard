@@ -19,6 +19,7 @@ import useServerAction from "@/hooks/useServerAction";
 import routePaths from "@/utils/routePaths";
 import { createFormResponseBody } from "@/utils/form/createFormResponseBody";
 import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
+import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 
 interface WeeklyCheckingFormProps {
   params: {
@@ -38,12 +39,17 @@ export default function WeeklyCheckingForm({
 }: WeeklyCheckingFormProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [teamId, sprintNumber] = [params.teamId, params.sprintNumber];
+  const [teamId, sprintNumber] = [
+    Number(params.teamId),
+    Number(params.sprintNumber),
+  ];
 
-  const { voyageTeamMembers } = useUser();
-  const voyageTeamMemberId = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
-  )?.id;
+  const user = useUser();
+  const { voyageTeamMemberId } = getCurrentVoyageTeam({
+    teamId,
+    user,
+    error: null,
+  });
 
   const { validationSchema, defaultValues } = createValidationSchema(questions);
 
