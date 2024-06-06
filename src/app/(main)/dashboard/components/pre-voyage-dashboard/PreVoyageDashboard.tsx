@@ -6,13 +6,13 @@ import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSuppor
 function PreVoyageDashboard() {
   return (
     <div className="flex flex-row gap-x-6">
-      <div className="flex flex-col gap-y-6 flex-grow-1 w-full">
-        <div className="w-full h-full p-6 bg-base-200 rounded-2xl border-2 border-base-100">
+      <div className="flex w-full grow flex-col gap-y-6">
+        <div className="h-full w-full rounded-2xl border-2 border-base-100 bg-base-200 p-6">
           <div>
-            <p className="text-[25px] font-semibold	">
+            <p className="text-[25px] font-semibold">
               Before your Voyage starts...
             </p>
-            <p className="font-medium	text-base">
+            <p className="text-base font-medium">
               Explore Chingu&apos;s Knowledge Hub to prepare for your Voyage
               with information on tools, Agile, Scrum, Git, Teamwork, and more.
             </p>
@@ -21,7 +21,7 @@ function PreVoyageDashboard() {
         </div>
         <VoyageSupport />
       </div>
-      <div className="flex flex-grow-1 w-full border-2 border-base-100">
+      <div className="flex w-full grow border-2 border-base-100">
         <PreVoyageBanner />
       </div>
     </div>

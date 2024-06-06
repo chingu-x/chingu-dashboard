@@ -18,7 +18,7 @@ export default function Avatar({
   return (
     <div
       className={cn(
-        "border border-neutral px-0 rounded-full cursor-pointer overflow-hidden shrink-1",
+        "shrink-1 cursor-pointer overflow-hidden rounded-full border border-neutral px-0",
         customClassName,
       )}
     >

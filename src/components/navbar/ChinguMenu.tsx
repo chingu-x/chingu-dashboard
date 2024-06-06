@@ -6,7 +6,7 @@ import routePaths from "@/utils/routePaths";
 export default function ChinguMenu() {
   return (
     <Link href={routePaths.dashboardPage()}>
-      <div className="flex flex-col items-center gap-2 cursor-pointer sm:flex-row">
+      <div className="flex cursor-pointer flex-col items-center gap-2 sm:flex-row">
         <Image
           src={chinguLogo}
           width={50}
@@ -14,7 +14,7 @@ export default function ChinguMenu() {
           alt="Chingu Logo"
           priority={true}
         />
-        <h2 className="font-semibold text-base-300 text-xs sm:text-lg">
+        <h2 className="text-xs font-semibold text-base-300 sm:text-lg">
           Chingu
         </h2>
       </div>

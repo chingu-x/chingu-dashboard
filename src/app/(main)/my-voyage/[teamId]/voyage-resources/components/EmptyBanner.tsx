@@ -2,8 +2,8 @@ import Banner from "@/components/banner/Banner";
 
 export default function EmptyBanner() {
   return (
-    <div className="flex items-center w-5/6 m-6">
-      <div className="text-lg font-medium text-base-300 w-1/2 m-2">
+    <div className="m-6 flex w-5/6 items-center">
+      <div className="m-2 w-1/2 text-lg font-medium text-base-300">
         <h1 className="text-lg">Be The First to Share!</h1>
         <p className="text-sm">
           It looks like no one has posted anything yet, but don&apos;t worry,

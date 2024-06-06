@@ -49,8 +49,8 @@ export default function ContributionCard({
   }, [member, id]);
 
   return (
-    <div className={cn("w-[200px] bg-base-100 rounded-lg", className)}>
-      <section className="flex flex-col items-start p-4 gap-y-4">
+    <div className={cn("w-[200px] rounded-lg bg-base-100", className)}>
+      <section className="flex flex-col items-start gap-y-4 p-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
         <Badge title={member.firstName} avatarUrlImage={member.avatar} />
         {ownVote && !isIdeationFinalized ? (

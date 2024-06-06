@@ -27,7 +27,7 @@ export default function AgendaTopic({
       key={topic.id}
       layout
       className={cn(
-        "flex flex-col w-full p-5 rounded-lg bg-base-100 gap-y-4",
+        "flex w-full flex-col gap-y-4 rounded-lg bg-base-100 p-5",
         topic.status && "bg-neutral-content",
       )}
     >
@@ -43,14 +43,14 @@ export default function AgendaTopic({
             disabled={statusButtonDisabled}
           >
             {topic.status ? (
-              <CheckCircleIconSolid className="w-5 h-5 text-base-300 stroke-[1.5px]" />
+              <CheckCircleIconSolid className="h-5 w-5 stroke-[1.5px] text-base-300" />
             ) : (
-              <CheckCircleIcon className="w-5 h-5 text-base-300 stroke-[1.5px]" />
+              <CheckCircleIcon className="h-5 w-5 stroke-[1.5px] text-base-300" />
             )}
           </IconButton>
         </div>
       </div>
-      <p className="whitespace-pre-wrap py-[10px] px-[14px] text-base font-medium text-neutral-focus bg-base-200 rounded-lg border-2 border-neutral/40 ">
+      <p className="whitespace-pre-wrap rounded-lg border-2 border-neutral/40 bg-base-200 px-[14px] py-[10px] text-base font-medium text-neutral-focus">
         {topic.description}
       </p>
     </motion.li>

@@ -12,7 +12,7 @@ export default function BaseFormPage({
   children,
 }: BaseFormPageProps) {
   return (
-    <div className="flex flex-col w-full gap-y-10 max-w-[871px] px-10 mx-auto">
+    <div className="mx-auto flex w-full max-w-[871px] flex-col gap-y-10 px-10">
       <FormBanner title={title} description={description} />
       {children}
     </div>
