@@ -5,6 +5,11 @@ import { useParams } from "next/navigation";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
+import {
+  addTechItem,
+  editTechItem,
+} from "@/myVoyage/tech-stack/techStackService";
+import getTechCategory from "@/myVoyage/tech-stack/components/getTechCategory";
 import TextInput from "@/components/inputs/TextInput";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
@@ -12,9 +17,8 @@ import Button from "@/components/Button";
 import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
 import { useUser, useAppDispatch, useAppSelector } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
-import { addTechItem, editTechItem } from "../techStackService";
-import getTechCategory from "./getTechCategory";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import Spinner from "@/components/Spinner";
 
 interface TechStackCardProps {
   title: string;
@@ -35,13 +39,15 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const voyageTeamMembers = useAppSelector(
     (state) => state.user?.voyageTeamMembers || [],
   );
-  const currentTeam = useMemo(() => {
-    return voyageTeamMembers.filter(
-      (team) =>
-        team.voyageTeam.voyage.status.name === "Active" &&
-        team.voyageTeamId === teamId,
-    );
-  }, [voyageTeamMembers, teamId]);
+  const currentTeam = useMemo(
+    () =>
+      voyageTeamMembers.filter(
+        (team) =>
+          team.voyageTeam.voyage.status.name === "Active" &&
+          team.voyageTeamId === teamId,
+      ),
+    [voyageTeamMembers, teamId],
+  );
   const voyageTeamMemberId = currentTeam.length > 0 ? currentTeam[0].id : -1;
 
   const [openMenuId, setOpenMenuId] = useState(-1);
@@ -67,7 +73,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const handleAddItem = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const techName = inputRef.current?.value ?? "";
-    const [res, error] = await addTechItemAction({
+    const [, error] = await addTechItemAction({
       teamId,
       techName,
       techCategoryId,
@@ -88,7 +94,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   ) => {
     e?.preventDefault();
     const techName = editRef.current?.value ?? "";
-    const [res, error] = await editTechItemAction({
+    const [, error] = await editTechItemAction({
       techItemId,
       techName,
     });
@@ -124,6 +130,15 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       setIsDuplicate(!!isDuplicateInAdding);
     }
   };
+  function LoadingSpinner() {
+    if (addTechItemLoading || editTechItemLoading) {
+      return (
+        <div className="ml-4">
+          <Spinner />
+        </div>
+      );
+    }
+  }
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -157,6 +172,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <h3 className="self-center text-xl font-semibold text-base-300">
           {title}
         </h3>
+        <LoadingSpinner />
       </div>
 
       <div className="mt-6 h-40 overflow-y-auto pt-1">

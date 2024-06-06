@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { deleteTechItem } from "@/myVoyage/tech-stack/techStackService";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { deleteTechItem } from "../techStackService";
 import EditMenu from "@/components/EditMenu";
 
 interface SettingsMenuProps {
