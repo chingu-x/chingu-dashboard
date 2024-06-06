@@ -12,7 +12,7 @@ import Button from "@/components/Button";
 import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
 import { useUser, useAppDispatch } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
-import { addTechItem } from "../techStackService";
+import { addTechItem, editTechItem } from "../techStackService";
 import getTechCategory from "./getTechCategory";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
@@ -41,6 +41,12 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     setIsLoading: setAddTechItemLoading,
   } = useServerAction(addTechItem);
 
+  const {
+    runAction: editTechItemAction,
+    isLoading: editTechItemLoading,
+    setIsLoading: setEditTechItemLoading,
+  } = useServerAction(editTechItem);
+
   const toggleAddItemInput = () => {
     setIsInput(!isInput);
   };
@@ -59,7 +65,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       voyageTeamMemberId,
     });
     if (error) {
-      console.log(error);
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
       );
@@ -67,10 +72,26 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     setAddTechItemLoading(false);
   };
 
-  const handleEdit = async (event: FormEvent<HTMLFormElement>) => {
-    event?.preventDefault();
-    const updatedItem = editRef.current?.value;
-    console.log(updatedItem);
+  const handleEdit = async (
+    e: FormEvent<HTMLFormElement>,
+    techItemId: number,
+  ) => {
+    e?.preventDefault();
+    const techName = editRef.current?.value ?? "";
+
+    const [res, error] = await editTechItemAction({
+      techItemId,
+      techName,
+    });
+
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    }
+    setEditTechItemLoading(false);
+    setIsEditing(-1);
+    handleSettingsMenuClose();
   };
 
   const handleSettingsMenuClose = () => {
@@ -147,7 +168,10 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                 key={element.id}
               >
                 {isEditing === element.id && (
-                  <form onSubmit={handleEdit} className="col-span-6 -my-2 h-12">
+                  <form
+                    onSubmit={(e) => handleEdit(e, element.id)}
+                    className="col-span-6 -my-2 h-12"
+                  >
                     <TextInput
                       id={element.id.toString()}
                       ref={editRef}
