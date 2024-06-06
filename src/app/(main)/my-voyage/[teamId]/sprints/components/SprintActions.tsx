@@ -118,22 +118,10 @@ export default function SprintActions({
 
   return (
     <div className="flex justify-between rounded-2xl border border-base-100 bg-base-200 p-5 shadow-md">
-      <Link
-        href={
-          meetingId
-            ? routePaths.submitVoyagePage(teamId, sprintNumber)
-            : routePaths.dashboardPage()
-        }
-      >
+      <Link href={routePaths.submitVoyagePage(teamId, sprintNumber)}>
         {renderSubmitVoyageButton()}
       </Link>
-      <Link
-        href={
-          meetingId
-            ? routePaths.weeklyCheckInPage(teamId, sprintNumber)
-            : routePaths.dashboardPage()
-        }
-      >
+      <Link href={routePaths.weeklyCheckInPage(teamId, sprintNumber)}>
         {renderWeeklyCheckinButton()}
       </Link>
       <Link
