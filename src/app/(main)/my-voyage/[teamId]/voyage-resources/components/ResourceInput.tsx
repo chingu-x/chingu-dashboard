@@ -67,10 +67,10 @@ export default function ResourceInput() {
 
   return (
     <form
-      className="flex items-center w-full p-1 shadow-lg bg-base-200 rounded-xl"
+      className="flex w-full items-center rounded-xl bg-base-200 p-1 shadow-lg"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex flex-col w-3/4 m-4 ">
+      <div className="m-4 flex w-3/4 flex-col">
         <TextInput
           id="url"
           placeholder="Paste your resource link here."
@@ -89,7 +89,7 @@ export default function ResourceInput() {
         />
       </div>
       <Button
-        className="w-1/4 m-4 whitespace-nowrap"
+        className="m-4 w-1/4 whitespace-nowrap"
         type="submit"
         disabled={!isValid}
       >

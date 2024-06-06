@@ -25,11 +25,11 @@ export default function RemoveVoteBtn({
   };
 
   return (
-    <div className="flex justify-end items-center w-[165px] col-span-2 relative">
+    <div className="relative col-span-2 flex w-[165px] items-center justify-end">
       {numberOfVotes < 2 && (
-        <div className="w-1/6 h-1/6">
+        <div className="h-1/6 w-1/6">
           <EllipsisVerticalIcon
-            className="rounded-xl hover:bg-base-100 mr-2  hover:cursor-pointer"
+            className="mr-2 rounded-xl hover:cursor-pointer hover:bg-base-100"
             onClick={handleClick}
           />
           {isMenuOpen === id && (
@@ -44,7 +44,7 @@ export default function RemoveVoteBtn({
       <Button
         variant="error"
         size="xs"
-        className="rounded-3xl justify-self-end font-semibold"
+        className="justify-self-end rounded-3xl font-semibold"
       >
         Remove Vote
       </Button>

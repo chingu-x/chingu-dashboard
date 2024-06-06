@@ -18,35 +18,35 @@ export default function GettingHelpModal() {
 
   return (
     <Modal isOpen={isOpen} title="Getting Help" onClose={handleClose}>
-      <div className="flex flex-col max-w-[700px]">
-        <p className="text-base font-semibold mb-2.5">Roundtable Discussion</p>
+      <div className="flex max-w-[700px] flex-col">
+        <p className="mb-2.5 text-base font-semibold">Roundtable Discussion</p>
         <p className="text-base">
           If you have questions about Chingu or the Voyage process join one or
           both of the Chingu Roundtable sessions held every:
         </p>
-        <ul className="list-disc ml-6 mb-4">
+        <ul className="mb-4 ml-6 list-disc">
           <li>Wednesday @ 5:00 PM CT (Chicago) </li>
           <li>Saturday @ 9:00 AM CT (Chicago)</li>
         </ul>
-        <p className="text-base mb-10">
+        <p className="mb-10 text-base">
           These sessions give you the opportunity to ask your questions in real
           time with a member of the Chingu team. These are held in our Discord
           community in the <span className="font-bold">#townhall-chat</span> &{" "}
           <span className="font-bold">#townhall-voice</span> channels.
         </p>
-        <p className="text-base font-semibold mb-2.5">
+        <p className="mb-2.5 text-base font-semibold">
           Stuck on a coding issue?
         </p>
-        <p className="text-base mb-10">
+        <p className="mb-10 text-base">
           Chingu&apos;s are famous for helping each other with technical
           problems and you can tap into this generosity by posting your
           technical questions and issues in the{" "}
           <span className="font-bold">#coding-help</span> Discord channel.
         </p>
-        <p className="text-base font-semibold mb-2.5">
+        <p className="mb-2.5 text-base font-semibold">
           Reaching out to Chingu Admin
         </p>
-        <p className="text-base mb-2.5">
+        <p className="mb-2.5 text-base">
           If you need assistance from our Admin Team, you can ask questions
           anytime in the <span className="font-bold">#admin-feedback</span>{" "}
           channel or you can open up a support ticket by clicking on the{" "}

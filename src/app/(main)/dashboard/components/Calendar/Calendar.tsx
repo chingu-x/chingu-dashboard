@@ -60,21 +60,21 @@ export default function Calendar({
   );
 
   return (
-    <div className="flex h-full w-full max-[1200px]:flex-col max-[1200px]:gap-y-4 max-[1200px]:items-center max-[1200px]:relative">
-      <div className="min-w-[400px] max-w-[400px] p-6 h-full min-[1200px]:border-r-2 min-[1200px]:min-w-[600px] min-[1200px]:px-28 min-[1470px]:min-w-[400px] min-[1470px]:px-6 border-base-100 flex flex-col items-center">
+    <div className="flex h-full w-full max-[1200px]:relative max-[1200px]:flex-col max-[1200px]:items-center max-[1200px]:gap-y-4">
+      <div className="flex h-full min-w-[400px] max-w-[400px] flex-col items-center border-base-100 p-6 min-[1200px]:min-w-[600px] min-[1200px]:border-r-2 min-[1200px]:px-28 min-[1470px]:min-w-[400px] min-[1470px]:px-6">
         <div className="flex w-full items-center">
-          <div className="flex gap-10 items-center w-full justify-center min-[1200px]:relative">
+          <div className="flex w-full items-center justify-center gap-10 min-[1200px]:relative">
             <ArrowLeftIcon
-              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute left-[14px] max-[1200px]:left-12"
+              className="absolute left-[14px] h-5 w-5 cursor-pointer transition-all hover:scale-105 max-[1200px]:left-12"
               onClick={() => {
                 onArrowClick(-1);
               }}
             />
-            <h1 className="text-2xl select-none font-semibold">
+            <h1 className="select-none text-2xl font-semibold">
               {currentMonth} {currentYear}
             </h1>
             <ArrowRightIcon
-              className="w-5 h-5 cursor-pointer hover:scale-105 transition-all absolute right-[14px] max-[1200px]:right-12"
+              className="absolute right-[14px] h-5 w-5 cursor-pointer transition-all hover:scale-105 max-[1200px]:right-12"
               onClick={() => {
                 onArrowClick(1);
               }}
@@ -85,14 +85,14 @@ export default function Calendar({
           {days.map((day) => (
             <h1
               key={day}
-              className="text-sm text-center h-14 w-14 grid place-content-center text-base-300 select-none"
+              className="grid h-14 w-14 select-none place-content-center text-center text-sm text-base-300"
             >
               {day}
             </h1>
           ))}
         </div>
 
-        <div className="grid grid-cols-7 border border-base-100 max-w-[352px]">
+        <div className="grid max-w-[352px] grid-cols-7 border border-base-100">
           {generateDate(today.getMonth(), today.getFullYear()).map(
             ({ date, currentMonth, today }) => (
               <div
@@ -126,7 +126,7 @@ export default function Calendar({
                       }}
                     >
                       <RocketLaunchIcon
-                        className={`w-4 h-4 absolute left-0 right-0 top-[1px] m-auto cursor-pointer ${
+                        className={`absolute inset-x-0 top-px m-auto h-4 w-4 cursor-pointer ${
                           "text-" + getCalendarElementColor(date, currentMonth)
                         }`}
                       />
@@ -140,18 +140,18 @@ export default function Calendar({
 
         <Legend />
       </div>
-      <div className="h-full w-full flex flex-col justify-between p-6">
+      <div className="flex h-full w-full flex-col justify-between p-6">
         <div>
-          <h1 className="text-lg font-semibold pb-3">{selectedDate}</h1>
+          <h1 className="pb-3 text-lg font-semibold">{selectedDate}</h1>
           <div className="max-[1500px]:w-[90px] max-[1470px]:w-full">
             {getDayLabel() ? (
-              <p className="rounded-lg bg-primary-content p-3 text-base font-medium w-full">
+              <p className="w-full rounded-lg bg-primary-content p-3 text-base font-medium">
                 {getDayLabel()}
               </p>
             ) : null}
             {selectedDate && selectedSprint ? (
               <p
-                className={`rounded-lg bg-primary-content p-3 text-base font-medium w-full ${
+                className={`w-full rounded-lg bg-primary-content p-3 text-base font-medium ${
                   getDayLabel() ? "mt-4" : ""
                 }`}
               >
@@ -186,7 +186,7 @@ export default function Calendar({
           </div>
         </div>
         <Button
-          className={`self-end p-1 h-[27px] mt-4 rounded text-base font-medium hover:bg-neutral ${
+          className={`mt-4 h-[27px] self-end rounded p-1 text-base font-medium hover:bg-neutral ${
             isSameDay(selectDate, userDate) ? "bg-primary" : "bg-neutral-focus"
           }`}
           onClick={() => {

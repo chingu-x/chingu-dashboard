@@ -50,8 +50,8 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   }
 
   return (
-    <div className="flex flex-col min-[1470px]:grid min-[1470px]:grid-cols-2 gap-x-6 max-[1470px]:gap-y-6 w-full">
-      <div className="col-span-1 flex flex-col gap-y-6 flex-grow-2">
+    <div className="flex w-full flex-col gap-x-6 max-[1470px]:gap-y-6 min-[1470px]:grid min-[1470px]:grid-cols-2">
+      <div className="col-span-1 flex grow-[2] flex-col gap-y-6">
         <CalendarWidget
           sprintsData={sprintsData ?? undefined}
           currentSprintNumber={currentSprintNumber}
@@ -63,8 +63,8 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />
       </div>
-      <div className="col-span-1 flex flex-grow-1 flex-col w-full bg-base-200 rounded-2xl p-4 border-2 border-base-100">
-        <p className="text-[25px] font-semibold mb-[23px]">
+      <div className="col-span-1 flex w-full grow flex-col rounded-2xl border-2 border-base-100 bg-base-200 p-4">
+        <p className="mb-[23px] text-[25px] font-semibold">
           My Voyage Overview
         </p>
         <div className="flex flex-col gap-y-4">
@@ -84,7 +84,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             ) : null}
           </DashboardWidget>
           <div className="flex flex-row justify-between gap-x-4 max-[1200px]:flex-col max-[1200px]:gap-y-4">
-            <div className="flex flex-grow-1 w-full">
+            <div className="flex w-full grow">
               <DashboardWidget
                 title="What features will you develop?"
                 link="/my-voyage/features"
@@ -97,7 +97,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
                 ) : null}
               </DashboardWidget>
             </div>
-            <div className="flex flex-grow-1 w-full">
+            <div className="flex w-full grow">
               <DashboardWidget
                 title="Choose your tech stack "
                 link="/my-voyage/tech-stack"

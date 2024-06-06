@@ -9,23 +9,23 @@ interface EditMenuProps {
 
 export default function EditMenu({ handleClick, handleDelete }: EditMenuProps) {
   return (
-    <div className="flex flex-col justify-evenly items-center w-[150px] h-[116px] bg-base-200 border border-base-100 rounded-lg shadow-lg absolute top-0 right-0 z-10">
+    <div className="absolute right-0 top-0 z-10 flex h-[116px] w-[150px] flex-col items-center justify-evenly rounded-lg border border-base-100 bg-base-200 shadow-lg">
       <Button
         variant="outline"
         size="sm"
-        className="w-[118px] h-[34px] justify-start"
+        className="h-[34px] w-[118px] justify-start"
         onClick={handleClick}
       >
-        <PencilSquareIcon className="w-4 h-4" />
+        <PencilSquareIcon className="h-4 w-4" />
         Edit
       </Button>
       <Button
         variant="error"
         size="sm"
-        className="w-[118px] h-[34px] justify-start"
+        className="h-[34px] w-[118px] justify-start"
         onClick={handleDelete}
       >
-        <TrashIcon className="w-4 h-4" />
+        <TrashIcon className="h-4 w-4" />
         Delete
       </Button>
     </div>

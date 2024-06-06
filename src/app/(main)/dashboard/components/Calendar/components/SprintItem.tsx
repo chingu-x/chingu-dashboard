@@ -21,7 +21,7 @@ function SprintItem({
           {time ? (
             <time className="text-sm font-medium text-base-300">{time}</time>
           ) : null}
-          <p className="text-base font-medium max-w-[150px] break-words cursor-pointer">
+          <p className="max-w-[150px] cursor-pointer break-words text-base font-medium">
             {title}
           </p>
         </div>
