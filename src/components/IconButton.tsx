@@ -14,7 +14,7 @@ export default function IconButton({
     <button
       type="button"
       className={cn(
-        "flex items-center justify-center w-10 h-10 px-2 rounded-full hover:bg-base-300/25 [&>*]:w-5 [&>*]:h-5 [&>*]:text-base-300 [&>*]:stroke-[1.5px]",
+        "flex h-10 w-10 items-center justify-center rounded-full px-2 hover:bg-base-300/25 [&>*]:h-5 [&>*]:w-5 [&>*]:stroke-[1.5px] [&>*]:text-base-300",
         className,
       )}
       {...props}

@@ -14,10 +14,10 @@ function PreVoyageLinks() {
           variant="neutral"
           className="w-full justify-between bg-base-100 hover:shadow-md"
         >
-          <p className="underline cursor-pointer">
+          <p className="cursor-pointer underline">
             🚀 Understand the Voyage Process
           </p>
-          <ArrowRightIcon className="w-5 h-5" />
+          <ArrowRightIcon className="h-5 w-5" />
         </Button>
       </Link>
       <Link
@@ -28,10 +28,10 @@ function PreVoyageLinks() {
           variant="neutral"
           className="w-full justify-between bg-base-100 hover:shadow-md"
         >
-          <p className="underline cursor-pointer">
+          <p className="cursor-pointer underline">
             📜 Review the Chingu Agile Methodology
           </p>
-          <ArrowRightIcon className="w-5 h-5" />
+          <ArrowRightIcon className="h-5 w-5" />
         </Button>
       </Link>
       <Link
@@ -42,10 +42,10 @@ function PreVoyageLinks() {
           variant="neutral"
           className="w-full justify-between bg-base-100 hover:shadow-md"
         >
-          <p className="underline cursor-pointer">
+          <p className="cursor-pointer underline">
             🤔 Start thinking about project ideas & the technical stack
           </p>
-          <ArrowRightIcon className="w-5 h-5" />
+          <ArrowRightIcon className="h-5 w-5" />
         </Button>
       </Link>
       <Link
@@ -56,10 +56,10 @@ function PreVoyageLinks() {
           variant="neutral"
           className="w-full justify-between bg-base-100 hover:shadow-md"
         >
-          <p className="underline cursor-pointer">
+          <p className="cursor-pointer underline">
             🙋 Do you have questions about Chingu or the Voyage process?
           </p>
-          <ArrowRightIcon className="w-5 h-5" />
+          <ArrowRightIcon className="h-5 w-5" />
         </Button>
       </Link>
     </div>

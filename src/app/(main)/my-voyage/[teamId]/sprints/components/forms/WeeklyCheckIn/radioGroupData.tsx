@@ -52,7 +52,7 @@ export const teamProgress = [
     value: "good",
     label: (
       <span className="flex items-center gap-x-4">
-        <RocketLaunchIcon className="w-6 h-5 text-success" />
+        <RocketLaunchIcon className="h-5 w-6 text-success" />
         We have had a good start!
       </span>
     ),
@@ -62,7 +62,7 @@ export const teamProgress = [
     value: "nervous",
     label: (
       <span className="flex items-center gap-x-4">
-        <RocketLaunchIcon className="w-6 h-5 text-warning" />
+        <RocketLaunchIcon className="h-5 w-6 text-warning" />
         I&apos;m nervous we won&apos;t finish.
       </span>
     ),
@@ -72,7 +72,7 @@ export const teamProgress = [
     value: "not_good",
     label: (
       <span className="flex items-center gap-x-4">
-        <RocketLaunchIcon className="w-6 h-5 text-error" />
+        <RocketLaunchIcon className="h-5 w-6 text-error" />
         It doesn&apos;t look good right now
       </span>
     ),

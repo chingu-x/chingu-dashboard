@@ -26,7 +26,7 @@ export default async function FinalizeIdeationPage({
 
   if (currentTeam) {
     return (
-      <div className="flex flex-col items-center w-full gap-y-10">
+      <div className="flex w-full flex-col items-center gap-y-10">
         <FinalizeIdeationBanner />
         <FinalizeIdeationList />
       </div>

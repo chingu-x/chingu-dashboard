@@ -26,7 +26,7 @@ export default function SprintActions({ params }: SprintActionsProps) {
   ];
   const submitVoyageIsAllowed = sprintNumber === "5" || sprintNumber === "6";
   return (
-    <div className="flex justify-between p-5 border shadow-md border-base-100 bg-base-200 rounded-2xl">
+    <div className="flex justify-between rounded-2xl border border-base-100 bg-base-200 p-5 shadow-md">
       {/* TODO: add animated variant to Button.tsx ??? */}
       <Link
         href={
@@ -43,7 +43,7 @@ export default function SprintActions({ params }: SprintActionsProps) {
         >
           <RocketLaunchIcon className="h-[18px] w-[18px]" /> Submit Voyage
           {(submitVoyageIsAllowed || !meetingId) && (
-            <ArrowRightIcon className="h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all" />
+            <ArrowRightIcon className="h-[18px] w-0 transition-all group-hover:w-[18px] group-disabled:group-hover:w-0" />
           )}
         </Button>
       </Link>
@@ -61,7 +61,7 @@ export default function SprintActions({ params }: SprintActionsProps) {
           disabled={!meetingId}
         >
           <DocumentCheckIcon className="h-[18px] w-[18px]" /> Submit Check-in
-          <ArrowRightIcon className="h-[18px] w-0 group-disabled:group-hover:w-0 group-hover:w-[18px] transition-all" />
+          <ArrowRightIcon className="h-[18px] w-0 transition-all group-hover:w-[18px] group-disabled:group-hover:w-0" />
         </Button>
       </Link>
       <Link
@@ -75,7 +75,7 @@ export default function SprintActions({ params }: SprintActionsProps) {
           <CalendarIcon className="h-[18px] w-[18px]" />{" "}
           {meetingId ? "Edit Meeting" : "Create Meeting"}
           {meetingId ? null : (
-            <PlusIcon className="h-[18px] w-0 group-hover:w-[18px] transition-all" />
+            <PlusIcon className="h-[18px] w-0 transition-all group-hover:w-[18px]" />
           )}
         </Button>
       </Link>

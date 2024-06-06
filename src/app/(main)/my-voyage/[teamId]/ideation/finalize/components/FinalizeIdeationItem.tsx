@@ -34,7 +34,7 @@ export default function FinalizeIdeationItem({
       className="w-full gap-x-0"
       onClick={handleClick}
     >
-      <div className="flex flex-col items-center justify-center w-full gap-y-2">
+      <div className="flex w-full flex-col items-center justify-center gap-y-2">
         <h2 className="text-base font-semibold">{title}</h2>
         <AvatarGroup>
           {projectIdeaVotes.map((votes) => {
@@ -47,11 +47,11 @@ export default function FinalizeIdeationItem({
           })}
         </AvatarGroup>
       </div>
-      <div className="w-6 h-6">
+      <div className="h-6 w-6">
         <CheckCircleIcon
           className={`${
             finalizedIdeation.title === title
-              ? "w-6 h-6 text-base-200"
+              ? "h-6 w-6 text-base-200"
               : "hidden"
           }`}
         />
