@@ -100,8 +100,7 @@ export default async function WeeklyCheckInWrapper({
     const currentSprintNumber = number;
 
     if (currentSprintNumber !== sprintNumber) {
-      // redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
-      console.log("other sprint");
+      redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
     } else {
       // Check if a checkin form for the current sprint has been submitted.
       const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(

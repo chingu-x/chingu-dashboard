@@ -75,7 +75,7 @@ export default function WeeklyCheckingForm({
     const responses = createFormResponseBody({ data, questions });
 
     const [res, error] = await submitCheckInFormAction({
-      voyageTeamMemberId: voyageTeamMemberId!,
+      voyageTeamMemberId,
       sprintId: Number(sprintNumber),
       responses,
     });
