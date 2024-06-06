@@ -10,7 +10,7 @@ import { TechStackItem } from "@/store/features/techStack/techStackSlice";
 interface AddTechItemProps {
   teamId: number;
   techName: string;
-  techCategory: number;
+  techCategoryId: number;
   voyageTeamMemberId: number;
 }
 
@@ -43,16 +43,16 @@ export interface DeleteTechItemProps {
 export async function addTechItem({
   teamId,
   techName,
-  techCategory,
+  techCategoryId,
   voyageTeamMemberId,
 }: AddTechItemProps): Promise<AsyncActionResponse<AddTechItemResponse>> {
   const token = getAccessToken();
   const addTechItemAsync = () =>
     POST<AddTechItemBody, AddTechItemResponse>(
-      `/api/v1/voyages/teams/${teamId}/techs`,
+      `api/v1/voyages/teams/${teamId}/techs`,
       token,
       "default",
-      { techName, techCategory, voyageTeamMemberId },
+      { techName, techCategoryId, voyageTeamMemberId },
     );
 
   const [res, error] = await handleAsync(addTechItemAsync);
@@ -69,10 +69,9 @@ export async function editTechItem({
   techName,
 }: EditTechItemProps): Promise<AsyncActionResponse<EditTechItemResponse>> {
   const token = getAccessToken();
-
   const editTechItemAsync = () =>
     PATCH<EditTechItemBody, EditTechItemResponse>(
-      `/api/v1/voyages/techs/${techItemId}`,
+      `api/v1/voyages/techs/${techItemId}`,
       token,
       "default",
       { techName },
@@ -95,7 +94,7 @@ export async function deleteTechItem({
   const deleteTechItemAsync = () =>
     DELETE<void>(`api/v1/voyages/techs/${techItemId}`, token, "default");
   const [res, error] = await handleAsync(deleteTechItemAsync);
-  console.log(techItemId);
+
   if (res) {
     revalidateTag(CacheTag.techStack);
   }
