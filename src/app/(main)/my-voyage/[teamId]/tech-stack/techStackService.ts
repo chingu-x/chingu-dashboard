@@ -36,7 +36,7 @@ interface EditTechItemResponse extends TechStackItem {
   voyageTeamId: number;
 }
 
-interface DeleteTechItemProps {
+export interface DeleteTechItemProps {
   techItemId: number;
 }
 
@@ -93,9 +93,9 @@ export async function deleteTechItem({
   const token = getAccessToken();
 
   const deleteTechItemAsync = () =>
-    DELETE<void>(`/api/v1/voyages/techs/${techItemId}/vote`, token, "default");
+    DELETE<void>(`api/v1/voyages/techs/${techItemId}`, token, "default");
   const [res, error] = await handleAsync(deleteTechItemAsync);
-
+  console.log(techItemId);
   if (res) {
     revalidateTag(CacheTag.techStack);
   }
