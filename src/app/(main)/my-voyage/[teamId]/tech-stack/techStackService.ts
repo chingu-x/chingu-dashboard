@@ -1,11 +1,11 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
 import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { DELETE, PATCH, POST } from "@/utils/requests";
-import { revalidateTag } from "next/cache";
-import { TechStackItem } from "@/store/features/techStack/techStackSlice";
+import { type TechStackItem } from "@/store/features/techStack/techStackSlice";
 
 interface AddTechItemProps {
   teamId: number;
