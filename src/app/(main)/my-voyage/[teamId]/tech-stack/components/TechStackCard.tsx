@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import type { FormEvent } from "react";
 import { useParams } from "next/navigation";
 import GetIcon from "./GetIcons";
@@ -10,7 +10,7 @@ import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
-import { useUser, useAppDispatch } from "@/store/hooks";
+import { useUser, useAppDispatch, useAppSelector } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { addTechItem, editTechItem } from "../techStackService";
 import getTechCategory from "./getTechCategory";
@@ -28,10 +28,23 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const editRef = useRef<HTMLInputElement>(null);
   const items = data.map((item) => item.name.toLowerCase());
-  const userId = useUser().id;
-  const [openMenuId, setOpenMenuId] = useState(-1);
   const params = useParams<{ teamId: string }>();
   const teamId = Number(params.teamId);
+  const userId = useUser().id;
+
+  const voyageTeamMembers = useAppSelector(
+    (state) => state.user?.voyageTeamMembers || [],
+  );
+  const currentTeam = useMemo(() => {
+    return voyageTeamMembers.filter(
+      (team) =>
+        team.voyageTeam.voyage.status.name === "Active" &&
+        team.voyageTeamId === teamId,
+    );
+  }, [voyageTeamMembers, teamId]);
+  const voyageTeamMemberId = currentTeam.length > 0 ? currentTeam[0].id : -1;
+
+  const [openMenuId, setOpenMenuId] = useState(-1);
   const techCategoryId = getTechCategory(title) ?? 0;
   const dispatch = useAppDispatch();
 
@@ -54,10 +67,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const handleAddItem = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const techName = inputRef.current?.value ?? "";
-    //voyageTeamMemberId  is hardwritten placeholder.
-    //TODO: get teamMember id of logged in user from ...?)
-    const voyageTeamMemberId = 20;
-
     const [res, error] = await addTechItemAction({
       teamId,
       techName,
@@ -70,6 +79,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       );
     }
     setAddTechItemLoading(false);
+    setIsInput(false);
   };
 
   const handleEdit = async (
@@ -78,7 +88,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   ) => {
     e?.preventDefault();
     const techName = editRef.current?.value ?? "";
-
     const [res, error] = await editTechItemAction({
       techItemId,
       techName,
@@ -109,10 +118,8 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
 
   const handleOnChange = () => {
     const addingItemValue = inputRef.current?.value.toLowerCase();
-
     const isDuplicateInAdding =
       addingItemValue && items.includes(addingItemValue);
-
     if (addingItemValue && isDuplicateInAdding !== isDuplicate) {
       setIsDuplicate(!!isDuplicateInAdding);
     }
@@ -121,7 +128,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const targetNode = event.target as Node;
-
       if (
         inputRef.current &&
         !inputRef.current.contains(targetNode) &&
@@ -129,7 +135,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       ) {
         setIsInput(false);
       }
-
       if (
         editRef.current &&
         !editRef.current.contains(targetNode) &&
@@ -139,9 +144,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         setOpenMenuId(-1);
       }
     }
-
     document.body.addEventListener("click", handleClickOutside);
-
     return () => {
       document.body.removeEventListener("click", handleClickOutside);
     };
