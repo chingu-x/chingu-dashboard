@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import type { FormEvent } from "react";
+import { useParams } from "next/navigation";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
@@ -9,7 +10,11 @@ import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
-import { useUser } from "@/store/hooks";
+import { useUser, useAppDispatch } from "@/store/hooks";
+import useServerAction from "@/hooks/useServerAction";
+import { addTechItem } from "../techStackService";
+import getTechCategory from "./getTechCategory";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface TechStackCardProps {
   title: string;
@@ -25,19 +30,47 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const items = data.map((item) => item.name.toLowerCase());
   const userId = useUser().id;
   const [openMenuId, setOpenMenuId] = useState(-1);
+  const params = useParams<{ teamId: string }>();
+  const teamId = Number(params.teamId);
+  const techCategoryId = getTechCategory(title) ?? 0;
+  const dispatch = useAppDispatch();
+
+  const {
+    runAction: addTechItemAction,
+    isLoading: addTechItemLoading,
+    setIsLoading: setAddTechItemLoading,
+  } = useServerAction(addTechItem);
 
   const toggleAddItemInput = () => {
     setIsInput(!isInput);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleAddItem = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("submitting")
-    if(inputRef.current){
-      console.log(inputRef.current.value)
-    }else{
-      console.log("input ref is not attached.")
+    const techName = inputRef.current?.value ?? "";
+    //voyageTeamMemberId  is hardwritten placeholder.
+    //TODO: get teamMember id of logged in user from ...?)
+    const voyageTeamMemberId = 20;
+
+    const [res, error] = await addTechItemAction({
+      teamId,
+      techName,
+      techCategoryId,
+      voyageTeamMemberId,
+    });
+    if (error) {
+      console.log(error);
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
     }
+    setAddTechItemLoading(false);
+  };
+
+  const handleEdit = async (event: FormEvent<HTMLFormElement>) => {
+    event?.preventDefault();
+    const updatedItem = editRef.current?.value;
+    console.log(updatedItem);
   };
 
   const handleSettingsMenuClose = () => {
@@ -64,34 +97,34 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     }
   };
 
-useEffect(() => {
-  function handleClickOutside(event: MouseEvent) {
-    const targetNode = event.target as Node;
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const targetNode = event.target as Node;
 
-    if (
-      inputRef.current &&
-      !inputRef.current.contains(targetNode) &&
-      !(targetNode instanceof HTMLElement && targetNode.closest('form'))
-    ) {
-      setIsInput(false);
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(targetNode) &&
+        !(targetNode instanceof HTMLElement && targetNode.closest("form"))
+      ) {
+        setIsInput(false);
+      }
+
+      if (
+        editRef.current &&
+        !editRef.current.contains(targetNode) &&
+        !(targetNode instanceof HTMLElement && targetNode.closest("form"))
+      ) {
+        setIsEditing(-1);
+        setOpenMenuId(-1);
+      }
     }
 
-    if (
-      editRef.current &&
-      !editRef.current.contains(targetNode) &&
-      !(targetNode instanceof HTMLElement && targetNode.closest('form'))
-    ) {
-      setIsEditing(-1);
-      setOpenMenuId(-1);
-    }
-  }
+    document.body.addEventListener("click", handleClickOutside);
 
-  document.body.addEventListener("click", handleClickOutside);
-
-  return () => {
-    document.body.removeEventListener("click", handleClickOutside);
-  };
-}, [isInput, isEditing]);
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, [isInput, isEditing]);
 
   return (
     <div className="h-80 min-w-[420px] rounded-lg bg-base-200 px-6 py-5 text-base-300 sm:w-96">
@@ -114,7 +147,7 @@ useEffect(() => {
                 key={element.id}
               >
                 {isEditing === element.id && (
-                  <form className="col-span-6 -my-2 h-12">
+                  <form onSubmit={handleEdit} className="col-span-6 -my-2 h-12">
                     <TextInput
                       id={element.id.toString()}
                       ref={editRef}
@@ -166,7 +199,7 @@ useEffect(() => {
       </div>
 
       {isInput ? (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleAddItem}>
           <TextInput
             id={title}
             ref={inputRef}
