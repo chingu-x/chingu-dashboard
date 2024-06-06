@@ -36,6 +36,8 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const teamId = Number(params.teamId);
   const userId = useUser().id;
 
+  //voyageTeamMembers, currentTeam and voyageTeamMemberId are all used to get
+  //TODO: create hook or find simpler more readble way to get voyageTeamMemberId?
   const voyageTeamMembers = useAppSelector(
     (state) => state.user?.voyageTeamMembers || [],
   );
@@ -139,6 +141,15 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       );
     }
   }
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+    if (editRef.current) {
+      editRef.current.focus();
+    }
+  }, [isInput, isEditing]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
