@@ -16,7 +16,7 @@ function SprintItem({
 }: SprintItemProps) {
   return (
     <Link href={link} target={useTargetBlank ? "_blank" : ""}>
-      <div className="flex flex-row items-center w-full rounded-lg bg-base-100 p-3 my-4 cursor-pointer justify-between">
+      <div className="my-4 flex w-full cursor-pointer flex-row items-center justify-between rounded-lg bg-base-100 p-3">
         <div>
           {time ? (
             <time className="text-sm font-medium text-base-300">{time}</time>
