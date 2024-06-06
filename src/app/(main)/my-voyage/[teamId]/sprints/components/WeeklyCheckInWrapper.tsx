@@ -16,6 +16,7 @@ import { Forms } from "@/utils/form/formsEnums";
 import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
 import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
+import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 
 interface FetchFormQuestionsProps {
   formId: number;
@@ -99,7 +100,8 @@ export default async function WeeklyCheckInWrapper({
     const currentSprintNumber = number;
 
     if (currentSprintNumber !== sprintNumber) {
-      redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
+      // redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
+      console.log("other sprint");
     } else {
       // Check if a checkin form for the current sprint has been submitted.
       const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
@@ -122,19 +124,26 @@ export default async function WeeklyCheckInWrapper({
         return `Error: ${error.message}`;
       }
       if (res) {
-        const voyageTeamMemberId = user?.voyageTeamMembers.find(
-          (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
-        )?.id;
+        let voyageTeamMemberId: number | undefined;
+        if (user && user.voyageTeamMembers) {
+          voyageTeamMemberId = getCurrentVoyageTeam({
+            teamId,
+            user,
+            error,
+          }).voyageTeamMemberId;
+        }
 
         // Get all teamMembers except for the current user
-        teamMembers = res.voyageTeamMembers
-          .map((member) => ({
-            id: member.id,
-            avatar: member.member.avatar,
-            firstName: member.member.firstName,
-            lastName: member.member.lastName,
-          }))
-          .filter((member) => member.id !== voyageTeamMemberId);
+        if (voyageTeamMemberId) {
+          teamMembers = res.voyageTeamMembers
+            .map((member) => ({
+              id: member.id,
+              avatar: member.member.avatar,
+              firstName: member.member.firstName,
+              lastName: member.member.lastName,
+            }))
+            .filter((member) => member.id !== voyageTeamMemberId);
+        }
       }
 
       // Fetch form
