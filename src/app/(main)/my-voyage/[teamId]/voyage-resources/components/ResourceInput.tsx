@@ -4,7 +4,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch } from "@/store/hooks";
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
