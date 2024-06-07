@@ -1,7 +1,9 @@
-export enum SprintSections {
-  notes = 3,
+export enum Forms {
+  submitProject = 6,
+  checkIn = 3,
   planning = 2,
   review = 1,
+  notes = 0,
 }
 
 export enum NotesQuestions {
