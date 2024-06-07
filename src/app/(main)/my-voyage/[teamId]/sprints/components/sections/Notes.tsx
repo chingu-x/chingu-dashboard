@@ -10,7 +10,7 @@ import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import useServerAction from "@/hooks/useServerAction";
 import { editMeeting } from "@/myVoyage/sprints/sprintsService";
 import { useAppDispatch } from "@/store/hooks";

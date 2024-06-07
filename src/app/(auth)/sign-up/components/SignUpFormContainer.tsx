@@ -4,7 +4,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import routePaths from "@/utils/routePaths";
 
 const validationSchema = z.object({
