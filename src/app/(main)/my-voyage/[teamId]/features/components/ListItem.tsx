@@ -4,7 +4,7 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import Card from "./Card";
 import TextInput from "@/components/inputs/TextInput";
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import { type Features } from "@/store/features/features/featuresSlice";
 import useServerAction from "@/hooks/useServerAction";
 import { editFeature } from "@/myVoyage/features/featuresService";
