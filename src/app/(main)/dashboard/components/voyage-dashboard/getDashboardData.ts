@@ -15,7 +15,6 @@ interface GetDashboardDataResponse {
   meetingsData: EventList[];
   voyageNumber: number | null;
   voyageData: Voyage;
-  currentMeetingId: number | null;
   errorMessage?: string;
 }
 
@@ -51,7 +50,6 @@ export const getDashboardData = async (
       meetingsData: [],
       voyageNumber: null,
       voyageData: {} as Voyage,
-      currentMeetingId: null,
       errorMessage: errorResponse,
     };
   }
@@ -69,11 +67,9 @@ export const getDashboardData = async (
   }
 
   let currentSprintNumber = null;
-  let currentMeetingId = null;
   if (sprintsData.length > 0) {
-    const { teamMeetings, number } = getCurrentSprint(sprintsData) as Sprint;
+    const { number } = getCurrentSprint(sprintsData) as Sprint;
     currentSprintNumber = number;
-    currentMeetingId = teamMeetings[0]?.id;
   }
 
   const meetingsData: {
@@ -115,6 +111,5 @@ export const getDashboardData = async (
     meetingsData,
     voyageNumber,
     voyageData,
-    currentMeetingId,
   };
 };

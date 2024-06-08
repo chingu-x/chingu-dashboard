@@ -37,7 +37,6 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   let meetingsData: EventList[] = [];
   let voyageNumber: number | null = null;
   let voyageData: Voyage = {} as Voyage;
-  let currentMeetingId: number | null = null;
 
   if (teamId !== undefined) {
     const data = await getDashboardData(user, error, Number(teamId));
@@ -46,7 +45,6 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
     meetingsData = data.meetingsData;
     voyageNumber = data.voyageNumber;
     voyageData = data.voyageData;
-    currentMeetingId = data.currentMeetingId;
   }
 
   return (
@@ -58,7 +56,6 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
           meetingsData={meetingsData}
           voyageNumber={voyageNumber}
           teamId={teamId}
-          currentMeetingId={currentMeetingId}
         />
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />

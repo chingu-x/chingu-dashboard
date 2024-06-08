@@ -27,7 +27,6 @@ export const useCalendarLogic = (
   meetingsData?: EventList[],
   voyageNumber?: number | null,
   teamId?: string,
-  currentMeetingId?: number | null,
 ) => {
   const { currentDate, timezone } = useUser();
   const userDate = currentDate ?? new Date();
@@ -163,11 +162,10 @@ export const useCalendarLogic = (
   }
 
   const weeklyCheckInLink = () => {
-    if (currentMeetingId && teamId && currentSprintNumber) {
+    if (teamId && currentSprintNumber) {
       return routePaths.weeklyCheckInPage(
         teamId,
         currentSprintNumber?.toString(),
-        currentMeetingId?.toString(),
       );
     } else {
       return "";
@@ -175,11 +173,10 @@ export const useCalendarLogic = (
   };
 
   const submitVoyageLink = () => {
-    if (currentMeetingId && teamId && currentSprintNumber) {
+    if (teamId && currentSprintNumber) {
       return routePaths.submitVoyagePage(
         teamId,
         currentSprintNumber?.toString(),
-        currentMeetingId?.toString(),
       );
     } else {
       return "";
