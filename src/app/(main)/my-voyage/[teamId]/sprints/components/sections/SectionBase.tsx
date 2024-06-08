@@ -12,7 +12,7 @@ import useServerAction from "@/hooks/useServerAction";
 import { addSection, editMeeting } from "@/myVoyage/sprints/sprintsService";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { SprintSections } from "@/utils/sections";
+import { Forms } from "@/utils/form/formsEnums";
 
 interface SectionBaseProps {
   params: {
@@ -59,7 +59,7 @@ export default function SectionBase({
   } = useServerAction(editMeeting);
 
   const handleAddSection = async () => {
-    if (id !== Number(SprintSections.notes)) {
+    if (id !== Number(Forms.notes)) {
       const [res, error] = await addSectionAction({
         sprintNumber,
         meetingId,
