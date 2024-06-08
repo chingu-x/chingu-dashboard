@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { type SetStateAction, useEffect } from "react";
 import TextInput from "@/components/inputs/TextInput";
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";
 import { editHours } from "@/app/(main)/my-voyage/[teamId]/directory/directoryService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
