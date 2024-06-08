@@ -19,7 +19,6 @@ interface CalendarProps {
   meetingsData?: EventList[];
   voyageNumber?: number | null;
   teamId?: string;
-  currentMeetingId?: number | null;
 }
 export default function Calendar({
   sprintsData,
@@ -27,7 +26,6 @@ export default function Calendar({
   meetingsData,
   voyageNumber,
   teamId,
-  currentMeetingId,
 }: CalendarProps) {
   const {
     cn,
@@ -56,7 +54,6 @@ export default function Calendar({
     meetingsData,
     voyageNumber,
     teamId,
-    currentMeetingId,
   );
 
   return (
