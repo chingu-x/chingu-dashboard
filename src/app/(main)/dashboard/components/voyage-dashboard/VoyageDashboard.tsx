@@ -55,6 +55,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
           currentSprintNumber={currentSprintNumber}
           meetingsData={meetingsData}
           voyageNumber={voyageNumber}
+          teamId={teamId}
         />
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />
