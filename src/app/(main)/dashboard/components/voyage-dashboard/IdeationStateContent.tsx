@@ -1,5 +1,5 @@
 import React from "react";
-import type { IdeationData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
+import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 
 interface IdeationStateContentProps {
   contentObject?: IdeationData;
@@ -10,7 +10,7 @@ function IdeationStateContent({ contentObject }: IdeationStateContentProps) {
       <div className="flex h-full flex-col justify-between gap-y-4">
         <p className="text-xl font-semibold">{contentObject?.title}</p>
         <p className="text-base font-semibold text-neutral-focus">
-          {contentObject?.topic}
+          Project Idea
         </p>
         <p className="overflow-auto text-base font-medium">
           {contentObject?.description}

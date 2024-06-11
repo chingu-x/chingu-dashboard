@@ -27,7 +27,7 @@ function ResourcesStateContent({ contentObject }: ResourcesStateContentProps) {
                   title={item.userName}
                   variant="primary"
                   isAvatarBadge={true}
-                  avatarUrlImage={item.userImage}
+                  avatarUrlImage={item.userAvatarUrl}
                 />
               </div>
             </div>

@@ -1,4 +1,12 @@
 import React from "react";
+import {
+  ComputerDesktopIcon,
+  SwatchIcon,
+  CodeBracketSquareIcon,
+  ChartPieIcon,
+  CloudIcon,
+  ServerStackIcon,
+} from "@heroicons/react/24/solid";
 import DashboardWidget from "./DashboardWidget";
 import CheckInWidget from "./CheckInWidget";
 import CalendarWidget from "./CalendarWidget";
@@ -7,29 +15,20 @@ import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
 import { type EventList, getDashboardData } from "./getDashboardData";
-import {
-  CHECKIN_STATUS,
-  getFeaturesData,
-  getIdeationData,
-  getResourcesData,
-  getTechStackData,
-} from "@/app/(main)/dashboard/mocks/voyageDashboardData";
+import { CHECKIN_STATUS } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
 import { getUser } from "@/utils/getUser";
 import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
+import { type FeaturesList } from "@/store/features/features/featuresSlice";
+import { type IdeationData } from "@/store/features/ideation/ideationSlice";
+import { type TechStackData } from "@/store/features/techStack/techStackSlice";
+import { type ResourceData } from "@/store/features/resources/resourcesSlice";
 
 interface VoyageDashboardProps {
   teamId?: string;
 }
 async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
-  //NOTE - Mocked value to show the filled state dashboard
-  const filledState = true;
-  const ideationData = filledState ? getIdeationData() : null;
-  const featureData = filledState ? getFeaturesData() : null;
-  const techStackData = filledState ? getTechStackData() : null;
-  const resourceData = filledState ? getResourcesData() : null;
-
   const [user, error] = await getUser();
 
   let currentSprintNumber: number | null = null;
@@ -37,6 +36,10 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   let meetingsData: EventList[] = [];
   let voyageNumber: number | null = null;
   let voyageData: Voyage = {} as Voyage;
+  let features: FeaturesList[] = [];
+  let projectIdeas: IdeationData[] = [];
+  let techStackDatas: TechStackData[] = [];
+  let projectResources: ResourceData[] = [];
 
   if (teamId !== undefined) {
     const data = await getDashboardData(user, error, Number(teamId));
@@ -45,7 +48,45 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
     meetingsData = data.meetingsData;
     voyageNumber = data.voyageNumber;
     voyageData = data.voyageData;
+    features = data.features;
+    projectIdeas = data.projectIdeas.filter((idea) => idea.isSelected);
+    techStackDatas = data.techStackData;
+    projectResources = data.projectResources;
   }
+
+  const featureList = features
+    .map((category) => category.features.map((feature) => feature.description))
+    .flat();
+
+  const resourceList = projectResources.map((resource) => ({
+    title: resource.title,
+    resourceUrl: resource.url,
+    userName: `${resource.addedBy.member.firstName} ${resource.addedBy.member.lastName}`,
+    userAvatarUrl: resource.addedBy.member.avatar,
+  }));
+
+  const iconMapping = {
+    Frontend: ComputerDesktopIcon,
+    "CSS Library": SwatchIcon,
+    Backend: CodeBracketSquareIcon,
+    "Project Management": ChartPieIcon,
+    "Cloud Provider": CloudIcon,
+    Hosting: ServerStackIcon,
+  };
+
+  type TechStackName =
+    | "Frontend"
+    | "CSS Library"
+    | "Backend"
+    | "Project Management"
+    | "Cloud Provider"
+    | "Hosting";
+
+  const techStackList = techStackDatas.map((techStackData) => ({
+    title: techStackData.name,
+    icon: iconMapping[techStackData.name as TechStackName],
+    value: techStackData.teamTechStackItems.map((item) => item.name).join(", "),
+  }));
 
   return (
     <div className="flex w-full flex-col gap-x-6 max-[1470px]:gap-y-6 min-[1470px]:grid min-[1470px]:grid-cols-2">
@@ -75,8 +116,8 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             vision to capture what it does and the benefit it will bring to
             users."
           >
-            {ideationData ? (
-              <IdeationStateContent contentObject={ideationData} />
+            {projectIdeas.length > 0 ? (
+              <IdeationStateContent contentObject={projectIdeas[0]} />
             ) : null}
           </DashboardWidget>
           <div className="flex flex-row justify-between gap-x-4 max-[1200px]:flex-col max-[1200px]:gap-y-4">
@@ -88,8 +129,8 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
                 buttonTitle="Go to Features"
                 description="Brainstorm and prioritize the features that will be included in the scope of your project. "
               >
-                {featureData ? (
-                  <FeaturesStateContent contentObject={featureData} />
+                {featureList ? (
+                  <FeaturesStateContent contentObject={featureList} />
                 ) : null}
               </DashboardWidget>
             </div>
@@ -101,8 +142,8 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
                 buttonTitle="Go to Tech Stack"
                 description="Choose the programming languages, frameworks, and tools that will serve as the foundation of your project."
               >
-                {techStackData ? (
-                  <TechStackStateContent contentObject={techStackData} />
+                {techStackList.some((item) => item.value) ? (
+                  <TechStackStateContent contentObject={techStackList} />
                 ) : null}
               </DashboardWidget>
             </div>
@@ -116,8 +157,8 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             buttonTitle="Go to Resources"
             description="Share links of helpful resources to your team for the Voyage. Contribute to the collective knowledgebase to empower your team."
           >
-            {resourceData ? (
-              <ResourcesStateContent contentObject={resourceData} />
+            {resourceList.length > 0 ? (
+              <ResourcesStateContent contentObject={resourceList} />
             ) : null}
           </DashboardWidget>
         </div>

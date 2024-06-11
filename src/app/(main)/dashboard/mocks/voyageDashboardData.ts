@@ -26,7 +26,7 @@ export type ResourcesData = {
   title: string;
   userName: string;
   resourceUrl: string;
-  userImage?: string;
+  userAvatarUrl?: string;
 };
 
 export type Event = {
