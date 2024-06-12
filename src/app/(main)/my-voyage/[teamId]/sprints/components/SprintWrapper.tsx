@@ -37,6 +37,7 @@ import {
   getSprintCheckinIsStatus,
   getVoyageProjectStatus,
 } from "@/utils/getFormStatus";
+import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 
 export async function fetchMeeting({
   sprintNumber,
@@ -74,6 +75,18 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   let sectionsData: Section[] = [];
 
   const [user, error] = await getUser();
+
+  // Check if it's a current team and if a project's been submitted,
+  // redirect to /sprints page where a corresponding messsage is rendered
+  const { currentTeam, projectSubmitted } = getCurrentVoyageTeam({
+    teamId,
+    user,
+    error: null,
+  });
+
+  if (currentTeam && projectSubmitted) {
+    redirect(`/my-voyage/${teamId}/sprints/`);
+  }
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,
