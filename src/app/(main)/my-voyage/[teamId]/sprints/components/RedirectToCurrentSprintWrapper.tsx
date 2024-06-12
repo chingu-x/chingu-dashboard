@@ -8,6 +8,9 @@ import {
   type SprintsResponse,
 } from "@/myVoyage/sprints/sprintsService";
 
+import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import Banner from "@/components/banner/Banner";
+
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
@@ -18,8 +21,6 @@ import { type Sprint } from "@/store/features/sprint/sprintSlice";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
-import Banner from "@/components/banner/Banner";
 
 export async function fetchSprints({
   teamId,
