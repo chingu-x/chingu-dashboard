@@ -6,7 +6,7 @@ import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { addFeature } from "@/myVoyage/features/featuresService";

@@ -18,7 +18,7 @@ import Spinner from "@/components/Spinner";
 import {
   validateDateTimeInput,
   validateTextInput,
-} from "@/helpers/form/validateInput";
+} from "@/utils/form/validateInput";
 import { useSprint, useAppDispatch, useUser } from "@/store/hooks";
 import { type Meeting } from "@/store/features/sprint/sprintSlice";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
