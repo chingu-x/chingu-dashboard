@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
 
+import VoyageSubmittedMessage from "./VoyageSubmittedMessage";
+
 import {
   type FetchSprintsProps,
   type FetchSprintsResponse,
@@ -18,7 +20,6 @@ import routePaths from "@/utils/routePaths";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
-import VoyageSubmittedMessage from "./VoyageSubmittedMessage";
 
 export async function fetchSprints({
   teamId,
