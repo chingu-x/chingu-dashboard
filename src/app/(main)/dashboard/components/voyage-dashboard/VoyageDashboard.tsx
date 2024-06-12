@@ -24,6 +24,11 @@ import { type FeaturesList } from "@/store/features/features/featuresSlice";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import { type TechStackData } from "@/store/features/techStack/techStackSlice";
 import { type ResourceData } from "@/store/features/resources/resourcesSlice";
+import ResourcesProvider from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ResourcesProvider";
+import FeaturesProvider from "@/app/(main)/my-voyage/[teamId]/features/components/FeaturesProvider";
+import IdeationProvider from "@/app/(main)/my-voyage/[teamId]/ideation/components/IdeationProvider";
+import TechStackProvider from "@/app/(main)/my-voyage/[teamId]/tech-stack/components/TechStackProvider";
+import routePaths from "@/utils/routePaths";
 
 interface VoyageDashboardProps {
   teamId?: string;
@@ -59,6 +64,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
     .flat();
 
   const resourceList = projectResources.map((resource) => ({
+    id: resource.id,
     title: resource.title,
     resourceUrl: resource.url,
     userName: `${resource.addedBy.member.firstName} ${resource.addedBy.member.lastName}`,
@@ -110,7 +116,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             imageLight="/img/discover_light.png"
             imageDark="/img/discover_dark.png"
             title="What is your Voyage project idea & vision?"
-            link="/my-voyage/ideation"
+            link={routePaths.ideationPage(teamId ?? "")}
             linkTitle="Ideation"
             buttonTitle="Go to Ideation"
             description="Share your ideas on what the team Voyage should be. Describe your
@@ -125,7 +131,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             <div className="flex w-full grow">
               <DashboardWidget
                 title="What features will you develop?"
-                link="/my-voyage/features"
+                link={routePaths.featuresPage(teamId ?? "")}
                 linkTitle="Features"
                 buttonTitle="Go to Features"
                 description="Brainstorm and prioritize the features that will be included in the scope of your project. "
@@ -138,7 +144,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             <div className="flex w-full grow">
               <DashboardWidget
                 title="Choose your tech stack "
-                link="/my-voyage/tech-stack"
+                link={routePaths.techStackPage(teamId ?? "")}
                 linkTitle="Tech Stack"
                 buttonTitle="Go to Tech Stack"
                 description="Choose the programming languages, frameworks, and tools that will serve as the foundation of your project."
@@ -153,7 +159,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             imageLight="/img/share_link_light.png"
             imageDark="/img/share_link_dark.png"
             title="Share resources with your team"
-            link="/my-voyage/voyage-resources"
+            link={routePaths.voyageResourcesPage(teamId ?? "")}
             linkTitle="Resources"
             buttonTitle="Go to Resources"
             description="Share links of helpful resources to your team for the Voyage. Contribute to the collective knowledgebase to empower your team."
@@ -165,6 +171,10 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
         </div>
       </div>
       <EmptySprintProvider voyage={voyageData} />
+      <ResourcesProvider payload={projectResources} />
+      <FeaturesProvider payload={features} />
+      <IdeationProvider payload={projectIdeas} />
+      <TechStackProvider payload={techStackDatas} />
     </div>
   );
 }
