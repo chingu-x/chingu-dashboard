@@ -6,10 +6,16 @@ type SprintItemProps = {
   title: string;
   link: string;
   time?: string;
+  useTargetBlank?: boolean;
 };
-function SprintItem({ title, link, time }: SprintItemProps) {
+function SprintItem({
+  title,
+  link,
+  time,
+  useTargetBlank = true,
+}: SprintItemProps) {
   return (
-    <Link href={link} target="_blank">
+    <Link href={link} target={useTargetBlank ? "_blank" : ""}>
       <div className="my-4 flex w-full cursor-pointer flex-row items-center justify-between rounded-lg bg-base-100 p-3">
         <div>
           {time ? (

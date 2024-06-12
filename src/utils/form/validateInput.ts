@@ -18,6 +18,10 @@ interface ValidateDateTimeInput {
   timezone?: string;
 }
 
+interface ValidateMultipleChoiceInput {
+  required?: boolean;
+}
+
 export function validateTextInput({
   inputName,
   required,
@@ -37,12 +41,15 @@ export function validateTextInput({
 
   // Must be email
   if (isEmail) {
-    rules = rules.email("This is not a valid email.");
+    rules = rules.regex(/^$|^\S+@\S+\.\S+$/, "This is not a valid email.");
   }
 
-  //Must be a url
+  // Must be a url
   if (isUrl) {
-    rules = rules.startsWith("https://");
+    rules = rules.regex(
+      /^$|https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+      "This is not a valid URL.",
+    );
   }
 
   // Minimum Length
@@ -54,7 +61,7 @@ export function validateTextInput({
 
   // Only whole numbers
   if (isHours) {
-    rules = rules.regex(/^[1-9][0-9]?$/, "Whole numbers only");
+    rules = rules.regex(/^$|^[1-9][0-9]?$/, "Whole numbers only");
   }
 
   // Maximum Length
@@ -91,6 +98,22 @@ export function validateDateTimeInput({
         })}`,
       }),
     );
+  }
+
+  return rules;
+}
+
+export function validateMultipleChoiceInput({
+  required,
+}: ValidateMultipleChoiceInput):
+  | z.ZodArray<z.ZodString, "many">
+  | z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many"> {
+  let rules;
+  rules = z.string().array();
+
+  // Required
+  if (required) {
+    rules = rules.min(1);
   }
 
   return rules;
