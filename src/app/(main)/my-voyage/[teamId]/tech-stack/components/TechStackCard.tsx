@@ -132,15 +132,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       setIsDuplicate(!!isDuplicateInAdding);
     }
   };
-  function LoadingSpinner() {
-    if (addTechItemLoading || editTechItemLoading) {
-      return (
-        <div className="ml-4">
-          <Spinner />
-        </div>
-      );
-    }
-  }
 
   useEffect(() => {
     if (inputRef.current) {
@@ -183,7 +174,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <h3 className="self-center text-xl font-semibold text-base-300">
           {title}
         </h3>
-        <LoadingSpinner />
       </div>
 
       <div className="mt-6 h-40 overflow-y-auto pt-1">
@@ -206,7 +196,9 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                       id={element.id.toString()}
                       ref={editRef}
                       placeholder={element.name}
-                      submitButtonText="Save"
+                      submitButtonText={
+                        editTechItemLoading ? <Spinner /> : "Save"
+                      }
                       clearInputAction={clearActionEditItem}
                       onChange={handleOnChange}
                     />
@@ -258,7 +250,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
             id={title}
             ref={inputRef}
             placeholder="Add Tech Stack"
-            submitButtonText="Save"
+            submitButtonText={addTechItemLoading ? <Spinner /> : "Save"}
             errorMessage={isDuplicate ? "Duplicate Item" : ""}
             clearInputAction={clearActionAdditem}
             onChange={handleOnChange}
