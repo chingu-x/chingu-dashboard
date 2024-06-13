@@ -7,20 +7,20 @@ import EditMenu from "@/components/EditMenu";
 
 interface SettingsMenuProps {
   onClose: () => void;
-  setIsEditing: (value: number) => void;
+  setEditItemId: (value: number) => void;
   id: number;
 }
 
 export default function SettingsMenu({
   onClose,
-  setIsEditing,
+  setEditItemId,
   id,
 }: SettingsMenuProps) {
   const dispatch = useAppDispatch();
   const menuRef = useRef<HTMLDivElement>(null);
 
   const openEdit = () => {
-    setIsEditing(id);
+    setEditItemId(id);
   };
 
   const handleDelete = () => {
