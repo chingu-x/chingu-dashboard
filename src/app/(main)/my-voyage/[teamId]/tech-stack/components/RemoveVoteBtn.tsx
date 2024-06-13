@@ -8,7 +8,7 @@ interface RemoveVoteBtnProps {
   openMenu: (value: number) => void;
   numberOfVotes: number;
   closeMenu: () => void;
-  setIsEditing: Dispatch<SetStateAction<number>>;
+  setEditItemId: Dispatch<SetStateAction<number>>;
   isMenuOpen: number;
 }
 
@@ -17,7 +17,7 @@ export default function RemoveVoteBtn({
   openMenu,
   numberOfVotes,
   closeMenu,
-  setIsEditing,
+  setEditItemId,
   isMenuOpen,
 }: RemoveVoteBtnProps) {
   const handleClick = () => {
@@ -35,7 +35,7 @@ export default function RemoveVoteBtn({
           {isMenuOpen === id && (
             <SettingsMenu
               onClose={closeMenu}
-              setIsEditing={setIsEditing}
+              setEditItemId={setEditItemId}
               id={id}
             />
           )}

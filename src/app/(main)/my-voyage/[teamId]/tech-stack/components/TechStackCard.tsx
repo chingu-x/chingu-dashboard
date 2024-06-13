@@ -27,7 +27,7 @@ interface TechStackCardProps {
 
 export default function TechStackCard({ title, data }: TechStackCardProps) {
   const [isInput, setIsInput] = useState(false);
-  const [isEditing, setIsEditing] = useState(-1);
+  const [editItemId, setEditItemId] = useState(-1);
   const [isDuplicate, setIsDuplicate] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const editRef = useRef<HTMLInputElement>(null);
@@ -107,7 +107,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       );
     }
     setEditTechItemLoading(false);
-    setIsEditing(-1);
+    setEditItemId(-1);
     handleSettingsMenuClose();
   };
 
@@ -116,7 +116,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   };
 
   const clearActionEditItem = () => {
-    setIsEditing(-1);
+    setEditItemId(-1);
     setOpenMenuId(-1);
   };
 
@@ -140,7 +140,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     if (editRef.current) {
       editRef.current.focus();
     }
-  }, [isInput, isEditing]);
+  }, [isInput, editItemId]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -157,7 +157,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         !editRef.current.contains(targetNode) &&
         !(targetNode instanceof HTMLElement && targetNode.closest("form"))
       ) {
-        setIsEditing(-1);
+        setEditItemId(-1);
         setOpenMenuId(-1);
       }
     }
@@ -165,7 +165,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     return () => {
       document.body.removeEventListener("click", handleClickOutside);
     };
-  }, [isInput, isEditing]);
+  }, [isInput, editItemId]);
 
   return (
     <div className="h-80 min-w-[420px] rounded-lg bg-base-200 p-5 text-base-300 sm:w-96">
@@ -187,7 +187,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                 className="relative mb-8 mr-2 grid grid-cols-6 items-center text-base"
                 key={element.id}
               >
-                {isEditing === element.id ? (
+                {editItemId === element.id ? (
                   <form
                     onSubmit={(e) => handleEdit(e, element.id)}
                     className="col-span-6 -my-2 h-12"
@@ -229,7 +229,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                         openMenu={setOpenMenuId}
                         numberOfVotes={element.teamTechStackItemVotes.length}
                         closeMenu={handleSettingsMenuClose}
-                        setIsEditing={setIsEditing}
+                        setEditItemId={setEditItemId}
                         isMenuOpen={openMenuId}
                       />
                     ) : (
