@@ -187,7 +187,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                 className="relative mb-8 mr-2 grid grid-cols-6 items-center text-base"
                 key={element.id}
               >
-                {isEditing === element.id && (
+                {isEditing === element.id ? (
                   <form
                     onSubmit={(e) => handleEdit(e, element.id)}
                     className="col-span-6 -my-2 h-12"
@@ -204,9 +204,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                       onChange={handleOnChange}
                     />
                   </form>
-                )}
-
-                {isEditing !== element.id && (
+                ) : (
                   <>
                     {/*item name*/}
                     <p className="text-base font-medium leading-5">
@@ -244,7 +242,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
           })}
         </ul>
       </div>
-
       {isInput ? (
         <form onSubmit={handleAddItem}>
           <TextInput
