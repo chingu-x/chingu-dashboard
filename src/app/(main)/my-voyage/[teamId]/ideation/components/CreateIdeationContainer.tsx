@@ -4,9 +4,9 @@ import FinalizeIdeationButton from "./FinalizeIdeationButton";
 
 function CreateIdeationContainer() {
   return (
-    <div className="grid grid-cols-[185px_1fr] 3xl:grid-cols-[200px_1fr_200px] items-center justify-items-center gap-y-7 3xl:gap-x-[110px] 2xl:gap-x-20 gap-x-10 w-full p-10 bg-base-200 rounded-2xl">
+    <div className="grid w-full grid-cols-[185px_1fr] items-center justify-items-center gap-x-10 gap-y-7 rounded-2xl bg-base-200 p-10 2xl:gap-x-20 3xl:grid-cols-[200px_1fr_200px] 3xl:gap-x-[110px]">
       <VoteDescriptionCard />
-      <section className="w-full row-span-2 gap-y-7 3xl:row-auto">
+      <section className="row-span-2 w-full gap-y-7 3xl:row-auto">
         <h2 className="text-xl font-semibold text-base-300">
           What is your Voyage project idea & vision?
         </h2>

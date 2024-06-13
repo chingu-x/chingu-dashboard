@@ -42,8 +42,8 @@ export default function FinalizeIdeationList() {
   }, [projectIdeas, router, teamId]);
 
   return (
-    <div className="max-w-[871px] w-full">
-      <div className="flex flex-1 flex-col justify-center p-10 gap-y-5 items-center bg-base-100 rounded-2xl">
+    <div className="w-full max-w-[871px]">
+      <div className="flex flex-1 flex-col items-center justify-center gap-y-5 rounded-2xl bg-base-100 p-10">
         {finalizeProjectList.map((projectIdea) => {
           const { id, title, projectIdeaVotes } = projectIdea;
           return (

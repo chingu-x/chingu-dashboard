@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch, useIdeation } from "@/store/hooks";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
@@ -285,10 +285,10 @@ export default function IdeationForm() {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col items-center w-[871px] p-10 bg-base-200 rounded-2xl">
+      <div className="flex w-[871px] flex-col items-center rounded-2xl bg-base-200 p-10">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-y-4 max-w-[650px] w-full"
+          className="flex w-full max-w-[650px] flex-col gap-y-4"
         >
           <div className="flex flex-col gap-y-4">
             <h1 className="text-3xl font-bold text-base-300">
@@ -333,7 +333,7 @@ export default function IdeationForm() {
                 title="delete"
                 className="w-1/2"
               >
-                <TrashIcon className="w-4 h-4" />
+                <TrashIcon className="h-4 w-4" />
                 Delete Project
               </Button>
             )}

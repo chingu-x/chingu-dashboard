@@ -83,7 +83,7 @@ export default function Modal({
           initial="initial"
           animate="animate"
           exit="exit"
-          className="fixed z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-overlay"
+          className="fixed z-50 flex h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden bg-overlay"
           open={isOpen}
           onClick={onClose}
         >
@@ -94,7 +94,7 @@ export default function Modal({
             animate="animate"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="rounded-2xl bg-base-content flex flex-col text-base-300 md:min-w-[730px] overflow-y-hidden max-h-[calc(100vh-5em)]"
+            className="flex max-h-[calc(100vh-5em)] flex-col overflow-y-hidden rounded-2xl bg-base-content text-base-300 md:min-w-[730px]"
           >
             {/* HEADER */}
             <div
@@ -108,7 +108,7 @@ export default function Modal({
                 <h3 className="text-xl font-semibold capitalize">{title}</h3>
               </div>
               <button type="button" aria-label="close modal" onClick={onClose}>
-                <XMarkIcon className="w-6 h-6 fill-current" />
+                <XMarkIcon className="h-6 w-6 fill-current" />
               </button>
             </div>
             {/* CONTENT */}

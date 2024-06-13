@@ -13,7 +13,7 @@ import Review from "./Review";
 import SectionBase from "./SectionBase";
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
 import { type Section } from "@/store/features/sprint/sprintSlice";
-import { SprintSections } from "@/utils/sections";
+import { Forms } from "@/utils/form/formsEnums";
 
 interface SectionsProps {
   params: {
@@ -33,21 +33,21 @@ export default function Sections({
 }: SectionsProps) {
   const sectionTemplates = [
     {
-      id: SprintSections.notes,
+      id: Forms.notes,
       title: "notes",
       icon: <DocumentTextIcon aria-hidden="true" />,
       isAdded: notes !== undefined,
       children: <Notes data={notes} />,
     },
     {
-      id: SprintSections.planning,
+      id: Forms.planning,
       title: "sprint planning",
       icon: <LightBulbIcon aria-hidden="true" />,
       isAdded: planning !== undefined,
       children: <Planning data={planning} />,
     },
     {
-      id: SprintSections.review,
+      id: Forms.review,
       title: "retrospective & review",
       icon: <ArrowPathRoundedSquareIcon aria-hidden="true" />,
       isAdded: review !== undefined,
@@ -77,7 +77,7 @@ export default function Sections({
   const dividerIsVisible = canBeAddedSections.length !== 0;
 
   return (
-    <div className="flex flex-col overflow-hidden gap-y-10">
+    <div className="flex flex-col gap-y-10 overflow-hidden">
       {/* ADDED SECTIONS */}
       {addedSections.map((section) => (
         <SectionBase

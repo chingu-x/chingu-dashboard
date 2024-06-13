@@ -12,6 +12,7 @@ interface Voyage {
 interface VoyageTeam {
   name: string;
   voyage: Voyage;
+  projectSubmitted: boolean;
 }
 
 export interface VoyageRole {
@@ -38,6 +39,7 @@ export interface User {
   timezone: string;
   avatar: string;
   voyageTeamMembers: VoyageTeamMember[];
+  sprintCheckIn: number[];
   currentDate: Date | null;
 }
 
@@ -54,6 +56,7 @@ const initialState: User = {
   timezone: "",
   avatar: "",
   voyageTeamMembers: [],
+  sprintCheckIn: [],
   currentDate: null,
 };
 

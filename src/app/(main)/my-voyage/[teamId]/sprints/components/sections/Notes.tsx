@@ -10,7 +10,7 @@ import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import useServerAction from "@/hooks/useServerAction";
 import { editMeeting } from "@/myVoyage/sprints/sprintsService";
 import { useAppDispatch } from "@/store/hooks";
@@ -88,7 +88,7 @@ export default function Notes({ data }: NotesProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col pt-10 gap-y-2"
+      className="flex flex-col gap-y-2 pt-10"
     >
       <Textarea
         id="notes"
@@ -101,7 +101,7 @@ export default function Notes({ data }: NotesProps) {
         type="submit"
         variant="outline"
         size="md"
-        className="self-center min-w-[75px]"
+        className="min-w-[75px] self-center"
         disabled={!isDirty || !isValid || editMeetingLoading}
       >
         {editMeetingLoading ? <Spinner /> : "Save"}

@@ -56,7 +56,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            className="relative bg-base-100 py-[14px] px-[22px] rounded-lg text-base-300 my-3"
+            className="relative my-3 rounded-lg bg-base-100 px-[22px] py-[14px] text-base-300"
           >
             {showPopover && (
               <EditPopover
@@ -67,7 +67,7 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
             )}
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-y-1">
-                <h5 className="text-base font-semibold">{description}</h5>
+                <span className="text-base font-semibold">{description}</span>
                 <span className="text-[10px] text-neutral-focus">{`Added by ${
                   isCurrentUser ? "you" : firstName + " " + lastName
                 }`}</span>
@@ -77,10 +77,10 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
                 <button
                   type="button"
                   onClick={handleClick}
-                  className="flex justify-end items-center w-12 h-10 p-0 m-0 bg-transparent border-none  hover:bg-transparent gap-x-0"
+                  className="m-0 flex h-10 w-12 items-center justify-end gap-x-0 border-none bg-transparent p-0 hover:bg-transparent"
                   aria-label="feature menu"
                 >
-                  <EllipsisVerticalIcon className="w-5 h-5 text-base-300" />
+                  <EllipsisVerticalIcon className="h-5 w-5 text-base-300" />
                 </button>
               ) : (
                 // Creator's avatar

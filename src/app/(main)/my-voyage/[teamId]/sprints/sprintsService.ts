@@ -40,6 +40,29 @@ interface SectionBody {
   }[];
 }
 
+interface CheckInFormBody {
+  voyageTeamMemberId: number;
+  sprintId: number;
+  responses: {
+    questionId: number;
+    text?: string;
+    optionChoiceId?: number;
+    boolean?: boolean;
+    numeric?: number;
+  }[];
+}
+
+interface VoyageFormBody {
+  voyageTeamId: number;
+  responses: {
+    questionId: number;
+    text?: string;
+    optionChoiceId?: number;
+    boolean?: boolean;
+    numeric?: number;
+  }[];
+}
+
 type FetchSprintsType = Pick<SprintProps, "teamId">;
 type FetchMeetingType = Pick<SprintProps, "meetingId" | "sprintNumber">;
 
@@ -101,12 +124,17 @@ interface NewEmptySectionResponse {
 
 interface SectionResponse {
   id: number;
-  formId: number;
   questionId: number;
   optionChoiceId: number;
   numeric: number;
   boolean: boolean;
   text: string;
+  responseGroupId: number;
+}
+
+interface FormResponse {
+  id: number;
+  sprintId: number;
   responseGroupId: number;
 }
 
@@ -118,6 +146,9 @@ interface EditAgendaTopicBody extends Partial<AgendaTopicBody> {}
 
 interface AddSectionBody {}
 export interface EditSectionBody extends Partial<SectionBody> {}
+
+interface SubmitCheckInFormBody extends CheckInFormBody {}
+interface SubmitVoyageFormBody extends VoyageFormBody {}
 
 export interface FetchSprintsProps extends FetchSprintsType {}
 export interface FetchMeetingProps extends FetchMeetingType {}
@@ -141,9 +172,11 @@ export interface DeleteAgendaTopicProps extends DeleteAgendaTopicType {}
 export interface AddSectionProps extends AddSectionType {}
 export interface EditSectionProps extends EditSectionType, EditSectionBody {}
 
+export interface SubmitCheckInFormProps extends CheckInFormBody {}
+export interface SubmitVoyageFormProps extends VoyageFormBody {}
+
 export interface FetchSprintsResponse extends SprintsResponse {}
 
-// TODO: will be updated later when agenda types/interfaces are added
 export interface FetchMeetingResponse extends MeetingResponse {
   id: number;
   sprint: {
@@ -184,6 +217,9 @@ export interface DeleteAgendaTopicResponse extends AgendaTopicResponse {}
 
 export interface AddSectionResponse extends NewEmptySectionResponse {}
 export interface EditSectionResponse extends SectionResponse {}
+
+export interface SubmitCheckInFormResponse extends FormResponse {}
+export interface SubmitVoyageFormResponse extends FormResponse {}
 
 export async function addMeeting({
   teamId,
@@ -395,6 +431,57 @@ export async function editSection({
 
   if (res) {
     revalidateTag(sprintCache);
+  }
+
+  return [res, error];
+}
+
+export async function submitCheckInForm({
+  voyageTeamMemberId,
+  sprintId,
+  responses,
+}: SubmitCheckInFormProps): Promise<
+  AsyncActionResponse<SubmitCheckInFormResponse>
+> {
+  const token = getAccessToken();
+
+  const editSectionAsync = () =>
+    POST<SubmitCheckInFormBody, SubmitCheckInFormResponse>(
+      "api/v1/voyages/sprints/check-in",
+      token,
+      "default",
+      { voyageTeamMemberId, sprintId, responses },
+    );
+
+  const [res, error] = await handleAsync(editSectionAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.me);
+  }
+
+  return [res, error];
+}
+
+export async function submitVoyageProjectForm({
+  voyageTeamId,
+  responses,
+}: SubmitVoyageFormProps): Promise<
+  AsyncActionResponse<SubmitVoyageFormResponse>
+> {
+  const token = getAccessToken();
+
+  const editSectionAsync = () =>
+    POST<SubmitVoyageFormBody, SubmitVoyageFormResponse>(
+      "api/v1/voyages/sprints/submit-project",
+      token,
+      "default",
+      { voyageTeamId, responses },
+    );
+
+  const [res, error] = await handleAsync(editSectionAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.me);
   }
 
   return [res, error];

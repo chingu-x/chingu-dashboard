@@ -21,6 +21,7 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   inputGroupContent?: JSX.Element;
   submitButtonText?: string | React.ReactNode;
   buttonDisabled?: boolean;
+  ariaLabel?: string;
   clearInputAction?: () => void;
 }
 
@@ -40,6 +41,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       clearInputAction,
       className,
       type = "text",
+      ariaLabel,
       ...props
     },
     ref,
@@ -92,13 +94,14 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           )}
         >
           <input
+            aria-label={ariaLabel}
             id={id}
             type={showPassword ? "text" : type}
             placeholder={placeholder}
             defaultValue={defaultValue}
             aria-describedby={`${id}-message`}
             className={cn(
-              "transition border-2 peer w-full outline-none rounded-lg px-3.5 py-2.5 shadow-transparent shadow-[0px_0px_0px_3px] bg-base-200 text-base-300 disabled:cursor-not-allowed border-neutral/40 group-hover:border-neutral-focus group-hover:focus-visible:border-neutral/40 focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:bg-base-100 disabled:group-hover:border-neutral/40",
+              "peer w-full rounded-lg border-2 border-neutral/40 bg-base-200 px-3.5 py-2.5 text-base-300 shadow-[0px_0px_0px_3px] shadow-transparent outline-none transition focus-visible:border-neutral/40 focus-visible:shadow-neutral/30 disabled:cursor-not-allowed disabled:bg-base-100 group-hover:border-neutral-focus group-hover:focus-visible:border-neutral/40 disabled:group-hover:border-neutral/40",
               errorMessage &&
                 "border-error/40 hover:border-error focus-visible:border-error/40 focus-visible:shadow-error/20",
               inputGroupContent && "pl-[56px]",
@@ -116,7 +119,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           />
           {/* FIXED INPUT GROUP */}
           {inputGroupContent && (
-            <div className="left-[2px] rounded-l-md flex justify-center items-center top-1/2 -translate-y-1/2 bg-neutral peer-disabled:bg-neutral-content [&>*]:text-base-200 h-[calc(100%-4px)] py-3 transition absolute [&>*]:mx-[14px] [&>*]:w-5 [&>*]:h-5 hover:peer-disabled:cursor-not-allowed">
+            <div className="absolute left-[2px] top-1/2 flex h-[calc(100%-4px)] -translate-y-1/2 items-center justify-center rounded-l-md bg-neutral py-3 transition peer-disabled:bg-neutral-content hover:peer-disabled:cursor-not-allowed [&>*]:mx-[14px] [&>*]:h-5 [&>*]:w-5 [&>*]:text-base-200">
               {inputGroupContent}
             </div>
           )}
@@ -128,7 +131,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               size="sm"
               disabled={buttonDisabled}
               className={cn(
-                "absolute top-1/2 -translate-y-1/2 right-[2px] h-[calc(100%-4px)] rounded-[6.2px]",
+                "absolute right-[2px] top-1/2 h-[calc(100%-4px)] -translate-y-1/2 rounded-[6.2px]",
                 isClearButtonVisible && "right-[50px]",
               )}
             >
@@ -141,16 +144,16 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             <button
               type="button"
               onClick={clearInput}
-              className="absolute right-0 p-[10px] -translate-y-1/2 top-1/2"
+              className="absolute right-0 top-1/2 -translate-y-1/2 p-[10px]"
             >
-              <XMarkIcon className="w-5 h-5 text-base-300" />
+              <XMarkIcon className="h-5 w-5 text-base-300" />
             </button>
           )}
           {/* SHOW/HIDE PASSWORD TOGGLE */}
           {type === "password" && (
             <div
               onClick={toggleShowPassword}
-              className="absolute inset-y-0 right-0 flex items-center px-5 cursor-pointer"
+              className="absolute inset-y-0 right-0 flex cursor-pointer items-center px-5"
             >
               {showPassword ? (
                 <EyeIcon className="h-5" />
