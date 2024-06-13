@@ -10,9 +10,9 @@ import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import { type Section } from "@/store/features/sprint/sprintSlice";
-import { PlanningQuestions, SprintSections } from "@/utils/sections";
+import { PlanningQuestions, Forms } from "@/utils/form/formsEnums";
 import useServerAction from "@/hooks/useServerAction";
 import {
   editSection,
@@ -113,7 +113,7 @@ export default function Planning({ data }: PlanningProps) {
       responses,
       meetingId,
       sprintNumber,
-      formId: Number(SprintSections.planning),
+      formId: Number(Forms.planning),
     });
     if (res) {
       reset({ ...data });
@@ -132,7 +132,7 @@ export default function Planning({ data }: PlanningProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col pt-10 gap-y-2"
+      className="flex flex-col gap-y-2 pt-10"
     >
       <Textarea
         id="goal"
@@ -156,7 +156,7 @@ export default function Planning({ data }: PlanningProps) {
         type="submit"
         variant="outline"
         size="md"
-        className="self-center min-w-[75px]"
+        className="min-w-[75px] self-center"
         disabled={!isDirty || !isValid || editSectionLoading}
       >
         {editSectionLoading ? <Spinner /> : "Save"}

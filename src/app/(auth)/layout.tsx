@@ -8,14 +8,14 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex flex-col h-screen w-screen">
+    <div className="flex h-screen w-screen flex-col">
       <Navbar>
         <div className="pr-2">
           <ModeToggle />
         </div>
       </Navbar>
-      <main className="flex flex-col items-center w-full p-10 overflow-y-auto h-full">
-        <div className="gap-y-9 h-full xl:flex">
+      <main className="flex h-full w-full flex-col items-center overflow-y-auto p-10">
+        <div className="h-full gap-y-9 xl:flex">
           <div className="flex items-center justify-center">
             <AuthBannerContainer />
             {children}

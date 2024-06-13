@@ -38,8 +38,8 @@ export default function List({ id, title, features }: ListProps) {
   }
 
   return (
-    <div className="flex flex-col w-full py-6 font-semibold bg-base-200 rounded-2xl text-base-300">
-      <h4 className="mx-6 mb-4 text-xl capitalize">{title}</h4>
+    <div className="flex w-full flex-col rounded-2xl bg-base-200 py-6 font-semibold text-base-300">
+      <h2 className="mx-6 mb-4 text-xl capitalize">{title}</h2>
       {/* Features container / drag and drop area */}
       <Droppable droppableId={id.toString()}>
         {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
@@ -49,7 +49,7 @@ export default function List({ id, title, features }: ListProps) {
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 0.3 } }}
-                className="absolute w-full text-neutral-focus bg-base-100 py-[18px] px-[22px] rounded-lg my-3"
+                className="absolute my-3 w-full rounded-lg bg-base-100 px-[22px] py-[18px] text-neutral-focus"
               >
                 Share your suggestions!
               </motion.span>
@@ -57,7 +57,7 @@ export default function List({ id, title, features }: ListProps) {
             <ul
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className={`max-h-[300px] overflow-y-auto overflow-x-hidden flex flex-col min-h-[130px] px-2 ${
+              className={`flex max-h-[300px] min-h-[130px] flex-col overflow-y-auto overflow-x-hidden px-2 ${
                 snapshot.draggingFromThisWith && "bg-base-content"
               } ${snapshot.isDraggingOver && "bg-base-content"}`}
             >

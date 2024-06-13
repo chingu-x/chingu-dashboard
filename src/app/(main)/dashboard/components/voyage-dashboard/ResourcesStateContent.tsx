@@ -9,20 +9,20 @@ interface ResourcesStateContentProps {
 }
 function ResourcesStateContent({ contentObject }: ResourcesStateContentProps) {
   return (
-    <div className="flex flex-col h-full justify-center">
-      <p className="text-xl font-semibold mb-4">Recently Shared</p>
-      <div className="flex flex-col overflow-auto w-full max-h-[200px] pr-3">
+    <div className="flex h-full flex-col justify-center">
+      <p className="mb-4 text-xl font-semibold">Recently Shared</p>
+      <div className="flex max-h-[200px] w-full flex-col overflow-auto pr-3">
         {contentObject?.map((item) => (
           <div
             key={item.title}
-            className="h-[79px] bg-base-200 rounded-lg w-full p-4 mb-4 flex justify-between items-center"
+            className="mb-4 flex h-[79px] w-full items-center justify-between rounded-lg bg-base-200 p-4"
           >
-            <div className="flex flex-col max-w-[400px]">
-              <p className="overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold mb-1">
+            <div className="flex max-w-[400px] flex-col">
+              <p className="mb-1 truncate text-base font-semibold">
                 {item.title}
               </p>
               <div className="flex">
-                <p className="font-medium text-base mr-2">Shared by</p>
+                <p className="mr-2 text-base font-medium">Shared by</p>
                 <Badge
                   title={item.userName}
                   variant="primary"
@@ -32,7 +32,7 @@ function ResourcesStateContent({ contentObject }: ResourcesStateContentProps) {
               </div>
             </div>
             <Link href={item.resourceUrl} target="_blank">
-              <ArrowTopRightOnSquareIcon className="w-6 h-6 text-base-300 mr-3" />
+              <ArrowTopRightOnSquareIcon className="mr-3 h-6 w-6 text-base-300" />
             </Link>
           </div>
         ))}

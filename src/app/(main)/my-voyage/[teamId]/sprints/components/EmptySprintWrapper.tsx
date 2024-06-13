@@ -13,6 +13,10 @@ import { type Voyage, type Sprint } from "@/store/features/sprint/sprintSlice";
 import { getUser } from "@/utils/getUser";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
+import {
+  getSprintCheckinIsStatus,
+  getVoyageProjectStatus,
+} from "@/utils/getFormStatus";
 
 function getMeeting(sprints: Sprint[], sprintNumber: number) {
   const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
@@ -79,8 +83,17 @@ export default async function EmptySprintWrapper({
       `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`,
     );
   } else {
+    // Check if a checkin form for the current sprint has been submitted
+    const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
+      user,
+      sprintNumber,
+    );
+
+    // Check if a voyage project has been submitted
+    const voyageProjectIsSubmitted = getVoyageProjectStatus(user, teamId);
+
     return (
-      <div className="flex flex-col w-full gap-y-10">
+      <div className="flex w-full flex-col gap-y-10">
         <VoyagePageBannerContainer
           title="Sprints"
           description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
@@ -94,7 +107,12 @@ export default async function EmptySprintWrapper({
           />
         </VoyagePageBannerContainer>
         <ProgressStepper currentSprintNumber={currentSprintNumber} />
-        <SprintActions params={params} />
+        <SprintActions
+          params={params}
+          sprintCheckinIsSubmitted={sprintCheckinIsSubmitted}
+          voyageProjectIsSubmitted={voyageProjectIsSubmitted}
+          currentSprintNumber={currentSprintNumber}
+        />
         <EmptySprintState />
         <EmptySprintProvider voyage={voyageData} />
       </div>

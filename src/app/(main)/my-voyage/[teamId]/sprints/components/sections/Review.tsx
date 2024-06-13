@@ -10,9 +10,9 @@ import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import { type Section } from "@/store/features/sprint/sprintSlice";
-import { ReviewQuestions, SprintSections } from "@/utils/sections";
+import { ReviewQuestions, Forms } from "@/utils/form/formsEnums";
 import useServerAction from "@/hooks/useServerAction";
 import {
   type EditSectionBody,
@@ -123,7 +123,7 @@ export default function Review({ data }: ReviewProps) {
       responses,
       meetingId,
       sprintNumber,
-      formId: Number(SprintSections.review),
+      formId: Number(Forms.review),
     });
 
     if (res) {
@@ -144,7 +144,7 @@ export default function Review({ data }: ReviewProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col pt-10 gap-y-2"
+      className="flex flex-col gap-y-2 pt-10"
     >
       <Textarea
         id="what_right"
@@ -177,7 +177,7 @@ export default function Review({ data }: ReviewProps) {
         type="submit"
         variant="outline"
         size="md"
-        className="self-center min-w-[75px]"
+        className="min-w-[75px] self-center"
         disabled={!isDirty || !isValid || editSectionLoading}
       >
         {editSectionLoading ? <Spinner /> : "Save"}

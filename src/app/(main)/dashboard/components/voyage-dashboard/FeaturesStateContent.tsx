@@ -5,12 +5,12 @@ interface FeaturesStateContentProps {
 }
 function FeaturesStateContent({ contentObject }: FeaturesStateContentProps) {
   return (
-    <div className="flex flex-col h-full justify-center mt-4">
-      <div className="flex flex-col overflow-auto w-full max-h-[200px] pr-3">
+    <div className="mt-4 flex h-full flex-col justify-center">
+      <div className="flex max-h-[200px] w-full flex-col overflow-auto pr-3">
         {contentObject?.map((item) => (
           <p
             key={item}
-            className="bg-base-200 rounded-lg h-[35px] w-full px-3 py-2 mb-3 flex items-center"
+            className="mb-3 flex h-[35px] w-full items-center rounded-lg bg-base-200 px-3 py-2"
           >
             {item}
           </p>

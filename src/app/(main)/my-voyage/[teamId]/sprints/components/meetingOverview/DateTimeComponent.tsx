@@ -41,11 +41,11 @@ export default function DateTimeComponent({
   return (
     <>
       <p className="flex items-center gap-x-2">
-        <CalendarDaysIcon className="w-[15px] h-[15px]" />
+        <CalendarDaysIcon className="h-[15px] w-[15px]" />
         {getMeetingDate()}
       </p>
       <p className="flex items-center gap-x-2">
-        <ClockIcon className="w-[15px] h-[15px]" />
+        <ClockIcon className="h-[15px] w-[15px]" />
         {getMeetingTime()}
       </p>
     </>

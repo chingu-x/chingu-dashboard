@@ -7,12 +7,12 @@ interface TechStackStateContentProps {
 
 function TechStackStateContent({ contentObject }: TechStackStateContentProps) {
   return (
-    <div className="flex flex-col h-full justify-center mt-4">
-      <div className="flex flex-col overflow-auto w-full max-h-[200px] pr-3">
+    <div className="mt-4 flex h-full flex-col justify-center">
+      <div className="flex max-h-[200px] w-full flex-col overflow-auto pr-3">
         {contentObject?.map((item) => (
           <div
             key={item.title}
-            className="h-[55px] bg-base-200 rounded-lg w-full px-3 py-2 mb-3 flex flex-col"
+            className="mb-3 flex h-[55px] w-full flex-col rounded-lg bg-base-200 px-3 py-2"
           >
             <div className="flex items-center justify-start gap-x-2">
               <div className="h-3 w-3 text-neutral-focus">{<item.icon />}</div>

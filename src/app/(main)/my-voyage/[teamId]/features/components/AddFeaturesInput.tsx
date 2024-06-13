@@ -6,7 +6,7 @@ import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { addFeature } from "@/myVoyage/features/featuresService";
@@ -102,12 +102,12 @@ export default function AddFeaturesInput({
       <Button
         variant="link"
         size="lg"
-        className="justify-between w-full h-10 p-0 mt-3 font-medium border rounded-lg shadow-sm outline-none text-neutral-focus border-base-100"
+        className="mt-3 h-10 w-full justify-between rounded-lg border border-base-100 p-0 font-medium text-neutral-focus shadow-sm outline-none"
         onClick={handleClick}
       >
         <div className="pl-3">Add Feature</div>
-        <div className="flex items-center justify-center w-12 h-full rounded-tr-lg rounded-br-lg bg-neutral">
-          <PlusCircleIcon className="w-6 h-6 text-base-200" />
+        <div className="flex h-full w-12 items-center justify-center rounded-r-lg bg-neutral">
+          <PlusCircleIcon className="h-6 w-6 text-base-200" />
         </div>
       </Button>
     </div>

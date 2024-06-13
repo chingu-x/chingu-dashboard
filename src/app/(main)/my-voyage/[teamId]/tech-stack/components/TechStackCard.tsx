@@ -78,56 +78,58 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   }, [isInput, isEditing]);
 
   return (
-    <div className="card min-w-[420px] h-80 text-base-300 bg-base-200 rounded-lg px-6 py-5 sm:w-96">
+    <div className="h-80 min-w-[420px] rounded-lg bg-base-200 px-6 py-5 text-base-300 sm:w-96">
       <div className="flex flex-row justify-start">
         {GetIcon(title)}
-        <h3 className="self-center text-xl font-semibold text-base-300">
+        <span className="self-center text-xl font-semibold text-base-300">
           {title}
-        </h3>
+        </span>
       </div>
 
-      <div className="h-40 pt-1 mt-6 overflow-y-auto">
+      <div className="mt-6 h-40 overflow-y-auto pt-1">
         <ul className="text-base-300">
-          {data.map((element) => (
-            <li
-              className="text-base mb-8 grid grid-cols-6 items-center relative "
-              key={element.id}
-            >
-              {isEditing === element.id && (
-                <form className="col-span-6 h-12 -my-2">
-                  <TextInput
-                    id={element.id.toString()}
-                    ref={editRef}
-                    placeholder={element.name}
-                    submitButtonText="Save"
-                    clearInputAction={clearActionEditItem}
-                    onChange={handleOnChange}
-                  />
-                </form>
-              )}
+          {data.map((element) => {
+            const voteIsSubmitted = element.teamTechStackItemVotes.find(
+              (item) => item.votedBy.member.id === userId,
+            );
+            return (
+              <li
+                className="relative mb-8 grid grid-cols-6 items-center text-base"
+                key={element.id}
+              >
+                {isEditing === element.id && (
+                  <form className="col-span-6 -my-2 h-12">
+                    <TextInput
+                      id={element.id.toString()}
+                      ref={editRef}
+                      placeholder={element.name}
+                      submitButtonText="Save"
+                      clearInputAction={clearActionEditItem}
+                      onChange={handleOnChange}
+                    />
+                  </form>
+                )}
 
-              {isEditing !== element.id && (
-                <>
-                  {/*item name*/}
-                  <p className="font-medium text-base leading-5">
-                    {element.name}
-                  </p>
-                  {/*Avatars of voters*/}
-                  <div className="ml-8 col-span-2 bg-base-200">
-                    <AvatarGroup>
-                      {element.teamTechStackItemVotes.map((vote) => (
-                        <Avatar
-                          key={vote.votedBy.member.id}
-                          image={vote.votedBy.member.avatar}
-                          width={24}
-                          height={24}
-                        />
-                      ))}
-                    </AvatarGroup>
-                  </div>
-                  {element.teamTechStackItemVotes
-                    .map((item) => item.votedBy.member.id)
-                    .includes(userId) ? (
+                {isEditing !== element.id && (
+                  <>
+                    {/*item name*/}
+                    <p className="text-base font-medium leading-5">
+                      {element.name}
+                    </p>
+                    {/*Avatars of voters*/}
+                    <div className="col-span-2 ml-8 bg-base-200">
+                      <AvatarGroup>
+                        {element.teamTechStackItemVotes.map((vote) => (
+                          <Avatar
+                            key={vote.votedBy.member.id}
+                            image={vote.votedBy.member.avatar}
+                            width={24}
+                            height={24}
+                          />
+                        ))}
+                      </AvatarGroup>
+                    </div>
+                    {voteIsSubmitted ? (
                       <RemoveVoteBtn
                         id={element.id}
                         openMenu={setOpenMenuId}
@@ -139,10 +141,11 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                     ) : (
                       <AddVoteBtn />
                     )}
-                </>
-              )}
-            </li>
-          ))}
+                  </>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
 
@@ -163,7 +166,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <div className="px-3.5 py-2.5">
           <Button
             variant="outline"
-            className="justify-center w-full border-2"
+            className="w-full justify-center border-2"
             onClick={toggleAddItemInput}
           >
             Add Tech Stack

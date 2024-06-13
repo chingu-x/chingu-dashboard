@@ -35,7 +35,7 @@ const DateTimePicker = React.forwardRef<DatePicker, DatePickerInputProps>(
       return currentDate.getTime() < selectedDate.getTime();
     };
     return (
-      <div className="flex flex-col w-full">
+      <div className="flex w-full flex-col">
         <DatePicker
           id={id}
           selected={selectedValue}
