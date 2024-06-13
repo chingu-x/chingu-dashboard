@@ -23,7 +23,9 @@ function TechStackStateContent({ contentObject }: TechStackStateContentProps) {
                   {item.title}
                 </p>
               </div>
-              <p className="text-base font-semibold">{item.value}</p>
+              <p className="w-40 truncate text-base font-semibold max-[1469px]:w-[300px] max-[1200px]:w-full">
+                {item.value}
+              </p>
             </div>
           ) : null,
         )}

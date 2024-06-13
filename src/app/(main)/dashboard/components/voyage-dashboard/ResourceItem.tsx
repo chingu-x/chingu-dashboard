@@ -48,7 +48,9 @@ function ResourceItem({
       onMouseLeave={() => setWidgetHovered(false)}
     >
       <div className="flex max-w-[400px] flex-col">
-        <p className="mb-1 truncate text-base font-semibold">{title}</p>
+        <p className="mb-1 w-[300px] truncate text-base font-semibold max-[1469px]:w-full max-[1200px]:w-56">
+          {title}
+        </p>
         <div className="flex">
           <p className="mr-2 text-base font-medium">Shared by</p>
           <Badge

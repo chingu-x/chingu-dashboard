@@ -15,6 +15,7 @@ import { type FeaturesList } from "@/store/features/features/featuresSlice";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import { type TechStackData } from "@/store/features/techStack/techStackSlice";
 import { type ResourceData } from "@/store/features/resources/resourcesSlice";
+import type { AsyncActionResponse } from "@/utils/handleAsync";
 
 interface GetDashboardDataResponse {
   currentSprintNumber: number | null;
@@ -36,130 +37,41 @@ export type EventList = {
   sprint: number;
 };
 
-const getFeaturesData = async (
+interface FetchResult<T> {
+  data: T | null;
+  error: string | null;
+}
+
+const fetchData = async <T, Y>(
+  fetchFunc: (args: Y) => Promise<AsyncActionResponse<T>>,
   user: User | null,
   error: AppError | null,
   teamId: number,
-) => {
-  let features: FeaturesList[] = [];
-
-  const { errorResponse, data } = await getCurrentVoyageData({
+  args: Y,
+): Promise<FetchResult<T>> => {
+  const { errorResponse, data } = await getCurrentVoyageData<T, Y>({
     user,
     error,
     teamId,
-    args: { teamId },
-    func: fetchFeatures,
+    args,
+    func: fetchFunc,
   });
 
   if (errorResponse) {
-    return errorResponse;
+    return { data: null, error: errorResponse };
   }
 
   if (data) {
-    const [res, error] = data;
+    const [res, err] = data;
 
-    if (error) {
-      return `Error: ${error.message}`;
+    if (err) {
+      return { data: null, error: `Error: ${err.message}` };
     }
 
-    features = res!;
+    return { data: res, error: null };
   }
 
-  return { features };
-};
-
-const getProjectsIdeasData = async (
-  user: User | null,
-  error: AppError | null,
-  teamId: number,
-) => {
-  let projectIdeas: IdeationData[] = [];
-
-  const { errorResponse, data } = await getCurrentVoyageData({
-    user,
-    error,
-    teamId,
-    args: { teamId },
-    func: fetchProjectIdeas,
-  });
-
-  if (errorResponse) {
-    return errorResponse;
-  }
-
-  if (data) {
-    const [res, error] = data;
-
-    if (error) {
-      return `Error: ${error.message}`;
-    }
-
-    projectIdeas = res!;
-  }
-
-  return { projectIdeas };
-};
-
-export const getTechStackData = async (
-  user: User | null,
-  error: AppError | null,
-  teamId: number,
-) => {
-  let techStackData: TechStackData[] = [];
-
-  const { errorResponse, data } = await getCurrentVoyageData({
-    user,
-    error,
-    teamId,
-    args: { teamId },
-    func: fetchTechStack,
-  });
-
-  if (errorResponse) {
-    return errorResponse;
-  }
-  if (data) {
-    const [res, error] = data;
-
-    if (error) {
-      return `Error: ${error.message}`;
-    }
-
-    techStackData = res!;
-  }
-
-  return { techStackData };
-};
-
-const getResourcesData = async (
-  user: User | null,
-  error: AppError | null,
-  teamId: number,
-) => {
-  let projectResources: ResourceData[] = [];
-
-  const { errorResponse, data } = await getCurrentVoyageData({
-    user,
-    error,
-    teamId,
-    args: { teamId },
-    func: fetchResources,
-  });
-
-  if (errorResponse) {
-    return errorResponse;
-  }
-  if (data) {
-    const [res, error] = data;
-
-    if (error) {
-      return `Error: ${error.message}`;
-    }
-
-    projectResources = res!;
-  }
-
-  return { projectResources };
+  return { data: null, error: null };
 };
 
 type SprintDataResponse =
@@ -207,54 +119,46 @@ export const getDashboardData = async (
   error: AppError | null,
   teamId: number,
 ): Promise<GetDashboardDataResponse> => {
-  let sprintsData: Sprint[] = [];
-  let voyageNumber: number | null = null;
-  let voyageData: Voyage = {} as Voyage;
-  let features: FeaturesList[] = [];
-  let projectIdeas: IdeationData[] = [];
-  let techStackData: TechStackData[] = [];
-  let projectResources: ResourceData[] = [];
-
   const sprintsResult = await getSprintsData(user, error, teamId);
-  const featuresResult = await getFeaturesData(user, error, teamId);
-  const projectIdeasResult = await getProjectsIdeasData(user, error, teamId);
-  const techStackResult = await getTechStackData(user, error, teamId);
-  const resourcesResult = await getResourcesData(user, error, teamId);
+  const featuresResult = await fetchData<FeaturesList[], { teamId: number }>(
+    fetchFeatures,
+    user,
+    error,
+    teamId,
+    { teamId },
+  );
+  const projectIdeasResult = await fetchData<
+    IdeationData[],
+    { teamId: number }
+  >(fetchProjectIdeas, user, error, teamId, { teamId });
+  const techStackResult = await fetchData<TechStackData[], { teamId: number }>(
+    fetchTechStack,
+    user,
+    error,
+    teamId,
+    { teamId },
+  );
+  const resourcesResult = await fetchData<ResourceData[], { teamId: number }>(
+    fetchResources,
+    user,
+    error,
+    teamId,
+    { teamId },
+  );
 
-  if (typeof sprintsResult !== "string") {
-    ({ sprintsData, voyageNumber, voyageData } = sprintsResult);
-  }
-
-  if (typeof featuresResult !== "string") {
-    ({ features } = featuresResult);
-  }
-
-  if (typeof projectIdeasResult !== "string") {
-    ({ projectIdeas } = projectIdeasResult);
-  }
-
-  if (typeof techStackResult !== "string") {
-    ({ techStackData } = techStackResult);
-  }
-
-  if (typeof resourcesResult !== "string") {
-    ({ projectResources } = resourcesResult);
-  }
+  if (typeof sprintsResult === "string") throw new Error(sprintsResult);
+  if (featuresResult.error) throw new Error(featuresResult.error);
+  if (projectIdeasResult.error) throw new Error(projectIdeasResult.error);
+  if (techStackResult.error) throw new Error(techStackResult.error);
+  if (resourcesResult.error) throw new Error(resourcesResult.error);
 
   let currentSprintNumber = null;
-  if (sprintsData.length > 0) {
-    const { number } = getCurrentSprint(sprintsData) as Sprint;
-    currentSprintNumber = number;
+  if (sprintsResult.sprintsData.length > 0) {
+    currentSprintNumber =
+      getCurrentSprint(sprintsResult.sprintsData)?.number ?? null;
   }
 
-  const meetingsData: {
-    title: string;
-    date: string;
-    link: string;
-    sprint: number;
-  }[] = [];
-
-  const fetchMeetingsPromises = sprintsData.map((sprint) =>
+  const fetchMeetingsPromises = sprintsResult.sprintsData.map((sprint) =>
     fetchMeeting({
       sprintNumber: sprint.number,
       meetingId: sprint.teamMeetings[0]?.id,
@@ -263,32 +167,33 @@ export const getDashboardData = async (
 
   const fetchMeetingsResults = await Promise.all(fetchMeetingsPromises);
 
-  fetchMeetingsResults.forEach(([res]) => {
-    if (res) {
-      const { title, dateTime, meetingLink, sprint } = res;
-      const parsedDate = convertStringToDate(dateTime, user?.timezone ?? "");
-      const formattedDate = format(parsedDate, "yyyy-MM-dd h:mm a");
-      meetingsData.push({
-        title,
-        date: formattedDate,
-        link: meetingLink,
-        sprint: sprint.number,
-      });
-    } else if (error) {
-      return `Error: ${error.message}`;
-    }
-  });
+  const meetingsData = fetchMeetingsResults
+    .map(([res]) => {
+      if (res) {
+        const { title, dateTime, meetingLink, sprint } = res;
+        const parsedDate = convertStringToDate(dateTime, user?.timezone ?? "");
+        const formattedDate = format(parsedDate, "yyyy-MM-dd h:mm a");
+        return {
+          title,
+          date: formattedDate,
+          link: meetingLink,
+          sprint: sprint.number,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean) as EventList[];
 
   return {
     currentSprintNumber,
-    sprintsData,
+    sprintsData: sprintsResult.sprintsData,
     user,
     meetingsData,
-    voyageNumber,
-    voyageData,
-    features,
-    projectIdeas,
-    techStackData,
-    projectResources,
+    voyageNumber: sprintsResult.voyageNumber,
+    voyageData: sprintsResult.voyageData,
+    features: featuresResult.data!,
+    projectIdeas: projectIdeasResult.data!,
+    techStackData: techStackResult.data!,
+    projectResources: resourcesResult.data!,
   };
 };
