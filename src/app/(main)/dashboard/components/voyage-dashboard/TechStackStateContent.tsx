@@ -1,8 +1,17 @@
 import React from "react";
-import type { TechStackData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 
+type TechItem = {
+  title: string;
+  icon: React.ForwardRefExoticComponent<
+    Omit<React.SVGProps<SVGSVGElement>, "ref"> & {
+      title?: string | undefined;
+      titleId?: string | undefined;
+    } & React.RefAttributes<SVGSVGElement>
+  >;
+  value: string;
+};
 interface TechStackStateContentProps {
-  contentObject?: TechStackData[];
+  contentObject?: TechItem[];
 }
 
 function TechStackStateContent({ contentObject }: TechStackStateContentProps) {

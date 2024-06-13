@@ -1,9 +1,16 @@
 import React from "react";
 import ResourceItem from "./ResourceItem";
-import type { ResourcesData } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
+
+type ResourceItemData = {
+  id: number;
+  title: string;
+  resourceUrl: string;
+  userName: string;
+  userAvatarUrl: string;
+};
 
 interface ResourcesStateContentProps {
-  contentObject?: ResourcesData[];
+  contentObject?: ResourceItemData[];
 }
 function ResourcesStateContent({ contentObject }: ResourcesStateContentProps) {
   return (

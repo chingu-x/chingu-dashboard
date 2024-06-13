@@ -15,7 +15,6 @@ import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
 import { type EventList, getDashboardData } from "./getDashboardData";
-import { CHECKIN_STATUS } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
 import { getUser } from "@/utils/getUser";
@@ -35,6 +34,9 @@ interface VoyageDashboardProps {
 }
 async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   const [user, error] = await getUser();
+
+  // TODO: Mocked value
+  const CHECKIN_STATUS = "Due today";
 
   let currentSprintNumber: number | null = null;
   let sprintsData: Sprint[] = [];
