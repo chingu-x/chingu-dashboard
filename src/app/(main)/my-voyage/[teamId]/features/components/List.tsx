@@ -39,7 +39,7 @@ export default function List({ id, title, features }: ListProps) {
 
   return (
     <div className="flex w-full flex-col rounded-2xl bg-base-200 py-6 font-semibold text-base-300">
-      <h4 className="mx-6 mb-4 text-xl capitalize">{title}</h4>
+      <h2 className="mx-6 mb-4 text-xl capitalize">{title}</h2>
       {/* Features container / drag and drop area */}
       <Droppable droppableId={id.toString()}>
         {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (

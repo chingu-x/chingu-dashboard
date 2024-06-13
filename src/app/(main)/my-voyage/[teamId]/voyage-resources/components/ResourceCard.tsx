@@ -80,13 +80,14 @@ export default function ResourceCard({
             <Badge title={user.firstName} avatarUrlImage={user.avatar} />
           </div>
           <div className="h-5 w-1 border border-y-0 border-l-0 border-r-neutral-content"></div>
-          <div className="text-neutral">Added {date}</div>
+          <div className="text-neutral-focus">Added {date}</div>
         </div>
       </div>
       {userId === currentUserId ? (
         <IconButton
           className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-base-100"
           onClick={openDeleteModal}
+          aria-label="delete"
         >
           <TrashIcon className="h-6 w-6" />
         </IconButton>
