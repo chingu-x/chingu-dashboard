@@ -184,7 +184,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
             );
             return (
               <li
-                className="relative mb-8 grid grid-cols-6 items-center text-base"
+                className="relative mb-8 mr-2 grid grid-cols-6 items-center text-base"
                 key={element.id}
               >
                 {isEditing === element.id && (
@@ -196,6 +196,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                       id={element.id.toString()}
                       ref={editRef}
                       placeholder={element.name}
+                      defaultValue={element.name}
                       submitButtonText={
                         editTechItemLoading ? <Spinner /> : "Save"
                       }
