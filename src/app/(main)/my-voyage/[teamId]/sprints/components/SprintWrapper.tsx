@@ -32,7 +32,11 @@ import { getUser } from "@/utils/getUser";
 import { getSprintCache } from "@/utils/getSprintCache";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
-import { SprintSections } from "@/utils/sections";
+import { Forms } from "@/utils/form/formsEnums";
+import {
+  getSprintCheckinIsStatus,
+  getVoyageProjectStatus,
+} from "@/utils/getFormStatus";
 
 export async function fetchMeeting({
   sprintNumber,
@@ -123,6 +127,12 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
     redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
   }
 
+  // Check if a checkin form for the current sprint has been submitted
+  const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(user, sprintNumber);
+
+  // Check if a voyage project has been submitted
+  const voyageProjectIsSubmitted = getVoyageProjectStatus(user, teamId);
+
   return (
     <div className="flex w-full flex-col gap-y-10">
       <VoyagePageBannerContainer
@@ -139,7 +149,12 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
       </VoyagePageBannerContainer>
 
       <ProgressStepper currentSprintNumber={currentSprintNumber} />
-      <SprintActions params={params} />
+      <SprintActions
+        params={params}
+        sprintCheckinIsSubmitted={sprintCheckinIsSubmitted}
+        voyageProjectIsSubmitted={voyageProjectIsSubmitted}
+        currentSprintNumber={currentSprintNumber}
+      />
       <MeetingOverview
         title={meetingData.title!}
         dateTime={meetingData.dateTime!}
@@ -152,10 +167,10 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         params={params}
         notes={meetingData.notes}
         planning={sectionsData.find(
-          (section) => section.form.id === Number(SprintSections.planning),
+          (section) => section.form.id === Number(Forms.planning),
         )}
         review={sectionsData.find(
-          (section) => section.form.id === Number(SprintSections.review),
+          (section) => section.form.id === Number(Forms.review),
         )}
       />
     </div>

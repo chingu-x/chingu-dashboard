@@ -4,7 +4,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch } from "@/store/hooks";
-import { validateTextInput } from "@/helpers/form/validateInput";
+import { validateTextInput } from "@/utils/form/validateInput";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
@@ -74,6 +74,7 @@ export default function ResourceInput() {
         <TextInput
           id="url"
           placeholder="Paste your resource link here."
+          ariaLabel="link"
           errorMessage={
             errors.url?.type === "invalid_string"
               ? "Must start with https://"
@@ -85,6 +86,7 @@ export default function ResourceInput() {
         <TextInput
           id="title"
           placeholder="Name your resource here."
+          ariaLabel="resource name"
           {...register("title")}
         />
       </div>

@@ -14,6 +14,7 @@ const user1: Partial<User> = {
             name: "Active",
           },
         },
+        projectSubmitted: false,
       },
       voyageRole: {
         name: "Developer",
@@ -33,6 +34,7 @@ const user2: Partial<User> = {
             name: "Closed",
           },
         },
+        projectSubmitted: false,
       },
       voyageRole: {
         name: "Developer",
