@@ -79,7 +79,7 @@ export default function Sidebar() {
   const currentPath = usePathname();
   let { teamId } = useParams();
 
-  if (Array.isArray(teamId)) teamId = teamId[0];
+  if (Array.isArray(teamId)) [teamId] = teamId;
 
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(true);
   const [selectedButton, setSelectedButton] = useState<string>(currentPath);
@@ -99,27 +99,27 @@ export default function Sidebar() {
   const voyagePages: VoyagePageProperty[] = [
     {
       name: VoyagePages.directory,
-      link: routePaths.directoryPage(teamId!),
+      link: routePaths.directoryPage(teamId),
     },
     {
       name: VoyagePages.techStack,
-      link: routePaths.techStackPage(teamId!),
+      link: routePaths.techStackPage(teamId),
     },
     {
       name: VoyagePages.ideation,
-      link: routePaths.ideationPage(teamId!),
+      link: routePaths.ideationPage(teamId),
     },
     {
       name: VoyagePages.features,
-      link: routePaths.featuresPage(teamId!),
+      link: routePaths.featuresPage(teamId),
     },
     {
       name: VoyagePages.sprints,
-      link: routePaths.sprintsPage(teamId!),
+      link: routePaths.sprintsPage(teamId),
     },
     {
       name: VoyagePages.resources,
-      link: routePaths.voyageResourcesPage(teamId!),
+      link: routePaths.voyageResourcesPage(teamId),
     },
   ];
 
