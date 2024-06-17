@@ -21,9 +21,20 @@ export function getCurrentVoyageTeam({
   let voyageTeamMemberId: number = 0;
 
   if (user) {
-    currentVoyageTeam = user.voyageTeamMembers.find(
-      (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+    const requestedVoyageTeam = user.voyageTeamMembers.find(
+      (voyage) => voyage.voyageTeamId === teamId,
     );
+
+    if (
+      requestedVoyageTeam &&
+      requestedVoyageTeam.voyageTeam.voyage.status.name === "Active"
+    ) {
+      currentVoyageTeam = requestedVoyageTeam;
+    } else {
+      currentVoyageTeam = user.voyageTeamMembers.find(
+        (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+      );
+    }
   }
 
   if (error) {
