@@ -10,5 +10,7 @@ export function getCurrentSprint(sprints: Sprint[]) {
       end: sprint.endDate,
     }),
   );
-  return currentSprint;
+
+  if (currentSprint) return currentSprint;
+  else return sprints.find((sprint) => sprint.number === sprints.length);
 }
