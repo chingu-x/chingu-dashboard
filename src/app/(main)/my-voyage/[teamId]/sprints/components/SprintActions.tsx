@@ -96,7 +96,7 @@ export default function SprintActions({
             className="group"
             disabled={true}
           >
-            <RocketLaunchIcon className="h-[18px] w-[18px]" />
+            <SolidRocketLaunchIcon className="h-[18px] w-[18px]" />
             Voyage Submitted
           </Button>
         );
@@ -108,7 +108,7 @@ export default function SprintActions({
             className="group"
             disabled={true}
           >
-            <SolidRocketLaunchIcon className="h-[18px] w-[18px]" />
+            <RocketLaunchIcon className="h-[18px] w-[18px]" />
             Submit Voyage
           </Button>
         );
