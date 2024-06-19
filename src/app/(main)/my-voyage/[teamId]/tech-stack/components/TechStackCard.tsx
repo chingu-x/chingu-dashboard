@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
+import SettingsMenu from "./SettingsMenu";
 import {
   addTechItem,
   editTechItem,
@@ -19,6 +20,7 @@ import { useUser, useAppDispatch, useAppSelector } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 interface TechStackCardProps {
   title: string;
@@ -223,15 +225,26 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                         ))}
                       </AvatarGroup>
                     </div>
+                    {/**add vote or remove vote buttons*/}
                     {voteIsSubmitted ? (
-                      <RemoveVoteBtn
-                        id={element.id}
-                        openMenu={setOpenMenuId}
-                        numberOfVotes={element.teamTechStackItemVotes.length}
-                        closeMenu={handleSettingsMenuClose}
-                        setEditItemId={setEditItemId}
-                        isMenuOpen={openMenuId}
-                      />
+                      <div className="relative col-span-2 flex w-[165px] items-center justify-end">
+                        {element.teamTechStackItemVotes.length < 2 && (
+                          <div className="h-1/6 w-1/6">
+                            <EllipsisVerticalIcon
+                              className="mr-2 rounded-xl hover:cursor-pointer hover:bg-base-100"
+                              onClick={() => setOpenMenuId(element.id)}
+                            />
+                            {openMenuId === element.id && (
+                              <SettingsMenu
+                                onClose={handleSettingsMenuClose}
+                                setEditItemId={setEditItemId}
+                                id={element.id}
+                              />
+                            )}
+                          </div>
+                        )}
+                        <RemoveVoteBtn id={element.id} />
+                      </div>
                     ) : (
                       <AddVoteBtn />
                     )}
