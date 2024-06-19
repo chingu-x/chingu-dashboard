@@ -1,10 +1,16 @@
 import Button from "@/components/Button";
 
+/*
 interface RemoveVoteBtnProps {
   id: number;
 }
+*/
 
-export default function RemoveVoteBtn({ id }: RemoveVoteBtnProps) {
+export default function RemoveVoteBtn(
+  {
+    /* { id }: RemoveVoteBtnProps */
+  },
+) {
   return (
     <Button
       variant="error"
