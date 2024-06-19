@@ -1,7 +1,8 @@
 "use client";
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect } from "react";
 import type { FormEvent } from "react";
 import { useParams } from "next/navigation";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
@@ -20,7 +21,7 @@ import { useUser, useAppDispatch, useAppSelector } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 
 interface TechStackCardProps {
   title: string;
@@ -37,23 +38,12 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const params = useParams<{ teamId: string }>();
   const teamId = Number(params.teamId);
   const userId = useUser().id;
-
-  //voyageTeamMembers, currentTeam and voyageTeamMemberId are all used to get
-  //TODO: create hook or find simpler more readble way to get voyageTeamMemberId?
-  const voyageTeamMembers = useAppSelector(
-    (state) => state.user?.voyageTeamMembers || [],
-  );
-  const currentTeam = useMemo(
-    () =>
-      voyageTeamMembers.filter(
-        (team) =>
-          team.voyageTeam.voyage.status.name === "Active" &&
-          team.voyageTeamId === teamId,
-      ),
-    [voyageTeamMembers, teamId],
-  );
-  const voyageTeamMemberId = currentTeam.length > 0 ? currentTeam[0].id : -1;
-
+  const user = useAppSelector((state) => state.user);
+  const { voyageTeamMemberId } = getCurrentVoyageTeam({
+    teamId,
+    user,
+    error: null,
+  });
   const [openMenuId, setOpenMenuId] = useState(-1);
   const techCategoryId = getTechCategory(title) ?? 0;
   const dispatch = useAppDispatch();
