@@ -74,6 +74,7 @@ export default function ResourceInput() {
         <TextInput
           id="url"
           placeholder="Paste your resource link here."
+          ariaLabel="link"
           errorMessage={
             errors.url?.type === "invalid_string"
               ? "Must start with https://"
@@ -85,6 +86,7 @@ export default function ResourceInput() {
         <TextInput
           id="title"
           placeholder="Name your resource here."
+          ariaLabel="resource name"
           {...register("title")}
         />
       </div>
