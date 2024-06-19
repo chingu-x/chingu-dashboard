@@ -21,6 +21,7 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   inputGroupContent?: JSX.Element;
   submitButtonText?: string | React.ReactNode;
   buttonDisabled?: boolean;
+  ariaLabel?: string;
   clearInputAction?: () => void;
 }
 
@@ -40,6 +41,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       clearInputAction,
       className,
       type = "text",
+      ariaLabel,
       ...props
     },
     ref,
@@ -92,6 +94,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           )}
         >
           <input
+            aria-label={ariaLabel}
             id={id}
             type={showPassword ? "text" : type}
             placeholder={placeholder}
