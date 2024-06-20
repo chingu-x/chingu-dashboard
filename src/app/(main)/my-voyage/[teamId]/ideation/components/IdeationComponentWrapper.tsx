@@ -1,21 +1,22 @@
 import { redirect } from "next/navigation";
-import IdeationContainer from "./IdeationContainer";
-import IdeationProvider from "./IdeationProvider";
-import CreateIdeationContainer from "./CreateIdeationContainer";
-import ContributionCard from "./ContributionCard";
-import VoteCard from "./VoteCard";
-import FinalizedIdeationCard from "./FinalizedIdeationCard";
+import ContributionCard from "./dependencies/ContributionCard";
+import CreateIdeationContainer from "./dependencies/CreateIdeationContainer";
+import FinalizedIdeationCard from "./dependencies/FinalizedIdeationCard";
+import IdeationContainer from "./dependencies/IdeationContainer";
+import IdeationProvider from "./dependencies/IdeationProvider";
+import VoteCard from "./dependencies/VoteCard";
 import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
-import { type IdeationData } from "@/store/features/ideation/ideationSlice";
-import { getAccessToken } from "@/utils/getCookie";
-import { GET } from "@/utils/requests";
 import Banner from "@/components/banner/Banner";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { CacheTag } from "@/utils/cacheTag";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import { type IdeationData } from "@/store/features/ideation/ideationSlice";
+import { CacheTag } from "@/utils/cacheTag";
+import { getAccessToken } from "@/utils/getCookie";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import routePaths from "@/utils/routePaths";
 import { getUser } from "@/utils/getUser";
+import { handleAsync, type AsyncActionResponse } from "@/utils/handleAsync";
+import { GET } from "@/utils/requests";
+import routePaths from "@/utils/routePaths";
+
 // import { ideation } from "./fixtures/ideation";
 
 // If user is not logged in, nav should be updated to reflect signed out state
