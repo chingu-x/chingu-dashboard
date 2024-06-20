@@ -68,8 +68,8 @@ export const getDashboardData = async (
 
   let currentSprintNumber = null;
   if (sprintsData.length > 0) {
-    const { number } = getCurrentSprint(sprintsData) as Sprint;
-    currentSprintNumber = number;
+    const sprint = getCurrentSprint(sprintsData);
+    currentSprintNumber = sprint?.number ?? null;
   }
 
   const meetingsData: {
