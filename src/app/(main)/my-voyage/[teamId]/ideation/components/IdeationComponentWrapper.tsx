@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
-import ContributionCard from "./dependencies/ContributionCard";
-import CreateIdeationContainer from "./dependencies/CreateIdeationContainer";
-import FinalizedIdeationCard from "./dependencies/FinalizedIdeationCard";
-import IdeationContainer from "./dependencies/IdeationContainer";
-import IdeationProvider from "./dependencies/IdeationProvider";
-import VoteCard from "./dependencies/VoteCard";
+import ContributionCard from "./ContributionCard";
+import CreateIdeationContainer from "./CreateIdeationContainer";
+import FinalizedIdeationCard from "./FinalizedIdeationCard";
+import IdeationContainer from "./IdeationContainer";
+import IdeationProvider from "./IdeationProvider";
+import VoteCard from "./VoteCard";
 import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
