@@ -99,63 +99,63 @@ export default async function IdeationComponentWrapper({
       );
     }
 
-    if (projectIdeas.length === 0) {
-      return (
-        <div className="my-20 flex h-[290px] w-full gap-x-48">
-          <div className="flex flex-col justify-center">
-            <h1 className="text-xl font-medium text-base-300">
-              Be the First to Share!
-            </h1>
-            <p className="my-4 text-base font-medium text-base-300">
-              It looks like no one has posted anything yet, but don’t worry, you
-              can be the first to create a new project idea and vision for your
-              team!
-            </p>
-            <p className="text-base font-medium text-base-300">
-              Click on the{" "}
-              <b className="text-base font-semibold text-base-300">
-                Add Project Idea
-              </b>{" "}
-              button at the top to get started!
-            </p>
-          </div>
-          <Banner
-            imageLight="/img/empty_ideation_light.png"
-            imageDark="/img/empty_ideation_dark.png"
-            alt="ideation_banner"
-            height="h-[290px]"
-            width="w-[540px]"
-          />
-        </div>
-      );
-    }
-
     return (
       <>
-        <CreateIdeationContainer />
-        {projectIdeas.map((projectIdea) => (
-          <IdeationContainer
-            key={projectIdea.id}
-            title={projectIdea.title}
-            project_idea={projectIdea.description}
-            vision_statement={projectIdea.vision}
-            isIdeationFinalized={false}
-            firstChild={
-              <VoteCard
-                teamId={teamId}
-                projectIdeaId={projectIdea.id}
-                users={projectIdea.projectIdeaVotes}
+        {!projectIdeas.length ? (
+          <>
+            <CreateIdeationContainer />
+            <div className="my-20 flex h-[290px] w-full gap-x-48">
+              <div className="flex flex-col justify-center">
+                <h1 className="text-xl font-medium text-base-300">
+                  Be the First to Share!
+                </h1>
+                <p className="my-4 text-base font-medium text-base-300">
+                  It looks like no one has posted anything yet, but don’t worry,
+                  you can be the first to create a new project idea and vision
+                  for your team!
+                </p>
+                <p className="text-base font-medium text-base-300">
+                  Click on the
+                  <b className="text-base font-semibold text-base-300">
+                    Add Project Idea
+                  </b>
+                  button at the top to get started!
+                </p>
+              </div>
+              <Banner
+                imageLight="/img/empty_ideation_light.png"
+                imageDark="/img/empty_ideation_dark.png"
+                alt="ideation_banner"
+                height="h-[290px]"
+                width="w-[540px]"
               />
-            }
-            secondChild={
-              <ContributionCard
-                projectIdeaId={projectIdea.id}
-                contributed_by={projectIdea.contributedBy}
-                isIdeationFinalized={false}
-              />
-            }
-          />
-        ))}
+            </div>
+          </>
+        ) : (
+          projectIdeas.map((projectIdea) => (
+            <IdeationContainer
+              key={projectIdea.id}
+              title={projectIdea.title}
+              project_idea={projectIdea.description}
+              vision_statement={projectIdea.vision}
+              isIdeationFinalized={false}
+              firstChild={
+                <VoteCard
+                  teamId={teamId}
+                  projectIdeaId={projectIdea.id}
+                  users={projectIdea.projectIdeaVotes}
+                />
+              }
+              secondChild={
+                <ContributionCard
+                  projectIdeaId={projectIdea.id}
+                  contributed_by={projectIdea.contributedBy}
+                  isIdeationFinalized={false}
+                />
+              }
+            />
+          ))
+        )}
       </>
     );
   }
