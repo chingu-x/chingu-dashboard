@@ -1,6 +1,6 @@
+import { Suspense } from "react";
 import IdeationComponentWrapper from "./components/IdeationComponentWrapper";
 import Spinner from "@/components/Spinner";
-import { Suspense } from "react";
 
 interface IdeationPageProps {
   params: {
