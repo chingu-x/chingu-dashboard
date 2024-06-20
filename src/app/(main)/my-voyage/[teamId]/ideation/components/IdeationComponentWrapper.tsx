@@ -116,10 +116,10 @@ export default async function IdeationComponentWrapper({
                   for your team!
                 </p>
                 <p className="text-base font-medium text-base-300">
-                  Click on the
+                  Click on the{" "}
                   <b className="text-base font-semibold text-base-300">
                     Add Project Idea
-                  </b>
+                  </b>{" "}
                   button at the top to get started!
                 </p>
               </div>
