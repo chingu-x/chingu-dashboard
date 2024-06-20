@@ -141,6 +141,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           {/* CLEAR INPUT BUTTON */}
           {isClearButtonVisible && (
             // TODO: replace with an Icon Button
+            // come back later
             <button
               type="button"
               onClick={clearInput}

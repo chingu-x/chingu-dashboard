@@ -107,6 +107,7 @@ export default function Modal({
                 {icon}
                 <h3 className="text-xl font-semibold capitalize">{title}</h3>
               </div>
+              {/* come back later */}
               <button type="button" aria-label="close modal" onClick={onClose}>
                 <XMarkIcon className="h-6 w-6 fill-current" />
               </button>
