@@ -85,14 +85,14 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   });
 
   if (errorResponse) {
-    throw new Error(`${ErrorType.VOYAGE_DATA} ${errorResponse}`);
+    return `${ErrorType.VOYAGE_DATA} ${errorResponse}`;
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      throw new Error(`${ErrorType.FETCH_SPRINT} ${error.message}`);
+      return `${ErrorType.FETCH_SPRINT} ${error.message}`;
     }
     voyageData = res!;
   } else {
@@ -113,7 +113,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
         sectionsData = res.formResponseMeeting;
       }
     } else {
-      throw new Error(`${ErrorType.FETCH_MEETING} ${error?.message}`);
+      return `${ErrorType.FETCH_MEETING} ${error?.message}`;
     }
   } else {
     redirect(`/my-voyage/${teamId}/sprints/`);

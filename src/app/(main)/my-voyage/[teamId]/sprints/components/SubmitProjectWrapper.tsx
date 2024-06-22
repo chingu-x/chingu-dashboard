@@ -38,7 +38,7 @@ export default async function SubmitProjectWrapper({
   });
 
   if (errorResponse) {
-    throw new Error(`${ErrorType.FORM_QUESTIONS} ${errorResponse}`);
+    return `${ErrorType.FORM_QUESTIONS} ${errorResponse}`;
   }
 
   if (data) {
@@ -49,7 +49,7 @@ export default async function SubmitProjectWrapper({
     if (res?.questions) questions = res?.questions;
 
     if (error) {
-      throw new Error(`${ErrorType.FORM_QUESTIONS} ${error.message}`);
+      return `${ErrorType.FORM_QUESTIONS} ${error.message}`;
     }
   } else {
     redirect(routePaths.dashboardPage());
