@@ -27,7 +27,7 @@ export function getCurrentVoyageTeam({
   }
 
   if (error) {
-    err = `Error: ${error?.message}`;
+    err = error?.message;
   }
 
   if (currentVoyageTeam) {

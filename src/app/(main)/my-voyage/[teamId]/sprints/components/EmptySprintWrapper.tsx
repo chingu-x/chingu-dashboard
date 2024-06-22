@@ -17,6 +17,7 @@ import {
   getSprintCheckinIsStatus,
   getVoyageProjectStatus,
 } from "@/utils/getFormStatus";
+import { ErrorType } from "@/utils/error";
 
 function getMeeting(sprints: Sprint[], sprintNumber: number) {
   const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
@@ -52,14 +53,14 @@ export default async function EmptySprintWrapper({
   });
 
   if (errorResponse) {
-    return errorResponse;
+    throw new Error(`${ErrorType.VOYAGE_DATA} ${errorResponse}`);
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `Error: ${error.message}`;
+      throw new Error(`${ErrorType.FETCH_SPRINT} ${error.message}`);
     }
     voyageData = res!;
   } else {
