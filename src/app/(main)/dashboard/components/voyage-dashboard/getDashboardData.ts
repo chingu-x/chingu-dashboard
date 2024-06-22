@@ -58,7 +58,7 @@ export const getDashboardData = async (
     const [res, error] = data;
 
     if (error) {
-      throw new Error(`Error: ${error.message}`);
+      throw new Error(`Can't fetch sprint data. ${error.message}`);
     }
 
     sprintsData = res!.sprints;
@@ -79,16 +79,18 @@ export const getDashboardData = async (
     sprint: number;
   }[] = [];
 
-  const fetchMeetingsPromises = sprintsData.map((sprint) =>
-    fetchMeeting({
-      sprintNumber: sprint.number,
-      meetingId: sprint.teamMeetings[0]?.id,
-    }),
-  );
+  const fetchMeetingsPromises = sprintsData
+    .filter((sprint) => sprint.teamMeetings.length)
+    .map((sprint) =>
+      fetchMeeting({
+        sprintNumber: sprint.number,
+        meetingId: sprint.teamMeetings[0]?.id,
+      }),
+    );
 
   const fetchMeetingsResults = await Promise.all(fetchMeetingsPromises);
 
-  fetchMeetingsResults.forEach(([res]) => {
+  fetchMeetingsResults.forEach(([res, error]) => {
     if (res) {
       const { title, dateTime, meetingLink, sprint } = res;
       const parsedDate = convertStringToDate(dateTime, user?.timezone ?? "");
@@ -100,7 +102,7 @@ export const getDashboardData = async (
         sprint: sprint.number,
       });
     } else if (error) {
-      return `Error: ${error.message}`;
+      throw new Error(`Can't fetch meeting data. ${error.message}`);
     }
   });
 

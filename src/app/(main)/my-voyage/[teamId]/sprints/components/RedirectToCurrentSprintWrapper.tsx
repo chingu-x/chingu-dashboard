@@ -15,6 +15,7 @@ import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { type Sprint } from "@/store/features/sprint/sprintSlice";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
+import { ErrorType } from "@/utils/error";
 
 export async function fetchSprints({
   teamId,
@@ -56,14 +57,14 @@ export default async function RedirectToCurrentSprintWrapper({
   });
 
   if (errorResponse) {
-    return errorResponse;
+    throw new Error(`${ErrorType.VOYAGE_DATA} ${errorResponse}`);
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `Error: ${error.message}`;
+      throw new Error(`${ErrorType.FETCH_SPRINT} ${error.message}`);
     }
     const { teamMeetings, number } = getCurrentSprint(res!.sprints) as Sprint;
     currentSprintNumber = number;
