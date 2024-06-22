@@ -53,14 +53,14 @@ export default async function EmptySprintWrapper({
   });
 
   if (errorResponse) {
-    throw new Error(`${ErrorType.VOYAGE_DATA} ${errorResponse}`);
+    return `${ErrorType.VOYAGE_DATA} ${errorResponse}`;
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      throw new Error(`${ErrorType.FETCH_SPRINT} ${error.message}`);
+      return `${ErrorType.FETCH_SPRINT} ${error.message}`;
     }
     voyageData = res!;
   } else {

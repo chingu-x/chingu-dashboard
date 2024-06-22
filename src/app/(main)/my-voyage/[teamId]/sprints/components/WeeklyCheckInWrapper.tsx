@@ -85,14 +85,14 @@ export default async function WeeklyCheckInWrapper({
   });
 
   if (errorResponse) {
-    throw new Error(`${ErrorType.FETCH_SPRINT} ${errorResponse}`);
+    return `${ErrorType.FETCH_SPRINT} ${errorResponse}`;
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      throw new Error(`${ErrorType.FETCH_SPRINT} ${error.message}`);
+      return `${ErrorType.FETCH_SPRINT} ${error.message}`;
     }
     voyageData = res!;
 
@@ -144,7 +144,7 @@ export default async function WeeklyCheckInWrapper({
       }
 
       if (error) {
-        throw new Error(`${ErrorType.FETCH_TEAM_DIRECTORY} ${error.message}`);
+        return `${ErrorType.FETCH_TEAM_DIRECTORY} ${error.message}`;
       }
 
       // Fetch form
@@ -153,7 +153,7 @@ export default async function WeeklyCheckInWrapper({
       });
 
       if (formError) {
-        throw new Error(`${ErrorType.FORM_QUESTIONS} ${formError.message}`);
+        return `${ErrorType.FORM_QUESTIONS} ${formError.message}`;
       }
       if (formRes && formRes?.description) description = formRes.description;
       if (formRes && formRes?.questions) questions = formRes.questions;
