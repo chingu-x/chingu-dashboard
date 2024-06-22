@@ -1,21 +1,22 @@
 import { redirect } from "next/navigation";
+import ContributionCard from "./ContributionCard";
+import CreateIdeationContainer from "./CreateIdeationContainer";
+import FinalizedIdeationCard from "./FinalizedIdeationCard";
 import IdeationContainer from "./IdeationContainer";
 import IdeationProvider from "./IdeationProvider";
-import CreateIdeationContainer from "./CreateIdeationContainer";
-import ContributionCard from "./ContributionCard";
 import VoteCard from "./VoteCard";
-import FinalizedIdeationCard from "./FinalizedIdeationCard";
 import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
-import { type IdeationData } from "@/store/features/ideation/ideationSlice";
-import { getAccessToken } from "@/utils/getCookie";
-import { GET } from "@/utils/requests";
 import Banner from "@/components/banner/Banner";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { CacheTag } from "@/utils/cacheTag";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import { type IdeationData } from "@/store/features/ideation/ideationSlice";
+import { CacheTag } from "@/utils/cacheTag";
+import { getAccessToken } from "@/utils/getCookie";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import routePaths from "@/utils/routePaths";
 import { getUser } from "@/utils/getUser";
+import { handleAsync, type AsyncActionResponse } from "@/utils/handleAsync";
+import { GET } from "@/utils/requests";
+import routePaths from "@/utils/routePaths";
+
 // import { ideation } from "./fixtures/ideation";
 
 // If user is not logged in, nav should be updated to reflect signed out state
@@ -99,63 +100,63 @@ export default async function IdeationComponentWrapper({
       );
     }
 
-    if (projectIdeas.length === 0) {
-      return (
-        <div className="my-20 flex h-[290px] w-full gap-x-48">
-          <div className="flex flex-col justify-center">
-            <h1 className="text-xl font-medium text-base-300">
-              Be the First to Share!
-            </h1>
-            <p className="my-4 text-base font-medium text-base-300">
-              It looks like no one has posted anything yet, but don’t worry, you
-              can be the first to create a new project idea and vision for your
-              team!
-            </p>
-            <p className="text-base font-medium text-base-300">
-              Click on the{" "}
-              <b className="text-base font-semibold text-base-300">
-                Add Project Idea
-              </b>{" "}
-              button at the top to get started!
-            </p>
-          </div>
-          <Banner
-            imageLight="/img/empty_ideation_light.png"
-            imageDark="/img/empty_ideation_dark.png"
-            alt="ideation_banner"
-            height="h-[290px]"
-            width="w-[540px]"
-          />
-        </div>
-      );
-    }
-
     return (
       <>
-        <CreateIdeationContainer />
-        {projectIdeas.map((projectIdea) => (
-          <IdeationContainer
-            key={projectIdea.id}
-            title={projectIdea.title}
-            project_idea={projectIdea.description}
-            vision_statement={projectIdea.vision}
-            isIdeationFinalized={false}
-            firstChild={
-              <VoteCard
-                teamId={teamId}
-                projectIdeaId={projectIdea.id}
-                users={projectIdea.projectIdeaVotes}
+        {!projectIdeas.length ? (
+          <>
+            <CreateIdeationContainer />
+            <div className="my-20 flex h-[290px] w-full gap-x-48">
+              <div className="flex flex-col justify-center">
+                <h1 className="text-xl font-medium text-base-300">
+                  Be the First to Share!
+                </h1>
+                <p className="my-4 text-base font-medium text-base-300">
+                  It looks like no one has posted anything yet, but don’t worry,
+                  you can be the first to create a new project idea and vision
+                  for your team!
+                </p>
+                <p className="text-base font-medium text-base-300">
+                  Click on the{" "}
+                  <b className="text-base font-semibold text-base-300">
+                    Add Project Idea
+                  </b>{" "}
+                  button at the top to get started!
+                </p>
+              </div>
+              <Banner
+                imageLight="/img/empty_ideation_light.png"
+                imageDark="/img/empty_ideation_dark.png"
+                alt="ideation_banner"
+                height="h-[290px]"
+                width="w-[540px]"
               />
-            }
-            secondChild={
-              <ContributionCard
-                projectIdeaId={projectIdea.id}
-                contributed_by={projectIdea.contributedBy}
-                isIdeationFinalized={false}
-              />
-            }
-          />
-        ))}
+            </div>
+          </>
+        ) : (
+          projectIdeas.map((projectIdea) => (
+            <IdeationContainer
+              key={projectIdea.id}
+              title={projectIdea.title}
+              project_idea={projectIdea.description}
+              vision_statement={projectIdea.vision}
+              isIdeationFinalized={false}
+              firstChild={
+                <VoteCard
+                  teamId={teamId}
+                  projectIdeaId={projectIdea.id}
+                  users={projectIdea.projectIdeaVotes}
+                />
+              }
+              secondChild={
+                <ContributionCard
+                  projectIdeaId={projectIdea.id}
+                  contributed_by={projectIdea.contributedBy}
+                  isIdeationFinalized={false}
+                />
+              }
+            />
+          ))
+        )}
       </>
     );
   }
