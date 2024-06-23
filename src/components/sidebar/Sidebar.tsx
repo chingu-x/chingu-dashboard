@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { usePathname, useParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   RectangleGroupIcon,
   ChartBarIcon,
@@ -13,7 +13,6 @@ import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
 import { useAuth, useUser } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
-import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -77,49 +76,55 @@ const pagesProperties: PageProperty[] = [
 
 export default function Sidebar() {
   const currentPath = usePathname();
-  let { teamId } = useParams();
-
-  if (Array.isArray(teamId)) [teamId] = teamId;
 
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(true);
   const [selectedButton, setSelectedButton] = useState<string>(currentPath);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const { isAuthenticated } = useAuth();
-  const user = useUser();
+  const { voyageTeamMembers } = useUser();
 
-  const { currentTeam } = getCurrentVoyageTeam({
-    teamId: Number(teamId),
-    user,
-    error: null,
-  });
+  const isActive = useMemo(() => {
+    if (voyageTeamMembers.length === 0) {
+      return false;
+    }
+    return voyageTeamMembers.some(
+      (member) => member.voyageTeam.voyage.status.name === "Active",
+    );
+  }, [voyageTeamMembers]);
 
-  const isVoyageStarted: boolean = isAuthenticated && currentTeam;
+  const isVoyageStarted: boolean = isAuthenticated && isActive;
+
+  const currentVoyageTeam = voyageTeamMembers.find(
+    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+  );
+
+  const teamId = currentVoyageTeam?.voyageTeamId.toString();
 
   const voyagePages: VoyagePageProperty[] = [
     {
       name: VoyagePages.directory,
-      link: routePaths.directoryPage(teamId),
+      link: routePaths.directoryPage(teamId!),
     },
     {
       name: VoyagePages.techStack,
-      link: routePaths.techStackPage(teamId),
+      link: routePaths.techStackPage(teamId!),
     },
     {
       name: VoyagePages.ideation,
-      link: routePaths.ideationPage(teamId),
+      link: routePaths.ideationPage(teamId!),
     },
     {
       name: VoyagePages.features,
-      link: routePaths.featuresPage(teamId),
+      link: routePaths.featuresPage(teamId!),
     },
     {
       name: VoyagePages.sprints,
-      link: routePaths.sprintsPage(teamId),
+      link: routePaths.sprintsPage(teamId!),
     },
     {
       name: VoyagePages.resources,
-      link: routePaths.voyageResourcesPage(teamId),
+      link: routePaths.voyageResourcesPage(teamId!),
     },
   ];
 
