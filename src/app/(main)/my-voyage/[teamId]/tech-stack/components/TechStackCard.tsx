@@ -81,9 +81,9 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     <div className="h-80 min-w-[420px] rounded-lg bg-base-200 px-6 py-5 text-base-300 sm:w-96">
       <div className="flex flex-row justify-start">
         {GetIcon(title)}
-        <h3 className="self-center text-xl font-semibold text-base-300">
+        <span className="self-center text-xl font-semibold text-base-300">
           {title}
-        </h3>
+        </span>
       </div>
 
       <div className="mt-6 h-40 overflow-y-auto pt-1">

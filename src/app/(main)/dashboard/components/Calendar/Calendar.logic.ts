@@ -195,6 +195,7 @@ export const useCalendarLogic = (
       check: sprintsData?.some((day) => isSameDay(new Date(day.endDate), date)),
       label: "Weekly Check-in Due",
       link: weeklyCheckInLink(),
+      isDisabled: isBefore(date, new Date()),
     },
     {
       id: 3,

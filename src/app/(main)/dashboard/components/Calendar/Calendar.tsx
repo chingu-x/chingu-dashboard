@@ -176,6 +176,7 @@ export default function Calendar({
                     title={condition.label}
                     link={condition?.link}
                     useTargetBlank={false}
+                    isDisabled={condition?.isDisabled}
                   />
                 </div>
               ) : null,
