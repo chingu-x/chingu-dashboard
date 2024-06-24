@@ -18,6 +18,7 @@ import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import { ErrorType } from "@/utils/error";
+import ErrorComponent from "@/components/Error";
 
 interface FetchFormQuestionsProps {
   formId: number;
@@ -85,14 +86,24 @@ export default async function WeeklyCheckInWrapper({
   });
 
   if (errorResponse) {
-    return `${ErrorType.FETCH_SPRINT} ${errorResponse}`;
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_VOYAGE_DATA}
+        message={errorResponse}
+      />
+    );
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `${ErrorType.FETCH_SPRINT} ${error.message}`;
+      return (
+        <ErrorComponent
+          errorType={ErrorType.FETCH_SPRINT}
+          message={error.message}
+        />
+      );
     }
     voyageData = res!;
 
@@ -144,7 +155,12 @@ export default async function WeeklyCheckInWrapper({
       }
 
       if (error) {
-        return `${ErrorType.FETCH_TEAM_DIRECTORY} ${error.message}`;
+        return (
+          <ErrorComponent
+            errorType={ErrorType.FETCH_TEAM_DIRECTORY}
+            message={error.message}
+          />
+        );
       }
 
       // Fetch form
@@ -153,7 +169,12 @@ export default async function WeeklyCheckInWrapper({
       });
 
       if (formError) {
-        return `${ErrorType.FORM_QUESTIONS} ${formError.message}`;
+        return (
+          <ErrorComponent
+            errorType={ErrorType.FETCH_FORM_QUESTIONS}
+            message={formError.message}
+          />
+        );
       }
       if (formRes && formRes?.description) description = formRes.description;
       if (formRes && formRes?.questions) questions = formRes.questions;

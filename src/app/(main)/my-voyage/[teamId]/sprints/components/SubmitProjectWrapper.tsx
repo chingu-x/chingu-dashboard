@@ -9,6 +9,7 @@ import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/form/formsEnums";
 import { type Question } from "@/utils/form/types";
 import { ErrorType } from "@/utils/error";
+import ErrorComponent from "@/components/Error";
 
 interface SubmitProjectWrapperProps {
   params: {
@@ -38,7 +39,12 @@ export default async function SubmitProjectWrapper({
   });
 
   if (errorResponse) {
-    return `${ErrorType.FORM_QUESTIONS} ${errorResponse}`;
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_VOYAGE_DATA}
+        message={errorResponse}
+      />
+    );
   }
 
   if (data) {
@@ -49,7 +55,12 @@ export default async function SubmitProjectWrapper({
     if (res?.questions) questions = res?.questions;
 
     if (error) {
-      return `${ErrorType.FORM_QUESTIONS} ${error.message}`;
+      return (
+        <ErrorComponent
+          errorType={ErrorType.FETCH_FORM_QUESTIONS}
+          message={error.message}
+        />
+      );
     }
   } else {
     redirect(routePaths.dashboardPage());
