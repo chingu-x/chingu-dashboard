@@ -7,6 +7,7 @@ import type { User } from "@/store/features/user/userSlice";
 import { fetchMeeting } from "@/app/(main)/my-voyage/[teamId]/sprints/components/SprintWrapper";
 import type { AppError } from "@/types/types";
 import convertStringToDate from "@/utils/convertStringToDate";
+import { ErrorType } from "@/utils/error";
 
 interface GetDashboardDataResponse {
   currentSprintNumber: number | null;
@@ -58,7 +59,7 @@ export const getDashboardData = async (
     const [res, error] = data;
 
     if (error) {
-      throw new Error(`Can't fetch sprint data. ${error.message}`);
+      throw new Error(`${ErrorType.FETCH_SPRINT} ${error.message}`);
     }
 
     sprintsData = res!.sprints;
@@ -102,7 +103,7 @@ export const getDashboardData = async (
         sprint: sprint.number,
       });
     } else if (error) {
-      throw new Error(`Can't fetch meeting data. ${error.message}`);
+      throw new Error(`${ErrorType.FETCH_MEETING} ${error.message}`);
     }
   });
 

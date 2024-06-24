@@ -38,6 +38,7 @@ import {
   getVoyageProjectStatus,
 } from "@/utils/getFormStatus";
 import { ErrorType } from "@/utils/error";
+import ErrorComponent from "@/components/Error";
 
 export async function fetchMeeting({
   sprintNumber,
@@ -85,14 +86,24 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
   });
 
   if (errorResponse) {
-    return `${ErrorType.VOYAGE_DATA} ${errorResponse}`;
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_VOYAGE_DATA}
+        message={errorResponse}
+      />
+    );
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `${ErrorType.FETCH_SPRINT} ${error.message}`;
+      return (
+        <ErrorComponent
+          errorType={ErrorType.FETCH_SPRINT}
+          message={error.message}
+        />
+      );
     }
     voyageData = res!;
   } else {
@@ -112,8 +123,15 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
       if (res.formResponseMeeting.length !== 0) {
         sectionsData = res.formResponseMeeting;
       }
-    } else {
-      return `${ErrorType.FETCH_MEETING} ${error?.message}`;
+    }
+
+    if (error) {
+      return (
+        <ErrorComponent
+          errorType={ErrorType.FETCH_MEETING}
+          message={error.message}
+        />
+      );
     }
   } else {
     redirect(`/my-voyage/${teamId}/sprints/`);

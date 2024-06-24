@@ -16,6 +16,7 @@ import { type Sprint } from "@/store/features/sprint/sprintSlice";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { ErrorType } from "@/utils/error";
+import ErrorComponent from "@/components/Error";
 
 export async function fetchSprints({
   teamId,
@@ -57,14 +58,24 @@ export default async function RedirectToCurrentSprintWrapper({
   });
 
   if (errorResponse) {
-    return `${ErrorType.VOYAGE_DATA} ${errorResponse}`;
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_VOYAGE_DATA}
+        message={errorResponse}
+      />
+    );
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `${ErrorType.FETCH_SPRINT} ${error.message}`;
+      return (
+        <ErrorComponent
+          errorType={ErrorType.FETCH_SPRINT}
+          message={error.message}
+        />
+      );
     }
     const { teamMeetings, number } = getCurrentSprint(res!.sprints) as Sprint;
     currentSprintNumber = number;
