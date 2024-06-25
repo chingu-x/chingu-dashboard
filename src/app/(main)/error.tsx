@@ -14,5 +14,10 @@ export default function Error({
     // Log the error to an error reporting service
   }, [error]);
 
-  return <ErrorComponent message={error.message} reset={reset} />;
+  return (
+    <ErrorComponent
+      message="Something went wrong. Please contact support"
+      reset={reset}
+    />
+  );
 }

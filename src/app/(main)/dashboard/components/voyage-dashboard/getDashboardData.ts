@@ -17,6 +17,7 @@ interface GetDashboardDataResponse {
   voyageNumber: number | null;
   voyageData: Voyage;
   errorMessage?: string;
+  errorType?: ErrorType;
 }
 
 export type EventList = {
@@ -34,6 +35,8 @@ export const getDashboardData = async (
   let sprintsData: Sprint[] = [];
   let voyageNumber: number | null = null;
   let voyageData: Voyage = {} as Voyage;
+  let errorMessage: string | undefined;
+  let errorType: ErrorType | undefined;
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,
@@ -52,6 +55,7 @@ export const getDashboardData = async (
       voyageNumber: null,
       voyageData: {} as Voyage,
       errorMessage: errorResponse,
+      errorType: ErrorType.FETCH_VOYAGE_DATA,
     };
   }
 
@@ -59,7 +63,16 @@ export const getDashboardData = async (
     const [res, error] = data;
 
     if (error) {
-      throw new Error(`${ErrorType.FETCH_SPRINT} ${error.message}`);
+      return {
+        currentSprintNumber: null,
+        sprintsData: [],
+        user: null,
+        meetingsData: [],
+        voyageNumber: null,
+        voyageData: {} as Voyage,
+        errorMessage: error.message,
+        errorType: ErrorType.FETCH_SPRINT,
+      };
     }
 
     sprintsData = res!.sprints;
@@ -103,7 +116,8 @@ export const getDashboardData = async (
         sprint: sprint.number,
       });
     } else if (error) {
-      throw new Error(`${ErrorType.FETCH_MEETING} ${error.message}`);
+      errorMessage = error.message;
+      errorType = ErrorType.FETCH_MEETING;
     }
   });
 
@@ -114,5 +128,7 @@ export const getDashboardData = async (
     meetingsData,
     voyageNumber,
     voyageData,
+    errorType,
+    errorMessage,
   };
 };
