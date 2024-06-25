@@ -7,7 +7,7 @@ import EmptyWidgetContent from "./EmptyWidgetContent";
 
 interface DashboardWidgetProps {
   title: string;
-  linkTitle: string;
+  headerTitle: string;
   link: string;
   buttonTitle: string;
   description: string;
@@ -19,40 +19,45 @@ function DashboardWidget({
   imageLight,
   imageDark,
   title,
-  linkTitle,
+  headerTitle,
   link,
   buttonTitle,
   description,
   children,
 }: DashboardWidgetProps) {
-  const [linkHovered, setLinkHovered] = useState<boolean>(false);
   const [widgetHovered, setWidgetHovered] = useState<boolean>(false);
   const router = useRouter();
 
+  const isWidgetClickable = widgetHovered && children;
+
   const handleLinkClick = (event: React.MouseEvent) => {
     event.preventDefault();
+    if (!children) return;
     router.push(link);
   };
 
   return (
-    <div onClick={handleLinkClick} className="w-full cursor-pointer">
+    <div
+      onClick={handleLinkClick}
+      className={`w-full ${isWidgetClickable ? "cursor-pointer" : ""}`}
+    >
       <div
-        className="flex h-full w-full flex-col rounded-lg bg-base-100 p-4 hover:shadow-md"
+        className={`flex h-full w-full flex-col rounded-lg bg-base-100 p-4 ${
+          isWidgetClickable ? "hover:shadow-md" : ""
+        }`}
         onMouseEnter={() => setWidgetHovered(true)}
         onMouseLeave={() => setWidgetHovered(false)}
       >
-        <div
-          className="inline-flex max-w-[100px] items-start text-neutral-focus"
-          onMouseEnter={() => setLinkHovered(true)}
-          onMouseLeave={() => setLinkHovered(false)}
-        >
+        <div className="inline-flex max-w-[100px] items-start text-neutral-focus">
           <p
-            className={`relative inline-block cursor-pointer text-[13px] font-semibold hover:text-primary ${
-              widgetHovered ? "text-base-300" : "text-neutral-focus"
+            className={`relative inline-block text-[13px] font-semibold ${
+              isWidgetClickable
+                ? "cursor-pointer text-primary"
+                : "text-neutral-focus"
             }`}
           >
-            {linkTitle}
-            {linkHovered ? (
+            {headerTitle}
+            {isWidgetClickable ? (
               <div className="absolute right-[-15px] top-[4px]">
                 <ChevronDoubleRightIcon className="ml-1 w-3" />
               </div>

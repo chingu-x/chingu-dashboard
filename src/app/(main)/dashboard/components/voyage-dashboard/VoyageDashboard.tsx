@@ -119,7 +119,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             imageDark="/img/discover_dark.png"
             title="What is your Voyage project idea & vision?"
             link={routePaths.ideationPage(teamId ?? "")}
-            linkTitle="Ideation"
+            headerTitle="Ideation"
             buttonTitle="Go to Ideation"
             description="Share your ideas on what the team Voyage should be. Describe your
             vision to capture what it does and the benefit it will bring to
@@ -134,7 +134,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
               <DashboardWidget
                 title="What features will you develop?"
                 link={routePaths.featuresPage(teamId ?? "")}
-                linkTitle="Features"
+                headerTitle="Features"
                 buttonTitle="Go to Features"
                 description="Brainstorm and prioritize the features that will be included in the scope of your project. "
               >
@@ -147,7 +147,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
               <DashboardWidget
                 title="Choose your tech stack "
                 link={routePaths.techStackPage(teamId ?? "")}
-                linkTitle="Tech Stack"
+                headerTitle="Tech Stack"
                 buttonTitle="Go to Tech Stack"
                 description="Choose the programming languages, frameworks, and tools that will serve as the foundation of your project."
               >
@@ -162,7 +162,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             imageDark="/img/share_link_dark.png"
             title="Share resources with your team"
             link={routePaths.voyageResourcesPage(teamId ?? "")}
-            linkTitle="Resources"
+            headerTitle="Resources"
             buttonTitle="Go to Resources"
             description="Share links of helpful resources to your team for the Voyage. Contribute to the collective knowledgebase to empower your team."
           >
