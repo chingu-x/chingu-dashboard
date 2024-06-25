@@ -1,7 +1,9 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import type { FormEvent } from "react";
+import { useForm } from "react-hook-form";
 import { useParams } from "next/navigation";
+import * as z from "zod";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
@@ -22,11 +24,22 @@ import useServerAction from "@/hooks/useServerAction";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
+import { validateTextInput } from "@/utils/form/validateInput";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface TechStackCardProps {
   title: string;
   data: TechStackItem[];
 }
+
+const validationSchema = z.object({
+  add: validateTextInput({
+    inputName: "addItem",
+    required: true,
+  }),
+});
+
+type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function TechStackCard({ title, data }: TechStackCardProps) {
   const [isInput, setIsInput] = useState(false);
@@ -59,6 +72,16 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     isLoading: editTechItemLoading,
     setIsLoading: setEditTechItemLoading,
   } = useServerAction(editTechItem);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<ValidationSchema>({
+    mode: "onTouched",
+    resolver: zodResolver(validationSchema),
+  });
 
   const toggleAddItemInput = () => {
     setIsInput(!isInput);
