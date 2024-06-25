@@ -25,9 +25,9 @@ export default function ErrorModal() {
     >
       <div className="flex flex-col overflow-hidden">
         <div className="mr-1 flex min-h-[90px] flex-col overflow-y-auto pr-2">
-          <div className="flex max-w-[650px] flex-col gap-4 text-base font-medium text-base-300">
-            {content?.message}
-          </div>
+          <p className="flex max-w-[650px] flex-col gap-4 text-base font-medium text-base-300">
+            {`The following error occurred: ${content?.message?.toUpperCase()}. Please try again later or contact support.`}
+          </p>
           <div className="flex flex-col gap-5 pt-8">
             <Button
               size="lg"
