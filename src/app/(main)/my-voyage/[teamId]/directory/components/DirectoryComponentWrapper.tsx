@@ -1,8 +1,13 @@
 import { redirect } from "next/navigation";
+
 import DirectoryProvider from "./DirectoryProvider";
 import TeamMember from "./TeamMember";
-import { type TeamDirectory } from "@/store/features/directory/directorySlice";
+
 import Banner from "@/components/banner/Banner";
+import ErrorComponent from "@/components/Error";
+
+import { type TeamDirectory } from "@/store/features/directory/directorySlice";
+
 import { getAccessToken } from "@/utils/getCookie";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
@@ -12,6 +17,7 @@ import { getUser } from "@/utils/getUser";
 import { getTimezone } from "@/utils/getTimezone";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
+import { ErrorType } from "@/utils/error";
 
 interface FetchTeamDirectoryProps {
   teamId: number;
@@ -86,14 +92,24 @@ export default async function DirectoryComponentWrapper({
   });
 
   if (errorResponse) {
-    return errorResponse;
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_VOYAGE_DATA}
+        message={errorResponse}
+      />
+    );
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `Error: ${error.message}`;
+      return (
+        <ErrorComponent
+          errorType={ErrorType.FETCH_TEAM_DIRECTORY}
+          message={error.message}
+        />
+      );
     }
 
     teamDirectory = res!;

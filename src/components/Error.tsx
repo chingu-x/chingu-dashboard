@@ -21,6 +21,7 @@ export default function ErrorComponent({
 
   function handleReset() {
     if (reset) reset();
+    else router.refresh();
   }
 
   return (
