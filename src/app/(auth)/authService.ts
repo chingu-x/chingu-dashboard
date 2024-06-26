@@ -114,7 +114,7 @@ async function asyncSignIn(
     );
 
     if (!res.ok) {
-      throw new Error(res.statusText);
+      throw new Error(`Status code: ${res.status}, Message: ${res.statusText}`);
     }
 
     const accessToken = res.headers.getSetCookie()[0].split("access_token=")[1];
