@@ -27,10 +27,11 @@ export default function ErrorComponent({
   return (
     <div className="mx-auto mt-2 flex w-full max-w-[600px] flex-col items-center justify-center gap-y-5">
       <h1 className="text-xl font-semibold capitalize">Error</h1>
-      <p className="font-medium">An following error occured:</p>
-      <p className="w-full rounded-lg bg-error-content/50 px-6 py-3 text-center font-semibold uppercase">
-        {`${errorType ? errorType : ""} ${message}.`}
-      </p>
+      <p className="font-medium">The following error occured:</p>
+      <div className="flex w-full flex-col gap-y-2 rounded-lg bg-error-content/50 px-6 py-4 text-center font-semibold uppercase">
+        <p>{errorType ? errorType : ""}</p>
+        <p>{message}.</p>
+      </div>
       <div className="flex w-full gap-x-10">
         <Button
           className="w-full"

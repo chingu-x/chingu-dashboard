@@ -16,9 +16,8 @@ export async function GET<T>(
     });
 
     if (!res.ok) {
-      throw new Error(res.statusText);
+      throw new Error(`Status code: ${res.status}, Message: ${res.statusText}`);
     }
-
     return (await res.json()) as T;
   } catch (error) {
     throw error;
@@ -43,7 +42,7 @@ export async function POST<X, Y>(
     });
 
     if (!res.ok) {
-      throw new Error(res.statusText);
+      throw new Error(`Status code: ${res.status}, Message: ${res.statusText}`);
     }
 
     return (await res.json()) as Y;
@@ -70,7 +69,7 @@ export async function PATCH<X, Y>(
     });
 
     if (!res.ok) {
-      throw new Error(res.statusText);
+      throw new Error(`Status code: ${res.status}, Message: ${res.statusText}`);
     }
 
     return (await res.json()) as Y;
@@ -95,7 +94,7 @@ export async function DELETE<X>(
     });
 
     if (!res.ok) {
-      throw new Error(res.statusText);
+      throw new Error(`Status code: ${res.status}, Message: ${res.statusText}`);
     }
 
     return (await res.json()) as X;
@@ -120,7 +119,7 @@ export async function UNAUTHPOST<X, Y>(
     });
 
     if (!res.ok) {
-      throw new Error(res.statusText);
+      throw new Error(`Status code: ${res.status}, Message: ${res.statusText}`);
     }
 
     return (await res.json()) as Y;
