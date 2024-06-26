@@ -34,12 +34,12 @@ export default function AgendaTopic({
       <div className="flex justify-between">
         <h4 className="py-2 text-xl font-medium">{topic.title}</h4>
         <div className="flex items-center gap-x-5">
-          <IconButton onClick={editTopic} aria-label="edit topic">
+          <IconButton onClick={editTopic} ariaLabel="edit topic">
             <EllipsisVerticalIcon />
           </IconButton>
           <IconButton
             onClick={() => changeStatus(topic.id, !topic.status)}
-            aria-label="change status"
+            ariaLabel="change status"
             disabled={statusButtonDisabled}
           >
             {topic.status ? (
