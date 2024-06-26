@@ -1,7 +1,10 @@
 "use client";
 
+import { startTransition } from "react";
 import { useRouter } from "next/navigation";
+
 import Button from "./Button";
+
 import routePaths from "@/utils/routePaths";
 import { type ErrorType } from "@/utils/error";
 
@@ -19,9 +22,11 @@ export default function ErrorComponent({
   const router = useRouter();
   const isUnauthorized = message.toLowerCase().includes("unauthorized");
 
-  function handleReset() {
-    if (reset) reset();
-    else router.refresh();
+  function handleResetAndRefresh() {
+    startTransition(() => {
+      router.refresh();
+      if (reset) reset();
+    });
   }
 
   return (
@@ -37,7 +42,7 @@ export default function ErrorComponent({
           className="w-full"
           variant="neutral"
           type="button"
-          onClick={handleReset}
+          onClick={handleResetAndRefresh}
         >
           Try again
         </Button>
