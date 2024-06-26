@@ -18,6 +18,8 @@ import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSuppor
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
 import { getUser } from "@/utils/getUser";
 import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
+import { type ErrorType } from "@/utils/error";
+import ErrorComponent from "@/components/Error";
 
 interface VoyageDashboardProps {
   teamId?: string;
@@ -37,6 +39,8 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   let meetingsData: EventList[] = [];
   let voyageNumber: number | null = null;
   let voyageData: Voyage = {} as Voyage;
+  let errorMessage: string | undefined;
+  let errorType: ErrorType | undefined;
 
   if (teamId !== undefined) {
     const data = await getDashboardData(user, error, Number(teamId));
@@ -45,6 +49,12 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
     meetingsData = data.meetingsData;
     voyageNumber = data.voyageNumber;
     voyageData = data.voyageData;
+    errorMessage = data.errorMessage;
+    errorType = data.errorType;
+  }
+
+  if (errorMessage && errorType) {
+    return <ErrorComponent errorType={errorType} message={errorMessage} />;
   }
 
   return (
