@@ -1,10 +1,11 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import type { FormEvent } from "react";
-import { useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { useParams } from "next/navigation";
 import * as z from "zod";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { zodResolver } from "@hookform/resolvers/zod";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
@@ -25,7 +26,6 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import { validateTextInput } from "@/utils/form/validateInput";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 interface TechStackCardProps {
   title: string;
@@ -45,7 +45,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const [isInput, setIsInput] = useState(false);
   const [editItemId, setEditItemId] = useState(-1);
   const [isDuplicate, setIsDuplicate] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLFormElement>(null);
   const editRef = useRef<HTMLInputElement>(null);
   const items = data.map((item) => item.name.toLowerCase());
   const params = useParams<{ teamId: string }>();
@@ -77,9 +77,9 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<ValidationSchema>({
-    mode: "onTouched",
+    mode: "onSubmit",
     resolver: zodResolver(validationSchema),
   });
 
@@ -87,9 +87,8 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     setIsInput(!isInput);
   };
 
-  const handleAddItem = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const techName = inputRef.current?.value ?? "";
+  const handleAddItem: SubmitHandler<ValidationSchema> = async (data) => {
+    const techName = data.add;
     const [, error] = await addTechItemAction({
       teamId,
       techName,
@@ -103,6 +102,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     }
     setAddTechItemLoading(false);
     setIsInput(false);
+    reset();
   };
 
   const handleEdit = async (
@@ -139,18 +139,34 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     setIsInput(!isInput);
   };
 
-  const handleOnChange = () => {
-    const addingItemValue = inputRef.current?.value.toLowerCase();
-    const isDuplicateInAdding =
-      addingItemValue && items.includes(addingItemValue);
-    if (addingItemValue && isDuplicateInAdding !== isDuplicate) {
-      setIsDuplicate(!!isDuplicateInAdding);
+  const checkIfDuplicate = () => {
+    let newItem;
+    const input = inputRef?.current?.querySelector(
+      "input[name='add']",
+    ) as HTMLInputElement;
+    if (input) {
+      newItem = input.value.toLowerCase();
+      if (items.includes(newItem)) {
+        return setIsDuplicate(true);
+      }
+    }
+    return setIsDuplicate(false);
+  };
+
+  const errorMessage = () => {
+    if (isDuplicate) {
+      return "Duplicate Item";
+    } else if (errors?.add?.message && errors) {
+      return errors.add.message;
     }
   };
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
+    const input = inputRef?.current?.querySelector(
+      "input[name='add']",
+    ) as HTMLInputElement;
+    if (input) {
+      input.focus();
     }
     if (editRef.current) {
       editRef.current.focus();
@@ -166,6 +182,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         !(targetNode instanceof HTMLElement && targetNode.closest("form"))
       ) {
         setIsInput(false);
+        reset();
       }
       if (
         editRef.current &&
@@ -180,7 +197,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     return () => {
       document.body.removeEventListener("click", handleClickOutside);
     };
-  }, [isInput, editItemId]);
+  }, [isInput, editItemId, reset]);
 
   return (
     <div className="h-80 min-w-[420px] rounded-lg bg-base-200 p-5 text-base-300 sm:w-96">
@@ -216,7 +233,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                         editTechItemLoading ? <Spinner /> : "Save"
                       }
                       clearInputAction={clearActionEditItem}
-                      onChange={handleOnChange}
+                      //onChange={handleOnChange}
                     />
                   </form>
                 ) : (
@@ -269,16 +286,16 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         </ul>
       </div>
       {isInput ? (
-        <form onSubmit={handleAddItem}>
+        <form ref={inputRef} onSubmit={handleSubmit(handleAddItem)}>
           <TextInput
-            id={title}
-            ref={inputRef}
+            id="add"
             placeholder="Add Tech Stack"
             submitButtonText={addTechItemLoading ? <Spinner /> : "Save"}
-            errorMessage={isDuplicate ? "Duplicate Item" : ""}
             clearInputAction={clearActionAdditem}
-            onChange={handleOnChange}
             className="z-10"
+            {...register("add")}
+            onChange={checkIfDuplicate}
+            errorMessage={errorMessage()}
           />
         </form>
       ) : (
