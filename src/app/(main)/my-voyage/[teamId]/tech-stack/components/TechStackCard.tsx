@@ -1,6 +1,5 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import type { FormEvent } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useParams } from "next/navigation";
 import * as z from "zod";
@@ -32,21 +31,29 @@ interface TechStackCardProps {
   data: TechStackItem[];
 }
 
-const validationSchema = z.object({
+const validationSchemaAdd = z.object({
   add: validateTextInput({
-    inputName: "addItem",
+    inputName: "new item",
     required: true,
   }),
 });
 
-type ValidationSchema = z.infer<typeof validationSchema>;
+const validationSchemaEdit = z.object({
+  edit: validateTextInput({
+    inputName: "edit item",
+    required: true,
+  }),
+});
+
+type ValidationSchemaAdd = z.infer<typeof validationSchemaAdd>;
+type ValidationSchemaEdit = z.infer<typeof validationSchemaEdit>;
 
 export default function TechStackCard({ title, data }: TechStackCardProps) {
   const [isInput, setIsInput] = useState(false);
   const [editItemId, setEditItemId] = useState(-1);
   const [isDuplicate, setIsDuplicate] = useState(false);
   const inputRef = useRef<HTMLFormElement>(null);
-  const editRef = useRef<HTMLInputElement>(null);
+  const editRef = useRef<HTMLFormElement>(null);
   const items = data.map((item) => item.name.toLowerCase());
   const params = useParams<{ teamId: string }>();
   const teamId = Number(params.teamId);
@@ -78,16 +85,26 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ValidationSchema>({
+  } = useForm<ValidationSchemaAdd>({
     mode: "onSubmit",
-    resolver: zodResolver(validationSchema),
+    resolver: zodResolver(validationSchemaAdd),
+  });
+
+  const {
+    register: registerEdit,
+    handleSubmit: handleSubmitEdit,
+    reset: resetEdit,
+    formState: { errors: errorsEdit },
+  } = useForm<ValidationSchemaEdit>({
+    mode: "onSubmit",
+    resolver: zodResolver(validationSchemaEdit),
   });
 
   const toggleAddItemInput = () => {
     setIsInput(!isInput);
   };
 
-  const handleAddItem: SubmitHandler<ValidationSchema> = async (data) => {
+  const handleAddItem: SubmitHandler<ValidationSchemaAdd> = async (data) => {
     const techName = data.add;
     const [, error] = await addTechItemAction({
       teamId,
@@ -105,12 +122,11 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     reset();
   };
 
-  const handleEdit = async (
-    e: FormEvent<HTMLFormElement>,
-    techItemId: number,
-  ) => {
-    e?.preventDefault();
-    const techName = editRef.current?.value ?? "";
+  const handleEdit = async (techItemId: number) => {
+    const input = editRef?.current?.querySelector(
+      "input[name='edit']",
+    ) as HTMLInputElement;
+    const techName = input.value ?? "";
     const [, error] = await editTechItemAction({
       techItemId,
       techName,
@@ -124,6 +140,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     setEditTechItemLoading(false);
     setEditItemId(-1);
     handleSettingsMenuClose();
+    resetEdit();
   };
 
   const handleSettingsMenuClose = () => {
@@ -165,11 +182,15 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
     const input = inputRef?.current?.querySelector(
       "input[name='add']",
     ) as HTMLInputElement;
+    const edit = editRef?.current?.querySelector(
+      "input[name='edit']",
+    ) as HTMLInputElement;
+
     if (input) {
       input.focus();
     }
-    if (editRef.current) {
-      editRef.current.focus();
+    if (edit) {
+      edit.focus();
     }
   }, [isInput, editItemId]);
 
@@ -191,13 +212,14 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
       ) {
         setEditItemId(-1);
         setOpenMenuId(-1);
+        resetEdit();
       }
     }
     document.body.addEventListener("click", handleClickOutside);
     return () => {
       document.body.removeEventListener("click", handleClickOutside);
     };
-  }, [isInput, editItemId, reset]);
+  }, [isInput, editItemId, reset, resetEdit]);
 
   return (
     <div className="h-80 min-w-[420px] rounded-lg bg-base-200 p-5 text-base-300 sm:w-96">
@@ -221,19 +243,20 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
               >
                 {editItemId === element.id ? (
                   <form
-                    onSubmit={(e) => handleEdit(e, element.id)}
+                    onSubmit={handleSubmitEdit(() => handleEdit(element.id))}
                     className="col-span-6 -my-2 h-12"
+                    ref={editRef}
                   >
                     <TextInput
                       id={element.id.toString()}
-                      ref={editRef}
                       placeholder={element.name}
                       defaultValue={element.name}
                       submitButtonText={
                         editTechItemLoading ? <Spinner /> : "Save"
                       }
                       clearInputAction={clearActionEditItem}
-                      //onChange={handleOnChange}
+                      {...registerEdit("edit")}
+                      errorMessage={errorsEdit.edit?.message}
                     />
                   </form>
                 ) : (
