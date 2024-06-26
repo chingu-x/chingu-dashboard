@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { AnimatePresence, type Variants, motion } from "framer-motion";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { cn } from "@/lib/utils";
+import IconButton from "@/components/IconButton";
 
 interface ModalProps {
   isOpen: boolean;
@@ -107,10 +108,9 @@ export default function Modal({
                 {icon}
                 <h3 className="text-xl font-semibold capitalize">{title}</h3>
               </div>
-              {/* come back later */}
-              <button type="button" aria-label="close modal" onClick={onClose}>
+              <IconButton ariaLabel="close modal" onClick={onClose}>
                 <XMarkIcon className="h-6 w-6 fill-current" />
-              </button>
+              </IconButton>
             </div>
             {/* CONTENT */}
             <div className="p-10">{children}</div>

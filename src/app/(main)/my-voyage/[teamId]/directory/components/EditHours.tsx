@@ -102,9 +102,8 @@ export default function EditHours({
       variant="link"
       className="mb-6 mt-2 flex w-full justify-between rounded-lg border-2 border-neutral-content px-3.5 py-2.5 text-base text-base-300 outline-none hover:border-base-300"
       onClick={handleClick}
-      aria-label=""
+      aria-label="average hour per sprint"
     >
-      {/* come back later to check if it's just a number, or "${number} hours" */}
       {hrPerSprint ? `${hrPerSprint}` : "Add Hours"}
       <PencilSquareIcon className="w-3.5" />
     </Button>
