@@ -7,6 +7,7 @@ import type { User } from "@/store/features/user/userSlice";
 import { fetchMeeting } from "@/app/(main)/my-voyage/[teamId]/sprints/components/SprintWrapper";
 import type { AppError } from "@/types/types";
 import convertStringToDate from "@/utils/convertStringToDate";
+import { ErrorType } from "@/utils/error";
 
 interface GetDashboardDataResponse {
   currentSprintNumber: number | null;
@@ -16,6 +17,7 @@ interface GetDashboardDataResponse {
   voyageNumber: number | null;
   voyageData: Voyage;
   errorMessage?: string;
+  errorType?: ErrorType;
 }
 
 export type EventList = {
@@ -33,6 +35,8 @@ export const getDashboardData = async (
   let sprintsData: Sprint[] = [];
   let voyageNumber: number | null = null;
   let voyageData: Voyage = {} as Voyage;
+  let errorMessage: string | undefined;
+  let errorType: ErrorType | undefined;
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,
@@ -51,6 +55,7 @@ export const getDashboardData = async (
       voyageNumber: null,
       voyageData: {} as Voyage,
       errorMessage: errorResponse,
+      errorType: ErrorType.FETCH_VOYAGE_DATA,
     };
   }
 
@@ -58,7 +63,16 @@ export const getDashboardData = async (
     const [res, error] = data;
 
     if (error) {
-      throw new Error(`Error: ${error.message}`);
+      return {
+        currentSprintNumber: null,
+        sprintsData: [],
+        user: null,
+        meetingsData: [],
+        voyageNumber: null,
+        voyageData: {} as Voyage,
+        errorMessage: error.message,
+        errorType: ErrorType.FETCH_SPRINT,
+      };
     }
 
     sprintsData = res!.sprints;
@@ -79,16 +93,18 @@ export const getDashboardData = async (
     sprint: number;
   }[] = [];
 
-  const fetchMeetingsPromises = sprintsData.map((sprint) =>
-    fetchMeeting({
-      sprintNumber: sprint.number,
-      meetingId: sprint.teamMeetings[0]?.id,
-    }),
-  );
+  const fetchMeetingsPromises = sprintsData
+    .filter((sprint) => sprint.teamMeetings.length)
+    .map((sprint) =>
+      fetchMeeting({
+        sprintNumber: sprint.number,
+        meetingId: sprint.teamMeetings[0]?.id,
+      }),
+    );
 
   const fetchMeetingsResults = await Promise.all(fetchMeetingsPromises);
 
-  fetchMeetingsResults.forEach(([res]) => {
+  fetchMeetingsResults.forEach(([res, error]) => {
     if (res) {
       const { title, dateTime, meetingLink, sprint } = res;
       const parsedDate = convertStringToDate(dateTime, user?.timezone ?? "");
@@ -100,7 +116,8 @@ export const getDashboardData = async (
         sprint: sprint.number,
       });
     } else if (error) {
-      return `Error: ${error.message}`;
+      errorMessage = error.message;
+      errorType = ErrorType.FETCH_MEETING;
     }
   });
 
@@ -111,5 +128,7 @@ export const getDashboardData = async (
     meetingsData,
     voyageNumber,
     voyageData,
+    errorType,
+    errorMessage,
   };
 };
