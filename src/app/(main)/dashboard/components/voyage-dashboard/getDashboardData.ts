@@ -29,8 +29,8 @@ interface GetDashboardDataResponse {
   projectIdeas: IdeationData[];
   techStackData: TechStackData[];
   projectResources: ResourceData[];
-  errorMessage?: string;
-  errorType?: ErrorType;
+  errorMessage?: string | undefined;
+  errorType?: ErrorType | undefined;
 }
 
 export type EventList = {
@@ -78,7 +78,13 @@ const fetchData = async <T, Y>(
 };
 
 type SprintDataResponse =
-  | { sprintsData: Sprint[]; voyageNumber: number | null; voyageData: Voyage }
+  | {
+      sprintsData: Sprint[];
+      voyageNumber: number | null;
+      voyageData: Voyage;
+      errorMessage: string;
+      errorType?: ErrorType;
+    }
   | string;
 
 const getSprintsData = async (
@@ -89,8 +95,6 @@ const getSprintsData = async (
   let sprintsData: Sprint[] = [];
   let voyageNumber: number | null = null;
   let voyageData: Voyage = {} as Voyage;
-  let errorMessage: string | undefined;
-  let errorType: ErrorType | undefined;
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,
@@ -102,10 +106,7 @@ const getSprintsData = async (
 
   if (errorResponse) {
     return {
-      currentSprintNumber: null,
       sprintsData: [],
-      user: null,
-      meetingsData: [],
       voyageNumber: null,
       voyageData: {} as Voyage,
       errorMessage: errorResponse,
@@ -118,10 +119,7 @@ const getSprintsData = async (
 
     if (error) {
       return {
-        currentSprintNumber: null,
         sprintsData: [],
-        user: null,
-        meetingsData: [],
         voyageNumber: null,
         voyageData: {} as Voyage,
         errorMessage: error.message,
@@ -134,7 +132,13 @@ const getSprintsData = async (
     voyageData = res!;
   }
 
-  return { sprintsData, voyageNumber, voyageData };
+  return {
+    sprintsData,
+    voyageNumber,
+    voyageData,
+    errorMessage: "",
+    errorType: undefined,
+  };
 };
 
 export const getDashboardData = async (
@@ -142,6 +146,8 @@ export const getDashboardData = async (
   error: AppError | null,
   teamId: number,
 ): Promise<GetDashboardDataResponse> => {
+  let errorMessage: string | undefined;
+  let errorType: ErrorType | undefined;
   const sprintsResult = await getSprintsData(user, error, teamId);
   const featuresResult = await fetchData<FeaturesList[], { teamId: number }>(
     fetchFeatures,
@@ -169,11 +175,21 @@ export const getDashboardData = async (
     { teamId },
   );
 
-  if (typeof sprintsResult === "string") throw new Error(sprintsResult);
-  if (featuresResult.error) throw new Error(featuresResult.error);
-  if (projectIdeasResult.error) throw new Error(projectIdeasResult.error);
-  if (techStackResult.error) throw new Error(techStackResult.error);
-  if (resourcesResult.error) throw new Error(resourcesResult.error);
+  if (typeof sprintsResult === "string")
+    return {
+      currentSprintNumber: null,
+      sprintsData: [],
+      user: null,
+      meetingsData: [],
+      voyageNumber: null,
+      voyageData: {} as Voyage,
+      features: [],
+      projectIdeas: [],
+      techStackData: [],
+      projectResources: [],
+      errorMessage: sprintsResult,
+      errorType: ErrorType.FETCH_SPRINT,
+    };
 
   let currentSprintNumber = null;
   if (sprintsResult.sprintsData.length > 0) {
@@ -221,5 +237,7 @@ export const getDashboardData = async (
     projectIdeas: projectIdeasResult.data!,
     techStackData: techStackResult.data!,
     projectResources: resourcesResult.data!,
+    errorMessage,
+    errorType,
   };
 };
