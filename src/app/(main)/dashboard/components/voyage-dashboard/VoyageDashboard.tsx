@@ -28,6 +28,8 @@ import FeaturesProvider from "@/app/(main)/my-voyage/[teamId]/features/component
 import IdeationProvider from "@/app/(main)/my-voyage/[teamId]/ideation/components/IdeationProvider";
 import TechStackProvider from "@/app/(main)/my-voyage/[teamId]/tech-stack/components/TechStackProvider";
 import routePaths from "@/utils/routePaths";
+import { type ErrorType } from "@/utils/error";
+import ErrorComponent from "@/components/Error";
 
 interface VoyageDashboardProps {
   teamId?: string;
@@ -47,6 +49,8 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   let projectIdeas: IdeationData[] = [];
   let techStackDatas: TechStackData[] = [];
   let projectResources: ResourceData[] = [];
+  let errorMessage: string | undefined;
+  let errorType: ErrorType | undefined;
 
   if (teamId !== undefined) {
     const data = await getDashboardData(user, error, Number(teamId));
@@ -59,6 +63,12 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
     projectIdeas = data.projectIdeas.filter((idea) => idea.isSelected);
     techStackDatas = data.techStackData;
     projectResources = data.projectResources;
+    errorMessage = data.errorMessage;
+    errorType = data.errorType;
+  }
+
+  if (errorMessage && errorType) {
+    return <ErrorComponent errorType={errorType} message={errorMessage} />;
   }
 
   const featureList = features

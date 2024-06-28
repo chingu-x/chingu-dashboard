@@ -16,6 +16,7 @@ import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import { type TechStackData } from "@/store/features/techStack/techStackSlice";
 import { type ResourceData } from "@/store/features/resources/resourcesSlice";
 import type { AsyncActionResponse } from "@/utils/handleAsync";
+import { ErrorType } from "@/utils/error";
 
 interface GetDashboardDataResponse {
   currentSprintNumber: number | null;
@@ -28,6 +29,8 @@ interface GetDashboardDataResponse {
   projectIdeas: IdeationData[];
   techStackData: TechStackData[];
   projectResources: ResourceData[];
+  errorMessage?: string;
+  errorType?: ErrorType;
 }
 
 export type EventList = {
@@ -86,6 +89,8 @@ const getSprintsData = async (
   let sprintsData: Sprint[] = [];
   let voyageNumber: number | null = null;
   let voyageData: Voyage = {} as Voyage;
+  let errorMessage: string | undefined;
+  let errorType: ErrorType | undefined;
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,
@@ -96,14 +101,32 @@ const getSprintsData = async (
   });
 
   if (errorResponse) {
-    return errorResponse;
+    return {
+      currentSprintNumber: null,
+      sprintsData: [],
+      user: null,
+      meetingsData: [],
+      voyageNumber: null,
+      voyageData: {} as Voyage,
+      errorMessage: errorResponse,
+      errorType: ErrorType.FETCH_VOYAGE_DATA,
+    };
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `Error: ${error.message}`;
+      return {
+        currentSprintNumber: null,
+        sprintsData: [],
+        user: null,
+        meetingsData: [],
+        voyageNumber: null,
+        voyageData: {} as Voyage,
+        errorMessage: error.message,
+        errorType: ErrorType.FETCH_SPRINT,
+      };
     }
 
     sprintsData = res!.sprints;
@@ -179,6 +202,9 @@ export const getDashboardData = async (
           link: meetingLink,
           sprint: sprint.number,
         };
+      } else if (error) {
+        errorMessage = error.message;
+        errorType = ErrorType.FETCH_MEETING;
       }
       return null;
     })
