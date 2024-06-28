@@ -20,6 +20,10 @@ import {
   type DeleteAgendaTopicResponse,
   type deleteAgendaTopic,
 } from "@/app/(main)/my-voyage/[teamId]/sprints/sprintsService";
+import {
+  type DeleteTechItemProps,
+  type deleteTechItem,
+} from "@/app/(main)/my-voyage/[teamId]/tech-stack/techStackService";
 
 export type ModalType =
   | "error"
@@ -70,7 +74,8 @@ export interface Payload {
     | typeof deleteIdeation
     | typeof deleteResource
     | typeof deleteFeature
-    | typeof deleteAgendaTopic;
+    | typeof deleteAgendaTopic
+    | typeof deleteTechItem;
 }
 
 export type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
@@ -79,7 +84,8 @@ export type DeleteProps =
   | DeleteIdeationProps
   | DeleteResourceProps
   | DeleteFeatureProps
-  | DeleteAgendaTopicProps;
+  | DeleteAgendaTopicProps
+  | DeleteTechItemProps;
 
 export type DeleteResponse =
   | DeleteIdeationResponse

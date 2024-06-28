@@ -14,7 +14,7 @@ export default function TechStackContainer({ data }: TechStackContainerProps) {
   }));
 
   return (
-    <div className="w-full p-10">
+    <div className="w-full">
       <div className="mb-10 grid grid-cols-2 place-items-center min-[1920px]:grid-cols-3">
         <div className="col-start-2 flex min-w-[420px] flex-row-reverse sm:w-96 min-[1920px]:col-start-3">
           <Button variant="secondary">Finalize Selection</Button>
