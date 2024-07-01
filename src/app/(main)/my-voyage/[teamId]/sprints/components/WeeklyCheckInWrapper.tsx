@@ -17,6 +17,8 @@ import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
 import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
+import { ErrorType } from "@/utils/error";
+import ErrorComponent from "@/components/Error";
 
 interface FetchFormQuestionsProps {
   formId: number;
@@ -84,14 +86,24 @@ export default async function WeeklyCheckInWrapper({
   });
 
   if (errorResponse) {
-    return errorResponse;
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_VOYAGE_DATA}
+        message={errorResponse}
+      />
+    );
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `Error: ${error.message}`;
+      return (
+        <ErrorComponent
+          errorType={ErrorType.FETCH_SPRINT}
+          message={error.message}
+        />
+      );
     }
     voyageData = res!;
 
@@ -119,9 +131,6 @@ export default async function WeeklyCheckInWrapper({
 
       // Fetch teamDirectory
       const [res, error] = await fetchTeamDirectory({ teamId, user });
-      if (error) {
-        return `Error: ${error.message}`;
-      }
       if (res) {
         let voyageTeamMemberId: number | undefined;
         if (user && user.voyageTeamMembers) {
@@ -145,13 +154,27 @@ export default async function WeeklyCheckInWrapper({
         }
       }
 
+      if (error) {
+        return (
+          <ErrorComponent
+            errorType={ErrorType.FETCH_TEAM_DIRECTORY}
+            message={error.message}
+          />
+        );
+      }
+
       // Fetch form
       const [formRes, formError] = await fetchFormQuestions({
         formId: Forms.checkIn,
       });
 
       if (formError) {
-        return `Error: ${formError.message}`;
+        return (
+          <ErrorComponent
+            errorType={ErrorType.FETCH_FORM_QUESTIONS}
+            message={formError.message}
+          />
+        );
       }
       if (formRes && formRes?.description) description = formRes.description;
       if (formRes && formRes?.questions) questions = formRes.questions;

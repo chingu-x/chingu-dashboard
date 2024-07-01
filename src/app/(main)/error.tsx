@@ -15,11 +15,9 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="flex h-screen flex-col items-start justify-center">
-      <ErrorComponent
-        message="Something went wrong. Please contact support"
-        reset={reset}
-      />
-    </div>
+    <ErrorComponent
+      message="Something went wrong. Please contact support"
+      reset={reset}
+    />
   );
 }
