@@ -87,7 +87,7 @@ export default function ResourceCard({
         <IconButton
           className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-base-100"
           onClick={openDeleteModal}
-          aria-label="delete"
+          ariaLabel="delete"
         >
           <TrashIcon className="h-6 w-6" />
         </IconButton>

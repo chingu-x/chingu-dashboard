@@ -27,12 +27,12 @@ export default function FinalizeIdeationItem({
       title,
     });
   }
-
   return (
     <Button
       variant={finalizedIdeation.title === title ? "primary" : "outline"}
       className="w-full gap-x-0"
       onClick={handleClick}
+      aria-label="Finalized Project Idea"
     >
       <div className="flex w-full flex-col items-center justify-center gap-y-2">
         <h2 className="text-base font-semibold">{title}</h2>
