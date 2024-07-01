@@ -11,6 +11,8 @@ import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
+import ErrorComponent from "@/components/Error";
+import { ErrorType } from "@/utils/error";
 
 interface FetchResourcesProps {
   teamId: number;
@@ -53,13 +55,23 @@ export default async function ResourcesComponentWrapper({
   });
 
   if (errorResponse) {
-    return errorResponse;
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_VOYAGE_DATA}
+        message={errorResponse}
+      />
+    );
   }
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `Error: ${error.message}`;
+      return (
+        <ErrorComponent
+          errorType={ErrorType.FETCH_RESOURCES}
+          message={error.message}
+        />
+      );
     }
 
     projectResources = res!;

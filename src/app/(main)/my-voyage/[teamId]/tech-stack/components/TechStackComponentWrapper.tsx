@@ -11,6 +11,8 @@ import type { TechStackData } from "@/store/features/techStack/techStackSlice";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
 import routePaths from "@/utils/routePaths";
+import { ErrorType } from "@/utils/error";
+import ErrorComponent from "@/components/Error";
 
 interface FetchTechStackProps {
   teamId: number;
@@ -52,13 +54,23 @@ export default async function TechStackComponentWrapper({
   });
 
   if (errorResponse) {
-    return errorResponse;
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_VOYAGE_DATA}
+        message={errorResponse}
+      />
+    );
   }
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `Error: ${error.message}`;
+      return (
+        <ErrorComponent
+          errorType={ErrorType.FETCH_TECH_STACK}
+          message={error.message}
+        />
+      );
     }
 
     techStackData = res!;

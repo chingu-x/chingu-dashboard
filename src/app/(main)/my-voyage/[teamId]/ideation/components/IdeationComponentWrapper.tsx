@@ -8,6 +8,8 @@ import VoteCard from "./VoteCard";
 import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import ErrorComponent from "@/components/Error";
+
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
@@ -16,6 +18,7 @@ import { getUser } from "@/utils/getUser";
 import { handleAsync, type AsyncActionResponse } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import routePaths from "@/utils/routePaths";
+import { ErrorType } from "@/utils/error";
 
 // import { ideation } from "./fixtures/ideation";
 
@@ -62,14 +65,24 @@ export default async function IdeationComponentWrapper({
   });
 
   if (errorResponse) {
-    return errorResponse;
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_VOYAGE_DATA}
+        message={errorResponse}
+      />
+    );
   }
 
   if (data) {
     const [res, error] = data;
 
     if (error) {
-      return `Error: ${error.message}`;
+      return (
+        <ErrorComponent
+          errorType={ErrorType.FETCH_IDEATIONS}
+          message={error.message}
+        />
+      );
     }
 
     projectIdeas = res!;
