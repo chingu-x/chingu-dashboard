@@ -7,6 +7,7 @@ import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import Label from "./Label";
 import FieldMessage from "./FieldMessage";
 import Button from "@/components/Button";
+import IconButton from "@/components/IconButton";
 
 import { cn } from "@/lib/utils";
 
@@ -140,14 +141,13 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           )}
           {/* CLEAR INPUT BUTTON */}
           {isClearButtonVisible && (
-            // TODO: replace with an Icon Button
-            <button
-              type="button"
-              onClick={clearInput}
+            <IconButton
               className="absolute right-0 top-1/2 -translate-y-1/2 p-[10px]"
+              onClick={clearInput}
+              ariaLabel="delete input"
             >
               <XMarkIcon className="h-5 w-5 text-base-300" />
-            </button>
+            </IconButton>
           )}
           {/* SHOW/HIDE PASSWORD TOGGLE */}
           {type === "password" && (
