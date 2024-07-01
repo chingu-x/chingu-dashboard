@@ -36,7 +36,7 @@ export default function Sections({
       id: Forms.notes,
       title: "notes",
       icon: <DocumentTextIcon aria-hidden="true" />,
-      isAdded: notes !== undefined,
+      isAdded: notes !== null,
       children: <Notes data={notes} />,
     },
     {

@@ -10,5 +10,6 @@ export function getCurrentSprint(sprints: Sprint[]) {
       end: sprint.endDate,
     }),
   );
+
   return currentSprint;
 }

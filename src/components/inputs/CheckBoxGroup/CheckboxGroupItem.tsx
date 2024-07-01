@@ -32,7 +32,7 @@ export const CheckboxGroupItem = React.forwardRef<
         className="peer hidden"
       />
       <span className="flex h-6 w-6 items-center justify-center rounded border border-neutral/40 bg-base-200 transition-all group-hover:bg-base-100 peer-checked:border-base-300 group-hover:peer-checked:border-neutral-content [&>*]:hidden [&>*]:text-base-300 peer-checked:[&>*]:block group-hover:peer-checked:[&>*]:text-neutral-content">
-        <CheckIcon className="hidden transition-all" />
+        <CheckIcon className="hidden h-full w-full transition-all" />
       </span>
       <span className="transition-all peer-checked:text-base-300">{label}</span>
     </Label>

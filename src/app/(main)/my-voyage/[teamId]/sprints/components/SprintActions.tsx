@@ -75,19 +75,6 @@ export default function SprintActions({
 
   function renderSubmitVoyageButton() {
     if (submitVoyageIsAllowed) {
-      return (
-        <Button
-          variant="secondary"
-          size="lg"
-          className="group"
-          disabled={false}
-        >
-          <RocketLaunchIcon className="h-[18px] w-[18px]" />
-          Submit Voyage
-          <ArrowRightIcon className="h-[18px] w-0 transition-all group-hover:w-[18px]" />
-        </Button>
-      );
-    } else {
       if (voyageProjectIsSubmitted) {
         return (
           <Button
@@ -96,7 +83,7 @@ export default function SprintActions({
             className="group"
             disabled={true}
           >
-            <RocketLaunchIcon className="h-[18px] w-[18px]" />
+            <SolidRocketLaunchIcon className="h-[18px] w-[18px]" />
             Voyage Submitted
           </Button>
         );
@@ -106,13 +93,21 @@ export default function SprintActions({
             variant="secondary"
             size="lg"
             className="group"
-            disabled={true}
+            disabled={false}
           >
-            <SolidRocketLaunchIcon className="h-[18px] w-[18px]" />
+            <RocketLaunchIcon className="h-[18px] w-[18px]" />
             Submit Voyage
+            <ArrowRightIcon className="h-[18px] w-0 transition-all group-hover:w-[18px]" />
           </Button>
         );
       }
+    } else {
+      return (
+        <Button variant="secondary" size="lg" className="group" disabled={true}>
+          <SolidRocketLaunchIcon className="h-[18px] w-[18px]" />
+          {voyageProjectIsSubmitted ? "Voyage Submitted" : "Submit Voyage"}
+        </Button>
+      );
     }
   }
 
