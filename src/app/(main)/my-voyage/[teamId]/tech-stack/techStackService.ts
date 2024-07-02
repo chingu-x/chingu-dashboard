@@ -40,6 +40,20 @@ export interface DeleteTechItemProps {
   techItemId: number;
 }
 
+interface AddTechItemVoteProps {
+  techItemId: number;
+}
+interface TechItemVoteResponse {
+  teamTechStackItemVotedId: number;
+  teamTechId: number;
+  teamMemberId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+interface RemoveTechItemVoteProps {
+  techItemId: number;
+}
+
 export async function addTechItem({
   teamId,
   techName,
@@ -94,6 +108,53 @@ export async function deleteTechItem({
   const deleteTechItemAsync = () =>
     DELETE<void>(`api/v1/voyages/techs/${techItemId}`, token, "default");
   const [res, error] = await handleAsync(deleteTechItemAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.techStack);
+  }
+
+  return [res, error];
+}
+
+//Voting
+// add vote endpoint /api/v1/voyages/techs/{teamTechItemId}/vote
+//remove vote endpoint /api/v1/voyages/techs/{teamTechItemId}/vote
+export async function addTechItemVote({
+  techItemId,
+}: AddTechItemVoteProps): Promise<AsyncActionResponse<TechItemVoteResponse>> {
+  const token = getAccessToken();
+
+  const addTechItemVoteAsync = () =>
+    POST<undefined, TechItemVoteResponse>(
+      `api/v1/voyages/techs/${techItemId}/vote`,
+      token,
+      "default",
+    );
+
+  const [res, error] = await handleAsync(addTechItemVoteAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.techStack);
+  }
+
+  return [res, error];
+}
+
+export async function removeTechItemVote({
+  techItemId,
+}: RemoveTechItemVoteProps): Promise<
+  AsyncActionResponse<TechItemVoteResponse>
+> {
+  const token = getAccessToken();
+
+  const removeTechItemVoteAsync = () =>
+    DELETE<TechItemVoteResponse>(
+      `api/v1/voyages/techs/${techItemId}/vote`,
+      token,
+      "default",
+    );
+
+  const [res, error] = await handleAsync(removeTechItemVoteAsync);
 
   if (res) {
     revalidateTag(CacheTag.techStack);
