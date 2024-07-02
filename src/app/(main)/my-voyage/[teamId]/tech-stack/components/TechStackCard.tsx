@@ -296,10 +296,10 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                             )}
                           </div>
                         )}
-                        <RemoveVoteBtn /* id={element.id} */ />
+                        <RemoveVoteBtn techItemId={element.id} />
                       </div>
                     ) : (
-                      <AddVoteBtn />
+                      <AddVoteBtn techItemId={element.id} />
                     )}
                   </>
                 )}

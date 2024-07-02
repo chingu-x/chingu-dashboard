@@ -1,21 +1,20 @@
 import Button from "@/components/Button";
 
-/*
 interface RemoveVoteBtnProps {
-  id: number;
+  techItemId: number;
 }
-*/
 
-export default function RemoveVoteBtn(
-  {
-    /* { id }: RemoveVoteBtnProps */
-  },
-) {
+export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
+  const handleClick = () => {
+    console.log(techItemId);
+  };
+
   return (
     <Button
       variant="error"
       size="xs"
       className="justify-self-end rounded-3xl font-semibold"
+      onClick={handleClick}
     >
       Remove Vote
     </Button>
