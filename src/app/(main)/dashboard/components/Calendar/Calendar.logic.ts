@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   startOfMonth,
@@ -7,7 +7,6 @@ import {
   getDate,
   getMonth,
   getYear,
-  isSameDay,
   addMonths,
   subDays,
 } from "date-fns";
@@ -17,8 +16,15 @@ export const useCalendarLogic = () => {
   const { currentDate } = useUser();
   const today = currentDate ?? new Date();
 
-  const [date, setDate] = useState(today);
-  const [selectedDate, setSelectedDate] = useState(today);
+  const [date, setDate] = useState<Date>(today);
+  const [selectedDate, setSelectedDate] = useState<Date>(today);
+
+  useEffect(() => {
+    if (today) {
+      setDate(today);
+      setSelectedDate(today);
+    }
+  }, [today]);
 
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -37,7 +43,7 @@ export const useCalendarLogic = () => {
     "December",
   ];
 
-  const generateDate = (
+  const generateDates = (
     month = getMonth(new Date()),
     year = getYear(new Date()),
   ) => {
@@ -64,7 +70,6 @@ export const useCalendarLogic = () => {
       arrayOfDate.push({
         isWithinSelectedMonth: true,
         date,
-        today: isSameDay(date, new Date()),
       });
     }
 
@@ -80,8 +85,13 @@ export const useCalendarLogic = () => {
     return arrayOfDate;
   };
 
+  // Handle arrow click (previous/next month)
+  const handleArrowClick = (month: number) => {
+    if (date) setDate(addMonths(date, month));
+  };
+
   return {
-    generateDate,
+    generateDates,
     weekdays,
     months,
     today,
@@ -89,6 +99,6 @@ export const useCalendarLogic = () => {
     setDate,
     selectedDate,
     setSelectedDate,
-    onArrowClick: (month: number) => setDate(addMonths(date, month)),
+    onArrowClick: (month: number) => handleArrowClick(month),
   };
 };

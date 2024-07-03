@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { isSameDay, isBefore, isWithinInterval } from "date-fns";
 
 import type { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
@@ -17,7 +15,7 @@ export const useEventsLogic = (
   teamId?: string,
 ) => {
   const { timezone } = useUser();
-  const [isHoveredDate, setIsHoveredDate] = useState<Date | null>(null);
+  let selectedSprint = null;
 
   const voyageStartDate = sprintsData?.find(
     (sprint) => Number(sprint.number) === 1,
@@ -34,8 +32,6 @@ export const useEventsLogic = (
     (sprint) => Number(sprint.number) === currentSprintNumber,
   )?.endDate;
 
-  const isSelectedDate = (date: Date) => isSameDay(selectedDate, date);
-
   const isWithinSprintRange = (date: Date) => {
     if (currentSprintStartDate && currentSprintEndDate) {
       return isWithinInterval(date, {
@@ -45,13 +41,17 @@ export const useEventsLogic = (
     }
   };
 
-  let selectedSprint = null;
-  for (const sprint of sprintsData!) {
-    const startDate = new Date(sprint.startDate);
-    const endDate = new Date(sprint.endDate);
-    if (selectedDate >= startDate && selectedDate <= endDate) {
-      selectedSprint = sprint.number;
-      break;
+  if (sprintsData) {
+    for (const sprint of sprintsData) {
+      const startDate = convertStringToDate(sprint.startDate, timezone);
+      const endDate = convertStringToDate(sprint.endDate, timezone);
+      // console.log("start date", startDate);
+      // console.log("selected date", selectedDate);
+
+      if (selectedDate >= startDate && selectedDate <= endDate) {
+        selectedSprint = sprint.number;
+        break;
+      }
     }
   }
 
@@ -80,20 +80,22 @@ export const useEventsLogic = (
   const showDotConditions = (date: Date) => [
     {
       id: 1,
-      check: meetingsData?.some((event) =>
-        isSameDay(new Date(event.date), date),
-      ),
+      check: meetingsData?.some((event) => isSameDay(event.date, date)),
     },
     {
       id: 2,
-      check: sprintsData?.some((day) => isSameDay(new Date(day.endDate), date)),
+      check: sprintsData?.some((day) =>
+        isSameDay(convertStringToDate(day.endDate, timezone), date),
+      ),
       label: "Weekly Check-in Due",
       link: weeklyCheckInLink(),
       isDisabled: isBefore(date, new Date()),
     },
     {
       id: 3,
-      check: isSameDay(new Date(voyageEndDate!), date),
+      check: voyageEndDate
+        ? isSameDay(convertStringToDate(voyageEndDate, timezone), date)
+        : false,
       label: "Voyage Submission Due",
       link: submitVoyageLink(),
     },
@@ -104,24 +106,6 @@ export const useEventsLogic = (
       isSameDay(convertStringToDate(voyageStartDate, timezone), date)) ||
     (voyageEndDate &&
       isSameDay(convertStringToDate(voyageEndDate, timezone), date));
-
-  const getCalendarElementColor = (date: Date, currentMonth: boolean) => {
-    if (isSelectedDate(date)) {
-      return "base-200";
-    } else if (date.getTime() === isHoveredDate?.getTime()) {
-      return "neutral";
-    } else if (!currentMonth) {
-      return "neutral-content";
-    } else {
-      return "neutral-focus";
-    }
-  };
-
-  // const onDotClick = (date: Date) => {
-  //   if (setSelectDate && date) {
-  //     setSelectDate(date);
-  //   }
-  // };
 
   const getDayLabel = () => {
     if (
@@ -140,9 +124,6 @@ export const useEventsLogic = (
     isWithinSprintRange,
     showDotConditions,
     showRocketIcon,
-    getCalendarElementColor,
-    setIsHoveredDate,
-    // onDotClick,
     getDayLabel,
     selectedSprint,
   };

@@ -1,44 +1,53 @@
-import React from "react";
-import { getDate, format } from "date-fns";
+import { getDate } from "date-fns";
+import { RocketLaunchIcon } from "@heroicons/react/24/solid";
 import { cn } from "@/lib/utils";
 
 type CellProps = {
   date: Date;
-  setSelectedDate: (value: React.SetStateAction<Date>) => void;
   isWithinSelectedMonth: boolean;
   isWithinCurrentSprintRange?: boolean;
   isSelectedDate: boolean;
-  children?: React.ReactNode;
+  showDot: boolean;
+  showRocketIcon: boolean;
 };
 function Cell({
   date,
-  setSelectedDate,
   isWithinSelectedMonth,
   isWithinCurrentSprintRange,
   isSelectedDate,
-  children,
+  showDot,
+  showRocketIcon,
 }: CellProps) {
   return (
-    <button
-      type="button"
-      className="relative grid h-[52px] place-content-center border border-base-100 text-center text-sm"
-      aria-label={format(date, "MMMM do, yyyy")}
+    <div
+      className={cn(
+        "group relative grid h-[50px] w-[48px] cursor-pointer select-none place-content-center border border-base-100 bg-base-content text-center text-sm text-neutral-content hover:bg-base-100",
+        isWithinSelectedMonth && "bg-base-200 text-base-300",
+        isWithinCurrentSprintRange && "bg-primary-content",
+        isSelectedDate && "bg-primary text-base-200 hover:bg-primary",
+      )}
     >
-      <h1
-        className={cn(
-          "grid h-[50px] w-[48px] cursor-pointer select-none place-content-center bg-base-content text-neutral-content",
-          isWithinSelectedMonth && "bg-base-200 text-base-300",
-          isWithinCurrentSprintRange && "bg-primary-content",
-          isSelectedDate && "bg-primary text-base-200",
-        )}
-        onClick={() => {
-          setSelectedDate(date);
-        }}
-      >
-        {getDate(date)}
-      </h1>
-      {children}
-    </button>
+      <h1>{getDate(date)}</h1>
+      {showDot && (
+        <div
+          className={cn(
+            "absolute inset-x-0 bottom-[6px] m-auto h-2 w-2 rounded-full bg-neutral-content group-hover:bg-neutral-content",
+            isWithinSelectedMonth && "bg-neutral-focus group-hover:bg-neutral",
+            isSelectedDate && "bg-base-200 group-hover:bg-base-200",
+          )}
+        />
+      )}
+      {showRocketIcon && (
+        <RocketLaunchIcon
+          className={cn(
+            "absolute inset-x-0 top-px m-auto h-4 w-4 text-neutral-content group-hover:text-neutral-content",
+            isWithinSelectedMonth &&
+              "text-neutral-focus group-hover:text-neutral",
+            isSelectedDate && "text-base-200 group-hover:text-base-200",
+          )}
+        />
+      )}
+    </div>
   );
 }
 
