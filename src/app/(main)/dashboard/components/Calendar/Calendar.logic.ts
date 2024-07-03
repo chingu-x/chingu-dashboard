@@ -51,7 +51,7 @@ export const useCalendarLogic = () => {
     while (firstDayOfWeek > 0) {
       const date = subDays(firstDateOfMonth, firstDayOfWeek);
       arrayOfDate.unshift({
-        currentMonth: false,
+        isWithinSelectedMonth: false,
         date,
       });
       firstDayOfWeek--;
@@ -62,7 +62,7 @@ export const useCalendarLogic = () => {
     for (let i = 1; i <= getDate(lastDateOfMonth); i++) {
       const date = new Date(year, month, i);
       arrayOfDate.push({
-        currentMonth: true,
+        isWithinSelectedMonth: true,
         date,
         today: isSameDay(date, new Date()),
       });
@@ -72,7 +72,7 @@ export const useCalendarLogic = () => {
 
     for (let i = 1; i <= remaining; i++) {
       arrayOfDate.push({
-        currentMonth: false,
+        isWithinSelectedMonth: false,
         date: new Date(year, month + 1, i),
       });
     }

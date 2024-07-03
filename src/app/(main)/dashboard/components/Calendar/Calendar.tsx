@@ -41,16 +41,16 @@ export default function Calendar({
     onArrowClick,
   } = useCalendarLogic();
   const {
-    cn,
-    generateClassString,
+    isWithinSprintRange,
     showDotConditions,
     showRocketIcon,
     getCalendarElementColor,
     setIsHoveredDate,
-    onDotClick,
+    // onDotClick,
     getDayLabel,
     selectedSprint,
   } = useEventsLogic(
+    selectedDate,
     sprintsData,
     currentSprintNumber,
     meetingsData,
@@ -70,7 +70,7 @@ export default function Calendar({
               }}
             />
             <h1 className="select-none text-2xl font-semibold">
-              {months[getMonth(today)]} {getYear(date)}
+              {months[getMonth(date)]} {getYear(date)}
             </h1>
             <ArrowRightIcon
               className="absolute right-[14px] h-5 w-5 cursor-pointer transition-all hover:scale-105 max-[1200px]:right-12"
@@ -93,7 +93,7 @@ export default function Calendar({
 
         <div className="grid max-w-[352px] grid-cols-7 border border-base-100">
           {generateDate(getMonth(date), getYear(date)).map(
-            ({ date, currentMonth, today }) => (
+            ({ date, isWithinSelectedMonth }) => (
               <div
                 key={getUnixTime(date)}
                 onMouseEnter={() => setIsHoveredDate(date)}
@@ -101,20 +101,20 @@ export default function Calendar({
               >
                 <Cell
                   date={date}
-                  currentMonth={currentMonth}
-                  today={!!today}
-                  cn={cn}
-                  generateClassString={() =>
-                    generateClassString(date, currentMonth)
-                  }
-                  setSelectDate={setSelectedDate}
+                  setSelectedDate={setSelectedDate}
+                  isWithinSelectedMonth={isWithinSelectedMonth}
+                  isWithinCurrentSprintRange={isWithinSprintRange(date)}
+                  isSelectedDate={isSameDay(selectedDate, date)}
                 >
                   {showDotConditions(date).map((condition) =>
                     condition.check ? (
                       <Dot
                         key={condition.id}
-                        color={getCalendarElementColor(date, currentMonth)}
-                        onClick={() => onDotClick(date)}
+                        color={getCalendarElementColor(
+                          date,
+                          isWithinSelectedMonth,
+                        )}
+                        // onClick={() => onDotClick(date)}
                       />
                     ) : null,
                   )}
@@ -126,7 +126,8 @@ export default function Calendar({
                     >
                       <RocketLaunchIcon
                         className={`absolute inset-x-0 top-px m-auto h-4 w-4 cursor-pointer ${
-                          "text-" + getCalendarElementColor(date, currentMonth)
+                          "text-" +
+                          getCalendarElementColor(date, isWithinSelectedMonth)
                         }`}
                       />
                     </div>

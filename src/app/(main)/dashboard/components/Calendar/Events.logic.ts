@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { isSameDay, isAfter, isBefore, startOfDay, endOfDay } from "date-fns";
+import { isSameDay, isBefore, isWithinInterval } from "date-fns";
 
 import type { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
 import type { Sprint } from "@/store/features/sprint/sprintSlice";
@@ -9,15 +9,14 @@ import convertStringToDate from "@/utils/convertStringToDate";
 import routePaths from "@/utils/routePaths";
 
 export const useEventsLogic = (
+  selectedDate: Date,
   sprintsData?: Sprint[],
   currentSprintNumber?: number | null,
   meetingsData?: EventList[],
   voyageNumber?: number | null,
   teamId?: string,
 ) => {
-  const { currentDate, timezone } = useUser();
-  const userDate = currentDate ?? new Date();
-  const [selectDate, setSelectDate] = useState(userDate);
+  const { timezone } = useUser();
   const [isHoveredDate, setIsHoveredDate] = useState<Date | null>(null);
 
   const voyageStartDate = sprintsData?.find(
@@ -35,51 +34,22 @@ export const useEventsLogic = (
     (sprint) => Number(sprint.number) === currentSprintNumber,
   )?.endDate;
 
-  const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
+  const isSelectedDate = (date: Date) => isSameDay(selectedDate, date);
 
-  const isSelectedDate = (date: Date) => isSameDay(selectDate, date);
-
-  const generateClassString = (date: Date, currentMonth: boolean) => {
-    let classes =
-      "h-[50px] w-[48px] grid place-content-center transition-all cursor-pointer select-none";
-
-    const isWithinSprintRange =
-      currentSprintStartDate &&
-      currentSprintEndDate &&
-      (isSameDay(
-        date,
-        startOfDay(convertStringToDate(currentSprintStartDate, timezone)),
-      ) ||
-        isAfter(
-          date,
-          startOfDay(convertStringToDate(currentSprintStartDate, timezone)),
-        )) &&
-      isBefore(
-        date,
-        endOfDay(convertStringToDate(currentSprintEndDate, timezone)),
-      );
-
-    if (!currentMonth) {
-      classes += " text-neutral-content";
+  const isWithinSprintRange = (date: Date) => {
+    if (currentSprintStartDate && currentSprintEndDate) {
+      return isWithinInterval(date, {
+        start: convertStringToDate(currentSprintStartDate, timezone),
+        end: convertStringToDate(currentSprintEndDate, timezone),
+      });
     }
-
-    if (isSelectedDate(date)) {
-      classes += " bg-primary text-base-200";
-    } else {
-      classes += " hover:bg-base-100";
-      if (isWithinSprintRange) {
-        classes += " bg-primary-content";
-      }
-    }
-
-    return classes;
   };
 
   let selectedSprint = null;
   for (const sprint of sprintsData!) {
     const startDate = new Date(sprint.startDate);
     const endDate = new Date(sprint.endDate);
-    if (selectDate >= startDate && selectDate <= endDate) {
+    if (selectedDate >= startDate && selectedDate <= endDate) {
       selectedSprint = sprint.number;
       break;
     }
@@ -147,33 +117,32 @@ export const useEventsLogic = (
     }
   };
 
-  const onDotClick = (date: Date) => {
-    if (setSelectDate && date) {
-      setSelectDate(date);
-    }
-  };
+  // const onDotClick = (date: Date) => {
+  //   if (setSelectDate && date) {
+  //     setSelectDate(date);
+  //   }
+  // };
 
   const getDayLabel = () => {
     if (
       voyageStartDate &&
-      isSameDay(convertStringToDate(voyageStartDate, timezone), selectDate)
+      isSameDay(convertStringToDate(voyageStartDate, timezone), selectedDate)
     )
       return `Start of Voyage ${voyageNumber}`;
     if (
       voyageEndDate &&
-      isSameDay(convertStringToDate(voyageEndDate, timezone), selectDate)
+      isSameDay(convertStringToDate(voyageEndDate, timezone), selectedDate)
     )
       return `End of Voyage ${voyageNumber}`;
   };
 
   return {
-    cn,
-    generateClassString,
+    isWithinSprintRange,
     showDotConditions,
     showRocketIcon,
     getCalendarElementColor,
     setIsHoveredDate,
-    onDotClick,
+    // onDotClick,
     getDayLabel,
     selectedSprint,
   };
