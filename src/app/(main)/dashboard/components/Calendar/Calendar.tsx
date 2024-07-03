@@ -1,10 +1,12 @@
 "use client";
 
-import { format, isSameDay, getUnixTime } from "date-fns";
 import React from "react";
+import { format, isSameDay, getUnixTime, getMonth, getYear } from "date-fns";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { RocketLaunchIcon } from "@heroicons/react/24/solid";
+
 import { useCalendarLogic } from "./Calendar.logic";
+import { useEventsLogic } from "./Events.logic";
 import Cell from "./components/Cell";
 import SprintItem from "./components/SprintItem";
 import Dot from "./components/Dot";
@@ -28,19 +30,19 @@ export default function Calendar({
   teamId,
 }: CalendarProps) {
   const {
-    cn,
     generateDate,
-    generateClassString,
-    days,
+    weekdays,
+    months,
     today,
-    setToday,
-    selectDate,
-    setSelectDate,
-    userDate,
-    onArrowClick,
-    currentMonth,
-    currentYear,
+    date,
+    setDate,
     selectedDate,
+    setSelectedDate,
+    onArrowClick,
+  } = useCalendarLogic();
+  const {
+    cn,
+    generateClassString,
     showDotConditions,
     showRocketIcon,
     getCalendarElementColor,
@@ -48,7 +50,7 @@ export default function Calendar({
     onDotClick,
     getDayLabel,
     selectedSprint,
-  } = useCalendarLogic(
+  } = useEventsLogic(
     sprintsData,
     currentSprintNumber,
     meetingsData,
@@ -68,7 +70,7 @@ export default function Calendar({
               }}
             />
             <h1 className="select-none text-2xl font-semibold">
-              {currentMonth} {currentYear}
+              {months[getMonth(today)]} {getYear(date)}
             </h1>
             <ArrowRightIcon
               className="absolute right-[14px] h-5 w-5 cursor-pointer transition-all hover:scale-105 max-[1200px]:right-12"
@@ -79,18 +81,18 @@ export default function Calendar({
           </div>
         </div>
         <div className="grid grid-cols-7 font-semibold">
-          {days.map((day) => (
+          {weekdays.map((weekday) => (
             <h1
-              key={day}
+              key={weekday}
               className="grid h-14 w-14 select-none place-content-center text-center text-sm text-base-300"
             >
-              {day}
+              {weekday}
             </h1>
           ))}
         </div>
 
         <div className="grid max-w-[352px] grid-cols-7 border border-base-100">
-          {generateDate(today.getMonth(), today.getFullYear()).map(
+          {generateDate(getMonth(date), getYear(date)).map(
             ({ date, currentMonth, today }) => (
               <div
                 key={getUnixTime(date)}
@@ -105,7 +107,7 @@ export default function Calendar({
                   generateClassString={() =>
                     generateClassString(date, currentMonth)
                   }
-                  setSelectDate={setSelectDate}
+                  setSelectDate={setSelectedDate}
                 >
                   {showDotConditions(date).map((condition) =>
                     condition.check ? (
@@ -119,7 +121,7 @@ export default function Calendar({
                   {showRocketIcon(date) ? (
                     <div
                       onClick={() => {
-                        setSelectDate(date);
+                        setSelectedDate(date);
                       }}
                     >
                       <RocketLaunchIcon
@@ -139,7 +141,9 @@ export default function Calendar({
       </div>
       <div className="flex h-full w-full flex-col justify-between p-6">
         <div>
-          <h1 className="pb-3 text-lg font-semibold">{selectedDate}</h1>
+          <h1 className="pb-3 text-lg font-semibold">
+            {format(selectedDate, "EEEE, MMMM do")}
+          </h1>
           <div className="max-[1500px]:w-[90px] max-[1470px]:w-full">
             {getDayLabel() ? (
               <p className="w-full rounded-lg bg-primary-content p-3 text-base font-medium">
@@ -157,7 +161,7 @@ export default function Calendar({
             ) : null}
             {meetingsData?.map((event) => {
               const eventDate = new Date(event.date);
-              const isSelectedDate = isSameDay(selectDate, eventDate);
+              const isSelectedDate = isSameDay(selectedDate, eventDate);
 
               return isSelectedDate ? (
                 <div key={event.title}>
@@ -169,7 +173,7 @@ export default function Calendar({
                 </div>
               ) : null;
             })}
-            {showDotConditions(selectDate).map((condition) =>
+            {showDotConditions(selectedDate).map((condition) =>
               condition.check && condition.label ? (
                 <div key={condition.id}>
                   <SprintItem
@@ -185,11 +189,11 @@ export default function Calendar({
         </div>
         <Button
           className={`mt-4 h-[27px] self-end rounded p-1 text-base font-medium hover:bg-neutral ${
-            isSameDay(selectDate, userDate) ? "bg-primary" : "bg-neutral-focus"
+            isSameDay(selectedDate, today) ? "bg-primary" : "bg-neutral-focus"
           }`}
           onClick={() => {
-            setToday(userDate);
-            setSelectDate(userDate);
+            setDate(today);
+            setSelectedDate(today);
           }}
         >
           Today

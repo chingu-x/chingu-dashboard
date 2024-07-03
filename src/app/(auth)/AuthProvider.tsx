@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { formatInTimeZone } from "date-fns-tz";
 import { clientSignIn, clientSignOut } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { type User, getUserState } from "@/store/features/user/userSlice";
@@ -18,7 +19,16 @@ export default function AuthProvider({ user, error }: AuthProviderProps) {
     if (user) {
       dispatch(clientSignIn());
       // Add the currentDate field to the user object
-      const userWithDate = { ...user, currentDate: new Date() };
+      const currentDateInUserTimezone = formatInTimeZone(
+        new Date(),
+        user.timezone,
+        "yyyy-MM-dd HH:mm:ss",
+      );
+
+      const userWithDate = {
+        ...user,
+        currentDate: new Date(currentDateInUserTimezone),
+      };
       // Dispatch the getUserState action with the user object
       dispatch(getUserState(userWithDate));
     }
