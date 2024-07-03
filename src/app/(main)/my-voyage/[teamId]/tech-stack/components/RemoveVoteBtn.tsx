@@ -31,7 +31,7 @@ export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
       size="xs"
       className="justify-self-end rounded-3xl font-semibold"
       onClick={handleClick}
-      isDisabled={removeVoteLoading}
+      disabled={removeVoteLoading}
     >
       Remove Vote
       {removeVoteLoading && <Spinner />}

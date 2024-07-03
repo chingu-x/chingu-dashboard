@@ -1,13 +1,19 @@
+import { useState } from "react";
 import Button from "@/components/Button";
 import useServerAction from "@/hooks/useServerAction";
 import { addTechItemVote } from "../techStackService";
 import Spinner from "@/components/Spinner";
+import ErrorComponent from "@/components/Error";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface AddVoteBtnProps {
   techItemId: number;
 }
 
 export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
+  const dispatch = useAppDispatch();
+
   const {
     runAction: addVoteAction,
     isLoading: addVoteLoading,
@@ -20,8 +26,9 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
     });
 
     if (error) {
-      //TODO add error component dispatch.
-      console.log(error);
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
     }
     setAddVoteLoading(false);
   };
@@ -33,7 +40,7 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
         size="xs"
         className="rounded-3xl font-semibold"
         onClick={handleClick}
-        isDisabled={addVoteLoading}
+        disabled={addVoteLoading}
       >
         Add Vote
         {addVoteLoading && <Spinner />}

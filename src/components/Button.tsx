@@ -82,15 +82,12 @@ const button = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof button> {
-  isDisabled?: boolean;
-}
+    VariantProps<typeof button> {}
 
 export default function Button({
   className,
   variant,
   size,
-  isDisabled = false,
   children,
   ...props
 }: ButtonProps) {
@@ -99,7 +96,6 @@ export default function Button({
       type="button"
       aria-label={props["aria-label"]}
       className={cn(button({ variant, size, className }))}
-      disabled={isDisabled}
       {...props}
     >
       {children}
