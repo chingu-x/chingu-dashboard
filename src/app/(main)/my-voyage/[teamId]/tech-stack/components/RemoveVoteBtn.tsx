@@ -1,13 +1,16 @@
+import { removeTechItemVote } from "@/myVoyage/tech-stack/techStackService";
 import Button from "@/components/Button";
 import useServerAction from "@/hooks/useServerAction";
-import { removeTechItemVote } from "../techStackService";
 import Spinner from "@/components/Spinner";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface RemoveVoteBtnProps {
   techItemId: number;
 }
 
 export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
+  const dispatch = useAppDispatch();
   const {
     runAction: removeVoteAction,
     isLoading: removeVoteLoading,
@@ -15,12 +18,13 @@ export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
   } = useServerAction(removeTechItemVote);
 
   const handleClick = async () => {
-    const [res, error] = await removeVoteAction({
+    const [, error] = await removeVoteAction({
       techItemId,
     });
     if (error) {
-      //TODO: add error handling dispatch new component.
-      console.log(error);
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
     }
     setRemoveVoteLoading(false);
   };

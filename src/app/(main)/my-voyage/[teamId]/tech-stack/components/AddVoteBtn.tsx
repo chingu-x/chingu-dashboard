@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { addTechItemVote } from "@/myVoyage/tech-stack/techStackService";
 import Button from "@/components/Button";
 import useServerAction from "@/hooks/useServerAction";
-import { addTechItemVote } from "../techStackService";
 import Spinner from "@/components/Spinner";
-import ErrorComponent from "@/components/Error";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
@@ -13,7 +11,6 @@ interface AddVoteBtnProps {
 
 export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
   const dispatch = useAppDispatch();
-
   const {
     runAction: addVoteAction,
     isLoading: addVoteLoading,
@@ -21,10 +18,10 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
   } = useServerAction(addTechItemVote);
 
   const handleClick = async () => {
-    const [res, error] = await addVoteAction({
+    const [, error] = await addVoteAction({
       techItemId,
     });
-
+    
     if (error) {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
