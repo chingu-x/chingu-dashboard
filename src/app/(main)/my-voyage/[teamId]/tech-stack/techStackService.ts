@@ -7,42 +7,48 @@ import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { type TechStackItem } from "@/store/features/techStack/techStackSlice";
 
-interface AddTechItemProps {
-  teamId: number;
+interface BaseTechItem {
   techName: string;
-  techCategoryId: number;
+}
+
+interface TeamProps {
+  teamId: number;
+}
+
+interface VoyageProps {
   voyageTeamMemberId: number;
 }
+
+interface TechCategoryProps {
+  techCategoryId: number;
+}
+
+interface TechItemIdProps {
+  techItemId: number;
+}
+
+interface AddTechItemProps
+  extends BaseTechItem,
+    TeamProps,
+    TechCategoryProps,
+    VoyageProps {}
 
 type AddTechItemBody = Omit<AddTechItemProps, "teamId">;
 
-interface AddTechItemResponse {
-  teamTechStackItemVotedId: number;
-  teamTechId: number;
-  teamMemberId: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
+interface AddTechItemResponse extends TechItemVoteResponse {}
 
-interface EditTechItemProps {
-  techItemId: number;
-  techName: string;
-}
+interface EditTechItemProps extends BaseTechItem, TechItemIdProps {}
 
 type EditTechItemBody = Omit<EditTechItemProps, "techItemId">;
 
-interface EditTechItemResponse extends TechStackItem {
-  voyageTeamMemberId: number;
+interface EditTechItemResponse extends TechStackItem, VoyageProps {
   voyageTeamId: number;
 }
 
-export interface DeleteTechItemProps {
-  techItemId: number;
-}
+export interface DeleteTechItemProps extends TechItemIdProps {}
 
-interface AddTechItemVoteProps {
-  techItemId: number;
-}
+interface AddTechItemVoteProps extends TechItemIdProps {}
+
 interface TechItemVoteResponse {
   teamTechStackItemVotedId: number;
   teamTechId: number;
@@ -50,9 +56,8 @@ interface TechItemVoteResponse {
   createdAt: Date;
   updatedAt: Date;
 }
-interface RemoveTechItemVoteProps {
-  techItemId: number;
-}
+
+interface RemoveTechItemVoteProps extends TechItemIdProps {}
 
 export async function addTechItem({
   teamId,
@@ -116,9 +121,6 @@ export async function deleteTechItem({
   return [res, error];
 }
 
-//Voting
-// add vote endpoint /api/v1/voyages/techs/{teamTechItemId}/vote
-//remove vote endpoint /api/v1/voyages/techs/{teamTechItemId}/vote
 export async function addTechItemVote({
   techItemId,
 }: AddTechItemVoteProps): Promise<AsyncActionResponse<TechItemVoteResponse>> {
