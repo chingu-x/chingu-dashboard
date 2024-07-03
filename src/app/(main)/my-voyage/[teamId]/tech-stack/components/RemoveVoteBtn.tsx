@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import useServerAction from "@/hooks/useServerAction";
 import { removeTechItemVote } from "../techStackService";
+import Spinner from "@/components/Spinner";
 
 interface RemoveVoteBtnProps {
   techItemId: number;
@@ -14,7 +15,6 @@ export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
   } = useServerAction(removeTechItemVote);
 
   const handleClick = async () => {
-    console.log(techItemId);
     const [res, error] = await removeVoteAction({
       techItemId,
     });
@@ -31,8 +31,10 @@ export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
       size="xs"
       className="justify-self-end rounded-3xl font-semibold"
       onClick={handleClick}
+      isDisabled={removeVoteLoading}
     >
       Remove Vote
+      {removeVoteLoading && <Spinner />}
     </Button>
   );
 }

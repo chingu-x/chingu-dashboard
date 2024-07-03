@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import useServerAction from "@/hooks/useServerAction";
 import { addTechItemVote } from "../techStackService";
+import Spinner from "@/components/Spinner";
 
 interface AddVoteBtnProps {
   techItemId: number;
@@ -22,7 +23,6 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
       //TODO add error component dispatch.
       console.log(error);
     }
-
     setAddVoteLoading(false);
   };
 
@@ -33,8 +33,10 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
         size="xs"
         className="rounded-3xl font-semibold"
         onClick={handleClick}
+        isDisabled={addVoteLoading}
       >
         Add Vote
+        {addVoteLoading && <Spinner />}
       </Button>
     </div>
   );
