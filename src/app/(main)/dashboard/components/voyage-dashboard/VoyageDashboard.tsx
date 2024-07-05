@@ -72,8 +72,10 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   }
 
   const featureList = features
-    .map((category) => category.features.map((feature) => feature.description))
-    .flat();
+    .filter((item) => item.categoryName === "must have")
+    .flatMap((category) =>
+      category.features.map((feature) => feature.description),
+    );
 
   const resourceList = projectResources.map((resource) => ({
     id: resource.id,
@@ -131,9 +133,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             link={routePaths.ideationPage(teamId ?? "")}
             headerTitle="Ideation"
             buttonTitle="Go to Ideation"
-            description="Share your ideas on what the team Voyage should be. Describe your
-            vision to capture what it does and the benefit it will bring to
-            users."
+            description="Share your ideas on what the team Voyage should be. Describe your vision and finalize your choice to capture what the benefit it will bring to users."
           >
             {projectIdeas.length > 0 ? (
               <IdeationStateContent contentObject={projectIdeas[0]} />
@@ -146,7 +146,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
                 link={routePaths.featuresPage(teamId ?? "")}
                 headerTitle="Features"
                 buttonTitle="Go to Features"
-                description="Brainstorm and prioritize the features that will be included in the scope of your project. "
+                description="Brainstorm and prioritize the features that will be included in the scope of your project."
               >
                 {featureList ? (
                   <FeaturesStateContent contentObject={featureList} />
@@ -155,11 +155,11 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
             </div>
             <div className="flex w-full grow">
               <DashboardWidget
-                title="Choose your tech stack "
+                title="Choose your tech stack"
                 link={routePaths.techStackPage(teamId ?? "")}
                 headerTitle="Tech Stack"
                 buttonTitle="Go to Tech Stack"
-                description="Choose the programming languages, frameworks, and tools that will serve as the foundation of your project."
+                description="The final choices for the programming languages, frameworks, and tools that will serve as the foundation of your project will appear here."
               >
                 {techStackList.some((item) => item.value) ? (
                   <TechStackStateContent contentObject={techStackList} />
