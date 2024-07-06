@@ -9,7 +9,7 @@ type EventItemProps = {
   useTargetBlank?: boolean;
   isDisabled?: boolean;
 };
-function SprintItem({
+export default function EventItem({
   title,
   link,
   time,
@@ -55,5 +55,3 @@ function SprintItem({
     </p>
   );
 }
-
-export default SprintItem;
