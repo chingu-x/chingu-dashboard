@@ -6,7 +6,7 @@ import IdeationStateContent from "./IdeationStateContent";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
-import { type EventList, getDashboardData } from "./getDashboardData";
+import { type MeetingEvent, getDashboardData } from "./getDashboardData";
 import {
   CHECKIN_STATUS,
   getFeaturesData,
@@ -36,7 +36,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
 
   let currentSprintNumber: number | null = null;
   let sprintsData: Sprint[] = [];
-  let meetingsData: EventList[] = [];
+  let meetingsData: MeetingEvent[] = [];
   let voyageNumber: number | null = null;
   let voyageData: Voyage = {} as Voyage;
   let errorMessage: string | undefined;
