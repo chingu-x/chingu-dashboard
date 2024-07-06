@@ -10,7 +10,7 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 export default function VoyageSubmittedMessage() {
   return (
-    <div className="grid w-full grid-rows-2 gap-x-10 px-8 pt-[96px] lg:grid-cols-[1fr_300px] xl:px-[80px]">
+    <div className="grid w-full grid-rows-2 gap-x-10 px-8 pt-[96px] lg:grid-cols-[1fr_300px] lg:grid-rows-1 xl:px-[80px]">
       <div className="order-2 flex max-w-[650px] flex-col gap-y-4 py-10 text-base-300 lg:order-1">
         <h3 className="text-[30px] font-bold">Congratulations!</h3>
         <p className="text-lg font-medium">
