@@ -1,23 +1,26 @@
 import { getDate } from "date-fns";
 import { RocketLaunchIcon } from "@heroicons/react/24/solid";
 import { cn } from "@/lib/utils";
+import { type Event } from "@/dashboard/components/Calendar/types/types";
 
 type CellProps = {
   date: Date;
   isWithinSelectedMonth: boolean;
   isWithinCurrentSprintRange?: boolean;
   isSelectedDate: boolean;
-  showDot: boolean;
-  showRocketIcon: boolean;
+  events: Event[];
 };
+
 function Cell({
   date,
   isWithinSelectedMonth,
   isWithinCurrentSprintRange,
   isSelectedDate,
-  showDot,
-  showRocketIcon,
+  events,
 }: CellProps) {
+  const showDot = events.find((event) => event.check && event.showDot);
+  const showRocket = events.find((event) => event.check && event.showRocket);
+
   return (
     <div
       className={cn(
@@ -37,7 +40,7 @@ function Cell({
           )}
         />
       )}
-      {showRocketIcon && (
+      {showRocket && (
         <RocketLaunchIcon
           className={cn(
             "absolute inset-x-0 top-px m-auto h-4 w-4 text-neutral-content group-hover:text-neutral-content",

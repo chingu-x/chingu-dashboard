@@ -1,12 +1,12 @@
 import React from "react";
-import type { EventList } from "./getDashboardData";
+import type { MeetingEvent } from "./getDashboardData";
 import Calendar from "@/app/(main)/dashboard/components/Calendar/Calendar";
 import type { Sprint } from "@/store/features/sprint/sprintSlice";
 
 interface CalendarWidgetProps {
   sprintsData?: Sprint[];
   currentSprintNumber?: number | null;
-  meetingsData?: EventList[];
+  meetingsData?: MeetingEvent[];
   voyageNumber?: number | null;
   teamId?: string;
 }

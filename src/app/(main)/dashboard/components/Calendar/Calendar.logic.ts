@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   startOfMonth,
@@ -14,7 +14,7 @@ import { useUser } from "@/store/hooks";
 
 export const useCalendarLogic = () => {
   const { currentDate } = useUser();
-  const today = currentDate ?? new Date();
+  const today = useMemo(() => currentDate ?? new Date(), [currentDate]);
 
   const [date, setDate] = useState<Date>(today);
   const [selectedDate, setSelectedDate] = useState<Date>(today);
@@ -27,21 +27,6 @@ export const useCalendarLogic = () => {
   }, [today]);
 
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
   const generateDates = (
     month = getMonth(new Date()),
@@ -93,7 +78,6 @@ export const useCalendarLogic = () => {
   return {
     generateDates,
     weekdays,
-    months,
     today,
     date,
     setDate,

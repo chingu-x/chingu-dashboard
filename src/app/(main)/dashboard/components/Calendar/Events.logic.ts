@@ -1,6 +1,7 @@
-import { isSameDay, isBefore, isWithinInterval } from "date-fns";
+import { isSameDay, isBefore, isWithinInterval, format } from "date-fns";
 
-import type { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
+import { type Event } from "./types/types";
+import type { MeetingEvent } from "@/dashboard/components/voyage-dashboard/getDashboardData";
 import type { Sprint } from "@/store/features/sprint/sprintSlice";
 import { useUser } from "@/store/hooks";
 import convertStringToDate from "@/utils/convertStringToDate";
@@ -10,12 +11,11 @@ export const useEventsLogic = (
   selectedDate: Date,
   sprintsData?: Sprint[],
   currentSprintNumber?: number | null,
-  meetingsData?: EventList[],
+  meetingsData?: MeetingEvent[],
   voyageNumber?: number | null,
   teamId?: string,
 ) => {
-  const { timezone } = useUser();
-  let selectedSprint = null;
+  const { timezone, currentDate } = useUser();
 
   const voyageStartDate = sprintsData?.find(
     (sprint) => Number(sprint.number) === 1,
@@ -41,21 +41,23 @@ export const useEventsLogic = (
     }
   };
 
-  if (sprintsData) {
-    for (const sprint of sprintsData) {
-      const startDate = convertStringToDate(sprint.startDate, timezone);
-      const endDate = convertStringToDate(sprint.endDate, timezone);
-      // console.log("start date", startDate);
-      // console.log("selected date", selectedDate);
+  const getSelectedSprint = () => {
+    if (sprintsData) {
+      for (const sprint of sprintsData) {
+        const startDate = convertStringToDate(sprint.startDate, timezone);
+        const endDate = convertStringToDate(sprint.endDate, timezone);
 
-      if (selectedDate >= startDate && selectedDate <= endDate) {
-        selectedSprint = sprint.number;
-        break;
+        if (
+          (isSameDay(selectedDate, startDate) || selectedDate >= startDate) &&
+          (isSameDay(selectedDate, endDate) || selectedDate <= endDate)
+        ) {
+          return sprint.number;
+        }
       }
     }
-  }
+  };
 
-  const weeklyCheckInLink = () => {
+  const getWeeklyCheckInLink = () => {
     if (teamId && currentSprintNumber) {
       return routePaths.weeklyCheckInPage(
         teamId,
@@ -66,7 +68,7 @@ export const useEventsLogic = (
     }
   };
 
-  const submitVoyageLink = () => {
+  const getSubmitVoyageLink = () => {
     if (teamId && currentSprintNumber) {
       return routePaths.submitVoyagePage(
         teamId,
@@ -77,54 +79,98 @@ export const useEventsLogic = (
     }
   };
 
-  const showDotConditions = (date: Date) => [
-    {
-      id: 1,
-      check: meetingsData?.some((event) => isSameDay(event.date, date)),
-    },
-    {
-      id: 2,
-      check: sprintsData?.some((day) =>
-        isSameDay(convertStringToDate(day.endDate, timezone), date),
-      ),
-      label: "Weekly Check-in Due",
-      link: weeklyCheckInLink(),
-      isDisabled: isBefore(date, new Date()),
-    },
-    {
-      id: 3,
-      check: voyageEndDate
-        ? isSameDay(convertStringToDate(voyageEndDate, timezone), date)
-        : false,
-      label: "Voyage Submission Due",
-      link: submitVoyageLink(),
-    },
-  ];
+  const getMeetingEventData = (meetingsData: MeetingEvent[], date: Date) => {
+    const meeting = meetingsData?.find((event) =>
+      isSameDay(convertStringToDate(event.date, timezone), date),
+    );
 
-  const showRocketIcon = (date: Date) =>
-    (voyageStartDate &&
-      isSameDay(convertStringToDate(voyageStartDate, timezone), date)) ||
-    (voyageEndDate &&
-      isSameDay(convertStringToDate(voyageEndDate, timezone), date));
+    if (meeting)
+      return {
+        ...meeting,
+        date: format(convertStringToDate(meeting.date, timezone), "h:mm a"),
+      };
+    return undefined;
+  };
 
-  const getDayLabel = () => {
+  const getEvents = (date: Date): Event[] => {
+    const events = [];
+    const selectedSprint = getSelectedSprint();
+    const meeting = meetingsData && getMeetingEventData(meetingsData, date);
+    const weeklyCheckinDue = sprintsData?.some((sprint) =>
+      isSameDay(convertStringToDate(sprint.endDate, timezone), date),
+    );
+    const voyageSubmissionDue =
+      voyageEndDate &&
+      isSameDay(convertStringToDate(voyageEndDate, timezone), date);
+
     if (
       voyageStartDate &&
-      isSameDay(convertStringToDate(voyageStartDate, timezone), selectedDate)
-    )
-      return `Start of Voyage ${voyageNumber}`;
+      isSameDay(convertStringToDate(voyageStartDate, timezone), date)
+    ) {
+      events.push({
+        id: 1,
+        check: true,
+        label: `Start of Voyage ${voyageNumber}`,
+        showRocket: true,
+      });
+    }
+
     if (
       voyageEndDate &&
-      isSameDay(convertStringToDate(voyageEndDate, timezone), selectedDate)
-    )
-      return `End of Voyage ${voyageNumber}`;
+      isSameDay(convertStringToDate(voyageEndDate, timezone), date)
+    ) {
+      events.push({
+        id: 2,
+        check: true,
+        label: `End of Voyage ${voyageNumber}`,
+        showRocket: true,
+      });
+    }
+
+    if (selectedSprint) {
+      events.push({
+        id: 3,
+        check: true,
+        label: `Sprint Week ${selectedSprint}`,
+      });
+    }
+
+    if (meeting) {
+      events.push({
+        id: 4,
+        check: true,
+        meeting,
+        showDot: true,
+      });
+    }
+
+    if (weeklyCheckinDue) {
+      events.push({
+        id: 5,
+        check: true,
+        label: "Weekly Check-in Due",
+        link: getWeeklyCheckInLink(),
+        isDisabled: isBefore(date, currentDate ?? new Date()),
+        showDot: true,
+      });
+    }
+
+    if (voyageSubmissionDue) {
+      events.push({
+        id: 6,
+        check: true,
+        label: "Voyage Submission Due",
+        link: getSubmitVoyageLink(),
+        isDisabled: isBefore(date, currentDate ?? new Date()),
+        showDot: true,
+      });
+    }
+
+    return events;
   };
 
   return {
     isWithinSprintRange,
-    showDotConditions,
-    showRocketIcon,
-    getDayLabel,
-    selectedSprint,
+    getEvents,
   };
 };

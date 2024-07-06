@@ -1,22 +1,21 @@
 "use client";
 
-import React from "react";
 import { format, isSameDay, getUnixTime, getMonth, getYear } from "date-fns";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 import { useCalendarLogic } from "./Calendar.logic";
 import { useEventsLogic } from "./Events.logic";
 import Cell from "./components/Cell";
-import SprintItem from "./components/SprintItem";
+import EventItem from "./components/EventItem";
 import Legend from "./components/Legend";
-import type { EventList } from "@/app/(main)/dashboard/components/voyage-dashboard/getDashboardData";
+import type { MeetingEvent } from "@/dashboard/components/voyage-dashboard/getDashboardData";
 import Button from "@/components/Button";
 import type { Sprint } from "@/store/features/sprint/sprintSlice";
 
 interface CalendarProps {
   currentSprintNumber?: number | null;
   sprintsData?: Sprint[];
-  meetingsData?: EventList[];
+  meetingsData?: MeetingEvent[];
   voyageNumber?: number | null;
   teamId?: string;
 }
@@ -30,7 +29,6 @@ export default function Calendar({
   const {
     generateDates,
     weekdays,
-    months,
     today,
     date,
     setDate,
@@ -38,13 +36,7 @@ export default function Calendar({
     setSelectedDate,
     onArrowClick,
   } = useCalendarLogic();
-  const {
-    isWithinSprintRange,
-    showDotConditions,
-    showRocketIcon,
-    getDayLabel,
-    selectedSprint,
-  } = useEventsLogic(
+  const { isWithinSprintRange, getEvents } = useEventsLogic(
     selectedDate,
     sprintsData,
     currentSprintNumber,
@@ -67,7 +59,7 @@ export default function Calendar({
               }}
             />
             <h1 className="select-none text-2xl font-semibold">
-              {months[getMonth(date)]} {getYear(date)}
+              {format(date, "MMMM y")}
             </h1>
             <ArrowRightIcon
               aria-label="next month"
@@ -105,18 +97,12 @@ export default function Calendar({
                   isWithinSelectedMonth={isWithinSelectedMonth}
                   isWithinCurrentSprintRange={isWithinSprintRange(date)}
                   isSelectedDate={isSameDay(selectedDate, date)}
-                  showDot={
-                    !!showDotConditions(date).find(
-                      (condition) => condition.check,
-                    )
-                  }
-                  showRocketIcon={!!showRocketIcon(date)}
+                  events={getEvents(date)}
                 />
               </button>
             ),
           )}
         </div>
-
         <Legend />
       </div>
 
@@ -127,46 +113,20 @@ export default function Calendar({
             {format(selectedDate, "EEEE, MMMM do")}
           </h1>
           <div className="max-[1500px]:w-[90px] max-[1470px]:w-full">
-            {getDayLabel() && (
-              <p className="w-full rounded-lg bg-primary-content p-3 text-base font-medium">
-                {getDayLabel()}
-              </p>
-            )}
-            {selectedDate && selectedSprint ? (
-              <p
-                className={`w-full rounded-lg bg-primary-content p-3 text-base font-medium ${
-                  getDayLabel() ? "mt-4" : ""
-                }`}
-              >
-                Sprint Week {selectedSprint}
-              </p>
-            ) : null}
-            {meetingsData?.map((event) => {
-              const eventDate = new Date(event.date);
-              const isSelectedDate = isSameDay(selectedDate, eventDate);
-
-              return isSelectedDate ? (
-                <div key={event.title}>
-                  <SprintItem
-                    title={event.title}
-                    link={event.link ?? ""}
-                    time={format(eventDate, "h:mm a")}
+            {getEvents(selectedDate).map((event) => {
+              if (event.check) {
+                return (
+                  <EventItem
+                    key={event.id}
+                    title={event.meeting?.title ?? event.label}
+                    link={event.meeting?.link ?? event.link}
+                    time={event.meeting?.date}
+                    useTargetBlank={!!event.meeting}
+                    isDisabled={event?.isDisabled}
                   />
-                </div>
-              ) : null;
+                );
+              }
             })}
-            {showDotConditions(selectedDate).map((condition) =>
-              condition.check && condition.label ? (
-                <div key={condition.id}>
-                  <SprintItem
-                    title={condition.label}
-                    link={condition?.link}
-                    useTargetBlank={false}
-                    isDisabled={condition?.isDisabled}
-                  />
-                </div>
-              ) : null,
-            )}
           </div>
         </div>
         <Button

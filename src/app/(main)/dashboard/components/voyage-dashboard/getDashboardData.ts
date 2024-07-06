@@ -1,26 +1,24 @@
-import { format } from "date-fns";
-import { fetchSprints } from "@/app/(main)/my-voyage/[teamId]/sprints/components/RedirectToCurrentSprintWrapper";
+import { fetchSprints } from "@/myVoyage/sprints/components/RedirectToCurrentSprintWrapper";
+import { fetchMeeting } from "@/myVoyage/sprints/components/SprintWrapper";
+import type { User } from "@/store/features/user/userSlice";
 import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
+import type { AppError } from "@/types/types";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import type { User } from "@/store/features/user/userSlice";
-import { fetchMeeting } from "@/app/(main)/my-voyage/[teamId]/sprints/components/SprintWrapper";
-import type { AppError } from "@/types/types";
-import convertStringToDate from "@/utils/convertStringToDate";
 import { ErrorType } from "@/utils/error";
 
 interface GetDashboardDataResponse {
   currentSprintNumber: number | null;
   sprintsData: Sprint[];
   user: User | null;
-  meetingsData: EventList[];
+  meetingsData: MeetingEvent[];
   voyageNumber: number | null;
   voyageData: Voyage;
   errorMessage?: string;
   errorType?: ErrorType;
 }
 
-export type EventList = {
+export type MeetingEvent = {
   title: string;
   date: string;
   link: string;
@@ -107,11 +105,9 @@ export const getDashboardData = async (
   fetchMeetingsResults.forEach(([res, error]) => {
     if (res) {
       const { title, dateTime, meetingLink, sprint } = res;
-      const parsedDate = convertStringToDate(dateTime, user?.timezone ?? "");
-      const formattedDate = format(parsedDate, "yyyy-MM-dd h:mm a");
       meetingsData.push({
         title,
-        date: formattedDate,
+        date: dateTime,
         link: meetingLink,
         sprint: sprint.number,
       });
