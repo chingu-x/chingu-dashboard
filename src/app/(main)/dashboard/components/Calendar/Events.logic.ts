@@ -1,4 +1,4 @@
-import { isSameDay, isBefore, isWithinInterval, format } from "date-fns";
+import { isSameDay, isBefore, format } from "date-fns";
 
 import { type Event } from "./types/types";
 import type { MeetingEvent } from "@/dashboard/components/voyage-dashboard/getDashboardData";
@@ -32,12 +32,22 @@ export const useEventsLogic = (
     (sprint) => Number(sprint.number) === currentSprintNumber,
   )?.endDate;
 
+  const isWithinTwoDates = (date: Date, start: Date, end: Date) =>
+    (isSameDay(date, start) || date >= start) &&
+    (isSameDay(date, end) || date <= end);
+
   const isWithinSprintRange = (date: Date) => {
     if (currentSprintStartDate && currentSprintEndDate) {
-      return isWithinInterval(date, {
-        start: convertStringToDate(currentSprintStartDate, timezone),
-        end: convertStringToDate(currentSprintEndDate, timezone),
-      });
+      if (
+        isWithinTwoDates(
+          date,
+          convertStringToDate(currentSprintStartDate, timezone),
+          convertStringToDate(currentSprintEndDate, timezone),
+        )
+      ) {
+        return true;
+      }
+      return false;
     }
   };
 
@@ -47,10 +57,7 @@ export const useEventsLogic = (
         const startDate = convertStringToDate(sprint.startDate, timezone);
         const endDate = convertStringToDate(sprint.endDate, timezone);
 
-        if (
-          (isSameDay(selectedDate, startDate) || selectedDate >= startDate) &&
-          (isSameDay(selectedDate, endDate) || selectedDate <= endDate)
-        ) {
+        if (isWithinTwoDates(selectedDate, startDate, endDate)) {
           return sprint.number;
         }
       }
