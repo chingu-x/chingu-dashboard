@@ -113,20 +113,16 @@ export default function Calendar({
             {format(selectedDate, "EEEE, MMMM do")}
           </h1>
           <div className="max-[1500px]:w-[90px] max-[1470px]:w-full">
-            {getEvents(selectedDate).map((event) => {
-              if (event.check) {
-                return (
-                  <EventItem
-                    key={event.id}
-                    title={event.meeting?.title ?? event.label}
-                    link={event.meeting?.link ?? event.link}
-                    time={event.meeting?.date}
-                    useTargetBlank={!!event.meeting}
-                    isDisabled={event?.isDisabled}
-                  />
-                );
-              }
-            })}
+            {getEvents(selectedDate).map((event) => (
+              <EventItem
+                key={event.id}
+                title={event.meeting?.title ?? event.label}
+                link={event.meeting?.link ?? event.link}
+                time={event.meeting?.date}
+                useTargetBlank={!!event.meeting}
+                isDisabled={event?.isDisabled}
+              />
+            ))}
           </div>
         </div>
         <Button
