@@ -61,7 +61,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
     voyageData = data.voyageData;
     features = data.features;
     projectIdeas = data.projectIdeas.filter((idea) => idea.isSelected);
-    techStackDatas = data.techStackData;
+    techStackDatas = data.techStackData.filter((tech) => tech.isSelected);
     projectResources = data.projectResources;
     errorMessage = data.errorMessage;
     errorType = data.errorType;
@@ -148,7 +148,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
                 buttonTitle="Go to Features"
                 description="Brainstorm and prioritize the features that will be included in the scope of your project."
               >
-                {featureList ? (
+                {featureList.length > 0 ? (
                   <FeaturesStateContent contentObject={featureList} />
                 ) : null}
               </DashboardWidget>
