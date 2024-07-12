@@ -228,8 +228,6 @@ export const getDashboardData = async (
     })
     .filter(Boolean) as EventList[];
 
-  console.log(fetchMeetingsResults);
-
   return {
     currentSprintNumber,
     sprintsData: sprintsResult.sprintsData,
