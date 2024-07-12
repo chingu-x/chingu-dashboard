@@ -197,17 +197,19 @@ export const getDashboardData = async (
       getCurrentSprint(sprintsResult.sprintsData)?.number ?? null;
   }
 
-  const fetchMeetingsPromises = sprintsResult.sprintsData.map((sprint) =>
-    fetchMeeting({
-      sprintNumber: sprint.number,
-      meetingId: sprint.teamMeetings[0]?.id,
-    }),
-  );
+  const fetchMeetingsPromises = sprintsResult.sprintsData
+    .filter((sprint) => sprint.teamMeetings.length)
+    .map((sprint) =>
+      fetchMeeting({
+        sprintNumber: sprint.number,
+        meetingId: sprint.teamMeetings[0]?.id,
+      }),
+    );
 
   const fetchMeetingsResults = await Promise.all(fetchMeetingsPromises);
 
   const meetingsData = fetchMeetingsResults
-    .map(([res]) => {
+    .map(([res, err]) => {
       if (res) {
         const { title, dateTime, meetingLink, sprint } = res;
         const parsedDate = convertStringToDate(dateTime, user?.timezone ?? "");
@@ -218,13 +220,15 @@ export const getDashboardData = async (
           link: meetingLink,
           sprint: sprint.number,
         };
-      } else if (error) {
-        errorMessage = error.message;
+      } else if (err) {
+        errorMessage = err.message;
         errorType = ErrorType.FETCH_MEETING;
       }
       return null;
     })
     .filter(Boolean) as EventList[];
+
+  console.log(fetchMeetingsResults);
 
   return {
     currentSprintNumber,
