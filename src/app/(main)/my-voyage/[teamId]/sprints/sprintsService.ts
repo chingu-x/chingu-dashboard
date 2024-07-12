@@ -472,7 +472,7 @@ export async function submitVoyageProjectForm({
 
   const editSectionAsync = () =>
     POST<SubmitVoyageFormBody, SubmitVoyageFormResponse>(
-      "api/v1/voyages/sprints/submit-project",
+      "api/v1/voyages/submit-project",
       token,
       "default",
       { voyageTeamId, responses },

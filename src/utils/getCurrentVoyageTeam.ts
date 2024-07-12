@@ -19,6 +19,7 @@ export function getCurrentVoyageTeam({
   let err = "";
   let currentTeam = false;
   let voyageTeamMemberId: number = 0;
+  let projectSubmitted: boolean = false;
 
   if (user) {
     currentVoyageTeam = user.voyageTeamMembers.find(
@@ -32,6 +33,7 @@ export function getCurrentVoyageTeam({
 
   if (currentVoyageTeam) {
     voyageTeamMemberId = currentVoyageTeam.id;
+    projectSubmitted = currentVoyageTeam.voyageTeam.projectSubmitted;
   }
 
   if (teamId === currentVoyageTeam?.voyageTeamId) {
@@ -48,5 +50,6 @@ export function getCurrentVoyageTeam({
     currentTeam,
     isStarted,
     voyageTeamMemberId,
+    projectSubmitted,
   };
 }
