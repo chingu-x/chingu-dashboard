@@ -49,34 +49,36 @@ export default function Calendar({
     <div className="flex h-full w-full max-[1200px]:relative max-[1200px]:flex-col max-[1200px]:items-center max-[1200px]:gap-y-4">
       {/* CALENDAR */}
       <div className="flex h-full min-w-[400px] max-w-[400px] flex-col items-center border-base-100 p-6 min-[1200px]:min-w-[600px] min-[1200px]:border-r-2 min-[1200px]:px-28 min-[1470px]:min-w-[400px] min-[1470px]:px-6">
-        <div className="flex items-center w-full">
+        <div className="flex w-full items-center">
           <div className="flex w-full items-center justify-between gap-10 min-[1200px]:relative">
             {/* CALENDAR CONTROLS */}
             <button
+              type="button"
               aria-label="previous month"
-              className="p-3 transition-all rounded-md hover:bg-base-content"
+              className="rounded-md p-3 transition-all hover:bg-base-content"
               onClick={() => {
                 onArrowClick(-1);
               }}
             >
               <ArrowLeftIcon
                 aria-hidden="true"
-                className="w-5 h-5 text-base-300"
+                className="h-5 w-5 text-base-300"
               />
             </button>
-            <h1 className="text-2xl font-semibold select-none">
+            <h1 className="select-none text-2xl font-semibold">
               {format(date, "MMMM y")}
             </h1>
             <button
+              type="button"
               aria-label="next month"
-              className="p-3 transition-all rounded-md hover:bg-base-content"
+              className="rounded-md p-3 transition-all hover:bg-base-content"
               onClick={() => {
                 onArrowClick(1);
               }}
             >
               <ArrowRightIcon
                 aria-hidden="true"
-                className="w-5 h-5 text-base-300"
+                className="h-5 w-5 text-base-300"
               />
             </button>
           </div>
@@ -86,7 +88,7 @@ export default function Calendar({
           {weekdays.map((weekday) => (
             <span
               key={weekday}
-              className="grid text-sm text-center select-none h-14 w-14 place-content-center text-base-300"
+              className="grid h-14 w-14 select-none place-content-center text-center text-sm text-base-300"
             >
               {weekday}
             </span>
@@ -119,7 +121,7 @@ export default function Calendar({
       </div>
 
       {/* LIST OF EVENTS */}
-      <div className="flex flex-col justify-between w-full h-full p-6">
+      <div className="flex h-full w-full flex-col justify-between p-6">
         <div>
           <h1 className="pb-3 text-lg font-semibold">
             {format(selectedDate, "EEEE, MMMM do")}
