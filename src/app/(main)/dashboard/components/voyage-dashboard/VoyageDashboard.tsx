@@ -128,7 +128,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
         <CheckInWidget status={CHECKIN_STATUS} />
         <VoyageSupport />
       </div>
-      <div className="flex flex-col w-full col-span-1 p-4 border-2 grow rounded-2xl border-base-100 bg-base-200">
+      <div className="col-span-1 flex w-full grow flex-col rounded-2xl border-2 border-base-100 bg-base-200 p-4">
         <p className="mb-[23px] text-[25px] font-semibold">
           My Voyage Overview
         </p>
