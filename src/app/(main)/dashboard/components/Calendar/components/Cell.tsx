@@ -1,14 +1,14 @@
 import { getDate } from "date-fns";
 import { RocketLaunchIcon } from "@heroicons/react/24/solid";
 import { cn } from "@/lib/utils";
-import { type Event } from "@/dashboard/components/Calendar/types/types";
+import { type CalendarEvent } from "@/dashboard/components/Calendar/types/types";
 
 type CellProps = {
   date: Date;
   isWithinSelectedMonth: boolean;
   isWithinCurrentSprintRange?: boolean;
   isSelectedDate: boolean;
-  events: Event[];
+  events: CalendarEvent[];
 };
 
 function Cell({

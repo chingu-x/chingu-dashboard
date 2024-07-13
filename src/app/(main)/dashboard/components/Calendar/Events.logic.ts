@@ -1,7 +1,7 @@
 import { isSameDay, isBefore, format } from "date-fns";
 
-import { type Event } from "./types/types";
-import type { MeetingEvent } from "@/dashboard/components/voyage-dashboard/getDashboardData";
+import { type CalendarEvent } from "./types/types";
+import type { Event } from "@/dashboard/components/voyage-dashboard/getDashboardData";
 import type { Sprint } from "@/store/features/sprint/sprintSlice";
 import { useUser } from "@/store/hooks";
 import convertStringToDate from "@/utils/convertStringToDate";
@@ -11,7 +11,7 @@ export const useEventsLogic = (
   selectedDate: Date,
   sprintsData?: Sprint[],
   currentSprintNumber?: number | null,
-  meetingsData?: MeetingEvent[],
+  meetingsData?: Event[],
   voyageNumber?: number | null,
   teamId?: string,
 ) => {
@@ -86,7 +86,7 @@ export const useEventsLogic = (
     }
   };
 
-  const getMeetingEventData = (meetingsData: MeetingEvent[], date: Date) => {
+  const getMeetingEventData = (meetingsData: Event[], date: Date) => {
     const meeting = meetingsData?.find((event) =>
       isSameDay(convertStringToDate(event.date, timezone), date),
     );
@@ -99,7 +99,7 @@ export const useEventsLogic = (
     return undefined;
   };
 
-  const getEvents = (date: Date): Event[] => {
+  const getEvents = (date: Date): CalendarEvent[] => {
     const events = [];
     const selectedSprint = getSelectedSprint();
     const meeting = meetingsData && getMeetingEventData(meetingsData, date);

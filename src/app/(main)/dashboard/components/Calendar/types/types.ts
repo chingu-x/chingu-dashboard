@@ -1,6 +1,6 @@
-import { type MeetingEvent } from "@/dashboard/components/voyage-dashboard/getDashboardData";
+import { type Event } from "@/dashboard/components/voyage-dashboard/getDashboardData";
 
-export interface Event {
+export interface CalendarEvent {
   id: number;
   check: boolean;
   label?: string;
@@ -8,5 +8,5 @@ export interface Event {
   showDot?: boolean;
   link?: string;
   isDisabled?: boolean;
-  meeting?: MeetingEvent;
+  meeting?: Event;
 }

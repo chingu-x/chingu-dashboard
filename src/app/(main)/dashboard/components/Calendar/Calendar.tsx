@@ -8,14 +8,14 @@ import { useEventsLogic } from "./Events.logic";
 import Cell from "./components/Cell";
 import EventItem from "./components/EventItem";
 import Legend from "./components/Legend";
-import type { MeetingEvent } from "@/dashboard/components/voyage-dashboard/getDashboardData";
+import type { Event } from "@/dashboard/components/voyage-dashboard/getDashboardData";
 import Button from "@/components/Button";
 import type { Sprint } from "@/store/features/sprint/sprintSlice";
 
 interface CalendarProps {
   currentSprintNumber?: number | null;
   sprintsData?: Sprint[];
-  meetingsData?: MeetingEvent[];
+  meetingsData?: Event[];
   voyageNumber?: number | null;
   teamId?: string;
 }

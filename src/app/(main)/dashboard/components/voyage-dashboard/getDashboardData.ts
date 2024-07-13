@@ -20,7 +20,7 @@ interface GetDashboardDataResponse {
   currentSprintNumber: number | null;
   sprintsData: Sprint[];
   user: User | null;
-  meetingsData: MeetingEvent[];
+  meetingsData: Event[];
   voyageNumber: number | null;
   voyageData: Voyage;
   features: FeaturesList[];
@@ -31,7 +31,7 @@ interface GetDashboardDataResponse {
   errorType?: ErrorType | undefined;
 }
 
-export type MeetingEvent = {
+export type Event = {
   title: string;
   date: string;
   link: string;
@@ -222,7 +222,7 @@ export const getDashboardData = async (
       }
       return null;
     })
-    .filter(Boolean) as MeetingEvent[];
+    .filter(Boolean) as Event[];
 
   return {
     currentSprintNumber,
