@@ -17,6 +17,7 @@ import {
   getSprintCheckinIsStatus,
   getVoyageProjectStatus,
 } from "@/utils/getFormStatus";
+import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
 
@@ -44,6 +45,16 @@ export default async function EmptySprintWrapper({
   let voyageData: Voyage;
 
   const [user, error] = await getUser();
+
+  const { currentTeam, projectSubmitted } = getCurrentVoyageTeam({
+    teamId,
+    user,
+    error: null,
+  });
+
+  if (currentTeam && projectSubmitted) {
+    redirect(`/my-voyage/${teamId}/sprints/`);
+  }
 
   const { errorResponse, data } = await getCurrentVoyageData({
     user,
