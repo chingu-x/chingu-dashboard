@@ -24,7 +24,7 @@ function Cell({
   return (
     <div
       className={cn(
-        "group relative grid h-[50px] w-[48px] cursor-pointer select-none place-content-center border border-base-100 bg-base-content text-center text-sm text-neutral-content transition-all hover:bg-base-100",
+        "group relative grid h-[50px] w-[48px] select-none place-content-center border border-base-100 bg-base-content text-center text-sm text-neutral-content transition-all hover:bg-base-100",
         isWithinSelectedMonth && "bg-base-200 text-base-300",
         isWithinCurrentSprintRange && "bg-primary-content",
         isSelectedDate && "bg-primary text-base-200 hover:bg-primary",
