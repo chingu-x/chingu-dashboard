@@ -21,7 +21,7 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
     const [, error] = await addVoteAction({
       techItemId,
     });
-    
+
     if (error) {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
@@ -39,8 +39,7 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
         onClick={handleClick}
         disabled={addVoteLoading}
       >
-        Add Vote
-        {addVoteLoading && <Spinner />}
+        {addVoteLoading ? <Spinner /> : "Add Vote"}
       </Button>
     </div>
   );

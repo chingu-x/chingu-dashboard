@@ -37,8 +37,7 @@ export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
       onClick={handleClick}
       disabled={removeVoteLoading}
     >
-      Remove Vote
-      {removeVoteLoading && <Spinner />}
+      {removeVoteLoading ? <Spinner /> : "Remove Vote"}
     </Button>
   );
 }
