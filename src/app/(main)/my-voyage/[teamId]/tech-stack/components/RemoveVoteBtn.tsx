@@ -37,7 +37,13 @@ export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
       onClick={handleClick}
       disabled={removeVoteLoading}
     >
-      {removeVoteLoading ? <Spinner /> : "Remove Vote"}
+      {removeVoteLoading ? (
+        <div className="px-[28px] py-[2px]">
+          <Spinner />
+        </div>
+      ) : (
+        "Remove Vote"
+      )}
     </Button>
   );
 }

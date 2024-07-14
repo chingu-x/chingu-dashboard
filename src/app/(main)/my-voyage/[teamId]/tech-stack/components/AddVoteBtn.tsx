@@ -39,7 +39,13 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
         onClick={handleClick}
         disabled={addVoteLoading}
       >
-        {addVoteLoading ? <Spinner /> : "Add Vote"}
+        {addVoteLoading ? (
+          <div className="px-[28px] py-[2px]">
+            <Spinner />
+          </div>
+        ) : (
+          "Add Vote"
+        )}
       </Button>
     </div>
   );
