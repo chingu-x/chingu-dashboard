@@ -35,17 +35,11 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
       <Button
         variant="primary"
         size="xs"
-        className="rounded-3xl font-semibold"
+        className={`rounded-3xl font-semibold ${addVoteLoading && "w-3/4"}`}
         onClick={handleClick}
         disabled={addVoteLoading}
       >
-        {addVoteLoading ? (
-          <div className="px-[28px] py-[2px]">
-            <Spinner />
-          </div>
-        ) : (
-          "Add Vote"
-        )}
+        {addVoteLoading ? <Spinner /> : "Add Vote"}
       </Button>
     </div>
   );

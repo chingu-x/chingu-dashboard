@@ -33,17 +33,13 @@ export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
     <Button
       variant="error"
       size="xs"
-      className="justify-self-end rounded-3xl font-semibold"
+      className={`justify-self-end rounded-3xl font-semibold ${
+        removeVoteLoading && "w-3/4"
+      }`}
       onClick={handleClick}
       disabled={removeVoteLoading}
     >
-      {removeVoteLoading ? (
-        <div className="px-[28px] py-[2px]">
-          <Spinner />
-        </div>
-      ) : (
-        "Remove Vote"
-      )}
+      {removeVoteLoading ? <Spinner /> : "Remove Vote"}
     </Button>
   );
 }
