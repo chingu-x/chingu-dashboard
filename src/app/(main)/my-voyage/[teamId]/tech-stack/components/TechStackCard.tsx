@@ -280,7 +280,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                     </div>
                     {/**add vote or remove vote buttons*/}
                     {voteIsSubmitted ? (
-                      <div className="relative col-span-2 flex w-[165px] items-center justify-end">
+                      <div className="relative col-span-2 flex w-[180px] items-center justify-end">
                         {element.teamTechStackItemVotes.length < 2 && (
                           <div className="h-1/6 w-1/6">
                             <EllipsisVerticalIcon
@@ -296,10 +296,10 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                             )}
                           </div>
                         )}
-                        <RemoveVoteBtn /* id={element.id} */ />
+                        <RemoveVoteBtn techItemId={element.id} />
                       </div>
                     ) : (
-                      <AddVoteBtn />
+                      <AddVoteBtn techItemId={element.id} />
                     )}
                   </>
                 )}
