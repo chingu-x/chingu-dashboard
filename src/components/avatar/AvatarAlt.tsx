@@ -20,8 +20,9 @@ const avatar = cva(
   },
 );
 
-export interface AvatarProps extends VariantProps<typeof avatar> {
-  className?: string;
+export interface AvatarProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof avatar> {
   avatarUrl?: string;
   firstName?: string;
   lastName?: string;
@@ -33,6 +34,7 @@ export default function Avatar({
   firstName,
   lastName,
   size,
+  ...props
 }: AvatarProps) {
   if (firstName && lastName) {
     const initials = firstName.trimStart()[0] + lastName.trimStart()[0];
@@ -48,7 +50,10 @@ export default function Avatar({
     const backgroundColor = getBackroundColor();
 
     return (
-      <div className={cn(avatar({ size, className }), backgroundColor)}>
+      <div
+        className={cn(avatar({ size, className }), backgroundColor)}
+        {...props}
+      >
         <span>{initials}</span>
       </div>
     );
@@ -56,7 +61,7 @@ export default function Avatar({
 
   if (avatarUrl) {
     return (
-      <div className={cn(avatar({ size, className }))}>
+      <div className={cn(avatar({ size, className }))} {...props}>
         <Image
           alt={
             firstName && lastName ? `${firstName} ${lastName}` : "User's Avatar"
@@ -91,7 +96,7 @@ export default function Avatar({
   // }
 
   return (
-    <div className={cn(avatar({ size, className }))}>
+    <div className={cn(avatar({ size, className }))} {...props}>
       <Image
         alt={
           firstName && lastName ? `${firstName} ${lastName}` : "User's Avatar"
