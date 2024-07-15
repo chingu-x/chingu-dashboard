@@ -16,7 +16,7 @@ import {
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
-import Avatar from "@/components/avatar/Avatar";
+import Avatar from "@/components/avatar/AvatarAlt";
 
 interface VoteCardProps {
   projectIdeaId: number;
@@ -127,7 +127,7 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
 
   return (
     <div className={cn("w-[200px] rounded-lg bg-base-100", className)}>
-      <section className="flex flex-col items-start gap-y-4 p-4">
+      <section className="flex flex-col items-start p-4 gap-y-4">
         <h1 className="text-3xl font-semibold text-base-300">{users.length}</h1>
         <h2 className="text-xl font-semibold text-base-300">{`Vote${
           users.length > 1 ? "s" : ""
@@ -135,10 +135,11 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
         <AvatarGroup>
           {users.map((user) => (
             <Avatar
-              width={24}
-              height={24}
               key={user.id}
-              image={user.votedBy.member.avatar}
+              firstName={user.votedBy.member.firstName}
+              lastName={user.votedBy.member.lastName}
+              avatarUrl={user.votedBy.member.avatar}
+              size="xl"
             />
           ))}
         </AvatarGroup>

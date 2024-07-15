@@ -58,6 +58,7 @@ function ResourceItem({
             variant="primary"
             isAvatarBadge={true}
             avatarUrlImage={userAvatarUrl}
+            size="md"
           />
         </div>
       </div>

@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useAuth, useUser } from "@/store/hooks";
-import Avatar from "@/components/avatar/Avatar";
+import Avatar from "@/components/avatar/AvatarAlt";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
@@ -12,7 +12,7 @@ const notificationCount = 4;
 
 export default function AuthHeader() {
   const { isAuthenticated } = useAuth();
-  const { avatar } = useUser();
+  const { avatar, firstName, lastName } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -38,11 +38,19 @@ export default function AuthHeader() {
     <>
       <Bell notificationCount={notificationCount} />
       <div
+        role="button"
+        aria-label={isMenuOpen ? "close menu" : "open menu"}
         ref={menuRef}
         onClick={toggleMenu}
         className="flex items-center px-2"
       >
-        <Avatar image={avatar} height={34} width={34} />
+        <Avatar
+          firstName={firstName}
+          lastName={lastName}
+          avatarUrl={avatar}
+          size="xxl"
+          className="cursor-pointer"
+        />
         <DropDown openState={isMenuOpen} />
       </div>
     </>
