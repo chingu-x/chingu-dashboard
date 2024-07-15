@@ -93,7 +93,6 @@ export default function IdeationForm() {
       }
 
       const filteredData: MyObject = {
-        teamId,
         ideationId,
       };
 
@@ -148,7 +147,6 @@ export default function IdeationForm() {
         },
         payload: {
           params: {
-            teamId,
             ideationId,
           },
           redirect: { router, route },
@@ -221,7 +219,6 @@ export default function IdeationForm() {
       }
 
       const filteredData = {
-        teamId,
         ideationId,
         ...modifiedObject,
       };

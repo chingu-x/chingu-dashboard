@@ -155,7 +155,6 @@ export default async function IdeationComponentWrapper({
               isIdeationFinalized={false}
               firstChild={
                 <VoteCard
-                  teamId={teamId}
                   projectIdeaId={projectIdea.id}
                   users={projectIdea.projectIdeaVotes}
                 />
