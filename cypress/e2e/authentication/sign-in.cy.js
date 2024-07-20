@@ -27,8 +27,8 @@ describe("sign in flow", () => {
       /https:\/\/chingu-dashboard-git-dev-chingu-dashboard\.vercel\.app\/dashboard(\/\d+)?/,
     );
 
-    // TODO: uncomment this once PR is pushed where AuthHeader has a data-testid="nav-dropdown-menu" and retest
-    // cy.get('[data-testid="nav-dropdown-menu"]').should("be-visible");
+    // TODO: uncomment this once PR is pushed where AuthHeader has a data-cy="nav-dropdown-menu" and retest
+    // cy.get('[data-cy="nav-dropdown-menu"]').should("be-visible");
 
     cy.contains("button", "Log In").should("not.exist");
   });
