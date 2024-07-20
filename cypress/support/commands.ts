@@ -13,7 +13,7 @@
 // -- This is a parent command --
 Cypress.Commands.add("login", (email: string, password: string) => {
   cy.visit(
-    '"https://chingu-dashboard-git-dev-chingu-dashboard.vercel.app/sign-in",',
+    "https://chingu-dashboard-git-dev-chingu-dashboard.vercel.app/sign-in",
   );
   cy.get('input[name="email"]').type(email);
   cy.get('input[name="password"]').type(password);
