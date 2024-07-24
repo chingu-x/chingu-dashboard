@@ -22,6 +22,9 @@ const routePaths = {
   techStackPage(teamId: string) {
     return `/my-voyage/${teamId}/tech-stack`;
   },
+  finalizeTechStackPage(teamId: string) {
+    return `/my-voyage/${teamId}/tech-stack/finalize`;
+  },
   ideationPage(teamId: string) {
     return `/my-voyage/${teamId}/ideation`;
   },
