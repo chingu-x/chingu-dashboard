@@ -7,14 +7,14 @@ export default function FinalizeTechBanner() {
         Finalize your choices
       </h2>
       <p className="text-base font-medium text-base-300">
-        Finalize the tech stack that you and your team plan on creating for
-        your Voyage!
+        Finalize the tech stack that you and your team plan on creating for your
+        Voyage!
       </p>
       <div className="w-full">
         <Alert
           context="info"
           message="Important: It's advisable to collaborate as a team and 
-          ensure everyone agrees before finalizing your tech stack. You will be able to make changes to your tech stack later."          
+          ensure everyone agrees before finalizing your tech stack. You will be able to make changes to your tech stack later."
         />
       </div>
     </div>
