@@ -39,6 +39,7 @@ export default function AuthHeader() {
       <Bell notificationCount={notificationCount} />
       <div
         ref={menuRef}
+        data-cy="nav-dropdown-menu"
         onClick={toggleMenu}
         className="flex items-center px-2"
       >
