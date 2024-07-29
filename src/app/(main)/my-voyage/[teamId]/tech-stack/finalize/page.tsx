@@ -11,12 +11,13 @@ interface FinalizeTechStackPageProps {
   };
 }
 
-export default async function FinalizeTechStackPage({
-  params,
-}: FinalizeTechStackPageProps) {
+export default async function FinalizeTechStackPage(
+  {
+    // params,
+  }: FinalizeTechStackPageProps,
+) {
   const teamId = 6;
-  //const teamId = Number(params.teamiId);
-  console.log(teamId);
+  //const teamId = params.teamiId;
   const [user, error] = await getUser();
 
   const { currentTeam, err } = getCurrentVoyageTeam({ user, error, teamId });
@@ -27,7 +28,7 @@ export default async function FinalizeTechStackPage({
 
   if (currentTeam) {
     return (
-      <>
+      <div className="flex h-screen w-full flex-col items-center [&>*]:my-5 [&>*]:w-[871px]">
         <FinalizeTechBanner />
         <FinalizeTechList />
         {/**
@@ -35,7 +36,7 @@ export default async function FinalizeTechStackPage({
          * finalize button
          * cancel button
          */}
-      </>
+      </div>
     );
   }
   redirect(routePaths.dashboardPage());

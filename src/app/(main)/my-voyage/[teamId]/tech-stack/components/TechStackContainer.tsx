@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import TechStackCard from "./TechStackCard";
 import Button from "@/components/Button";
 import type { TechStackData } from "@/store/features/techStack/techStackSlice";
 import routePaths from "@/utils/routePaths";
-import { useParams } from "next/navigation";
 
 interface TechStackContainerProps {
   data: TechStackData[];
@@ -13,6 +13,7 @@ interface TechStackContainerProps {
 
 export default function TechStackContainer({ data }: TechStackContainerProps) {
   const { teamId } = useParams<{ teamId: string }>();
+  //console.log(teamId)
   const techCardData = data.map((item) => ({
     id: item.id,
     title: item.name,
