@@ -2,6 +2,23 @@ import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+// TODO: Move colors to globals
+const getBackroundColor = (initials: String) => {
+  const charCode = initials.toUpperCase().charCodeAt(initials.length - 1);
+  if (charCode < 71) return "bg-[#FE6AA6]";
+  if (charCode >= 71 && charCode < 77) return "bg-[#48FE90]";
+  if (charCode >= 77 && charCode < 84) return "bg-[#50DBFE]";
+  if (charCode >= 84) return "bg-[#D091DF]";
+};
+
+const imageSize = {
+  sm: 14,
+  md: 16,
+  lg: 18,
+  xl: 24,
+  xxl: 34,
+};
+
 const avatar = cva(
   "relative flex items-center justify-center overflow-hidden rounded-full font-semibold uppercase",
   {
@@ -36,18 +53,11 @@ export default function Avatar({
   size,
   ...props
 }: AvatarProps) {
-  if (firstName && lastName) {
-    const initials = firstName.trimStart()[0] + lastName.trimStart()[0];
-
-    // TODO: Move colors to globals
-    const getBackroundColor = () => {
-      const charCode = initials.toUpperCase().charCodeAt(1);
-      if (charCode < 71) return "bg-[#FE6AA6]";
-      if (charCode >= 71 && charCode < 77) return "bg-[#48FE90]";
-      if (charCode >= 77 && charCode < 84) return "bg-[#50DBFE]";
-      if (charCode >= 84) return "bg-[#D091DF]";
-    };
-    const backgroundColor = getBackroundColor();
+  if (firstName || lastName) {
+    let initials = "";
+    if (firstName) initials += firstName.trimStart()[0];
+    if (lastName) initials += lastName.trimStart()[0];
+    const backgroundColor = getBackroundColor(initials);
 
     return (
       <div
@@ -69,31 +79,12 @@ export default function Avatar({
           src={avatarUrl}
           fill
           style={{ objectFit: "cover" }}
-          sizes="34px"
+          height={size ? imageSize[size] : 34}
+          width={size ? imageSize[size] : 34}
         />
       </div>
     );
   }
-
-  // if (firstName && lastName) {
-  //   const initials = firstName.trimStart()[0] + lastName.trimStart()[0];
-
-  //   // TODO: Move colors to globals
-  //   const getBackroundColor = () => {
-  //     const charCode = initials.toUpperCase().charCodeAt(0);
-  //     if (charCode < 71) return "bg-[#FE6AA6]";
-  //     if (charCode >= 71 && charCode < 77) return "bg-[#48FE90]";
-  //     if (charCode >= 77 && charCode < 84) return "bg-[#50DBFE]";
-  //     if (charCode >= 84) return "bg-[#D091DF]";
-  //   };
-  //   const backgroundColor = getBackroundColor();
-
-  //   return (
-  //     <div className={cn(avatar({ size, className }), backgroundColor)}>
-  //       <span>{initials}</span>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className={cn(avatar({ size, className }))} {...props}>
@@ -104,7 +95,8 @@ export default function Avatar({
         src="https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg"
         fill
         style={{ objectFit: "cover" }}
-        sizes="34px"
+        height={size ? imageSize[size] : 34}
+        width={size ? imageSize[size] : 34}
       />
     </div>
   );
