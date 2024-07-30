@@ -13,7 +13,7 @@ interface TechStackContainerProps {
 
 export default function TechStackContainer({ data }: TechStackContainerProps) {
   const { teamId } = useParams<{ teamId: string }>();
-  //console.log(teamId)
+
   const techCardData = data.map((item) => ({
     id: item.id,
     title: item.name,

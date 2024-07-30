@@ -7,19 +7,15 @@ import routePaths from "@/utils/routePaths";
 
 interface FinalizeTechStackPageProps {
   params: {
-    teamiId: string;
+    teamId: string;
   };
 }
 
-export default async function FinalizeTechStackPage(
-  {
-    // params,
-  }: FinalizeTechStackPageProps,
-) {
-  const teamId = 6;
-  //const teamId = params.teamiId;
+export default async function FinalizeTechStackPage({
+  params,
+}: FinalizeTechStackPageProps) {
+  const teamId = Number(params.teamId);
   const [user, error] = await getUser();
-
   const { currentTeam, err } = getCurrentVoyageTeam({ user, error, teamId });
 
   if (err) {
