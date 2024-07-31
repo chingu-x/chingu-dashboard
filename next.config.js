@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    webpack(config, { buildId, dev, isServer, defaultLoaders, webpack }) {
+        console.log(`Running in ${process.env.NODE_ENV} mode`)
+        return config;
+    },
     images: {
         remotePatterns: [
             {
