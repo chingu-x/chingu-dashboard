@@ -2,7 +2,7 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import Badge from "@/components/badge/Badge";
+import Badge from "@/components/badge/BadgeAlt";
 import IconButton from "@/components/IconButton";
 import { deleteResource } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
 
@@ -77,7 +77,12 @@ export default function ResourceCard({
         <div className="mt-2 flex [&>*]:mr-8">
           <div className="flex items-center gap-x-2">
             <p>Shared by</p>
-            <Badge title={user.firstName} avatarUrlImage={user.avatar} />
+            <Badge
+              title={user.firstName}
+              avatarUrl={user.avatar}
+              firstName={user.firstName}
+              lastName={user.lastName}
+            />
           </div>
           <div className="h-5 w-1 border border-y-0 border-l-0 border-r-neutral-content"></div>
           <div className="text-neutral-focus">Added {date}</div>
