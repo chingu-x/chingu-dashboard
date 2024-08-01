@@ -24,11 +24,11 @@ const avatar = cva(
   {
     variants: {
       size: {
-        sm: ["h-[14px] w-[14px] text-[7px]"],
-        md: ["h-[16px] w-[16px] text-[8px]"],
-        lg: ["h-[18px] w-[18px] text-[9px]"],
-        xl: ["h-[24px] w-[24px] text-[12px]"],
-        xxl: ["h-[34px] w-[34px] text-[17px]"],
+        sm: ["h-[14px]", "w-[14px]", "text-[7px]"],
+        md: ["h-[16px]", "w-[16px]", "text-[8px]"],
+        lg: ["h-[18px]", "w-[18px]", "text-[9px]"],
+        xl: ["h-[24px]", "w-[24px]", "text-[12px]"],
+        xxl: ["h-[34px]", "w-[34px]", "text-[17px]"],
       },
     },
     defaultVariants: {
@@ -64,7 +64,7 @@ export default function Avatar({
         className={cn(avatar({ size, className }), backgroundColor)}
         {...props}
       >
-        <span>{initials}</span>
+        {initials}
       </div>
     );
   }
@@ -77,7 +77,6 @@ export default function Avatar({
             firstName && lastName ? `${firstName} ${lastName}` : "User's Avatar"
           }
           src={avatarUrl}
-          fill
           style={{ objectFit: "cover" }}
           height={size ? imageSize[size] : 34}
           width={size ? imageSize[size] : 34}
@@ -93,7 +92,6 @@ export default function Avatar({
           firstName && lastName ? `${firstName} ${lastName}` : "User's Avatar"
         }
         src="https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg"
-        fill
         style={{ objectFit: "cover" }}
         height={size ? imageSize[size] : 34}
         width={size ? imageSize[size] : 34}
