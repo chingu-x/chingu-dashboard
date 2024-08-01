@@ -53,8 +53,3 @@ export type setFinalizedListArgs = Category;
 export interface ConfirmationButtonProps {
   selectedItems: SelectedItems;
 }
-
-//req body
-export interface FinalizedList {
-  categories: [Category];
-}
