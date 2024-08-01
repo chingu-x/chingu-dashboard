@@ -1,7 +1,6 @@
 import { Provider } from "react-redux";
 import type { Meta, StoryObj } from "@storybook/react";
 import { FewNotifications } from "./Bell.stories";
-import avatarImage from "@/stories/assets/avatar.png";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
