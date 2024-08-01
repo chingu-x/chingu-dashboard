@@ -1,17 +1,16 @@
 "use client";
+
+import { useState } from "react";
+import type { SelectedItems } from "./types";
 import GetIcon from "@/myVoyage/tech-stack/components/GetIcons";
 import Button from "@/components/Button";
 import { useTechStack } from "@/store/hooks";
 import FinalizeTechListItem from "@/app/(main)/my-voyage/[teamId]/tech-stack/finalize/FinalizeTechListItem";
 import ConfirmationButton from "@/app/(main)/my-voyage/[teamId]/tech-stack/finalize/ConfirmationButton";
 
-export interface FinalizeTechStack {
-  id: number;
-  title: string;
-}
-
 export default function FinalizeTechList() {
   const { techStack } = useTechStack();
+  const [selectedItems, setSelectedItems] = useState<SelectedItems>({});
 
   return (
     <>
@@ -25,20 +24,22 @@ export default function FinalizeTechList() {
             {item.name}
           </h1>
           {item.teamTechStackItems.map((techItem) => {
-            const { id, name, teamTechStackItemVotes, isSelected } = techItem;
+            const { id, name, teamTechStackItemVotes } = techItem;
             return (
               <FinalizeTechListItem
+                categoryId={item.id}
                 key={id}
                 title={name}
                 techId={id}
                 techItemVotes={teamTechStackItemVotes}
-                isSelected={isSelected}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
               />
             );
           })}
         </div>
       ))}
-      <ConfirmationButton />
+      <ConfirmationButton selectedItems={selectedItems} />
       <Button variant="neutral">Cancel</Button>
     </>
   );
