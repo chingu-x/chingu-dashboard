@@ -1,4 +1,4 @@
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import createFinalList from "./utils/createFinalList";
 import {
   type FinalizedList,
@@ -10,12 +10,14 @@ import Button from "@/components/Button";
 import { useAppDispatch } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import routePaths from "@/utils/routePaths";
 
 export default function ConfirmationButton({
   selectedItems,
 }: ConfirmationButtonProps) {
   const params = useParams();
   const teamId = Number(params.teamId);
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const {
@@ -38,7 +40,7 @@ export default function ConfirmationButton({
       finalizedList: finalList,
     });
     if (res) {
-      //redirect to tech stack page (final version)
+      router.push(routePaths.techStackPage(teamId.toString()));
     }
     if (error) {
       dispatch(
