@@ -52,22 +52,6 @@ export default function Avatar({
   size,
   ...props
 }: AvatarProps) {
-  if (firstName || lastName) {
-    let initials = "";
-    if (firstName) initials += firstName.trimStart()[0];
-    if (lastName) initials += lastName.trimStart()[0];
-    const backgroundColor = getBackroundColor(initials);
-
-    return (
-      <div
-        className={cn(avatar({ size, className }), backgroundColor)}
-        {...props}
-      >
-        {initials}
-      </div>
-    );
-  }
-
   if (avatarUrl) {
     return (
       <div className={cn(avatar({ size, className }))} {...props}>
@@ -80,6 +64,22 @@ export default function Avatar({
           height={size ? imageSize[size] : 34}
           width={size ? imageSize[size] : 34}
         />
+      </div>
+    );
+  }
+
+  if (firstName || lastName) {
+    let initials = "";
+    if (firstName) initials += firstName.trimStart()[0];
+    if (lastName) initials += lastName.trimStart()[0];
+    const backgroundColor = getBackroundColor(initials);
+
+    return (
+      <div
+        className={cn(avatar({ size, className }), backgroundColor)}
+        {...props}
+      >
+        {initials}
       </div>
     );
   }
