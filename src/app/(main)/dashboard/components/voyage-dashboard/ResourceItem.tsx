@@ -2,21 +2,23 @@
 
 import React, { useState } from "react";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
-import Badge from "@/components/badge/Badge";
+import Badge from "@/components/badge/BadgeAlt";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface ResourceItemProps {
   id: number;
   title: string;
-  userName: string;
+  userFirstName: string;
+  userLastName: string;
   resourceUrl: string;
   userAvatarUrl?: string;
 }
 function ResourceItem({
   id,
   title,
-  userName,
+  userFirstName,
+  userLastName,
   resourceUrl,
   userAvatarUrl,
 }: ResourceItemProps) {
@@ -54,11 +56,10 @@ function ResourceItem({
         <div className="flex">
           <p className="mr-2 text-base font-medium">Shared by</p>
           <Badge
-            title={userName}
-            variant="primary"
-            isAvatarBadge={true}
-            avatarUrlImage={userAvatarUrl}
-            size="md"
+            title={`${userFirstName} ${userLastName}`}
+            firstName={userFirstName}
+            lastName={userLastName}
+            avatarUrl={userAvatarUrl}
           />
         </div>
       </div>

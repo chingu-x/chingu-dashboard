@@ -4,7 +4,7 @@ import { DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
 import Button from "@/components/Button";
-import Badge from "@/components/badge/Badge";
+import Badge from "@/components/badge/BadgeAlt";
 
 interface CheckInWidgetProps {
   status: string;

@@ -81,7 +81,8 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
     id: resource.id,
     title: resource.title,
     resourceUrl: resource.url,
-    userName: `${resource.addedBy.member.firstName} ${resource.addedBy.member.lastName}`,
+    userFirstName: resource.addedBy.member.firstName,
+    userLastName: resource.addedBy.member.lastName,
     userAvatarUrl: resource.addedBy.member.avatar,
   }));
 
