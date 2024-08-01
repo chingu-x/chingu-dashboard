@@ -41,6 +41,7 @@ export default function AuthHeader() {
         role="button"
         aria-label={isMenuOpen ? "close menu" : "open menu"}
         ref={menuRef}
+        data-cy="nav-dropdown-menu"
         onClick={toggleMenu}
         className="flex items-center px-2"
       >
