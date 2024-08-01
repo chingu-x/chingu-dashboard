@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Badge from "@/components/badge/Badge";
 
+const randomAvatarImage2 = "https://avatar.iran.liara.run/public/75";
+
 const meta = {
   title: "Components/Badge",
   component: Badge,
@@ -21,6 +23,21 @@ const meta = {
       control: "select",
       options: ["sm", "md", "lg"],
     },
+    avatarUrl: {
+      description: "Does it have an avatar?",
+      control: { type: "boolean" },
+      mapping: { false: undefined, true: randomAvatarImage2 },
+    },
+    firstName: {
+      description: "Does it have an initial-based avatar?",
+      control: { type: "boolean" },
+      mapping: { false: undefined, true: "Kate" },
+    },
+    lastName: {
+      description: "Does it have an initial-based avatar?",
+      control: { type: "boolean" },
+      mapping: { false: undefined, true: "Smith" },
+    },
   },
   args: {
     title: "Badge",
@@ -30,46 +47,53 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const BaseTemplate: Story = {
+const TextBaseTemplate: Story = {
   render: ({ ...args }) => <Badge {...args}>Badge</Badge>,
 };
 
+const AvatarBaseTemplate: Story = {
+  render: ({ ...args }) => (
+    <Badge {...args} avatarUrl={randomAvatarImage2}>
+      Badge
+    </Badge>
+  ),
+};
+
 export const Default = {
-  ...BaseTemplate,
+  ...TextBaseTemplate,
 };
 
 export const Primary = {
-  ...BaseTemplate,
+  ...TextBaseTemplate,
   args: {
     variant: "primary",
   },
 };
 
 export const Error = {
-  ...BaseTemplate,
+  ...TextBaseTemplate,
   args: {
     variant: "error",
   },
 };
 
 export const Warning = {
-  ...BaseTemplate,
+  ...TextBaseTemplate,
   args: {
     variant: "warning",
   },
 };
 
 export const Success = {
-  ...BaseTemplate,
+  ...TextBaseTemplate,
   args: {
     variant: "success",
   },
 };
 
-export const AvatarBadge = {
-  ...BaseTemplate,
+export const AvatarBadgePrimary = {
+  ...AvatarBaseTemplate,
   args: {
     variant: "primary",
-    isAvatarBadge: true,
   },
 };
