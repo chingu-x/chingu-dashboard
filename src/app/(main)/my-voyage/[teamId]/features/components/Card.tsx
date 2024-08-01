@@ -10,7 +10,7 @@ import {
 import { type Feature } from "./fixtures/Features";
 import EditPopover from "./EditPopover";
 import { useUser } from "@/store/hooks";
-import Avatar from "@/components/avatar/AvatarAlt";
+import Avatar from "@/components/avatar/Avatar";
 
 interface CardProps {
   feature: Feature;
@@ -77,10 +77,10 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
                 <button
                   type="button"
                   onClick={handleClick}
-                  className="flex items-center justify-end w-12 h-10 p-0 m-0 bg-transparent border-none gap-x-0 hover:bg-transparent"
+                  className="m-0 flex h-10 w-12 items-center justify-end gap-x-0 border-none bg-transparent p-0 hover:bg-transparent"
                   aria-label="feature menu"
                 >
-                  <EllipsisVerticalIcon className="w-5 h-5 text-base-300" />
+                  <EllipsisVerticalIcon className="h-5 w-5 text-base-300" />
                 </button>
               ) : (
                 // Creator's avatar

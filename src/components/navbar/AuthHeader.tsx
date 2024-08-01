@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useAuth, useUser } from "@/store/hooks";
-import Avatar from "@/components/avatar/AvatarAlt";
+import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";

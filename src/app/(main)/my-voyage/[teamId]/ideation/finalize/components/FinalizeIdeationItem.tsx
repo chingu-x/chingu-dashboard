@@ -2,7 +2,7 @@ import { type Dispatch, type SetStateAction } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { type FinalizedIdeation } from "./FinalizeIdeationList";
 import Button from "@/components/Button";
-import Avatar from "@/components/avatar/AvatarAlt";
+import Avatar from "@/components/avatar/Avatar";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 
@@ -34,7 +34,7 @@ export default function FinalizeIdeationItem({
       onClick={handleClick}
       aria-label="Finalized Project Idea"
     >
-      <div className="flex flex-col items-center justify-center w-full gap-y-2">
+      <div className="flex w-full flex-col items-center justify-center gap-y-2">
         <h2 className="text-base font-semibold">{title}</h2>
         <AvatarGroup>
           {projectIdeaVotes.map((votes) => {
@@ -55,7 +55,7 @@ export default function FinalizeIdeationItem({
           })}
         </AvatarGroup>
       </div>
-      <div className="w-6 h-6">
+      <div className="h-6 w-6">
         <CheckCircleIcon
           className={`${
             finalizedIdeation.title === title

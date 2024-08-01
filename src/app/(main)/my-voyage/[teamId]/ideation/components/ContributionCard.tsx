@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Badge from "@/components/badge/BadgeAlt";
+import Badge from "@/components/badge/Badge";
 import Button from "@/components/Button";
 import { type VoyageMember } from "@/store/features/ideation/ideationSlice";
 import { useUser } from "@/store/hooks";

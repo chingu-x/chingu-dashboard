@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
-import Badge from "@/components/badge/BadgeAlt";
+import Badge from "@/components/badge/Badge";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 

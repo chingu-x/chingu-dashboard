@@ -1,31 +1,60 @@
-import { AVATAR_SIZES, useBadgeLogic, badge } from "./Badge.logic";
-import type { BadgeProps } from "./Badge.logic";
-import Avatar from "@/components/avatar/Avatar";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import Avatar from "@/components/avatar/Avatar";
 
-function Badge({
+const badge = cva(
+  "flex items-center justify-center overflow-hidden rounded-[100px] font-medium text-base-300",
+  {
+    variants: {
+      variant: {
+        primary: ["bg-accent-content"],
+        error: ["bg-error-content"],
+        warning: ["bg-warning-content"],
+        success: ["bg-success-content"],
+      },
+      size: {
+        sm: ["py-[2px]", "px-[8px]", "text-[13px]", "gap-x-[4px]", "h-[20px]"],
+        md: ["py-[3px]", "px-[9px]", "text-base", "gap-x-[5px]", "h-[25px]"],
+        lg: ["py-[4px]", "px-[10px]", "text-xl", "gap-x-[6px]", "h-[32px]"],
+      },
+    },
+    defaultVariants: {
+      variant: "primary",
+      size: "md",
+    },
+  },
+);
+
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badge> {
+  title: string;
+  avatarUrl?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+export default function Badge({
+  className,
   title,
+  avatarUrl,
+  firstName,
+  lastName,
   variant,
   size,
-  className,
-  isAvatarBadge, // NOTE - this is a boolean that you can use to show avatars without available images
-  avatarUrlImage,
+  ...props
 }: BadgeProps) {
-  const { avatarDimension, h2Class, avatarClass } = useBadgeLogic(size);
-
   return (
-    <div className={cn(badge({ variant, size, className }))}>
-      {isAvatarBadge || avatarUrlImage ? (
+    <div className={cn(badge({ variant, size, className }))} {...props}>
+      {(avatarUrl || firstName || lastName) && (
         <Avatar
-          image={avatarUrlImage}
-          customClassName={avatarClass}
-          width={avatarDimension ?? AVATAR_SIZES.md}
-          height={avatarDimension ?? AVATAR_SIZES.md}
+          size={size}
+          avatarUrl={avatarUrl}
+          firstName={firstName}
+          lastName={lastName}
         />
-      ) : null}
-      <h2 className={h2Class}>{title}</h2>
+      )}
+      <span>{title}</span>
     </div>
   );
 }
-
-export default Badge;
