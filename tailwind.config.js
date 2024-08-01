@@ -36,6 +36,10 @@ module.exports = {
         "base-300": "rgb(var(--base-300) / <alpha-value>)",
         "base-content": "rgb(var(--base-content) / <alpha-value>)",
         overlay: "var(--overlay)",
+        "avatar-1": "rgb(var(--avatar-1) / <alpha-value>)",
+        "avatar-2": "rgb(var(--avatar-2) / <alpha-value>)",
+        "avatar-3": "rgb(var(--avatar-3) / <alpha-value>)",
+        "avatar-4": "rgb(var(--avatar-4) / <alpha-value>)",
       },
       boxShadow: {
         sm: "0 2px 4px 0 rgb(var(--neutral-focus) / 0.05)",

@@ -2,13 +2,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-// TODO: Move colors to globals
 const getBackroundColor = (initials: string) => {
   const charCode = initials.toUpperCase().charCodeAt(initials.length - 1);
-  if (charCode < 71) return "bg-[#FE6AA6]";
-  if (charCode >= 71 && charCode < 77) return "bg-[#48FE90]";
-  if (charCode >= 77 && charCode < 84) return "bg-[#50DBFE]";
-  if (charCode >= 84) return "bg-[#D091DF]";
+  if (charCode < 71) return "bg-avatar-1";
+  if (charCode >= 71 && charCode < 77) return "bg-avatar-2";
+  if (charCode >= 77 && charCode < 84) return "bg-avatar-3";
+  if (charCode >= 84) return "bg-avatar-4";
 };
 
 const imageSize = {
@@ -53,22 +52,6 @@ export default function Avatar({
   size,
   ...props
 }: AvatarProps) {
-  if (avatarUrl) {
-    return (
-      <div className={cn(avatar({ size, className }))} {...props}>
-        <Image
-          alt={
-            firstName && lastName ? `${firstName} ${lastName}` : "User's Avatar"
-          }
-          src={avatarUrl}
-          style={{ objectFit: "cover" }}
-          height={size ? imageSize[size] : 34}
-          width={size ? imageSize[size] : 34}
-        />
-      </div>
-    );
-  }
-
   if (firstName || lastName) {
     let initials = "";
     if (firstName) initials += firstName.trimStart()[0];
@@ -81,6 +64,22 @@ export default function Avatar({
         {...props}
       >
         {initials}
+      </div>
+    );
+  }
+
+  if (avatarUrl) {
+    return (
+      <div className={cn(avatar({ size, className }))} {...props}>
+        <Image
+          alt={
+            firstName && lastName ? `${firstName} ${lastName}` : "User's Avatar"
+          }
+          src={avatarUrl}
+          style={{ objectFit: "cover" }}
+          height={size ? imageSize[size] : 34}
+          width={size ? imageSize[size] : 34}
+        />
       </div>
     );
   }
