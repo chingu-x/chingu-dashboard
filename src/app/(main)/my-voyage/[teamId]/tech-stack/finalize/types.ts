@@ -8,7 +8,7 @@ export interface FinalizeTechStackPageProps {
 }
 
 export type SelectedItems = object | { [key: number]: number };
-export interface FinalizeTechListItemProps {
+export interface FinalizeTechCardProps {
   title: string;
   techItemVotes: TechStackItemVotes[];
   categoryId: number;
@@ -35,6 +35,18 @@ export type Category = {
   categoryId: number;
   techs: Tech[];
 };
+
+export interface TechItem {
+  id: number;
+  name: string;
+  teamTechStackItemVotes: TechStackItemVotes[];
+}
+
+export interface TechStackItem {
+  id: number;
+  name: string;
+  teamTechStackItems: TechItem[];
+}
 
 export type setFinalizedListArgs = Category;
 

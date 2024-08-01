@@ -1,17 +1,17 @@
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import type { FinalizeTechListItemProps, Vote, SelectedItems } from "./types";
+import type { FinalizeTechCardProps, Vote, SelectedItems } from "./types";
 import Button from "@/components/Button";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
 
-export default function FinalizeTechListItem({
+export default function FinalizeTechCard({
   title,
   techItemVotes,
   categoryId,
   techId,
   selectedItems,
   setSelectedItems,
-}: FinalizeTechListItemProps) {
+}: FinalizeTechCardProps) {
   const handleSelect = () => {
     if (selectedItems[categoryId as keyof SelectedItems] === techId) {
       setSelectedItems((selectedItems: SelectedItems) => ({
