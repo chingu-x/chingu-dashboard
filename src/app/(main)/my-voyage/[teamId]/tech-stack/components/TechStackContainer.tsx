@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import TechStackCard from "./TechStackCard";
 import FinalizedTechStackCard from "./FinalizedTechStackCard";
+import { getSelectedTechItems } from "@/app/(main)/my-voyage/[teamId]/tech-stack/finalize/utils/getSelectedTechItems";
 import Button from "@/components/Button";
 import type { TechStackData } from "@/store/features/techStack/techStackSlice";
 import routePaths from "@/utils/routePaths";
-import { getSelectedTechItems } from "../finalize/utils/getSelectedTechItems";
 
 interface TechStackContainerProps {
   data: TechStackData[];
@@ -46,7 +46,7 @@ export default function TechStackContainer({ data }: TechStackContainerProps) {
 
         {isFinalized &&
           selectedTechItems.map((item) => (
-            <FinalizedTechStackCard title={item.title} data={item} />
+            <FinalizedTechStackCard key={item.id} title={item.title} data={item} />
           ))}
       </ul>
     </div>

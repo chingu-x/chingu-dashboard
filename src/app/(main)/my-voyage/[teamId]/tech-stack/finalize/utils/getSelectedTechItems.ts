@@ -34,19 +34,24 @@ type SelectedTechItem = {
 };
 
 export type SelectedCategory = {
+  id: number;
   title: string;
   techItems: SelectedTechItem[];
 };
 
-
-export const getSelectedTechItems = (categories: Category[]): SelectedCategory[] => {
+export const getSelectedTechItems = (
+  categories: Category[],
+): SelectedCategory[] => {
   const selectedCategories: SelectedCategory[] = [];
 
-  categories.forEach(category => {
-    const selectedTechItems: SelectedTechItem[] = category.techItems.filter(techItem => techItem.isSelected);
+  categories.forEach((category) => {
+    const selectedTechItems: SelectedTechItem[] = category.techItems.filter(
+      (techItem) => techItem.isSelected,
+    );
 
     if (selectedTechItems.length > 0) {
       selectedCategories.push({
+        id: category.id,
         title: category.title,
         techItems: selectedTechItems,
       });
