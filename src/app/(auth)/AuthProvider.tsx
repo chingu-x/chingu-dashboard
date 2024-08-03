@@ -6,6 +6,7 @@ import { clientSignIn, clientSignOut } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { type User, getUserState } from "@/store/features/user/userSlice";
 import { type AppError } from "@/types/types";
+import { currentDate } from "@/utils/getCurrentSprint";
 
 interface AuthProviderProps {
   user: User | null;
@@ -20,7 +21,7 @@ export default function AuthProvider({ user, error }: AuthProviderProps) {
       dispatch(clientSignIn());
       // Add the currentDate field to the user object
       const currentDateInUserTimezone = formatInTimeZone(
-        new Date(),
+        currentDate,
         user.timezone,
         "yyyy-MM-dd HH:mm:ss",
       );

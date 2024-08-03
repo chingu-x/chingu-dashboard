@@ -24,13 +24,13 @@ function Cell({
   return (
     <div
       className={cn(
-        "group relative grid h-[50px] w-[48px] select-none place-content-center border border-base-100 bg-base-content text-center text-sm text-neutral-content transition-all hover:bg-base-100",
+        "group relative grid h-[53px] w-[53px] select-none place-content-center border border-base-100 bg-base-content text-center text-sm text-neutral-content transition-all hover:bg-base-100",
         isWithinSelectedMonth && "bg-base-200 text-base-300",
         isWithinCurrentSprintRange && "bg-primary-content",
         isSelectedDate && "bg-primary text-base-200 hover:bg-primary",
       )}
     >
-      <h1>{getDate(date)}</h1>
+      <span className="leading-[17px]">{getDate(date)}</span>
       {showDot && (
         <div
           className={cn(
@@ -43,7 +43,7 @@ function Cell({
       {showRocket && (
         <RocketLaunchIcon
           className={cn(
-            "absolute inset-x-0 top-px m-auto h-4 w-4 text-neutral-content transition-all group-hover:text-neutral-content",
+            "absolute inset-x-0 top-1 m-auto h-[14px] w-[14px] text-neutral-content transition-all group-hover:text-neutral-content",
             isWithinSelectedMonth &&
               "text-neutral-focus group-hover:text-neutral",
             isSelectedDate && "text-base-200 group-hover:text-base-200",
