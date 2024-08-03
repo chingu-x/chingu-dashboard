@@ -15,13 +15,6 @@ import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
 import { type Event, getDashboardData } from "./getDashboardData";
-// import {
-//   CHECKIN_STATUS,
-//   getFeaturesData,
-//   getIdeationData,
-//   getResourcesData,
-//   getTechStackData,
-// } from "@/app/(main)/dashboard/mocks/voyageDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
 import { getUser } from "@/utils/getUser";
