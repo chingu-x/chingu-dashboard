@@ -118,7 +118,12 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
           voyageNumber={voyageNumber}
           teamId={teamId}
         />
-        <CheckInWidget status={CHECKIN_STATUS} />
+        <CheckInWidget
+          status={CHECKIN_STATUS}
+          user={user}
+          currentSprintNumber={currentSprintNumber}
+          teamId={teamId ?? ""}
+        />
         <VoyageSupport />
       </div>
       <div className="col-span-1 flex w-full grow flex-col rounded-2xl border-2 border-base-100 bg-base-200 p-4">
