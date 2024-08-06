@@ -51,5 +51,6 @@ export interface TechStackItem {
 export type setFinalizedListArgs = Category;
 
 export interface ConfirmationButtonProps {
+  allCategoriesSelected: boolean;
   selectedItems: SelectedItems;
 }

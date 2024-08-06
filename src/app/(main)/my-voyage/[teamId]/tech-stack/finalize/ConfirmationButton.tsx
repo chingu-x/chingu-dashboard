@@ -13,6 +13,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
 
 export default function ConfirmationButton({
+  allCategoriesSelected,
   selectedItems,
 }: ConfirmationButtonProps) {
   const params = useParams();
@@ -60,7 +61,7 @@ export default function ConfirmationButton({
   return (
     <Button
       variant="secondary"
-      disabled={finalizeTechStackLoading}
+      disabled={finalizeTechStackLoading || !allCategoriesSelected}
       className="mb-4 mt-10 w-full"
       onClick={handleClick}
     >

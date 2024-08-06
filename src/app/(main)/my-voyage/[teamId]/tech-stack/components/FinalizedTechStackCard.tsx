@@ -13,7 +13,6 @@ export default function FinalizedTechStackCard({
   title,
   data,
 }: FinalizedTechStackCardProps) {
-
   return (
     <>
       <div className="h-80 min-w-[420px] rounded-lg bg-base-200 p-6 text-base-300 sm:w-96 [&>*]:my-4">
@@ -24,7 +23,11 @@ export default function FinalizedTechStackCard({
           </span>
         </div>
         {data.techItems.map((item) => (
-          <FinalizedTechListItem key={item.id} name={item.name} votes={item.teamTechStackItemVotes} />
+          <FinalizedTechListItem
+            key={item.id}
+            name={item.name}
+            votes={item.teamTechStackItemVotes}
+          />
         ))}
       </div>
     </>
@@ -33,14 +36,17 @@ export default function FinalizedTechStackCard({
 
 interface FinalizedTechListItemProps {
   name: string;
-  votes: TechStackItemVotes[]
+  votes: TechStackItemVotes[];
 }
-export function FinalizedTechListItem({ name, votes }: FinalizedTechListItemProps) {
+export function FinalizedTechListItem({
+  name,
+  votes,
+}: FinalizedTechListItemProps) {
   const avatars = votes.map((vote) => vote.votedBy.member);
 
   return (
-    <div className="flex items-center bg-neutral-content h-12 px-4 py-2 rounded-md">
-      <h1 className="font-medium w-1/3">{name}</h1>
+    <div className="flex h-12 items-center rounded-md bg-neutral-content px-4 py-2">
+      <h1 className="w-1/3 font-medium">{name}</h1>
       <AvatarGroup>
         {avatars.map((member) => (
           <Avatar

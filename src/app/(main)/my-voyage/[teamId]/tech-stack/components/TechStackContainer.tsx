@@ -46,7 +46,11 @@ export default function TechStackContainer({ data }: TechStackContainerProps) {
 
         {isFinalized &&
           selectedTechItems.map((item) => (
-            <FinalizedTechStackCard key={item.id} title={item.title} data={item} />
+            <FinalizedTechStackCard
+              key={item.id}
+              title={item.title}
+              data={item}
+            />
           ))}
       </ul>
     </div>
