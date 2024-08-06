@@ -1,12 +1,10 @@
-import { format } from "date-fns";
-import { fetchSprints } from "@/app/(main)/my-voyage/[teamId]/sprints/components/RedirectToCurrentSprintWrapper";
+import { fetchSprints } from "@/myVoyage/sprints/components/RedirectToCurrentSprintWrapper";
+import { fetchMeeting } from "@/myVoyage/sprints/components/SprintWrapper";
+import type { User } from "@/store/features/user/userSlice";
 import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
+import type { AppError } from "@/types/types";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import type { User } from "@/store/features/user/userSlice";
-import { fetchMeeting } from "@/app/(main)/my-voyage/[teamId]/sprints/components/SprintWrapper";
-import type { AppError } from "@/types/types";
-import convertStringToDate from "@/utils/convertStringToDate";
 import { fetchResources } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ResourcesComponentWrapper";
 import { fetchTechStack } from "@/app/(main)/my-voyage/[teamId]/tech-stack/components/TechStackComponentWrapper";
 import { fetchProjectIdeas } from "@/app/(main)/my-voyage/[teamId]/ideation/components/IdeationComponentWrapper";
@@ -22,7 +20,7 @@ interface GetDashboardDataResponse {
   currentSprintNumber: number | null;
   sprintsData: Sprint[];
   user: User | null;
-  meetingsData: EventList[];
+  meetingsData: Event[];
   voyageNumber: number | null;
   voyageData: Voyage;
   features: FeaturesList[];
@@ -33,7 +31,7 @@ interface GetDashboardDataResponse {
   errorType?: ErrorType | undefined;
 }
 
-export type EventList = {
+export type Event = {
   title: string;
   date: string;
   link: string;
@@ -212,11 +210,9 @@ export const getDashboardData = async (
     .map(([res, err]) => {
       if (res) {
         const { title, dateTime, meetingLink, sprint } = res;
-        const parsedDate = convertStringToDate(dateTime, user?.timezone ?? "");
-        const formattedDate = format(parsedDate, "yyyy-MM-dd h:mm a");
         return {
           title,
-          date: formattedDate,
+          date: dateTime,
           link: meetingLink,
           sprint: sprint.number,
         };
@@ -226,7 +222,7 @@ export const getDashboardData = async (
       }
       return null;
     })
-    .filter(Boolean) as EventList[];
+    .filter(Boolean) as Event[];
 
   return {
     currentSprintNumber,
