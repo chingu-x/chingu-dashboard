@@ -115,9 +115,9 @@ export default async function IdeationComponentWrapper({
 
     return (
       <>
+        <CreateIdeationContainer />
         {!projectIdeas.length ? (
           <>
-            <CreateIdeationContainer />
             <div className="my-20 flex h-[290px] w-full gap-x-48">
               <div className="flex flex-col justify-center">
                 <h1 className="text-xl font-medium text-base-300">
@@ -155,7 +155,6 @@ export default async function IdeationComponentWrapper({
               isIdeationFinalized={false}
               firstChild={
                 <VoteCard
-                  teamId={teamId}
                   projectIdeaId={projectIdea.id}
                   users={projectIdea.projectIdeaVotes}
                 />
