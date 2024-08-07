@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import type { SelectedItems, TechItem, TechStackItem } from "./types";
+import { checkIfFinalized } from "./utils/checkIfFinalized";
+import { getSelectedTechItems } from "./utils/getSelectedTechItems";
 import GetIcon from "@/myVoyage/tech-stack/components/GetIcons";
 import Button from "@/components/Button";
 import { useTechStack } from "@/store/hooks";
@@ -16,7 +18,7 @@ export default function FinalizeTechList() {
   const { techStack } = useTechStack();
   const [selectedItems, setSelectedItems] = useState<SelectedItems>({});
 
-  //checks how many categories have suggested items
+  //checks how many categories are being finalized (Frontend, Backend, CSS etc...)
   const categories = techStack
     .filter((item) => item.teamTechStackItems.length > 0)
     .map((item) => item.id);
@@ -25,6 +27,17 @@ export default function FinalizeTechList() {
   const allCategoriesSelected = categories.every(
     (item) => selectedItems[item as keyof SelectedItems],
   );
+
+  // if isSelected property has been set to true on any item, assumption is
+  // user has already finalized techStack.
+  const isFinalized = checkIfFinalized(techStack);
+
+  const techCardData = techStack.map((item) => ({
+    id: item.id,
+    title: item.name,
+    techItems: item.teamTechStackItems,
+  }));
+  const finalizedItems = getSelectedTechItems(techCardData);
 
   const renderTechStackItem = (item: TechStackItem) => {
     if (item.teamTechStackItems.length === 0) {
@@ -41,19 +54,28 @@ export default function FinalizeTechList() {
           {item.name}
         </h1>
         {item.teamTechStackItems.map((techItem: TechItem) => {
-          const { id, name, teamTechStackItemVotes } = techItem;
+          const { id, name, teamTechStackItemVotes, isSelected } = techItem;
           return (
             <FinalizeTechCard
               categoryId={item.id}
               key={id}
               title={name}
               techId={id}
+              isSelected={isSelected}
               techItemVotes={teamTechStackItemVotes}
               selectedItems={selectedItems}
               setSelectedItems={setSelectedItems}
+              finalizedItems={finalizedItems}
             />
           );
         })}
+        {isFinalized && (
+          <ConfirmationButton
+            isFinalized={isFinalized}
+            selectedItems={selectedItems}
+            allCategoriesSelected={true}
+          />
+        )}
       </div>
     );
   };
@@ -61,10 +83,12 @@ export default function FinalizeTechList() {
   return (
     <>
       {techStack.map(renderTechStackItem)}
-      <ConfirmationButton
-        allCategoriesSelected={allCategoriesSelected}
-        selectedItems={selectedItems}
-      />
+      {!isFinalized && (
+        <ConfirmationButton
+          allCategoriesSelected={allCategoriesSelected}
+          selectedItems={selectedItems}
+        />
+      )}
       <Link href={routePaths.techStackPage(teamId)}>
         <Button className="w-full" variant="neutral">
           Cancel

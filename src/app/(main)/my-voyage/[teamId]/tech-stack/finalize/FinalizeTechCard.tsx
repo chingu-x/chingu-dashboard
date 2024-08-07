@@ -1,5 +1,11 @@
+import { useEffect, useRef } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import type { FinalizeTechCardProps, Vote, SelectedItems } from "./types";
+import type {
+  FinalizeTechCardProps,
+  Vote,
+  SelectedItems,
+  FinalizedItem,
+} from "./types";
 import Button from "@/components/Button";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
@@ -11,7 +17,10 @@ export default function FinalizeTechCard({
   techId,
   selectedItems,
   setSelectedItems,
+  finalizedItems,
 }: FinalizeTechCardProps) {
+  const hasMounted = useRef(false);
+
   const handleSelect = () => {
     if (selectedItems[categoryId as keyof SelectedItems] === techId) {
       setSelectedItems((selectedItems: SelectedItems) => ({
@@ -25,6 +34,24 @@ export default function FinalizeTechCard({
       }));
     }
   };
+
+  //if editing the 'selectedItems' variable needs to be set to contain the
+  // finalized list. This useEffect makes sure that happens. *ref is used because linting error required
+  // dependencies but dependencies caused loop. The ref is used to workaround that.
+  useEffect(() => {
+    if (!hasMounted.current) {
+      if (finalizedItems) {
+        let update = {};
+        for (let i = 0; i < finalizedItems.length; i++) {
+          const key = finalizedItems[i].id;
+          const value = finalizedItems[i].techItems[0].id;
+          update = { ...update, [key as keyof FinalizedItem[]]: value };
+        }
+        setSelectedItems(update);
+      }
+    }
+    hasMounted.current = true;
+  }, [finalizedItems, setSelectedItems]);
 
   return (
     <Button

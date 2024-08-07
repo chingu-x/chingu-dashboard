@@ -13,6 +13,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
 
 export default function ConfirmationButton({
+  isFinalized,
   allCategoriesSelected,
   selectedItems,
 }: ConfirmationButtonProps) {
@@ -29,6 +30,12 @@ export default function ConfirmationButton({
 
   const handleClick = async () => {
     const selection = createFinalList(selectedItems);
+
+    // TODO unselect items if needed. (when editing).
+    // As is, a user can go to edit page and select different items,
+    // hitting 'save changes' sends this to the backend and everything works...except that
+    // previously selected items still have 'isSelected' set to true.
+
     const finalList: FinalizedList = {
       categories: selection.map((cat) => ({
         categoryId: cat.categoryId,
@@ -55,7 +62,10 @@ export default function ConfirmationButton({
     if (finalizeTechStackLoading) {
       return <Spinner />;
     }
-    return "Finalize Tech Stack Selection.";
+    const text = isFinalized
+      ? "Save Changes"
+      : "Finalize Tech Stack Selection.";
+    return text;
   }
 
   return (

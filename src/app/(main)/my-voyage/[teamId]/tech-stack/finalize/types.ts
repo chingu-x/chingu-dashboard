@@ -13,10 +13,17 @@ export interface FinalizeTechCardProps {
   techItemVotes: TechStackItemVotes[];
   categoryId: number;
   techId: number;
+  isSelected: boolean;
   selectedItems: SelectedItems;
   setSelectedItems: React.Dispatch<React.SetStateAction<SelectedItems>>;
+  finalizedItems?: FinalizedItem[];
 }
 
+export type FinalizedItem = {
+  id: number;
+  title: string;
+  techItems: TechItem[];
+};
 export type Vote = {
   votedBy: {
     member: {
@@ -39,6 +46,7 @@ export type Category = {
 export interface TechItem {
   id: number;
   name: string;
+  isSelected: boolean;
   teamTechStackItemVotes: TechStackItemVotes[];
 }
 
@@ -51,6 +59,7 @@ export interface TechStackItem {
 export type setFinalizedListArgs = Category;
 
 export interface ConfirmationButtonProps {
-  allCategoriesSelected: boolean;
+  isFinalized?: boolean;
+  allCategoriesSelected?: boolean;
   selectedItems: SelectedItems;
 }
