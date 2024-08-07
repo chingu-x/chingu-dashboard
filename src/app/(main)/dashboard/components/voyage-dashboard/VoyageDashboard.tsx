@@ -14,7 +14,7 @@ import IdeationStateContent from "./IdeationStateContent";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
-import { type EventList, getDashboardData } from "./getDashboardData";
+import { type Event, getDashboardData } from "./getDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
 import { getUser } from "@/utils/getUser";
@@ -42,7 +42,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
 
   let currentSprintNumber: number | null = null;
   let sprintsData: Sprint[] = [];
-  let meetingsData: EventList[] = [];
+  let meetingsData: Event[] = [];
   let voyageNumber: number | null = null;
   let voyageData: Voyage = {} as Voyage;
   let features: FeaturesList[] = [];
