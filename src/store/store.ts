@@ -9,6 +9,7 @@ import userReducer from "./features/user/userSlice";
 import directoryReducer from "./features/directory/directorySlice";
 import sprintReducer from "./features/sprint/sprintSlice";
 import featuresReducer from "./features/features/featuresSlice";
+import techStackReducer from "./features/techStack/techStackSlice";
 
 const createNoopStorage = () => ({
   getItem() {
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   features: featuresReducer,
   resources: resourceReducer,
   sprint: sprintReducer,
+  techStack: techStackReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

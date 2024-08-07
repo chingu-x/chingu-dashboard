@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
+import type { Category } from "./finalize/types";
 import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
@@ -58,6 +59,21 @@ interface TechItemVoteResponse {
 }
 
 interface RemoveTechItemVoteProps extends TechItemIdProps {}
+
+export interface FinalizedList {
+  categories: Category[];
+}
+interface FinalizeTechStackProps {
+  teamId: number;
+  finalizedList: FinalizedList;
+}
+interface FinalizeTechStackResponse {
+  teamTechStackItemVotedId: number;
+  teamTechId: number;
+  teamMemberId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export async function addTechItem({
   teamId,
@@ -162,5 +178,26 @@ export async function removeTechItemVote({
     revalidateTag(CacheTag.techStack);
   }
 
+  return [res, error];
+}
+
+export async function finalizeTechStack({
+  teamId,
+  finalizedList,
+}: FinalizeTechStackProps): Promise<
+  AsyncActionResponse<FinalizeTechStackResponse>
+> {
+  const token = getAccessToken();
+  const finalizeTechStackAsync = () =>
+    PATCH<FinalizedList, FinalizeTechStackResponse>(
+      `api/v1/voyages/teams/${teamId}/techs/selections`,
+      token,
+      "default",
+      finalizedList,
+    );
+  const [res, error] = await handleAsync(finalizeTechStackAsync);
+  if (res) {
+    revalidateTag(CacheTag.techStack);
+  }
   return [res, error];
 }
