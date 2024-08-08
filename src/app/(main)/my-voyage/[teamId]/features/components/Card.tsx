@@ -84,7 +84,12 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
                 </button>
               ) : (
                 // Creator's avatar
-                <Avatar image={avatar} width={24} height={24} />
+                <Avatar
+                  firstName={firstName}
+                  lastName={lastName}
+                  avatarUrl={avatar}
+                  size="xl"
+                />
               )}
             </div>
           </li>

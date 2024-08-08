@@ -40,10 +40,18 @@ export default function FinalizeIdeationItem({
           {projectIdeaVotes.map((votes) => {
             const {
               votedBy: {
-                member: { avatar, id },
+                member: { avatar, firstName, lastName, id },
               },
             } = votes;
-            return <Avatar width={24} height={24} key={id} image={avatar} />;
+            return (
+              <Avatar
+                key={id}
+                firstName={firstName}
+                lastName={lastName}
+                avatarUrl={avatar}
+                size="xl"
+              />
+            );
           })}
         </AvatarGroup>
       </div>

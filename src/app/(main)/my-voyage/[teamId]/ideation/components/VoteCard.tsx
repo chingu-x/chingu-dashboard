@@ -132,10 +132,11 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         <AvatarGroup>
           {users.map((user) => (
             <Avatar
-              width={24}
-              height={24}
               key={user.id}
-              image={user.votedBy.member.avatar}
+              firstName={user.votedBy.member.firstName}
+              lastName={user.votedBy.member.lastName}
+              avatarUrl={user.votedBy.member.avatar}
+              size="xl"
             />
           ))}
         </AvatarGroup>

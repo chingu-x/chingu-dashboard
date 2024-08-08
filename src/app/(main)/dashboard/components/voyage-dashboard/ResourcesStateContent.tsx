@@ -5,7 +5,8 @@ type ResourceItemData = {
   id: number;
   title: string;
   resourceUrl: string;
-  userName: string;
+  userFirstName: string;
+  userLastName: string;
   userAvatarUrl: string;
 };
 
@@ -23,7 +24,8 @@ function ResourcesStateContent({ contentObject }: ResourcesStateContentProps) {
             id={Number(item.id)}
             resourceUrl={item.resourceUrl}
             title={item.title}
-            userName={item.userName}
+            userFirstName={item.userFirstName}
+            userLastName={item.userLastName}
             userAvatarUrl={item.userAvatarUrl}
           />
         ))}

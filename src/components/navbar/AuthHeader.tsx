@@ -12,7 +12,7 @@ const notificationCount = 4;
 
 export default function AuthHeader() {
   const { isAuthenticated } = useAuth();
-  const { avatar } = useUser();
+  const { avatar, firstName, lastName } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -38,12 +38,20 @@ export default function AuthHeader() {
     <>
       <Bell notificationCount={notificationCount} />
       <div
+        role="button"
+        aria-label={isMenuOpen ? "close menu" : "open menu"}
         ref={menuRef}
         data-cy="nav-dropdown-menu"
         onClick={toggleMenu}
         className="flex items-center px-2"
       >
-        <Avatar image={avatar} height={34} width={34} />
+        <Avatar
+          firstName={firstName}
+          lastName={lastName}
+          avatarUrl={avatar}
+          size="xxl"
+          className="cursor-pointer"
+        />
         <DropDown openState={isMenuOpen} />
       </div>
     </>

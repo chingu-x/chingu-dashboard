@@ -1,7 +1,6 @@
 import { Provider } from "react-redux";
 import type { Meta, StoryObj } from "@storybook/react";
 import { FewNotifications } from "./Bell.stories";
-import avatarImage from "@/stories/assets/avatar.png";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
@@ -10,6 +9,8 @@ import DropDown from "@/components/navbar/DropDown";
 import Button from "@/components/Button";
 import Avatar from "@/components/avatar/Avatar";
 import { mockStoreVoyage, mockStoreNoVoyage } from "@/stories/DropDownStore";
+
+const randomAvatarImage2 = "https://avatar.iran.liara.run/public/";
 
 const meta = {
   title: "Components/Navbar",
@@ -40,7 +41,7 @@ export const MenuOpenNoVoyage: Story = {
         <ModeToggle />
       </ThemeProvider>,
       <Bell key="Bell" {...FewNotifications.args} />,
-      <Avatar key="Avatar" image={avatarImage} width={24} height={24} />,
+      <Avatar key="Avatar" avatarUrl={randomAvatarImage2} size="xxl" />,
       <DropDown key="DropDown" openState={true} />,
     ],
   },
@@ -62,7 +63,7 @@ export const MenuOpenedOnVoyage: Story = {
         <ModeToggle />
       </ThemeProvider>,
       <Bell key="Bell" {...FewNotifications.args} />,
-      <Avatar key="Avatar" image={avatarImage} width={24} height={24} />,
+      <Avatar key="Avatar" avatarUrl={randomAvatarImage2} size="xxl" />,
       <DropDown key="DropDown" openState={true} />,
     ],
   },

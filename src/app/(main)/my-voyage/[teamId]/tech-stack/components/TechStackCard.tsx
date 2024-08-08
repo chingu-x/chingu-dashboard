@@ -271,9 +271,10 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                         {element.teamTechStackItemVotes.map((vote) => (
                           <Avatar
                             key={vote.votedBy.member.id}
-                            image={vote.votedBy.member.avatar}
-                            width={24}
-                            height={24}
+                            firstName={vote.votedBy.member.firstName}
+                            lastName={vote.votedBy.member.lastName}
+                            avatarUrl={vote.votedBy.member.avatar}
+                            size="xl"
                           />
                         ))}
                       </AvatarGroup>

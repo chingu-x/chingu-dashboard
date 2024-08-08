@@ -9,14 +9,16 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 interface ResourceItemProps {
   id: number;
   title: string;
-  userName: string;
+  userFirstName: string;
+  userLastName: string;
   resourceUrl: string;
   userAvatarUrl?: string;
 }
 function ResourceItem({
   id,
   title,
-  userName,
+  userFirstName,
+  userLastName,
   resourceUrl,
   userAvatarUrl,
 }: ResourceItemProps) {
@@ -54,10 +56,10 @@ function ResourceItem({
         <div className="flex">
           <p className="mr-2 text-base font-medium">Shared by</p>
           <Badge
-            title={userName}
-            variant="primary"
-            isAvatarBadge={true}
-            avatarUrlImage={userAvatarUrl}
+            title={`${userFirstName} ${userLastName}`}
+            firstName={userFirstName}
+            lastName={userLastName}
+            avatarUrl={userAvatarUrl}
           />
         </div>
       </div>

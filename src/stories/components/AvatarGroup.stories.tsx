@@ -1,11 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
-import myAvatar from "@/public/img/avatar.png";
 
-const placeholder =
-  "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg";
-
+const randomAvatarImage1 = "https://avatar.iran.liara.run/public/50";
+const randomAvatarImage2 = "https://avatar.iran.liara.run/public/66";
 const meta = {
   title: "Components/AvatarGroup",
   component: AvatarGroup,
@@ -28,47 +26,67 @@ type Story = StoryObj<typeof AvatarGroup>;
 export const AFewMembers: Story = {
   args: {
     children: [
-      <Avatar key={1} image={myAvatar} width={24} height={24} />,
-      <Avatar key={2} image={myAvatar} width={24} height={24} />,
-      <Avatar key={3} image={myAvatar} width={24} height={24} />,
+      <Avatar
+        key={1}
+        avatarUrl={randomAvatarImage1}
+        firstName="John"
+        lastName="Williams"
+        size="xl"
+      />,
+      <Avatar
+        key={2}
+        avatarUrl={randomAvatarImage2}
+        firstName="Kate"
+        lastName="Brown"
+        size="xl"
+      />,
+      <Avatar key={3} firstName="Peter" lastName="Clark" size="xl" />,
     ],
   },
 };
 export const SingleMember: Story = {
   args: {
-    children: [<Avatar key={1} image={myAvatar} width={24} height={24} />],
+    children: [<Avatar key={1} avatarUrl={randomAvatarImage1} size="xl" />],
   },
 };
 export const ManyMembers: Story = {
   args: {
     children: [
-      <Avatar key={1} image={myAvatar} width={24} height={24} />,
-      <Avatar key={2} image={myAvatar} width={24} height={24} />,
-      <Avatar key={3} image={myAvatar} width={24} height={24} />,
-      <Avatar key={4} image={myAvatar} width={24} height={24} />,
-      <Avatar key={5} image={myAvatar} width={24} height={24} />,
-      <Avatar key={6} image={myAvatar} width={24} height={24} />,
-      <Avatar key={7} image={myAvatar} width={24} height={24} />,
+      <Avatar key={1} firstName="John" lastName="Williams" size="xl" />,
+      <Avatar key={2} firstName="Sarah" lastName="Conor" size="xl" />,
+      <Avatar
+        key={3}
+        avatarUrl={randomAvatarImage2}
+        firstName="Kate"
+        lastName="Brown"
+        size="xl"
+      />,
+      <Avatar key={4} firstName="Harry" size="xl" />,
+      <Avatar
+        key={5}
+        avatarUrl={randomAvatarImage1}
+        firstName="John"
+        lastName="Williams"
+        size="xl"
+      />,
+      <Avatar key={6} firstName="Matt" lastName="Terner" size="xl" />,
+      <Avatar key={7} firstName="Taylor" size="xl" />,
     ],
   },
 };
-export const Placeholder: Story = {
+
+export const DefaultImage: Story = {
   args: {
-    children: [<Avatar key={1} image={placeholder} width={24} height={24} />],
-  },
-};
-export const AlternativeImage: Story = {
-  args: {
-    children: [<Avatar key={1} image={""} width={24} height={24} />],
+    children: [<Avatar key={1} size="xl" />],
   },
 };
 export const MixedImages: Story = {
   args: {
     children: [
-      <Avatar key={1} image={myAvatar} width={24} height={24} />,
-      <Avatar key={2} image={placeholder} width={24} height={24} />,
-      <Avatar key={3} image={""} width={24} height={24} />,
-      <Avatar key={4} image={myAvatar} width={24} height={24} />,
+      <Avatar key={1} firstName="John" lastName="Williams" size="xl" />,
+      <Avatar key={2} size="xl" />,
+      <Avatar key={3} avatarUrl={randomAvatarImage1} size="xl" />,
+      <Avatar key={4} firstName="Ann" size="xl" />,
     ],
   },
 };
