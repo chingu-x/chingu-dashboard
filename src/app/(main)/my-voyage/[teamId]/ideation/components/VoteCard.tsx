@@ -22,10 +22,9 @@ interface VoteCardProps {
   projectIdeaId: number;
   users: ProjectIdeaVotes[];
   className?: string;
-  teamId: number;
 }
 
-function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
+function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
     null,
   );
@@ -52,7 +51,6 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
       dispatch(setProjectIdeasLoadingTrue());
 
       const [, error] = await removeIdeationVoteAction({
-        teamId,
         ideationId: projectIdeaId,
       });
 
@@ -67,7 +65,6 @@ function VoteCard({ teamId, projectIdeaId, users, className }: VoteCardProps) {
     } else {
       dispatch(setProjectIdeasLoadingTrue());
       const [, error] = await addIdeationVoteAction({
-        teamId,
         ideationId: projectIdeaId,
       });
 
