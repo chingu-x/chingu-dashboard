@@ -37,9 +37,6 @@ interface VoyageDashboardProps {
 async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   const [user, error] = await getUser();
 
-  // TODO: Mocked value
-  const CHECKIN_STATUS = "Due today";
-
   let currentSprintNumber: number | null = null;
   let sprintsData: Sprint[] = [];
   let meetingsData: Event[] = [];
@@ -118,7 +115,11 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
           voyageNumber={voyageNumber}
           teamId={teamId}
         />
-        <CheckInWidget status={CHECKIN_STATUS} />
+        <CheckInWidget
+          user={user}
+          currentSprintNumber={currentSprintNumber}
+          teamId={teamId ?? ""}
+        />
         <VoyageSupport />
       </div>
       <div className="col-span-1 flex w-full grow flex-col rounded-2xl border-2 border-base-100 bg-base-200 p-4">
