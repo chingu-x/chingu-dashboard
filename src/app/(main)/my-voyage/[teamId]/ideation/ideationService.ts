@@ -29,11 +29,13 @@ interface IdeationResponse {
 interface AddIdeationBody extends IdeationBody {}
 interface EditIdeationBody extends Partial<AddIdeationBody> {}
 
-export interface AddIdeationProps extends AddIdeationType, IdeationBody {}
-export interface EditIdeationProps extends EditIdeationBody, IdeationProps {}
-export interface DeleteIdeationProps extends IdeationProps {}
+type IdeationWithoutTeamId = Omit<IdeationProps, "teamId">;
 
-export interface IdeationVoteProps extends IdeationProps {}
+export interface AddIdeationProps extends AddIdeationType, IdeationBody {}
+export type EditIdeationProps = EditIdeationBody & IdeationWithoutTeamId;
+export type DeleteIdeationProps = IdeationWithoutTeamId;
+
+export type IdeationVoteProps = IdeationWithoutTeamId;
 export type FetchIdeationsProps = Pick<IdeationProps, "teamId">;
 
 export interface FinalizeIdeationProps extends IdeationProps {}
@@ -77,7 +79,6 @@ export async function addIdeation({
 }
 
 export async function editIdeation({
-  teamId,
   ideationId,
   title,
   description,
@@ -87,7 +88,7 @@ export async function editIdeation({
 
   const editIdeationAsync = () =>
     PATCH<EditIdeationBody, EditIdeationResponse>(
-      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}`,
+      `api/v1/voyages/ideations/${ideationId}`,
       token,
       "default",
       { title, description, vision },
@@ -103,13 +104,12 @@ export async function editIdeation({
 }
 
 export async function deleteIdeation({
-  teamId,
   ideationId,
 }: DeleteIdeationProps): Promise<AsyncActionResponse<DeleteIdeationResponse>> {
   const token = getAccessToken();
   const deleteIdeationAsync = () =>
     DELETE<DeleteIdeationResponse>(
-      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}`,
+      `api/v1/voyages/ideations/${ideationId}`,
       token,
       "default",
     );
@@ -124,14 +124,13 @@ export async function deleteIdeation({
 }
 
 export async function addIdeationVote({
-  teamId,
   ideationId,
 }: IdeationVoteProps): Promise<AsyncActionResponse<IdeationVoteResponse>> {
   const token = getAccessToken();
 
   const addIdeationVoteAsync = () =>
     POST<undefined, IdeationVoteResponse>(
-      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}/ideation-votes`,
+      `api/v1/voyages/ideations/${ideationId}/ideation-votes`,
       token,
       "default",
     );
@@ -146,14 +145,13 @@ export async function addIdeationVote({
 }
 
 export async function removeIdeationVote({
-  teamId,
   ideationId,
 }: IdeationVoteProps): Promise<AsyncActionResponse<IdeationVoteResponse>> {
   const token = getAccessToken();
 
   const removeIdeationVoteAsync = () =>
     DELETE<IdeationVoteResponse>(
-      `api/v1/voyages/teams/${teamId}/ideations/${ideationId}/ideation-votes`,
+      `api/v1/voyages/ideations/${ideationId}/ideation-votes`,
       token,
       "default",
     );

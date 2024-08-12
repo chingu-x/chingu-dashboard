@@ -14,7 +14,7 @@ import IdeationStateContent from "./IdeationStateContent";
 import FeaturesStateContent from "./FeaturesStateContent";
 import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
-import { type EventList, getDashboardData } from "./getDashboardData";
+import { type Event, getDashboardData } from "./getDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
 import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
 import { getUser } from "@/utils/getUser";
@@ -37,12 +37,9 @@ interface VoyageDashboardProps {
 async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   const [user, error] = await getUser();
 
-  // TODO: Mocked value
-  const CHECKIN_STATUS = "Due today";
-
   let currentSprintNumber: number | null = null;
   let sprintsData: Sprint[] = [];
-  let meetingsData: EventList[] = [];
+  let meetingsData: Event[] = [];
   let voyageNumber: number | null = null;
   let voyageData: Voyage = {} as Voyage;
   let features: FeaturesList[] = [];
@@ -119,7 +116,11 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
           voyageNumber={voyageNumber}
           teamId={teamId}
         />
-        <CheckInWidget status={CHECKIN_STATUS} />
+        <CheckInWidget
+          user={user}
+          currentSprintNumber={currentSprintNumber}
+          teamId={teamId ?? ""}
+        />
         <VoyageSupport />
       </div>
       <div className="col-span-1 flex w-full grow flex-col rounded-2xl border-2 border-base-100 bg-base-200 p-4">
