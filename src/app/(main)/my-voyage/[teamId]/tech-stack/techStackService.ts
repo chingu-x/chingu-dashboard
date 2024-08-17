@@ -188,6 +188,7 @@ export async function finalizeTechStack({
   AsyncActionResponse<FinalizeTechStackResponse>
 > {
   const token = getAccessToken();
+
   const finalizeTechStackAsync = () =>
     PATCH<FinalizedList, FinalizeTechStackResponse>(
       `api/v1/voyages/teams/${teamId}/techs/selections`,

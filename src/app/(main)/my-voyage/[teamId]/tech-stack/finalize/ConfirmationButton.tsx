@@ -1,5 +1,6 @@
 import { useParams, useRouter } from "next/navigation";
 import createFinalList from "./utils/createFinalList";
+import editFinalList from "./utils/editFinalList";
 import {
   type FinalizedList,
   finalizeTechStack,
@@ -30,27 +31,52 @@ export default function ConfirmationButton({
   } = useServerAction(finalizeTechStack);
 
   const handleClick = async () => {
-    const selection = createFinalList(previousSelected, selectedItems);
+    if (isFinalized) {
+      const selection = editFinalList(previousSelected, selectedItems);
 
-    const finalList: FinalizedList = {
-      categories: selection.map((cat) => ({
-        categoryId: cat.categoryId,
-        techs: cat.techs,
-      })),
-    };
+      const finalList: FinalizedList = {
+        categories: selection.map((cat) => ({
+          categoryId: cat.categoryId,
+          techs: cat.techs,
+        })),
+      };
 
-    const [res, error] = await finalizeTechStackAction({
-      teamId,
-      finalizedList: finalList,
-    });
-    if (res) {
-      router.push(routePaths.techStackPage(teamId.toString()));
+      const [res, error] = await finalizeTechStackAction({
+        teamId,
+        finalizedList: finalList,
+      });
+      if (res) {
+        router.push(routePaths.techStackPage(teamId.toString()));
+      }
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+      }
+    } else {
+      const selection = createFinalList(selectedItems);
+
+      const finalList: FinalizedList = {
+        categories: selection.map((cat) => ({
+          categoryId: cat.categoryId,
+          techs: cat.techs,
+        })),
+      };
+
+      const [res, error] = await finalizeTechStackAction({
+        teamId,
+        finalizedList: finalList,
+      });
+      if (res) {
+        router.push(routePaths.techStackPage(teamId.toString()));
+      }
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+      }
     }
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-    }
+
     setFinalizeTechStackLoading(false);
   };
 
