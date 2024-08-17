@@ -89,9 +89,9 @@ export default function FinalizeTechList() {
       {techStack.map(renderTechStackItem)}
       {!isFinalized && (
         <ConfirmationButton
+          isFinalized={false}
           allCategoriesSelected={allCategoriesSelected}
           selectedItems={selectedItems}
-          previousSelected={previousSelected}
         />
       )}
       <Link href={routePaths.techStackPage(teamId)}>

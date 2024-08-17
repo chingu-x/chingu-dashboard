@@ -25,6 +25,20 @@ export default function TechStackContainer({ data }: TechStackContainerProps) {
   const selectedTechItems = getSelectedTechItems(techCardData);
   const isFinalized = selectedTechItems.length > 0;
 
+  function renderContent() {
+    if (isFinalized) {
+      return selectedTechItems.map((item) => (
+        <FinalizedTechStackCard key={item.id} title={item.title} data={item} />
+      ));
+    }
+
+    return techCardData.map((item) => (
+      <li key={item.id}>
+        <TechStackCard title={item.title} data={item.techItems} />
+      </li>
+    ));
+  }
+
   return (
     <div className="w-full">
       <div className="mb-10 grid grid-cols-2 place-items-center min-[1920px]:grid-cols-3">
@@ -37,21 +51,7 @@ export default function TechStackContainer({ data }: TechStackContainerProps) {
         </div>
       </div>
       <ul className="grid grid-cols-2 place-items-center gap-y-10 min-[1920px]:grid-cols-3">
-        {!isFinalized &&
-          techCardData.map((item) => (
-            <li key={item.id}>
-              <TechStackCard title={item.title} data={item.techItems} />
-            </li>
-          ))}
-
-        {isFinalized &&
-          selectedTechItems.map((item) => (
-            <FinalizedTechStackCard
-              key={item.id}
-              title={item.title}
-              data={item}
-            />
-          ))}
+        {renderContent()}
       </ul>
     </div>
   );
