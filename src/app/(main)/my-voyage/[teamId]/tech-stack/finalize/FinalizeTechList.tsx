@@ -49,10 +49,10 @@ export default function FinalizeTechList() {
         key={item.id}
         className="flex flex-1 flex-col items-center justify-center rounded-2xl bg-base-100 p-10 [&>*]:my-3 [&>*]:w-3/4"
       >
-        <h1 className="flex items-center">
+        <div className="flex items-center">
           {GetIcon(item.name)}
-          {item.name}
-        </h1>
+          <h1 className="text-xl font-semibold text-base-300">{item.name}</h1>
+        </div>
         {item.teamTechStackItems.map((techItem: TechItem) => {
           const { id, name, teamTechStackItemVotes, isSelected } = techItem;
           return (
