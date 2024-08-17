@@ -1,38 +1,47 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: Chingu Dashboard Bug report
+about: Chingu Dashboard Alpha Testing Bug Tracker
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
 
-**Describe the bug**
+***Describe the bug***
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+***To Reproduce Bug***
+Steps to reproduce the bug:
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
-**Expected behavior**
+***Expected behavior***
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
+***Screenshots***
 If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
+***Additional context***
 Add any other context about the problem here.
+
+***--------------- End of User Report: DO NOT MODIFY ITEMS BELOW THIS LINE ---------------***
+
+***GitHub Issue No. / ID***
+
+***Team Task***
+Here will be added Team declaration by Team Leads.
+
+***Development start date***
+Date when dev team start fixing a bug
+
+***Development end date***
+Date when dev team complete fixing a bug
+
+***BugFix Deploy Date***
+Date when BugFix is deployed, and Bug Issue is closed
+
+***PO Comment***
+Here will be PO team add a comment.
