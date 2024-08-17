@@ -90,7 +90,7 @@ export default function FinalizeTechList() {
         />
       )}
       <Link href={routePaths.techStackPage(teamId)}>
-        <Button className="w-full" variant="neutral">
+        <Button className="mb-20 w-full" variant="neutral">
           Cancel
         </Button>
       </Link>
