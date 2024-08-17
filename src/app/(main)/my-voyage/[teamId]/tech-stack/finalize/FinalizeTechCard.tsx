@@ -17,6 +17,7 @@ export default function FinalizeTechCard({
   techId,
   selectedItems,
   setSelectedItems,
+  setPreviousSelected,
   finalizedItems,
 }: FinalizeTechCardProps) {
   const hasMounted = useRef(false);
@@ -47,11 +48,12 @@ export default function FinalizeTechCard({
           const value = finalizedItems[i].techItems[0].id;
           update = { ...update, [key as keyof FinalizedItem[]]: value };
         }
+        setPreviousSelected(update);
         setSelectedItems(update);
       }
     }
     hasMounted.current = true;
-  }, [finalizedItems, setSelectedItems]);
+  }, [finalizedItems, setSelectedItems, setPreviousSelected]);
 
   return (
     <Button

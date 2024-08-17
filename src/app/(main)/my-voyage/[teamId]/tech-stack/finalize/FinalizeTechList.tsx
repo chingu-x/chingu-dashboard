@@ -17,6 +17,7 @@ export default function FinalizeTechList() {
   const { teamId } = useParams<{ teamId: string }>();
   const { techStack } = useTechStack();
   const [selectedItems, setSelectedItems] = useState<SelectedItems>({});
+  const [previousSelected, setPreviousSelected] = useState<SelectedItems>({});
 
   //checks how many categories are being finalized (Frontend, Backend, CSS etc...)
   const categories = techStack
@@ -55,6 +56,7 @@ export default function FinalizeTechList() {
         </div>
         {item.teamTechStackItems.map((techItem: TechItem) => {
           const { id, name, teamTechStackItemVotes, isSelected } = techItem;
+
           return (
             <FinalizeTechCard
               categoryId={item.id}
@@ -65,6 +67,7 @@ export default function FinalizeTechList() {
               techItemVotes={teamTechStackItemVotes}
               selectedItems={selectedItems}
               setSelectedItems={setSelectedItems}
+              setPreviousSelected={setPreviousSelected}
               finalizedItems={finalizedItems}
             />
           );
@@ -73,6 +76,7 @@ export default function FinalizeTechList() {
           <ConfirmationButton
             isFinalized={isFinalized}
             selectedItems={selectedItems}
+            previousSelected={previousSelected}
             allCategoriesSelected={true}
           />
         )}
@@ -87,6 +91,7 @@ export default function FinalizeTechList() {
         <ConfirmationButton
           allCategoriesSelected={allCategoriesSelected}
           selectedItems={selectedItems}
+          previousSelected={previousSelected}
         />
       )}
       <Link href={routePaths.techStackPage(teamId)}>

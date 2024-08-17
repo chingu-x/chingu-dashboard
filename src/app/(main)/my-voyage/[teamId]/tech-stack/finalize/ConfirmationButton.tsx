@@ -16,6 +16,7 @@ export default function ConfirmationButton({
   isFinalized,
   allCategoriesSelected,
   selectedItems,
+  previousSelected,
 }: ConfirmationButtonProps) {
   const params = useParams();
   const teamId = Number(params.teamId);
@@ -29,12 +30,7 @@ export default function ConfirmationButton({
   } = useServerAction(finalizeTechStack);
 
   const handleClick = async () => {
-    const selection = createFinalList(selectedItems);
-
-    // TODO unselect items if needed. (when editing).
-    // As is, a user can go to edit page and select different items,
-    // hitting 'save changes' sends this to the backend and everything works...except that
-    // previously selected items still have 'isSelected' set to true.
+    const selection = createFinalList(previousSelected, selectedItems);
 
     const finalList: FinalizedList = {
       categories: selection.map((cat) => ({

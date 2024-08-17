@@ -16,6 +16,7 @@ export interface FinalizeTechCardProps {
   isSelected: boolean;
   selectedItems: SelectedItems;
   setSelectedItems: React.Dispatch<React.SetStateAction<SelectedItems>>;
+  setPreviousSelected: React.Dispatch<React.SetStateAction<SelectedItems>>;
   finalizedItems?: FinalizedItem[];
 }
 
@@ -62,4 +63,5 @@ export interface ConfirmationButtonProps {
   isFinalized?: boolean;
   allCategoriesSelected?: boolean;
   selectedItems: SelectedItems;
+  previousSelected: SelectedItems;
 }
