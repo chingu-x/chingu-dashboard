@@ -45,7 +45,7 @@ export function FinalizedTechListItem({
   const avatars = votes.map((vote) => vote.votedBy.member);
 
   return (
-    <div className="flex h-12 items-center rounded-md bg-neutral-content px-4 py-2">
+    <div className="flex h-12 items-center rounded-md bg-base-100 px-4 py-2">
       <h1 className="w-1/3 font-medium">{name}</h1>
       <AvatarGroup>
         {avatars.map((member) => (
