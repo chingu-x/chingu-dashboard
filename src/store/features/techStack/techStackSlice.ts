@@ -6,6 +6,7 @@ export interface TechStackData {
   id: number;
   name: string;
   description: string;
+  isSelected: boolean;
   teamTechStackItems: TechStackItem[];
 }
 export interface TechStackItem {

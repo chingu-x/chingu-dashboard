@@ -1,53 +1,45 @@
-import type { Dispatch, SetStateAction } from "react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
-import SettingsMenu from "./SettingsMenu";
+import { removeTechItemVote } from "@/myVoyage/tech-stack/techStackService";
 import Button from "@/components/Button";
+import useServerAction from "@/hooks/useServerAction";
+import Spinner from "@/components/Spinner";
+import { useAppDispatch } from "@/store/hooks";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 interface RemoveVoteBtnProps {
-  id: number;
-  openMenu: (value: number) => void;
-  numberOfVotes: number;
-  closeMenu: () => void;
-  setIsEditing: Dispatch<SetStateAction<number>>;
-  isMenuOpen: number;
+  techItemId: number;
 }
 
-export default function RemoveVoteBtn({
-  id,
-  openMenu,
-  numberOfVotes,
-  closeMenu,
-  setIsEditing,
-  isMenuOpen,
-}: RemoveVoteBtnProps) {
-  const handleClick = () => {
-    openMenu(id);
+export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
+  const dispatch = useAppDispatch();
+  const {
+    runAction: removeVoteAction,
+    isLoading: removeVoteLoading,
+    setIsLoading: setRemoveVoteLoading,
+  } = useServerAction(removeTechItemVote);
+
+  const handleClick = async () => {
+    const [, error] = await removeVoteAction({
+      techItemId,
+    });
+    if (error) {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    }
+    setRemoveVoteLoading(false);
   };
 
   return (
-    <div className="relative col-span-2 flex w-[165px] items-center justify-end">
-      {numberOfVotes < 2 && (
-        <div className="h-1/6 w-1/6">
-          <EllipsisVerticalIcon
-            className="mr-2 rounded-xl hover:cursor-pointer hover:bg-base-100"
-            onClick={handleClick}
-          />
-          {isMenuOpen === id && (
-            <SettingsMenu
-              onClose={closeMenu}
-              setIsEditing={setIsEditing}
-              id={id}
-            />
-          )}
-        </div>
-      )}
-      <Button
-        variant="error"
-        size="xs"
-        className="justify-self-end rounded-3xl font-semibold"
-      >
-        Remove Vote
-      </Button>
-    </div>
+    <Button
+      variant="error"
+      size="xs"
+      className={`justify-self-end rounded-3xl font-semibold ${
+        removeVoteLoading && "w-3/4"
+      }`}
+      onClick={handleClick}
+      disabled={removeVoteLoading}
+    >
+      {removeVoteLoading ? <Spinner /> : "Remove Vote"}
+    </Button>
   );
 }

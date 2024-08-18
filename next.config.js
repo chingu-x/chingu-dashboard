@@ -29,7 +29,10 @@ const nextConfig = {
             permanent: true,
           },
         ];
-      },
+    },
+    experimental: {
+        optimizePackageImports: [] // put folders with barrel imports here
+    }
 };
 
 module.exports = nextConfig;
