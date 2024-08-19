@@ -13,8 +13,9 @@ export interface TechStackItem {
   id: number;
   name: string;
   teamTechStackItemVotes: TechStackItemVotes[];
+  isSelected: boolean;
 }
-interface TechStackItemVotes {
+export interface TechStackItemVotes {
   votedBy: {
     member: VoyageMember;
   };
