@@ -229,7 +229,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
           {title}
         </span>
       </div>
-
+      {/**TODO Refactor this beast into smaller more module pieces. */}
       <div className="mt-6 h-40 overflow-y-auto p-1">
         <ul className="text-base-300">
           {data.map((element) => {
@@ -308,6 +308,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
           })}
         </ul>
       </div>
+
       {isInput ? (
         <form ref={inputRef} onSubmit={handleSubmit(handleAddItem)}>
           <TextInput
