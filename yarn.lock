@@ -6732,6 +6732,7 @@ __metadata:
     react-hook-form: "npm:^7.46.2"
     react-redux: "npm:^8.1.2"
     redux-persist: "npm:^6.0.0"
+    reflect-metadata: "npm:^0.2.2"
     storybook: "npm:^7.6.4"
     tailwind-merge: "npm:^2.0.0"
     tailwindcss: "npm:3.3.3"
@@ -14221,6 +14222,13 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.9.2"
   checksum: 136d98b3d5dbed1cd6279c8c18a6a74c416db98b8a432a46836bdd668475de6279a2d4fd9d1363f63904e00f0678a8a3e7fa532c897163340baf1e71bb42c742
+  languageName: node
+  linkType: hard
+
+"reflect-metadata@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "reflect-metadata@npm:0.2.2"
+  checksum: 1cd93a15ea291e420204955544637c264c216e7aac527470e393d54b4bb075f10a17e60d8168ec96600c7e0b9fcc0cb0bb6e91c3fbf5b0d8c9056f04e6ac1ec2
   languageName: node
   linkType: hard
 
