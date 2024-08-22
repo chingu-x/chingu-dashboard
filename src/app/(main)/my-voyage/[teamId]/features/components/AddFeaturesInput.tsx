@@ -75,6 +75,27 @@ export default function AddFeaturesInput({
       featureCategoryId: id,
     });
 
+    // if (error) {
+    //   const unauthorized = error.message.split(" ")[2];
+
+    //   if (unauthorized) {
+    //     setTimeout(() => {
+    //       void (async () => {
+    //         await addFeatureAction({
+    //           teamId,
+    //           description,
+    //           featureCategoryId: id,
+    //         });
+    //       })();
+    //     }, 1);
+    //   } else {
+    //     console.log("asd");
+    //     dispatch(
+    //       onOpenModal({ type: "error", content: { message: error.message } }),
+    //     );
+    //   }
+    // }
+
     if (error) {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
