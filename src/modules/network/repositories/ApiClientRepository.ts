@@ -9,8 +9,20 @@ import type {
 } from "@/modules/network/domain/ApiParams";
 import type { IApiClientRepository } from "@/modules/network/domain/repositories/IApiClientRepository";
 
+/**
+ * ApiClientRepository is a custom API client and is responsible for making HTTP requests.
+ * It implements the IApiClientRepository interface.
+ */
 @injectable()
 export class ApiClientRepository implements IApiClientRepository {
+  /**
+   * Sends an HTTP request to the specified URL with the given parameters.
+   *
+   * @template T - The expected response type.
+   * @template P - The type of the payload.
+   * @param {SendRequestParams<P>} params - The parameters for the request.
+   * @returns {Promise<T>} - The response from the API.
+   */
   private async sendRequest<T, P>({
     method,
     baseUrl,
@@ -45,6 +57,13 @@ export class ApiClientRepository implements IApiClientRepository {
     return (await res.json()) as T;
   }
 
+  /**
+   * Sends a GET request to the specified URL.
+   *
+   * @template T - The expected response type.
+   * @param {GetParams} params - The parameters for the GET request.
+   * @returns {Promise<T>} - The response from the API.
+   */
   async GET<T>({ baseUrl, url, token, cache, tags }: GetParams): Promise<T> {
     return this.sendRequest<T, null>({
       method: "GET",
@@ -57,6 +76,14 @@ export class ApiClientRepository implements IApiClientRepository {
     });
   }
 
+  /**
+   * Sends a POST request to the specified URL.
+   *
+   * @template X - The type of the payload.
+   * @template Y - The expected response type.
+   * @param {PostParams<X>} params - The parameters for the POST request.
+   * @returns {Promise<Y>} - The response from the API.
+   */
   async POST<X, Y>({
     baseUrl,
     url,
@@ -74,6 +101,14 @@ export class ApiClientRepository implements IApiClientRepository {
     });
   }
 
+  /**
+   * Sends a PATCH request to the specified URL.
+   *
+   * @template X - The type of the payload.
+   * @template Y - The expected response type.
+   * @param {PatchParams<X>} params - The parameters for the PATCH request.
+   * @returns {Promise<Y>} - The response from the API.
+   */
   async PATCH<X, Y>({
     baseUrl,
     url,
@@ -91,6 +126,13 @@ export class ApiClientRepository implements IApiClientRepository {
     });
   }
 
+  /**
+   * Sends a DELETE request to the specified URL.
+   *
+   * @template X - The expected response type.
+   * @param {DeleteParams} params - The parameters for the DELETE request.
+   * @returns {Promise<X>} - The response from the API.
+   */
   async DELETE<X>({ baseUrl, url, token, cache }: DeleteParams): Promise<X> {
     return this.sendRequest<X, null>({
       method: "DELETE",
@@ -101,6 +143,14 @@ export class ApiClientRepository implements IApiClientRepository {
     });
   }
 
+  /**
+   * Sends an unauthenticated POST request to the specified URL.
+   *
+   * @template X - The type of the payload.
+   * @template Y - The expected response type.
+   * @param {UnauthPostParams<X>} params - The parameters for the unauthenticated POST request.
+   * @returns {Promise<Y>} - The response from the API.
+   */
   async UNAUTHPOST<X, Y>({
     baseUrl,
     url,

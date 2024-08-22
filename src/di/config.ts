@@ -7,12 +7,12 @@ import type { IIdeationService } from "@/modules/ideation/domain/services/IIdeat
 import { IdeationService } from "@/modules/ideation/service/IdeationService";
 
 /* Services */
-container.register<IIdeationService>(TYPES.IdeationService, {
+container.register<IIdeationService>(TYPES.IIdeationService, {
   useClass: IdeationService,
 });
 
 /* Repositories */
-container.register<IApiClientRepository>(TYPES.ApiClientRepository, {
+container.register<IApiClientRepository>(TYPES.IApiClientRepository, {
   useClass: ApiClientRepository,
 });
 

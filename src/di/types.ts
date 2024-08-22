@@ -1,7 +1,7 @@
 export const TYPES = {
   /* Repositories */
-  ApiClientRepository: Symbol.for("ApiClientRepository"),
+  IApiClientRepository: Symbol.for("IApiClientRepository"),
 
   /* Services */
-  IdeationService: Symbol.for("IdeationService"),
+  IIdeationService: Symbol.for("IIdeationService"),
 };
