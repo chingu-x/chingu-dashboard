@@ -50,7 +50,7 @@ export default function Calendar({
       {/* CALENDAR */}
       <div className="flex h-full min-w-[400px] max-w-[400px] flex-col items-center border-base-100 p-6 min-[1200px]:min-w-[600px] min-[1200px]:border-r-2 min-[1200px]:px-28 min-[1470px]:min-w-[400px] min-[1470px]:px-6">
         <div className="flex w-full items-center">
-          <div className="flex w-full items-center justify-between gap-10 min-[1200px]:relative">
+          <div className="flex w-full items-center justify-between min-[1200px]:relative">
             {/* CALENDAR CONTROLS */}
             <button
               type="button"
