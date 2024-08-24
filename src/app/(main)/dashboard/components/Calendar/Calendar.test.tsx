@@ -6,6 +6,7 @@ import Calendar from "./Calendar";
 import { rootReducer } from "@/store/store";
 
 describe("Calendar Component", () => {
+  // not the best test. maybe refactor to e2e test later
   it("displays the month and year on a single line", () => {
     const store = configureStore({
       reducer: rootReducer,
