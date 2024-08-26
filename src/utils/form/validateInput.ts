@@ -89,11 +89,11 @@ export function validateDateTimeInput({
       () => ({
         message: `The meeting should be between ${format(
           minDate,
-          "MMM d k:mm (zzz)",
+          "MMM d H:mm (zzz)",
           {
             timeZone: timezone,
           },
-        )} and ${format(maxDate, "MMM d k:mm (zzz)", {
+        )} and ${format(maxDate, "MMM d H:mm (zzz)", {
           timeZone: timezone,
         })}`,
       }),

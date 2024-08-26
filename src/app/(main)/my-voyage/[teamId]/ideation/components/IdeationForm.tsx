@@ -28,7 +28,7 @@ const validationSchema = z.object({
   title: validateTextInput({
     inputName: "Title",
     required: true,
-    minLen: 10,
+    minLen: 3,
     maxLen: 50,
   }),
   description: validateTextInput({
@@ -315,7 +315,7 @@ export default function IdeationForm() {
           <Textarea
             id="visionStatement"
             label="vision statement"
-            placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
+            placeholder="Share your inspiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
             {...register("vision")}
             errorMessage={errors.vision?.message}
             defaultValue={ideationData?.vision ?? ""}
