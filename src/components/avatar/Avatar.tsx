@@ -1,9 +1,9 @@
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
 interface AvatarProps {
-  image?: string | StaticImageData;
+  image?: string;
   customClassName?: string;
   width: number;
   height: number;
@@ -25,8 +25,9 @@ export default function Avatar({
       <Image
         alt="avatar"
         src={
-          image ??
-          "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg"
+          image
+            ? `${image}?v=1.1`
+            : "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg"
         }
         width={width}
         height={height}
