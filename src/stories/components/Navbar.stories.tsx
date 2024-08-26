@@ -1,7 +1,6 @@
 import { Provider } from "react-redux";
 import type { Meta, StoryObj } from "@storybook/react";
 import { FewNotifications } from "./Bell.stories";
-import avatarImage from "@/stories/assets/avatar.png";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
@@ -10,6 +9,9 @@ import DropDown from "@/components/navbar/DropDown";
 import Button from "@/components/Button";
 import Avatar from "@/components/avatar/Avatar";
 import { mockStoreVoyage, mockStoreNoVoyage } from "@/stories/DropDownStore";
+
+const avatarUrl =
+  "https://gravatar.com/avatar/3bfaef00e02a22f99e17c66e7a9fdd31?s=400&d=identicon&r=x";
 
 const meta = {
   title: "Components/Navbar",
@@ -40,7 +42,7 @@ export const MenuOpenNoVoyage: Story = {
         <ModeToggle />
       </ThemeProvider>,
       <Bell key="Bell" {...FewNotifications.args} />,
-      <Avatar key="Avatar" image={avatarImage} width={24} height={24} />,
+      <Avatar key="Avatar" image={avatarUrl} width={24} height={24} />,
       <DropDown key="DropDown" openState={true} />,
     ],
   },
@@ -62,7 +64,7 @@ export const MenuOpenedOnVoyage: Story = {
         <ModeToggle />
       </ThemeProvider>,
       <Bell key="Bell" {...FewNotifications.args} />,
-      <Avatar key="Avatar" image={avatarImage} width={24} height={24} />,
+      <Avatar key="Avatar" image={avatarUrl} width={24} height={24} />,
       <DropDown key="DropDown" openState={true} />,
     ],
   },
