@@ -11,6 +11,7 @@ import routePaths from "@/utils/routePaths";
 import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
 import type { User } from "@/store/features/user/userSlice";
 import { useSprint, useUser } from "@/store/hooks";
+import convertStringToDate from "@/utils/convertStringToDate";
 
 interface CheckInWidgetProps {
   user: User | null;
@@ -22,7 +23,7 @@ function CheckInWidget({
   currentSprintNumber,
   teamId,
 }: CheckInWidgetProps) {
-  const { currentDate } = useUser();
+  const { timezone, currentDate } = useUser();
   const sprintsData = useSprint();
   const userDate = currentDate ?? new Date();
 
@@ -61,9 +62,19 @@ function CheckInWidget({
     )?.endDate;
 
     if (currentSprintEndDate) {
-      if (isSameDay(userDate, currentSprintEndDate)) {
+      const currentSprintEndDateInUserTimezone = convertStringToDate(
+        currentSprintEndDate,
+        timezone,
+      );
+
+      if (isSameDay(userDate, currentSprintEndDateInUserTimezone)) {
         return "Due today";
-      } else if (isSameDay(userDate, sub(currentSprintEndDate, { days: 1 }))) {
+      } else if (
+        isSameDay(
+          userDate,
+          sub(currentSprintEndDateInUserTimezone, { days: 1 }),
+        )
+      ) {
         return "Pending Submission";
       }
     }
