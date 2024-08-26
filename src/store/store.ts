@@ -34,7 +34,8 @@ const persistConfig = {
   whitelist: ["ideation", "sprint"],
 };
 
-const rootReducer = combineReducers({
+// Root reducer should be used as import directly only for tests
+export const rootReducer = combineReducers({
   modal: modalReducer,
   auth: authReducer,
   user: userReducer,
