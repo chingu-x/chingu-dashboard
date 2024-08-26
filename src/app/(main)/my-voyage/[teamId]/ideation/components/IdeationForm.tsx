@@ -315,7 +315,7 @@ export default function IdeationForm() {
           <Textarea
             id="visionStatement"
             label="vision statement"
-            placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
+            placeholder="Share your inspiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
             {...register("vision")}
             errorMessage={errors.vision?.message}
             defaultValue={ideationData?.vision ?? ""}
