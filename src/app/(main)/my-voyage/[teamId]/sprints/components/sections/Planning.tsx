@@ -54,10 +54,10 @@ export default function Planning() {
   useEffect(() => {
     setData(
       sprints[sprintNumber - 1].teamMeetings[0].formResponseMeeting?.find(
-        (form) => form.form.id === Forms.planning,
+        (form) => form.form.id === Number(Forms.planning),
       ),
     );
-  }, [sprints]);
+  }, [sprints, sprintNumber]);
 
   const goal = data?.responseGroup.responses.find(
     (response) => response.question.id === Number(PlanningQuestions.goal),

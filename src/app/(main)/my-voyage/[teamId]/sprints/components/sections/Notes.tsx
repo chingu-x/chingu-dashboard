@@ -15,7 +15,6 @@ import useServerAction from "@/hooks/useServerAction";
 import { editMeeting } from "@/myVoyage/sprints/sprintsService";
 import { useAppDispatch, useSprint } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { Section } from "@/store/features/sprint/sprintSlice";
 
 const validationSchema = z.object({
   notes: validateTextInput({

@@ -58,10 +58,10 @@ export default function Review() {
   useEffect(() => {
     setData(
       sprints[sprintNumber - 1].teamMeetings[0].formResponseMeeting?.find(
-        (form) => form.form.id === Forms.review,
+        (form) => form.form.id === Number(Forms.review),
       ),
     );
-  }, [sprints]);
+  }, [sprints, sprintNumber]);
 
   const what_right = data?.responseGroup.responses.find(
     (response) => response.question.id === Number(ReviewQuestions.what_right),
