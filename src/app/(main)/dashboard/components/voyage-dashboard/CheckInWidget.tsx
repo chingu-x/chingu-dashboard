@@ -31,13 +31,6 @@ function CheckInWidget({
     Number(currentSprintNumber),
   );
 
-  console.log(
-    "currentSprint",
-    sprintsData.voyage.sprints.find(
-      (sprint) => sprint.number === currentSprintNumber,
-    )?.endDate,
-  );
-
   function renderWeeklyCheckinButton() {
     if (sprintCheckinIsSubmitted) {
       return (
