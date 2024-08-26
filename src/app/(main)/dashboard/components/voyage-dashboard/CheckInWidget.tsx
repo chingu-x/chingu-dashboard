@@ -4,13 +4,13 @@ import { ArrowRightIcon, DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import Link from "next/link";
-import { getDay } from "date-fns";
+import { isSameDay, sub } from "date-fns";
 import Button from "@/components/Button";
 import Badge from "@/components/badge/Badge";
 import routePaths from "@/utils/routePaths";
 import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
 import type { User } from "@/store/features/user/userSlice";
-import { useUser } from "@/store/hooks";
+import { useSprint, useUser } from "@/store/hooks";
 
 interface CheckInWidgetProps {
   user: User | null;
@@ -23,11 +23,19 @@ function CheckInWidget({
   teamId,
 }: CheckInWidgetProps) {
   const { currentDate } = useUser();
+  const sprintsData = useSprint();
   const userDate = currentDate ?? new Date();
 
   const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
     user,
     Number(currentSprintNumber),
+  );
+
+  console.log(
+    "currentSprint",
+    sprintsData.voyage.sprints.find(
+      (sprint) => sprint.number === currentSprintNumber,
+    )?.endDate,
   );
 
   function renderWeeklyCheckinButton() {
@@ -55,14 +63,16 @@ function CheckInWidget({
   }
 
   const getBadgeValue = (userDate: Date): string => {
-    const dayOfWeek = getDay(userDate);
+    const currentSprintEndDate = sprintsData.voyage.sprints.find(
+      (sprint) => sprint.number === currentSprintNumber,
+    )?.endDate;
 
-    if (dayOfWeek >= 2 && dayOfWeek <= 6) {
-      return "";
-    } else if (dayOfWeek === 0) {
-      return "Pending Submission";
-    } else if (dayOfWeek === 1) {
-      return "Due today";
+    if (currentSprintEndDate) {
+      if (isSameDay(userDate, currentSprintEndDate)) {
+        return "Due today";
+      } else if (isSameDay(userDate, sub(currentSprintEndDate, { days: 1 }))) {
+        return "Pending Submission";
+      }
     }
 
     return "";
