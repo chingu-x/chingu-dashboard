@@ -128,7 +128,7 @@ export const WithFormInsideWithVerticalScroll: Story = {
             <Textarea
               id="visionStatement"
               label="vision statement"
-              placeholder="Share your insoiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
+              placeholder="Share your inspiring vision. How will you provide value and benefits to users? What long term impact do you hope to achieve?"
               maxLength={50}
             />
             <TextInput

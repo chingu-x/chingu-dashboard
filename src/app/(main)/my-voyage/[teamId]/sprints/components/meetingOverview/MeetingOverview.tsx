@@ -28,9 +28,9 @@ export default function MeetingOverview({
         </p>
       </div>
       <a
-        href={`//${meetingLink}`}
+        href={meetingLink}
         target={"_blank"}
-        rel={"noreferrer"}
+        rel={"noopener noreferrer"}
         className="w-full"
       >
         <Button
