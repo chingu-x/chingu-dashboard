@@ -28,7 +28,7 @@ const validationSchema = z.object({
   title: validateTextInput({
     inputName: "Title",
     required: true,
-    minLen: 10,
+    minLen: 3,
     maxLen: 50,
   }),
   description: validateTextInput({
