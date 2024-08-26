@@ -44,7 +44,7 @@ export default function Notes() {
 
   useEffect(() => {
     setData(sprints[sprintNumber - 1].teamMeetings[0].notes);
-  }, [sprints]);
+  }, [sprints, sprintNumber]);
 
   const {
     register,
