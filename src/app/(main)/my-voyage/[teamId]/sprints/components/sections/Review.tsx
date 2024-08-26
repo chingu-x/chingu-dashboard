@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,7 +19,7 @@ import {
   editSection,
 } from "@/myVoyage/sprints/sprintsService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useSprint } from "@/store/hooks";
 
 const validationSchema = z.object({
   what_right: validateTextInput({
@@ -38,11 +38,8 @@ const validationSchema = z.object({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-interface ReviewProps {
-  data?: Section;
-}
-
-export default function Review({ data }: ReviewProps) {
+export default function Review() {
+  const [data, setData] = useState<Section>();
   const dispatch = useAppDispatch();
   const params = useParams<{
     sprintNumber: string;
@@ -53,6 +50,18 @@ export default function Review({ data }: ReviewProps) {
     Number(params.sprintNumber),
     Number(params.meetingId),
   ];
+
+  const {
+    voyage: { sprints },
+  } = useSprint();
+
+  useEffect(() => {
+    setData(
+      sprints[sprintNumber - 1].teamMeetings[0].formResponseMeeting?.find(
+        (form) => form.form.id === Forms.review,
+      ),
+    );
+  }, [sprints]);
 
   const what_right = data?.responseGroup.responses.find(
     (response) => response.question.id === Number(ReviewQuestions.what_right),
