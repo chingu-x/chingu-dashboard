@@ -26,7 +26,7 @@ export default function Avatar({
         alt="avatar"
         src={
           image
-            ? `${image}?v=1.1`
+            ? `${image}&v=1.2`
             : "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg"
         }
         width={width}
