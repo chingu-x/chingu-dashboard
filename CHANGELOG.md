@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 - Added version to image in avatar component
 
+### Changed
+
+### Fixed
+
 ## [1.0.0-alpha.1] - 2024-08-26
 
 ### Added
