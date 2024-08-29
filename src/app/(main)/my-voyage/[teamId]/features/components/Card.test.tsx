@@ -75,10 +75,10 @@ describe("Feature Card component", () => {
       "25b7b76c-1567-4910-9d50-e78819daccf1",
     );
 
-    const editButton = card.getByRole("button", { name: /feature menu/i });
+    const cardAction = card.getByRole("button", { name: /feature menu/i });
     const avatar = card.queryByRole("img", { name: /avatar/i });
 
-    expect(editButton).toBeInTheDocument();
+    expect(cardAction).toBeInTheDocument();
     expect(avatar).not.toBeInTheDocument();
   });
 
@@ -88,10 +88,10 @@ describe("Feature Card component", () => {
       "5d6eb1aa-6e9c-4b26-a363-6a35e5d76daa",
     );
 
-    const editButton = card.queryByRole("button", { name: /feature menu/i });
+    const cardAction = card.queryByRole("button", { name: /feature menu/i });
     const avatar = card.getByRole("img", { name: /avatar/i });
 
-    expect(editButton).not.toBeInTheDocument();
+    expect(cardAction).not.toBeInTheDocument();
     expect(avatar).toBeInTheDocument();
   });
 
@@ -104,4 +104,9 @@ describe("Feature Card component", () => {
     const description = card.getByText(features[0].description);
     expect(description.closest("span")).toHaveClass("break-all");
   });
+
+  // some more tests that could be implemented
+  it("renders input when edit button is visible and clicked", () => {});
+
+  it("deletes a feature when delete button is visible and clicked", () => {});
 });
