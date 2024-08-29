@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import React from "react";
 import Card from "./Card";
+import { type Feature, features } from "./fixtures/Features";
 import { rootReducer } from "@/store/store";
 import { useUser } from "@/store/hooks";
 
@@ -48,45 +49,30 @@ jest.mock("@hello-pangea/dnd", () => ({
   ),
 }));
 
+// "current user" id is 25b7b76c-1567-4910-9d50-e78819daccf1
+const renderWithStore = (feature: Feature, userId: string) => {
+  const store = configureStore({
+    reducer: rootReducer,
+  });
+
+  (useUser as jest.Mock).mockReturnValue({ id: userId });
+
+  return render(
+    <Provider store={store}>
+      <Card index={1} feature={feature} setEditMode={jest.fn()} />
+    </Provider>,
+  );
+};
+
 describe("Feature Card component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it("renders edit button if current user's id matches id of user who added feature", () => {
-    const mockSetEditMode = jest.fn();
-
-    const store = configureStore({
-      reducer: rootReducer,
-    });
-
-    const feature = {
-      id: 1,
-      order: 1,
-      teamMemberId: 1,
-      category: {
-        id: 1,
-        name: "Must Have",
-      },
-      addedBy: {
-        member: {
-          id: "user1",
-          firstName: "test",
-          lastName: "user",
-          avatar:
-            "https://gravatar.com/avatar/c8cf6521c193fc743c7fadcd8be04e983724764efa65b3c3913b6d22f086a11f?s=200&r=g&d=robohash",
-        },
-      },
-      description:
-        "This is a really long description to test ellipsis button visibility",
-    };
-
-    (useUser as jest.Mock).mockReturnValue({ id: "user1" });
-
-    const card = render(
-      <Provider store={store}>
-        <Card index={1} feature={feature} setEditMode={mockSetEditMode} />
-      </Provider>,
+    const card = renderWithStore(
+      features[0],
+      "25b7b76c-1567-4910-9d50-e78819daccf1",
     );
 
     const editButton = card.getByRole("button", { name: /feature menu/i });
@@ -97,39 +83,9 @@ describe("Feature Card component", () => {
   });
 
   it("renders avatar if current user's id doesn't match id of user who added feature", () => {
-    const mockSetEditMode = jest.fn();
-
-    const store = configureStore({
-      reducer: rootReducer,
-    });
-
-    const feature = {
-      id: 1,
-      order: 1,
-      teamMemberId: 1,
-      category: {
-        id: 1,
-        name: "Must Have",
-      },
-      addedBy: {
-        member: {
-          id: "user1",
-          firstName: "test",
-          lastName: "user",
-          avatar:
-            "https://gravatar.com/avatar/c8cf6521c193fc743c7fadcd8be04e983724764efa65b3c3913b6d22f086a11f?s=200&r=g&d=robohash",
-        },
-      },
-      description:
-        "This is a really long description to test ellipsis button visibility",
-    };
-
-    (useUser as jest.Mock).mockReturnValue({ id: "user2" });
-
-    const card = render(
-      <Provider store={store}>
-        <Card index={1} feature={feature} setEditMode={mockSetEditMode} />
-      </Provider>,
+    const card = renderWithStore(
+      features[0],
+      "5d6eb1aa-6e9c-4b26-a363-6a35e5d76daa",
     );
 
     const editButton = card.queryByRole("button", { name: /feature menu/i });
@@ -140,42 +96,12 @@ describe("Feature Card component", () => {
   });
 
   it("wraps long word to new line", () => {
-    const mockSetEditMode = jest.fn();
-
-    const store = configureStore({
-      reducer: rootReducer,
-    });
-
-    const feature = {
-      id: 1,
-      order: 1,
-      teamMemberId: 1,
-      category: {
-        id: 1,
-        name: "Must Have",
-      },
-      addedBy: {
-        member: {
-          id: "user1",
-          firstName: "test",
-          lastName: "user",
-          avatar:
-            "https://gravatar.com/avatar/c8cf6521c193fc743c7fadcd8be04e983724764efa65b3c3913b6d22f086a11f?s=200&r=g&d=robohash",
-        },
-      },
-      description:
-        "This is a really long description to test ellipsis button visibility",
-    };
-
-    (useUser as jest.Mock).mockReturnValue({ id: "user2" });
-
-    const card = render(
-      <Provider store={store}>
-        <Card index={1} feature={feature} setEditMode={mockSetEditMode} />
-      </Provider>,
+    const card = renderWithStore(
+      features[0],
+      "5d6eb1aa-6e9c-4b26-a363-6a35e5d76daa",
     );
 
-    const description = card.getByText(feature.description);
+    const description = card.getByText(features[0].description);
     expect(description.closest("span")).toHaveClass("break-all");
   });
 });
