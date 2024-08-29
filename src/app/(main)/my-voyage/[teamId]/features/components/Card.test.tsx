@@ -104,11 +104,4 @@ describe("Feature Card component", () => {
     const description = card.getByText(features[0].description);
     expect(description.closest("span")).toHaveClass("break-all");
   });
-
-  // some more tests that could be implemented
-  it("renders input when edit button is visible and clicked", () => {});
-
-  it("edits feature when input is saved", () => {});
-
-  it("deletes a feature when delete button is visible and clicked", () => {});
 });
