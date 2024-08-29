@@ -31,7 +31,7 @@ export default function Avatar({
         }
         width={width}
         height={height}
-        className="bg-base-200"
+        className={cn("bg-base-200")}
       />
     </div>
   );
