@@ -108,5 +108,7 @@ describe("Feature Card component", () => {
   // some more tests that could be implemented
   it("renders input when edit button is visible and clicked", () => {});
 
+  it("adds new feature when input is saved", () => {});
+
   it("deletes a feature when delete button is visible and clicked", () => {});
 });
