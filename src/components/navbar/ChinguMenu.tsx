@@ -7,7 +7,7 @@ export default function ChinguMenu() {
   return (
     <Link
       href={routePaths.dashboardPage()}
-      className="flex flex-col flex-wrap items-center gap-2 cursor-pointer sm:flex-row"
+      className="flex cursor-pointer flex-col flex-wrap items-center gap-2 sm:flex-row"
     >
       <Image
         src={chinguLogo}
