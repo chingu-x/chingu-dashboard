@@ -31,7 +31,7 @@ export default function ErrorComponent({
   }
 
   return (
-    <div className="mx-auto flex h-full w-full max-w-[628px] flex-col items-center justify-center gap-y-6">
+    <div className="mx-auto flex h-[calc(100vh-155px)] w-full max-w-[628px] flex-col items-center justify-center gap-y-6">
       <Banner
         imageLight="/img/error_light.png"
         imageDark="/img/error_dark.png"
