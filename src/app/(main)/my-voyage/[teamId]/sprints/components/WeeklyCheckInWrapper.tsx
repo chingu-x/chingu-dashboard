@@ -75,6 +75,9 @@ export default async function WeeklyCheckInWrapper({
   let description = "";
   let questions = [] as Question[];
 
+  let hasProductOwner = false;
+  let hasScrumMaster = false;
+
   const [user, error] = await getUser();
 
   const { errorResponse, data } = await getCurrentVoyageData({
@@ -141,6 +144,15 @@ export default async function WeeklyCheckInWrapper({
           }).voyageTeamMemberId;
         }
 
+        // Check if a team has a product owner or a scrum muster
+        hasScrumMaster = !!res.voyageTeamMembers.find(
+          (member) => member.voyageRole.name === "Scrum Master",
+        );
+
+        hasProductOwner = !!res.voyageTeamMembers.find(
+          (member) => member.voyageRole.name === "Product Owner",
+        );
+
         // Get all teamMembers except for the current user
         if (voyageTeamMemberId) {
           teamMembers = res.voyageTeamMembers
@@ -163,7 +175,7 @@ export default async function WeeklyCheckInWrapper({
         );
       }
 
-      // Fetch form
+      // Fetch general checkin form
       const [formRes, formError] = await fetchFormQuestions({
         formId: Forms.checkIn,
       });
@@ -176,8 +188,47 @@ export default async function WeeklyCheckInWrapper({
           />
         );
       }
+
       if (formRes && formRes?.description) description = formRes.description;
       if (formRes && formRes?.questions) questions = formRes.questions;
+
+      // Fetch PO checkin questions (form)
+      if (hasProductOwner) {
+        const [POformRes, POformError] = await fetchFormQuestions({
+          formId: Forms.checkinPO,
+        });
+
+        if (POformError) {
+          return (
+            <ErrorComponent
+              errorType={ErrorType.FETCH_FORM_QUESTIONS}
+              message={POformError.message}
+            />
+          );
+        }
+
+        if (POformRes && POformRes?.questions)
+          questions = [...questions, ...POformRes.questions];
+      }
+
+      // Fetch SM checkin questions (form)
+      if (hasScrumMaster) {
+        const [SMformRes, SMformError] = await fetchFormQuestions({
+          formId: Forms.checkinSM,
+        });
+
+        if (SMformError) {
+          return (
+            <ErrorComponent
+              errorType={ErrorType.FETCH_FORM_QUESTIONS}
+              message={SMformError.message}
+            />
+          );
+        }
+
+        if (SMformRes && SMformRes?.questions)
+          questions = [...questions, ...SMformRes.questions];
+      }
     }
   } else {
     redirect(routePaths.dashboardPage());

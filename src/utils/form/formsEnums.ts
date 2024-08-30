@@ -1,5 +1,7 @@
 export enum Forms {
-  submitProject = 6,
+  submitProject = 8,
+  checkinSM = 5,
+  checkinPO = 4,
   checkIn = 3,
   planning = 2,
   review = 1,
