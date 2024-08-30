@@ -7,6 +7,7 @@ import Button from "./Button";
 
 import routePaths from "@/utils/routePaths";
 import { type ErrorType } from "@/utils/error";
+import Banner from "@/components/banner/Banner";
 
 interface ErrorProps {
   message: string;
@@ -30,18 +31,30 @@ export default function ErrorComponent({
   }
 
   return (
-    <div className="mx-auto mt-2 flex w-full max-w-[600px] flex-col items-center justify-center gap-y-5">
-      <h1 className="text-xl font-semibold capitalize">Error</h1>
-      <p className="font-medium">The following error occured:</p>
-      <div className="flex w-full flex-col gap-y-2 rounded-lg bg-error-content/50 px-6 py-4 text-center font-semibold uppercase">
-        <p>{errorType ? errorType : ""}</p>
-        <p>{message}.</p>
+    <div className="mx-auto flex h-full w-full max-w-[628px] flex-col items-center justify-center gap-y-6">
+      <Banner
+        imageLight="/img/error_light.png"
+        imageDark="/img/error_dark.png"
+        alt="error_banner"
+        height="h-[315px]"
+        width="w-[484px]"
+      />
+      <div className="flex flex-col items-center gap-y-8">
+        <h1 className="text-3xl font-semibold uppercase text-primary">Error</h1>
+        <span className="text-lg font-medium text-base-300">
+          The following error occurred:
+        </span>
+        <div className="flex flex-col items-center gap-y-2 text-lg font-medium uppercase text-base-300">
+          <h2>{errorType ? errorType : ""}</h2>
+          <span>{message}.</span>
+        </div>
       </div>
       <div className="flex w-full gap-x-10">
         <Button
           className="w-full"
           variant="neutral"
           type="button"
+          size="lg"
           onClick={handleResetAndRefresh}
         >
           Try again
@@ -50,6 +63,7 @@ export default function ErrorComponent({
           <Button
             className="w-full"
             type="button"
+            size="lg"
             onClick={() => router.push(routePaths.signIn())}
           >
             Log in
@@ -58,6 +72,7 @@ export default function ErrorComponent({
           <Button
             className="w-full"
             type="button"
+            size="lg"
             onClick={() => router.push(routePaths.dashboardPage())}
           >
             Return to dashboard
