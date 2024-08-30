@@ -30,7 +30,7 @@ export default function PageButton({
   ariaLabel,
 }: PageButtonProps) {
   const buttonStyles = `${
-    isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem] px-0"
+    isOpen ? "flex justify-start w-full" : "h-[3.125rem] w-[3.125rem] p-0"
   }`;
 
   const getButtonBackgroundStyle = (page: string) =>

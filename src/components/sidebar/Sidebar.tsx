@@ -146,15 +146,15 @@ export default function Sidebar() {
   return (
     <aside
       className={`${
-        isOpenSidebar ? "w-[18.438rem]" : "w-[5.813rem]"
-      } flex h-full flex-col justify-between border-r border-neutral-content bg-base-200 text-center shadow-[4px_4px_4px_0] shadow-neutral-focus/5`}
+        isOpenSidebar ? "w-[15.626rem]" : "w-auto"
+      } flex h-full flex-col justify-between border-r border-base-100 bg-base-200 text-center shadow-md`}
     >
       <div
         className={`flex flex-col ${
-          isOpenSidebar ? "items-start pl-10" : "items-center"
-        } pt-6`}
+          isOpenSidebar ? "items-start px-6 pt-6" : "items-center"
+        } px-5 pt-6`}
       >
-        <ul>
+        <ul className="w-full">
           {pagesProperties.map((element) => (
             <PageButton
               key={element.name}
@@ -186,7 +186,7 @@ export default function Sidebar() {
           </ul>
         )}
       </div>
-      <div className="flex min-h-[80px] flex-col items-end justify-start border-t border-neutral-content pr-6 pt-4">
+      <div className="flex min-h-[80px] flex-col items-end justify-start border-t border-base-100 pr-6 pt-4">
         <ExpandButton isOpen={isOpenSidebar} onClick={setIsOpenSidebar} />
       </div>
     </aside>
