@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IdeationUrls } from "@/modules/ideation/constants/IdeationUrls";
 import { TYPES } from "@/di/types";
 import { type IdeationApiRepository } from "@/modules/ideation/domain/ports/ideationApiRepository";
-import { type RestApiRepository } from "@/modules/rest-api/domain/ports/restApiRepository";
+import { type RestApiRepository } from "@/modules/restApi/domain/ports/restApiRepository";
 import type {
   AddIdeationBodyDto,
   AddIdeationRequestDto,

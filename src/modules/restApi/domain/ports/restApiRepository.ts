@@ -4,7 +4,7 @@ import type {
   PatchParams,
   PostParams,
   UnauthPostParams,
-} from "@/modules/rest-api/domain/entities/restApiParams";
+} from "@/modules/restApi/domain/entities/restApiParams";
 
 export interface RestApiRepository {
   get<X>(params: GetParams): Promise<X>;

@@ -7,7 +7,7 @@ import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/AddIdeationUseCase";
 import type { AddIdeationUsecaseDto } from "@/modules/ideation/domain/dtos/request.dto";
-import { NextJsRestApiRepository } from "@/modules/rest-api/infrastructure/adapters/nextJsRestApiRepository";
+import { NextJsRestApiRepository } from "@/modules/restApi/infrastructure/adapters/nextJsRestApiRepository";
 import { IdeationApiRepositoryImpl } from "@/modules/ideation/infrastructure/adapters/ideationApiRepositoryImpl";
 import { type AddIdeationResponseDto } from "@/modules/ideation/domain/dtos/response.dto";
 

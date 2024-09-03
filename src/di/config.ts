@@ -2,9 +2,9 @@ import { container } from "tsyringe";
 
 import { TYPES } from "./types";
 import { type IdeationApiRepository } from "@/modules/ideation/domain/ports/ideationApiRepository";
-import { NextJsRestApiRepository } from "@/modules/rest-api/infrastructure/adapters/nextJsRestApiRepository";
+import { NextJsRestApiRepository } from "@/modules/restApi/infrastructure/adapters/nextJsRestApiRepository";
 import { IdeationApiRepositoryImpl } from "@/modules/ideation/infrastructure/adapters/ideationApiRepositoryImpl";
-import { type RestApiRepository } from "@/modules/rest-api/domain/ports/restApiRepository";
+import { type RestApiRepository } from "@/modules/restApi/domain/ports/restApiRepository";
 import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/AddIdeationUseCase";
 
 container.register<IdeationApiRepository>(TYPES.IdeationApiRepository, {

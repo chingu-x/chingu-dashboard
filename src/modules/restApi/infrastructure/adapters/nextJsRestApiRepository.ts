@@ -1,12 +1,12 @@
-import { type RestApiRepository } from "@/modules/rest-api/domain/ports/restApiRepository";
+import { type RestApiRepository } from "@/modules/restApi/domain/ports/restApiRepository";
 import type {
   DeleteParams,
   PatchParams,
   PostParams,
   UnauthPostParams,
   GetParams,
-} from "@/modules/rest-api/domain/entities/restApiParams";
-import { type RequestOptions } from "@/modules/rest-api/domain/entities/requestOptions";
+} from "@/modules/restApi/domain/entities/restApiParams";
+import { type RequestOptions } from "@/modules/restApi/domain/entities/requestOptions";
 
 type NextJsAuthRequestOptions = Required<
   Pick<RequestOptions, "token" | "cache">
