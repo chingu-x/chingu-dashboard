@@ -48,7 +48,7 @@ const pagesProperties: PageProperty[] = [
     name: MainPages.dashboard,
     marginBottom: "mb-4",
     icon: <RectangleGroupIcon className="h-[1.125rem]" />,
-    link: "/dashboard",
+    link: routePaths.dashboardPage(),
     "aria-label": "Dashboard Page",
   },
   {
