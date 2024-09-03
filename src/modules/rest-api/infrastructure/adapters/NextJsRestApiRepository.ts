@@ -1,4 +1,4 @@
-import { type IRestApiRepository } from "@/modules/rest-api/domain/ports/IRestApiRepository";
+import { type RestApiRepository } from "@/modules/rest-api/domain/ports/restApiRepository";
 import type {
   DeleteParams,
   PatchParams,
@@ -17,26 +17,26 @@ type NextJsUnAuthRequestionOptions = Required<Pick<RequestOptions, "cache">> &
   Omit<RequestOptions, "cache">;
 
 interface NextJsGetParams extends Omit<GetParams, "options"> {
-  options: NextJsAuthRequestOptions;
+  options: NextJsAuthRequestOptions; // Enforce required options
 }
 
 interface NextJsPostParams<X> extends Omit<PostParams<X>, "options"> {
-  options: NextJsAuthRequestOptions;
+  options: NextJsAuthRequestOptions; // Enforce required options
 }
 
 interface NextJsPatchParams<X> extends Omit<PatchParams<X>, "options"> {
-  options: NextJsAuthRequestOptions;
+  options: NextJsAuthRequestOptions; // Enforce required options
 }
 
 interface NextJsDeleteParams extends Omit<DeleteParams, "options"> {
-  options: NextJsAuthRequestOptions;
+  options: NextJsAuthRequestOptions; // Enforce required options
 }
 
 interface NextJsUnauthParams<X> extends Omit<UnauthPostParams<X>, "options"> {
   options: NextJsUnAuthRequestionOptions;
 }
 
-export class NextJsRestApiRepository implements IRestApiRepository {
+export class NextJsRestApiRepository implements RestApiRepository {
   private baseUrl: string;
 
   constructor(baseUrl: string) {

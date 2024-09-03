@@ -6,7 +6,7 @@ import type {
   UnauthPostParams,
 } from "@/modules/rest-api/domain/entities/restApiParams";
 
-export interface IRestApiRepository {
+export interface RestApiRepository {
   get<T>(params: GetParams): Promise<T>;
 
   post<X, Y>(params: PostParams<X>): Promise<Y>;
