@@ -7,13 +7,13 @@ import type {
 } from "@/modules/rest-api/domain/entities/restApiParams";
 
 export interface RestApiRepository {
-  get<T>(params: GetParams): Promise<T>;
+  get<X>(params: GetParams): Promise<X>;
 
   post<X, Y>(params: PostParams<X>): Promise<Y>;
 
   patch<X, Y>(params: PatchParams<X>): Promise<Y>;
 
-  delete<T>(params: DeleteParams): Promise<T>;
+  delete<X>(params: DeleteParams): Promise<X>;
 
   unauthpost<X, Y>(params: UnauthPostParams<X>): Promise<Y>;
 }

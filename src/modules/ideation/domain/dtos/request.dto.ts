@@ -1,19 +1,34 @@
 import { type IdeationRequestDto, type IdeationBodyDto } from "./common.dto";
 
-interface AddIdeationBodyDto extends IdeationBodyDto {}
+export interface AddIdeationBodyDto extends IdeationBodyDto {}
 
-interface EditIdeationBodyDto extends Partial<AddIdeationBodyDto> {}
+export interface EditIdeationBodyDto extends Partial<AddIdeationBodyDto> {}
 
-interface AddIdeationRequestDto
+export interface AddIdeationRequestDto
   extends Pick<IdeationRequestDto, "teamId">,
-    IdeationBodyDto {}
+    IdeationBodyDto {
+  cache?: RequestCache;
+  token?: string;
+}
 
-type EditIdeationRequestDto = EditIdeationBodyDto &
-  Omit<IdeationRequestDto, "teamId">;
+export type EditIdeationRequestDto = EditIdeationBodyDto &
+  Omit<IdeationRequestDto, "teamId"> & {
+    cache?: RequestCache;
+    token?: string;
+  };
 
-type DeleteIdeationRequestDto = Omit<IdeationRequestDto, "teamId">;
+export type DeleteIdeationRequestDto = Omit<IdeationRequestDto, "teamId"> & {
+  cache?: RequestCache;
+  token?: string;
+};
 
-type IdeationVoteRequestDto = Omit<IdeationRequestDto, "teamId">;
-type FetchIdeationsRequestDto = Pick<IdeationRequestDto, "teamId">;
+export type IdeationVoteRequestDto = Omit<IdeationRequestDto, "teamId"> & {
+  cache?: RequestCache;
+  token?: string;
+};
+export type FetchIdeationsRequestDto = Pick<IdeationRequestDto, "teamId">;
 
-interface FinalizeIdeationRequestDto extends IdeationRequestDto {}
+export interface FinalizeIdeationRequestDto extends IdeationRequestDto {
+  cache?: RequestCache;
+  token?: string;
+}

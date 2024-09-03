@@ -7,18 +7,20 @@ interface IdeationResponseDto {
   updatedAt: Date;
 }
 
-interface AddIdeationResponseDto extends IdeationResponseDto, IdeationBodyDto {}
+export interface AddIdeationResponseDto
+  extends IdeationResponseDto,
+    IdeationBodyDto {}
 
-interface EditIdeationResponseDto extends AddIdeationResponseDto {}
+export interface EditIdeationResponseDto extends AddIdeationResponseDto {}
 
-interface DeleteIdeationResponseDto extends AddIdeationResponseDto {}
+export interface DeleteIdeationResponseDto extends AddIdeationResponseDto {}
 
-interface FinalizeIdeationResponseDto
+export interface IdeationVoteResponseDto extends IdeationResponseDto {
+  projectIdeaId: number;
+}
+
+export interface FinalizeIdeationResponseDto
   extends IdeationResponseDto,
     IdeationBodyDto {
   isSelected: boolean;
-}
-
-interface IdeationVoteResponseDto extends IdeationResponseDto {
-  projectIdeaId: number;
 }
