@@ -1,9 +1,7 @@
 export const TYPES = {
   /* Repositories */
   RestApiRepository: Symbol.for("RestApiRepository"),
-
-  /* Services */
-  IIdeationService: Symbol.for("IIdeationService"),
+  IdeationApiRepository: Symbol.for("IdeationApiRepository"),
 
   /* UseCases */
   AddIdeationUseCase: Symbol.for("AddIdeationUseCase"),

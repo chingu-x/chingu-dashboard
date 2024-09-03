@@ -1,5 +1,7 @@
 import { type IdeationRequestDto, type IdeationBodyDto } from "./common.dto";
 
+export type FetchIdeationsRequestDto = Pick<IdeationRequestDto, "teamId">;
+
 export interface AddIdeationBodyDto extends IdeationBodyDto {}
 
 export interface EditIdeationBodyDto extends Partial<AddIdeationBodyDto> {}
@@ -26,7 +28,6 @@ export type IdeationVoteRequestDto = Omit<IdeationRequestDto, "teamId"> & {
   cache?: RequestCache;
   token?: string;
 };
-export type FetchIdeationsRequestDto = Pick<IdeationRequestDto, "teamId">;
 
 export interface FinalizeIdeationRequestDto extends IdeationRequestDto {
   cache?: RequestCache;

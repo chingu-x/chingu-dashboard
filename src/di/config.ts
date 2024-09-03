@@ -1,19 +1,17 @@
 import { container } from "tsyringe";
 
 import { TYPES } from "./types";
-import type { IRestApiRepository } from "@/modules/api/domain/repositories/IRestApiRepository";
-import { RestApiRepository } from "@/modules/api/repositories/RestApiRepository";
-import type { IIdeationService } from "@/modules/ideation/domain/services/IIdeationService";
-import { IdeationService } from "@/modules/ideation/service/IdeationService";
+import { type IdeationApiRepository } from "@/modules/ideation/domain/ports/ideationApiRepository";
+import { NextJsRestApiRepository } from "@/modules/rest-api/infrastructure/adapters/nextJsRestApiRepository";
+import { IdeationApiRepositoryImpl } from "@/modules/ideation/infrastructure/adapters/ideationApiRepositoryImpl";
+import { type RestApiRepository } from "@/modules/rest-api/domain/ports/restApiRepository";
 
-/* Services */
-container.register<IIdeationService>(TYPES.IIdeationService, {
-  useClass: IdeationService,
+container.register<IdeationApiRepository>(TYPES.IdeationApiRepository, {
+  useClass: IdeationApiRepositoryImpl,
 });
 
-/* Repositories */
-container.register<IRestApiRepository>(TYPES.IApiClientRepository, {
-  useClass: RestApiRepository,
+container.register<RestApiRepository>(TYPES.RestApiRepository, {
+  useClass: NextJsRestApiRepository,
 });
 
 export default container;
