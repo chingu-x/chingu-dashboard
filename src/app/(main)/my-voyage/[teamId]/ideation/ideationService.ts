@@ -5,6 +5,11 @@ import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
+import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/AddIdeationUseCase";
+import type { AddIdeationUsecaseDto } from "@/modules/ideation/domain/dtos/request.dto";
+import { NextJsRestApiRepository } from "@/modules/rest-api/infrastructure/adapters/nextJsRestApiRepository";
+import { IdeationApiRepositoryImpl } from "@/modules/ideation/infrastructure/adapters/ideationApiRepositoryImpl";
+import { type AddIdeationResponseDto } from "@/modules/ideation/domain/dtos/response.dto";
 
 interface IdeationProps {
   teamId: number;
@@ -53,30 +58,76 @@ export interface IdeationVoteResponse extends IdeationResponse {
   projectIdeaId: number;
 }
 
+const nextJsRestApiRepository = new NextJsRestApiRepository(
+  process.env.NEXT_PUBLIC_API_URL!,
+);
+const ideationApiRepository = new IdeationApiRepositoryImpl(
+  nextJsRestApiRepository,
+);
+
 export async function addIdeation({
   teamId,
   title,
   description,
   vision,
-}: AddIdeationProps): Promise<AsyncActionResponse<AddIdeationResponse>> {
+}: AddIdeationUsecaseDto): Promise<
+  AsyncActionResponse<AddIdeationResponseDto>
+> {
   const token = getAccessToken();
+  const addIdeationUseCase = new AddIdeationUseCase(ideationApiRepository);
 
-  const addIdeationAsync = () =>
-    POST<AddIdeationBody, AddIdeationResponse>(
-      `api/v1/voyages/teams/${teamId}/ideations`,
+  // const addIdeationUseCase = container.resolve<AddIdeationUseCase>(
+  //   TYPES.AddIdeationUseCase,
+  // );
+
+  try {
+    const addIdeationAsync = await addIdeationUseCase.execute({
+      teamId,
+      title,
+      description,
+      vision,
+      cache: "default",
       token,
-      "default",
-      { title, description, vision },
-    );
+    });
 
-  const [res, error] = await handleAsync(addIdeationAsync);
+    if (addIdeationAsync) {
+      revalidateTag(CacheTag.ideation);
+    }
 
-  if (res) {
-    revalidateTag(CacheTag.ideation);
+    return [addIdeationAsync, null];
+  } catch (error) {
+    if (error instanceof Error) {
+      return [null, { message: error.message }];
+    } else {
+      throw error;
+    }
   }
-
-  return [res, error];
 }
+
+// export async function addIdeation({
+//   teamId,
+//   title,
+//   description,
+//   vision,
+// }: AddIdeationProps): Promise<AsyncActionResponse<AddIdeationResponse>> {
+//   const token = getAccessToken();
+
+//   const addIdeationAsync = () =>
+//     POST<AddIdeationBody, AddIdeationResponse>(
+//       `api/v1/voyages/teams/${teamId}/ideations`,
+//       token,
+//       "default",
+//       { title, description, vision },
+//     );
+
+//   const [res, error] = await handleAsync(addIdeationAsync);
+
+//   if (res) {
+//     revalidateTag(CacheTag.ideation);
+//   }
+
+//   return [res, error];
+// }
 
 export async function editIdeation({
   ideationId,
