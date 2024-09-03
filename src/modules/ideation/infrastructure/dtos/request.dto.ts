@@ -13,10 +13,6 @@ export interface AddIdeationRequestDto
   token?: string;
 }
 
-export interface AddIdeationUsecaseDto
-  extends Pick<IdeationRequestDto, "teamId">,
-    IdeationBodyDto {}
-
 export type EditIdeationRequestDto = EditIdeationBodyDto &
   Omit<IdeationRequestDto, "teamId"> & {
     cache?: RequestCache;

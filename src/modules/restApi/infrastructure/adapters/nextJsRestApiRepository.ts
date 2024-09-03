@@ -33,7 +33,7 @@ interface NextJsDeleteParams extends Omit<DeleteParams, "options"> {
 }
 
 interface NextJsUnauthParams<X> extends Omit<UnauthPostParams<X>, "options"> {
-  options: NextJsUnAuthRequestionOptions;
+  options: NextJsUnAuthRequestionOptions; // Enforce required options
 }
 
 export class NextJsRestApiRepository implements RestApiRepository {

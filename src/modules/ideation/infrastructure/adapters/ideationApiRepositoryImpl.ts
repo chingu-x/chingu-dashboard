@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IdeationUrls } from "@/modules/ideation/constants/IdeationUrls";
+import { IdeationUrls } from "@/modules/ideation/constants/ideationUrls";
 import { TYPES } from "@/di/types";
 import { type IdeationApiRepository } from "@/modules/ideation/domain/ports/ideationApiRepository";
 import { type RestApiRepository } from "@/modules/restApi/domain/ports/restApiRepository";
@@ -11,14 +11,14 @@ import type {
   EditIdeationRequestDto,
   FinalizeIdeationRequestDto,
   IdeationVoteRequestDto,
-} from "@/modules/ideation/domain/dtos/request.dto";
+} from "@/modules/ideation/infrastructure/dtos/request.dto";
 import type {
   EditIdeationResponseDto,
   AddIdeationResponseDto,
   DeleteIdeationResponseDto,
   IdeationVoteResponseDto,
   FinalizeIdeationResponseDto,
-} from "@/modules/ideation/domain/dtos/response.dto";
+} from "@/modules/ideation/infrastructure/dtos/response.dto";
 
 /**
  * Repository (adapter) implementing the port

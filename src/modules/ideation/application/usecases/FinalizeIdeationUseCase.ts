@@ -1,8 +1,8 @@
 import { inject } from "tsyringe";
 import { TYPES } from "@/di/types";
 import { type IdeationApiRepository } from "@/modules/ideation/domain/ports/ideationApiRepository";
-import { type FinalizeIdeationRequestDto } from "@/modules/ideation/domain/dtos/request.dto";
-import { type FinalizeIdeationResponseDto } from "@/modules/ideation/domain/dtos/response.dto";
+import { type FinalizeIdeationRequestDto } from "@/modules/ideation/infrastructure/dtos/request.dto";
+import { type FinalizeIdeationResponseDto } from "@/modules/ideation/infrastructure/dtos/response.dto";
 
 export class FinalizeIdeationUseCase {
   constructor(

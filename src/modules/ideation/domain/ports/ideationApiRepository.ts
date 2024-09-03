@@ -4,7 +4,7 @@ import type {
   EditIdeationRequestDto,
   FinalizeIdeationRequestDto,
   IdeationVoteRequestDto,
-} from "@/modules/ideation/domain/dtos/request.dto";
+} from "@/modules/ideation/infrastructure/dtos/request.dto";
 
 import type {
   AddIdeationResponseDto,
@@ -12,7 +12,7 @@ import type {
   EditIdeationResponseDto,
   FinalizeIdeationResponseDto,
   IdeationVoteResponseDto,
-} from "@/modules/ideation/domain/dtos/response.dto";
+} from "@/modules/ideation/infrastructure/dtos/response.dto";
 
 export interface IdeationApiRepository {
   addIdeation: (

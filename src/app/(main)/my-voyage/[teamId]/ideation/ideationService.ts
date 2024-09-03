@@ -6,10 +6,10 @@ import { DELETE, PATCH, POST } from "@/utils/requests";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/AddIdeationUseCase";
-import type { AddIdeationUsecaseDto } from "@/modules/ideation/domain/dtos/request.dto";
+import type { AddIdeationUsecaseDto } from "@/modules/ideation/application/dtos/dtos";
 import { NextJsRestApiRepository } from "@/modules/restApi/infrastructure/adapters/nextJsRestApiRepository";
 import { IdeationApiRepositoryImpl } from "@/modules/ideation/infrastructure/adapters/ideationApiRepositoryImpl";
-import { type AddIdeationResponseDto } from "@/modules/ideation/domain/dtos/response.dto";
+import { type AddIdeationResponseDto } from "@/modules/ideation/infrastructure/dtos/response.dto";
 
 interface IdeationProps {
   teamId: number;

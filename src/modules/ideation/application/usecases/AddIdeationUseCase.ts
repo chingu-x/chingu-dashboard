@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 import { TYPES } from "@/di/types";
 import { type IdeationApiRepository } from "@/modules/ideation/domain/ports/ideationApiRepository";
-import { type AddIdeationRequestDto } from "@/modules/ideation/domain/dtos/request.dto";
-import { type AddIdeationResponseDto } from "@/modules/ideation/domain/dtos/response.dto";
+import { type AddIdeationRequestDto } from "@/modules/ideation/infrastructure/dtos/request.dto";
+import { type AddIdeationResponseDto } from "@/modules/ideation/infrastructure/dtos/response.dto";
 
 @injectable()
 export class AddIdeationUseCase {
