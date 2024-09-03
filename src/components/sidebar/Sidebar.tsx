@@ -69,7 +69,7 @@ const pagesProperties: PageProperty[] = [
     name: MainPages.myVoyage,
     marginBottom: "mb-4",
     icon: <RocketLaunchIcon className="h-[1.125rem]" />,
-    link: "",
+    link: "/my-voyage",
     "aria-label": "Voyage Main Page",
   },
 ];
@@ -164,7 +164,6 @@ export default function Sidebar() {
               isOpen={isOpenSidebar}
               link={element.link}
               setHoveredButton={setHoveredButton}
-              voyagePages={voyagePages}
               ariaLabel={element["aria-label"]}
             />
           ))}
