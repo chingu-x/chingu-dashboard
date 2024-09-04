@@ -5,11 +5,11 @@ import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
-import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/addIdeationUseCase";
 import { type AddIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
 import { NextJsRestApiAdapter } from "@/modules/restApi/adapters/secondary/nextJsRestApiAdapter";
 import { IdeationApiAdapter } from "@/modules/ideation/adapters/secondary/ideationApiAdapter";
 import { type AddIdeationUsecaseDto } from "@/modules/ideation/application/dtos/addIdeationUsecaseDto";
+import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/addIdeationUseCase";
 
 interface IdeationProps {
   teamId: number;

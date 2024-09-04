@@ -1,5 +1,4 @@
 import { inject, injectable } from "tsyringe";
-import { IdeationUrls } from "@/modules/ideation/constants/ideationUrls";
 import { TYPES } from "@/di/types";
 import { type IdeationApiPort } from "@/modules/ideation/ports/secondary/ideationApiPort";
 import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort";
@@ -19,6 +18,7 @@ import type {
   IdeationVoteResponseDto,
   FinalizeIdeationResponseDto,
 } from "@/modules/ideation/application/dtos/response.dto";
+import { IdeationUrls } from "@/modules/ideation/application/constants/ideationUrls";
 
 @injectable()
 export class IdeationApiAdapter implements IdeationApiPort {
