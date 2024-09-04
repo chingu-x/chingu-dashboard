@@ -2,7 +2,7 @@ import { type FinalizeIdeationRequestDto } from "@/modules/ideation/application/
 import { type FinalizeIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
 
 export interface FinalizeIdeationPort {
-  finalizeIdeation(
+  execute(
     props: FinalizeIdeationRequestDto,
   ): Promise<FinalizeIdeationResponseDto>;
 }

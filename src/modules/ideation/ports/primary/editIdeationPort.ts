@@ -2,5 +2,5 @@ import { type EditIdeationRequestDto } from "@/modules/ideation/application/dtos
 import { type EditIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
 
 export interface EditIdeationPort {
-  editIdeation(props: EditIdeationRequestDto): Promise<EditIdeationResponseDto>;
+  execute(props: EditIdeationRequestDto): Promise<EditIdeationResponseDto>;
 }

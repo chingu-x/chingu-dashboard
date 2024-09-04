@@ -2,7 +2,5 @@ import { type DeleteIdeationRequestDto } from "@/modules/ideation/application/dt
 import { type DeleteIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
 
 export interface DeleteIdeationPort {
-  deleteIdeation(
-    props: DeleteIdeationRequestDto,
-  ): Promise<DeleteIdeationResponseDto>;
+  execute(props: DeleteIdeationRequestDto): Promise<DeleteIdeationResponseDto>;
 }
