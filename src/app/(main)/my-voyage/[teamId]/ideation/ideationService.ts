@@ -10,6 +10,7 @@ import { NextJsRestApiAdapter } from "@/modules/restApi/adapters/secondary/nextJ
 import { IdeationApiAdapter } from "@/modules/ideation/adapters/secondary/ideationApiAdapter";
 import { type AddIdeationUsecaseDto } from "@/modules/ideation/application/dtos/addIdeationUsecaseDto";
 import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/addIdeationUseCase";
+import { type AddIdeationRequestDto } from "@/modules/ideation/application/dtos/request.dto";
 
 interface IdeationProps {
   teamId: number;
@@ -63,6 +64,12 @@ const nextJsRestApiAdapter = new NextJsRestApiAdapter(
 );
 const ideationApiPort = new IdeationApiAdapter(nextJsRestApiAdapter);
 
+interface NextJsAddIdeationAdapter extends AddIdeationUseCase {
+  execute(
+    props: Required<AddIdeationRequestDto>,
+  ): Promise<AddIdeationResponseDto>;
+}
+
 export async function addIdeation({
   teamId,
   title,
@@ -72,7 +79,9 @@ export async function addIdeation({
   AsyncActionResponse<AddIdeationResponseDto>
 > {
   const token = getAccessToken();
-  const addIdeationUseCase = new AddIdeationUseCase(ideationApiPort);
+  const addIdeationUseCase: NextJsAddIdeationAdapter = new AddIdeationUseCase(
+    ideationApiPort,
+  );
 
   // refactor this later to not expect a function
   const addIdeationAsync = async () =>
