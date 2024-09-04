@@ -1,11 +1,11 @@
 import { container } from "tsyringe";
 import { TYPES } from "./types";
-import type { AddIdeationUseCase } from "@/modules/ideation/application/usecases/AddIdeationUseCase";
-import type { AddIdeationVoteUseCase } from "@/modules/ideation/application/usecases/AddIdeationVoteUseCase";
-import type { DeleteIdeationUseCase } from "@/modules/ideation/application/usecases/DeleteIdeationUseCase";
-import type { EditIdeationUseCase } from "@/modules/ideation/application/usecases/EditIdeationUseCase";
-import type { FinalizeIdeationUseCase } from "@/modules/ideation/application/usecases/FinalizeIdeationUseCase";
-import type { RemoveIdeationVoteUseCase } from "@/modules/ideation/application/usecases/RemoveIdeationVoteUseCase";
+import type { AddIdeationUseCase } from "@/modules/ideation/application/usecases/addIdeationUseCase";
+import type { AddIdeationVoteUseCase } from "@/modules/ideation/application/usecases/addIdeationVoteUseCase";
+import type { DeleteIdeationUseCase } from "@/modules/ideation/application/usecases/deleteIdeationUseCase";
+import type { EditIdeationUseCase } from "@/modules/ideation/application/usecases/editIdeationUseCase";
+import type { FinalizeIdeationUseCase } from "@/modules/ideation/application/usecases/finalizeIdeationUseCase";
+import type { RemoveIdeationVoteUseCase } from "@/modules/ideation/application/usecases/removeIdeationVoteUseCase";
 
 export const injectables = {
   /* Ideation */

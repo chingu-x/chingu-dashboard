@@ -1,22 +1,17 @@
 import { container } from "tsyringe";
 
 import { TYPES } from "./types";
-import { type IdeationApiRepository } from "@/modules/ideation/domain/ports/ideationApiRepository";
-import { NextJsRestApiRepository } from "@/modules/restApi/infrastructure/adapters/nextJsRestApiRepository";
-import { IdeationApiRepositoryImpl } from "@/modules/ideation/infrastructure/adapters/ideationApiRepositoryImpl";
-import { type RestApiRepository } from "@/modules/restApi/domain/ports/restApiRepository";
-import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/AddIdeationUseCase";
+import { type IdeationApiPort } from "@/modules/ideation/ports/secondary/ideationApiPort";
+import { IdeationApiAdapter } from "@/modules/ideation/adapters/secondary/ideationApiAdapter";
+import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort";
+import { NextJsRestApiAdapter } from "@/modules/restApi/adapters/secondary/nextJsRestApiAdapter";
 
-container.register<IdeationApiRepository>(TYPES.IdeationApiRepository, {
-  useClass: IdeationApiRepositoryImpl,
+container.register<IdeationApiPort>(TYPES.IdeationApiPort, {
+  useClass: IdeationApiAdapter,
 });
 
-container.register<RestApiRepository>(TYPES.RestApiRepository, {
-  useValue: new NextJsRestApiRepository(process.env.NEXT_PUBLIC_API_URL!),
-});
-
-container.register<AddIdeationUseCase>(TYPES.AddIdeationUseCase, {
-  useClass: AddIdeationUseCase,
+container.register<RestApiPort>(TYPES.RestApiPort, {
+  useValue: new NextJsRestApiAdapter(process.env.NEXT_PUBLIC_API_URL!),
 });
 
 export default container;

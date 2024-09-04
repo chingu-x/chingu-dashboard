@@ -5,11 +5,11 @@ import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
-import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/AddIdeationUseCase";
-import type { AddIdeationUsecaseDto } from "@/modules/ideation/application/dtos/dtos";
-import { NextJsRestApiRepository } from "@/modules/restApi/infrastructure/adapters/nextJsRestApiRepository";
-import { IdeationApiRepositoryImpl } from "@/modules/ideation/infrastructure/adapters/ideationApiRepositoryImpl";
-import { type AddIdeationResponseDto } from "@/modules/ideation/infrastructure/dtos/response.dto";
+import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/addIdeationUseCase";
+import { type AddIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
+import { NextJsRestApiAdapter } from "@/modules/restApi/adapters/secondary/nextJsRestApiAdapter";
+import { IdeationApiAdapter } from "@/modules/ideation/adapters/secondary/ideationApiAdapter";
+import { type AddIdeationUsecaseDto } from "@/modules/ideation/application/dtos/addIdeationUsecaseDto";
 
 interface IdeationProps {
   teamId: number;
@@ -58,12 +58,10 @@ export interface IdeationVoteResponse extends IdeationResponse {
   projectIdeaId: number;
 }
 
-const nextJsRestApiRepository = new NextJsRestApiRepository(
+const nextJsRestApiAdapter = new NextJsRestApiAdapter(
   process.env.NEXT_PUBLIC_API_URL!,
 );
-const ideationApiRepository = new IdeationApiRepositoryImpl(
-  nextJsRestApiRepository,
-);
+const ideationApiPort = new IdeationApiAdapter(nextJsRestApiAdapter);
 
 export async function addIdeation({
   teamId,
@@ -74,14 +72,11 @@ export async function addIdeation({
   AsyncActionResponse<AddIdeationResponseDto>
 > {
   const token = getAccessToken();
-  const addIdeationUseCase = new AddIdeationUseCase(ideationApiRepository);
+  const addIdeationUseCase = new AddIdeationUseCase(ideationApiPort);
 
-  // const addIdeationUseCase = container.resolve<AddIdeationUseCase>(
-  //   TYPES.AddIdeationUseCase,
-  // );
-
-  try {
-    const addIdeationAsync = await addIdeationUseCase.execute({
+  // refactor this later to not expect a function
+  const addIdeationAsync = async () =>
+    await addIdeationUseCase.execute({
       teamId,
       title,
       description,
@@ -90,18 +85,14 @@ export async function addIdeation({
       token,
     });
 
-    if (addIdeationAsync) {
-      revalidateTag(CacheTag.ideation);
-    }
+  const [res, error] =
+    await handleAsync<AddIdeationResponseDto>(addIdeationAsync);
 
-    return [addIdeationAsync, null];
-  } catch (error) {
-    if (error instanceof Error) {
-      return [null, { message: error.message }];
-    } else {
-      throw error;
-    }
+  if (res) {
+    revalidateTag(CacheTag.ideation);
   }
+
+  return [res, error];
 }
 
 // export async function addIdeation({

@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 import { IdeationUrls } from "@/modules/ideation/constants/ideationUrls";
 import { TYPES } from "@/di/types";
-import { type IdeationApiRepository } from "@/modules/ideation/domain/ports/ideationApiRepository";
-import { type RestApiRepository } from "@/modules/restApi/domain/ports/restApiRepository";
+import { type IdeationApiPort } from "@/modules/ideation/ports/secondary/ideationApiPort";
+import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort";
 import type {
   AddIdeationBodyDto,
   AddIdeationRequestDto,
@@ -11,23 +11,20 @@ import type {
   EditIdeationRequestDto,
   FinalizeIdeationRequestDto,
   IdeationVoteRequestDto,
-} from "@/modules/ideation/infrastructure/dtos/request.dto";
+} from "@/modules/ideation/application/dtos/request.dto";
 import type {
   EditIdeationResponseDto,
   AddIdeationResponseDto,
   DeleteIdeationResponseDto,
   IdeationVoteResponseDto,
   FinalizeIdeationResponseDto,
-} from "@/modules/ideation/infrastructure/dtos/response.dto";
+} from "@/modules/ideation/application/dtos/response.dto";
 
-/**
- * Repository (adapter) implementing the port
- */
 @injectable()
-export class IdeationApiRepositoryImpl implements IdeationApiRepository {
+export class IdeationApiAdapter implements IdeationApiPort {
   constructor(
-    @inject(TYPES.RestApiRepository)
-    private readonly apiClient: RestApiRepository,
+    @inject(TYPES.RestApiPort)
+    private readonly apiClient: RestApiPort,
   ) {}
 
   async addIdeation({

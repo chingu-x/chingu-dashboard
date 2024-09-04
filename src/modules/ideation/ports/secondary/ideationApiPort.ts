@@ -4,7 +4,7 @@ import type {
   EditIdeationRequestDto,
   FinalizeIdeationRequestDto,
   IdeationVoteRequestDto,
-} from "@/modules/ideation/infrastructure/dtos/request.dto";
+} from "@/modules/ideation/application/dtos/request.dto";
 
 import type {
   AddIdeationResponseDto,
@@ -12,9 +12,9 @@ import type {
   EditIdeationResponseDto,
   FinalizeIdeationResponseDto,
   IdeationVoteResponseDto,
-} from "@/modules/ideation/infrastructure/dtos/response.dto";
+} from "@/modules/ideation/application/dtos/response.dto";
 
-export interface IdeationApiRepository {
+export interface IdeationApiPort {
   addIdeation: (
     props: AddIdeationRequestDto,
   ) => Promise<AddIdeationResponseDto>;

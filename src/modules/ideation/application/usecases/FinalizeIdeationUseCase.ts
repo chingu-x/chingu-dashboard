@@ -1,19 +1,19 @@
 import { inject } from "tsyringe";
 import { TYPES } from "@/di/types";
-import { type IdeationApiRepository } from "@/modules/ideation/domain/ports/ideationApiRepository";
-import { type FinalizeIdeationRequestDto } from "@/modules/ideation/infrastructure/dtos/request.dto";
-import { type FinalizeIdeationResponseDto } from "@/modules/ideation/infrastructure/dtos/response.dto";
+import { type IdeationApiPort } from "@/modules/ideation/ports/secondary/ideationApiPort";
+import { type FinalizeIdeationRequestDto } from "@/modules/ideation/application/dtos/request.dto";
+import { type FinalizeIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
 
 export class FinalizeIdeationUseCase {
   constructor(
-    @inject(TYPES.IdeationApiRepository)
-    private readonly ideationApiRepository: IdeationApiRepository,
+    @inject(TYPES.IdeationApiPort)
+    private readonly ideationApi: IdeationApiPort,
   ) {}
 
   async execute(
     props: FinalizeIdeationRequestDto,
   ): Promise<FinalizeIdeationResponseDto> {
-    return await this.ideationApiRepository.finalizeIdeation({
+    return await this.ideationApi.finalizeIdeation({
       ...props,
     });
   }

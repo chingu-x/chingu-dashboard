@@ -1,7 +1,11 @@
 export const TYPES = {
-  /* Repositories */
-  RestApiRepository: Symbol.for("RestApiRepository"),
-  IdeationApiRepository: Symbol.for("IdeationApiRepository"),
+  /* Ports */
+  RestApiPort: Symbol.for("RestApiPort"),
+  IdeationApiPort: Symbol.for("IdeationApiPort"),
+
+  /* Adapters */
+  // NextJsRestApiAdapter: Symbol.for("NextJsRestApiAdapter"),
+  IdeationApiAdapter: Symbol.for("IdeationApiAdapter"),
 
   /* UseCases */
   AddIdeationUseCase: Symbol.for("AddIdeationUseCase"),

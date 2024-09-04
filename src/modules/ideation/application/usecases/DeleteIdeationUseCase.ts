@@ -1,19 +1,19 @@
 import { inject } from "tsyringe";
 import { TYPES } from "@/di/types";
-import { type IdeationApiRepository } from "@/modules/ideation/domain/ports/ideationApiRepository";
-import { type DeleteIdeationRequestDto } from "@/modules/ideation/infrastructure/dtos/request.dto";
-import { type DeleteIdeationResponseDto } from "@/modules/ideation/infrastructure/dtos/response.dto";
+import { type DeleteIdeationRequestDto } from "@/modules/ideation/application/dtos/request.dto";
+import { type DeleteIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
+import { type IdeationApiPort } from "@/modules/ideation/ports/secondary/ideationApiPort";
 
 export class DeleteIdeationUseCase {
   constructor(
-    @inject(TYPES.IdeationApiRepository)
-    private readonly ideationApiRepository: IdeationApiRepository,
+    @inject(TYPES.IdeationApiPort)
+    private readonly ideationApi: IdeationApiPort,
   ) {}
 
   async execute(
     props: DeleteIdeationRequestDto,
   ): Promise<DeleteIdeationResponseDto> {
-    return await this.ideationApiRepository.deleteIdeation({
+    return await this.ideationApi.deleteIdeation({
       ...props,
     });
   }

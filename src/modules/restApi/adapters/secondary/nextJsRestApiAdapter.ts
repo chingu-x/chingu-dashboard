@@ -1,12 +1,12 @@
-import { type RestApiRepository } from "@/modules/restApi/domain/ports/restApiRepository";
+import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort";
 import type {
   DeleteParams,
   PatchParams,
   PostParams,
   UnauthPostParams,
   GetParams,
-} from "@/modules/restApi/domain/entities/restApiParams";
-import { type RequestOptions } from "@/modules/restApi/domain/entities/requestOptions";
+} from "@/modules/restApi/application/entities/restApiParams";
+import { type RequestOptions } from "@/modules/restApi/application/entities/requestOptions";
 
 type NextJsAuthRequestOptions = Required<
   Pick<RequestOptions, "token" | "cache">
@@ -36,7 +36,7 @@ interface NextJsUnauthParams<X> extends Omit<UnauthPostParams<X>, "options"> {
   options: NextJsUnAuthRequestionOptions; // Enforce required options
 }
 
-export class NextJsRestApiRepository implements RestApiRepository {
+export class NextJsRestApiAdapter implements RestApiPort {
   private baseUrl: string;
 
   constructor(baseUrl: string) {

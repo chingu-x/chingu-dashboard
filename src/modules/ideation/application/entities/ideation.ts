@@ -1,4 +1,4 @@
-import { type IdeationVotes } from "./IdeationVotes";
+import { type IdeationVotes } from "./ideationVotes";
 import { type VoyageMember } from "@/store/features/ideation/ideationSlice";
 
 // importing the voyage member from the store for now but it would ideally be imported from a different domain in modules folder
