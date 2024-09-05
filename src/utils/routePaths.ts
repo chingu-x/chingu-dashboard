@@ -2,7 +2,7 @@
 
 const routePaths = {
   dashboardPage() {
-    return "/";
+    return "/dashboard";
   },
   VoyageMemberDashboardPage(teamId: string) {
     return `/dashboard/${teamId}`;
