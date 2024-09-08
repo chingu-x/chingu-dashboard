@@ -18,7 +18,7 @@ export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
   } = useServerAction(removeTechItemVote);
 
   const handleClick = async () => {
-    const [_, error] = await removeVoteAction({
+    const [, error] = await removeVoteAction({
       techItemId,
     });
 

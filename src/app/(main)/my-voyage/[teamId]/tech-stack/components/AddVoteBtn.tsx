@@ -18,7 +18,7 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
   } = useServerAction(addTechItemVote);
 
   const handleClick = async () => {
-    const [_, error] = await addVoteAction({
+    const [, error] = await addVoteAction({
       techItemId,
     });
 
