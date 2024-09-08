@@ -61,7 +61,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
       }
 
       setVoteChanged(true);
-      setRemoveIdeationVoteLoading(false);
+      setTimeout(() => {
+        setRemoveIdeationVoteLoading(false);
+      }, 1000);
     } else {
       dispatch(setProjectIdeasLoadingTrue());
       const [, error] = await addIdeationVoteAction({
@@ -75,7 +77,10 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
       }
 
       setVoteChanged(true);
-      setAddIdeationVoteLoading(false);
+
+      setTimeout(() => {
+        setAddIdeationVoteLoading(false);
+      }, 1000);
     }
   }
 

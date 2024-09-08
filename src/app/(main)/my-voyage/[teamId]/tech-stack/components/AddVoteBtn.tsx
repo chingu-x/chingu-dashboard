@@ -18,7 +18,7 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
   } = useServerAction(addTechItemVote);
 
   const handleClick = async () => {
-    const [, error] = await addVoteAction({
+    const [_, error] = await addVoteAction({
       techItemId,
     });
 
@@ -27,7 +27,10 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
         onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
-    setAddVoteLoading(false);
+
+    setTimeout(() => {
+      setAddVoteLoading(false);
+    }, 1000);
   };
 
   return (

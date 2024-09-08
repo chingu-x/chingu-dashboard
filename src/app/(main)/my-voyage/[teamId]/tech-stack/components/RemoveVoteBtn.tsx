@@ -18,15 +18,18 @@ export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
   } = useServerAction(removeTechItemVote);
 
   const handleClick = async () => {
-    const [, error] = await removeVoteAction({
+    const [_, error] = await removeVoteAction({
       techItemId,
     });
+
     if (error) {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
-    setRemoveVoteLoading(false);
+    setTimeout(() => {
+      setRemoveVoteLoading(false);
+    }, 1000);
   };
 
   return (
