@@ -229,6 +229,8 @@ export default async function WeeklyCheckInWrapper({
         if (SMformRes && SMformRes?.questions)
           questions = [...questions, ...SMformRes.questions];
       }
+
+      questions = questions.sort((a, b) => a.order - b.order);
     }
   } else {
     redirect(routePaths.dashboardPage());
