@@ -43,8 +43,10 @@ export async function fetchTeamDirectory({
   if (res) {
     updateDirectoryWithCurrentTime(res);
     const teamMember = res.voyageTeamMembers;
-    const elementToSort = teamMember.find(
-      (element) => element.member.discordId === user?.discordId,
+    const elementToSort = teamMember.find((element) =>
+      element.member.oAuthProfiles.find(
+        (profile) => profile.provider.name === "discord",
+      ),
     );
     moveElementToFirst(teamMember, elementToSort);
   }
