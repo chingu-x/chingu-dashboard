@@ -70,8 +70,7 @@ export default function MeetingForm() {
       timezone,
     }),
     meetingLink: validateTextInput({
-      inputName: "Meeting Link",
-      required: true,
+      inputName: "Meeting link",
       isUrl: true,
     }),
   });
