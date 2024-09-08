@@ -64,34 +64,34 @@ export default function ResourceCard({
   };
 
   return (
-    <div className="group flex w-full items-center rounded-xl border border-base-200 bg-base-200 p-2 shadow-sm transition-all hover:border-base-100 hover:shadow-md [&>*]:cursor-pointer">
-      <ArrowTopRightOnSquareIcon
+    <div className="group relative flex w-full flex-nowrap items-center gap-x-2 rounded-xl border border-base-200 bg-base-200 shadow-sm transition-all hover:border-base-100 hover:shadow-md xl:gap-x-6">
+      <button
+        type="button"
+        aria-label="open resource details"
         onClick={openViewModal}
-        className="ml-2 mr-4 h-8 w-8 stroke-1 transition-all group-hover:stroke-2"
-      />
-      <div
-        onClick={openViewModal}
-        className="flex w-full flex-col justify-center overflow-hidden p-2"
+        className="before:absolute before:left-0 before:top-0 before:h-full before:w-full before:content-['']"
       >
-        <h1 className="w-1/2 truncate text-xl font-bold">{title}</h1>
-        <div className="mt-2 flex [&>*]:mr-8">
-          <div className="flex items-center gap-x-2">
+        <ArrowTopRightOnSquareIcon className="mx-6 h-8 w-8 stroke-1 transition-all group-hover:stroke-2" />
+      </button>
+      <div className="my-2 flex w-full flex-col justify-center overflow-hidden p-2">
+        <h2 className="text-xl font-semibold text-base-300">{title}</h2>
+        <div className="mt-2 flex">
+          <div className="flex items-center gap-x-2 border-r border-r-base-100 pr-4 xl:pr-8">
             <p>Shared by</p>
             <Badge title={user.firstName} avatarUrlImage={user.avatar} />
           </div>
-          <div className="h-5 w-1 border border-y-0 border-l-0 border-r-neutral-content"></div>
-          <div className="text-neutral-focus">Added {date}</div>
+          <div className="pl-4 text-neutral-focus xl:pl-8">Added {date}</div>
         </div>
       </div>
-      {userId === currentUserId ? (
+      {userId === currentUserId && (
         <IconButton
-          className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-base-100"
+          className="z-10 mx-6"
           onClick={openDeleteModal}
           ariaLabel="delete"
         >
-          <TrashIcon className="h-6 w-6" />
+          <TrashIcon />
         </IconButton>
-      ) : null}
+      )}
     </div>
   );
 }

@@ -70,16 +70,12 @@ export default function ResourceInput() {
       className="flex w-full items-center rounded-xl bg-base-200 p-1 shadow-lg"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="m-4 flex w-3/4 flex-col">
+      <div className="mx-4 mb-1 mt-3 flex w-3/4 flex-col">
         <TextInput
           id="url"
           placeholder="Paste your resource link here."
           ariaLabel="link"
-          errorMessage={
-            errors.url?.type === "invalid_string"
-              ? "Must start with https://"
-              : ""
-          }
+          errorMessage={errors.url?.message}
           {...register("url")}
           inputGroupContent={<LinkIcon />}
         />
@@ -87,6 +83,7 @@ export default function ResourceInput() {
           id="title"
           placeholder="Name your resource here."
           ariaLabel="resource name"
+          errorMessage={errors.title?.message}
           {...register("title")}
         />
       </div>
