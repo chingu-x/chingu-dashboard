@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 
 ### Changed
-- Updated how we're retrieving the discord id to display in the directory page
+- Updated how we're retrieving the discord id to display in the directory page https://github.com/chingu-x/chingu-dashboard/issues/202
 
 
 ### Fixed
