@@ -101,6 +101,7 @@ export default function Notes() {
         rows={2}
         {...register("notes")}
         errorMessage={errors.notes?.message}
+        defaultValue={data ?? ""}
       />
       <Button
         type="submit"

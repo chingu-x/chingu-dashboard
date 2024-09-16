@@ -42,11 +42,18 @@ export async function fetchTeamDirectory({
 
   if (res) {
     updateDirectoryWithCurrentTime(res);
-    const teamMember = res.voyageTeamMembers;
-    const elementToSort = teamMember.find(
-      (element) => element.member.discordId === user?.discordId,
+    const teamMembers = res.voyageTeamMembers;
+    const userDiscordId = user?.oAuthProfiles.find(
+      (profile) => profile.provider.name === "discord",
+    )?.providerUsername;
+    const elementToSort = teamMembers.find(
+      (element) =>
+        element.member.oAuthProfiles.find(
+          (profile) => profile.provider.name === "discord",
+        )?.providerUsername === userDiscordId,
     );
-    moveElementToFirst(teamMember, elementToSort);
+
+    moveElementToFirst(teamMembers, elementToSort);
   }
 
   return [res, error];
