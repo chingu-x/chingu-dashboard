@@ -25,6 +25,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import { validateTextInput } from "@/utils/form/validateInput";
+import Tooltip from "@/components/Tooltip";
 
 interface TechStackCardProps {
   title: string;
@@ -52,6 +53,8 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
   const [isInput, setIsInput] = useState(false);
   const [editItemId, setEditItemId] = useState(-1);
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const [tooltipHovered, setTooltipHovered] = useState<string>("");
+
   const inputRef = useRef<HTMLFormElement>(null);
   const editRef = useRef<HTMLFormElement>(null);
   const items = data.map((item) => item.name.toLowerCase());
@@ -269,12 +272,35 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                     <div className="col-span-2 ml-8 bg-base-200">
                       <AvatarGroup>
                         {element.teamTechStackItemVotes.map((vote) => (
-                          <Avatar
+                          <Tooltip
                             key={vote.votedBy.member.id}
-                            image={vote.votedBy.member.avatar}
-                            width={24}
-                            height={24}
-                          />
+                            content={`${vote.votedBy.member.firstName}`}
+                            customClassName="bg-base-100 after:border-100 text-xs font-medium w-fit"
+                            position="bottom"
+                            tooltipWidth="small"
+                            isDisplay={
+                              tooltipHovered ===
+                              element.id + vote.votedBy.member.id
+                            }
+                            hovered={
+                              tooltipHovered ===
+                              element.id + vote.votedBy.member.id
+                            }
+                          >
+                            <Avatar
+                              image={vote.votedBy.member.avatar}
+                              width={24}
+                              height={24}
+                              onMouseEnter={() => {
+                                setTooltipHovered(
+                                  element.id + vote.votedBy.member.id,
+                                );
+                              }}
+                              onMouseLeave={() => {
+                                setTooltipHovered("");
+                              }}
+                            />
+                          </Tooltip>
                         ))}
                       </AvatarGroup>
                     </div>

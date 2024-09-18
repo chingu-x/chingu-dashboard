@@ -7,6 +7,8 @@ interface AvatarProps {
   customClassName?: string;
   width: number;
   height: number;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
 export default function Avatar({
@@ -14,13 +16,17 @@ export default function Avatar({
   customClassName,
   width = 24,
   height = 24,
+  onMouseEnter,
+  onMouseLeave,
 }: AvatarProps) {
   return (
     <div
       className={cn(
-        "shrink-1 cursor-pointer overflow-hidden rounded-full border border-neutral px-0",
+        "shrink-1 cursor-pointer overflow-hidden rounded-full px-0",
         customClassName,
       )}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <Image
         alt="avatar"

@@ -14,6 +14,7 @@ export interface TooltipProps {
   tooltipWidth: TooltipWidth;
   isDisplay: boolean;
   hovered: boolean;
+  customClassName?: string;
 }
 
 export default function Tooltip({
@@ -24,6 +25,7 @@ export default function Tooltip({
   tooltipWidth,
   isDisplay,
   hovered,
+  customClassName,
 }: TooltipProps) {
   let nonSupportTextWidth;
 
@@ -56,9 +58,15 @@ export default function Tooltip({
             "left-full top-1/2 translate-x-3 after:right-full after:border-l-transparent",
           position === "left" &&
             "right-full top-1/2 -translate-x-3 after:left-full after:border-r-transparent",
+          customClassName,
         )}
       >
-        <div className={`${supportText && "mb-2"}`}>{content}</div>
+        <div
+          className={`${supportText && "mb-2"}`}
+          style={{ textWrap: "nowrap" }}
+        >
+          {content}
+        </div>
         {supportText && <div>{supportText}</div>}
       </div>
     </div>
