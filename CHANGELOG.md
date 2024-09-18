@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.0.0-alpha.4] - 2024-09-10
+
+### Added
+
+
+### Changed
+- Updated how we're retrieving the discord id to display in the directory page https://github.com/chingu-x/chingu-dashboard/issues/202
+
+
+### Fixed
+- Fixed issue with dark mode images being different size https://github.com/chingu-x/chingu-dashboard/issues/200
+- Fixed issue with meeting notes section becoming scrollable instead of expanding when saved https://github.com/chingu-x/chingu-dashboard/issues/248
+
+
+## [1.0.0-alpha.3] - 2024-09-05
+
+### Added
+- Added 404 page https://github.com/chingu-x/chingu-dashboard/issues/205
+
+### Changed
+- Updated top nav and side bar colors along with some other styling changes https://github.com/chingu-x/chingu-dashboard/issues/197
+
+### Fixed
+- Fixed active states in the sidebar https://github.com/chingu-x/chingu-dashboard/issues/198
+- Fixed spacing issues in the calendar title with longer months wrapping to a newline https://github.com/chingu-x/chingu-dashboard/issues/201
+- Fixed spacing issues in resources page https://github.com/chingu-x/chingu-dashboard/issues/206
+- Fixed overflow issue with features description in the list https://github.com/chingu-x/chingu-dashboard/issues/222
+- Fixed an issue with selecting team members in checkboxes https://github.com/chingu-x/chingu-dashboard/issues/230
+
 ## [1.0.0-alpha.2] - 2024-08-28
 
 ### Added

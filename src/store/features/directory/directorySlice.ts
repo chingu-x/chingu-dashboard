@@ -4,6 +4,8 @@ import {
   type VoyageStatus,
 } from "@/store/features/user/userSlice";
 
+type providerType = "discord";
+
 interface VoyageTier {
   id: number;
   name: string;
@@ -20,10 +22,12 @@ interface VoyageMember {
   firstName: string;
   lastName: string;
   avatar: string;
-  githubId: string | null;
-  discordId: string | null;
-  twitterId: string | null;
-  linkedinId: string | null;
+  oAuthProfiles: {
+    provider: {
+      name: providerType;
+    };
+    providerUsername: string;
+  }[];
   countryCode: string;
   timezone: string;
   currentTime: string;
@@ -73,10 +77,14 @@ const initialState: DirectoryState = {
           firstName: "",
           lastName: "",
           avatar: "",
-          githubId: null,
-          discordId: null,
-          twitterId: null,
-          linkedinId: null,
+          oAuthProfiles: [
+            {
+              provider: {
+                name: "discord",
+              },
+              providerUsername: "",
+            },
+          ],
           countryCode: "",
           timezone: "",
           currentTime: "",
