@@ -116,9 +116,18 @@ export default function MeetingForm() {
       timeZone: timezone,
     });
 
+    const newData =
+      data.meetingLink === ""
+        ? { description: data.description, title: data.title }
+        : {
+            description: data.description,
+            title: data.title,
+            meetingLink: data.meetingLink,
+          };
+
     if (editMode) {
       const [res, error] = await editMeetingAction({
-        ...data,
+        ...newData,
         dateTime,
         meetingId,
         sprintNumber,
@@ -142,7 +151,7 @@ export default function MeetingForm() {
         setEditMeetingLoading(false);
       }
     } else {
-      const payload = { ...data, dateTime, teamId, sprintNumber };
+      const payload = { ...newData, dateTime, teamId, sprintNumber };
 
       const [res, error] = await addMeetingAction(payload);
 
