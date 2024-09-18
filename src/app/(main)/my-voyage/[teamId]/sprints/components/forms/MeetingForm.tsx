@@ -120,10 +120,10 @@ export default function MeetingForm() {
       data.meetingLink === ""
         ? { description: data.description, title: data.title }
         : {
-            description: data.description,
-            title: data.title,
-            meetingLink: data.meetingLink,
-          };
+          description: data.description,
+          title: data.title,
+          meetingLink: data.meetingLink,
+        };
 
     if (editMode) {
       const [res, error] = await editMeetingAction({
