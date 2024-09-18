@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.0.0-alpha.4] - 2024-09-10
+
+### Added
+
+
+### Changed
+- Updated how we're retrieving the discord id to display in the directory page https://github.com/chingu-x/chingu-dashboard/issues/202
+
+
+### Fixed
+- Fixed issue with dark mode images being different size https://github.com/chingu-x/chingu-dashboard/issues/200
+- Fixed issue with meeting notes section becoming scrollable instead of expanding when saved https://github.com/chingu-x/chingu-dashboard/issues/248
+
+
 ## [1.0.0-alpha.3] - 2024-09-05
 
 ### Added
