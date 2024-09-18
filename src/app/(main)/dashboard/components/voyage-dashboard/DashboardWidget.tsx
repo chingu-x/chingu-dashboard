@@ -58,7 +58,7 @@ function DashboardWidget({
           >
             {headerTitle}
             {isWidgetClickable && (
-              <div className="absolute right-0 top-[50%] -translate-y-[45%] translate-x-[110%]">
+              <div className="absolute right-0 top-1/2 translate-x-[110%] translate-y-[-45%]">
                 <ChevronDoubleRightIcon className="h-3 w-3" />
               </div>
             )}
