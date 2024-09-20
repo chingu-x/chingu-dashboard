@@ -233,7 +233,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         </span>
       </div>
       {/**TODO Refactor this beast into smaller more module pieces. */}
-      <div className="mt-6 h-40 overflow-y-auto p-1">
+      <div className="h-40 p-1 mt-6 overflow-y-auto">
         <ul className="text-base-300">
           {data.map((element) => {
             const voteIsSubmitted = element.teamTechStackItemVotes.find(
@@ -241,13 +241,13 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
             );
             return (
               <li
-                className="relative mb-8 mr-2 grid grid-cols-6 items-center text-base"
+                className="relative grid items-center grid-cols-6 mb-8 mr-2 text-base"
                 key={element.id}
               >
                 {editItemId === element.id ? (
                   <form
                     onSubmit={handleSubmitEdit(() => handleEdit(element.id))}
-                    className="col-span-6 -my-2 h-12"
+                    className="h-12 col-span-6 -my-2"
                     ref={editRef}
                   >
                     <TextInput
@@ -275,7 +275,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                           <Tooltip
                             key={vote.votedBy.member.id}
                             content={`${vote.votedBy.member.firstName}`}
-                            customClassName="bg-base-100 after:border-100 text-xs font-medium w-fit"
+                            customClassName="text-xs font-medium w-fit"
                             position="bottom"
                             tooltipWidth="small"
                             isDisplay={
@@ -308,7 +308,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                     {voteIsSubmitted ? (
                       <div className="relative col-span-2 flex w-[180px] items-center justify-end">
                         {element.teamTechStackItemVotes.length < 2 && (
-                          <div className="h-1/6 w-1/6">
+                          <div className="w-1/6 h-1/6">
                             <EllipsisVerticalIcon
                               className="mr-2 rounded-xl hover:cursor-pointer hover:bg-base-100"
                               onClick={() => setOpenMenuId(element.id)}
@@ -352,7 +352,7 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
         <div className="px-3.5 py-2.5">
           <Button
             variant="outline"
-            className="w-full justify-center border-2"
+            className="justify-center w-full border-2"
             onClick={toggleAddItemInput}
           >
             Add Tech Stack
