@@ -34,6 +34,7 @@ export default function MeetingOverview({
         className="w-full"
       >
         <Button
+          disabled={!meetingLink}
           className="w-full justify-between bg-primary-content text-base-300 hover:text-base-200"
           size="lg"
         >
