@@ -12,9 +12,7 @@ function FeaturesStateContent({ contentObject }: FeaturesStateContentProps) {
             key={item}
             className="flex items-center rounded-lg bg-base-200 px-3 py-2"
           >
-            <p className="w-40 font-semibold max-[1469px]:w-[300px] max-[1200px]:w-full">
-              {item}
-            </p>
+            <p className="w-full break-words font-semibold">{item}</p>
           </div>
         ))}
       </div>
