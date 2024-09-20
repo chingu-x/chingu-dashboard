@@ -12,7 +12,7 @@ import { CacheTag } from "@/utils/cacheTag";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
-import { Forms } from "@/utils/form/formsEnums";
+import { Forms, UserRole } from "@/utils/form/formsEnums";
 import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
 import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
@@ -77,6 +77,8 @@ export default async function WeeklyCheckInWrapper({
 
   let hasProductOwner = false;
   let hasScrumMaster = false;
+  let isScrumMaster = false;
+  let isProductOwner = false;
 
   const [user, error] = await getUser();
 
@@ -144,14 +146,24 @@ export default async function WeeklyCheckInWrapper({
           }).voyageTeamMemberId;
         }
 
-        // Check if a team has a product owner or a scrum muster
+        // Check if a team has a product owner or a scrum muster and if a user is a team has a product owner or a scrum muster
         hasScrumMaster = !!res.voyageTeamMembers.find(
-          (member) => member.voyageRole.name === "Scrum Master",
+          (member) =>
+            member.voyageRole.name === UserRole.scrumMaster.toString(),
         );
 
         hasProductOwner = !!res.voyageTeamMembers.find(
-          (member) => member.voyageRole.name === "Product Owner",
+          (member) =>
+            member.voyageRole.name === UserRole.productOwner.toString(),
         );
+
+        const currentUserRole = res.voyageTeamMembers.find(
+          (member) => member.id === voyageTeamMemberId,
+        )?.voyageRole.name;
+
+        isScrumMaster = currentUserRole === UserRole.scrumMaster.toString();
+
+        isProductOwner = currentUserRole === UserRole.productOwner.toString();
 
         // Get all teamMembers except for the current user
         if (voyageTeamMemberId) {
@@ -193,7 +205,7 @@ export default async function WeeklyCheckInWrapper({
       if (formRes && formRes?.questions) questions = formRes.questions;
 
       // Fetch PO checkin questions (form)
-      if (hasProductOwner) {
+      if (hasProductOwner && !isProductOwner) {
         const [POformRes, POformError] = await fetchFormQuestions({
           formId: Forms.checkinPO,
         });
@@ -212,7 +224,7 @@ export default async function WeeklyCheckInWrapper({
       }
 
       // Fetch SM checkin questions (form)
-      if (hasScrumMaster) {
+      if (hasScrumMaster && !isScrumMaster) {
         const [SMformRes, SMformError] = await fetchFormQuestions({
           formId: Forms.checkinSM,
         });

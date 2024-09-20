@@ -22,3 +22,9 @@ export enum ReviewQuestions {
   what_to_improve = 2,
   what_to_change = 1,
 }
+
+export enum UserRole {
+  developer = "Developer",
+  productOwner = "Product Owner",
+  scrumMaster = "Scrum Master",
+}
