@@ -19,7 +19,7 @@ interface MeetingBody {
   title: string;
   description: string;
   dateTime: string;
-  meetingLink: string;
+  meetingLink?: string;
   notes: string;
 }
 
