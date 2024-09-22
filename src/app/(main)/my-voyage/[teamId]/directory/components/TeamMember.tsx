@@ -12,12 +12,12 @@ interface TeamMemberProps {
 }
 
 export default function TeamMember({ teamMember }: TeamMemberProps) {
-  const [isCurrentUser, setIsCurrentUser] = useState(false);
   const user = useUser().voyageTeamMembers;
   const { firstName, lastName, oAuthProfiles, currentTime } = teamMember.member;
   const { id, hrPerSprint, voyageRole } = teamMember;
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const newRef = useRef<HTMLDivElement>(null);
+  const isCurrentUser = user.some((user) => user.id === id);
 
   const discordId =
     oAuthProfiles.find((profile) => profile.provider.name === "discord")
@@ -29,13 +29,6 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   });
-
-  useEffect(() => {
-    if (user) {
-      const currentUser = user.some((user) => user.id === id);
-      setIsCurrentUser(currentUser);
-    }
-  }, [user, id]);
 
   function handleOutsideClick(e: MouseEvent | TouchEvent) {
     if (newRef.current && !newRef.current.contains(e.target as Node)) {
