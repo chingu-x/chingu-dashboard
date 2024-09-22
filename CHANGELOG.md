@@ -5,13 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.0.0-alpha.5] - 2024-09-19
+
+### Added
+
+
+### Changed
+- Made meeting link optional https://github.com/chingu-x/chingu-dashboard/issues/237
+
 ## [1.0.0-alpha.4] - 2024-09-10
 
 ### Added
 
 
 ### Changed
-- Updated how we're retrieving the discord id to display in the directory page
+- Updated how we're retrieving the discord id to display in the directory page https://github.com/chingu-x/chingu-dashboard/issues/202
 
 
 ### Fixed
