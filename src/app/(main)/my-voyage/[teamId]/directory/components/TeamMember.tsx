@@ -30,6 +30,21 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
     };
   });
 
+  useEffect(() => {
+    console.log("TeamMember: ", teamMember);
+  }, []);
+
+  useEffect(() => {
+    // hrPerSprint={hrPerSprint}
+    //           isEditing={isEditing}
+    //           setIsEditing={setIsEditing}
+    //           handleClick={handleClick}
+    console.log("hrPerSprint: ", hrPerSprint);
+    console.log("isEditing: ", isEditing);
+    console.log("setIsEditing", setIsEditing);
+    console.log("handleClick: ", handleClick);
+  }, []);
+
   function handleOutsideClick(e: MouseEvent | TouchEvent) {
     if (newRef.current && !newRef.current.contains(e.target as Node)) {
       setIsEditing(false);
