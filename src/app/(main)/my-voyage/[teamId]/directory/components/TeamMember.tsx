@@ -35,7 +35,7 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
       const currentUser = user.some((user) => user.id === id);
       setIsCurrentUser(currentUser);
     }
-  }, [user]);
+  }, [user, id]);
 
   function handleOutsideClick(e: MouseEvent | TouchEvent) {
     if (newRef.current && !newRef.current.contains(e.target as Node)) {

@@ -18,7 +18,6 @@ import { getTimezone } from "@/utils/getTimezone";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { ErrorType } from "@/utils/error";
-import { useEffect } from "react";
 
 interface FetchTeamDirectoryProps {
   teamId: number;
