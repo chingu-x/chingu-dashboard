@@ -12,10 +12,10 @@ interface TeamMemberProps {
 }
 
 export default function TeamMember({ teamMember }: TeamMemberProps) {
+  const [isCurrentUser, setIsCurrentUser] = useState(false);
   const user = useUser().voyageTeamMembers;
   const { firstName, lastName, oAuthProfiles, currentTime } = teamMember.member;
   const { id, hrPerSprint, voyageRole } = teamMember;
-  const isCurrentUser = user.some((user) => user.id === id);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const newRef = useRef<HTMLDivElement>(null);
 
@@ -31,19 +31,15 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
   });
 
   useEffect(() => {
-    console.log("TeamMember: ", teamMember);
-  }, []);
+    console.log("user: ", user);
+  }, [user]);
 
   useEffect(() => {
-    // hrPerSprint={hrPerSprint}
-    //           isEditing={isEditing}
-    //           setIsEditing={setIsEditing}
-    //           handleClick={handleClick}
-    console.log("hrPerSprint: ", hrPerSprint);
-    console.log("isEditing: ", isEditing);
-    console.log("setIsEditing", setIsEditing);
-    console.log("handleClick: ", handleClick);
-  }, []);
+    if (user) {
+      const currentUser = user.some((user) => user.id === id);
+      setIsCurrentUser(currentUser);
+    }
+  }, [user]);
 
   function handleOutsideClick(e: MouseEvent | TouchEvent) {
     if (newRef.current && !newRef.current.contains(e.target as Node)) {
