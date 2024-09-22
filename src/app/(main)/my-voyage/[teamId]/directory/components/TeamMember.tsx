@@ -31,10 +31,6 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
   });
 
   useEffect(() => {
-    console.log("user: ", user);
-  }, [user]);
-
-  useEffect(() => {
     if (user) {
       const currentUser = user.some((user) => user.id === id);
       setIsCurrentUser(currentUser);
