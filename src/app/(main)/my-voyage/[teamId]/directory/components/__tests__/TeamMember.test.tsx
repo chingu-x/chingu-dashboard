@@ -1,17 +1,17 @@
-import { render, screen, cleanup } from "@testing-library/react";
-import TeamMember from "../TeamMember";
-import { rootReducer } from "@/store/store";
+import { render } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
+import { rootReducer } from "@/store/store";
 import { useUser } from "@/store/hooks";
 import { type VoyageTeam } from "@/store/features/directory/directorySlice";
+import TeamMember from "@/app/(main)/my-voyage/[teamId]/directory/components/TeamMember";
 
 jest.mock("@/store/hooks", () => ({
   useUser: jest.fn(),
 }));
 
 // CURRENT USER IS: 14444f08-cdfb-45fc-8192-a3b79f3180d5
-const renderWithStore = (id: number, userId: string) => {
+const renderWithStore = (userId: string) => {
   const teamMemberData: VoyageTeam = {
     id: 20,
     member: {
@@ -55,10 +55,7 @@ describe("Team Member Component", () => {
   });
 
   it("renders individual team data", () => {
-    const teamMember = renderWithStore(
-      20,
-      "25b7b76c-1567-4910-9d50-e78819daccf1",
-    );
+    const teamMember = renderWithStore("25b7b76c-1567-4910-9d50-e78819daccf1");
 
     const name = teamMember.getByLabelText("Name");
     const discordID = teamMember.getByLabelText("Discord ID");
@@ -75,7 +72,6 @@ describe("Team Member Component", () => {
 
   it("current user CANNOT input other id's average hour per sprint", () => {
     const currentTeamMember = renderWithStore(
-      20,
       "25b7b76c-1567-4910-9d50-e78819daccf1",
     );
 
