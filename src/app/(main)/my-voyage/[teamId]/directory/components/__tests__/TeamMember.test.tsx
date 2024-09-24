@@ -10,8 +10,19 @@ jest.mock("@/store/hooks", () => ({
   useUser: jest.fn(),
 }));
 
-// CURRENT USER IS: 14444f08-cdfb-45fc-8192-a3b79f3180d5
-const renderWithStore = (userId: string) => {
+jest.mock(
+  "@/app/(main)/my-voyage/[teamId]/directory/components/EditHours",
+  () =>
+    function EditHoursMock() {
+      return (
+        <div>
+          <button type="button">average hour per sprint</button>
+        </div>
+      );
+    },
+);
+
+const renderWithStore = (userId: number) => {
   const teamMemberData: VoyageTeam = {
     id: 20,
     member: {
@@ -41,7 +52,10 @@ const renderWithStore = (userId: string) => {
     reducer: rootReducer,
   });
 
-  (useUser as jest.Mock).mockReturnValue({ id: userId });
+  (useUser as jest.Mock).mockReturnValue({
+    voyageTeamMembers: [{ id: userId }],
+  });
+
   return render(
     <Provider store={store}>
       <TeamMember teamMember={teamMemberData} />
@@ -55,7 +69,7 @@ describe("Team Member Component", () => {
   });
 
   it("renders individual team data", () => {
-    const teamMember = renderWithStore("25b7b76c-1567-4910-9d50-e78819daccf1");
+    const teamMember = renderWithStore(20);
 
     const name = teamMember.getByLabelText("Name");
     const discordID = teamMember.getByLabelText("Discord ID");
@@ -71,27 +85,26 @@ describe("Team Member Component", () => {
   });
 
   it("current user CANNOT input other id's average hour per sprint", () => {
-    const currentTeamMember = renderWithStore(
-      "25b7b76c-1567-4910-9d50-e78819daccf1",
-    );
+    const screen = renderWithStore(30);
 
-    const buttonAction = currentTeamMember.queryByRole("button", {
+    screen.debug();
+
+    const buttonAction = screen.queryByRole("button", {
       name: "average hour per sprint",
     });
 
     expect(buttonAction).not.toBeInTheDocument();
   });
 
-  // it("current user can input their own id's average hour per sprint", () => {
-  //   const currentTeamMember = renderWithStore(
-  //     20,
-  //     "14444f08-cdfb-45fc-8192-a3b79f3180d5",
-  //   );
+  it("current user can input their own id's average hour per sprint", () => {
+    const screen = renderWithStore(20);
 
-  //   const buttonAction = currentTeamMember.queryByRole("button", {
-  //     name: "average hour per sprint",
-  //   });
+    screen.debug();
 
-  //   expect(buttonAction).toBeInTheDocument();
-  // });
+    const buttonAction = screen.queryByRole("button", {
+      name: "average hour per sprint",
+    });
+
+    expect(buttonAction).toBeInTheDocument();
+  });
 });
