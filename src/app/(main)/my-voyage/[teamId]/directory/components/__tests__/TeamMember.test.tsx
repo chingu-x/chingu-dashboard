@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { rootReducer } from "@/store/store";
 import { useUser } from "@/store/hooks";
+import { teamMemberData } from "../fixtures/TeamMember";
 import { type VoyageTeam } from "@/store/features/directory/directorySlice";
 import TeamMember from "@/app/(main)/my-voyage/[teamId]/directory/components/TeamMember";
 
@@ -22,32 +23,7 @@ jest.mock(
     },
 );
 
-const renderWithStore = (userId: number) => {
-  const teamMemberData: VoyageTeam = {
-    id: 20,
-    member: {
-      firstName: "Jessica",
-      lastName: "Williamson",
-      avatar:
-        "https://gravatar.com/avatar/a6416cf1e8d0208251a732a6af75530878cdfd92b85d2de9ba6c4fec92d8a157?s=200&r=g&d=robohash\n",
-      oAuthProfiles: [
-        {
-          provider: {
-            name: "discord",
-          },
-          providerUsername: "jessica-discord",
-        },
-      ],
-      countryCode: "AU",
-      timezone: "Australia/Melbourne",
-      currentTime: "02:56 (GMT+10)",
-    },
-    hrPerSprint: 10,
-    voyageRole: {
-      name: "Developer",
-    },
-  };
-
+const renderWithStore = (teamMember: VoyageTeam, userId: number) => {
   const store = configureStore({
     reducer: rootReducer,
   });
@@ -58,7 +34,7 @@ const renderWithStore = (userId: number) => {
 
   return render(
     <Provider store={store}>
-      <TeamMember teamMember={teamMemberData} />
+      <TeamMember teamMember={teamMember} />
     </Provider>,
   );
 };
@@ -69,7 +45,7 @@ describe("Team Member Component", () => {
   });
 
   it("renders individual team data", () => {
-    const teamMember = renderWithStore(20);
+    const teamMember = renderWithStore(teamMemberData, 20);
 
     const name = teamMember.getByLabelText("Name");
     const discordID = teamMember.getByLabelText("Discord ID");
@@ -85,7 +61,7 @@ describe("Team Member Component", () => {
   });
 
   it("current user CANNOT input other id's average hour per sprint", () => {
-    const screen = renderWithStore(30);
+    const screen = renderWithStore(teamMemberData, 30);
 
     screen.debug();
 
@@ -97,7 +73,7 @@ describe("Team Member Component", () => {
   });
 
   it("current user can input their own id's average hour per sprint", () => {
-    const screen = renderWithStore(20);
+    const screen = renderWithStore(teamMemberData, 20);
 
     screen.debug();
 
