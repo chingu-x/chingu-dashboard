@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+
+## [1.0.0-alpha.6] - 2024-09-27
+
+### Added
+
+
+### Changed
+- Changed how we're accessing meeting data to match changes in backend https://github.com/chingu-x/chingu-dashboard/pull/269
+
+
+### Fixed
+
 ## [1.0.0-alpha.5] - 2024-09-19
 
 ### Added
