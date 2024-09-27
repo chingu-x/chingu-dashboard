@@ -56,11 +56,14 @@ export default function Review() {
   } = useSprint();
 
   useEffect(() => {
-    setData(
-      sprints[sprintNumber - 1].teamMeetings[0].formResponseMeeting?.find(
-        (form) => form.form.id === Number(Forms.review),
-      ),
-    );
+    const sprint = sprints[sprintNumber - 1];
+    if (sprint.teamMeetingsData && sprint.teamMeetingsData.length) {
+      setData(
+        sprint.teamMeetingsData[0].formResponseMeeting?.find(
+          (form) => form.form.id === Number(Forms.review),
+        ),
+      );
+    }
   }, [sprints, sprintNumber]);
 
   const what_right = data?.responseGroup.responses.find(
