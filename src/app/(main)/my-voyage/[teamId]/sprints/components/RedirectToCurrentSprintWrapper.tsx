@@ -51,7 +51,6 @@ export default async function RedirectToCurrentSprintWrapper({
   const teamId = Number(params.teamId);
 
   let currentSprintNumber: number;
-  let currentMeetingId: number;
 
   const [user, error] = await getUser();
 
@@ -110,12 +109,12 @@ export default async function RedirectToCurrentSprintWrapper({
       );
     }
     const { teamMeetings, number } = getCurrentSprint(res!.sprints) as Sprint;
-    currentSprintNumber = number;
-    currentMeetingId = teamMeetings[0]?.id;
 
-    if (currentMeetingId) {
+    currentSprintNumber = number;
+
+    if (teamMeetings.length !== 0) {
       redirect(
-        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${currentMeetingId}`,
+        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${teamMeetings[0]}`,
       );
     } else {
       redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}`);
