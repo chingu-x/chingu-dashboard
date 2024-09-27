@@ -177,8 +177,10 @@ export default function MeetingForm() {
   useEffect(() => {
     if (params.meetingId) {
       const meeting = sprints.find(
-        (sprint) => sprint.teamMeetings[0]?.id === +params.meetingId,
-      )?.teamMeetings[0];
+        (sprint) =>
+          sprint.teamMeetingsData &&
+          sprint.teamMeetingsData[0].id === +params.meetingId,
+      );
 
       setMeetingData(meeting as Meeting);
       setEditMode(true);
