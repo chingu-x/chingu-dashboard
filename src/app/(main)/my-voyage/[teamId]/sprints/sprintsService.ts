@@ -95,7 +95,7 @@ export interface SprintsResponse {
     number: number;
     startDate: string;
     endDate: string;
-    teamMeetings: { id: number }[];
+    teamMeetings: number[];
   }[];
 }
 
