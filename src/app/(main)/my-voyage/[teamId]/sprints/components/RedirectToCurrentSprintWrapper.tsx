@@ -113,7 +113,9 @@ export default async function RedirectToCurrentSprintWrapper({
     currentSprintNumber = number;
 
     if (teamMeetings.length !== 0) {
-      redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/4`);
+      redirect(
+        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${teamMeetings[0]}`,
+      );
     } else {
       redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}`);
     }
