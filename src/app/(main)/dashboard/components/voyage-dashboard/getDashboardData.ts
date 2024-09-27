@@ -200,7 +200,7 @@ export const getDashboardData = async (
     .map((sprint) =>
       fetchMeeting({
         sprintNumber: sprint.number,
-        meetingId: sprint.teamMeetings[0]?.id,
+        meetingId: sprint.teamMeetings[0],
       }),
     );
 
