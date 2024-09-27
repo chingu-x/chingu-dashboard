@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 - Changed how we're accessing meeting data to match changes in backend https://github.com/chingu-x/chingu-dashboard/pull/269
+- Updated dropdown menu in top nav https://github.com/chingu-x/chingu-dashboard/issues/261
 
 
 ### Fixed
