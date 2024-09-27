@@ -13,13 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 - Made meeting link optional https://github.com/chingu-x/chingu-dashboard/issues/237
 
-
-### Fixed
-- Fixed issue with dark mode images being different size https://github.com/chingu-x/chingu-dashboard/issues/200
-- Fixed issue with meeting notes section becoming scrollable instead of expanding when saved https://github.com/chingu-x/chingu-dashboard/issues/248
-
-
-
 ## [1.0.0-alpha.4] - 2024-09-10
 
 ### Added
