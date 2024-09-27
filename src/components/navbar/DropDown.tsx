@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import DropDownLink from "./DropDownLink";
+import Link from "next/link";
 import Button from "@/components/Button";
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
@@ -14,12 +14,18 @@ export default function DropDown({ openState }: { openState?: boolean }) {
   const activeVoyage = allVoyages?.find(
     (item) => item.voyageTeam.voyage.status.name === "Active",
   );
-  const currentVoyage =
-    activeVoyage?.voyageTeam.name ??
-    "Please join a voyage to see your status information.";
+
+  const currentVoyage = activeVoyage?.voyageTeam.name
+    ? `Team - Tier ${activeVoyage.voyageTeam.name
+      .split("-")[1]
+      .split("tier")[1]
+      .toUpperCase()} ${activeVoyage.voyageTeam.name
+      .split("-")[0]
+      .toUpperCase()}`
+    : "Please join a voyage to see your status information.";
   const closed = "hidden";
   const open =
-    "absolute z-[1] w-44 p-4 [&>*]:mt-2 mt-6 shadow bg-base-100 right-0 border border-neutral rounded-2xl";
+    "absolute flex flex-col gap-5 z-[1] w-[250px] p-5 bottom-100 translate-y-[15%] shadow-md bg-base-200 right-0 border border-base-100 rounded-2xl";
 
   async function handleClick() {
     const [res, error] = await serverSignOut();
@@ -35,7 +41,7 @@ export default function DropDown({ openState }: { openState?: boolean }) {
     }
   }
 
-  const handleDropDownClick = (event: React.MouseEvent<HTMLUListElement>) => {
+  const handleDropDownClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
   };
 
@@ -47,15 +53,17 @@ export default function DropDown({ openState }: { openState?: boolean }) {
       >
         <ChevronDownIcon className="w-4 cursor-pointer text-base-300" />
       </label>
-      <ul
+      <div
         tabIndex={0}
         className={openState ? open : closed}
         onClick={handleDropDownClick}
       >
-        <li className="rounded-lg bg-secondary-content p-2 text-xs [&>*]:m-1">
-          <p className="text-xs text-neutral">My Status:</p>
-          {currentVoyage ? (
-            <p className="border border-transparent font-semibold text-base-300">
+        <div className="rounded-lg bg-secondary-content p-2 text-xs [&>*]:m-1">
+          <p className="text-[10px] font-medium text-neutral-focus">
+            My Voyage:
+          </p>
+          {activeVoyage?.voyageTeam.name ? (
+            <p className="border border-transparent text-base font-medium text-base-300">
               {currentVoyage}
             </p>
           ) : (
@@ -63,19 +71,27 @@ export default function DropDown({ openState }: { openState?: boolean }) {
               {currentVoyage}
             </p>
           )}
-        </li>
-        <DropDownLink title="Settings" href="/hello404" />
+        </div>
+        <Link href="/hello404">
+          <Button
+            type="button"
+            variant="link"
+            size="lg"
+            className="m-0 flex w-full justify-start p-2 hover:bg-base-100 hover:text-base-300"
+          >
+            Settings
+          </Button>
+        </Link>
         <Button
-          title="signout"
           type="button"
           onClick={handleClick}
           variant="link"
-          size={"lg"}
-          className="m-0 flex w-full justify-start p-2 hover:bg-neutral-content hover:text-base-300"
+          size="lg"
+          className="m-0 flex w-full justify-start p-2 hover:bg-base-100 hover:text-base-300"
         >
           Sign Out
         </Button>
-      </ul>
+      </div>
     </div>
   );
 }
