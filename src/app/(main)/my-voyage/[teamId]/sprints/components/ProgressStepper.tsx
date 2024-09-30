@@ -31,7 +31,7 @@ export default function ProgressStepper({
 
   function handleClick(sprintNumber: number) {
     const meetingId = sprints.find((sprint) => sprint.number === sprintNumber)!
-      .teamMeetings[0]?.id;
+      .teamMeetings[0];
 
     if (meetingId) {
       router.push(
