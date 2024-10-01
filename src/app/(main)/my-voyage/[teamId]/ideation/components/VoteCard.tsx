@@ -2,11 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/Button";
-import {
-  type ProjectIdeaVotes,
-  setProjectIdeasLoadingTrue,
-} from "@/store/features/ideation/ideationSlice";
-import { useAppDispatch, useIdeation, useModal, useUser } from "@/store/hooks";
+import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
+import { useAppDispatch, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
@@ -26,13 +23,10 @@ interface VoteCardProps {
 
 function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
-    null,
+    null
   );
   const { id } = useUser();
-  const { loading } = useIdeation();
-  const { isOpen } = useModal();
   const dispatch = useAppDispatch();
-  const [voteChanged, setVoteChanged] = useState<boolean>(false);
 
   const {
     runAction: addIdeationVoteAction,
@@ -48,48 +42,43 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
   async function handleVote() {
     if (currentUserVoted) {
-      dispatch(setProjectIdeasLoadingTrue());
-
       const [, error] = await removeIdeationVoteAction({
         ideationId: projectIdeaId,
       });
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
+          onOpenModal({ type: "error", content: { message: error.message } })
         );
       }
 
-      setVoteChanged(true);
-      setRemoveIdeationVoteLoading(false);
+      setTimeout(() => {
+        setRemoveIdeationVoteLoading(false);
+      }, 500);
     } else {
-      dispatch(setProjectIdeasLoadingTrue());
       const [, error] = await addIdeationVoteAction({
         ideationId: projectIdeaId,
       });
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
+          onOpenModal({ type: "error", content: { message: error.message } })
         );
       }
 
-      setVoteChanged(true);
-      setAddIdeationVoteLoading(false);
+      setTimeout(() => {
+        setAddIdeationVoteLoading(false);
+      }, 500);
     }
   }
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users],
+    [users]
   );
 
   function buttonContent() {
-    if (
-      addIdeationVoteLoading ||
-      removeIdeationVoteLoading ||
-      (loading && voteChanged)
-    ) {
+    if (addIdeationVoteLoading || removeIdeationVoteLoading) {
       return <Spinner />;
     }
 
@@ -101,24 +90,14 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   }
 
   useEffect(() => {
-    if (isOpen === false) {
-      setAddIdeationVoteLoading(false);
-      setRemoveIdeationVoteLoading(false);
-      setVoteChanged(false);
-    }
-  }, [isOpen, setAddIdeationVoteLoading, setRemoveIdeationVoteLoading]);
-
-  useEffect(() => {
-    if (voteChanged && !loading) {
-      setVoteChanged(false);
-    }
-  }, [voteChanged, loading]);
-
-  useEffect(() => {
     if (getVoteUsers().includes(id) === true) {
-      setCurrentUserVoted(true);
+      setTimeout(() => {
+        setCurrentUserVoted(true);
+      }, 500);
     } else {
-      setCurrentUserVoted(false);
+      setTimeout(() => {
+        setCurrentUserVoted(false);
+      }, 500);
     }
   }, [id, getVoteUsers]);
 
