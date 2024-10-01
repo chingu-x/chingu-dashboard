@@ -43,12 +43,14 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
     setIsLoading: setRemoveIdeationVoteLoading,
   } = useServerAction(removeIdeationVote);
 
-  useEffect(() => {
-    dispatch(fetchIdeation({ id: projectIdeaId }));
-  }, [projectIdeaId, currentUserVoted, dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchIdeation({ id: projectIdeaId }));
+  // }, [projectIdeaId, currentUserVoted, dispatch]);
 
   async function handleVote() {
     if (currentUserVoted) {
+      // eslint-disable-next-line no-console
+      console.log("remove vote");
       const [, error] = await removeIdeationVoteAction({
         ideationId: projectIdeaId,
       });
@@ -60,6 +62,8 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
       }
       setRemoveIdeationVoteLoading(false);
     } else {
+      // eslint-disable-next-line no-console
+      console.log("add vote");
       const [, error] = await addIdeationVoteAction({
         ideationId: projectIdeaId,
       });
@@ -93,11 +97,13 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
   useEffect(() => {
     if (getVoteUsers().includes(id) === true) {
+      dispatch(fetchIdeation({ id: projectIdeaId }));
       setCurrentUserVoted(true);
     } else {
       setCurrentUserVoted(false);
+      dispatch(fetchIdeation({ id: projectIdeaId }));
     }
-  }, [id, getVoteUsers]);
+  }, [id, getVoteUsers, dispatch, projectIdeaId]);
 
   return (
     <div className={cn("w-[200px] rounded-lg bg-base-100", className)}>
