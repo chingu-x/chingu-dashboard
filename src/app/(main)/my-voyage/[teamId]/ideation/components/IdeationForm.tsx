@@ -18,7 +18,7 @@ import {
   type EditIdeationProps,
   addIdeation,
   deleteIdeation,
-} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+} from "@/app/(main)/my-voyage/[teamId]/ideation/adapters/ideationService";
 import useServerAction from "@/hooks/useServerAction";
 import { persistor } from "@/store/store";
 import { onOpenModal } from "@/store/features/modal/modalSlice";

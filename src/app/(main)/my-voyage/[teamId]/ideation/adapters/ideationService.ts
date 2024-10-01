@@ -1,16 +1,13 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
+import { IdeationClientAdapter } from "./ideationClientAdapter";
 import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 import { type AddIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
-import { NextJsRestApiAdapter } from "@/modules/restApi/adapters/secondary/nextJsRestApiAdapter";
-import { IdeationApiAdapter } from "@/modules/ideation/adapters/secondary/ideationApiAdapter";
 import { type AddIdeationUsecaseDto } from "@/modules/ideation/application/dtos/addIdeationUsecaseDto";
-import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/addIdeationUseCase";
-import { type AddIdeationRequestDto } from "@/modules/ideation/application/dtos/request.dto";
 
 interface IdeationProps {
   teamId: number;
@@ -59,17 +56,6 @@ export interface IdeationVoteResponse extends IdeationResponse {
   projectIdeaId: number;
 }
 
-const nextJsRestApiAdapter = new NextJsRestApiAdapter(
-  process.env.NEXT_PUBLIC_API_URL!,
-);
-const ideationApiPort = new IdeationApiAdapter(nextJsRestApiAdapter);
-
-interface NextJsAddIdeationAdapter extends AddIdeationUseCase {
-  execute(
-    props: Required<AddIdeationRequestDto>,
-  ): Promise<AddIdeationResponseDto>;
-}
-
 export async function addIdeation({
   teamId,
   title,
@@ -78,30 +64,14 @@ export async function addIdeation({
 }: AddIdeationUsecaseDto): Promise<
   AsyncActionResponse<AddIdeationResponseDto>
 > {
-  const token = getAccessToken();
-  const addIdeationUseCase: NextJsAddIdeationAdapter = new AddIdeationUseCase(
-    ideationApiPort,
-  );
+  const addIdeationClientAdapter = new IdeationClientAdapter();
 
-  // refactor this later to not expect a function
-  const addIdeationAsync = async () =>
-    await addIdeationUseCase.execute({
-      teamId,
-      title,
-      description,
-      vision,
-      cache: "default",
-      token,
-    });
-
-  const [res, error] =
-    await handleAsync<AddIdeationResponseDto>(addIdeationAsync);
-
-  if (res) {
-    revalidateTag(CacheTag.ideation);
-  }
-
-  return [res, error];
+  return addIdeationClientAdapter.addIdeation({
+    teamId,
+    title,
+    description,
+    vision,
+  });
 }
 
 // test

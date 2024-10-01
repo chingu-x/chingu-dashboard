@@ -13,7 +13,7 @@ import useServerAction from "@/hooks/useServerAction";
 import {
   addIdeationVote,
   removeIdeationVote,
-} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+} from "@/app/(main)/my-voyage/[teamId]/ideation/adapters/ideationService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
