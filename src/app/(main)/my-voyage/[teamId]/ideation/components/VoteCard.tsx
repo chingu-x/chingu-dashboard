@@ -2,11 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/Button";
-import {
-  fetchIdeation,
-  type ProjectIdeaVotes,
-} from "@/store/features/ideation/ideationSlice";
-import { useAppDispatch, useIdeation, useUser } from "@/store/hooks";
+import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
+import { useAppDispatch, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
@@ -30,7 +27,6 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   );
   const { id } = useUser();
   const dispatch = useAppDispatch();
-  const projectIdeaStore = useIdeation().projectIdea.projectIdeaVotes;
 
   const {
     runAction: addIdeationVoteAction,
@@ -97,13 +93,11 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
   useEffect(() => {
     if (getVoteUsers().includes(id) === true) {
-      dispatch(fetchIdeation({ id: projectIdeaId }));
       setCurrentUserVoted(true);
     } else {
-      dispatch(fetchIdeation({ id: projectIdeaId }));
       setCurrentUserVoted(false);
     }
-  }, [id, getVoteUsers, dispatch, projectIdeaId, projectIdeaStore]);
+  }, [id, getVoteUsers]);
 
   return (
     <div className={cn("w-[200px] rounded-lg bg-base-100", className)}>
