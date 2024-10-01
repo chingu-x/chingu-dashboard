@@ -52,9 +52,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
           onOpenModal({ type: "error", content: { message: error.message } }),
         );
       }
-      setTimeout(() => {
-        setRemoveIdeationVoteLoading(false);
-      }, 2000);
+      setRemoveIdeationVoteLoading(false);
     } else {
       const [, error] = await addIdeationVoteAction({
         ideationId: projectIdeaId,
@@ -66,9 +64,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      setTimeout(() => {
-        setAddIdeationVoteLoading(false);
-      }, 2000);
+      setAddIdeationVoteLoading(false);
     }
   }
 
