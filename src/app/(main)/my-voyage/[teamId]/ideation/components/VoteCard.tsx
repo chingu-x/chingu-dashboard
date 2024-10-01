@@ -2,10 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/Button";
-import {
-  fetchIdeation,
-  type ProjectIdeaVotes,
-} from "@/store/features/ideation/ideationSlice";
+import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
