@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/Button";
 import {
   fetchIdeation,
@@ -31,8 +31,6 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   const { id } = useUser();
   const dispatch = useAppDispatch();
   const projectIdeaStore = useIdeation().projectIdea.projectIdeaVotes;
-  const previousVoteCountRef = useRef<number>(0);
-  const currentVoteCount = projectIdeaStore.length;
 
   const {
     runAction: addIdeationVoteAction,
