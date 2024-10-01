@@ -29,6 +29,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   const { id } = useUser();
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [previousUserVoted, setPreviousUserVoted] = useState<number>(
+    users.length,
+  );
 
   const {
     runAction: addIdeationVoteAction,
@@ -45,30 +48,32 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   async function handleVote() {
     router.refresh();
 
-    if (currentUserVoted) {
-      const [, error] = await removeIdeationVoteAction({
-        ideationId: projectIdeaId,
-      });
+    if (previousUserVoted !== users.length) {
+      if (currentUserVoted) {
+        const [, error] = await removeIdeationVoteAction({
+          ideationId: projectIdeaId,
+        });
 
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
+        if (error) {
+          dispatch(
+            onOpenModal({ type: "error", content: { message: error.message } }),
+          );
+        }
+
+        setRemoveIdeationVoteLoading(false);
+      } else {
+        const [, error] = await addIdeationVoteAction({
+          ideationId: projectIdeaId,
+        });
+
+        if (error) {
+          dispatch(
+            onOpenModal({ type: "error", content: { message: error.message } }),
+          );
+        }
+
+        setAddIdeationVoteLoading(false);
       }
-
-      setRemoveIdeationVoteLoading(false);
-    } else {
-      const [, error] = await addIdeationVoteAction({
-        ideationId: projectIdeaId,
-      });
-
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-      }
-
-      setAddIdeationVoteLoading(false);
     }
   }
 
@@ -92,10 +97,12 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   useEffect(() => {
     if (getVoteUsers().includes(id) === true) {
       setCurrentUserVoted(true);
+      setPreviousUserVoted(users.length);
     } else {
       setCurrentUserVoted(false);
+      setPreviousUserVoted(users.length);
     }
-  }, [id, getVoteUsers]);
+  }, [id, getVoteUsers, users.length]);
 
   return (
     <div className={cn("w-[200px] rounded-lg bg-base-100", className)}>
