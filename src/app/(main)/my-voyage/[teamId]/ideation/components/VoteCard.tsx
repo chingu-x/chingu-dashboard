@@ -96,13 +96,15 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   }
 
   useEffect(() => {
-    if (getVoteUsers().includes(id) === true) {
-      dispatch(fetchIdeation({ id: projectIdeaId }));
-      setCurrentUserVoted(true);
-    } else {
-      setCurrentUserVoted(false);
-      dispatch(fetchIdeation({ id: projectIdeaId }));
-    }
+    setTimeout(() => {
+      if (getVoteUsers().includes(id) === true) {
+        dispatch(fetchIdeation({ id: projectIdeaId }));
+        setCurrentUserVoted(true);
+      } else {
+        setCurrentUserVoted(false);
+        dispatch(fetchIdeation({ id: projectIdeaId }));
+      }
+    }, 5000);
   }, [id, getVoteUsers, dispatch, projectIdeaId]);
 
   return (
