@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useUser } from "@/store/hooks";
@@ -28,7 +27,6 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   );
   const { id } = useUser();
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   const {
     runAction: addIdeationVoteAction,
@@ -56,11 +54,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      router.refresh();
-
       setTimeout(() => {
         setRemoveIdeationVoteLoading(false);
-      }, 1000);
+      }, 1500);
     } else {
       const [, error] = await addIdeationVoteAction({
         ideationId: projectIdeaId,
@@ -72,11 +68,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      router.refresh();
-
       setTimeout(() => {
         setAddIdeationVoteLoading(false);
-      }, 1000);
+      }, 1500);
     }
   }
 
