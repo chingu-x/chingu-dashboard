@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Button from "@/components/Button";
 import {
   fetchIdeation,
-  IdeationData,
   type ProjectIdeaVotes,
 } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useIdeation, useUser } from "@/store/hooks";
