@@ -59,16 +59,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      if (previousVoteCountRef.current !== currentVoteCount) {
+      setTimeout(() => {
         setRemoveIdeationVoteLoading(false);
-      }
-
-      // Update the ref with the current vote count for next comparison
-      previousVoteCountRef.current = currentVoteCount;
-
-      // setTimeout(() => {
-      //   setRemoveIdeationVoteLoading(false);
-      // }, 2000);
+      }, 2000);
     } else {
       // eslint-disable-next-line no-console
       const [, error] = await addIdeationVoteAction({
@@ -81,16 +74,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      if (previousVoteCountRef.current !== currentVoteCount) {
+      setTimeout(() => {
         setAddIdeationVoteLoading(false);
-      }
-
-      // Update the ref with the current vote count for next comparison
-      previousVoteCountRef.current = currentVoteCount;
-
-      // setTimeout(() => {
-      //   setAddIdeationVoteLoading(false);
-      // }, 2000);
+      }, 2000);
     }
   }
 
