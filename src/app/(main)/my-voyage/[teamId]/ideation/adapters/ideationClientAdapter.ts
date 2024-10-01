@@ -1,7 +1,8 @@
 import { revalidateTag } from "next/cache";
 import { type IdeationClientPort } from "@/modules/ideation/ports/primary/ideationClientPort";
 import { type AddIdeationUsecaseDto } from "@/modules/ideation/application/dtos/addIdeationUsecaseDto";
-import { handleAsync, type AsyncActionResponse } from "@/utils/handleAsync";
+import { handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/modules/shared/types";
 import { type AddIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
 import { AddIdeationUseCase } from "@/modules/ideation/application/usecases/addIdeationUseCase";
 import { getAccessToken } from "@/utils/getCookie";
