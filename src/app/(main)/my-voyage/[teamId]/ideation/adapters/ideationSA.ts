@@ -67,12 +67,25 @@ export async function addIdeation({
 }: AddIdeationUsecaseDto): Promise<
   AsyncActionResponse<AddIdeationResponseDto>
 > {
-  return addIdeationClientAdapter.addIdeation({
-    teamId,
-    title,
-    description,
-    vision,
-  });
+  const token = getAccessToken();
+
+  const addIdeationAsync = () =>
+    addIdeationClientAdapter.addIdeation({
+      teamId,
+      title,
+      description,
+      vision,
+      token,
+      cache: "default",
+    });
+
+  const [res, error] = await handleAsync(addIdeationAsync);
+
+  if (res) {
+    revalidateTag(CacheTag.ideation);
+  }
+
+  return [res, error];
 }
 
 export async function editIdeation({
