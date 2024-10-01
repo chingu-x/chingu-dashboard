@@ -90,9 +90,13 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
   useEffect(() => {
     if (getVoteUsers().includes(id) === true) {
-      setCurrentUserVoted(true);
+      setTimeout(() => {
+        setCurrentUserVoted(true);
+      }, 2000);
     } else {
-      setCurrentUserVoted(false);
+      setTimeout(() => {
+        setCurrentUserVoted(false);
+      }, 2000);
     }
   }, [id, getVoteUsers]);
 

@@ -27,7 +27,10 @@ export default function AddVoteBtn({ techItemId }: AddVoteBtnProps) {
         onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
-    setAddVoteLoading(false);
+
+    setTimeout(() => {
+      setAddVoteLoading(false);
+    }, 2000);
   };
 
   return (

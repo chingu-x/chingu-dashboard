@@ -26,7 +26,10 @@ export default function RemoveVoteBtn({ techItemId }: RemoveVoteBtnProps) {
         onOpenModal({ type: "error", content: { message: error.message } }),
       );
     }
-    setRemoveVoteLoading(false);
+
+    setTimeout(() => {
+      setRemoveVoteLoading(false);
+    }, 2000);
   };
 
   return (
