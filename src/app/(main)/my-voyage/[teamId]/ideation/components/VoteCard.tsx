@@ -29,9 +29,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   const { id } = useUser();
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [previousUserVoted, setPreviousUserVoted] = useState<number>(
-    users.length,
-  );
+  const [previousUserVoted, setPreviousUserVoted] = useState<number>(0);
 
   const {
     runAction: addIdeationVoteAction,
@@ -60,6 +58,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
           );
         }
 
+        setPreviousUserVoted(users.length);
         setRemoveIdeationVoteLoading(false);
       } else {
         const [, error] = await addIdeationVoteAction({
@@ -72,6 +71,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
           );
         }
 
+        setPreviousUserVoted(users.length);
         setAddIdeationVoteLoading(false);
       }
     }
@@ -97,12 +97,10 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   useEffect(() => {
     if (getVoteUsers().includes(id) === true) {
       setCurrentUserVoted(true);
-      setPreviousUserVoted(users.length);
     } else {
       setCurrentUserVoted(false);
-      setPreviousUserVoted(users.length);
     }
-  }, [id, getVoteUsers, users.length]);
+  }, [id, getVoteUsers]);
 
   return (
     <div className={cn("w-[200px] rounded-lg bg-base-100", className)}>
