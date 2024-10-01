@@ -70,6 +70,8 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         setPreviousUserVoted(users.length);
         setAddIdeationVoteLoading(false);
       }
+    } else {
+      return;
     }
   }
 
