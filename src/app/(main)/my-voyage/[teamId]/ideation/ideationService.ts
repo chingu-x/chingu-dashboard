@@ -137,6 +137,8 @@ export async function addIdeationVote({
 
   const [res, error] = await handleAsync(addIdeationVoteAsync);
 
+  console.log("addIdeationVote called");
+
   if (res) {
     revalidateTag(CacheTag.ideation);
   }
@@ -157,6 +159,8 @@ export async function removeIdeationVote({
     );
 
   const [res, error] = await handleAsync(removeIdeationVoteAsync);
+
+  console.log("removeIdeationVote called");
 
   if (res) {
     revalidateTag(CacheTag.ideation);
