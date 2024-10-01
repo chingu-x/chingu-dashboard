@@ -35,14 +35,51 @@ export interface IdeationData {
   projectIdeaVotes: ProjectIdeaVotes[];
 }
 
+type IdeationId = Pick<IdeationData, "id">;
+
 interface IdeationState {
   loading: boolean;
   projectIdeas: IdeationData[];
+  projectIdea: IdeationData;
 }
 
 const initialState: IdeationState = {
   loading: false,
   projectIdeas: [],
+  projectIdea: {
+    id: 0,
+    title: "",
+    description: "",
+    vision: "",
+    isSelected: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    contributedBy: {
+      member: {
+        id: "0",
+        avatar: "",
+        firstName: "",
+        lastName: "",
+      },
+    },
+    projectIdeaVotes: [
+      {
+        id: 0,
+        voyageTeamMemberId: 0,
+        projectIdeaId: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        votedBy: {
+          member: {
+            id: "",
+            avatar: "",
+            firstName: "",
+            lastName: "",
+          },
+        },
+      },
+    ],
+  },
 };
 
 export const ideationSlice = createSlice({
@@ -59,6 +96,13 @@ export const ideationSlice = createSlice({
     setProjectIdeasLoadingFalse: (state) => {
       state.loading = false;
     },
+    fetchIdeation: (state, action: PayloadAction<IdeationId>) => {
+      const ideation = state.projectIdeas.find(
+        (project) => project.id === action.payload.id,
+      );
+
+      state.projectIdea = ideation!;
+    },
   },
   extraReducers(builder) {
     builder.addCase(PURGE, () => {
@@ -70,6 +114,7 @@ export const ideationSlice = createSlice({
 
 export const {
   fetchIdeations,
+  fetchIdeation,
   setProjectIdeasLoadingTrue,
   setProjectIdeasLoadingFalse,
 } = ideationSlice.actions;

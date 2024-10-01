@@ -2,8 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/Button";
-import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
-import { useAppDispatch, useUser } from "@/store/hooks";
+import {
+  fetchIdeation,
+  type ProjectIdeaVotes,
+} from "@/store/features/ideation/ideationSlice";
+import { useAppDispatch, useIdeation, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
@@ -23,7 +26,7 @@ interface VoteCardProps {
 
 function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
-    null
+    null,
   );
   const { id } = useUser();
   const dispatch = useAppDispatch();
@@ -40,6 +43,10 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
     setIsLoading: setRemoveIdeationVoteLoading,
   } = useServerAction(removeIdeationVote);
 
+  useEffect(() => {
+    dispatch(fetchIdeation({ id: projectIdeaId }));
+  }, [projectIdeaId, currentUserVoted, dispatch]);
+
   async function handleVote() {
     if (currentUserVoted) {
       const [, error] = await removeIdeationVoteAction({
@@ -48,13 +55,10 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
       }
-
-      setTimeout(() => {
-        setRemoveIdeationVoteLoading(false);
-      }, 500);
+      setRemoveIdeationVoteLoading(false);
     } else {
       const [, error] = await addIdeationVoteAction({
         ideationId: projectIdeaId,
@@ -62,19 +66,17 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
       if (error) {
         dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } })
+          onOpenModal({ type: "error", content: { message: error.message } }),
         );
       }
 
-      setTimeout(() => {
-        setAddIdeationVoteLoading(false);
-      }, 500);
+      setAddIdeationVoteLoading(false);
     }
   }
 
   const getVoteUsers = useCallback(
     () => users.map((user) => user.votedBy.member.id),
-    [users]
+    [users],
   );
 
   function buttonContent() {
