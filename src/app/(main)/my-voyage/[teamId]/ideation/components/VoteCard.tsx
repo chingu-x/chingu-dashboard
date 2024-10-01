@@ -27,6 +27,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   );
   const { id } = useUser();
   const dispatch = useAppDispatch();
+  const [previousUserVoted, setPreviousUserVoted] = useState<null | boolean>(
+    currentUserVoted,
+  );
 
   const {
     runAction: addIdeationVoteAction,
@@ -41,36 +44,35 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   } = useServerAction(removeIdeationVote);
 
   async function handleVote() {
-    if (addIdeationVoteLoading || removeIdeationVoteLoading) return;
+    if (currentUserVoted !== previousUserVoted) {
+      if (currentUserVoted) {
+        const [, error] = await removeIdeationVoteAction({
+          ideationId: projectIdeaId,
+        });
 
-    if (currentUserVoted) {
-      const [, error] = await removeIdeationVoteAction({
-        ideationId: projectIdeaId,
-      });
+        if (error) {
+          dispatch(
+            onOpenModal({ type: "error", content: { message: error.message } }),
+          );
+        }
 
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-      }
-
-      setTimeout(() => {
         setRemoveIdeationVoteLoading(false);
-      }, 1500);
-    } else {
-      const [, error] = await addIdeationVoteAction({
-        ideationId: projectIdeaId,
-      });
+      } else {
+        const [, error] = await addIdeationVoteAction({
+          ideationId: projectIdeaId,
+        });
 
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
+        if (error) {
+          dispatch(
+            onOpenModal({ type: "error", content: { message: error.message } }),
+          );
+        }
+
+        setAddIdeationVoteLoading(false);
       }
 
-      setTimeout(() => {
-        setAddIdeationVoteLoading(false);
-      }, 1500);
+      // Update previousUserVoted after the vote action is triggered
+      setPreviousUserVoted(currentUserVoted);
     }
   }
 
