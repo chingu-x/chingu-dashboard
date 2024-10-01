@@ -60,7 +60,10 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
           onOpenModal({ type: "error", content: { message: error.message } }),
         );
       }
-      setRemoveIdeationVoteLoading(false);
+
+      setTimeout(() => {
+        setRemoveIdeationVoteLoading(false);
+      }, 5000);
     } else {
       // eslint-disable-next-line no-console
       console.log("add vote");
@@ -74,7 +77,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      setAddIdeationVoteLoading(false);
+      setTimeout(() => {
+        setAddIdeationVoteLoading(false);
+      }, 5000);
     }
   }
 
