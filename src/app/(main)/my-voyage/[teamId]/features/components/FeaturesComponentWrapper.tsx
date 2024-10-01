@@ -16,7 +16,8 @@ import { getUser } from "@/utils/getUser";
 import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/modules/shared/types";
 import { ErrorType } from "@/utils/error";
 
 function transformData(features: Features[]): FeaturesList[] {

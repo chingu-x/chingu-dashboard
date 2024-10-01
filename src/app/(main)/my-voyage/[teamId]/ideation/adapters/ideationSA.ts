@@ -75,32 +75,6 @@ export async function addIdeation({
   });
 }
 
-// test
-// export async function addIdeation({
-//   teamId,
-//   title,
-//   description,
-//   vision,
-// }: AddIdeationProps): Promise<AsyncActionResponse<AddIdeationResponse>> {
-//   const token = getAccessToken();
-
-//   const addIdeationAsync = () =>
-//     POST<AddIdeationBody, AddIdeationResponse>(
-//       `api/v1/voyages/teams/${teamId}/ideations`,
-//       token,
-//       "default",
-//       { title, description, vision },
-//     );
-
-//   const [res, error] = await handleAsync(addIdeationAsync);
-
-//   if (res) {
-//     revalidateTag(CacheTag.ideation);
-//   }
-
-//   return [res, error];
-// }
-
 export async function editIdeation({
   ideationId,
   title,

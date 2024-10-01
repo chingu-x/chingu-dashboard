@@ -1,7 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/modules/shared/types";
 import { getAccessToken, getRefreshToken } from "@/utils/getCookie";
 import { POST, UNAUTHPOST } from "@/utils/requests";
 

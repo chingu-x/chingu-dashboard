@@ -9,12 +9,12 @@ import {
   type DeleteIdeationProps,
   type DeleteIdeationResponse,
   type deleteIdeation,
-} from "@/myVoyage/ideation/ideationService";
+} from "@/myVoyage/ideation/adapters/ideationSA";
 import {
   type DeleteFeatureProps,
   type deleteFeature,
 } from "@/myVoyage/features/featuresService";
-import { type AsyncActionResponse } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/modules/shared/types";
 import {
   type DeleteAgendaTopicProps,
   type DeleteAgendaTopicResponse,

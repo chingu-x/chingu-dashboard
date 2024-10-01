@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { type AsyncActionResponse } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/modules/shared/types";
 
 type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
 

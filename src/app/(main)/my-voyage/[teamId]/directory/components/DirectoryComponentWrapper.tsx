@@ -9,7 +9,8 @@ import ErrorComponent from "@/components/Error";
 import { type TeamDirectory } from "@/store/features/directory/directorySlice";
 
 import { getAccessToken } from "@/utils/getCookie";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/modules/shared/types";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { type User } from "@/store/features/user/userSlice";

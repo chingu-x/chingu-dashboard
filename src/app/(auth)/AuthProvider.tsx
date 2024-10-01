@@ -5,7 +5,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import { clientSignIn, clientSignOut } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { type User, getUserState } from "@/store/features/user/userSlice";
-import { type AppError } from "@/types/types";
+import { type AppError } from "@/modules/shared/types";
 import { currentDate } from "@/utils/getCurrentSprint";
 
 interface AuthProviderProps {
