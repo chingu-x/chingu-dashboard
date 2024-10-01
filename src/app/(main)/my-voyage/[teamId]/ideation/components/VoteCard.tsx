@@ -27,9 +27,6 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   );
   const { id } = useUser();
   const dispatch = useAppDispatch();
-  const [previousUserVoted, setPreviousUserVoted] = useState<null | boolean>(
-    currentUserVoted,
-  );
 
   const {
     runAction: addIdeationVoteAction,
@@ -44,35 +41,34 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   } = useServerAction(removeIdeationVote);
 
   async function handleVote() {
-    if (currentUserVoted !== previousUserVoted) {
-      if (currentUserVoted) {
-        const [, error] = await removeIdeationVoteAction({
-          ideationId: projectIdeaId,
-        });
+    setTimeout(() => {}, 1000);
+    if (currentUserVoted) {
+      const [, error] = await removeIdeationVoteAction({
+        ideationId: projectIdeaId,
+      });
 
-        if (error) {
-          dispatch(
-            onOpenModal({ type: "error", content: { message: error.message } }),
-          );
-        }
-
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+      }
+      setTimeout(() => {
         setRemoveIdeationVoteLoading(false);
-      } else {
-        const [, error] = await addIdeationVoteAction({
-          ideationId: projectIdeaId,
-        });
+      }, 2000);
+    } else {
+      const [, error] = await addIdeationVoteAction({
+        ideationId: projectIdeaId,
+      });
 
-        if (error) {
-          dispatch(
-            onOpenModal({ type: "error", content: { message: error.message } }),
-          );
-        }
-
-        setAddIdeationVoteLoading(false);
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
       }
 
-      // Update previousUserVoted after the vote action is triggered
-      setPreviousUserVoted(currentUserVoted);
+      setTimeout(() => {
+        setAddIdeationVoteLoading(false);
+      }, 2000);
     }
   }
 
