@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useUser } from "@/store/hooks";
@@ -25,55 +26,53 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   const [currentUserVoted, setCurrentUserVoted] = useState<null | boolean>(
     null,
   );
-  const [isPending, startTransition] = useTransition();
   const { id } = useUser();
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const {
     runAction: addIdeationVoteAction,
-    // isLoading: addIdeationVoteLoading,
-    // setIsLoading: setAddIdeationVoteLoading,
+    isLoading: addIdeationVoteLoading,
+    setIsLoading: setAddIdeationVoteLoading,
   } = useServerAction(addIdeationVote);
 
   const {
     runAction: removeIdeationVoteAction,
-    // isLoading: removeIdeationVoteLoading,
-    // setIsLoading: setRemoveIdeationVoteLoading,
+    isLoading: removeIdeationVoteLoading,
+    setIsLoading: setRemoveIdeationVoteLoading,
   } = useServerAction(removeIdeationVote);
 
-  function handleVote() {
+  async function handleVote() {
+    if (addIdeationVoteLoading || removeIdeationVoteLoading) return;
+
     if (currentUserVoted) {
-      startTransition(async () => {
-        const [, error] = await removeIdeationVoteAction({
-          ideationId: projectIdeaId,
-        });
-
-        if (error) {
-          dispatch(
-            onOpenModal({ type: "error", content: { message: error.message } }),
-          );
-        }
+      const [, error] = await removeIdeationVoteAction({
+        ideationId: projectIdeaId,
       });
 
-      // setTimeout(() => {
-      //   setRemoveIdeationVoteLoading(false);
-      // }, 2000);
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+      }
+
+      setRemoveIdeationVoteLoading(false);
+
+      router.refresh();
     } else {
-      startTransition(async () => {
-        const [, error] = await addIdeationVoteAction({
-          ideationId: projectIdeaId,
-        });
-
-        if (error) {
-          dispatch(
-            onOpenModal({ type: "error", content: { message: error.message } }),
-          );
-        }
+      const [, error] = await addIdeationVoteAction({
+        ideationId: projectIdeaId,
       });
 
-      // setTimeout(() => {
-      //   setAddIdeationVoteLoading(false);
-      // }, 2000);
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+      }
+
+      setAddIdeationVoteLoading(false);
+
+      router.refresh();
     }
   }
 
@@ -83,7 +82,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   );
 
   function buttonContent() {
-    if (isPending) {
+    if (addIdeationVoteLoading || removeIdeationVoteLoading) {
       return <Spinner />;
     }
 
@@ -125,7 +124,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
           variant={`${currentUserVoted ? "error" : "primary"}`}
           className={`w-full ${currentUserVoted ? "text-base-300" : ""}`}
           onClick={handleVote}
-          disabled={isPending}
+          disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
         >
           {buttonContent()}
         </Button>
