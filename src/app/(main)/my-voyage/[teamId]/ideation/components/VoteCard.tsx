@@ -27,7 +27,6 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   );
   const { id } = useUser();
   const dispatch = useAppDispatch();
-  const [previousUserVoted, setPreviousUserVoted] = useState<number>(0);
 
   const {
     runAction: addIdeationVoteAction,
@@ -42,36 +41,33 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   } = useServerAction(removeIdeationVote);
 
   async function handleVote() {
-    if (previousUserVoted !== users.length) {
-      if (currentUserVoted) {
-        const [, error] = await removeIdeationVoteAction({
-          ideationId: projectIdeaId,
-        });
+    if (currentUserVoted) {
+      const [, error] = await removeIdeationVoteAction({
+        ideationId: projectIdeaId,
+      });
 
-        if (error) {
-          dispatch(
-            onOpenModal({ type: "error", content: { message: error.message } }),
-          );
-        }
-
-        setPreviousUserVoted(users.length);
-        setRemoveIdeationVoteLoading(false);
-      } else {
-        const [, error] = await addIdeationVoteAction({
-          ideationId: projectIdeaId,
-        });
-
-        if (error) {
-          dispatch(
-            onOpenModal({ type: "error", content: { message: error.message } }),
-          );
-        }
-
-        setPreviousUserVoted(users.length);
-        setAddIdeationVoteLoading(false);
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
       }
+      setTimeout(() => {
+        setRemoveIdeationVoteLoading(false);
+      }, 2000);
     } else {
-      return;
+      const [, error] = await addIdeationVoteAction({
+        ideationId: projectIdeaId,
+      });
+
+      if (error) {
+        dispatch(
+          onOpenModal({ type: "error", content: { message: error.message } }),
+        );
+      }
+
+      setTimeout(() => {
+        setAddIdeationVoteLoading(false);
+      }, 2000);
     }
   }
 
@@ -123,7 +119,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
           variant={`${currentUserVoted ? "error" : "primary"}`}
           className={`w-full ${currentUserVoted ? "text-base-300" : ""}`}
           onClick={handleVote}
-          disabled={previousUserVoted === users.length}
+          disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
         >
           {buttonContent()}
         </Button>
