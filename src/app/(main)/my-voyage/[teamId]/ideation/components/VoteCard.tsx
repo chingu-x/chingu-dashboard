@@ -31,13 +31,13 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
   const {
     runAction: addIdeationVoteAction,
-    isLoading: addIdeationVoteLoading,
+    // isLoading: addIdeationVoteLoading,
     // setIsLoading: setAddIdeationVoteLoading,
   } = useServerAction(addIdeationVote);
 
   const {
     runAction: removeIdeationVoteAction,
-    isLoading: removeIdeationVoteLoading,
+    // isLoading: removeIdeationVoteLoading,
     // setIsLoading: setRemoveIdeationVoteLoading,
   } = useServerAction(removeIdeationVote);
 

@@ -137,6 +137,9 @@ export async function addIdeationVote({
 
   const [res, error] = await handleAsync(addIdeationVoteAsync);
 
+  // eslint-disable-next-line no-console
+  console.log("addIdeationVote called");
+
   if (res) {
     revalidateTag(CacheTag.ideation);
   }
@@ -157,6 +160,9 @@ export async function removeIdeationVote({
     );
 
   const [res, error] = await handleAsync(removeIdeationVoteAsync);
+
+  // eslint-disable-next-line no-console
+  console.log("removeIdeationVote called");
 
   if (res) {
     revalidateTag(CacheTag.ideation);
