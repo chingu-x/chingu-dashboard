@@ -6,7 +6,7 @@ import {
   fetchIdeation,
   type ProjectIdeaVotes,
 } from "@/store/features/ideation/ideationSlice";
-import { useAppDispatch, useIdeation, useUser } from "@/store/hooks";
+import { useAppDispatch, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
