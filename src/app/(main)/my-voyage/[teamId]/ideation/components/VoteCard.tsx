@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useUser } from "@/store/hooks";
@@ -28,7 +27,6 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   );
   const { id } = useUser();
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const [previousUserVoted, setPreviousUserVoted] = useState<number>(0);
 
   const {
@@ -44,8 +42,6 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   } = useServerAction(removeIdeationVote);
 
   async function handleVote() {
-    router.refresh();
-
     if (previousUserVoted !== users.length) {
       if (currentUserVoted) {
         const [, error] = await removeIdeationVoteAction({
@@ -125,7 +121,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
           variant={`${currentUserVoted ? "error" : "primary"}`}
           className={`w-full ${currentUserVoted ? "text-base-300" : ""}`}
           onClick={handleVote}
-          disabled={addIdeationVoteLoading || removeIdeationVoteLoading}
+          disabled={previousUserVoted === users.length}
         >
           {buttonContent()}
         </Button>
