@@ -1,5 +1,5 @@
-import { type AddIdeationUsecaseDto } from "@/modules/ideation/application/dtos/addIdeationUsecaseDto";
 import { type AddIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
+import { type AddIdeationRequestDto } from "@/modules/ideation/application/dtos/request.dto";
 
 export interface IdeationClientPort {
   addIdeation({
@@ -7,5 +7,5 @@ export interface IdeationClientPort {
     title,
     description,
     vision,
-  }: AddIdeationUsecaseDto): Promise<AddIdeationResponseDto>;
+  }: AddIdeationRequestDto): Promise<AddIdeationResponseDto>;
 }
