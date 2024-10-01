@@ -63,7 +63,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
       setTimeout(() => {
         setRemoveIdeationVoteLoading(false);
-      }, 5000);
+      }, 1000);
     } else {
       // eslint-disable-next-line no-console
       console.log("add vote");
@@ -79,7 +79,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
       setTimeout(() => {
         setAddIdeationVoteLoading(false);
-      }, 5000);
+      }, 1000);
     }
   }
 
@@ -103,13 +103,11 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   useEffect(() => {
     setTimeout(() => {
       if (getVoteUsers().includes(id) === true) {
-        dispatch(fetchIdeation({ id: projectIdeaId }));
         setCurrentUserVoted(true);
       } else {
         setCurrentUserVoted(false);
-        dispatch(fetchIdeation({ id: projectIdeaId }));
       }
-    }, 5000);
+    }, 1000);
   }, [id, getVoteUsers, dispatch, projectIdeaId]);
 
   return (
