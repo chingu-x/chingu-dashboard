@@ -1,9 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Button from "@/components/Button";
-import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
-import { useAppDispatch, useUser } from "@/store/hooks";
+import {
+  fetchIdeation,
+  IdeationData,
+  type ProjectIdeaVotes,
+} from "@/store/features/ideation/ideationSlice";
+import { useAppDispatch, useIdeation, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
@@ -27,6 +31,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   );
   const { id } = useUser();
   const dispatch = useAppDispatch();
+  const projectIdeaStore = useIdeation().projectIdea.projectIdeaVotes;
+  const previousVoteCountRef = useRef<number>(0);
+  const currentVoteCount = projectIdeaStore.length;
 
   const {
     runAction: addIdeationVoteAction,
@@ -40,14 +47,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
     setIsLoading: setRemoveIdeationVoteLoading,
   } = useServerAction(removeIdeationVote);
 
-  // useEffect(() => {
-  //   dispatch(fetchIdeation({ id: projectIdeaId }));
-  // }, [projectIdeaId, currentUserVoted, dispatch]);
-
   async function handleVote() {
     if (currentUserVoted) {
       // eslint-disable-next-line no-console
-      console.log("remove vote");
       const [, error] = await removeIdeationVoteAction({
         ideationId: projectIdeaId,
       });
@@ -58,12 +60,18 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      setTimeout(() => {
+      if (previousVoteCountRef.current !== currentVoteCount) {
         setRemoveIdeationVoteLoading(false);
-      }, 2000);
+      }
+
+      // Update the ref with the current vote count for next comparison
+      previousVoteCountRef.current = currentVoteCount;
+
+      // setTimeout(() => {
+      //   setRemoveIdeationVoteLoading(false);
+      // }, 2000);
     } else {
       // eslint-disable-next-line no-console
-      console.log("add vote");
       const [, error] = await addIdeationVoteAction({
         ideationId: projectIdeaId,
       });
@@ -74,9 +82,16 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         );
       }
 
-      setTimeout(() => {
+      if (previousVoteCountRef.current !== currentVoteCount) {
         setAddIdeationVoteLoading(false);
-      }, 2000);
+      }
+
+      // Update the ref with the current vote count for next comparison
+      previousVoteCountRef.current = currentVoteCount;
+
+      // setTimeout(() => {
+      //   setAddIdeationVoteLoading(false);
+      // }, 2000);
     }
   }
 
@@ -98,14 +113,14 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      if (getVoteUsers().includes(id) === true) {
-        setCurrentUserVoted(true);
-      } else {
-        setCurrentUserVoted(false);
-      }
-    }, 2000);
-  }, [id, getVoteUsers, dispatch, projectIdeaId]);
+    if (getVoteUsers().includes(id) === true) {
+      dispatch(fetchIdeation({ id: projectIdeaId }));
+      setCurrentUserVoted(true);
+    } else {
+      dispatch(fetchIdeation({ id: projectIdeaId }));
+      setCurrentUserVoted(false);
+    }
+  }, [id, getVoteUsers, dispatch, projectIdeaId, projectIdeaStore]);
 
   return (
     <div className={cn("w-[200px] rounded-lg bg-base-100", className)}>
