@@ -10,7 +10,7 @@ import { getUser } from "@/utils/getUser";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/modules/shared/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
 import { Forms } from "@/utils/form/formsEnums";

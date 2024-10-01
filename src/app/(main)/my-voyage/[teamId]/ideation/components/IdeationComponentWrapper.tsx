@@ -16,7 +16,7 @@ import { getAccessToken } from "@/utils/getCookie";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { getUser } from "@/utils/getUser";
 import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/modules/shared/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import routePaths from "@/utils/routePaths";
 import { ErrorType } from "@/utils/error";

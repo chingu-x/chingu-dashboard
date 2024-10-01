@@ -17,7 +17,7 @@ import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/modules/shared/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { type Sprint } from "@/store/features/sprint/sprintSlice";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";

@@ -14,7 +14,7 @@ import {
   type DeleteFeatureProps,
   type deleteFeature,
 } from "@/myVoyage/features/featuresService";
-import { type AsyncActionResponse } from "@/modules/shared/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import {
   type DeleteAgendaTopicProps,
   type DeleteAgendaTopicResponse,

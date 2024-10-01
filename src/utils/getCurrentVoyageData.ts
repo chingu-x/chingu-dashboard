@@ -1,5 +1,6 @@
 import { getCurrentVoyageTeam } from "./getCurrentVoyageTeam";
-import type { AsyncActionResponse, AppError } from "@/modules/shared/types";
+import { type AppError } from "@/types/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { type User } from "@/store/features/user/userSlice";
 
 interface GetCurrentVoyageDataProps<X, Y> {

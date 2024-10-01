@@ -4,7 +4,7 @@ import { revalidateTag } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
 import { POST, DELETE } from "@/utils/requests";
 import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/modules/shared/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 
 interface ResourceProps {

@@ -5,7 +5,7 @@ import { IdeationClientAdapter } from "./ideationClientAdapter";
 import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/modules/shared/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 import { type AddIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
 import { type AddIdeationUsecaseDto } from "@/modules/ideation/application/dtos/addIdeationUsecaseDto";

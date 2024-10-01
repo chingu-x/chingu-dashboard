@@ -1,4 +1,4 @@
-import { type AppError } from "@/modules/shared/types";
+import { type AppError } from "@/types/types";
 import {
   type User,
   type VoyageTeamMember,

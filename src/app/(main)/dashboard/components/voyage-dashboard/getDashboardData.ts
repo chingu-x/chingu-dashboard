@@ -2,7 +2,8 @@ import { fetchSprints } from "@/myVoyage/sprints/components/RedirectToCurrentSpr
 import { fetchMeeting } from "@/myVoyage/sprints/components/SprintWrapper";
 import type { User } from "@/store/features/user/userSlice";
 import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
-import type { AppError, AsyncActionResponse } from "@/modules/shared/types";
+import { type AppError } from "@/types/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { fetchResources } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ResourcesComponentWrapper";

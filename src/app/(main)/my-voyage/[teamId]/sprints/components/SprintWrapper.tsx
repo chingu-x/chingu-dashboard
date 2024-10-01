@@ -26,7 +26,7 @@ import {
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/modules/shared/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";

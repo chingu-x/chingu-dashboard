@@ -1,7 +1,7 @@
-import {
-  type AsyncActionResponse,
-  type AsyncFunction,
-} from "@/modules/shared/types";
+import { type AppError } from "@/types/types";
+
+export type AsyncFunction<X> = () => Promise<X>;
+export type AsyncActionResponse<X> = [X | null, AppError | null];
 
 export async function handleAsync<X>(
   asyncFn: AsyncFunction<X>,

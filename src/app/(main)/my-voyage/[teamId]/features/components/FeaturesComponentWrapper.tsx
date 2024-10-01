@@ -17,7 +17,7 @@ import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/modules/shared/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { ErrorType } from "@/utils/error";
 
 function transformData(features: Features[]): FeaturesList[] {
