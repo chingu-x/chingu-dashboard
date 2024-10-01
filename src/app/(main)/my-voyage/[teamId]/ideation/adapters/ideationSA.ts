@@ -57,6 +57,8 @@ export interface IdeationVoteResponse extends IdeationResponse {
   projectIdeaId: number;
 }
 
+const addIdeationClientAdapter = new IdeationClientAdapter();
+
 export async function addIdeation({
   teamId,
   title,
@@ -65,8 +67,6 @@ export async function addIdeation({
 }: AddIdeationUsecaseDto): Promise<
   AsyncActionResponse<AddIdeationResponseDto>
 > {
-  const addIdeationClientAdapter = new IdeationClientAdapter();
-
   return addIdeationClientAdapter.addIdeation({
     teamId,
     title,
