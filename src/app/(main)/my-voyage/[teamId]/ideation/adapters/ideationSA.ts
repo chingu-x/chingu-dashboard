@@ -8,7 +8,7 @@ import { handleAsync } from "@/utils/handleAsync";
 import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
 import { type AddIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
-import { type AddIdeationUsecaseDto } from "@/modules/ideation/application/dtos/addIdeationUsecaseDto";
+import { type AddIdeationRequestDto } from "@/modules/ideation/application/dtos/request.dto";
 
 interface IdeationProps {
   teamId: number;
@@ -64,7 +64,7 @@ export async function addIdeation({
   title,
   description,
   vision,
-}: AddIdeationUsecaseDto): Promise<
+}: AddIdeationRequestDto): Promise<
   AsyncActionResponse<AddIdeationResponseDto>
 > {
   const token = getAccessToken();
