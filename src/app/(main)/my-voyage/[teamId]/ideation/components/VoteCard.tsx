@@ -60,7 +60,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
       setTimeout(() => {
         setRemoveIdeationVoteLoading(false);
-      }, 500);
+      }, 1000);
     } else {
       const [, error] = await addIdeationVoteAction({
         ideationId: projectIdeaId,
@@ -76,7 +76,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
 
       setTimeout(() => {
         setAddIdeationVoteLoading(false);
-      }, 500);
+      }, 1000);
     }
   }
 
