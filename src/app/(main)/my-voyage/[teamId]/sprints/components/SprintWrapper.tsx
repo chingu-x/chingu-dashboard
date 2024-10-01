@@ -126,7 +126,7 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
 
   const correspondingMeetingId = voyageData.sprints.find(
     (sprint) => sprint.number === sprintNumber,
-  )?.teamMeetings[0]?.id;
+  )?.teamMeetings[0];
 
   if (meetingId === correspondingMeetingId) {
     const [res, error] = await fetchMeeting({ sprintNumber, meetingId });

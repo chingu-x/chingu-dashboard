@@ -20,7 +20,7 @@ interface MeetingBody {
   title: string;
   description: string;
   dateTime: string;
-  meetingLink: string;
+  meetingLink?: string;
   notes: string;
 }
 
@@ -96,7 +96,7 @@ export interface SprintsResponse {
     number: number;
     startDate: string;
     endDate: string;
-    teamMeetings: { id: number }[];
+    teamMeetings: number[];
   }[];
 }
 

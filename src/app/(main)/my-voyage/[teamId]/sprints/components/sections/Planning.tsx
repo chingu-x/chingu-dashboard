@@ -52,11 +52,14 @@ export default function Planning() {
   } = useSprint();
 
   useEffect(() => {
-    setData(
-      sprints[sprintNumber - 1].teamMeetings[0].formResponseMeeting?.find(
-        (form) => form.form.id === Number(Forms.planning),
-      ),
-    );
+    const sprint = sprints[sprintNumber - 1];
+    if (sprint.teamMeetingsData && sprint.teamMeetingsData.length) {
+      setData(
+        sprint.teamMeetingsData[0].formResponseMeeting?.find(
+          (form) => form.form.id === Number(Forms.planning),
+        ),
+      );
+    }
   }, [sprints, sprintNumber]);
 
   const goal = data?.responseGroup.responses.find(
