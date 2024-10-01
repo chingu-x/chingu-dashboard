@@ -35,7 +35,7 @@ export async function fetchProjectIdeas({
     GET<IdeationData[]>(
       `api/v1/voyages/teams/${teamId}/ideations`,
       token,
-      "no-store",
+      "force-cache",
       CacheTag.ideation,
     );
 

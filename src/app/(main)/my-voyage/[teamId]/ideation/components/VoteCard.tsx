@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 import { useAppDispatch, useUser } from "@/store/hooks";
@@ -27,6 +28,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   );
   const { id } = useUser();
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const {
     runAction: addIdeationVoteAction,
@@ -41,7 +43,8 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   } = useServerAction(removeIdeationVote);
 
   async function handleVote() {
-    setTimeout(() => {}, 1000);
+    router.refresh();
+
     if (currentUserVoted) {
       const [, error] = await removeIdeationVoteAction({
         ideationId: projectIdeaId,
@@ -52,6 +55,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
           onOpenModal({ type: "error", content: { message: error.message } }),
         );
       }
+
       setRemoveIdeationVoteLoading(false);
     } else {
       const [, error] = await addIdeationVoteAction({
