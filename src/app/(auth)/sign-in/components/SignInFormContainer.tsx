@@ -15,6 +15,7 @@ import routePaths from "@/utils/routePaths";
 
 import useServerAction from "@/hooks/useServerAction";
 import Spinner from "@/components/Spinner";
+import { login } from "../../login";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -59,25 +60,26 @@ function SignInFormContainer({
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { email, password } = data;
-    const [res, error] = await serverSignInAction({ email, password });
+    await login(email, password);
+    // const [res, error] = await serverSignInAction({ email, password });
 
-    if (res) {
-      dispatch(clientSignIn());
-      router.replace(routePaths.dashboardPage());
-    }
+    // if (res) {
+    //   dispatch(clientSignIn());
+    //   router.replace(routePaths.dashboardPage());
+    // }
 
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-      setServerSignInLoading(false);
-    }
+    // if (error) {
+    //   dispatch(
+    //     onOpenModal({ type: "error", content: { message: error.message } }),
+    //   );
+    //   setServerSignInLoading(false);
+    // }
   };
 
   function renderButtonContent() {
-    if (serverSignInLoading) {
-      return <Spinner />;
-    }
+    // if (serverSignInLoading) {
+    //   return <Spinner />;
+    // }
     return "Sign In";
   }
 
