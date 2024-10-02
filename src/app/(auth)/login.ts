@@ -13,9 +13,11 @@ export async function login(email: string, password: string) {
       },
     );
 
+    // eslint-disable-next-line no-console
     console.log(response);
     //   return response.data;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 }
