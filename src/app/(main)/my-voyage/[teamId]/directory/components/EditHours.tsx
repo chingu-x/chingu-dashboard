@@ -12,6 +12,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import useServerAction from "@/hooks/useServerAction";
 import Spinner from "@/components/Spinner";
 import Button from "@/components/Button";
+import { axiosInstance } from "@/utils/axiosInstance";
 
 interface EditHoursProps {
   hrPerSprint: number;
@@ -59,19 +60,23 @@ export default function EditHours({
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { avgHours } = data;
-    const [, error] = await editHoursAction({
-      teamId,
+
+    return await axiosInstance.patch(`api/v1/teams/${teamId}/members`, {
       hrPerSprint: Number(avgHours),
     });
+    // const [, error] = await editHoursAction({
+    //   teamId,
+    //   hrPerSprint: Number(avgHours),
+    // });
 
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-    }
+    // if (error) {
+    //   dispatch(
+    //     onOpenModal({ type: "error", content: { message: error.message } }),
+    //   );
+    // }
 
-    setEditHoursLoading(false);
-    setIsEditing(false);
+    // setEditHoursLoading(false);
+    // setIsEditing(false);
   };
 
   function handleClearInputAction() {

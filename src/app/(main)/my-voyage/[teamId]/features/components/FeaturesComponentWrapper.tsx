@@ -141,8 +141,6 @@ export default function FeaturesComponentWrapper({
       });
   }, [teamId]);
 
-  console.log(features);
-
   // const [user, error] = await getUser();
 
   // const { errorResponse, data } = await getCurrentVoyageData({
