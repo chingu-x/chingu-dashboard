@@ -1,16 +1,30 @@
+"use client";
+
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
 import AuthHeader from "@/components/navbar/AuthHeader";
 import { getUser } from "@/utils/getUser";
 import AuthProvider from "@/app/(auth)/AuthProvider";
+import { useEffect, useState } from "react";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default async function Layout({ children }: LayoutProps) {
-  const [user, error] = await getUser();
+export default function Layout({ children }: LayoutProps) {
+  const [user, setUser] = useState();
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    const fetchUser = async () => await getUser();
+
+    fetchUser()
+      .then((data) => setUser(data))
+      .catch((err) => {
+        setError(err);
+      });
+  }, []);
 
   return (
     <div className="flex h-screen w-screen flex-col">

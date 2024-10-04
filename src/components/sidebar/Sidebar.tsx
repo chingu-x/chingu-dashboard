@@ -179,7 +179,7 @@ export default function Sidebar() {
                 onClick={handlePageClick}
                 hoveredButton={hoveredButton}
                 selectedButton={selectedButton}
-                isVoyageStarted={isVoyageStarted}
+                isVoyageStarted={true}
                 setHoveredButton={setHoveredButton}
               />
             ))}
