@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { redirect } from "next/navigation";
 
 import ProgressStepper from "./ProgressStepper";
