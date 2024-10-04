@@ -4,22 +4,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { redirect } from "next/navigation";
-import { getUser } from "@/utils/getUser";
-import routePaths from "@/utils/routePaths";
+function DashboardPage() {
+  // const [user] = await getUser();
 
-async function DashboardPage() {
-  const [user] = await getUser();
+  // const teamMember = user?.voyageTeamMembers.find(
+  //   (voyage: any) => voyage.voyageTeam.voyage.status.name === "Active",
+  // );
 
-  const teamMember = user?.voyageTeamMembers.find(
-    (voyage: any) => voyage.voyageTeam.voyage.status.name === "Active",
-  );
-
-  if (teamMember) {
-    redirect(
-      routePaths.VoyageMemberDashboardPage(teamMember?.voyageTeamId.toString()),
-    );
-  }
+  // if (teamMember) {
+  //   redirect(
+  //     routePaths.VoyageMemberDashboardPage(teamMember?.voyageTeamId.toString()),
+  //   );
+  // }
 
   return <div>Default Dashboard</div>;
 }
