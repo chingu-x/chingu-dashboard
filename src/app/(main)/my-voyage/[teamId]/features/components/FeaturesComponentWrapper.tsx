@@ -23,6 +23,7 @@ import { ErrorType } from "@/utils/error";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { features } from "process";
+import { axiosInstance } from "@/utils/axiosInstance";
 
 function transformData(features: Features[]): FeaturesList[] {
   const transformedData: FeaturesList[] = [
@@ -120,14 +121,8 @@ export default function FeaturesComponentWrapper({
   useEffect(() => {
     const fetchFeatures = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/voyages/teams/${teamId}/features`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          },
+        const response = await axiosInstance.get(
+          `/api/v1/voyages/teams/${teamId}/features`,
         );
 
         return response.data;

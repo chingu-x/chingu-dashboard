@@ -22,6 +22,7 @@ import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { ErrorType } from "@/utils/error";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { axiosInstance } from "@/utils/axiosInstance";
 
 interface FetchTeamDirectoryProps {
   teamId: number;
@@ -100,15 +101,7 @@ export default function DirectoryComponentWrapper({
   useEffect(() => {
     const fetchDirectory = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams/${teamId}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          },
-        );
+        const response = await axiosInstance.get(`/api/v1/teams/${teamId}`);
 
         return response.data;
       } catch (error) {

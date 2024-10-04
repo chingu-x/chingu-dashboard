@@ -3,18 +3,11 @@ import { getAccessToken } from "./getCookie";
 import { type AsyncActionResponse, handleAsync } from "./handleAsync";
 import { GET } from "./requests";
 import { type User } from "@/store/features/user/userSlice";
+import { axiosInstance } from "./axiosInstance";
 
 export async function getUser() {
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/me`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      },
-    );
+    const response = await axiosInstance.get("/api/v1/users/me");
 
     return response.data;
   } catch (error) {
