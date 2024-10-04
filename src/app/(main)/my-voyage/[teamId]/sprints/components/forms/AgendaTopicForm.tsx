@@ -160,9 +160,13 @@ export default function AgendaTopicForm() {
 
   useEffect(() => {
     if (sprintNumber && agendaId) {
-      const topic = sprints
-        .find((sprint) => sprint.number === sprintNumber)
-        ?.teamMeetings[0].agendas?.find((topic) => topic.id === agendaId);
+      const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
+
+      const topic =
+        sprint?.teamMeetingsData &&
+        sprint.teamMeetingsData[0].agendas?.find(
+          (topic) => topic.id === agendaId,
+        );
 
       setTopicData(topic);
       setEditMode(true);

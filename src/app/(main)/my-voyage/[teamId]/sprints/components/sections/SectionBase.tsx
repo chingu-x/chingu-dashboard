@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, type Variants, motion } from "framer-motion";
 import {
   ChevronDownIcon,
@@ -57,6 +57,10 @@ export default function SectionBase({
     isLoading: editMeetingLoading,
     setIsLoading: setEditMeetingLoading,
   } = useServerAction(editMeeting);
+
+  useEffect(() => {
+    if (isAdded) setIsOpen(true);
+  }, [isAdded]);
 
   const handleAddSection = async () => {
     if (id !== Number(Forms.notes)) {
@@ -174,10 +178,10 @@ export default function SectionBase({
               aria-expanded={isOpen}
               aria-controls={`accordion-panel-${title}`}
               type="button"
-              onClick={handleToggle}
+              onClick={() => handleToggle()}
               aria-label={`close ${title} panel`}
             >
-              <ChevronUpIcon className="h-10 w-10 text-base-300" />
+              <ChevronDownIcon className="h-10 w-10 text-base-300" />
             </motion.button>
           )}
           {isAdded && !isOpen && (
@@ -191,10 +195,10 @@ export default function SectionBase({
               aria-expanded={isOpen}
               aria-controls={`accordion-panel-${title}`}
               type="button"
-              onClick={handleToggle}
+              onClick={() => handleToggle()}
               aria-label={`open ${title} panel`}
             >
-              <ChevronDownIcon className="h-10 w-10 text-base-300" />
+              <ChevronUpIcon className="h-10 w-10 text-base-300" />
             </motion.button>
           )}
         </AnimatePresence>

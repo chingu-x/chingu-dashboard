@@ -57,7 +57,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
 
     function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
       // Max length suggestion message
-      if (maxLength) {
+      if (maxLength && e.target.type !== "password") {
         const currentLength = e.target.value.length;
         if (currentLength > 0) {
           setCurrentSuggestion(

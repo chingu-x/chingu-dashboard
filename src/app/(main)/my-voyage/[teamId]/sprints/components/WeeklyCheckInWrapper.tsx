@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -78,6 +79,11 @@ export default async function WeeklyCheckInWrapper({
 
   let description = "";
   let questions = [] as Question[];
+
+  let hasProductOwner = false;
+  let hasScrumMaster = false;
+  let isScrumMaster = false;
+  let isProductOwner = false;
 
   const [user, error] = await getUser();
 
@@ -167,7 +173,7 @@ export default async function WeeklyCheckInWrapper({
       //   );
       // }
 
-      // Fetch form
+      // Fetch general checkin form
       const [formRes, formError] = await fetchFormQuestions({
         formId: Forms.checkIn,
       });
@@ -180,8 +186,49 @@ export default async function WeeklyCheckInWrapper({
           />
         );
       }
+
       if (formRes && formRes?.description) description = formRes.description;
       if (formRes && formRes?.questions) questions = formRes.questions;
+
+      // Fetch PO checkin questions (form)
+      if (hasProductOwner && !isProductOwner) {
+        const [POformRes, POformError] = await fetchFormQuestions({
+          formId: Forms.checkinPO,
+        });
+
+        if (POformError) {
+          return (
+            <ErrorComponent
+              errorType={ErrorType.FETCH_FORM_QUESTIONS}
+              message={POformError.message}
+            />
+          );
+        }
+
+        if (POformRes && POformRes?.questions)
+          questions = [...questions, ...POformRes.questions];
+      }
+
+      // Fetch SM checkin questions (form)
+      if (hasScrumMaster && !isScrumMaster) {
+        const [SMformRes, SMformError] = await fetchFormQuestions({
+          formId: Forms.checkinSM,
+        });
+
+        if (SMformError) {
+          return (
+            <ErrorComponent
+              errorType={ErrorType.FETCH_FORM_QUESTIONS}
+              message={SMformError.message}
+            />
+          );
+        }
+
+        if (SMformRes && SMformRes?.questions)
+          questions = [...questions, ...SMformRes.questions];
+      }
+
+      questions = questions.sort((a, b) => a.order - b.order);
     }
   } else {
     redirect(routePaths.dashboardPage());

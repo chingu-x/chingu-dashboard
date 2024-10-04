@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +13,7 @@ import Spinner from "@/components/Spinner";
 import { validateTextInput } from "@/utils/form/validateInput";
 import useServerAction from "@/hooks/useServerAction";
 import { editMeeting } from "@/myVoyage/sprints/sprintsService";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useSprint } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
@@ -25,11 +25,8 @@ const validationSchema = z.object({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-interface NotesProps {
-  data?: string;
-}
-
-export default function Notes({ data }: NotesProps) {
+export default function Notes() {
+  const [data, setData] = useState<string>();
   const dispatch = useAppDispatch();
   const params = useParams<{
     sprintNumber: string;
@@ -40,6 +37,17 @@ export default function Notes({ data }: NotesProps) {
     Number(params.sprintNumber),
     Number(params.meetingId),
   ];
+
+  const {
+    voyage: { sprints },
+  } = useSprint();
+
+  useEffect(() => {
+    const sprint = sprints[sprintNumber - 1];
+    if (sprint.teamMeetingsData && sprint.teamMeetingsData.length) {
+      setData(sprint.teamMeetingsData[0].notes);
+    }
+  }, [sprints, sprintNumber]);
 
   const {
     register,
@@ -96,6 +104,7 @@ export default function Notes({ data }: NotesProps) {
         rows={2}
         {...register("notes")}
         errorMessage={errors.notes?.message}
+        defaultValue={data ?? ""}
       />
       <Button
         type="submit"

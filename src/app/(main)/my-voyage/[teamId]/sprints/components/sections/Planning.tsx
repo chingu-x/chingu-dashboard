@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +18,7 @@ import {
   editSection,
   type EditSectionBody,
 } from "@/myVoyage/sprints/sprintsService";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useSprint } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
@@ -34,11 +34,8 @@ const validationSchema = z.object({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-interface PlanningProps {
-  data?: Section;
-}
-
-export default function Planning({ data }: PlanningProps) {
+export default function Planning() {
+  const [data, setData] = useState<Section>();
   const dispatch = useAppDispatch();
   const params = useParams<{
     sprintNumber: string;
@@ -49,6 +46,21 @@ export default function Planning({ data }: PlanningProps) {
     Number(params.sprintNumber),
     Number(params.meetingId),
   ];
+
+  const {
+    voyage: { sprints },
+  } = useSprint();
+
+  useEffect(() => {
+    const sprint = sprints[sprintNumber - 1];
+    if (sprint.teamMeetingsData && sprint.teamMeetingsData.length) {
+      setData(
+        sprint.teamMeetingsData[0].formResponseMeeting?.find(
+          (form) => form.form.id === Number(Forms.planning),
+        ),
+      );
+    }
+  }, [sprints, sprintNumber]);
 
   const goal = data?.responseGroup.responses.find(
     (response) => response.question.id === Number(PlanningQuestions.goal),

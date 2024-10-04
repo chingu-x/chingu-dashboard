@@ -45,7 +45,8 @@ export interface Sprint {
   number: number;
   startDate: string;
   endDate: string;
-  teamMeetings: Meeting[];
+  teamMeetings: number[];
+  teamMeetingsData?: Meeting[];
 }
 
 export interface Voyage {
@@ -89,16 +90,11 @@ export const sprintSlice = createSlice({
 
       const updatedSprints = state.voyage.sprints.map((sprint) => {
         if (sprint.id === sprintId) {
-          const updatedMeetings = sprint.teamMeetings.map((meeting) => {
-            if (meeting.id === action.payload.id) {
-              return action.payload;
-            }
-            return meeting;
-          });
-          return { ...sprint, teamMeetings: updatedMeetings };
+          return { ...sprint, teamMeetingsData: [action.payload] };
         }
         return sprint;
       });
+
       state.voyage.sprints = updatedSprints;
       state.loading = true;
     },

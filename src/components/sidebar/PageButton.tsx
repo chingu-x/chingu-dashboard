@@ -1,12 +1,9 @@
 import { useState } from "react";
 import Link from "next/link";
-import {
-  MainPages,
-  type PageProperty,
-  type VoyagePageProperty,
-} from "./Sidebar";
+import { MainPages, type PageProperty } from "./Sidebar";
 import Button from "@/components/Button";
 import Tooltip from "@/components/Tooltip";
+import { cn } from "@/lib/utils";
 
 interface PageButtonProps {
   element: PageProperty;
@@ -15,7 +12,6 @@ interface PageButtonProps {
   isOpen: boolean;
   link: string;
   setHoveredButton: (element: string | null) => void;
-  voyagePages: VoyagePageProperty[];
   ariaLabel: string;
 }
 
@@ -26,19 +22,9 @@ export default function PageButton({
   isOpen,
   link,
   setHoveredButton,
-  voyagePages,
   ariaLabel,
 }: PageButtonProps) {
-  const buttonStyles = `${
-    isOpen ? "w-[14.375rem] flex justify-start pl-6" : "w-[3.125rem] px-0"
-  }`;
-
-  const getButtonBackgroundStyle = (page: string) =>
-    selectedButton === page ||
-    (page === "" &&
-      voyagePages.some((voyagePage) => voyagePage.link === selectedButton))
-      ? "bg-neutral-content"
-      : "bg-base-200";
+  const isActive = selectedButton.includes(link);
 
   const getButtonText = (page: string) => (isOpen ? page : "");
 
@@ -67,9 +53,12 @@ export default function PageButton({
             variant="neutral"
             data-tip={element.name}
             aria-label={ariaLabel}
-            className={`${buttonStyles} ${getButtonBackgroundStyle(
-              element.link,
-            )} ${element.marginBottom} flex items-center`}
+            className={cn(
+              "h-[3.125rem] w-[3.125rem] justify-center bg-base-200 p-0 text-neutral-focus",
+              isActive && "bg-primary-content text-base-300",
+              isOpen && "flex w-full justify-start px-6",
+              element.marginBottom,
+            )}
             onMouseEnter={() => {
               setHoveredButton(element.name);
               setTooltipHovered(true);

@@ -49,21 +49,23 @@ export default function ResourcesContainer({ data }: ResourceContainerProps) {
           isDisabled={!voyageResources?.length}
         />
       </div>
-      {formattedResources?.length ? (
-        formattedResources.map((item) => (
-          <ResourceCard
-            key={item.id}
-            resourceId={item.id}
-            title={item.title}
-            user={item.addedBy.member}
-            date={item.date}
-            userId={item.addedBy.member.id}
-            url={item.url}
-          />
-        ))
-      ) : (
-        <EmptyBanner />
-      )}
+      <div className="flex flex-col gap-y-6">
+        {formattedResources?.length ? (
+          formattedResources.map((item) => (
+            <ResourceCard
+              key={item.id}
+              resourceId={item.id}
+              title={item.title}
+              user={item.addedBy.member}
+              date={item.date}
+              userId={item.addedBy.member.id}
+              url={item.url}
+            />
+          ))
+        ) : (
+          <EmptyBanner />
+        )}
+      </div>
     </>
   );
 }

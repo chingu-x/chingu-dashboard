@@ -37,21 +37,21 @@ export default function Sections({
       title: "notes",
       icon: <DocumentTextIcon aria-hidden="true" />,
       isAdded: notes !== null,
-      children: <Notes data={notes} />,
+      children: <Notes />,
     },
     {
       id: Forms.planning,
       title: "sprint planning",
       icon: <LightBulbIcon aria-hidden="true" />,
       isAdded: planning !== undefined,
-      children: <Planning data={planning} />,
+      children: <Planning />,
     },
     {
       id: Forms.review,
       title: "retrospective & review",
       icon: <ArrowPathRoundedSquareIcon aria-hidden="true" />,
       isAdded: review !== undefined,
-      children: <Review data={review} />,
+      children: <Review />,
     },
   ];
 

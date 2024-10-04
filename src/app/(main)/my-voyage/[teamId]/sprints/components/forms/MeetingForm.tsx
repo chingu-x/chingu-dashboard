@@ -70,8 +70,7 @@ export default function MeetingForm() {
       timezone,
     }),
     meetingLink: validateTextInput({
-      inputName: "Meeting Link",
-      required: true,
+      inputName: "Meeting link",
       isUrl: true,
     }),
   });
@@ -117,9 +116,18 @@ export default function MeetingForm() {
       timeZone: timezone,
     });
 
+    const newData =
+      data.meetingLink === ""
+        ? { description: data.description, title: data.title }
+        : {
+          description: data.description,
+          title: data.title,
+          meetingLink: data.meetingLink,
+        };
+
     if (editMode) {
       const [res, error] = await editMeetingAction({
-        ...data,
+        ...newData,
         dateTime,
         meetingId,
         sprintNumber,
@@ -143,7 +151,7 @@ export default function MeetingForm() {
         setEditMeetingLoading(false);
       }
     } else {
-      const payload = { ...data, dateTime, teamId, sprintNumber };
+      const payload = { ...newData, dateTime, teamId, sprintNumber };
 
       const [res, error] = await addMeetingAction(payload);
 
@@ -169,8 +177,10 @@ export default function MeetingForm() {
   useEffect(() => {
     if (params.meetingId) {
       const meeting = sprints.find(
-        (sprint) => sprint.teamMeetings[0]?.id === +params.meetingId,
-      )?.teamMeetings[0];
+        (sprint) =>
+          sprint.teamMeetingsData &&
+          sprint.teamMeetingsData[0].id === +params.meetingId,
+      );
 
       setMeetingData(meeting as Meeting);
       setEditMode(true);

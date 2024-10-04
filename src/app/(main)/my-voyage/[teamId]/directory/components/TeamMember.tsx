@@ -13,11 +13,15 @@ interface TeamMemberProps {
 
 export default function TeamMember({ teamMember }: TeamMemberProps) {
   const user = useUser().voyageTeamMembers;
-  const { firstName, lastName, discordId, currentTime } = teamMember.member;
+  const { firstName, lastName, oAuthProfiles, currentTime } = teamMember.member;
   const { id, hrPerSprint, voyageRole } = teamMember;
   const isCurrentUser = user.some((user) => user.id === id);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const newRef = useRef<HTMLDivElement>(null);
+
+  const discordId =
+    oAuthProfiles.find((profile) => profile.provider.name === "discord")
+      ?.providerUsername || "";
 
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
