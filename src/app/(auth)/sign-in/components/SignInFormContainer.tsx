@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from "zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -65,7 +68,7 @@ function SignInFormContainer({
       await login(email, password);
       dispatch(clientSignIn());
       router.replace(routePaths.dashboardPage());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
       );

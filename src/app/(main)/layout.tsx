@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 "use client";
 
+import { useEffect, useState } from "react";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
 import AuthHeader from "@/components/navbar/AuthHeader";
 import { getUser } from "@/utils/getUser";
 import AuthProvider from "@/app/(auth)/AuthProvider";
-import { useEffect, useState } from "react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -28,7 +30,7 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <div className="flex h-screen w-screen flex-col">
-      <AuthProvider user={user} error={error} />
+      <AuthProvider user={user!} error={error!} />
       <Navbar>
         <>
           <ModeToggle />

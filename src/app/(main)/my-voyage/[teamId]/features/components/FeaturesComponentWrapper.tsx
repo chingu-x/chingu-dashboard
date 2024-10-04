@@ -1,28 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 "use client";
 
-import { redirect } from "next/navigation";
-
-import FeaturesProvider from "./FeaturesProvider";
+import { useEffect, useState } from "react";
 import FeaturesContainer from "./FeaturesContainer";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
-import ErrorComponent from "@/components/Error";
-
 import {
   type Features,
   type FeaturesList,
 } from "@/store/features/features/featuresSlice";
-
-import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import { getUser } from "@/utils/getUser";
-import { getAccessToken } from "@/utils/getCookie";
-import { GET } from "@/utils/requests";
-import { CacheTag } from "@/utils/cacheTag";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { ErrorType } from "@/utils/error";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { features } from "process";
 import { axiosInstance } from "@/utils/axiosInstance";
 
 function transformData(features: Features[]): FeaturesList[] {
@@ -77,9 +65,9 @@ function transformData(features: Features[]): FeaturesList[] {
   return transformedData;
 }
 
-interface FetchFeaturesProps {
-  teamId: number;
-}
+// interface FetchFeaturesProps {
+//   teamId: number;
+// }
 
 // export async function fetchFeatures({
 //   teamId,
@@ -126,7 +114,7 @@ export default function FeaturesComponentWrapper({
         );
 
         return response.data;
-      } catch (error) {
+      } catch (error: any) {
         throw Error(error);
       }
     };

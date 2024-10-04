@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   RectangleGroupIcon,
@@ -11,7 +11,7 @@ import {
 import PageButton from "./PageButton";
 import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
-import { useAuth, useUser } from "@/store/hooks";
+import { useUser } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 
 export enum MainPages {
@@ -81,19 +81,19 @@ export default function Sidebar() {
   const [selectedButton, setSelectedButton] = useState<string>(currentPath);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
   const { voyageTeamMembers } = useUser();
 
-  const isActive = useMemo(() => {
-    if (voyageTeamMembers.length === 0) {
-      return false;
-    }
-    return voyageTeamMembers.some(
-      (member) => member.voyageTeam.voyage.status.name === "Active",
-    );
-  }, [voyageTeamMembers]);
+  // const isActive = useMemo(() => {
+  //   if (voyageTeamMembers.length === 0) {
+  //     return false;
+  //   }
+  //   return voyageTeamMembers.some(
+  //     (member) => member.voyageTeam.voyage.status.name === "Active",
+  //   );
+  // }, [voyageTeamMembers]);
 
-  const isVoyageStarted: boolean = isAuthenticated && isActive;
+  // const isVoyageStarted: boolean = isAuthenticated && isActive;
 
   const currentVoyageTeam = voyageTeamMembers.find(
     (voyage) => voyage.voyageTeam.voyage.status.name === "Active",

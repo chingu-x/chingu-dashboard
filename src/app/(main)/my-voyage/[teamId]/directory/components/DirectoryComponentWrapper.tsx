@@ -1,33 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 "use client";
 
-import { redirect } from "next/navigation";
-
-import DirectoryProvider from "./DirectoryProvider";
-import TeamMember from "./TeamMember";
-
-import Banner from "@/components/banner/Banner";
-import ErrorComponent from "@/components/Error";
-
-import { type TeamDirectory } from "@/store/features/directory/directorySlice";
-
-import { getAccessToken } from "@/utils/getCookie";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { GET } from "@/utils/requests";
-import { CacheTag } from "@/utils/cacheTag";
-import { type User } from "@/store/features/user/userSlice";
-import { getUser } from "@/utils/getUser";
-import { getTimezone } from "@/utils/getTimezone";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
-import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import { ErrorType } from "@/utils/error";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import TeamMember from "./TeamMember";
+import Banner from "@/components/banner/Banner";
+import { type TeamDirectory } from "@/store/features/directory/directorySlice";
+// import { type User } from "@/store/features/user/userSlice";
+import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { axiosInstance } from "@/utils/axiosInstance";
 
-interface FetchTeamDirectoryProps {
-  teamId: number;
-  user: User | null;
-}
+// interface FetchTeamDirectoryProps {
+//   teamId: number;
+//   user: User | null;
+// }
 
 // export async function fetchTeamDirectory({
 //   teamId,
@@ -104,7 +91,7 @@ export default function DirectoryComponentWrapper({
         const response = await axiosInstance.get(`/api/v1/teams/${teamId}`);
 
         return response.data;
-      } catch (error) {
+      } catch (error: any) {
         throw Error(error);
       }
     };

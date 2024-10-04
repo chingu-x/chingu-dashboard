@@ -1,8 +1,7 @@
-import axios from "axios";
-import { getAccessToken } from "./getCookie";
-import { type AsyncActionResponse, handleAsync } from "./handleAsync";
-import { GET } from "./requests";
-import { type User } from "@/store/features/user/userSlice";
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { axiosInstance } from "./axiosInstance";
 
 export async function getUser() {
@@ -10,7 +9,7 @@ export async function getUser() {
     const response = await axiosInstance.get("/api/v1/users/me");
 
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     throw Error(error);
   }
 

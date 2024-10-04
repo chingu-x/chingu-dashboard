@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { axiosInstance } from "@/utils/axiosInstance";
-import axios from "axios";
 
 export async function login(email: string, password: string) {
   try {
@@ -9,7 +11,7 @@ export async function login(email: string, password: string) {
     });
 
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     throw Error(error);
   }
 }

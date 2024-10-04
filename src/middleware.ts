@@ -1,7 +1,3 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { getRefreshToken } from "./utils/getCookie";
-
 export async function middleware() {
   // if (request.cookies.has("refresh_token")) {
   //   if (request.cookies.has("access_token")) {

@@ -6,9 +6,9 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { type SetStateAction, useEffect } from "react";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
-import { useAppDispatch } from "@/store/hooks";
+// import { useAppDispatch } from "@/store/hooks";
 import { editHours } from "@/app/(main)/my-voyage/[teamId]/directory/directoryService";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
+// import { onOpenModal } from "@/store/features/modal/modalSlice";
 import useServerAction from "@/hooks/useServerAction";
 import Spinner from "@/components/Spinner";
 import Button from "@/components/Button";
@@ -34,17 +34,17 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function EditHours({
   hrPerSprint,
   isEditing,
-  setIsEditing,
+  // setIsEditing,
   handleClick,
 }: EditHoursProps) {
   const params = useParams<{ teamId: string }>();
   const teamId = Number(params.teamId);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const {
-    runAction: editHoursAction,
+    // runAction: editHoursAction,
     isLoading: editHoursLoading,
-    setIsLoading: setEditHoursLoading,
+    // setIsLoading: setEditHoursLoading,
   } = useServerAction(editHours);
 
   const {
