@@ -123,8 +123,6 @@ export default function DirectoryComponentWrapper({
       });
   }, [teamId]);
 
-  console.log(teamDirectory);
-
   // const { errorResponse, data } = await getCurrentVoyageData({
   //   user,
   //   error,

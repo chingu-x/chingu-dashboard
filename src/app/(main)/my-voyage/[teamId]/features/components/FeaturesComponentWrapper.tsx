@@ -1,3 +1,5 @@
+"use client";
+
 import { redirect } from "next/navigation";
 
 import FeaturesProvider from "./FeaturesProvider";
@@ -18,6 +20,9 @@ import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { ErrorType } from "@/utils/error";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { features } from "process";
 
 function transformData(features: Features[]): FeaturesList[] {
   const transformedData: FeaturesList[] = [
@@ -75,28 +80,28 @@ interface FetchFeaturesProps {
   teamId: number;
 }
 
-export async function fetchFeatures({
-  teamId,
-}: FetchFeaturesProps): Promise<AsyncActionResponse<FeaturesList[]>> {
-  let data: FeaturesList[] | null = [];
-  const token = getAccessToken();
+// export async function fetchFeatures({
+//   teamId,
+// }: FetchFeaturesProps): Promise<AsyncActionResponse<FeaturesList[]>> {
+//   let data: FeaturesList[] | null = [];
+//   const token = getAccessToken();
 
-  const fetchFeaturesAsync = () =>
-    GET<Features[]>(
-      `api/v1/voyages/teams/${teamId}/features`,
-      token,
-      "force-cache",
-      CacheTag.features,
-    );
+//   const fetchFeaturesAsync = () =>
+//     GET<Features[]>(
+//       `api/v1/voyages/teams/${teamId}/features`,
+//       token,
+//       "force-cache",
+//       CacheTag.features,
+//     );
 
-  const [res, error] = await handleAsync(fetchFeaturesAsync);
+//   const [res, error] = await handleAsync(fetchFeaturesAsync);
 
-  if (res) {
-    data = transformData(res);
-  }
+//   if (res) {
+//     data = transformData(res);
+//   }
 
-  return [data, error];
-}
+//   return [data, error];
+// }
 
 interface FeaturesComponentWrapperProps {
   params: {
@@ -104,48 +109,80 @@ interface FeaturesComponentWrapperProps {
   };
 }
 
-export default async function FeaturesComponentWrapper({
+export default function FeaturesComponentWrapper({
   params,
 }: FeaturesComponentWrapperProps) {
-  let features = [];
+  // let features = [];
 
   const teamId = Number(params.teamId);
+  const [features, setFeatures] = useState<FeaturesList[]>([]);
 
-  const [user, error] = await getUser();
+  useEffect(() => {
+    const fetchFeatures = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/voyages/teams/${teamId}/features`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          },
+        );
 
-  const { errorResponse, data } = await getCurrentVoyageData({
-    user,
-    error,
-    teamId,
-    args: { teamId },
-    func: fetchFeatures,
-  });
+        return response.data;
+      } catch (error) {
+        throw Error(error);
+      }
+    };
 
-  if (errorResponse) {
-    return (
-      <ErrorComponent
-        errorType={ErrorType.FETCH_VOYAGE_DATA}
-        message={errorResponse}
-      />
-    );
-  }
+    fetchFeatures()
+      .then((data) => {
+        const features = transformData(data);
+        setFeatures(features);
+      })
+      .catch((err) => {
+        throw Error(err);
+      });
+  }, [teamId]);
 
-  if (data) {
-    const [res, error] = data;
+  console.log(features);
 
-    if (error) {
-      return (
-        <ErrorComponent
-          errorType={ErrorType.FETCH_FEATURES}
-          message={error.message}
-        />
-      );
-    }
+  // const [user, error] = await getUser();
 
-    features = res!;
-  } else {
-    redirect("/");
-  }
+  // const { errorResponse, data } = await getCurrentVoyageData({
+  //   user,
+  //   error,
+  //   teamId,
+  //   args: { teamId },
+  //   func: fetchFeatures,
+  // });
+
+  // if (errorResponse) {
+  //   return (
+  //     <ErrorComponent
+  //       errorType={ErrorType.FETCH_VOYAGE_DATA}
+  //       message={errorResponse}
+  //     />
+  //   );
+  // }
+
+  // if (data) {
+  //   const [res, error] = data;
+
+  //   if (error) {
+  //     return (
+  //       <ErrorComponent
+  //         errorType={ErrorType.FETCH_FEATURES}
+  //         message={error.message}
+  //       />
+  //     );
+  //   }
+
+  //   features = res!;
+  // } else {
+  //   redirect("/");
+  // }
 
   return (
     <>
@@ -161,7 +198,7 @@ export default async function FeaturesComponentWrapper({
           width="w-[276px]"
         />
       </VoyagePageBannerContainer>
-      <FeaturesProvider payload={features} />
+      {/* <FeaturesProvider payload={features} /> */}
       <FeaturesContainer data={features} />
     </>
   );
