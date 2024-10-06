@@ -5,8 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2024-10-06
 
-## [1.0.0-alpha.6] - 2024-09-27
+### Added
+- Added tooltips over avatars https://github.com/chingu-x/chingu-dashboard/issues/221
+
+### Fixed
+- Fixed text truncation and spacing issues in features widget on dashboard page https://github.com/chingu-x/chingu-dashboard/issues/256
+
+## [0.1.0-alpha.6] - 2024-09-27
 
 ### Added
 - Added po and sm forms for the weekly checkin for the appropriate teams https://github.com/chingu-x/chingu-dashboard/issues/216
@@ -18,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
-## [1.0.0-alpha.5] - 2024-09-19
+## [0.1.0-alpha.5] - 2024-09-19
 
 ### Added
 
@@ -26,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 - Made meeting link optional https://github.com/chingu-x/chingu-dashboard/issues/237
 
-## [1.0.0-alpha.4] - 2024-09-10
+## [0.1.0-alpha.4] - 2024-09-10
 
 ### Added
 
@@ -40,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Fixed issue with meeting notes section becoming scrollable instead of expanding when saved https://github.com/chingu-x/chingu-dashboard/issues/248
 
 
-## [1.0.0-alpha.3] - 2024-09-05
+## [0.1.0-alpha.3] - 2024-09-05
 
 ### Added
 - Added 404 page https://github.com/chingu-x/chingu-dashboard/issues/205
@@ -55,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Fixed overflow issue with features description in the list https://github.com/chingu-x/chingu-dashboard/issues/222
 - Fixed an issue with selecting team members in checkboxes https://github.com/chingu-x/chingu-dashboard/issues/230
 
-## [1.0.0-alpha.2] - 2024-08-28
+## [0.1.0-alpha.2] - 2024-08-28
 
 ### Added
 - Added version to image in avatar component
@@ -64,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
-## [1.0.0-alpha.1] - 2024-08-26
+## [0.1.0-alpha.1] - 2024-08-26
 
 ### Added
 
