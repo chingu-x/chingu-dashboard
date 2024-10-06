@@ -17,6 +17,7 @@ import {
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Avatar from "@/components/avatar/Avatar";
+import Tooltip from "@/components/Tooltip";
 
 interface VoteCardProps {
   projectIdeaId: number;
@@ -33,6 +34,7 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
   const { isOpen } = useModal();
   const dispatch = useAppDispatch();
   const [voteChanged, setVoteChanged] = useState<boolean>(false);
+  const [tooltipHovered, setTooltipHovered] = useState<string>("");
 
   const {
     runAction: addIdeationVoteAction,
@@ -131,12 +133,28 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
         }`}</h2>
         <AvatarGroup>
           {users.map((user) => (
-            <Avatar
-              width={24}
-              height={24}
-              key={user.id}
-              image={user.votedBy.member.avatar}
-            />
+            <Tooltip
+              key={user.votedBy.member.id}
+              content={`${user.votedBy.member.firstName}`}
+              customClassName="text-xs font-medium w-fit"
+              position="bottom"
+              tooltipWidth="small"
+              isDisplay={tooltipHovered === user.votedBy.member.id}
+              hovered={tooltipHovered === user.votedBy.member.id}
+            >
+              <Avatar
+                customClassName="border border-base-content"
+                width={24}
+                height={24}
+                image={user.votedBy.member.avatar}
+                onMouseEnter={() => {
+                  setTooltipHovered(user.votedBy.member.id);
+                }}
+                onMouseLeave={() => {
+                  setTooltipHovered("");
+                }}
+              />
+            </Tooltip>
           ))}
         </AvatarGroup>
         <Button
