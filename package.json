@@ -33,7 +33,9 @@
     "react-hook-form": "^7.46.2",
     "react-redux": "^8.1.2",
     "redux-persist": "^6.0.0",
+    "reflect-metadata": "^0.2.2",
     "tailwind-merge": "^2.0.0",
+    "tsyringe": "^4.8.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {

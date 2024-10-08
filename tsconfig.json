@@ -20,6 +20,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "plugins": [
       {
         "name": "next"
@@ -29,7 +31,9 @@
       "@/*": ["./src/*"],
       "@/public/*": ["./public/*"],
       "@/myVoyage/*": ["./src/app/(main)/my-voyage/[teamId]/*"],
-      "@/dashboard/*": ["./src/app/(main)/dashboard/*"]
+      "@/dashboard/*": ["./src/app/(main)/dashboard/*"],
+      "@/di/*": ["./src/di/*"],
+      "@/modules/*": ["./src/modules/*"]
     }
   },
   "include": [

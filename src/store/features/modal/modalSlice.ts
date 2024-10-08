@@ -9,7 +9,7 @@ import {
   type DeleteIdeationProps,
   type DeleteIdeationResponse,
   type deleteIdeation,
-} from "@/myVoyage/ideation/ideationService";
+} from "@/myVoyage/ideation/adapters/ideationSA";
 import {
   type DeleteFeatureProps,
   type deleteFeature,

@@ -25,7 +25,8 @@ import {
 } from "@/store/features/sprint/sprintSlice";
 
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";

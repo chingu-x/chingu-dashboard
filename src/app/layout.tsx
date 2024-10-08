@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import StoreProvider from "@/components/providers/StoreProvider";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import ModalProvider from "@/components/providers/ModalProvider";
+import "reflect-metadata";
+import "@/di/config";
 
 export const metadata: Metadata = {
   title: "Chingu Dashboard",
