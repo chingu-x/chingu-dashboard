@@ -28,7 +28,7 @@ interface WeeklyCheckingFormProps {
   };
   description: string;
   questions: Question[];
-  teamMembers: TeamMemberForCheckbox[];
+  teamMembers?: TeamMemberForCheckbox[];
 }
 
 export default function WeeklyCheckingForm({

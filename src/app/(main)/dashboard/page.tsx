@@ -1,19 +1,21 @@
-import { redirect } from "next/navigation";
-import { getUser } from "@/utils/getUser";
-import routePaths from "@/utils/routePaths";
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-async function DashboardPage() {
-  const [user] = await getUser();
+function DashboardPage() {
+  // const [user] = await getUser();
 
-  const teamMember = user?.voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-  );
+  // const teamMember = user?.voyageTeamMembers.find(
+  //   (voyage: any) => voyage.voyageTeam.voyage.status.name === "Active",
+  // );
 
-  if (teamMember) {
-    redirect(
-      routePaths.VoyageMemberDashboardPage(teamMember?.voyageTeamId.toString()),
-    );
-  }
+  // if (teamMember) {
+  //   redirect(
+  //     routePaths.VoyageMemberDashboardPage(teamMember?.voyageTeamId.toString()),
+  //   );
+  // }
 
   return <div>Default Dashboard</div>;
 }

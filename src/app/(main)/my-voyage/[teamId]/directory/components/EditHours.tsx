@@ -6,12 +6,13 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { type SetStateAction, useEffect } from "react";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
-import { useAppDispatch } from "@/store/hooks";
+// import { useAppDispatch } from "@/store/hooks";
 import { editHours } from "@/app/(main)/my-voyage/[teamId]/directory/directoryService";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
+// import { onOpenModal } from "@/store/features/modal/modalSlice";
 import useServerAction from "@/hooks/useServerAction";
 import Spinner from "@/components/Spinner";
 import Button from "@/components/Button";
+import { axiosInstance } from "@/utils/axiosInstance";
 
 interface EditHoursProps {
   hrPerSprint: number;
@@ -33,17 +34,17 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export default function EditHours({
   hrPerSprint,
   isEditing,
-  setIsEditing,
+  // setIsEditing,
   handleClick,
 }: EditHoursProps) {
   const params = useParams<{ teamId: string }>();
   const teamId = Number(params.teamId);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const {
-    runAction: editHoursAction,
+    // runAction: editHoursAction,
     isLoading: editHoursLoading,
-    setIsLoading: setEditHoursLoading,
+    // setIsLoading: setEditHoursLoading,
   } = useServerAction(editHours);
 
   const {
@@ -59,19 +60,23 @@ export default function EditHours({
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { avgHours } = data;
-    const [, error] = await editHoursAction({
-      teamId,
+
+    return await axiosInstance.patch(`api/v1/teams/${teamId}/members`, {
       hrPerSprint: Number(avgHours),
     });
+    // const [, error] = await editHoursAction({
+    //   teamId,
+    //   hrPerSprint: Number(avgHours),
+    // });
 
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-    }
+    // if (error) {
+    //   dispatch(
+    //     onOpenModal({ type: "error", content: { message: error.message } }),
+    //   );
+    // }
 
-    setEditHoursLoading(false);
-    setIsEditing(false);
+    // setEditHoursLoading(false);
+    // setIsEditing(false);
   };
 
   function handleClearInputAction() {

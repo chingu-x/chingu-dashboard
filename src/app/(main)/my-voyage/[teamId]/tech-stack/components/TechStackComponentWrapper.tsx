@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { redirect } from "next/navigation";
 import TechStackContainer from "./TechStackContainer";
 import TechStackProvider from "./TechStackProvider";

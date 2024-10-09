@@ -1,9 +1,15 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { redirect } from "next/navigation";
 
 import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import WeeklyCheckInForm from "./forms/WeeklyCheckInForm";
 
-import { fetchTeamDirectory } from "@/myVoyage/directory/components/DirectoryComponentWrapper";
+// import { fetchTeamDirectory } from "@/myVoyage/directory/components/DirectoryComponentWrapper";
 import { type Sprint, type Voyage } from "@/store/features/sprint/sprintSlice";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
@@ -12,11 +18,10 @@ import { CacheTag } from "@/utils/cacheTag";
 import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
-import { Forms, UserRole } from "@/utils/form/formsEnums";
-import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
+import { Forms } from "@/utils/form/formsEnums";
+import { type Question } from "@/utils/form/types";
 import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
 
@@ -70,7 +75,7 @@ export default async function WeeklyCheckInWrapper({
   const teamId = Number(params.teamId);
 
   let voyageData: Voyage;
-  let teamMembers = [] as TeamMemberForCheckbox[];
+  // let teamMembers = [] as TeamMemberForCheckbox[];
 
   let description = "";
   let questions = [] as Question[];
@@ -135,57 +140,38 @@ export default async function WeeklyCheckInWrapper({
       }
 
       // Fetch teamDirectory
-      const [res, error] = await fetchTeamDirectory({ teamId, user });
-      if (res) {
-        let voyageTeamMemberId: number | undefined;
-        if (user && user.voyageTeamMembers) {
-          voyageTeamMemberId = getCurrentVoyageTeam({
-            teamId,
-            user,
-            error,
-          }).voyageTeamMemberId;
-        }
+      // const [res, error] = await fetchTeamDirectory({ teamId, user });
+      // if (res) {
+      //   let voyageTeamMemberId: number | undefined;
+      //   if (user && user.voyageTeamMembers) {
+      //     voyageTeamMemberId = getCurrentVoyageTeam({
+      //       teamId,
+      //       user,
+      //       error,
+      //     }).voyageTeamMemberId;
+      //   }
 
-        // Check if a team has a product owner or a scrum muster and if a user is a team has a product owner or a scrum muster
-        hasScrumMaster = !!res.voyageTeamMembers.find(
-          (member) =>
-            member.voyageRole.name === UserRole.scrumMaster.toString(),
-        );
+      //   // Get all teamMembers except for the current user
+      //   if (voyageTeamMemberId) {
+      //     teamMembers = res.voyageTeamMembers
+      //       .map((member: any) => ({
+      //         id: member.id,
+      //         avatar: member.member.avatar,
+      //         firstName: member.member.firstName,
+      //         lastName: member.member.lastName,
+      //       }))
+      //       .filter((member: any) => member.id !== voyageTeamMemberId);
+      //   }
+      // }
 
-        hasProductOwner = !!res.voyageTeamMembers.find(
-          (member) =>
-            member.voyageRole.name === UserRole.productOwner.toString(),
-        );
-
-        const currentUserRole = res.voyageTeamMembers.find(
-          (member) => member.id === voyageTeamMemberId,
-        )?.voyageRole.name;
-
-        isScrumMaster = currentUserRole === UserRole.scrumMaster.toString();
-
-        isProductOwner = currentUserRole === UserRole.productOwner.toString();
-
-        // Get all teamMembers except for the current user
-        if (voyageTeamMemberId) {
-          teamMembers = res.voyageTeamMembers
-            .map((member) => ({
-              id: member.id,
-              avatar: member.member.avatar,
-              firstName: member.member.firstName,
-              lastName: member.member.lastName,
-            }))
-            .filter((member) => member.id !== voyageTeamMemberId);
-        }
-      }
-
-      if (error) {
-        return (
-          <ErrorComponent
-            errorType={ErrorType.FETCH_TEAM_DIRECTORY}
-            message={error.message}
-          />
-        );
-      }
+      // if (error) {
+      //   return (
+      //     <ErrorComponent
+      //       errorType={ErrorType.FETCH_TEAM_DIRECTORY}
+      //       message={error.message}
+      //     />
+      //   );
+      // }
 
       // Fetch general checkin form
       const [formRes, formError] = await fetchFormQuestions({
@@ -253,7 +239,6 @@ export default async function WeeklyCheckInWrapper({
       params={params}
       description={description}
       questions={questions}
-      teamMembers={teamMembers}
     />
   );
 }

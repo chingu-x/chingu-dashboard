@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+"use client";
+
+import { useEffect, useState } from "react";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
@@ -9,12 +14,23 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default async function Layout({ children }: LayoutProps) {
-  const [user, error] = await getUser();
+export default function Layout({ children }: LayoutProps) {
+  const [user, setUser] = useState();
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    const fetchUser = async () => await getUser();
+
+    fetchUser()
+      .then((data) => setUser(data))
+      .catch((err) => {
+        setError(err);
+      });
+  }, []);
 
   return (
     <div className="flex h-screen w-screen flex-col">
-      <AuthProvider user={user} error={error} />
+      <AuthProvider user={user!} error={error!} />
       <Navbar>
         <>
           <ModeToggle />

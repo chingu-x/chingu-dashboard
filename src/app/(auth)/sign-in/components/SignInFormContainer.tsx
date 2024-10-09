@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from "zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,7 +17,8 @@ import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 
 import useServerAction from "@/hooks/useServerAction";
-import Spinner from "@/components/Spinner";
+// import Spinner from "@/components/Spinner";
+import { login } from "@/app/(auth)/login";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -43,9 +47,9 @@ function SignInFormContainer({
   const dispatch = useAppDispatch();
 
   const {
-    runAction: serverSignInAction,
+    // runAction: serverSignInAction,
     isLoading: serverSignInLoading,
-    setIsLoading: setServerSignInLoading,
+    // setIsLoading: setServerSignInLoading,
   } = useServerAction(serverSignIn);
 
   const {
@@ -59,25 +63,35 @@ function SignInFormContainer({
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { email, password } = data;
-    const [res, error] = await serverSignInAction({ email, password });
 
-    if (res) {
+    try {
+      await login(email, password);
       dispatch(clientSignIn());
       router.replace(routePaths.dashboardPage());
-    }
-
-    if (error) {
+    } catch (error: any) {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
       );
-      setServerSignInLoading(false);
     }
+    // const [res, error] = await serverSignInAction({ email, password });
+
+    // if (res) {
+    //   dispatch(clientSignIn());
+    //   router.replace(routePaths.dashboardPage());
+    // }
+
+    // if (error) {
+    //   dispatch(
+    //     onOpenModal({ type: "error", content: { message: error.message } }),
+    //   );
+    //   setServerSignInLoading(false);
+    // }
   };
 
   function renderButtonContent() {
-    if (serverSignInLoading) {
-      return <Spinner />;
-    }
+    // if (serverSignInLoading) {
+    //   return <Spinner />;
+    // }
     return "Sign In";
   }
 

@@ -1,23 +1,17 @@
-import { redirect } from "next/navigation";
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+"use client";
 
-import FeaturesProvider from "./FeaturesProvider";
+import { useEffect, useState } from "react";
 import FeaturesContainer from "./FeaturesContainer";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
-import ErrorComponent from "@/components/Error";
-
 import {
   type Features,
   type FeaturesList,
 } from "@/store/features/features/featuresSlice";
-
-import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import { getUser } from "@/utils/getUser";
-import { getAccessToken } from "@/utils/getCookie";
-import { GET } from "@/utils/requests";
-import { CacheTag } from "@/utils/cacheTag";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
-import { ErrorType } from "@/utils/error";
+import { axiosInstance } from "@/utils/axiosInstance";
 
 function transformData(features: Features[]): FeaturesList[] {
   const transformedData: FeaturesList[] = [
@@ -71,32 +65,32 @@ function transformData(features: Features[]): FeaturesList[] {
   return transformedData;
 }
 
-interface FetchFeaturesProps {
-  teamId: number;
-}
+// interface FetchFeaturesProps {
+//   teamId: number;
+// }
 
-export async function fetchFeatures({
-  teamId,
-}: FetchFeaturesProps): Promise<AsyncActionResponse<FeaturesList[]>> {
-  let data: FeaturesList[] | null = [];
-  const token = getAccessToken();
+// export async function fetchFeatures({
+//   teamId,
+// }: FetchFeaturesProps): Promise<AsyncActionResponse<FeaturesList[]>> {
+//   let data: FeaturesList[] | null = [];
+//   const token = getAccessToken();
 
-  const fetchFeaturesAsync = () =>
-    GET<Features[]>(
-      `api/v1/voyages/teams/${teamId}/features`,
-      token,
-      "force-cache",
-      CacheTag.features,
-    );
+//   const fetchFeaturesAsync = () =>
+//     GET<Features[]>(
+//       `api/v1/voyages/teams/${teamId}/features`,
+//       token,
+//       "force-cache",
+//       CacheTag.features,
+//     );
 
-  const [res, error] = await handleAsync(fetchFeaturesAsync);
+//   const [res, error] = await handleAsync(fetchFeaturesAsync);
 
-  if (res) {
-    data = transformData(res);
-  }
+//   if (res) {
+//     data = transformData(res);
+//   }
 
-  return [data, error];
-}
+//   return [data, error];
+// }
 
 interface FeaturesComponentWrapperProps {
   params: {
@@ -104,48 +98,72 @@ interface FeaturesComponentWrapperProps {
   };
 }
 
-export default async function FeaturesComponentWrapper({
+export default function FeaturesComponentWrapper({
   params,
 }: FeaturesComponentWrapperProps) {
-  let features = [];
+  // let features = [];
 
   const teamId = Number(params.teamId);
+  const [features, setFeatures] = useState<FeaturesList[]>([]);
 
-  const [user, error] = await getUser();
+  useEffect(() => {
+    const fetchFeatures = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/api/v1/voyages/teams/${teamId}/features`,
+        );
 
-  const { errorResponse, data } = await getCurrentVoyageData({
-    user,
-    error,
-    teamId,
-    args: { teamId },
-    func: fetchFeatures,
-  });
+        return response.data;
+      } catch (error: any) {
+        throw Error(error);
+      }
+    };
 
-  if (errorResponse) {
-    return (
-      <ErrorComponent
-        errorType={ErrorType.FETCH_VOYAGE_DATA}
-        message={errorResponse}
-      />
-    );
-  }
+    fetchFeatures()
+      .then((data) => {
+        const features = transformData(data);
+        setFeatures(features);
+      })
+      .catch((err) => {
+        throw Error(err);
+      });
+  }, [teamId]);
 
-  if (data) {
-    const [res, error] = data;
+  // const [user, error] = await getUser();
 
-    if (error) {
-      return (
-        <ErrorComponent
-          errorType={ErrorType.FETCH_FEATURES}
-          message={error.message}
-        />
-      );
-    }
+  // const { errorResponse, data } = await getCurrentVoyageData({
+  //   user,
+  //   error,
+  //   teamId,
+  //   args: { teamId },
+  //   func: fetchFeatures,
+  // });
 
-    features = res!;
-  } else {
-    redirect("/");
-  }
+  // if (errorResponse) {
+  //   return (
+  //     <ErrorComponent
+  //       errorType={ErrorType.FETCH_VOYAGE_DATA}
+  //       message={errorResponse}
+  //     />
+  //   );
+  // }
+
+  // if (data) {
+  //   const [res, error] = data;
+
+  //   if (error) {
+  //     return (
+  //       <ErrorComponent
+  //         errorType={ErrorType.FETCH_FEATURES}
+  //         message={error.message}
+  //       />
+  //     );
+  //   }
+
+  //   features = res!;
+  // } else {
+  //   redirect("/");
+  // }
 
   return (
     <>
@@ -161,7 +179,7 @@ export default async function FeaturesComponentWrapper({
           width="w-[276px]"
         />
       </VoyagePageBannerContainer>
-      <FeaturesProvider payload={features} />
+      {/* <FeaturesProvider payload={features} /> */}
       <FeaturesContainer data={features} />
     </>
   );
