@@ -7,7 +7,7 @@ import { type LoginResponseDto } from "@/modules/auth/application/dtos/response.
 @injectable()
 export class LoginUsecase {
   constructor(
-    @inject(TYPES.IdeationApiPort)
+    @inject(TYPES.AuthApiPort)
     private readonly authApi: AuthApiPort,
   ) {}
 

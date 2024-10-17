@@ -6,6 +6,7 @@ import type { DeleteIdeationUseCase } from "@/modules/ideation/application/useca
 import type { EditIdeationUseCase } from "@/modules/ideation/application/usecases/editIdeationUseCase";
 import type { FinalizeIdeationUseCase } from "@/modules/ideation/application/usecases/finalizeIdeationUseCase";
 import type { RemoveIdeationVoteUseCase } from "@/modules/ideation/application/usecases/removeIdeationVoteUseCase";
+import { type LoginUsecase } from "@/modules/auth/application/usecases/loginUsecase";
 
 export const injectables = {
   /* Ideation */
@@ -27,4 +28,6 @@ export const injectables = {
   removeIdeationVoteUseCase: container.resolve<RemoveIdeationVoteUseCase>(
     TYPES.RemoveIdeationVoteUseCase,
   ),
+  /*auth*/
+  loginUsecase: container.resolve<LoginUsecase>(TYPES.LoginUsecase),
 } as const;

@@ -1,12 +1,14 @@
 export const TYPES = {
   /* Ports */
   RestApiPort: Symbol.for("RestApiPort"),
+  AuthClientPort: Symbol.for("AuthClientPort"),
   AuthApiPort: Symbol.for("AuthApiPort"),
   IdeationApiPort: Symbol.for("IdeationApiPort"),
   IdeationClientPort: Symbol.for("IdeationClientPort"),
 
   /* Adapters */
   // NextJsRestApiAdapter: Symbol.for("NextJsRestApiAdapter"),
+  AxiosAdapter: Symbol.for("AxiosAdapter"),
   AuthApiAdapter: Symbol.for("AuthApiAdapter"),
   IdeationApiAdapter: Symbol.for("IdeationApiAdapter"),
 

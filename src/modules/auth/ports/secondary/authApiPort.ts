@@ -2,5 +2,5 @@ import { type LoginRequestDto } from "@/modules/auth/application/dtos/request.dt
 import { type LoginResponseDto } from "@/modules/auth/application/dtos/response.dto";
 
 export interface AuthApiPort {
-  login: (props: LoginRequestDto) => Promise<LoginResponseDto>;
+  login: ({ email, password }: LoginRequestDto) => Promise<LoginResponseDto>;
 }
