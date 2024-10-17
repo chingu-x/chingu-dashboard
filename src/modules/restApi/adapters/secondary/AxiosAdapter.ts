@@ -4,7 +4,13 @@ import axios, {
   type AxiosRequestConfig,
   type AxiosResponse,
 } from "axios";
-import { type PostParams } from "@/modules/restApi/application/entities/restApiParams";
+import type {
+  DeleteParams,
+  GetParams,
+  PatchParams,
+  UnauthPostParams,
+  PostParams,
+} from "@/modules/restApi/application/entities/restApiParams";
 import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort";
 
 export class AxiosAdapter implements RestApiPort {
@@ -86,100 +92,28 @@ export class AxiosAdapter implements RestApiPort {
     this.failedRequestsQueue = [];
   }
 
-  // async get<T>(url: string): Promise<T> {
-  //   const response = await this.axiosInstance.get<T>(url);
-  //   return response.data;
-  // }
-
-  async get<T>({ url, options }: NextJsGetParams): Promise<T> {
-    const { token, cache, tags } = options;
-
-    const res = await fetch(`${this.baseUrl}/${url}`, {
-      method: "GET",
-      headers: {
-        Cookie: token,
-      },
-      cache,
-      next: {
-        tags: [tags ?? ""],
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error(`Status code: ${res.status}, Message: ${res.statusText}`);
-    }
-
-    return res.json() as Promise<T>;
+  async get<X>({ url }: GetParams): Promise<X> {
+    const response = await this.axiosInstance.get<X>(url);
+    return response.data;
   }
 
-  async patch<X, Y>({
-    url,
-    options,
-    payload,
-  }: NextJsPatchParams<X>): Promise<Y> {
-    const { token, cache } = options;
-
-    const res = await fetch(`${this.baseUrl}/${url}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: token,
-      },
-      body: JSON.stringify(payload),
-      cache,
-    });
-
-    if (!res.ok) {
-      throw new Error(`Status code: ${res.status}, Message: ${res.statusText}`);
-    }
-
-    return res.json() as Promise<Y>;
+  async patch<X, Y>({ url, payload }: PatchParams<X>): Promise<Y> {
+    const response = await this.axiosInstance.patch<Y>(url, payload);
+    return response.data;
   }
 
-  async delete<X>({ url, options }: NextJsDeleteParams): Promise<X> {
-    const { token, cache } = options;
-
-    const res = await fetch(`${this.baseUrl}/${url}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: token,
-      },
-      cache,
-    });
-
-    if (!res.ok) {
-      throw new Error(`Status code: ${res.status}, Message: ${res.statusText}`);
-    }
-
-    return res.json() as Promise<X>;
+  async delete<X>({ url }: DeleteParams): Promise<X> {
+    const response = await this.axiosInstance.delete<X>(url);
+    return response.data;
   }
 
-  async unauthpost<X, Y>({
-    url,
-    options,
-    payload,
-  }: NextJsUnauthParams<X>): Promise<Y> {
-    const { cache } = options;
-
-    const res = await fetch(`${this.baseUrl}/${url}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-      cache,
-    });
-
-    if (!res.ok) {
-      throw new Error(`Status code: ${res.status}, Message: ${res.statusText}`);
-    }
-
-    return res.json() as Promise<Y>;
+  async unauthpost<X, Y>({ url, payload }: UnauthPostParams<X>): Promise<Y> {
+    const response = await this.axiosInstance.post<Y>(url, payload);
+    return response.data;
   }
 
   async post<X, Y>({ url, payload }: PostParams<X>): Promise<Y> {
-    const response = await this.axiosInstance.post<X>(url, payload);
-    return response.data as Promise<Y>;
+    const response = await this.axiosInstance.post<Y>(url, payload);
+    return response.data;
   }
 }

@@ -1,6 +1,6 @@
 import * as z from "zod";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { serverSignIn } from "@/app/(auth)/authService";
@@ -8,9 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
-// import { clientSignIn } from "@/store/features/auth/authSlice";
+import { clientSignIn } from "@/store/features/auth/authSlice";
 // import { onOpenModal } from "@/store/features/modal/modalSlice";
-// import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 
 // import useServerAction from "@/hooks/useServerAction";
@@ -40,8 +40,8 @@ interface SignInFormContainerProps {
 function SignInFormContainer({
   handleResetPassword,
 }: SignInFormContainerProps) {
-  // const router = useRouter();
-  // const dispatch = useAppDispatch();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   // const {
   //   runAction: serverSignInAction,
@@ -63,6 +63,9 @@ function SignInFormContainer({
     const authAdapter = new AuthClientAdapter();
 
     await authAdapter.login({ email, password });
+
+    dispatch(clientSignIn());
+    router.replace(routePaths.dashboardPage());
     // const [res, error] = await serverSignInAction({ email, password });
 
     // if (res) {
