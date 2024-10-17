@@ -1,6 +1,4 @@
-import { Suspense } from "react";
 import DirectoryComponentWrapper from "./components/DirectoryComponentWrapper";
-import Spinner from "@/components/Spinner";
 
 interface DirectoryPageProps {
   params: {

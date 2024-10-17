@@ -2,15 +2,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
 import AuthHeader from "@/components/navbar/AuthHeader";
 import { getUser } from "@/utils/getUser";
-import AuthProvider from "@/app/(auth)/AuthProvider";
-import { useAppDispatch, useAuth, useUser } from "@/store/hooks";
+import { useAppDispatch, useAuth } from "@/store/hooks";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { currentDate } from "@/utils/getCurrentSprint";
 import { getUserState } from "@/store/features/user/userSlice";
