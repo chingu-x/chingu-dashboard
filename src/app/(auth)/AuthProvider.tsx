@@ -9,8 +9,8 @@ import { type AppError } from "@/types/types";
 import { currentDate } from "@/utils/getCurrentSprint";
 
 interface AuthProviderProps {
-  user: User | null;
-  error: AppError | null;
+  user?: User | null;
+  error?: AppError | null;
 }
 
 export default function AuthProvider({ user, error }: AuthProviderProps) {

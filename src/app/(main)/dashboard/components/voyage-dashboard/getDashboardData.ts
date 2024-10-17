@@ -8,7 +8,7 @@ import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { fetchResources } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ResourcesComponentWrapper";
 import { fetchTechStack } from "@/app/(main)/my-voyage/[teamId]/tech-stack/components/TechStackComponentWrapper";
 import { fetchProjectIdeas } from "@/app/(main)/my-voyage/[teamId]/ideation/components/IdeationComponentWrapper";
-import { fetchFeatures } from "@/app/(main)/my-voyage/[teamId]/features/components/FeaturesComponentWrapper";
+// import { fetchFeatures } from "@/app/(main)/my-voyage/[teamId]/features/components/FeaturesComponentWrapper";
 import { type FeaturesList } from "@/store/features/features/featuresSlice";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import { type TechStackData } from "@/store/features/techStack/techStackSlice";
@@ -23,7 +23,7 @@ interface GetDashboardDataResponse {
   meetingsData: Event[];
   voyageNumber: number | null;
   voyageData: Voyage;
-  features: FeaturesList[];
+  features?: FeaturesList[];
   projectIdeas: IdeationData[];
   techStackData: TechStackData[];
   projectResources: ResourceData[];
@@ -147,13 +147,13 @@ export const getDashboardData = async (
   let errorMessage: string | undefined;
   let errorType: ErrorType | undefined;
   const sprintsResult = await getSprintsData(user, error, teamId);
-  const featuresResult = await fetchData<FeaturesList[], { teamId: number }>(
-    fetchFeatures,
-    user,
-    error,
-    teamId,
-    { teamId },
-  );
+  // const featuresResult = await fetchData<FeaturesList[], { teamId: number }>(
+  //   fetchFeatures,
+  //   user,
+  //   error,
+  //   teamId,
+  //   { teamId },
+  // );
   const projectIdeasResult = await fetchData<
     IdeationData[],
     { teamId: number }
@@ -231,7 +231,7 @@ export const getDashboardData = async (
     meetingsData,
     voyageNumber: sprintsResult.voyageNumber,
     voyageData: sprintsResult.voyageData,
-    features: featuresResult.data!,
+    // features: featuresResult.data!,
     projectIdeas: projectIdeasResult.data!,
     techStackData: techStackResult.data!,
     projectResources: resourcesResult.data!,

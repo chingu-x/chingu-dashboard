@@ -1,20 +1,58 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+"use client";
+
+import { useEffect } from "react";
+import { formatInTimeZone } from "date-fns-tz";
+import { useRouter } from "next/navigation";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
 import AuthHeader from "@/components/navbar/AuthHeader";
 import { getUser } from "@/utils/getUser";
-import AuthProvider from "@/app/(auth)/AuthProvider";
+import { useAppDispatch, useAuth } from "@/store/hooks";
+import { clientSignIn } from "@/store/features/auth/authSlice";
+import { currentDate } from "@/utils/getCurrentSprint";
+import { getUserState } from "@/store/features/user/userSlice";
+import routePaths from "@/utils/routePaths";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default async function Layout({ children }: LayoutProps) {
-  const [user, error] = await getUser();
+export default function Layout({ children }: LayoutProps) {
+  const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
 
-  return (
+  useEffect(() => {
+    const fetchUser = async () => await getUser();
+
+    fetchUser()
+      .then((data) => {
+        dispatch(clientSignIn());
+        // Add the currentDate field to the user object
+        const currentDateInUserTimezone = formatInTimeZone(
+          currentDate,
+          data.timezone,
+          "yyyy-MM-dd HH:mm:ss",
+        );
+
+        const userWithDate = {
+          ...data,
+          currentDate: new Date(currentDateInUserTimezone),
+        };
+        // Dispatch the getUserState action with the user object
+        dispatch(getUserState(userWithDate));
+      })
+      .catch(() => {
+        router.push(routePaths.signIn());
+      });
+  }, [dispatch, router]);
+
+  return isAuthenticated ? (
     <div className="flex h-screen w-screen flex-col">
-      <AuthProvider user={user} error={error} />
+      {/* <AuthProvider user={user} error={error} /> */}
       <Navbar>
         <>
           <ModeToggle />
@@ -32,5 +70,5 @@ export default async function Layout({ children }: LayoutProps) {
         </main>
       </div>
     </div>
-  );
+  ) : null;
 }
