@@ -6,6 +6,7 @@ export const TYPES = {
 
   /* Adapters */
   AxiosAdapter: Symbol.for("AxiosAdapter"),
+  AuthClientAdapter: Symbol.for("AuthClientAdapter"),
   AuthApiAdapter: Symbol.for("AuthApiAdapter"),
 
   /* UseCases */

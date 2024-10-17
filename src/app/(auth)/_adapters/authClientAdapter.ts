@@ -1,17 +1,18 @@
-import { AuthApiAdapter } from "@/modules/auth/adapters/secondary/authApiAdapter";
+import { inject, injectable } from "tsyringe";
 import { type LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
 import { type LoginResponseDto } from "@/modules/auth/application/dtos/response.dto";
 import { LoginUsecase } from "@/modules/auth/application/usecases/loginUsecase";
 import { type AuthClientPort } from "@/modules/auth/ports/primary/authClientPort";
-import { AxiosAdapter } from "@/modules/restApi/adapters/secondary/AxiosAdapter";
+import { TYPES } from "@/di/types";
 
-const axiosAdapter = new AxiosAdapter();
-const authApiPort = new AuthApiAdapter(axiosAdapter);
-
+@injectable()
 export class AuthClientAdapter implements AuthClientPort {
-  async login({ email, password }: LoginRequestDto): Promise<LoginResponseDto> {
-    const loginUsecase = new LoginUsecase(authApiPort);
+  constructor(
+    @inject(TYPES.LoginUsecase)
+    private readonly loginUsecase: LoginUsecase,
+  ) {}
 
-    return await loginUsecase.execute({ email, password });
+  async login({ email, password }: LoginRequestDto): Promise<LoginResponseDto> {
+    return await this.loginUsecase.execute({ email, password });
   }
 }

@@ -1,17 +1,13 @@
 import { container } from "tsyringe";
-
 import { TYPES } from "./types";
-import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort";
-import { type AuthApiPort } from "@/modules/auth/ports/secondary/authApiPort";
 import { AuthApiAdapter } from "@/modules/auth/adapters/secondary/authApiAdapter";
 import { AxiosAdapter } from "@/modules/restApi/adapters/secondary/AxiosAdapter";
+import { AuthClientAdapter } from "@/app/(auth)/_adapters/authClientAdapter";
+import { LoginUsecase } from "@/modules/auth/application/usecases/loginUsecase";
 
-container.register<AuthApiPort>(TYPES.AuthApiPort, {
-  useClass: AuthApiAdapter,
-});
-
-container.register<RestApiPort>(TYPES.RestApiPort, {
-  useValue: new AxiosAdapter(),
-});
+container.register(TYPES.RestApiPort, { useClass: AxiosAdapter });
+container.register(TYPES.AuthApiPort, { useClass: AuthApiAdapter });
+container.register(TYPES.LoginUsecase, { useClass: LoginUsecase });
+container.register(TYPES.AuthClientAdapter, { useClass: AuthClientAdapter });
 
 export default container;
