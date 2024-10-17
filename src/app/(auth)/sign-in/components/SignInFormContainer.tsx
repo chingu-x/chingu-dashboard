@@ -15,7 +15,7 @@ import routePaths from "@/utils/routePaths";
 
 // import useServerAction from "@/hooks/useServerAction";
 // import Spinner from "@/components/Spinner";
-import { AuthClientAdapter } from "@/app/(auth)/adapters/authClientAdapter";
+import { AuthClientAdapter } from "@/app/(auth)/_adapters/authClientAdapter";
 
 const validationSchema = z.object({
   email: validateTextInput({
