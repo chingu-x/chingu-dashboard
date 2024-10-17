@@ -9,11 +9,5 @@ interface DirectoryPageProps {
 }
 
 export default function DirectoryPage({ params }: DirectoryPageProps) {
-  return (
-    <>
-      <Suspense fallback={<Spinner />}>
-        <DirectoryComponentWrapper params={params} />
-      </Suspense>
-    </>
-  );
+  return <DirectoryComponentWrapper params={params} />;
 }
