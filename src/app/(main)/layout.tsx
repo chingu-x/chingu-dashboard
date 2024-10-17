@@ -4,6 +4,7 @@
 
 import { useEffect } from "react";
 import { formatInTimeZone } from "date-fns-tz";
+import { useRouter } from "next/navigation";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
@@ -13,6 +14,7 @@ import { useAppDispatch, useAuth } from "@/store/hooks";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { currentDate } from "@/utils/getCurrentSprint";
 import { getUserState } from "@/store/features/user/userSlice";
+import routePaths from "@/utils/routePaths";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -21,6 +23,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => await getUser();
@@ -44,9 +47,9 @@ export default function Layout({ children }: LayoutProps) {
       })
       .catch((err) => {
         // eslint-disable-next-line no-console
-        console.log(err);
+        router.push(routePaths.signIn());
       });
-  }, [dispatch]);
+  }, [dispatch, router]);
 
   return isAuthenticated ? (
     <div className="flex h-screen w-screen flex-col">
