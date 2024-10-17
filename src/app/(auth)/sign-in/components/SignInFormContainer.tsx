@@ -1,20 +1,21 @@
 import * as z from "zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { serverSignIn } from "@/app/(auth)/authService";
+// import { serverSignIn } from "@/app/(auth)/authService";
 
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
-import { clientSignIn } from "@/store/features/auth/authSlice";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { useAppDispatch } from "@/store/hooks";
+// import { clientSignIn } from "@/store/features/auth/authSlice";
+// import { onOpenModal } from "@/store/features/modal/modalSlice";
+// import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 
-import useServerAction from "@/hooks/useServerAction";
-import Spinner from "@/components/Spinner";
+// import useServerAction from "@/hooks/useServerAction";
+// import Spinner from "@/components/Spinner";
+import { AuthClientAdapter } from "@/app/(auth)/adapters/authClientAdapter";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -39,18 +40,18 @@ interface SignInFormContainerProps {
 function SignInFormContainer({
   handleResetPassword,
 }: SignInFormContainerProps) {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
+  // const router = useRouter();
+  // const dispatch = useAppDispatch();
 
-  const {
-    runAction: serverSignInAction,
-    isLoading: serverSignInLoading,
-    setIsLoading: setServerSignInLoading,
-  } = useServerAction(serverSignIn);
+  // const {
+  //   runAction: serverSignInAction,
+  //   isLoading: serverSignInLoading,
+  //   setIsLoading: setServerSignInLoading,
+  // } = useServerAction(serverSignIn);
 
   const {
     register,
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
     handleSubmit,
   } = useForm<ValidationSchema>({
     mode: "onTouched",
@@ -59,25 +60,28 @@ function SignInFormContainer({
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { email, password } = data;
-    const [res, error] = await serverSignInAction({ email, password });
+    const authAdapter = new AuthClientAdapter();
 
-    if (res) {
-      dispatch(clientSignIn());
-      router.replace(routePaths.dashboardPage());
-    }
+    await authAdapter.login({ email, password });
+    // const [res, error] = await serverSignInAction({ email, password });
 
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-      setServerSignInLoading(false);
-    }
+    // if (res) {
+    //   dispatch(clientSignIn());
+    //   router.replace(routePaths.dashboardPage());
+    // }
+
+    // if (error) {
+    //   dispatch(
+    //     onOpenModal({ type: "error", content: { message: error.message } }),
+    //   );
+    //   setServerSignInLoading(false);
+    // }
   };
 
   function renderButtonContent() {
-    if (serverSignInLoading) {
-      return <Spinner />;
-    }
+    // if (serverSignInLoading) {
+    //   return <Spinner />;
+    // }
     return "Sign In";
   }
 
@@ -113,7 +117,7 @@ function SignInFormContainer({
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid || serverSignInLoading}
+          // disabled={!isDirty || !isValid || serverSignInLoading}
         >
           {renderButtonContent()}
         </Button>
