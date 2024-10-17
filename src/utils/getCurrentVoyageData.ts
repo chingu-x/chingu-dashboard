@@ -1,7 +1,7 @@
-import { type AsyncActionResponse } from "./handleAsync";
 import { getCurrentVoyageTeam } from "./getCurrentVoyageTeam";
-import { type User } from "@/store/features/user/userSlice";
 import { type AppError } from "@/types/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
+import { type User } from "@/store/features/user/userSlice";
 
 interface GetCurrentVoyageDataProps<X, Y> {
   teamId: number;

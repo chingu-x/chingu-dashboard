@@ -4,7 +4,8 @@ import { revalidateTag } from "next/cache";
 import type { Category } from "./finalize/types";
 import { CacheTag } from "@/utils/cacheTag";
 import { getAccessToken } from "@/utils/getCookie";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { DELETE, PATCH, POST } from "@/utils/requests";
 import { type TechStackItem } from "@/store/features/techStack/techStackSlice";
 
