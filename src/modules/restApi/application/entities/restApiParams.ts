@@ -7,7 +7,7 @@ export interface GetParams {
 
 export interface PostParams<X> {
   url: string;
-  options: RequestOptions;
+  // options: RequestOptions;
   payload?: X;
 }
 
