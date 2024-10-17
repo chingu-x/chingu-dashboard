@@ -45,8 +45,7 @@ export default function Layout({ children }: LayoutProps) {
         // Dispatch the getUserState action with the user object
         dispatch(getUserState(userWithDate));
       })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
+      .catch(() => {
         router.push(routePaths.signIn());
       });
   }, [dispatch, router]);
