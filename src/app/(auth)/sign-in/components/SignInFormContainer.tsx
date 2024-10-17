@@ -10,7 +10,7 @@ import { validateTextInput } from "@/utils/form/validateInput";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
-import { AuthClientAdapter } from "@/app/(auth)/_adapters/authClientAdapter";
+import { type AuthClientAdapter } from "@/app/(auth)/_adapters/authClientAdapter";
 import { TYPES } from "@/di/types";
 
 const validationSchema = z.object({
