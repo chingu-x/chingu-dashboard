@@ -1,14 +1,10 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
-import { IdeationClientAdapter } from "./ideationClientAdapter";
 import { getAccessToken } from "@/utils/getCookie";
 import { DELETE, PATCH, POST } from "@/utils/requests";
-import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/utils/handleAsync";
+import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
 import { CacheTag } from "@/utils/cacheTag";
-import { type AddIdeationResponseDto } from "@/modules/ideation/application/dtos/response.dto";
-import { type AddIdeationRequestDto } from "@/modules/ideation/application/dtos/request.dto";
 
 interface IdeationProps {
   teamId: number;
@@ -57,27 +53,21 @@ export interface IdeationVoteResponse extends IdeationResponse {
   projectIdeaId: number;
 }
 
-const addIdeationClientAdapter = new IdeationClientAdapter();
-
 export async function addIdeation({
   teamId,
   title,
   description,
   vision,
-}: AddIdeationRequestDto): Promise<
-  AsyncActionResponse<AddIdeationResponseDto>
-> {
+}: AddIdeationProps): Promise<AsyncActionResponse<AddIdeationResponse>> {
   const token = getAccessToken();
 
   const addIdeationAsync = () =>
-    addIdeationClientAdapter.addIdeation({
-      teamId,
-      title,
-      description,
-      vision,
+    POST<AddIdeationBody, AddIdeationResponse>(
+      `api/v1/voyages/teams/${teamId}/ideations`,
       token,
-      cache: "default",
-    });
+      "default",
+      { title, description, vision },
+    );
 
   const [res, error] = await handleAsync(addIdeationAsync);
 

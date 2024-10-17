@@ -5,7 +5,6 @@ import FinalizedIdeationCard from "./FinalizedIdeationCard";
 import IdeationContainer from "./IdeationContainer";
 import IdeationProvider from "./IdeationProvider";
 import VoteCard from "./VoteCard";
-import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/adapters/ideationSA";
 import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import ErrorComponent from "@/components/Error";
@@ -20,6 +19,7 @@ import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import routePaths from "@/utils/routePaths";
 import { ErrorType } from "@/utils/error";
+import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 // import { ideation } from "./fixtures/ideation";
 

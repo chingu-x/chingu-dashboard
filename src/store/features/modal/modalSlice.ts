@@ -6,11 +6,6 @@ import {
   type deleteResource,
 } from "@/myVoyage/voyage-resources/resourcesService";
 import {
-  type DeleteIdeationProps,
-  type DeleteIdeationResponse,
-  type deleteIdeation,
-} from "@/myVoyage/ideation/adapters/ideationSA";
-import {
   type DeleteFeatureProps,
   type deleteFeature,
 } from "@/myVoyage/features/featuresService";
@@ -24,6 +19,11 @@ import {
   type DeleteTechItemProps,
   type deleteTechItem,
 } from "@/app/(main)/my-voyage/[teamId]/tech-stack/techStackService";
+import type {
+  deleteIdeation,
+  DeleteIdeationProps,
+  DeleteIdeationResponse,
+} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 export type ModalType =
   | "error"

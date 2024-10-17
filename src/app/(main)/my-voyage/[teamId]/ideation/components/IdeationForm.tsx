@@ -13,16 +13,16 @@ import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch, useIdeation } from "@/store/hooks";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import Spinner from "@/components/Spinner";
-import {
-  editIdeation,
-  type EditIdeationProps,
-  addIdeation,
-  deleteIdeation,
-} from "@/app/(main)/my-voyage/[teamId]/ideation/adapters/ideationSA";
 import useServerAction from "@/hooks/useServerAction";
 import { persistor } from "@/store/store";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
+import {
+  addIdeation,
+  deleteIdeation,
+  editIdeation,
+  type EditIdeationProps,
+} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 const validationSchema = z.object({
   title: validateTextInput({
