@@ -91,8 +91,8 @@ export class AxiosAdapter implements RestApiPort {
   //   return response.data;
   // }
 
-  async post<X, Y>({ url }: PostParams<X>): Promise<Y> {
-    const response = await this.axiosInstance.post<X>(url);
+  async post<X, Y>({ url, payload }: PostParams<X>): Promise<Y> {
+    const response = await this.axiosInstance.post<X>(url, payload);
     return response.data as Promise<Y>;
   }
 }
