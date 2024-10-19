@@ -15,9 +15,9 @@ export default function TeamMember({ teamMember }: TeamMemberProps) {
   const user = useUser().voyageTeamMembers;
   const { firstName, lastName, oAuthProfiles, currentTime } = teamMember.member;
   const { id, hrPerSprint, voyageRole } = teamMember;
-  const isCurrentUser = user.some((user) => user.id === id);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const newRef = useRef<HTMLDivElement>(null);
+  const isCurrentUser = user.some((user) => user.id === id);
 
   const discordId =
     oAuthProfiles.find((profile) => profile.provider.name === "discord")
