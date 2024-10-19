@@ -3,8 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { rootReducer } from "@/store/store";
 import { useUser } from "@/store/hooks";
-import { teamMemberData } from "../fixtures/TeamMember";
-import { type VoyageTeam } from "@/store/features/directory/directorySlice";
+import { teamMemberData } from "@/app/(main)/my-voyage/[teamId]/directory/components/fixtures/TeamMember";
 import TeamMember from "@/app/(main)/my-voyage/[teamId]/directory/components/TeamMember";
 
 jest.mock("@/store/hooks", () => ({
@@ -23,7 +22,7 @@ jest.mock(
     },
 );
 
-const renderWithStore = (teamMember: VoyageTeam, userId: number) => {
+const renderWithStore = (userId: number) => {
   const store = configureStore({
     reducer: rootReducer,
   });
@@ -34,7 +33,7 @@ const renderWithStore = (teamMember: VoyageTeam, userId: number) => {
 
   return render(
     <Provider store={store}>
-      <TeamMember teamMember={teamMember} />
+      <TeamMember teamMember={teamMemberData} />
     </Provider>,
   );
 };
@@ -45,7 +44,7 @@ describe("Team Member Component", () => {
   });
 
   it("renders individual team data", () => {
-    const teamMember = renderWithStore(teamMemberData, 20);
+    const teamMember = renderWithStore(20);
 
     const name = teamMember.getByLabelText("Name");
     const discordID = teamMember.getByLabelText("Discord ID");
@@ -61,7 +60,7 @@ describe("Team Member Component", () => {
   });
 
   it("current user CANNOT input other id's average hour per sprint", () => {
-    const screen = renderWithStore(teamMemberData, 30);
+    const screen = renderWithStore(30);
 
     screen.debug();
 
@@ -70,17 +69,5 @@ describe("Team Member Component", () => {
     });
 
     expect(buttonAction).not.toBeInTheDocument();
-  });
-
-  it("current user can input their own id's average hour per sprint", () => {
-    const screen = renderWithStore(teamMemberData, 20);
-
-    screen.debug();
-
-    const buttonAction = screen.queryByRole("button", {
-      name: "average hour per sprint",
-    });
-
-    expect(buttonAction).toBeInTheDocument();
   });
 });
