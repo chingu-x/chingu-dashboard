@@ -3,18 +3,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { serverSignIn } from "@/app/(auth)/authService";
-
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
 import { clientSignIn } from "@/store/features/auth/authSlice";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
-
-import useServerAction from "@/hooks/useServerAction";
-import Spinner from "@/components/Spinner";
+import { type AuthClientAdapter } from "@/app/(auth)/_adapters/authClientAdapter";
+import { TYPES } from "@/di/types";
+import { resolve } from "@/di/resolver";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -43,14 +40,8 @@ function SignInFormContainer({
   const dispatch = useAppDispatch();
 
   const {
-    runAction: serverSignInAction,
-    isLoading: serverSignInLoading,
-    setIsLoading: setServerSignInLoading,
-  } = useServerAction(serverSignIn);
-
-  const {
     register,
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
     handleSubmit,
   } = useForm<ValidationSchema>({
     mode: "onTouched",
@@ -59,25 +50,15 @@ function SignInFormContainer({
 
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { email, password } = data;
-    const [res, error] = await serverSignInAction({ email, password });
+    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
 
-    if (res) {
-      dispatch(clientSignIn());
-      router.replace(routePaths.dashboardPage());
-    }
+    await authAdapter.login({ email, password });
 
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-      setServerSignInLoading(false);
-    }
+    dispatch(clientSignIn());
+    router.replace(routePaths.dashboardPage());
   };
 
   function renderButtonContent() {
-    if (serverSignInLoading) {
-      return <Spinner />;
-    }
     return "Sign In";
   }
 
@@ -113,7 +94,7 @@ function SignInFormContainer({
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid || serverSignInLoading}
+          // disabled={!isDirty || !isValid || serverSignInLoading}
         >
           {renderButtonContent()}
         </Button>

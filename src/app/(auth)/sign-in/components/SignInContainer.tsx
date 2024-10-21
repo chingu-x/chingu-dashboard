@@ -1,5 +1,6 @@
 "use client";
 
+import "reflect-metadata";
 import { useState } from "react";
 import ResetPasswordContainer from "./ResetPasswordContainer";
 import SignInBlock from "./SignInBlock";
