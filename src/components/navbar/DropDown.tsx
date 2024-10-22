@@ -1,14 +1,20 @@
 "use client";
 
+import "reflect-metadata";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
-import { serverSignOut } from "@/app/(auth)/authService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { TYPES } from "@/di/types";
+import { resolve } from "@/di/resolver";
+import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
+import routePaths from "@/utils/routePaths";
 
 export default function DropDown({ openState }: { openState?: boolean }) {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const allVoyages = useUser().voyageTeamMembers;
   const activeVoyage = allVoyages?.find(
@@ -17,28 +23,32 @@ export default function DropDown({ openState }: { openState?: boolean }) {
 
   const currentVoyage = activeVoyage?.voyageTeam.name
     ? `Team - Tier ${activeVoyage.voyageTeam.name
-      .split("-")[1]
-      .split("tier")[1]
-      .toUpperCase()} ${activeVoyage.voyageTeam.name
-      .split("-")[0]
-      .toUpperCase()}`
+        .split("-")[1]
+        .split("tier")[1]
+        .toUpperCase()} ${activeVoyage.voyageTeam.name
+        .split("-")[0]
+        .toUpperCase()}`
     : "Please join a voyage to see your status information.";
   const closed = "hidden";
   const open =
     "absolute flex flex-col gap-5 z-[1] w-[250px] p-5 bottom-100 translate-y-[15%] shadow-md bg-base-200 right-0 border border-base-100 rounded-2xl";
 
+  // TODO: update error handling
   async function handleClick() {
-    const [res, error] = await serverSignOut();
+    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
 
-    if (res) {
-      dispatch(clientSignOut());
-    }
+    await authAdapter.logout();
+    dispatch(clientSignOut());
+    router.replace(routePaths.signIn());
+    // if (res) {
+    //   dispatch(clientSignOut());
+    // }
 
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-    }
+    // if (error) {
+    //   dispatch(
+    //     onOpenModal({ type: "error", content: { message: error.message } }),
+    //   );
+    // }
   }
 
   const handleDropDownClick = (event: React.MouseEvent<HTMLDivElement>) => {

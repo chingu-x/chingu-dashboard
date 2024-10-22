@@ -48,6 +48,7 @@ function SignInFormContainer({
     resolver: zodResolver(validationSchema),
   });
 
+  // TODO: update error handling
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { email, password } = data;
     const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);

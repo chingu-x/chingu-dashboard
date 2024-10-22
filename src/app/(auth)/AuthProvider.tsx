@@ -34,9 +34,9 @@ export default function AuthProvider({ user, error }: AuthProviderProps) {
       dispatch(getUserState(userWithDate));
     }
 
-    if (error) {
-      dispatch(clientSignOut());
-    }
+    // if (error) {
+    //   dispatch(clientSignOut());
+    // }
   }, [dispatch, user, error]);
 
   return null;
