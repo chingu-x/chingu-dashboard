@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { formatInTimeZone } from "date-fns-tz";
-import { clientSignIn, clientSignOut } from "@/store/features/auth/authSlice";
+import { clientSignIn } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { type User, getUserState } from "@/store/features/user/userSlice";
 import { type AppError } from "@/types/types";
