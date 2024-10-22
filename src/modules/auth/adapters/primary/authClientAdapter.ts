@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { type LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
 import { type LoginResponseDto } from "@/modules/auth/application/dtos/response.dto";
-import { LoginUsecase } from "@/modules/auth/application/usecases/loginUsecase";
+import { type LoginUsecase } from "@/modules/auth/application/usecases/loginUsecase";
 import { type AuthClientPort } from "@/modules/auth/ports/primary/authClientPort";
 import { TYPES } from "@/di/types";
 
