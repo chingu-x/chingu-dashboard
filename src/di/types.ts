@@ -11,4 +11,5 @@ export const TYPES = {
 
   /* UseCases */
   LoginUsecase: Symbol.for("LoginUsecase"),
+  LogoutUsecase: Symbol.for("LogoutUsecase"),
 };

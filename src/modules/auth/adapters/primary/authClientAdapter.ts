@@ -14,6 +14,8 @@ export class AuthClientAdapter implements AuthClientPort {
   constructor(
     @inject(TYPES.LoginUsecase)
     private readonly loginUsecase: LoginUsecase,
+
+    @inject(TYPES.LogoutUsecase)
     private readonly logoutUsecase: LogoutUsecase,
   ) {}
 
