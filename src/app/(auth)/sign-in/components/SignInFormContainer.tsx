@@ -9,7 +9,7 @@ import { validateTextInput } from "@/utils/form/validateInput";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
-import { type AuthClientAdapter } from "@/app/(auth)/_adapters/authClientAdapter";
+import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
 import { TYPES } from "@/di/types";
 import { resolve } from "@/di/resolver";
 
@@ -48,6 +48,7 @@ function SignInFormContainer({
     resolver: zodResolver(validationSchema),
   });
 
+  // TODO: update error handling
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const { email, password } = data;
     const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);

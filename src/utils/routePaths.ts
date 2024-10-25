@@ -10,9 +10,6 @@ const routePaths = {
   signIn() {
     return "/sign-in";
   },
-  signOut() {
-    return "/sign-out";
-  },
   signUp() {
     return "/sign-up";
   },
