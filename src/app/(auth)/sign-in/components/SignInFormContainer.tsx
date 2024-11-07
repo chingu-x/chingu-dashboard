@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
@@ -12,9 +13,9 @@ import routePaths from "@/utils/routePaths";
 import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
 import { TYPES } from "@/di/types";
 import { resolve } from "@/di/resolver";
-import { LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
-import { useMutation } from "@tanstack/react-query";
-import { LoginResponseDto } from "@/modules/auth/application/dtos/response.dto";
+import type { LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
+import type { LoginResponseDto } from "@/modules/auth/application/dtos/response.dto";
+import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -42,7 +43,7 @@ function SignInFormContainer({
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { mutate, isLoading, isError, error } = useMutation<
+  const { mutate, isPending } = useMutation<
     LoginResponseDto,
     Error,
     LoginRequestDto
@@ -52,14 +53,14 @@ function SignInFormContainer({
       dispatch(clientSignIn());
       router.replace(routePaths.dashboardPage());
     },
-    onError: (error: Error) => {
-      console.error("Login failed:", error.message);
-    },
+    // onError: (error: Error) => {
+    //   console.error("Login failed:", error.message);
+    // },
   });
 
   const {
     register,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     handleSubmit,
   } = useForm<ValidationSchema>({
     mode: "onTouched",
@@ -81,7 +82,7 @@ function SignInFormContainer({
   };
 
   function renderButtonContent() {
-    return "Sign In";
+    return isPending ? <Spinner /> : "Sign In";
   }
 
   return (
@@ -116,7 +117,7 @@ function SignInFormContainer({
         <Button
           type="submit"
           title="submit"
-          // disabled={!isDirty || !isValid || serverSignInLoading}
+          disabled={!isDirty || !isValid || isPending}
         >
           {renderButtonContent()}
         </Button>
