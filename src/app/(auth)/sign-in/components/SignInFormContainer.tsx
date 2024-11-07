@@ -12,6 +12,9 @@ import routePaths from "@/utils/routePaths";
 import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
 import { TYPES } from "@/di/types";
 import { resolve } from "@/di/resolver";
+import { LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
+import { useMutation } from "@tanstack/react-query";
+import { LoginResponseDto } from "@/modules/auth/application/dtos/response.dto";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -39,6 +42,21 @@ function SignInFormContainer({
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const { mutate, isLoading, isError, error } = useMutation<
+    LoginResponseDto,
+    Error,
+    LoginRequestDto
+  >({
+    mutationFn: loginMutation,
+    onSuccess: () => {
+      dispatch(clientSignIn());
+      router.replace(routePaths.dashboardPage());
+    },
+    onError: (error: Error) => {
+      console.error("Login failed:", error.message);
+    },
+  });
+
   const {
     register,
     formState: { errors },
@@ -48,15 +66,18 @@ function SignInFormContainer({
     resolver: zodResolver(validationSchema),
   });
 
-  // TODO: update error handling
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    const { email, password } = data;
+  async function loginMutation({
+    email,
+    password,
+  }: LoginRequestDto): Promise<LoginResponseDto> {
     const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
+    return await authAdapter.login({ email, password });
+  }
 
-    await authAdapter.login({ email, password });
-
-    dispatch(clientSignIn());
-    router.replace(routePaths.dashboardPage());
+  // TODO: update error handling
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+    const { email, password } = data;
+    mutate({ email, password });
   };
 
   function renderButtonContent() {

@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import StoreProvider from "@/components/providers/StoreProvider";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import ModalProvider from "@/components/providers/ModalProvider";
+import { TanstackQueryProvider } from "@/components/providers/TanstackQueryProvider";
 
 export const metadata: Metadata = {
   title: "Chingu Dashboard",
@@ -33,8 +34,10 @@ export default function RootLayout({
       <body className="overflow-hidden">
         <ThemeProvider storageKey="chingu-theme" disableTransitionOnChange>
           <StoreProvider>
-            <ModalProvider />
-            {children}
+            <TanstackQueryProvider>
+              <ModalProvider />
+              {children}
+            </TanstackQueryProvider>
           </StoreProvider>
         </ThemeProvider>
       </body>
