@@ -39,8 +39,6 @@ describe("sign in flow", () => {
 
     cy.contains("button", "Sign In").should("be.visible");
     cy.contains("button", "Sign In").click();
-
-    // TODO: Fix
-    // cy.contains("Submission Error").should("be.visible");
+    cy.contains("Submission Error").should("be.visible");
   });
 });

@@ -16,6 +16,7 @@ import { resolve } from "@/di/resolver";
 import type { LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
 import type { LoginResponseDto } from "@/modules/auth/application/dtos/response.dto";
 import Spinner from "@/components/Spinner";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -53,9 +54,12 @@ function SignInFormContainer({
       dispatch(clientSignIn());
       router.replace(routePaths.dashboardPage());
     },
-    // onError: (error: Error) => {
-    //   console.error("Login failed:", error.message);
-    // },
+    // TODO: update error handling
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
   });
 
   const {
@@ -75,7 +79,6 @@ function SignInFormContainer({
     return await authAdapter.login({ email, password });
   }
 
-  // TODO: update error handling
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     const { email, password } = data;
     mutate({ email, password });
