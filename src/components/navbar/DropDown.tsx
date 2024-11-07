@@ -15,7 +15,11 @@ import routePaths from "@/utils/routePaths";
 import type { LogoutResponseDto } from "@/modules/auth/application/dtos/response.dto";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
-export default function DropDown({ openState }: { openState?: boolean }) {
+interface DropdownProps {
+  openState?: boolean;
+}
+
+export default function DropDown({ openState }: DropdownProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const allVoyages = useUser().voyageTeamMembers;
