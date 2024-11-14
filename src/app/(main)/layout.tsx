@@ -36,7 +36,11 @@ export default function Layout({ children }: LayoutProps) {
   }
 
   if (isPending) {
-    return <Spinner />;
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
   // TODO: refactor

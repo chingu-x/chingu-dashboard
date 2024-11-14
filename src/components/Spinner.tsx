@@ -10,7 +10,7 @@ export default function Spinner({
   extraClasses,
 }: SpinnerProps) {
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex justify-center">
       <svg
         className={`h-5 w-5 animate-spin ${color} ${extraClasses}`}
         xmlns="http://www.w3.org/2000/svg"
