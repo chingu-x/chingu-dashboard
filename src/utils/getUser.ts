@@ -1,3 +1,5 @@
+// TODO: remove later
+
 import { getAccessToken } from "./getCookie";
 import { handleAsync } from "./handleAsync";
 import { GET } from "./requests";

@@ -1,3 +1,5 @@
+// TODO: refactor
+
 import { type RequestOptions } from "./requestOptions";
 
 export interface GetParams {
