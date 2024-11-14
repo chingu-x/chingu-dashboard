@@ -29,6 +29,7 @@ export default function Layout({ children }: LayoutProps) {
   const { isPending, isError, data } = useQuery({
     queryKey: ["user"],
     queryFn: getUserQuery,
+    staleTime: 1000 * 60 * 30, // This sets it to 30 minutes, which is how long the access token lasts
   });
 
   async function getUserQuery() {
@@ -56,7 +57,7 @@ export default function Layout({ children }: LayoutProps) {
 
     const userWithDate = {
       ...data,
-      currentDate: new Date(currentDateInUserTimezone),
+      currentDateInUserTimezone: new Date(currentDateInUserTimezone),
     };
 
     dispatch(getUserState(userWithDate));
