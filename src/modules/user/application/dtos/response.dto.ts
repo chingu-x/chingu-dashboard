@@ -14,7 +14,7 @@ export interface GetUserResponseDto {
   avatar: string;
   voyageTeamMembers: VoyageTeamMember[];
   sprintCheckIn: number[];
-  currentDate: Date | null;
+  currentDateInUserTimezone: Date | null;
 }
 
 type providerType = "discord";

@@ -48,19 +48,7 @@ export default function Layout({ children }: LayoutProps) {
 
   if (data) {
     dispatch(clientSignIn());
-
-    const currentDateInUserTimezone = formatInTimeZone(
-      currentDate,
-      data.timezone,
-      "yyyy-MM-dd HH:mm:ss",
-    );
-
-    const userWithDate = {
-      ...data,
-      currentDateInUserTimezone: new Date(currentDateInUserTimezone),
-    };
-
-    dispatch(getUserState(userWithDate));
+    dispatch(getUserState(data));
   }
 
   return (
