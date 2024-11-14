@@ -15,6 +15,7 @@ import { getUserState } from "@/store/features/user/userSlice";
 import { TYPES } from "@/di/types";
 import { resolve } from "@/di/resolver";
 import Spinner from "@/components/Spinner";
+import { CacheTag } from "@/utils/cacheTag";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -25,7 +26,7 @@ export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
 
   const { isPending, isError, data } = useQuery({
-    queryKey: ["user"],
+    queryKey: [CacheTag.me],
     queryFn: getUserQuery,
     staleTime: 1000 * 60 * 30, // This sets it to 30 minutes, which is how long the access token lasts
   });
