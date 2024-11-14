@@ -1,6 +1,8 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 
+// TODO: All of these interfaces need to be refactored to extend the response dto types
+
 type providerType = "discord";
 
 export interface VoyageStatus {

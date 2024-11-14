@@ -2,7 +2,6 @@
 
 import "reflect-metadata";
 import { useQuery } from "@tanstack/react-query";
-import { formatInTimeZone } from "date-fns-tz";
 import { useRouter } from "next/navigation";
 import { type UserClientAdapter } from "@/modules/user/adapters/primary/userClientAdapter";
 import Sidebar from "@/components/sidebar/Sidebar";
@@ -13,7 +12,6 @@ import { useAppDispatch } from "@/store/hooks";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import routePaths from "@/utils/routePaths";
 import { getUserState } from "@/store/features/user/userSlice";
-import { currentDate } from "@/utils/getCurrentSprint";
 import { TYPES } from "@/di/types";
 import { resolve } from "@/di/resolver";
 import Spinner from "@/components/Spinner";
