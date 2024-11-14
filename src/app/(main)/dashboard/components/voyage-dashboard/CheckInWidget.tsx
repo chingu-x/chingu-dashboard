@@ -23,9 +23,9 @@ function CheckInWidget({
   currentSprintNumber,
   teamId,
 }: CheckInWidgetProps) {
-  const { timezone, currentDate } = useUser();
+  const { timezone, currentDateInUserTimezone } = useUser();
   const sprintsData = useSprint();
-  const userDate = currentDate ?? new Date();
+  const userDate = currentDateInUserTimezone ?? new Date();
 
   const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
     user,

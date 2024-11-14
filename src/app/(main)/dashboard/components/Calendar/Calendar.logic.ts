@@ -13,8 +13,11 @@ import {
 import { useUser } from "@/store/hooks";
 
 export const useCalendarLogic = () => {
-  const { currentDate } = useUser();
-  const today = useMemo(() => currentDate ?? new Date(), [currentDate]);
+  const { currentDateInUserTimezone } = useUser();
+  const today = useMemo(
+    () => currentDateInUserTimezone ?? new Date(),
+    [currentDateInUserTimezone],
+  );
 
   const [date, setDate] = useState<Date>(today);
   const [selectedDate, setSelectedDate] = useState<Date>(today);
