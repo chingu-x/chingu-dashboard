@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
@@ -12,6 +13,10 @@ import routePaths from "@/utils/routePaths";
 import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
 import { TYPES } from "@/di/types";
 import { resolve } from "@/di/resolver";
+import type { LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
+import type { LoginResponseDto } from "@/modules/auth/application/dtos/response.dto";
+import Spinner from "@/components/Spinner";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -39,28 +44,48 @@ function SignInFormContainer({
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const { mutate, isPending } = useMutation<
+    LoginResponseDto,
+    Error,
+    LoginRequestDto
+  >({
+    mutationFn: loginMutation,
+    onSuccess: () => {
+      dispatch(clientSignIn());
+      router.replace(routePaths.dashboardPage());
+    },
+    // TODO: update error handling
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
+
   const {
     register,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     handleSubmit,
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
-  // TODO: update error handling
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    const { email, password } = data;
+  async function loginMutation({
+    email,
+    password,
+  }: LoginRequestDto): Promise<LoginResponseDto> {
     const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
+    return await authAdapter.login({ email, password });
+  }
 
-    await authAdapter.login({ email, password });
-
-    dispatch(clientSignIn());
-    router.replace(routePaths.dashboardPage());
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+    const { email, password } = data;
+    mutate({ email, password });
   };
 
   function renderButtonContent() {
-    return "Sign In";
+    return isPending ? <Spinner /> : "Sign In";
   }
 
   return (
@@ -95,7 +120,7 @@ function SignInFormContainer({
         <Button
           type="submit"
           title="submit"
-          // disabled={!isDirty || !isValid || serverSignInLoading}
+          disabled={!isDirty || !isValid || isPending}
         >
           {renderButtonContent()}
         </Button>
