@@ -3,6 +3,7 @@ export const TYPES = {
   RestApiPort: Symbol.for("RestApiPort"),
   AuthClientPort: Symbol.for("AuthClientPort"),
   AuthApiPort: Symbol.for("AuthApiPort"),
+  UserApiPort: Symbol.for("UserApiPort"),
 
   /* Adapters */
   AxiosAdapter: Symbol.for("AxiosAdapter"),
@@ -12,4 +13,5 @@ export const TYPES = {
   /* UseCases */
   LoginUsecase: Symbol.for("LoginUsecase"),
   LogoutUsecase: Symbol.for("LogoutUsecase"),
+  GetUserUsecase: Symbol.for("GetUserUsecase"),
 };
