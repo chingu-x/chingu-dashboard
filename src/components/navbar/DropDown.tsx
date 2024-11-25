@@ -4,7 +4,7 @@ import "reflect-metadata";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Button from "@/components/Button";
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
@@ -14,12 +14,14 @@ import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClie
 import routePaths from "@/utils/routePaths";
 import type { LogoutResponseDto } from "@/modules/auth/application/dtos/response.dto";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { CacheTag } from "@/utils/cacheTag";
 
 interface DropdownProps {
   openState?: boolean;
 }
 
 export default function DropDown({ openState }: DropdownProps) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const allVoyages = useUser().voyageTeamMembers;
@@ -53,8 +55,10 @@ export default function DropDown({ openState }: DropdownProps) {
   }
 
   const { mutate } = useMutation<LogoutResponseDto, Error, void>({
+    mutationKey: [CacheTag.logout],
     mutationFn: logoutMutation,
     onSuccess: () => {
+      queryClient.removeQueries({ queryKey: [CacheTag.me] });
       dispatch(clientSignOut());
       router.replace(routePaths.signIn());
     },

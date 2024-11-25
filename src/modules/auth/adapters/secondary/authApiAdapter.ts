@@ -7,7 +7,7 @@ import type {
   LogoutResponseDto,
   LoginResponseDto,
 } from "@/modules/auth/application/dtos/response.dto";
-import { AuthUrls } from "@/modules/auth/application/constants/authUrls";
+import AuthUrls from "@/modules/auth/application/constants/authUrls";
 
 @injectable()
 export class AuthApiAdapter implements AuthApiPort {
@@ -18,14 +18,14 @@ export class AuthApiAdapter implements AuthApiPort {
 
   async login({ email, password }: LoginRequestDto): Promise<LoginResponseDto> {
     return await this.apiClient.post({
-      url: AuthUrls.login,
+      url: AuthUrls.login(),
       payload: { email, password },
     });
   }
 
   async logout(): Promise<LogoutResponseDto> {
     return await this.apiClient.post({
-      url: AuthUrls.logout,
+      url: AuthUrls.logout(),
     });
   }
 }

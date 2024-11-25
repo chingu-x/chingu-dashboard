@@ -1,8 +1,10 @@
+// TODO: refactor
+
 import { type RequestOptions } from "./requestOptions";
 
 export interface GetParams {
   url: string;
-  options: RequestOptions;
+  // options: RequestOptions;
 }
 
 export interface PostParams<X> {
