@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import type {
   RequestResetPasswordDto,
   LoginRequestDto,
+  ResetPasswordDto,
 } from "@/modules/auth/application/dtos/request.dto";
 import type {
   LogoutResponseDto,
@@ -12,6 +13,7 @@ import { type LogoutUsecase } from "@/modules/auth/application/usecases/logoutUs
 import { type AuthClientPort } from "@/modules/auth/ports/primary/authClientPort";
 import { TYPES } from "@/di/types";
 import { type RequestResetPasswordUsecase } from "@/modules/auth/application/usecases/requestPasswordResetUsecase";
+import { type ResetPasswordUsecase } from "@/modules/auth/application/usecases/resetPasswordUsecase";
 
 @injectable()
 export class AuthClientAdapter implements AuthClientPort {
@@ -24,6 +26,9 @@ export class AuthClientAdapter implements AuthClientPort {
 
     @inject(TYPES.RequestResetPasswordUsecase)
     private readonly requestResetPasswordUsecase: RequestResetPasswordUsecase,
+
+    @inject(TYPES.ResetPasswordUsecase)
+    private readonly resetPasswordUsecase: ResetPasswordUsecase,
   ) {}
 
   async login({ email, password }: LoginRequestDto): Promise<LoginResponseDto> {
@@ -38,5 +43,9 @@ export class AuthClientAdapter implements AuthClientPort {
     email,
   }: RequestResetPasswordDto): Promise<void> {
     return await this.requestResetPasswordUsecase.execute({ email });
+  }
+
+  async resetPassword({ password, token }: ResetPasswordDto): Promise<void> {
+    return await this.resetPasswordUsecase.execute({ password, token });
   }
 }
