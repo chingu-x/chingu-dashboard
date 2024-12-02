@@ -63,7 +63,7 @@ function ResetPasswordContainer({
   }
 
   function renderButtonContent() {
-    return isPending ? <Spinner /> : "Resend Email";
+    return isPending ? <Spinner /> : "Send reset link";
   }
 
   const {
