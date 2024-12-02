@@ -1,4 +1,7 @@
-import { type LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
+import type {
+  RequestPasswordResetDto,
+  LoginRequestDto,
+} from "@/modules/auth/application/dtos/request.dto";
 import type {
   LogoutResponseDto,
   LoginResponseDto,
@@ -7,4 +10,5 @@ import type {
 export interface AuthClientPort {
   login: (props: LoginRequestDto) => Promise<LoginResponseDto>;
   logout: () => Promise<LogoutResponseDto>;
+  requestPasswordReset: (props: RequestPasswordResetDto) => Promise<void>;
 }
