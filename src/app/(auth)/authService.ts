@@ -10,21 +10,6 @@ interface ResetPasswordRequestProps {
   password?: string;
 }
 
-export async function resetPasswordRequestEmail(
-  email: string,
-): Promise<AsyncActionResponse<void>> {
-  const asyncPasswordResetEmail = async () =>
-    UNAUTHPOST<ResetPasswordRequestProps, void>(
-      "api/v1/auth/reset-password/request",
-      "no-store",
-      {
-        email,
-      },
-    );
-
-  return handleAsync(asyncPasswordResetEmail);
-}
-
 export async function resetPassword({
   password,
   token,
