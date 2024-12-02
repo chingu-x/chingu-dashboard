@@ -9,6 +9,7 @@ import { UserClientAdapter } from "@/modules/user/adapters/primary/userClientAda
 import { GetUserUsecase } from "@/modules/user/application/usecases/getUserUsecase";
 import { UserApiAdapter } from "@/modules/user/adapters/secondary/userApiAdapter";
 import { RequestResetPasswordUsecase } from "@/modules/auth/application/usecases/requestPasswordResetUsecase";
+import { ResetPasswordUsecase } from "@/modules/auth/application/usecases/resetPasswordUsecase";
 
 container.register(TYPES.RestApiPort, { useClass: AxiosAdapter });
 container.register(TYPES.AuthApiPort, { useClass: AuthApiAdapter });
@@ -17,6 +18,9 @@ container.register(TYPES.LoginUsecase, { useClass: LoginUsecase });
 container.register(TYPES.LogoutUsecase, { useClass: LogoutUsecase });
 container.register(TYPES.RequestResetPasswordUsecase, {
   useClass: RequestResetPasswordUsecase,
+});
+container.register(TYPES.ResetPasswordUsecase, {
+  useClass: ResetPasswordUsecase,
 });
 container.register(TYPES.AuthClientAdapter, { useClass: AuthClientAdapter });
 container.register(TYPES.GetUserUsecase, { useClass: GetUserUsecase });

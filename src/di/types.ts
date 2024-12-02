@@ -13,4 +13,5 @@ export const TYPES = {
   LogoutUsecase: Symbol.for("LogoutUsecase"),
   GetUserUsecase: Symbol.for("GetUserUsecase"),
   RequestResetPasswordUsecase: Symbol.for("RequestResetPasswordUsecase"),
+  ResetPasswordUsecase: Symbol.for("ResetPasswordUsecase"),
 };
