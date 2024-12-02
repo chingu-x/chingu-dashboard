@@ -12,7 +12,7 @@ import { type LoginUsecase } from "@/modules/auth/application/usecases/loginUsec
 import { type LogoutUsecase } from "@/modules/auth/application/usecases/logoutUsecase";
 import { type AuthClientPort } from "@/modules/auth/ports/primary/authClientPort";
 import { TYPES } from "@/di/types";
-import { type RequestResetPasswordUsecase } from "@/modules/auth/application/usecases/requestPasswordResetUsecase";
+import { type RequestResetPasswordUsecase } from "@/modules/auth/application/usecases/requestResetPasswordUsecase";
 import { type ResetPasswordUsecase } from "@/modules/auth/application/usecases/resetPasswordUsecase";
 
 @injectable()
