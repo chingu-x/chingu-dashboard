@@ -2,7 +2,10 @@ import { inject, injectable } from "tsyringe";
 import { TYPES } from "@/di/types";
 import { type AuthApiPort } from "@/modules/auth/ports/secondary/authApiPort";
 import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort";
-import { type LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
+import {
+  RequestPasswordResetDto,
+  type LoginRequestDto,
+} from "@/modules/auth/application/dtos/request.dto";
 import type {
   LogoutResponseDto,
   LoginResponseDto,
@@ -28,4 +31,8 @@ export class AuthApiAdapter implements AuthApiPort {
       url: AuthUrls.logout(),
     });
   }
+
+  async requestPasswordReset({
+    email,
+  }: RequestPasswordResetDto): Promise<void> {}
 }
