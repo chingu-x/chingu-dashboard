@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { type LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
+import { RequestPasswordResetDto, type LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
 import type {
   LogoutResponseDto,
   LoginResponseDto,
@@ -25,5 +25,9 @@ export class AuthClientAdapter implements AuthClientPort {
 
   async logout(): Promise<LogoutResponseDto> {
     return await this.logoutUsecase.execute();
+  }
+
+  async requestPasswordReset({email}: RequestPasswordResetDto): Promise<void> {
+    return await
   }
 }
