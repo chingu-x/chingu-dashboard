@@ -5,6 +5,7 @@ import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort"
 import type {
   RequestResetPasswordDto,
   LoginRequestDto,
+  ResetPasswordDto,
 } from "@/modules/auth/application/dtos/request.dto";
 import type {
   LogoutResponseDto,
@@ -38,6 +39,13 @@ export class AuthApiAdapter implements AuthApiPort {
     return await this.apiClient.post({
       url: AuthUrls.requestResetPassword(),
       payload: { email },
+    });
+  }
+
+  async resetPassword({ password, token }: ResetPasswordDto): Promise<void> {
+    return await this.apiClient.post({
+      url: AuthUrls.resetPassword(),
+      payload: { password, token },
     });
   }
 }
