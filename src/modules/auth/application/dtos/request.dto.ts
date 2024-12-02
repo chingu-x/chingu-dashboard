@@ -6,3 +6,8 @@ export interface LoginRequestDto {
 export interface RequestResetPasswordDto {
   email: string;
 }
+
+export interface ResetPasswordDto {
+  password: string;
+  token: string;
+}
