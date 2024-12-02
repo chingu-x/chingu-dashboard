@@ -43,10 +43,10 @@ function ResetPasswordContainer({
     RequestResetPasswordDto
   >({
     mutationFn: requestResetPasswordMutation,
-    // onSuccess: () => {
-    //   dispatch(clientSignIn());
-    //   router.replace(routePaths.dashboardPage());
-    // },
+    onSuccess: (_, variables) => {
+      handleEmailCheck();
+      setEmail(variables.email);
+    },
     // TODO: update error handling
     onError: (error: Error) => {
       dispatch(
@@ -78,8 +78,6 @@ function ResetPasswordContainer({
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     const { email } = data;
     mutate({ email });
-    handleEmailCheck();
-    setEmail(email);
   };
 
   return (
