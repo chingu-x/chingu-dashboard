@@ -3,7 +3,7 @@ import { TYPES } from "@/di/types";
 import { type AuthApiPort } from "@/modules/auth/ports/secondary/authApiPort";
 import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort";
 import type {
-  RequestPasswordResetDto,
+  RequestResetPasswordDto,
   LoginRequestDto,
 } from "@/modules/auth/application/dtos/request.dto";
 import type {
@@ -32,11 +32,11 @@ export class AuthApiAdapter implements AuthApiPort {
     });
   }
 
-  async requestPasswordReset({
+  async requestResetPassword({
     email,
-  }: RequestPasswordResetDto): Promise<void> {
+  }: RequestResetPasswordDto): Promise<void> {
     return await this.apiClient.post({
-      url: AuthUrls.requestPasswordReset(),
+      url: AuthUrls.requestResetPassword(),
       payload: { email },
     });
   }

@@ -5,7 +5,7 @@ const AuthUrls = {
   logout() {
     return "/api/v1/auth/logout";
   },
-  requestPasswordReset() {
+  requestResetPassword() {
     return "/api/v1/auth/reset-password/request";
   },
 } as const;

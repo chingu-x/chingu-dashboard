@@ -3,6 +3,6 @@ export interface LoginRequestDto {
   password: string;
 }
 
-export interface RequestPasswordResetDto {
+export interface RequestResetPasswordDto {
   email: string;
 }

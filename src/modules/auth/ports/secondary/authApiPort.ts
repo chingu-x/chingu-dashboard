@@ -1,5 +1,5 @@
 import type {
-  RequestPasswordResetDto,
+  RequestResetPasswordDto,
   LoginRequestDto,
 } from "@/modules/auth/application/dtos/request.dto";
 import type {
@@ -10,5 +10,5 @@ import type {
 export interface AuthApiPort {
   login: ({ email, password }: LoginRequestDto) => Promise<LoginResponseDto>;
   logout: () => Promise<LogoutResponseDto>;
-  requestPasswordReset: ({ email }: RequestPasswordResetDto) => Promise<void>;
+  requestResetPassword: ({ email }: RequestResetPasswordDto) => Promise<void>;
 }
