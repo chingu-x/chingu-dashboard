@@ -28,10 +28,6 @@ function EmailCheckContainer({
     RequestResetPasswordDto
   >({
     mutationFn: requestResetPasswordMutation,
-    // onSuccess: () => {
-    //   dispatch(clientSignIn());
-    //   router.replace(routePaths.dashboardPage());
-    // },
     // TODO: update error handling
     onError: (error: Error) => {
       dispatch(
