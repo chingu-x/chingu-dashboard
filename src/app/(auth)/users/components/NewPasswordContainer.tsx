@@ -2,14 +2,17 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { resetPassword } from "@/app/(auth)/authService";
+import { useMutation } from "@tanstack/react-query";
 import TextInput from "@/components/inputs/TextInput";
 import Button from "@/components/Button";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { validateTextInput } from "@/utils/form/validateInput";
-import useServerAction from "@/hooks/useServerAction";
 import Spinner from "@/components/Spinner";
+import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
+import { TYPES } from "@/di/types";
+import { resolve } from "@/di/resolver";
+import { type ResetPasswordDto } from "@/modules/auth/application/dtos/request.dto";
 
 const validationSchema = z.object({
   password: validateTextInput({
@@ -31,6 +34,31 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   const token = searchParams.get("token");
   const dispatch = useAppDispatch();
 
+  const { mutate, isPending } = useMutation<void, Error, ResetPasswordDto>({
+    mutationFn: resetPasswordMutation,
+    onSuccess: () => {
+      onClick();
+    },
+    // TODO: update error handling
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
+
+  async function resetPasswordMutation({
+    password,
+    token,
+  }: ResetPasswordDto): Promise<void> {
+    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
+    return await authAdapter.resetPassword({ password, token });
+  }
+
+  function renderButtonContent() {
+    return isPending ? <Spinner /> : "Update New Password";
+  }
+
   const {
     register,
     formState: { errors, isDirty, isValid },
@@ -40,39 +68,13 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
     resolver: zodResolver(validationSchema),
   });
 
-  const {
-    runAction: resetPasswordAction,
-    isLoading: resetPasswordLoading,
-    setIsLoading: setResetPasswordLoading,
-  } = useServerAction(resetPassword);
-
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     if (token) {
-      const [res, error] = await resetPasswordAction({
-        password: data.password,
-        token,
-      });
+      const { password } = data;
 
-      if (res) {
-        onClick();
-      }
-
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-      }
-
-      setResetPasswordLoading(false);
+      mutate({ password, token });
     }
   };
-
-  function renderButtonContent() {
-    if (resetPasswordLoading) {
-      return <Spinner />;
-    }
-    return "Update New Password";
-  }
 
   return (
     <div className="min-h-[349px] w-[400px] rounded-2xl bg-base-200 p-8 xl:ml-60">
@@ -100,7 +102,7 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
           <Button
             type="submit"
             title="submit"
-            disabled={!isDirty || !isValid || resetPasswordLoading}
+            disabled={!isDirty || !isValid || isPending}
           >
             {renderButtonContent()}
           </Button>
