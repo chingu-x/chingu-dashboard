@@ -14,7 +14,6 @@ import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
 import { useAuth, useUser } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
-import { type UserClientAdapter } from "@/modules/user/adapters/primary/userClientAdapter";
 import { TYPES } from "@/di/types";
 import { resolve } from "@/di/resolver";
 import { type VoyageTeamClientAdapter } from "@/modules/voyage-team/adapters/primary/voyageTeamClientAdapter";
@@ -88,14 +87,14 @@ export default function Sidebar() {
 
   const { isAuthenticated } = useAuth();
   const user = useUser();
-  const userAdapter = resolve<UserClientAdapter>(TYPES.UserClientAdapter);
   const voyageTeamAdapter = resolve<VoyageTeamClientAdapter>(
     TYPES.VoyageTeamClientAdapter,
   );
 
-  const isActive = userAdapter.getChinguMemberStatus(user);
-
-  const isVoyageStarted: boolean = isAuthenticated && isActive;
+  const isVoyageStarted = voyageTeamAdapter.hasVoyageStarted({
+    user,
+    isAuthenticated,
+  });
 
   const teamId = voyageTeamAdapter.getCurrentVoyageTeamId(user);
 

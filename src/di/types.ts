@@ -19,4 +19,5 @@ export const TYPES = {
   ResetPasswordUsecase: Symbol.for("ResetPasswordUsecase"),
   GetCurrentVoyageTeamUsecase: Symbol.for("GetCurrentVoyageTeamUsecase"),
   GetCurrentVoyageTeamIdUsecase: Symbol.for("GetCurrentVoyageTeamIdUsecase"),
+  HasVoyageStartedUsecase: Symbol.for("HasVoyageStartedUsecase"),
 };

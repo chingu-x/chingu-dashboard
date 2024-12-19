@@ -1,5 +1,6 @@
 export interface GetCurrentVoyageTeamResponseDto extends VoyageTeamMember {}
 export type GetCurrentVoyageTeamIdResponseDto = string | undefined;
+export type HasVoyageStartedResponseDto = boolean;
 
 export interface VoyageTeamMember {
   id: number;

@@ -14,6 +14,7 @@ import { GetChinguMemberStatusUsecase } from "@/modules/user/application/usecase
 import { VoyageTeamClientAdapter } from "@/modules/voyage-team/adapters/primary/voyageTeamClientAdapter";
 import { GetCurrentVoyageTeamUsecase } from "@/modules/voyage-team/application/usecases/getCurrentVoyageTeamUsecase";
 import { GetCurrentVoyageTeamIdUsecase } from "@/modules/voyage-team/application/usecases/getCurrentVoyageTeamIdUsecase";
+import { HasVoyageStartedUsecase } from "@/modules/voyage-team/application/usecases/hasVoyageStartedUsecase";
 
 container.register(TYPES.RestApiPort, { useClass: AxiosAdapter });
 container.register(TYPES.AuthApiPort, { useClass: AuthApiAdapter });
@@ -40,6 +41,9 @@ container.register(TYPES.GetCurrentVoyageTeamUsecase, {
 });
 container.register(TYPES.GetCurrentVoyageTeamIdUsecase, {
   useClass: GetCurrentVoyageTeamIdUsecase,
+});
+container.register(TYPES.HasVoyageStartedUsecase, {
+  useClass: HasVoyageStartedUsecase,
 });
 
 export default container;
