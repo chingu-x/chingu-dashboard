@@ -4,5 +4,5 @@ import { type GetCurrentVoyageTeamResponseDto } from "@/modules/voyage-team/appl
 export interface VoyageTeamClientPort {
   getCurrentVoyageTeam: (
     user: GetUserRequestDto,
-  ) => GetCurrentVoyageTeamResponseDto;
+  ) => GetCurrentVoyageTeamResponseDto | undefined;
 }

@@ -11,6 +11,8 @@ import { UserApiAdapter } from "@/modules/user/adapters/secondary/userApiAdapter
 import { RequestResetPasswordUsecase } from "@/modules/auth/application/usecases/requestResetPasswordUsecase";
 import { ResetPasswordUsecase } from "@/modules/auth/application/usecases/resetPasswordUsecase";
 import { GetChinguMemberStatusUsecase } from "@/modules/user/application/usecases/getChinguMemberStatusUsecase";
+import { VoyageTeamClientAdapter } from "@/modules/voyage-team/adapters/primary/voyageTeamClientAdapter";
+import { GetCurrentVoyageTeamUsecase } from "@/modules/voyage-team/application/usecases/getCurrentVoyageTeamUsecase";
 
 container.register(TYPES.RestApiPort, { useClass: AxiosAdapter });
 container.register(TYPES.AuthApiPort, { useClass: AuthApiAdapter });
@@ -29,5 +31,11 @@ container.register(TYPES.GetChinguMemberStatusUsecase, {
   useClass: GetChinguMemberStatusUsecase,
 });
 container.register(TYPES.UserClientAdapter, { useClass: UserClientAdapter });
+container.register(TYPES.VoyageTeamClientAdapter, {
+  useClass: VoyageTeamClientAdapter,
+});
+container.register(TYPES.GetCurrentVoyageTeamUsecase, {
+  useClass: GetCurrentVoyageTeamUsecase,
+});
 
 export default container;
