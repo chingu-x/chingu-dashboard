@@ -10,8 +10,8 @@ import type {
   PatchParams,
   UnauthPostParams,
   PostParams,
-} from "@/modules/restApi/application/entities/restApiParams";
-import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort";
+} from "@/modules/rest-api/application/entities/restApiParams";
+import { type RestApiPort } from "@/modules/rest-api/ports/secondary/restApiPort";
 
 export class AxiosAdapter implements RestApiPort {
   private axiosInstance: AxiosInstance;

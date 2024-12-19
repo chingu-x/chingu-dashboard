@@ -1,7 +1,7 @@
 import { container } from "tsyringe";
 import { TYPES } from "./types";
 import { AuthApiAdapter } from "@/modules/auth/adapters/secondary/authApiAdapter";
-import { AxiosAdapter } from "@/modules/restApi/adapters/secondary/AxiosAdapter";
+import { AxiosAdapter } from "@/modules/rest-api/adapters/secondary/AxiosAdapter";
 import { AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
 import { LoginUsecase } from "@/modules/auth/application/usecases/loginUsecase";
 import { LogoutUsecase } from "@/modules/auth/application/usecases/logoutUsecase";
