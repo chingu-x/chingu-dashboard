@@ -97,9 +97,7 @@ export default function Sidebar() {
 
   const isVoyageStarted: boolean = isAuthenticated && isActive;
 
-  const teamId = voyageTeamAdapter
-    .getCurrentVoyageTeam(user)
-    ?.voyageTeamId.toString();
+  const teamId = voyageTeamAdapter.getCurrentVoyageTeamId(user);
 
   const voyagePages: VoyagePageProperty[] = [
     {
