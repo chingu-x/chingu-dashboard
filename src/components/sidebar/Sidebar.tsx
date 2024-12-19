@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import "reflect-metadata";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   RectangleGroupIcon,
@@ -13,6 +14,9 @@ import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
 import { useAuth, useUser } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
+import { type UserClientAdapter } from "@/modules/user/adapters/primary/userClientAdapter";
+import { TYPES } from "@/di/types";
+import { resolve } from "@/di/resolver";
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -82,16 +86,11 @@ export default function Sidebar() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const { isAuthenticated } = useAuth();
+  const user = useUser();
   const { voyageTeamMembers } = useUser();
+  const userAdapter = resolve<UserClientAdapter>(TYPES.UserClientAdapter);
 
-  const isActive = useMemo(() => {
-    if (voyageTeamMembers.length === 0) {
-      return false;
-    }
-    return voyageTeamMembers.some(
-      (member) => member.voyageTeam.voyage.status.name === "Active",
-    );
-  }, [voyageTeamMembers]);
+  const isActive = userAdapter.getChinguMemberStatus(user);
 
   const isVoyageStarted: boolean = isAuthenticated && isActive;
 

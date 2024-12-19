@@ -1,23 +1,8 @@
-export interface GetUserResponseDto {
-  id: string;
-  firstName: string;
-  lastName: string;
-  countryCode: string;
-  oAuthProfiles: {
-    provider: {
-      name: providerType;
-    };
-    providerUsername: string;
-  }[];
-  email: string;
-  timezone: string;
-  avatar: string;
-  voyageTeamMembers: VoyageTeamMember[];
-  sprintCheckIn: number[];
-  currentDateInUserTimezone: Date | null;
-}
+import { type User } from "@/modules/user/application/types";
 
-type providerType = "discord";
+export interface GetUserResponseDto extends User {}
+
+export type GetChinguMemberStatusResponseDto = boolean;
 
 // TODO: move this to separate module
 export interface VoyageTeamMember {
