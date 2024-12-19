@@ -17,6 +17,7 @@ import routePaths from "@/utils/routePaths";
 import { type UserClientAdapter } from "@/modules/user/adapters/primary/userClientAdapter";
 import { TYPES } from "@/di/types";
 import { resolve } from "@/di/resolver";
+import { type VoyageTeamClientAdapter } from "@/modules/voyage-team/adapters/primary/voyageTeamClientAdapter";
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -87,18 +88,18 @@ export default function Sidebar() {
 
   const { isAuthenticated } = useAuth();
   const user = useUser();
-  const { voyageTeamMembers } = useUser();
   const userAdapter = resolve<UserClientAdapter>(TYPES.UserClientAdapter);
+  const voyageTeamAdapter = resolve<VoyageTeamClientAdapter>(
+    TYPES.VoyageTeamClientAdapter,
+  );
 
   const isActive = userAdapter.getChinguMemberStatus(user);
 
   const isVoyageStarted: boolean = isAuthenticated && isActive;
 
-  const currentVoyageTeam = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-  );
-
-  const teamId = currentVoyageTeam?.voyageTeamId.toString();
+  const teamId = voyageTeamAdapter
+    .getCurrentVoyageTeam(user)
+    ?.voyageTeamId.toString();
 
   const voyagePages: VoyagePageProperty[] = [
     {
