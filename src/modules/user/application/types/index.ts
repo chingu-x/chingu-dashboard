@@ -1,4 +1,4 @@
-import { type VoyageTeamMember } from "@/modules/user/application/dtos/response.dto";
+import { type VoyageTeamMember } from "@/modules/voyage-team/application/dtos/response.dto";
 
 export interface User {
   id: string;
