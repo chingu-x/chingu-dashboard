@@ -1,53 +1,6 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { clientSignOut } from "@/store/features/auth/authSlice";
-
-// TODO: All of these interfaces need to be refactored to extend the response dto types
-
-type providerType = "discord";
-
-export interface VoyageStatus {
-  name: string;
-}
-
-interface Voyage {
-  status: VoyageStatus;
-}
-
-interface VoyageTeam {
-  name: string;
-  voyage: Voyage;
-  projectSubmitted: boolean;
-}
-
-export interface VoyageRole {
-  name: string;
-}
-
-export interface VoyageTeamMember {
-  id: number;
-  voyageTeamId: number;
-  voyageTeam: VoyageTeam;
-  voyageRole: VoyageRole;
-}
-
-export interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  countryCode: string;
-  oAuthProfiles: {
-    provider: {
-      name: providerType;
-    };
-    providerUsername: string;
-  }[];
-  email: string;
-  timezone: string;
-  avatar: string;
-  voyageTeamMembers: VoyageTeamMember[];
-  sprintCheckIn: number[];
-  currentDateInUserTimezone: Date | null;
-}
+import { type User } from "@/modules/user/application/types";
 
 const initialState: User = {
   id: "",

@@ -15,8 +15,6 @@ export class GetUserUsecase {
   async execute(): Promise<GetUserResponseDto> {
     const data = await this.userApi.getUser();
 
-    // TODO: refactor later
-    // need to move the current date to a module
     const userWithDate = {
       ...data,
       currentDateInUserTimezone: transformDateToUserTimezone(
