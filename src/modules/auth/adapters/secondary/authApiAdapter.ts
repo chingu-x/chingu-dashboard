@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { TYPES } from "@/di/types";
 import { type AuthApiPort } from "@/modules/auth/ports/secondary/authApiPort";
-import { type RestApiPort } from "@/modules/restApi/ports/secondary/restApiPort";
+import { type RestApiPort } from "@/modules/rest-api/ports/secondary/restApiPort";
 import type {
   RequestResetPasswordDto,
   LoginRequestDto,
