@@ -8,7 +8,6 @@ import type {
   DeleteParams,
   GetParams,
   PatchParams,
-  UnauthPostParams,
   PostParams,
 } from "@/modules/rest-api/application/entities/restApiParams";
 import { type RestApiPort } from "@/modules/rest-api/ports/secondary/restApiPort";
@@ -104,11 +103,6 @@ export class AxiosAdapter implements RestApiPort {
 
   async delete<X>({ url }: DeleteParams): Promise<X> {
     const response = await this.axiosInstance.delete<X>(url);
-    return response.data;
-  }
-
-  async unauthpost<X, Y>({ url, payload }: UnauthPostParams<X>): Promise<Y> {
-    const response = await this.axiosInstance.post<Y>(url, payload);
     return response.data;
   }
 

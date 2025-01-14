@@ -1,4 +1,4 @@
-// TODO: remove later
+// TODO: remove when architecture refactor is finished
 
 import { getAccessToken } from "./getCookie";
 import { handleAsync } from "./handleAsync";

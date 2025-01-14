@@ -3,7 +3,6 @@ import type {
   GetParams,
   PatchParams,
   PostParams,
-  UnauthPostParams,
 } from "@/modules/rest-api/application/entities/restApiParams";
 
 export interface RestApiPort {
@@ -14,6 +13,4 @@ export interface RestApiPort {
   patch: <X, Y>(params: PatchParams<X>) => Promise<Y>;
 
   delete: <X>(params: DeleteParams) => Promise<X>;
-
-  unauthpost: <X, Y>(params: UnauthPostParams<X>) => Promise<Y>;
 }

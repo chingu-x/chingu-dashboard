@@ -1,3 +1,5 @@
+// TODO: remove when architecture refactor is finished
+
 export async function GET<T>(
   url: string,
   token: string,
