@@ -1,3 +1,5 @@
+// TODO: remove when architecture refactor is finished
+
 import { getCurrentVoyageTeam } from "./getCurrentVoyageTeam";
 import { type User } from "@/modules/user/application/types";
 import { type AppError } from "@/types/types";
