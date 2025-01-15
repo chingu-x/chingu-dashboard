@@ -1,8 +1,6 @@
+import { type User } from "@/modules/user/application/types";
+import { type VoyageTeamMember } from "@/modules/voyage-team/application/dtos/response.dto";
 import { type AppError } from "@/types/types";
-import {
-  type User,
-  type VoyageTeamMember,
-} from "@/store/features/user/userSlice";
 
 interface GetCurrentVoyageTeamProps {
   teamId: number;

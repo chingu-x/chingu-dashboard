@@ -1,4 +1,4 @@
-import { type User } from "@/store/features/user/userSlice";
+import { type User } from "@/modules/user/application/types";
 
 export function getSprintCheckinIsStatus(
   user: User | null,
