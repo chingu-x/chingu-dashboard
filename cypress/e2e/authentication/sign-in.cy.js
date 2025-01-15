@@ -24,7 +24,7 @@ describe("sign in flow", () => {
     // verify we're back on a dashboard page
     cy.url().should(
       "match",
-      /https:\/\/chingu-dashboard-git-dev-chingu-dashboard\.vercel\.app\/dashboard(\/\d+)?/,
+      /https:\/\/chingu-dashboard-git-dev-chingu-dashboard\.vercel\.app\/dashboard\/\d+/,
     );
 
     // TODO: uncomment this once PR is pushed where AuthHeader has a data-cy="nav-dropdown-menu" and retest
