@@ -1,3 +1,5 @@
+// TODO: remove when architecture refactor is finished
+
 import { isWithinInterval } from "date-fns";
 
 import { type Sprint } from "@/store/features/sprint/sprintSlice";

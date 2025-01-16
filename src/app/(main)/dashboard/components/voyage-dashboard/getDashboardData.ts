@@ -1,6 +1,5 @@
 import { fetchSprints } from "@/myVoyage/sprints/components/RedirectToCurrentSprintWrapper";
 import { fetchMeeting } from "@/myVoyage/sprints/components/SprintWrapper";
-import type { User } from "@/store/features/user/userSlice";
 import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
 import { type AppError } from "@/types/types";
 import { type AsyncActionResponse } from "@/utils/handleAsync";
@@ -15,6 +14,7 @@ import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import { type TechStackData } from "@/store/features/techStack/techStackSlice";
 import { type ResourceData } from "@/store/features/resources/resourcesSlice";
 import { ErrorType } from "@/utils/error";
+import { type User } from "@/modules/user/application/types";
 
 interface GetDashboardDataResponse {
   currentSprintNumber: number | null;

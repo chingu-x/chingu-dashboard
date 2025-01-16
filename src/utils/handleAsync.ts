@@ -1,3 +1,5 @@
+// TODO: remove when architecture refactor is finished
+
 import { type AppError } from "@/types/types";
 
 export type AsyncFunction<X> = () => Promise<X>;

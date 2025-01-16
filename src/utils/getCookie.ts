@@ -1,3 +1,5 @@
+// TODO: remove when architecture refactor is finished
+
 import { cookies } from "next/headers";
 
 export function getAccessToken() {

@@ -43,8 +43,6 @@ export default function Layout({ children }: LayoutProps) {
       </div>
     );
   }
-
-  // TODO: refactor
   if (isError) {
     router.push(routePaths.signIn());
   }
