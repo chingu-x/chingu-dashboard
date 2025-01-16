@@ -9,9 +9,9 @@ import Button from "@/components/Button";
 import Badge from "@/components/badge/Badge";
 import routePaths from "@/utils/routePaths";
 import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
-import type { User } from "@/store/features/user/userSlice";
 import { useSprint, useUser } from "@/store/hooks";
 import convertStringToDate from "@/utils/convertStringToDate";
+import { type User } from "@/modules/user/application/types";
 
 interface CheckInWidgetProps {
   user: User | null;
@@ -23,9 +23,9 @@ function CheckInWidget({
   currentSprintNumber,
   teamId,
 }: CheckInWidgetProps) {
-  const { timezone, currentDate } = useUser();
+  const { timezone, currentDateInUserTimezone } = useUser();
   const sprintsData = useSprint();
-  const userDate = currentDate ?? new Date();
+  const userDate = currentDateInUserTimezone ?? new Date();
 
   const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
     user,

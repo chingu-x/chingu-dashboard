@@ -5,6 +5,7 @@ export enum CacheTag {
   directory = "directory",
   ideation = "ideation",
   me = "me",
+  logout = "logout",
   features = "features",
   resources = "resources",
   techStack = "tech-stack",

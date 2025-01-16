@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer, { type User } from "@/store/features/user/userSlice";
+import userReducer from "@/store/features/user/userSlice";
 import authReducer from "@/store/features/auth/authSlice";
+import { type User } from "@/modules/user/application/types";
 
 const user1: Partial<User> = {
   voyageTeamMembers: [

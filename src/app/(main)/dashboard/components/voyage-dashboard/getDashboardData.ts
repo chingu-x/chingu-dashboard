@@ -1,8 +1,8 @@
 import { fetchSprints } from "@/myVoyage/sprints/components/RedirectToCurrentSprintWrapper";
 import { fetchMeeting } from "@/myVoyage/sprints/components/SprintWrapper";
-import type { User } from "@/store/features/user/userSlice";
 import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
-import type { AppError } from "@/types/types";
+import { type AppError } from "@/types/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { fetchResources } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ResourcesComponentWrapper";
@@ -13,8 +13,8 @@ import { type FeaturesList } from "@/store/features/features/featuresSlice";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
 import { type TechStackData } from "@/store/features/techStack/techStackSlice";
 import { type ResourceData } from "@/store/features/resources/resourcesSlice";
-import type { AsyncActionResponse } from "@/utils/handleAsync";
 import { ErrorType } from "@/utils/error";
+import { type User } from "@/modules/user/application/types";
 
 interface GetDashboardDataResponse {
   currentSprintNumber: number | null;

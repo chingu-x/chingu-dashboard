@@ -10,13 +10,13 @@ import { useAppDispatch, useIdeation, useModal, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
+import AvatarGroup from "@/components/avatar/AvatarGroup";
+import Avatar from "@/components/avatar/Avatar";
 import {
   addIdeationVote,
   removeIdeationVote,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
-import AvatarGroup from "@/components/avatar/AvatarGroup";
-import Avatar from "@/components/avatar/Avatar";
 import Tooltip from "@/components/Tooltip";
 
 interface VoteCardProps {

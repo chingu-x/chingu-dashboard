@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import "reflect-metadata";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   RectangleGroupIcon,
@@ -13,6 +14,9 @@ import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
 import { useAuth, useUser } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
+import { TYPES } from "@/di/types";
+import { resolve } from "@/di/resolver";
+import { type VoyageTeamClientAdapter } from "@/modules/voyage-team/adapters/primary/voyageTeamClientAdapter";
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -82,24 +86,17 @@ export default function Sidebar() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const { isAuthenticated } = useAuth();
-  const { voyageTeamMembers } = useUser();
-
-  const isActive = useMemo(() => {
-    if (voyageTeamMembers.length === 0) {
-      return false;
-    }
-    return voyageTeamMembers.some(
-      (member) => member.voyageTeam.voyage.status.name === "Active",
-    );
-  }, [voyageTeamMembers]);
-
-  const isVoyageStarted: boolean = isAuthenticated && isActive;
-
-  const currentVoyageTeam = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+  const user = useUser();
+  const voyageTeamAdapter = resolve<VoyageTeamClientAdapter>(
+    TYPES.VoyageTeamClientAdapter,
   );
 
-  const teamId = currentVoyageTeam?.voyageTeamId.toString();
+  const isVoyageStarted = voyageTeamAdapter.hasVoyageStarted({
+    user,
+    isAuthenticated,
+  });
+
+  const teamId = voyageTeamAdapter.getCurrentVoyageTeamId(user);
 
   const voyagePages: VoyagePageProperty[] = [
     {

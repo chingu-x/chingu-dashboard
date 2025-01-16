@@ -3,18 +3,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { serverSignIn } from "@/app/(auth)/authService";
-
+import { useMutation } from "@tanstack/react-query";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
 import { clientSignIn } from "@/store/features/auth/authSlice";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
-
-import useServerAction from "@/hooks/useServerAction";
+import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
+import { TYPES } from "@/di/types";
+import { resolve } from "@/di/resolver";
+import type { LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
+import type { LoginResponseDto } from "@/modules/auth/application/dtos/response.dto";
 import Spinner from "@/components/Spinner";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -42,11 +44,23 @@ function SignInFormContainer({
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const {
-    runAction: serverSignInAction,
-    isLoading: serverSignInLoading,
-    setIsLoading: setServerSignInLoading,
-  } = useServerAction(serverSignIn);
+  const { mutate, isPending } = useMutation<
+    LoginResponseDto,
+    Error,
+    LoginRequestDto
+  >({
+    mutationFn: loginMutation,
+    onSuccess: () => {
+      dispatch(clientSignIn());
+      router.replace(routePaths.dashboardPage());
+    },
+    // TODO: update error handling
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
 
   const {
     register,
@@ -57,28 +71,21 @@ function SignInFormContainer({
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+  async function loginMutation({
+    email,
+    password,
+  }: LoginRequestDto): Promise<LoginResponseDto> {
+    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
+    return await authAdapter.login({ email, password });
+  }
+
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     const { email, password } = data;
-    const [res, error] = await serverSignInAction({ email, password });
-
-    if (res) {
-      dispatch(clientSignIn());
-      router.replace(routePaths.dashboardPage());
-    }
-
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-      setServerSignInLoading(false);
-    }
+    mutate({ email, password });
   };
 
   function renderButtonContent() {
-    if (serverSignInLoading) {
-      return <Spinner />;
-    }
-    return "Sign In";
+    return isPending ? <Spinner /> : "Sign In";
   }
 
   return (
@@ -113,7 +120,7 @@ function SignInFormContainer({
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid || serverSignInLoading}
+          disabled={!isDirty || !isValid || isPending}
         >
           {renderButtonContent()}
         </Button>

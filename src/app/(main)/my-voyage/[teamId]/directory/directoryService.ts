@@ -2,7 +2,8 @@
 
 import { revalidateTag } from "next/cache";
 import { getAccessToken } from "@/utils/getCookie";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { PATCH } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 
