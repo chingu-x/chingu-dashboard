@@ -13,7 +13,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "format:changed": "git diff --name-only --diff-filter=d HEAD | grep -e 'src.*\\.[jt]sx\\?$' -e 'src.*\\.json$' -e 'src.*\\.css$' -e 'src.*\\.md$' | xargs prettier -u --write",
-    "postinstall": "husky install"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^16.3.0",
@@ -37,7 +37,12 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
     "@next/eslint-plugin-next": "^13.4.12",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.1",
     "@storybook/addon-essentials": "^7.6.4",
     "@storybook/addon-interactions": "^7.6.4",
     "@storybook/addon-links": "^7.6.4",
@@ -65,12 +70,13 @@
     "eslint-plugin-no-relative-import-paths": "^1.5.2",
     "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-tailwindcss": "^3.17.0",
-    "husky": "^8.0.0",
+    "husky": "^9.1.7",
     "jest": "^29.6.2",
     "jest-environment-jsdom": "^29.6.2",
     "postcss": "8.4.27",
     "prettier": "^3.0.1",
     "prettier-plugin-tailwindcss": "^0.6.1",
+    "semantic-release": "^24.2.1",
     "storybook": "^7.6.4",
     "tailwindcss": "3.3.3",
     "tsconfig-paths-webpack-plugin": "^4.1.0",

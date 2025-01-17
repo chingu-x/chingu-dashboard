@@ -8,6 +8,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  "ignorePatterns": ["commitlint.config.cjs"],
   "plugins": ["@typescript-eslint", "import", "no-relative-import-paths"],
   "extends": [
     "plugin:import/recommended",
