@@ -1,6 +1,8 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 
+type providerType = "discord";
+
 export interface VoyageStatus {
   name: string;
 }
@@ -31,10 +33,12 @@ export interface User {
   firstName: string;
   lastName: string;
   countryCode: string;
-  discordId: string;
-  githubId: string;
-  twitterId: string;
-  linkedinId: string;
+  oAuthProfiles: {
+    provider: {
+      name: providerType;
+    };
+    providerUsername: string;
+  }[];
   email: string;
   timezone: string;
   avatar: string;
@@ -48,10 +52,14 @@ const initialState: User = {
   firstName: "",
   lastName: "",
   countryCode: "",
-  discordId: "",
-  githubId: "",
-  twitterId: "",
-  linkedinId: "",
+  oAuthProfiles: [
+    {
+      provider: {
+        name: "discord",
+      },
+      providerUsername: "",
+    },
+  ],
   email: "",
   timezone: "",
   avatar: "",

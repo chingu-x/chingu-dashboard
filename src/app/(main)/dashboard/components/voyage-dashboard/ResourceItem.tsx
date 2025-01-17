@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 import Badge from "@/components/badge/Badge";
 import { useAppDispatch } from "@/store/hooks";
@@ -21,7 +21,6 @@ function ResourceItem({
   userAvatarUrl,
 }: ResourceItemProps) {
   const dispatch = useAppDispatch();
-  const [widgetHovered, setWidgetHovered] = useState<boolean>(false);
 
   const openViewModal = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -40,17 +39,15 @@ function ResourceItem({
   };
 
   return (
-    <div
+    <button
+      type="button"
+      aria-label="open resource details"
       key={title}
-      className="mb-4 flex h-[79px] w-full cursor-pointer items-center justify-between rounded-lg bg-base-200 p-4 hover:shadow-md"
+      className="group mb-4 flex w-full cursor-pointer items-center justify-between gap-x-4 rounded-lg bg-base-200 hover:shadow-md"
       onClick={openViewModal}
-      onMouseEnter={() => setWidgetHovered(true)}
-      onMouseLeave={() => setWidgetHovered(false)}
     >
-      <div className="flex max-w-[400px] flex-col">
-        <p className="mb-1 w-[300px] truncate text-base font-semibold max-[1469px]:w-full max-[1200px]:w-56">
-          {title}
-        </p>
+      <div className="flex flex-col p-4">
+        <p className="mb-1 text-left text-base font-semibold">{title}</p>
         <div className="flex">
           <p className="mr-2 text-base font-medium">Shared by</p>
           <Badge
@@ -61,12 +58,8 @@ function ResourceItem({
           />
         </div>
       </div>
-      <ArrowTopRightOnSquareIcon
-        className={`mr-3 h-6 w-6 text-base-300 ${
-          widgetHovered ? "stroke-base-300" : ""
-        }`}
-      />
-    </div>
+      <ArrowTopRightOnSquareIcon className="m-7 h-6 w-6 shrink-0 text-base-300 group-hover:stroke-base-300" />
+    </button>
   );
 }
 

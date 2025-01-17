@@ -24,8 +24,8 @@ import ErrorComponent from "@/components/Error";
 function getMeeting(sprints: Sprint[], sprintNumber: number) {
   const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
 
-  if (sprint?.teamMeetings && sprint?.teamMeetings.length > 0)
-    return sprint.teamMeetings[0];
+  if (sprint?.teamMeetingsData && sprint?.teamMeetingsData.length > 0)
+    return sprint.teamMeetingsData[0];
   return null;
 }
 

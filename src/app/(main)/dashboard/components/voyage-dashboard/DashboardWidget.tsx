@@ -50,18 +50,18 @@ function DashboardWidget({
       >
         <div className="inline-flex max-w-[100px] items-start text-neutral-focus">
           <p
-            className={`relative inline-block text-[13px] font-semibold ${
+            className={`relative inline-block font-semibold ${
               isWidgetClickable
                 ? "cursor-pointer text-primary"
                 : "text-neutral-focus"
             }`}
           >
             {headerTitle}
-            {isWidgetClickable ? (
-              <div className="absolute right-[-15px] top-[4px]">
-                <ChevronDoubleRightIcon className="ml-1 w-3" />
+            {isWidgetClickable && (
+              <div className="absolute right-0 top-1/2 translate-x-[110%] translate-y-[-45%]">
+                <ChevronDoubleRightIcon className="h-3 w-3" />
               </div>
-            ) : null}
+            )}
           </p>
         </div>
 

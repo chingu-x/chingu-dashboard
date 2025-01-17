@@ -43,7 +43,10 @@ export default function Notes() {
   } = useSprint();
 
   useEffect(() => {
-    setData(sprints[sprintNumber - 1].teamMeetings[0].notes);
+    const sprint = sprints[sprintNumber - 1];
+    if (sprint.teamMeetingsData && sprint.teamMeetingsData.length) {
+      setData(sprint.teamMeetingsData[0].notes);
+    }
   }, [sprints, sprintNumber]);
 
   const {
@@ -101,6 +104,7 @@ export default function Notes() {
         rows={2}
         {...register("notes")}
         errorMessage={errors.notes?.message}
+        defaultValue={data ?? ""}
       />
       <Button
         type="submit"

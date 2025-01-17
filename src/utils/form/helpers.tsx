@@ -101,7 +101,7 @@ export function getOptions({
       const teamMemberId = member.id;
 
       const option = {
-        id: `teamMember${teamMemberId.toString()}`,
+        id: `${id}-teamMember${teamMemberId.toString()}`,
         value: teamMemberId.toString(),
         label: (
           <span className="flex items-center gap-x-2">
