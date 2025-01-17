@@ -1,3 +1,5 @@
+// TODO: remove when architecture refactor is finished
+
 "use client";
 
 import { useCallback, useState } from "react";

@@ -1,5 +1,6 @@
 "use client";
 
+import "reflect-metadata";
 import { useState } from "react";
 import NewPasswordContainer from "./NewPasswordContainer";
 import ResetCompletedContainer from "./ResetCompletedContainer";

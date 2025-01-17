@@ -15,7 +15,7 @@ export const useEventsLogic = (
   voyageNumber?: number | null,
   teamId?: string,
 ) => {
-  const { timezone, currentDate } = useUser();
+  const { timezone, currentDateInUserTimezone } = useUser();
 
   const voyageStartDate = sprintsData?.find(
     (sprint) => Number(sprint.number) === 1,
@@ -157,7 +157,7 @@ export const useEventsLogic = (
         check: true,
         label: "Weekly Check-in Due",
         link: getWeeklyCheckInLink(),
-        isDisabled: isBefore(date, currentDate ?? new Date()),
+        isDisabled: isBefore(date, currentDateInUserTimezone ?? new Date()),
         showDot: true,
       });
     }
@@ -168,7 +168,7 @@ export const useEventsLogic = (
         check: true,
         label: "Voyage Submission Due",
         link: getSubmitVoyageLink(),
-        isDisabled: isBefore(date, currentDate ?? new Date()),
+        isDisabled: isBefore(date, currentDateInUserTimezone ?? new Date()),
         showDot: true,
       });
     }

@@ -1,8 +1,8 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import {
-  type VoyageRole,
-  type VoyageStatus,
-} from "@/store/features/user/userSlice";
+import type {
+  VoyageStatus,
+  VoyageRole,
+} from "@/modules/voyage-team/application/dtos/response.dto";
 
 type providerType = "discord";
 

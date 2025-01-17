@@ -3,15 +3,18 @@ import * as z from "zod";
 import Link from "next/link";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type Dispatch, type SetStateAction } from "react";
-import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
+import { useMutation } from "@tanstack/react-query";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { validateTextInput } from "@/utils/form/validateInput";
 import routePaths from "@/utils/routePaths";
-import useServerAction from "@/hooks/useServerAction";
 import Spinner from "@/components/Spinner";
+import { type RequestResetPasswordDto } from "@/modules/auth/application/dtos/request.dto";
+import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
+import { TYPES } from "@/di/types";
+import { resolve } from "@/di/resolver";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -34,11 +37,34 @@ function ResetPasswordContainer({
 }: ResetPasswordContainerProps) {
   const dispatch = useAppDispatch();
 
-  const {
-    runAction: resetPwdReqEmailAction,
-    isLoading: resetPwdReqEmailLoading,
-    setIsLoading: setResetPwdReqEmailLoading,
-  } = useServerAction(resetPasswordRequestEmail);
+  const { mutate, isPending } = useMutation<
+    void,
+    Error,
+    RequestResetPasswordDto
+  >({
+    mutationFn: requestResetPasswordMutation,
+    onSuccess: (_, variables) => {
+      handleEmailCheck();
+      setEmail(variables.email);
+    },
+    // TODO: update error handling
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
+
+  async function requestResetPasswordMutation({
+    email,
+  }: RequestResetPasswordDto): Promise<void> {
+    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
+    return await authAdapter.requestResetPassword({ email });
+  }
+
+  function renderButtonContent() {
+    return isPending ? <Spinner /> : "Send reset link";
+  }
 
   const {
     register,
@@ -49,30 +75,10 @@ function ResetPasswordContainer({
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     const { email } = data;
-    const [res, error] = await resetPwdReqEmailAction(email);
-
-    if (res) {
-      handleEmailCheck();
-      setEmail(email);
-    }
-
-    if (error) {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-    }
-
-    setResetPwdReqEmailLoading(false);
+    mutate({ email });
   };
-
-  function renderButtonContent() {
-    if (resetPwdReqEmailLoading) {
-      return <Spinner />;
-    }
-    return "Send reset link";
-  }
 
   return (
     <div className="flex min-h-[377px] w-[400px] flex-col items-center rounded-2xl bg-base-200 px-6 py-9 xl:ml-60">
@@ -94,7 +100,7 @@ function ResetPasswordContainer({
           type="submit"
           title="submit"
           className="my-3"
-          disabled={!isDirty || !isValid || resetPwdReqEmailLoading}
+          disabled={!isDirty || !isValid || isPending}
         >
           {renderButtonContent()}
         </Button>

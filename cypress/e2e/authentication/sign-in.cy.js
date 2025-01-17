@@ -24,7 +24,7 @@ describe("sign in flow", () => {
     // verify we're back on a dashboard page
     cy.url().should(
       "match",
-      /https:\/\/chingu-dashboard-git-dev-chingu-dashboard\.vercel\.app\/dashboard(\/\d+)?/,
+      /https:\/\/chingu-dashboard-git-dev-chingu-dashboard\.vercel\.app\/dashboard\/\d+/,
     );
 
     // TODO: uncomment this once PR is pushed where AuthHeader has a data-cy="nav-dropdown-menu" and retest
@@ -39,7 +39,6 @@ describe("sign in flow", () => {
 
     cy.contains("button", "Sign In").should("be.visible");
     cy.contains("button", "Sign In").click();
-
     cy.contains("Submission Error").should("be.visible");
   });
 });

@@ -1,7 +1,9 @@
-import { type AsyncActionResponse } from "./handleAsync";
+// TODO: remove when architecture refactor is finished
+
 import { getCurrentVoyageTeam } from "./getCurrentVoyageTeam";
-import { type User } from "@/store/features/user/userSlice";
+import { type User } from "@/modules/user/application/types";
 import { type AppError } from "@/types/types";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 
 interface GetCurrentVoyageDataProps<X, Y> {
   teamId: number;

@@ -9,15 +9,16 @@ import ErrorComponent from "@/components/Error";
 import { type TeamDirectory } from "@/store/features/directory/directorySlice";
 
 import { getAccessToken } from "@/utils/getCookie";
-import { type AsyncActionResponse, handleAsync } from "@/utils/handleAsync";
+import { handleAsync } from "@/utils/handleAsync";
+import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
-import { type User } from "@/store/features/user/userSlice";
 import { getUser } from "@/utils/getUser";
 import { getTimezone } from "@/utils/getTimezone";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { ErrorType } from "@/utils/error";
+import { type User } from "@/modules/user/application/types";
 
 interface FetchTeamDirectoryProps {
   teamId: number;

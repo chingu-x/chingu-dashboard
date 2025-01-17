@@ -1,12 +1,15 @@
 import { type Dispatch, type SetStateAction } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { ContainerState } from "./SignInContainer";
 import Button from "@/components/Button";
 import Banner from "@/components/banner/Banner";
 import { useAppDispatch } from "@/store/hooks";
-import useServerAction from "@/hooks/useServerAction";
-import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
+import { type RequestResetPasswordDto } from "@/modules/auth/application/dtos/request.dto";
+import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
+import { TYPES } from "@/di/types";
+import { resolve } from "@/di/resolver";
 
 type ResendEmailContainerProp = {
   email: string;
@@ -19,29 +22,33 @@ function EmailCheckContainer({
 }: ResendEmailContainerProp) {
   const dispatch = useAppDispatch();
 
-  const {
-    runAction: resetPwdReqEmailAction,
-    isLoading: resetPwdReqEmailLoading,
-    setIsLoading: setResetPwdReqEmailLoading,
-  } = useServerAction(resetPasswordRequestEmail);
-
-  async function handleResendEmail() {
-    const [, error] = await resetPwdReqEmailAction(email);
-
-    if (error) {
+  const { mutate, isPending } = useMutation<
+    void,
+    Error,
+    RequestResetPasswordDto
+  >({
+    mutationFn: requestResetPasswordMutation,
+    // TODO: update error handling
+    onError: (error: Error) => {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
       );
-    }
+    },
+  });
 
-    setResetPwdReqEmailLoading(false);
+  async function requestResetPasswordMutation({
+    email,
+  }: RequestResetPasswordDto): Promise<void> {
+    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
+    return await authAdapter.requestResetPassword({ email });
+  }
+
+  function handleResendEmail() {
+    mutate({ email });
   }
 
   function renderButtonContent() {
-    if (resetPwdReqEmailLoading) {
-      return <Spinner />;
-    }
-    return "Resend Email";
+    return isPending ? <Spinner /> : "Resend Email";
   }
 
   function handleClick() {
