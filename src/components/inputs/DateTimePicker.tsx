@@ -36,29 +36,34 @@ const DateTimePicker = React.forwardRef<DatePicker, DatePickerInputProps>(
     };
     return (
       <div className="flex w-full flex-col">
-        <DatePicker
-          id={id}
-          selected={selectedValue}
-          placeholderText={placeholder}
-          showTimeSelect
-          filterTime={filterPassedTime}
-          dateFormat="MMMM d, yyyy h:mm aa"
-          timeIntervals={15}
-          popperClassName="ml-1"
-          popperPlacement="bottom-start"
-          customInput={
-            <TextInput
-              id={id}
-              label={label}
-              placeholder=""
-              inputGroupContent={<CalendarDaysIcon />}
-              errorMessage={errorMessage}
-              className={className}
-            />
-          }
-          ref={ref}
-          {...props}
-        />
+        {
+          // Ignore the TypeScript error related to ref
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          <DatePicker
+            id={id}
+            selected={selectedValue}
+            placeholderText={placeholder}
+            showTimeSelect
+            filterTime={filterPassedTime}
+            dateFormat="MMMM d, yyyy h:mm aa"
+            timeIntervals={15}
+            popperClassName="ml-1"
+            popperPlacement="bottom-start"
+            customInput={
+              <TextInput
+                id={id}
+                label={label}
+                placeholder=""
+                inputGroupContent={<CalendarDaysIcon />}
+                errorMessage={errorMessage}
+                className={className}
+              />
+            }
+            ref={ref}
+            {...props}
+          />
+        }
       </div>
     );
   },
