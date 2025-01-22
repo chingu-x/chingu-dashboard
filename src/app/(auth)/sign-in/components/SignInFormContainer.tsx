@@ -4,19 +4,22 @@ import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { resolve } from "@chingu-x/modules/resolver";
+import { TYPES } from "@chingu-x/modules/di-types";
+import type {
+  AuthClientAdapter,
+  LoginRequestDto,
+  LoginResponseDto,
+} from "@chingu-x/modules/auth";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
-import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
-import { TYPES } from "@/di/types";
-import { resolve } from "@/di/resolver";
-import type { LoginRequestDto } from "@/modules/auth/application/dtos/request.dto";
-import type { LoginResponseDto } from "@/modules/auth/application/dtos/response.dto";
 import Spinner from "@/components/Spinner";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { authAdapter } from "@/app/(auth)/layout";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -75,7 +78,6 @@ function SignInFormContainer({
     email,
     password,
   }: LoginRequestDto): Promise<LoginResponseDto> {
-    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
     return await authAdapter.login({ email, password });
   }
 

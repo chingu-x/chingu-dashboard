@@ -1505,6 +1505,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chingu-x/modules@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@chingu-x/modules@npm:0.2.0"
+  dependencies:
+    axios: "npm:^1.7.9"
+    dotenv: "npm:^16.4.7"
+    reflect-metadata: "npm:^0.2.2"
+    tsyringe: "npm:^4.8.0"
+  checksum: bf03653b84b21b780c4f1ae7dc47ec70792d03d9659549260771b54254e418c6e596ba830d25273c45e5e20e5d8588978b9bc3e0ffd6ca6d5edde6b33494ac70
+  languageName: node
+  linkType: hard
+
 "@colors/colors@npm:1.5.0":
   version: 1.5.0
   resolution: "@colors/colors@npm:1.5.0"
@@ -6972,7 +6984,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.7":
+"axios@npm:^1.7.7, axios@npm:^1.7.9":
   version: 1.7.9
   resolution: "axios@npm:1.7.9"
   dependencies:
@@ -7759,6 +7771,7 @@ __metadata:
   resolution: "chingu_dashboard@workspace:."
   dependencies:
     "@chingu-x/components": "npm:^0.8.0"
+    "@chingu-x/modules": "npm:^0.2.0"
     "@commitlint/cli": "npm:^19.6.1"
     "@commitlint/config-conventional": "npm:^19.6.0"
     "@hello-pangea/dnd": "npm:^16.3.0"
@@ -9323,7 +9336,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.0":
+"dotenv@npm:^16.0.0, dotenv@npm:^16.4.7":
   version: 16.4.7
   resolution: "dotenv@npm:16.4.7"
   checksum: be9f597e36a8daf834452daa1f4cc30e5375a5968f98f46d89b16b983c567398a330580c88395069a77473943c06b877d1ca25b4afafcdd6d4adb549e8293462

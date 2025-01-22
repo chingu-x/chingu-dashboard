@@ -1,6 +1,11 @@
+import { resolve } from "@chingu-x/modules/resolver";
+import { TYPES } from "@chingu-x/modules/di-types";
+import { type AuthClientAdapter } from "@chingu-x/modules/auth";
 import ModeToggle from "@/components/ModeToggle";
 import Navbar from "@/components/navbar/Navbar";
 import AuthBannerContainer from "@/app/(auth)/components/AuthBannerContainer";
+
+export const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
 
 interface LayoutProps {
   children: React.ReactNode;
