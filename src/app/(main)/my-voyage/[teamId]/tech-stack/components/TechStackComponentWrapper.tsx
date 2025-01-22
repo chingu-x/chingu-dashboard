@@ -1,4 +1,6 @@
 import { redirect } from "next/navigation";
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 import TechStackContainer from "./TechStackContainer";
 import TechStackProvider from "./TechStackProvider";
 import { getAccessToken } from "@/utils/getCookie";
@@ -9,7 +11,6 @@ import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { getUser } from "@/utils/getUser";
 import type { TechStackData } from "@/store/features/techStack/techStackSlice";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
-import Banner from "@/components/banner/Banner";
 import routePaths from "@/utils/routePaths";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
@@ -85,9 +86,26 @@ export default async function TechStackComponentWrapper({
         description="Alright, let's get down to business. We need to figure out which tech stack we're going to use to power this bad boy. Are you a JavaScript junkie, a Python pro, a Java genius, or a Ruby rockstar? Let's vote"
       >
         <Banner
-          imageLight="/img/tech_stack_banner_light.png"
-          imageDark="/img/tech_stack_banner_dark.png"
-          alt="teck_stack_banner"
+          imageLight={
+            <Image
+              src="/img/tech_stack_banner_light.png"
+              alt="Light tech stack banner"
+              fill={true}
+              sizes="276px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
+          imageDark={
+            <Image
+              src="/img/tech_stack_banner_dark.png"
+              alt="Dark tech stack banner"
+              fill={true}
+              sizes="276px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
           height="h-[200px]"
           width="w-[276px]"
         />
