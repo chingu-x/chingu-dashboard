@@ -1,4 +1,6 @@
 import { redirect } from "next/navigation";
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 import ResourcesContainer from "./ResourcesContainer";
 import ResourcesProvider from "./ResourcesProvider";
 import { getUser } from "@/utils/getUser";
@@ -7,7 +9,6 @@ import { getAccessToken } from "@/utils/getCookie";
 import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
 import { handleAsync } from "@/utils/handleAsync";
-import Banner from "@/components/banner/Banner";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
@@ -86,9 +87,26 @@ export default async function ResourcesComponentWrapper({
         description="This resources page is your secret weapon for this voyage! Take a look at what your team is sharing or share your own resources for this voyage. Go ahead and be the first to post a new resource for you and your peers!"
       >
         <Banner
-          imageLight="/img/resources_banner_light.png"
-          imageDark="/img/resources_banner_dark.png"
-          alt="resources_banner"
+          imageLight={
+            <Image
+              src="/img/resources_banner_light.png"
+              alt="Light resources banner"
+              fill={true}
+              sizes="276px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
+          imageDark={
+            <Image
+              src="/img/resources_banner_dark.png"
+              alt="Dark resources banner"
+              fill={true}
+              sizes="276px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
           height="h-[200px]"
           width="w-[276px]"
         />
