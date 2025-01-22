@@ -1,11 +1,12 @@
 import { redirect } from "next/navigation";
 
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import ProgressStepper from "./ProgressStepper";
 import EmptySprintState from "./EmptySprintState";
 import SprintActions from "./SprintActions";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
-import Banner from "@/components/banner/Banner";
 
 import EmptySprintProvider from "@/myVoyage/sprints/providers/EmptySprintProvider";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
@@ -122,9 +123,26 @@ export default async function EmptySprintWrapper({
           description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
         >
           <Banner
-            imageLight="/img/sprints_banner_light.png"
-            imageDark="/img/sprints_banner_dark.png"
-            alt="sprints_banner"
+            imageLight={
+              <Image
+                src="/img/sprints_banner_light.png"
+                alt="Light sprints banner"
+                fill={true}
+                sizes="276px"
+                priority
+                style={{ objectFit: "contain" }}
+              />
+            }
+            imageDark={
+              <Image
+                src="/img/sprints_banner_dark.png"
+                alt="Dark sprints banner"
+                fill={true}
+                sizes="276px"
+                priority
+                style={{ objectFit: "contain" }}
+              />
+            }
             height="h-[200px]"
             width="w-[276px]"
           />
