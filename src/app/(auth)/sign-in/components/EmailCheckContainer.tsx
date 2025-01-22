@@ -1,15 +1,13 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { type RequestResetPasswordDto } from "@chingu-x/modules/auth";
 import { ContainerState } from "./SignInContainer";
 import Button from "@/components/Button";
 import Banner from "@/components/banner/Banner";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
-import { type RequestResetPasswordDto } from "@/modules/auth/application/dtos/request.dto";
-import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
-import { TYPES } from "@/di/types";
-import { resolve } from "@/di/resolver";
+import { authAdapter } from "@/utils/adapters";
 
 type ResendEmailContainerProp = {
   email: string;
@@ -39,7 +37,6 @@ function EmailCheckContainer({
   async function requestResetPasswordMutation({
     email,
   }: RequestResetPasswordDto): Promise<void> {
-    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
     return await authAdapter.requestResetPassword({ email });
   }
 

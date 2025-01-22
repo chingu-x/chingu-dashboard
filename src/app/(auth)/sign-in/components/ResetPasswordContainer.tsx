@@ -4,6 +4,7 @@ import Link from "next/link";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type Dispatch, type SetStateAction } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { type RequestResetPasswordDto } from "@chingu-x/modules/auth";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
@@ -11,10 +12,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { validateTextInput } from "@/utils/form/validateInput";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
-import { type RequestResetPasswordDto } from "@/modules/auth/application/dtos/request.dto";
-import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
-import { TYPES } from "@/di/types";
-import { resolve } from "@/di/resolver";
+import { authAdapter } from "@/utils/adapters";
 
 const validationSchema = z.object({
   email: validateTextInput({
@@ -58,7 +56,6 @@ function ResetPasswordContainer({
   async function requestResetPasswordMutation({
     email,
   }: RequestResetPasswordDto): Promise<void> {
-    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
     return await authAdapter.requestResetPassword({ email });
   }
 

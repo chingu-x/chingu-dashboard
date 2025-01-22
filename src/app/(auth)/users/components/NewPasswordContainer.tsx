@@ -3,16 +3,14 @@ import { useSearchParams } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { type ResetPasswordDto } from "@chingu-x/modules/auth";
 import TextInput from "@/components/inputs/TextInput";
 import Button from "@/components/Button";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { validateTextInput } from "@/utils/form/validateInput";
 import Spinner from "@/components/Spinner";
-import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
-import { TYPES } from "@/di/types";
-import { resolve } from "@/di/resolver";
-import { type ResetPasswordDto } from "@/modules/auth/application/dtos/request.dto";
+import { authAdapter } from "@/utils/adapters";
 
 const validationSchema = z.object({
   password: validateTextInput({
@@ -51,7 +49,6 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
     password,
     token,
   }: ResetPasswordDto): Promise<void> {
-    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
     return await authAdapter.resetPassword({ password, token });
   }
 

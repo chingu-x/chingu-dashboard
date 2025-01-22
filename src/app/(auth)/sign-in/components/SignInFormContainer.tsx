@@ -4,13 +4,7 @@ import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { resolve } from "@chingu-x/modules/resolver";
-import { TYPES } from "@chingu-x/modules/di-types";
-import type {
-  AuthClientAdapter,
-  LoginRequestDto,
-  LoginResponseDto,
-} from "@chingu-x/modules/auth";
+import type { LoginRequestDto, LoginResponseDto } from "@chingu-x/modules/auth";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
@@ -19,7 +13,7 @@ import { useAppDispatch } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { authAdapter } from "@/app/(auth)/layout";
+import { authAdapter } from "@/utils/adapters";
 
 const validationSchema = z.object({
   email: validateTextInput({

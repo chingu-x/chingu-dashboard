@@ -5,16 +5,14 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { LogoutResponseDto } from "@chingu-x/modules/auth";
 import Button from "@/components/Button";
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
-import { TYPES } from "@/di/types";
-import { resolve } from "@/di/resolver";
-import { type AuthClientAdapter } from "@/modules/auth/adapters/primary/authClientAdapter";
 import routePaths from "@/utils/routePaths";
-import type { LogoutResponseDto } from "@/modules/auth/application/dtos/response.dto";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { CacheTag } from "@/utils/cacheTag";
+import { authAdapter } from "@/utils/adapters";
 
 interface DropdownProps {
   openState?: boolean;
@@ -50,7 +48,6 @@ export default function DropDown({ openState }: DropdownProps) {
   }
 
   async function logoutMutation(): Promise<LogoutResponseDto> {
-    const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
     return await authAdapter.logout();
   }
 
