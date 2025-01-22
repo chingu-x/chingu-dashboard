@@ -151,7 +151,7 @@ export default async function DirectoryComponentWrapper({
               priority
               style={{ objectFit: "contain" }}
             />
-          }          
+          }
           height="h-[200px]"
           width="w-[276px]"
         />
