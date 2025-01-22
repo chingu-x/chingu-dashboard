@@ -20,7 +20,6 @@ function ConfirmationMailContainer() {
               style={{ objectFit: "contain" }}
             />
           }
-
           imageDark={
             <Image
               src="/img/retro_mac_dark.png"
