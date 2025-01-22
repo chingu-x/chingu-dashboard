@@ -1,7 +1,8 @@
 import { type Dispatch, type SetStateAction } from "react";
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 import { ContainerState } from "./SignInContainer";
 import Button from "@/components/Button";
-import Banner from "@/components/banner/Banner";
 import { useAppDispatch } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
@@ -55,11 +56,28 @@ function EmailCheckContainer({
       </p>
       <div>
         <Banner
-          imageLight="/img/link_retro_mac_light.png"
-          imageDark="/img/link_retro_mac_dark.png"
+          imageLight={
+            <Image
+              src="/img/link_retro_mac_light.png"
+              alt="Email confirmation light image"
+              fill={true}
+              sizes="168px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
+          imageDark={
+            <Image
+              src="/img/link_retro_mac_dark.png"
+              alt="Email confirmation dark image"
+              fill={true}
+              sizes="168px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
           height="h-[171px]"
           width="w-[168px]"
-          alt="Email confirmation image"
         />
       </div>
       <div className="flex flex-col items-center">
