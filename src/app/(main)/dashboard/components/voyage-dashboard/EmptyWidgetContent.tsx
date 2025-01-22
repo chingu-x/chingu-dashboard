@@ -1,7 +1,8 @@
 import Link from "next/link";
 import React from "react";
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 import Button from "@/components/Button";
-import Banner from "@/components/banner/Banner";
 
 interface EmptyWidgetContentProps {
   title: string;
@@ -33,9 +34,25 @@ function EmptyWidgetContent({
       {imageLight && imageDark ? (
         <div className="flex h-full w-full flex-col justify-center">
           <Banner
-            imageLight={imageLight}
-            imageDark={imageDark}
-            alt="Pre Voyage image"
+            imageLight={
+              <Image
+                src={imageLight}
+                alt="Pre Voyage light image"
+                fill={true}
+                sizes="w-full"
+                priority
+                style={{ objectFit: "contain" }}
+              />
+            }
+            imageDark={
+              <Image
+                src={imageDark}
+                alt="Pre Voyage dark image"
+                fill={true}
+                sizes="w-full"
+                priority
+                style={{ objectFit: "contain" }} />
+            }
             height="h-[160px]"
             width="w-full"
           />
