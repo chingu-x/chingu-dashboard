@@ -51,7 +51,8 @@ function EmptyWidgetContent({
                 fill={true}
                 sizes="w-full"
                 priority
-                style={{ objectFit: "contain" }} />
+                style={{ objectFit: "contain" }}
+              />
             }
             height="h-[160px]"
             width="w-full"
