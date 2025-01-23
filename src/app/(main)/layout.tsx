@@ -3,7 +3,6 @@
 import "reflect-metadata";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { type UserClientAdapter } from "@/modules/user/adapters/primary/userClientAdapter";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
@@ -12,10 +11,9 @@ import { useAppDispatch } from "@/store/hooks";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import routePaths from "@/utils/routePaths";
 import { getUserState } from "@/store/features/user/userSlice";
-import { TYPES } from "@/di/types";
-import { resolve } from "@/di/resolver";
 import Spinner from "@/components/Spinner";
 import { CacheTag } from "@/utils/cacheTag";
+import { userAdapter } from "@/utils/adapters";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -32,7 +30,6 @@ export default function Layout({ children }: LayoutProps) {
   });
 
   async function getUserQuery() {
-    const userAdapter = resolve<UserClientAdapter>(TYPES.UserClientAdapter);
     return await userAdapter.getUser();
   }
 
