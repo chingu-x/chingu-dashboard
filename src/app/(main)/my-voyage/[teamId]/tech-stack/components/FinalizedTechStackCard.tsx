@@ -1,7 +1,8 @@
+import { Avatar } from "@chingu-x/components/avatar";
+import Image from "next/image";
 import GetIcon from "./GetIcons";
 import type { SelectedCategory } from "@/app/(main)/my-voyage/[teamId]/tech-stack/finalize/utils/getSelectedTechItems";
 import type { TechStackItemVotes } from "@/store/features/techStack/techStackSlice";
-import Avatar from "@/components/avatar/Avatar";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 
 interface FinalizedTechStackCardProps {
@@ -51,10 +52,10 @@ export function FinalizedTechListItem({
         {avatars.map((member) => (
           <Avatar
             key={member.id}
-            image={member.avatar}
-            width={24}
-            height={24}
-          />
+          >
+            <Image src={member.avatar} alt={`${member.firstName}'s avatar`} width={24}
+              height={24} />
+          </Avatar>
         ))}
       </AvatarGroup>
     </div>
