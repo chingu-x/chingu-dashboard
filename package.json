@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@chingu-x/components": "^0.8.0",
-    "@chingu-x/modules": "file:C:\\Users\\DK379\\Documents\\web_pages\\chingu_modules",
+    "@chingu-x/modules": "^0.5.0",
     "@hello-pangea/dnd": "^16.3.0",
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.1",
