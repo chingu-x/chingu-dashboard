@@ -54,12 +54,12 @@ function ResourceItem({
           <p className="mr-2 text-base font-medium">Shared by</p>
           <Badge title={userName}>
             {userAvatarUrl ? (
-              <Avatar customClassName="h-6 w-6">
+              <Avatar customClassName="h-4 w-4">
                 <Image
                   src={userAvatarUrl}
                   alt={`${userName}'s avatar`}
-                  width={24}
-                  height={24}
+                  width={16}
+                  height={16}
                 />
               </Avatar>
             ) : undefined}
