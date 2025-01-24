@@ -129,8 +129,9 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
     <div className={cn("w-[200px] rounded-lg bg-base-100", className)}>
       <section className="flex flex-col items-start gap-y-4 p-4">
         <h1 className="text-3xl font-semibold text-base-300">{users.length}</h1>
-        <h2 className="text-xl font-semibold text-base-300">{`Vote${users.length > 1 ? "s" : ""
-          }`}</h2>
+        <h2 className="text-xl font-semibold text-base-300">{`Vote${
+          users.length > 1 ? "s" : ""
+        }`}</h2>
         <AvatarGroup>
           {users.map((user) => (
             <Tooltip
@@ -149,11 +150,15 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
                 }}
                 onMouseLeave={() => {
                   setTooltipHovered("");
-                }}>
-                <Image src={user.votedBy.member.avatar} alt={`${user.votedBy.member.firstName}'s avatar`} width={24}
-                  height={24}></Image>
+                }}
+              >
+                <Image
+                  src={user.votedBy.member.avatar}
+                  alt={`${user.votedBy.member.firstName}'s avatar`}
+                  width={24}
+                  height={24}
+                ></Image>
               </Avatar>
-
             </Tooltip>
           ))}
         </AvatarGroup>
