@@ -1,8 +1,10 @@
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/20/solid";
+import { Badge } from "@chingu-x/components/badge";
+import { Avatar } from "@chingu-x/components/avatar";
+import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import Badge from "@/components/badge/Badge";
 import IconButton from "@/components/IconButton";
 import { deleteResource } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
 
@@ -78,7 +80,18 @@ export default function ResourceCard({
         <div className="mt-2 flex">
           <div className="flex items-center gap-x-2 border-r border-r-base-100 pr-4 xl:pr-8">
             <p>Shared by</p>
-            <Badge title={user.firstName} avatarUrlImage={user.avatar} />
+            <Badge title={user.firstName}>
+              {user.avatar ? (
+                <Avatar customClassName="h-4 w-4">
+                  <Image
+                    src={user.avatar}
+                    alt={`${user.firstName}'s avatar`}
+                    width={20}
+                    height={20}
+                  />
+                </Avatar>
+              ) : undefined}
+            </Badge>
           </div>
           <div className="pl-4 text-neutral-focus xl:pl-8">Added {date}</div>
         </div>
