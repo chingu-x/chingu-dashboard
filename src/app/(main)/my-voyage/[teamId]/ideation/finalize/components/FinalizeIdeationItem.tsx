@@ -1,8 +1,9 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { Avatar } from "@chingu-x/components/avatar";
+import Image from "next/image";
 import { type FinalizedIdeation } from "./FinalizeIdeationList";
 import Button from "@/components/Button";
-import Avatar from "@/components/avatar/Avatar";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
 import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 
@@ -43,17 +44,23 @@ export default function FinalizeIdeationItem({
                 member: { avatar, id },
               },
             } = votes;
-            return <Avatar width={24} height={24} key={id} image={avatar} />;
+            return <Avatar key={id}>
+              <Image
+                src={avatar}
+                alt="avatar"
+                width={24}
+                height={24}
+              />
+            </Avatar>;
           })}
         </AvatarGroup>
       </div>
       <div className="h-6 w-6">
         <CheckCircleIcon
-          className={`${
-            finalizedIdeation.title === title
+          className={`${finalizedIdeation.title === title
               ? "h-6 w-6 text-base-200"
               : "hidden"
-          }`}
+            }`}
         />
       </div>
     </Button>
