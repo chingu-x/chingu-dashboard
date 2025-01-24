@@ -7,10 +7,11 @@ import {
   useRef,
   useState,
 } from "react";
+import { Avatar } from "@chingu-x/components/avatar";
+import Image from "next/image";
 import { type Feature } from "./fixtures/Features";
 import EditPopover from "./EditPopover";
 import { useUser } from "@/store/hooks";
-import Avatar from "@/components/avatar/Avatar";
 
 interface CardProps {
   feature: Feature;
@@ -86,7 +87,14 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
                 </button>
               ) : (
                 // Creator's avatar
-                <Avatar image={avatar} width={24} height={24} />
+                <Avatar>
+                  <Image
+                    src={avatar}
+                    alt={`${firstName} ${lastName}'s avatar`}
+                    width={24}
+                    height={24}
+                  />
+                </Avatar>
               )}
             </div>
           </li>
