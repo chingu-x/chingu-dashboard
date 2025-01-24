@@ -44,23 +44,21 @@ export default function FinalizeIdeationItem({
                 member: { avatar, id },
               },
             } = votes;
-            return <Avatar key={id}>
-              <Image
-                src={avatar}
-                alt="avatar"
-                width={24}
-                height={24}
-              />
-            </Avatar>;
+            return (
+              <Avatar key={id}>
+                <Image src={avatar} alt="avatar" width={24} height={24} />
+              </Avatar>
+            );
           })}
         </AvatarGroup>
       </div>
       <div className="h-6 w-6">
         <CheckCircleIcon
-          className={`${finalizedIdeation.title === title
+          className={`${
+            finalizedIdeation.title === title
               ? "h-6 w-6 text-base-200"
               : "hidden"
-            }`}
+          }`}
         />
       </div>
     </Button>
