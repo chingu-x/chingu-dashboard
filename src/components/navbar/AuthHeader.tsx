@@ -47,7 +47,7 @@ export default function AuthHeader() {
         <Avatar customClassName="h-[34px] w-[34px]">
           <Image src={avatar} alt="user avatar" width={34} height={34} />
         </Avatar>
-       
+
         <DropDown openState={isMenuOpen} />
       </div>
     </>
