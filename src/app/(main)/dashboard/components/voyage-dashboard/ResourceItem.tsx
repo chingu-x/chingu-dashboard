@@ -52,12 +52,15 @@ function ResourceItem({
         <p className="mb-1 text-left text-base font-semibold">{title}</p>
         <div className="flex">
           <p className="mr-2 text-base font-medium">Shared by</p>
-          <Badge
-            title={userName}
-          >
+          <Badge title={userName}>
             {userAvatarUrl ? (
               <Avatar customClassName="h-6 w-6">
-                <Image src={userAvatarUrl} alt={`${userName}'s avatar`} width={24} height={24} />
+                <Image
+                  src={userAvatarUrl}
+                  alt={`${userName}'s avatar`}
+                  width={24}
+                  height={24}
+                />
               </Avatar>
             ) : undefined}
           </Badge>
