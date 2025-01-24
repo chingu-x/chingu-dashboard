@@ -5,6 +5,8 @@ import { useParams } from "next/navigation";
 import * as z from "zod";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Avatar } from "@chingu-x/components/avatar";
+import Image from "next/image";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
@@ -16,7 +18,6 @@ import {
 import getTechCategory from "@/myVoyage/tech-stack/components/getTechCategory";
 import TextInput from "@/components/inputs/TextInput";
 import AvatarGroup from "@/components/avatar/AvatarGroup";
-import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
 import { useUser, useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -288,9 +289,6 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                             }
                           >
                             <Avatar
-                              image={vote.votedBy.member.avatar}
-                              width={24}
-                              height={24}
                               onMouseEnter={() => {
                                 setTooltipHovered(
                                   element.id + vote.votedBy.member.id,
@@ -299,7 +297,14 @@ export default function TechStackCard({ title, data }: TechStackCardProps) {
                               onMouseLeave={() => {
                                 setTooltipHovered("");
                               }}
-                            />
+                            >
+                              <Image
+                                src={vote.votedBy.member.avatar}
+                                alt={`${vote.votedBy.member.firstName}'s avatar`}
+                                width={24}
+                                height={24}
+                              />
+                            </Avatar>
                           </Tooltip>
                         ))}
                       </AvatarGroup>
