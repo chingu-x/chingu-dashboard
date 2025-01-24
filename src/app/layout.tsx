@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import "@/di/config";
+import "@chingu-x/modules/config";
 import "./globals.css";
 import "@chingu-x/components/styles";
 import type { Metadata } from "next";

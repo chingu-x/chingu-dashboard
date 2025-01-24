@@ -1,6 +1,6 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type User } from "@chingu-x/modules/user";
 import { clientSignOut } from "@/store/features/auth/authSlice";
-import { type User } from "@/modules/user/application/types";
 
 const initialState: User = {
   id: "",

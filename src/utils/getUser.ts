@@ -1,9 +1,9 @@
 // TODO: remove when architecture refactor is finished
 
+import { type User } from "@chingu-x/modules/user";
 import { getAccessToken } from "./getCookie";
 import { handleAsync } from "./handleAsync";
 import { GET } from "./requests";
-import { type User } from "@/modules/user/application/types";
 import { type AsyncActionResponse } from "@/utils/handleAsync";
 
 export function getUser(): Promise<AsyncActionResponse<User>> {

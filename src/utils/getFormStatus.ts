@@ -1,4 +1,4 @@
-import { type User } from "@/modules/user/application/types";
+import { type User } from "@chingu-x/modules/user";
 
 export function getSprintCheckinIsStatus(
   user: User | null,

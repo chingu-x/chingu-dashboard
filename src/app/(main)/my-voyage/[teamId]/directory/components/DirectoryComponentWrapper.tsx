@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import { type User } from "@chingu-x/modules/user";
 import DirectoryProvider from "./DirectoryProvider";
 import TeamMember from "./TeamMember";
 
@@ -18,7 +19,6 @@ import { getTimezone } from "@/utils/getTimezone";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { ErrorType } from "@/utils/error";
-import { type User } from "@/modules/user/application/types";
 
 interface FetchTeamDirectoryProps {
   teamId: number;

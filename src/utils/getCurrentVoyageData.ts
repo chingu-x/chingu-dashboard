@@ -1,7 +1,7 @@
 // TODO: remove when architecture refactor is finished
 
+import { type User } from "@chingu-x/modules/user";
 import { getCurrentVoyageTeam } from "./getCurrentVoyageTeam";
-import { type User } from "@/modules/user/application/types";
 import { type AppError } from "@/types/types";
 import { type AsyncActionResponse } from "@/utils/handleAsync";
 

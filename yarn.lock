@@ -1506,8 +1506,8 @@ __metadata:
   linkType: hard
 
 "@chingu-x/modules@file:C:\\Users\\DK379\\Documents\\web_pages\\chingu_modules::locator=chingu_dashboard%40workspace%3A.":
-  version: 0.4.0
-  resolution: "@chingu-x/modules@file:/C%3A/Users/DK379/Documents/web_pages/chingu_modules#/C%3A/Users/DK379/Documents/web_pages/chingu_modules::hash=9cf0c6&locator=chingu_dashboard%40workspace%3A."
+  version: 0.4.1
+  resolution: "@chingu-x/modules@file:/C%3A/Users/DK379/Documents/web_pages/chingu_modules#/C%3A/Users/DK379/Documents/web_pages/chingu_modules::hash=0d0b38&locator=chingu_dashboard%40workspace%3A."
   dependencies:
     axios: "npm:^1.7.9"
     date-fns: "npm:^4.1.0"
@@ -1515,7 +1515,7 @@ __metadata:
     dotenv: "npm:^16.4.7"
     reflect-metadata: "npm:^0.2.2"
     tsyringe: "npm:^4.8.0"
-  checksum: a0dd3d0c325f47a787e0f64cf1f790bfbd890a3fb4f09f38e0c2615cf39f11defeb48a5d0d1d142a493f71b4194265db4cb0b708d69f103cad3c040d4668bab9
+  checksum: 4627e069b52aa9fe36382b789a47cd3c7b2dddb4eb2abdc25b15116bf05f8b60f4a1a36209f258fbc33b253e35d674e04d808abd7e626249811b4b36bcf0fcf8
   languageName: node
   linkType: hard
 
@@ -7840,7 +7840,6 @@ __metadata:
     tailwind-merge: "npm:^2.0.0"
     tailwindcss: "npm:3.3.3"
     tsconfig-paths-webpack-plugin: "npm:^4.1.0"
-    tsyringe: "npm:^4.8.0"
     typescript: "npm:5.3.3"
     zod: "npm:^3.22.2"
   languageName: unknown

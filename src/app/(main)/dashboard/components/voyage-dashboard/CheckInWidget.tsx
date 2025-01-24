@@ -5,13 +5,13 @@ import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import Link from "next/link";
 import { isSameDay, sub } from "date-fns";
+import { type User } from "@chingu-x/modules/user";
 import Button from "@/components/Button";
 import Badge from "@/components/badge/Badge";
 import routePaths from "@/utils/routePaths";
 import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
 import { useSprint, useUser } from "@/store/hooks";
 import convertStringToDate from "@/utils/convertStringToDate";
-import { type User } from "@/modules/user/application/types";
 
 interface CheckInWidgetProps {
   user: User | null;

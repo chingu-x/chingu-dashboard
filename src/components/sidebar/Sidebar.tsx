@@ -14,9 +14,7 @@ import VoyagePageButton from "./VoyagePageButton";
 import ExpandButton from "./ExpandButton";
 import { useAuth, useUser } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
-import { TYPES } from "@/di/types";
-import { resolve } from "@/di/resolver";
-import { type VoyageTeamClientAdapter } from "@/modules/voyage-team/adapters/primary/voyageTeamClientAdapter";
+import { voyageTeamAdapter } from "@/utils/adapters";
 
 export enum MainPages {
   dashboard = "Dashboard",
@@ -87,9 +85,6 @@ export default function Sidebar() {
 
   const { isAuthenticated } = useAuth();
   const user = useUser();
-  const voyageTeamAdapter = resolve<VoyageTeamClientAdapter>(
-    TYPES.VoyageTeamClientAdapter,
-  );
 
   const isVoyageStarted = voyageTeamAdapter.hasVoyageStarted({
     user,
