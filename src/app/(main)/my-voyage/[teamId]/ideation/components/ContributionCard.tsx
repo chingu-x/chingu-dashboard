@@ -55,9 +55,16 @@ export default function ContributionCard({
       <section className="flex flex-col items-start gap-y-4 p-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
         <Badge title={member.firstName}>
-          {member.avatar ? (<Avatar customClassName="h-4 w-4">
-            <Image src={member.avatar} alt={`${member.firstName}'s avatar`} width={20} height={20} />
-          </Avatar>) : undefined}
+          {member.avatar ? (
+            <Avatar customClassName="h-4 w-4">
+              <Image
+                src={member.avatar}
+                alt={`${member.firstName}'s avatar`}
+                width={20}
+                height={20}
+              />
+            </Avatar>
+          ) : undefined}
         </Badge>
         {ownVote && !isIdeationFinalized ? (
           <Link
