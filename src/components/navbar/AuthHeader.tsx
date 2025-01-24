@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { Avatar } from "@chingu-x/components/avatar";
+import Image from "next/image";
 import { useAuth, useUser } from "@/store/hooks";
-import Avatar from "@/components/avatar/Avatar";
 import Button from "@/components/Button";
 import Bell from "@/components/navbar/Bell";
 import DropDown from "@/components/navbar/DropDown";
@@ -43,7 +44,10 @@ export default function AuthHeader() {
         onClick={toggleMenu}
         className="flex items-center px-2"
       >
-        <Avatar image={avatar} height={34} width={34} />
+        <Avatar customClassName="h-[34px] w-[34px]">
+          <Image src={avatar} alt="user avatar" width={34} height={34} />
+        </Avatar>
+       
         <DropDown openState={isMenuOpen} />
       </div>
     </>
