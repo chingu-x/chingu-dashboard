@@ -71,7 +71,8 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
                 <span className="break-all text-base font-semibold">
                   {description}
                 </span>
-                <span className="text-[10px] text-neutral-focus">{`Added by ${isCurrentUser ? "you" : firstName + " " + lastName
+                <span className="text-[10px] text-neutral-focus">{`Added by ${
+                  isCurrentUser ? "you" : firstName + " " + lastName
                 }`}</span>
               </div>
               {isCurrentUser ? (
@@ -87,7 +88,12 @@ export default function Card({ feature, index, setEditMode }: CardProps) {
               ) : (
                 // Creator's avatar
                 <Avatar>
-                  <Image src={avatar} alt={`${firstName} ${lastName}'s avatar`} width={24} height={24} />
+                  <Image
+                    src={avatar}
+                    alt={`${firstName} ${lastName}'s avatar`}
+                    width={24}
+                    height={24}
+                  />
                 </Avatar>
               )}
             </div>
