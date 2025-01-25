@@ -2,7 +2,7 @@
 // used for revalidating tags
 
 export enum CacheTag {
-  directory = "directory",
+  myTeam = "myTeam",
   ideation = "ideation",
   me = "me",
   logout = "logout",

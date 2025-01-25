@@ -91,7 +91,7 @@ export default function Sidebar() {
     isAuthenticated,
   });
 
-  const teamId = voyageTeamAdapter.getCurrentVoyageTeamId(user);
+  const teamId = voyageTeamAdapter.getUserVoyageTeamId(user);
 
   const voyagePages: VoyagePageProperty[] = [
     {

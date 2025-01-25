@@ -1,5 +1,8 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import type { VoyageStatus, VoyageRole } from "@chingu-x/modules/voyage-team";
+import type {
+  UserVoyageStatus,
+  UserVoyageRole,
+} from "@chingu-x/modules/voyage-team";
 
 type providerType = "discord";
 
@@ -12,7 +15,7 @@ export interface VoyageTeam {
   id: number;
   member: VoyageMember;
   hrPerSprint: number;
-  voyageRole: VoyageRole;
+  voyageRole: UserVoyageRole;
 }
 
 interface VoyageMember {
@@ -34,7 +37,7 @@ export interface TeamDirectory {
   id: number;
   voyageId: number;
   name: string;
-  status: VoyageStatus;
+  status: UserVoyageStatus;
   repoUrl: string;
   repoUrlBE: string;
   deployedUrl: string;
@@ -44,64 +47,57 @@ export interface TeamDirectory {
   voyageTeamMembers: VoyageTeam[];
 }
 
-interface DirectoryState {
-  loading: boolean;
-  teamDirectory: TeamDirectory;
-}
-
-const initialState: DirectoryState = {
-  loading: false,
-  teamDirectory: {
-    id: 0,
-    voyageId: 0,
+const initialState: TeamDirectory = {
+  id: 0,
+  voyageId: 0,
+  name: "",
+  status: {
     name: "",
-    status: {
-      name: "",
-    },
-    repoUrl: "",
-    repoUrlBE: "",
-    deployedUrl: "",
-    deployedUrlBE: "",
-    tier: {
-      id: 0,
-      name: "",
-    },
-    endDate: "",
-    voyageTeamMembers: [
-      {
-        id: 0,
-        member: {
-          firstName: "",
-          lastName: "",
-          avatar: "",
-          oAuthProfiles: [
-            {
-              provider: {
-                name: "discord",
-              },
-              providerUsername: "",
-            },
-          ],
-          countryCode: "",
-          timezone: "",
-          currentTime: "",
-        },
-        hrPerSprint: 0,
-        voyageRole: {
-          name: "",
-        },
-      },
-    ],
   },
+  repoUrl: "",
+  repoUrlBE: "",
+  deployedUrl: "",
+  deployedUrlBE: "",
+  tier: {
+    id: 0,
+    name: "",
+  },
+  endDate: "",
+  voyageTeamMembers: [
+    {
+      id: 0,
+      member: {
+        firstName: "",
+        lastName: "",
+        avatar: "",
+        oAuthProfiles: [
+          {
+            provider: {
+              name: "discord",
+            },
+            providerUsername: "",
+          },
+        ],
+        countryCode: "",
+        timezone: "",
+        currentTime: "",
+      },
+      hrPerSprint: 0,
+      voyageRole: {
+        name: "",
+      },
+    },
+  ],
 };
 
 export const directorySlice = createSlice({
   name: "directory",
   initialState,
   reducers: {
-    fetchTeamDirectory: (state, action: PayloadAction<TeamDirectory>) => {
-      state.teamDirectory = action.payload;
-    },
+    fetchTeamDirectory: (state, action: PayloadAction<TeamDirectory>) => ({
+      ...state,
+      ...action.payload,
+    }),
   },
 });
 

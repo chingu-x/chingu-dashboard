@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import "@chingu-x/modules/config";
 import "./globals.css";
-import "@chingu-x/components/styles";
+// import "@chingu-x/components/styles";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import StoreProvider from "@/components/providers/StoreProvider";
