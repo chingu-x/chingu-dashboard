@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 import { Banner } from "@chingu-x/components/banner";
 import Image from "next/image";
+import { BannerContainer } from "@chingu-x/components/banner-container";
 import VoyageSubmittedMessage from "./VoyageSubmittedMessage";
 
 import {
@@ -9,8 +10,6 @@ import {
   type FetchSprintsResponse,
   type SprintsResponse,
 } from "@/myVoyage/sprints/sprintsService";
-
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
@@ -64,7 +63,7 @@ export default async function RedirectToCurrentSprintWrapper({
   if (currentTeam && projectSubmitted) {
     return (
       <div className="flex w-full flex-col gap-y-10">
-        <VoyagePageBannerContainer
+        <BannerContainer
           title="Sprints"
           description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
         >
@@ -92,7 +91,7 @@ export default async function RedirectToCurrentSprintWrapper({
             height="h-[200px]"
             width="w-[276px]"
           />
-        </VoyagePageBannerContainer>
+        </BannerContainer>
         <VoyageSubmittedMessage />
       </div>
     );

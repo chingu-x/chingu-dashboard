@@ -2,11 +2,11 @@ import { redirect } from "next/navigation";
 
 import { Banner } from "@chingu-x/components/banner";
 import Image from "next/image";
+import { BannerContainer } from "@chingu-x/components/banner-container";
 import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import ProgressStepper from "./ProgressStepper";
 import EmptySprintState from "./EmptySprintState";
 import SprintActions from "./SprintActions";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 
 import EmptySprintProvider from "@/myVoyage/sprints/providers/EmptySprintProvider";
 import { getCurrentSprint } from "@/utils/getCurrentSprint";
@@ -118,7 +118,7 @@ export default async function EmptySprintWrapper({
 
     return (
       <div className="flex w-full flex-col gap-y-10">
-        <VoyagePageBannerContainer
+        <BannerContainer
           title="Sprints"
           description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
         >
@@ -146,7 +146,7 @@ export default async function EmptySprintWrapper({
             height="h-[200px]"
             width="w-[276px]"
           />
-        </VoyagePageBannerContainer>
+        </BannerContainer>
         <ProgressStepper currentSprintNumber={currentSprintNumber} />
         <SprintActions
           params={params}

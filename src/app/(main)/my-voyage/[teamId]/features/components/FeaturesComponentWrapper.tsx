@@ -2,9 +2,9 @@ import { redirect } from "next/navigation";
 
 import { Banner } from "@chingu-x/components/banner";
 import Image from "next/image";
+import { BannerContainer } from "@chingu-x/components/banner-container";
 import FeaturesProvider from "./FeaturesProvider";
 import FeaturesContainer from "./FeaturesContainer";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import ErrorComponent from "@/components/Error";
 
 import {
@@ -150,7 +150,7 @@ export default async function FeaturesComponentWrapper({
 
   return (
     <>
-      <VoyagePageBannerContainer
+      <BannerContainer
         title="Features"
         description="What's on the feature menu for our app? We want only the crème de la crème, so prioritize wisely. Remember, we're building an app, not a buffet."
       >
@@ -178,7 +178,7 @@ export default async function FeaturesComponentWrapper({
           height="h-[200px]"
           width="w-[276px]"
         />
-      </VoyagePageBannerContainer>
+      </BannerContainer>
       <FeaturesProvider payload={features} />
       <FeaturesContainer data={features} />
     </>

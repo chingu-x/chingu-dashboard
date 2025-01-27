@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { Banner } from "@chingu-x/components/banner";
 import Image from "next/image";
+import { BannerContainer } from "@chingu-x/components/banner-container";
 import TechStackContainer from "./TechStackContainer";
 import TechStackProvider from "./TechStackProvider";
 import { getAccessToken } from "@/utils/getCookie";
@@ -10,7 +11,6 @@ import { GET } from "@/utils/requests";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { getUser } from "@/utils/getUser";
 import type { TechStackData } from "@/store/features/techStack/techStackSlice";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import routePaths from "@/utils/routePaths";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
@@ -81,7 +81,7 @@ export default async function TechStackComponentWrapper({
 
   return (
     <>
-      <VoyagePageBannerContainer
+      <BannerContainer
         title="Tech Stack"
         description="Alright, let's get down to business. We need to figure out which tech stack we're going to use to power this bad boy. Are you a JavaScript junkie, a Python pro, a Java genius, or a Ruby rockstar? Let's vote"
       >
@@ -109,7 +109,7 @@ export default async function TechStackComponentWrapper({
           height="h-[200px]"
           width="w-[276px]"
         />
-      </VoyagePageBannerContainer>
+      </BannerContainer>
       <TechStackProvider payload={techStackData} />
       <TechStackContainer data={techStackData} />
     </>

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { Banner } from "@chingu-x/components/banner";
 import Image from "next/image";
+import { BannerContainer } from "@chingu-x/components/banner-container";
 import ContributionCard from "./ContributionCard";
 import CreateIdeationContainer from "./CreateIdeationContainer";
 import FinalizedIdeationCard from "./FinalizedIdeationCard";
@@ -8,7 +9,6 @@ import IdeationContainer from "./IdeationContainer";
 import IdeationProvider from "./IdeationProvider";
 import VoteCard from "./VoteCard";
 import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import ErrorComponent from "@/components/Error";
 
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
@@ -193,7 +193,7 @@ export default async function IdeationComponentWrapper({
 
   return (
     <>
-      <VoyagePageBannerContainer
+      <BannerContainer
         title="Ideation"
         description="Okay, time to put on your thinking caps and channel your inner
           creativity! What kind of amazing, mind-blowing project idea do you
@@ -223,7 +223,7 @@ export default async function IdeationComponentWrapper({
           height="h-[200px]"
           width="w-[276px]"
         />
-      </VoyagePageBannerContainer>
+      </BannerContainer>
       <div className="flex flex-col items-center gap-y-10">
         <IdeationProvider payload={projectIdeas} />
         {renderProjects()}
