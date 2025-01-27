@@ -2,9 +2,9 @@ import { type Dispatch, type SetStateAction } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
+import { AvatarGroup } from "@chingu-x/components/avatar-group";
 import { type FinalizedIdeation } from "./FinalizeIdeationList";
 import Button from "@/components/Button";
-import AvatarGroup from "@/components/avatar/AvatarGroup";
 import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 
 interface FinalizeIdeationItemProps {

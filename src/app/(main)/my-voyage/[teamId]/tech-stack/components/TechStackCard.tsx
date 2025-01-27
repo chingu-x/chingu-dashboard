@@ -7,6 +7,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
+import { AvatarGroup } from "@chingu-x/components/avatar-group";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
@@ -17,7 +18,6 @@ import {
 } from "@/myVoyage/tech-stack/techStackService";
 import getTechCategory from "@/myVoyage/tech-stack/components/getTechCategory";
 import TextInput from "@/components/inputs/TextInput";
-import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Button from "@/components/Button";
 import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
 import { useUser, useAppDispatch, useAppSelector } from "@/store/hooks";

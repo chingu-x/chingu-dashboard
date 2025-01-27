@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
+import { AvatarGroup } from "@chingu-x/components/avatar-group";
 import Button from "@/components/Button";
 import {
   type ProjectIdeaVotes,
@@ -17,7 +18,6 @@ import {
   removeIdeationVote,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import AvatarGroup from "@/components/avatar/AvatarGroup";
 import Tooltip from "@/components/Tooltip";
 
 interface VoteCardProps {

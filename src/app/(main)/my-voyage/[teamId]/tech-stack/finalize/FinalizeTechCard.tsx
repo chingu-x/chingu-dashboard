@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
+import { AvatarGroup } from "@chingu-x/components/avatar-group";
 import type {
   FinalizeTechCardProps,
   Vote,
@@ -9,7 +10,6 @@ import type {
   FinalizedItem,
 } from "./types";
 import Button from "@/components/Button";
-import AvatarGroup from "@/components/avatar/AvatarGroup";
 
 export default function FinalizeTechCard({
   title,
