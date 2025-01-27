@@ -48,6 +48,9 @@ jest.mock("@hello-pangea/dnd", () => ({
     </div>
   ),
 }));
+jest.mock("@chingu-x/components/avatar", () => ({
+  Avatar: jest.fn(() => <div>Mocked Avatar</div>),
+}));
 
 // "current user" id is 25b7b76c-1567-4910-9d50-e78819daccf1
 const renderWithStore = (feature: Feature, userId: string) => {
@@ -76,7 +79,7 @@ describe("Feature Card component", () => {
     );
 
     const cardAction = card.getByRole("button", { name: /feature menu/i });
-    const avatar = card.queryByRole("img", { name: /avatar/i });
+    const avatar = card.queryByText("Mocked Avatar");
 
     expect(cardAction).toBeInTheDocument();
     expect(avatar).not.toBeInTheDocument();
@@ -89,7 +92,7 @@ describe("Feature Card component", () => {
     );
 
     const cardAction = card.queryByRole("button", { name: /feature menu/i });
-    const avatar = card.getByRole("img", { name: /avatar/i });
+    const avatar = card.queryByText("Mocked Avatar");
 
     expect(cardAction).not.toBeInTheDocument();
     expect(avatar).toBeInTheDocument();

@@ -13,6 +13,7 @@ const sharedConfig = {
   coveragePathIgnorePatterns: ["<rootDir>/build/", "<rootDir>/node_modules/"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
+    "^@chingu-x/components/(.*)$": "<rootDir>/node_modules/@chingu-x/components/dist/$1",
   },
 };
 
