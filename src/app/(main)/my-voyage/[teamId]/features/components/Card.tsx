@@ -7,8 +7,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { Avatar } from "@chingu-x/components/avatar";
+
 import Image from "next/image";
+import { Avatar } from "@chingu-x/components/avatar";
 import { type Feature } from "./fixtures/Features";
 import EditPopover from "./EditPopover";
 import { useUser } from "@/store/hooks";
