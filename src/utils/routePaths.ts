@@ -13,8 +13,8 @@ const routePaths = {
   signUp() {
     return "/sign-up";
   },
-  directoryPage(teamId: string) {
-    return `/my-voyage/${teamId}/directory`;
+  MyTeamPage(teamId: string) {
+    return `/my-voyage/${teamId}/my-team`;
   },
   techStackPage(teamId: string) {
     return `/my-voyage/${teamId}/tech-stack`;

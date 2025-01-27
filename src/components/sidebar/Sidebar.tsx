@@ -24,7 +24,7 @@ export enum MainPages {
 }
 
 export enum VoyagePages {
-  directory = "Directory",
+  myTeam = "My Team",
   techStack = "Tech Stack",
   ideation = "Ideation",
   features = "Features",
@@ -95,8 +95,8 @@ export default function Sidebar() {
 
   const voyagePages: VoyagePageProperty[] = [
     {
-      name: VoyagePages.directory,
-      link: routePaths.directoryPage(teamId!),
+      name: VoyagePages.myTeam,
+      link: routePaths.MyTeamPage(teamId!),
     },
     {
       name: VoyagePages.techStack,

@@ -59,7 +59,7 @@ export default function DirectoryComponentWrapper({
   return (
     <>
       <VoyagePageBannerContainer
-        title="Directory"
+        title="My Team"
         description="Behold, your mighty band of teammates! If you want them to plan with precision and prowess, make sure your deets are up to date, or else prepare for some serious spreadsheet confusion!"
       >
         <Banner

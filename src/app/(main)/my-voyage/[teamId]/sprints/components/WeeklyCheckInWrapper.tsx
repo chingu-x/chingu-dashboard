@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import WeeklyCheckInForm from "./forms/WeeklyCheckInForm";
 
-import { fetchTeamDirectory } from "@/myVoyage/directory/components/DirectoryComponentWrapper";
+import { fetchTeamDirectory } from "@/app/(main)/my-voyage/[teamId]/my-team/components/DirectoryComponentWrapper";
 import { type Sprint, type Voyage } from "@/store/features/sprint/sprintSlice";
 import { getAccessToken } from "@/utils/getCookie";
 import { getUser } from "@/utils/getUser";
