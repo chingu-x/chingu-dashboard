@@ -1505,9 +1505,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chingu-x/modules@file:C:\\Users\\DK379\\Documents\\web_pages\\chingu_packages\\modules::locator=chingu_dashboard%40workspace%3A.":
-  version: 0.6.0
-  resolution: "@chingu-x/modules@file:/C%3A/Users/DK379/Documents/web_pages/chingu_packages/modules#/C%3A/Users/DK379/Documents/web_pages/chingu_packages/modules::hash=a20b6f&locator=chingu_dashboard%40workspace%3A."
+"@chingu-x/modules@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "@chingu-x/modules@npm:0.7.0"
   dependencies:
     axios: "npm:^1.7.9"
     date-fns: "npm:^4.1.0"
@@ -1515,7 +1515,7 @@ __metadata:
     dotenv: "npm:^16.4.7"
     reflect-metadata: "npm:^0.2.2"
     tsyringe: "npm:^4.8.0"
-  checksum: 159bec732277eb1382ab8edbdc40fc7bc8657f60bebed0c3b7ff6696a2fe32e56184df22883a4865d6d0fe787ed373e4545807ee7cc4831d242f15eccaf10f48
+  checksum: fe6bf4969f2500d30ccbab27994f00ce89fbd6a6e0b831753ecb0bccaade904937d7aa87b055a800f9eaca2db8729e8a4fcbf052f7532b333b465679474129ef
   languageName: node
   linkType: hard
 
@@ -7773,7 +7773,7 @@ __metadata:
   resolution: "chingu_dashboard@workspace:."
   dependencies:
     "@chingu-x/components": "npm:^0.8.0"
-    "@chingu-x/modules": "file:C:\\Users\\DK379\\Documents\\web_pages\\chingu_packages\\modules"
+    "@chingu-x/modules": "npm:^0.7.0"
     "@commitlint/cli": "npm:^19.6.1"
     "@commitlint/config-conventional": "npm:^19.6.0"
     "@hello-pangea/dnd": "npm:^16.3.0"
