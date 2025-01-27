@@ -1,14 +1,13 @@
 "use client";
+
 import "reflect-metadata";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import type { GetMyTeamClientRequestDto } from "@chingu-x/modules/my-team";
 import { useEffect } from "react";
 import TeamMember from "./TeamMember";
-import Banner from "@/components/banner/Banner";
 import { fetchTeamDirectory } from "@/store/features/my-team/myTeam";
 import { CacheTag } from "@/utils/cacheTag";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { useAppDispatch, useMyTeam, useUser } from "@/store/hooks";
 import { myTeamAdapter } from "@/utils/adapters";
 import routePaths from "@/utils/routePaths";
@@ -58,18 +57,6 @@ export default function DirectoryComponentWrapper({
 
   return (
     <>
-      <VoyagePageBannerContainer
-        title="My Team"
-        description="Behold, your mighty band of teammates! If you want them to plan with precision and prowess, make sure your deets are up to date, or else prepare for some serious spreadsheet confusion!"
-      >
-        <Banner
-          imageLight="/img/directory_banner_light.png"
-          imageDark="/img/directory_banner_dark.png"
-          alt="directory_banner"
-          height="h-[200px]"
-          width="w-[276px]"
-        />
-      </VoyagePageBannerContainer>
       {/* For screens > 1920px */}
       <div className="flex w-full flex-col gap-y-10 rounded-2xl border border-transparent bg-transparent p-10 pb-4 text-base-300 3xl:gap-y-0 3xl:bg-base-200">
         {/* header - table only */}

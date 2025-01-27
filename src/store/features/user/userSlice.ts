@@ -7,6 +7,7 @@ const initialState: User = {
   firstName: "",
   lastName: "",
   countryCode: "",
+  roles: [],
   oAuthProfiles: [
     {
       provider: {
