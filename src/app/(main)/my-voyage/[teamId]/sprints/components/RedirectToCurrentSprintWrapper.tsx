@@ -1,3 +1,6 @@
+"use client";
+
+import "reflect-metadata";
 import { redirect } from "next/navigation";
 
 import VoyageSubmittedMessage from "./VoyageSubmittedMessage";
@@ -24,6 +27,10 @@ import routePaths from "@/utils/routePaths";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
+import { useUser } from "@/store/hooks";
+import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
+import { useQuery } from "@tanstack/react-query";
+import { sprintsAdapter } from "@/utils/adapters";
 
 export async function fetchSprints({
   teamId,
@@ -46,22 +53,49 @@ interface RedirectToCurrentSprintWrapperProps {
   };
 }
 
-export default async function RedirectToCurrentSprintWrapper({
+export default function RedirectToCurrentSprintWrapper({
   params,
 }: RedirectToCurrentSprintWrapperProps) {
-  const teamId = Number(params.teamId);
+  const { teamId } = params;
+  const user = useUser();
 
   let currentSprintNumber: number;
 
-  const [user, error] = await getUser();
+  useCheckCurrentVoyageTeam({ user, teamId });
 
-  const { currentTeam, projectSubmitted } = getCurrentVoyageTeam({
+  const { isPending, isError, data } = useQuery({
+    queryKey: [CacheTag.sprints, { teamId, user: `${user.id}` }],
+    queryFn: () => getSprintsQuery({ teamId }),
+    staleTime: 1000 * 60 * 30, // This sets it to 30 minutes, which is how long the access token lasts
+  });
+
+  async function getSprintsQuery() {
+    return await sprintsAdapter.fetchSprints({ teamId });
+  }
+
+  if (isPending) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+  if (isError) {
+    router.push(routePaths.signIn());
+  }
+
+  if (data) {
+    dispatch(clientSignIn());
+    dispatch(getUserState(data));
+  }
+
+  const { projectSubmitted } = getCurrentVoyageTeam({
     teamId,
     user,
     error: null,
   });
 
-  if (currentTeam && projectSubmitted) {
+  if (projectSubmitted) {
     return (
       <div className="flex w-full flex-col gap-y-10">
         <VoyagePageBannerContainer
@@ -97,30 +131,15 @@ export default async function RedirectToCurrentSprintWrapper({
       />
     );
   }
+  const { teamMeetings, number } = getCurrentSprint(res!.sprints) as Sprint;
 
-  if (data) {
-    const [res, error] = data;
+  currentSprintNumber = number;
 
-    if (error) {
-      return (
-        <ErrorComponent
-          errorType={ErrorType.FETCH_SPRINT}
-          message={error.message}
-        />
-      );
-    }
-    const { teamMeetings, number } = getCurrentSprint(res!.sprints) as Sprint;
-
-    currentSprintNumber = number;
-
-    if (teamMeetings.length !== 0) {
-      redirect(
-        `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${teamMeetings[0]}`,
-      );
-    } else {
-      redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}`);
-    }
+  if (teamMeetings.length !== 0) {
+    redirect(
+      `/my-voyage/${teamId}/sprints/${currentSprintNumber}/meeting/${teamMeetings[0]}`,
+    );
   } else {
-    redirect(routePaths.dashboardPage());
+    redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}`);
   }
 }

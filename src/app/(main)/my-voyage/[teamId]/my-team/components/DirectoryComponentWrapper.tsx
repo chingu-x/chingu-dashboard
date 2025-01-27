@@ -12,6 +12,7 @@ import { useAppDispatch, useMyTeam, useUser } from "@/store/hooks";
 import { myTeamAdapter } from "@/utils/adapters";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
+import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
 
 interface TeamDirectoryProps {
   params: {
@@ -30,12 +31,14 @@ export default function DirectoryComponentWrapper({
 
   const { isPending, isError, data } = useQuery({
     queryKey: [CacheTag.myTeam, { teamId, user: `${user.id}` }],
-    queryFn: () => getMyTeamQuery({ teamId, user }),
+    queryFn: () => getMyTeamQuery(),
   });
 
-  async function getMyTeamQuery({ teamId, user }: GetMyTeamClientRequestDto) {
+  async function getMyTeamQuery() {
     return await myTeamAdapter.getMyTeam({ teamId, user });
   }
+
+  useCheckCurrentVoyageTeam({ user, teamId });
 
   useEffect(() => {
     if (data) {

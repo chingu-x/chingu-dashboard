@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { type RequestResetPasswordDto } from "@chingu-x/modules/auth";
-import { ContainerState } from "./SignInContainer";
+import { ContainerState } from "@/app/(auth)/sign-in/page";
 import Button from "@/components/Button";
 import Banner from "@/components/banner/Banner";
 import { useAppDispatch } from "@/store/hooks";
