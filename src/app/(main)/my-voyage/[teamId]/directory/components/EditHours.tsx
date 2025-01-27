@@ -4,14 +4,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { type SetStateAction, useEffect } from "react";
+import { useMutation } from "@tanstack/react-query";
+import type {
+  EditHoursRequestDto,
+  EditHoursResponseDto,
+} from "@chingu-x/modules/my-team";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
-import { useAppDispatch } from "@/store/hooks";
-import { editHours } from "@/app/(main)/my-voyage/[teamId]/directory/directoryService";
+import { useAppDispatch, useUser } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import useServerAction from "@/hooks/useServerAction";
 import Spinner from "@/components/Spinner";
 import Button from "@/components/Button";
+import { myTeamAdapter } from "@/utils/adapters";
+import { editHours } from "@/store/features/directory/directorySlice";
 
 interface EditHoursProps {
   hrPerSprint: number;
@@ -39,12 +44,7 @@ export default function EditHours({
   const params = useParams<{ teamId: string }>();
   const teamId = Number(params.teamId);
   const dispatch = useAppDispatch();
-
-  const {
-    runAction: editHoursAction,
-    isLoading: editHoursLoading,
-    setIsLoading: setEditHoursLoading,
-  } = useServerAction(editHours);
+  const user = useUser();
 
   const {
     register,
@@ -57,22 +57,37 @@ export default function EditHours({
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    const { avgHours } = data;
-    const [, error] = await editHoursAction({
-      teamId,
-      hrPerSprint: Number(avgHours),
-    });
-
-    if (error) {
+  const { mutate, isPending } = useMutation<
+    EditHoursResponseDto,
+    Error,
+    EditHoursRequestDto
+  >({
+    mutationFn: editHoursMutation,
+    onSuccess: (_, variables) => {
+      const { hrPerSprint } = variables;
+      setIsEditing(false);
+      dispatch(editHours({ user, hrPerSprint }));
+    },
+    // TODO: update error handling
+    onError: (error: Error) => {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
       );
-    }
+    },
+  });
 
-    setEditHoursLoading(false);
-    setIsEditing(false);
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+    const { avgHours } = data;
+
+    mutate({ teamId, hrPerSprint: Number(avgHours) });
   };
+
+  async function editHoursMutation({
+    teamId,
+    hrPerSprint,
+  }: EditHoursRequestDto): Promise<EditHoursResponseDto> {
+    return await myTeamAdapter.editHours({ teamId, hrPerSprint });
+  }
 
   function handleClearInputAction() {
     reset({ avgHours: hrPerSprint.toString() });
@@ -93,7 +108,7 @@ export default function EditHours({
         errorMessage={errors.avgHours?.message}
         placeholder={`${hrPerSprint}`}
         defaultValue={`${hrPerSprint}`}
-        submitButtonText={editHoursLoading ? <Spinner /> : "Save"}
+        submitButtonText={isPending ? <Spinner /> : "Save"}
         buttonDisabled={!isDirty || !isValid}
       />
     </form>
