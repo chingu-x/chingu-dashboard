@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { CurrentVoyageTeamMember } from "@chingu-x/modules/voyage-team";
 import TeamMemberDataItemWrapper from "./TeamMemberDataItemWrapper";
 import EditHours from "./EditHours";
 import { cn } from "@/lib/utils";
-import { type VoyageTeam } from "@/store/features/directory/directorySlice";
 import { useUser } from "@/store/hooks";
 
 interface TeamMemberProps {
-  teamMember: VoyageTeam;
+  teamMember: CurrentVoyageTeamMember;
 }
 
 export default function TeamMember({ teamMember }: TeamMemberProps) {

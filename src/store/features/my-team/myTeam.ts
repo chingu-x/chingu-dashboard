@@ -1,54 +1,8 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import type {
-  UserVoyageStatus,
-  UserVoyageRole,
-} from "@chingu-x/modules/voyage-team";
 import type { User } from "@chingu-x/modules/user";
+import type { MyTeam } from "@chingu-x/modules/my-team";
 
-type providerType = "discord";
-
-interface VoyageTier {
-  id: number;
-  name: string;
-}
-
-export interface VoyageTeam {
-  id: number;
-  member: VoyageMember;
-  hrPerSprint: number;
-  voyageRole: UserVoyageRole;
-}
-
-interface VoyageMember {
-  firstName: string;
-  lastName: string;
-  avatar: string;
-  oAuthProfiles: {
-    provider: {
-      name: providerType;
-    };
-    providerUsername: string;
-  }[];
-  countryCode: string;
-  timezone: string;
-  currentTime: string;
-}
-
-export interface TeamDirectory {
-  id: number;
-  voyageId: number;
-  name: string;
-  status: UserVoyageStatus;
-  repoUrl: string;
-  repoUrlBE: string;
-  deployedUrl: string;
-  deployedUrlBE: string;
-  tier: VoyageTier;
-  endDate: string;
-  voyageTeamMembers: VoyageTeam[];
-}
-
-const initialState: TeamDirectory = {
+const initialState: MyTeam = {
   id: 0,
   voyageId: 0,
   name: "",
@@ -96,11 +50,11 @@ interface EditHoursPayload {
   hrPerSprint: number;
 }
 
-export const directorySlice = createSlice({
-  name: "directory",
+export const myTeamSlice = createSlice({
+  name: "my-team",
   initialState,
   reducers: {
-    fetchTeamDirectory: (state, action: PayloadAction<TeamDirectory>) => ({
+    fetchTeamDirectory: (state, action: PayloadAction<MyTeam>) => ({
       ...state,
       ...action.payload,
     }),
@@ -118,6 +72,6 @@ export const directorySlice = createSlice({
   },
 });
 
-export const { fetchTeamDirectory, editHours } = directorySlice.actions;
+export const { fetchTeamDirectory, editHours } = myTeamSlice.actions;
 
-export default directorySlice.reducer;
+export default myTeamSlice.reducer;

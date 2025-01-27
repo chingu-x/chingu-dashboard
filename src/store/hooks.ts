@@ -16,7 +16,7 @@ export const useFinalizedIdeation = () =>
   useAppSelector((state) =>
     state.ideation.projectIdeas.find((project) => project.isSelected === true),
   );
-export const useDirectory = () => useAppSelector((state) => state.directory);
+export const useMyTeam = () => useAppSelector((state) => state.myTeam);
 export const useSprint = () => useAppSelector((state) => state.sprint);
 export const useResource = () => useAppSelector((state) => state.resources);
 export const useFeatures = () => useAppSelector((state) => state.features);

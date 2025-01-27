@@ -6,10 +6,10 @@ import type { GetMyTeamClientRequestDto } from "@chingu-x/modules/my-team";
 import { useEffect } from "react";
 import TeamMember from "./TeamMember";
 import Banner from "@/components/banner/Banner";
-import { fetchTeamDirectory } from "@/store/features/directory/directorySlice";
+import { fetchTeamDirectory } from "@/store/features/my-team/myTeam";
 import { CacheTag } from "@/utils/cacheTag";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
-import { useAppDispatch, useDirectory, useUser } from "@/store/hooks";
+import { useAppDispatch, useMyTeam, useUser } from "@/store/hooks";
 import { myTeamAdapter } from "@/utils/adapters";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
@@ -25,7 +25,7 @@ export default function DirectoryComponentWrapper({
 }: TeamDirectoryProps) {
   const router = useRouter();
   const user = useUser();
-  const myTeam = useDirectory();
+  const myTeam = useMyTeam();
   const dispatch = useAppDispatch();
   const { teamId } = params;
 

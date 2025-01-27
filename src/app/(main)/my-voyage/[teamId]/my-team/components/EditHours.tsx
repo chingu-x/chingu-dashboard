@@ -16,7 +16,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
 import Button from "@/components/Button";
 import { myTeamAdapter } from "@/utils/adapters";
-import { editHours } from "@/store/features/directory/directorySlice";
+import { editHours } from "@/store/features/my-team/myTeam";
 
 interface EditHoursProps {
   hrPerSprint: number;

@@ -6,7 +6,7 @@ import authReducer from "./features/auth/authSlice";
 import ideationReducer from "./features/ideation/ideationSlice";
 import resourceReducer from "./features/resources/resourcesSlice";
 import userReducer from "./features/user/userSlice";
-import directoryReducer from "./features/directory/directorySlice";
+import myTeamReducer from "./features/my-team/myTeam";
 import sprintReducer from "./features/sprint/sprintSlice";
 import featuresReducer from "./features/features/featuresSlice";
 import techStackReducer from "./features/techStack/techStackSlice";
@@ -40,7 +40,7 @@ export const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   ideation: ideationReducer,
-  directory: directoryReducer,
+  myTeam: myTeamReducer,
   features: featuresReducer,
   resources: resourceReducer,
   sprint: sprintReducer,
