@@ -1,13 +1,20 @@
 // TODO: remove when architecture refactor is finished
 
+import type { Sprints } from "@chingu-x/modules/sprints";
 import { isWithinInterval } from "date-fns";
-
-import { type Sprint } from "@/store/features/sprint/sprintSlice";
 
 export const currentDate =
   process.env.NODE_ENV === "development" ? new Date(2024, 8, 10) : new Date();
 
-export function getCurrentSprint(sprints: Sprint[]) {
+export function getCurrentSprint(
+  sprints: {
+    id: number;
+    number: number;
+    startDate: string;
+    endDate: string;
+    teamMeetings: number[];
+  }[],
+) {
   const currentSprint = sprints.find((sprint) =>
     isWithinInterval(currentDate, {
       start: sprint.startDate,
