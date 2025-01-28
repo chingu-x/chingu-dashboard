@@ -13,6 +13,8 @@ import { myTeamAdapter } from "@/utils/adapters";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
 import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
+import ErrorComponent from "@/components/Error";
+import { ErrorType } from "@/utils/error";
 
 interface TeamDirectoryProps {
   params: {
@@ -29,7 +31,7 @@ export default function DirectoryComponentWrapper({
   const dispatch = useAppDispatch();
   const { teamId } = params;
 
-  const { isPending, isError, data } = useQuery({
+  const { isPending, isError, error, data } = useQuery({
     queryKey: [CacheTag.myTeam, { teamId, user: `${user.id}` }],
     queryFn: () => getMyTeamQuery(),
   });
@@ -47,7 +49,10 @@ export default function DirectoryComponentWrapper({
   }, [data, dispatch]);
 
   if (isError) {
-    router.push(routePaths.dashboardPage());
+    <ErrorComponent
+      errorType={ErrorType.FETCH_MY_TEAM}
+      message={error.message}
+    />;
   }
 
   if (isPending) {

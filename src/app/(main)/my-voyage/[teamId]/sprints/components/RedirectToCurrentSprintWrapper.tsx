@@ -1,37 +1,21 @@
 "use client";
 
 import "reflect-metadata";
-import { redirect, useRouter } from "next/navigation";
-
+import { redirect } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import type { Sprint } from "@chingu-x/modules/sprints";
 import VoyageSubmittedMessage from "./VoyageSubmittedMessage";
-
-import {
-  type FetchSprintsProps,
-  type FetchSprintsResponse,
-  type SprintsResponse,
-} from "@/myVoyage/sprints/sprintsService";
-
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
-
-import { getAccessToken } from "@/utils/getCookie";
-import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { GET } from "@/utils/requests";
+import { currentDate } from "@/utils/getCurrentSprint";
 import { CacheTag } from "@/utils/cacheTag";
-import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/utils/handleAsync";
-import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import routePaths from "@/utils/routePaths";
-import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
 import { useAppDispatch, useUser } from "@/store/hooks";
 import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
-import { sprintsAdapter } from "@/utils/adapters";
+import { sprintsAdapter, voyageTeamAdapter } from "@/utils/adapters";
 import Spinner from "@/components/Spinner";
 import { fetchSprints } from "@/store/features/sprint/sprintSlice";
-import { Sprint, Sprints } from "@chingu-x/modules/sprints";
 
 interface RedirectToCurrentSprintWrapperProps {
   params: {
@@ -44,12 +28,11 @@ export default function RedirectToCurrentSprintWrapper({
 }: RedirectToCurrentSprintWrapperProps) {
   const { teamId } = params;
   const user = useUser();
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
   useCheckCurrentVoyageTeam({ user, teamId });
 
-  const { isPending, isError, data } = useQuery({
+  const { isPending, isError, error, data } = useQuery({
     queryKey: [CacheTag.sprints, { teamId, user: `${user.id}` }],
     queryFn: getSprintsQuery,
   });
@@ -67,20 +50,19 @@ export default function RedirectToCurrentSprintWrapper({
   }
 
   if (isError) {
-    router.push(routePaths.dashboardPage());
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_SPRINT}
+        message={error.message}
+      />
+    );
   }
 
   if (data) {
     dispatch(fetchSprints(data));
   }
 
-  const { projectSubmitted } = getCurrentVoyageTeam({
-    teamId,
-    user,
-    error: null,
-  });
-
-  if (projectSubmitted) {
+  if (voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)) {
     return (
       <div className="flex w-full flex-col gap-y-10">
         <VoyagePageBannerContainer
@@ -100,7 +82,10 @@ export default function RedirectToCurrentSprintWrapper({
     );
   }
 
-  const { teamMeetings, number } = getCurrentSprint(data!.sprints) as Sprint;
+  const { teamMeetings, number } = sprintsAdapter.getCurrentSprint({
+    sprints: data.sprints,
+    currentDate,
+  }) as Sprint;
 
   const currentSprintNumber = number;
 
