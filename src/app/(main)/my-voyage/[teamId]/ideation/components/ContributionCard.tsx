@@ -54,6 +54,7 @@ export default function ContributionCard({
     <div className={cn("w-[200px] rounded-lg bg-base-100", className)}>
       <section className="flex flex-col items-start gap-y-4 p-4">
         <h1 className="text-base font-medium text-base-300">Contributed By</h1>
+        {/* TO DO: replace undefined with default avatar when it is ready. */}
         <Badge title={member.firstName}>
           {member.avatar ? (
             <Avatar customClassName="h-4 w-4">

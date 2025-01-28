@@ -80,6 +80,7 @@ export default function ResourceCard({
         <div className="mt-2 flex">
           <div className="flex items-center gap-x-2 border-r border-r-base-100 pr-4 xl:pr-8">
             <p>Shared by</p>
+            {/* TO DO: replace undefined with default avatar when it is ready. */}
             <Badge title={user.firstName}>
               {user.avatar ? (
                 <Avatar customClassName="h-4 w-4">

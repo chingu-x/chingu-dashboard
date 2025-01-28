@@ -52,6 +52,7 @@ function ResourceItem({
         <p className="mb-1 text-left text-base font-semibold">{title}</p>
         <div className="flex">
           <p className="mr-2 text-base font-medium">Shared by</p>
+          {/* TO DO: replace undefined with default avatar when it is ready. */}
           <Badge title={userName}>
             {userAvatarUrl ? (
               <Avatar customClassName="h-4 w-4">
