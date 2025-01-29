@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
 import { AvatarGroup } from "@chingu-x/components/avatar-group";
+import { Tooltip } from "@chingu-x/components/tooltip";
 import Button from "@/components/Button";
 import {
   type ProjectIdeaVotes,
@@ -18,7 +19,6 @@ import {
   removeIdeationVote,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import Tooltip from "@/components/Tooltip";
 
 interface VoteCardProps {
   projectIdeaId: number;

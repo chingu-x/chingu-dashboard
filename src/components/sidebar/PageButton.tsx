@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Link from "next/link";
+import { Tooltip } from "@chingu-x/components/tooltip";
 import { MainPages, type PageProperty } from "./Sidebar";
 import Button from "@/components/Button";
-import Tooltip from "@/components/Tooltip";
 import { cn } from "@/lib/utils";
 
 interface PageButtonProps {

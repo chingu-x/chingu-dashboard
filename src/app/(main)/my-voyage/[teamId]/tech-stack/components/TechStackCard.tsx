@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
 import { AvatarGroup } from "@chingu-x/components/avatar-group";
+import { Tooltip } from "@chingu-x/components/tooltip";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
@@ -26,7 +27,6 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import { validateTextInput } from "@/utils/form/validateInput";
-import Tooltip from "@/components/Tooltip";
 
 interface TechStackCardProps {
   title: string;
