@@ -1,63 +1,31 @@
-import { redirect } from "next/navigation";
+"use client";
 
+import "reflect-metadata";
+import { useRouter } from "next/navigation";
+import type { Sprint } from "@chingu-x/modules/sprints";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import ProgressStepper from "./ProgressStepper";
 import MeetingOverview from "./meetingOverview/MeetingOverview";
 import Agendas from "./agenda/Agendas";
 import Sections from "./sections/Sections";
-import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import SprintActions from "./SprintActions";
-import MeetingProvider from "@/myVoyage/sprints/providers/MeetingProvider";
-
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
-
-import {
-  type FetchMeetingProps,
-  type FetchMeetingResponse,
-} from "@/myVoyage/sprints/sprintsService";
-
-import {
-  type Agenda,
-  type Meeting,
-  type Sprint,
-  type Section,
-  type Voyage,
-} from "@/store/features/sprint/sprintSlice";
-
-import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/utils/handleAsync";
-import { GET } from "@/utils/requests";
-import { getAccessToken } from "@/utils/getCookie";
-import { getUser } from "@/utils/getUser";
-import { getSprintCache } from "@/utils/getSprintCache";
-import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import routePaths from "@/utils/routePaths";
+import { currentDate } from "@/utils/getCurrentSprint";
 import { Forms } from "@/utils/form/formsEnums";
-import {
-  getSprintCheckinIsStatus,
-  getVoyageProjectStatus,
-} from "@/utils/getFormStatus";
-import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
-
-export async function fetchMeeting({
-  sprintNumber,
-  meetingId,
-}: FetchMeetingProps): Promise<AsyncActionResponse<FetchMeetingResponse>> {
-  const token = getAccessToken();
-  const sprintCache = getSprintCache(sprintNumber);
-  const fetchMeetingAsync = () =>
-    GET<FetchMeetingResponse>(
-      `api/v1/voyages/sprints/meetings/${meetingId}`,
-      token,
-      "force-cache",
-      sprintCache,
-    );
-
-  return await handleAsync(fetchMeetingAsync);
-}
+import { useAppDispatch, useSprint, useUser } from "@/store/hooks";
+import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
+import {
+  sprintMeetingAdapter,
+  sprintsAdapter,
+  voyageTeamAdapter,
+} from "@/utils/adapters";
+import { CacheTag } from "@/utils/cacheTag";
+import Spinner from "@/components/Spinner";
+import { fetchMeeting } from "@/store/features/sprint/sprintSlice";
 
 interface SprintWrapperProps {
   params: {
@@ -67,104 +35,77 @@ interface SprintWrapperProps {
   };
 }
 
-export default async function SprintWrapper({ params }: SprintWrapperProps) {
-  const teamId = Number(params.teamId);
+export default function SprintWrapper({ params }: SprintWrapperProps) {
+  const { teamId } = params;
   const sprintNumber = Number(params.sprintNumber);
   const meetingId = Number(params.meetingId);
+  const user = useUser();
+  const sprints = useSprint();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  let voyageData: Voyage;
-  let meetingData: Meeting = { id: +params.meetingId };
-  let agendaData: Agenda[] = [];
-  let sectionsData: Section[] = [];
+  useCheckCurrentVoyageTeam({ user, teamId });
 
-  const [user, error] = await getUser();
+  const isVoyageProjectSubmitted =
+    voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)!;
 
-  // Check if it's a current team and if a project's been submitted,
-  // redirect to /sprints page where a corresponding messsage is rendered
-  const { currentTeam, projectSubmitted } = getCurrentVoyageTeam({
-    teamId,
-    user,
-    error: null,
-  });
-
-  if (currentTeam && projectSubmitted) {
-    redirect(`/my-voyage/${teamId}/sprints/`);
+  if (isVoyageProjectSubmitted) {
+    router.push(`/my-voyage/${teamId}/sprints/`);
   }
 
-  const { errorResponse, data } = await getCurrentVoyageData({
-    user,
-    error,
-    teamId,
-    args: { teamId },
-    func: fetchSprints,
+  const { isPending, isError, error, data } = useQuery({
+    queryKey: [
+      CacheTag.sprintMeetingId,
+      { teamId, user: `${user.id}`, meetingId: `${meetingId}` },
+    ],
+    queryFn: fetchMeetingQuery,
   });
 
-  if (errorResponse) {
+  async function fetchMeetingQuery() {
+    return await sprintMeetingAdapter.fetchMeeting({ meetingId });
+  }
+
+  useEffect(() => {
+    if (data) {
+      dispatch(fetchMeeting(data));
+    }
+  }, [data, dispatch]);
+
+  if (isPending) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (isError) {
     return (
       <ErrorComponent
-        errorType={ErrorType.FETCH_VOYAGE_DATA}
-        message={errorResponse}
+        errorType={ErrorType.FETCH_SPRINT}
+        message={error.message}
       />
     );
   }
 
-  if (data) {
-    const [res, error] = data;
-
-    if (error) {
-      return (
-        <ErrorComponent
-          errorType={ErrorType.FETCH_SPRINT}
-          message={error.message}
-        />
-      );
-    }
-    voyageData = res!;
-  } else {
-    redirect(routePaths.dashboardPage());
-  }
-
-  const correspondingMeetingId = voyageData.sprints.find(
-    (sprint) => sprint.number === sprintNumber,
-  )?.teamMeetings[0];
-
-  if (meetingId === correspondingMeetingId) {
-    const [res, error] = await fetchMeeting({ sprintNumber, meetingId });
-
-    if (res) {
-      meetingData = res;
-      agendaData = res.agendas;
-      if (res.formResponseMeeting.length !== 0) {
-        sectionsData = res.formResponseMeeting;
-      }
-    }
-
-    if (error) {
-      return (
-        <ErrorComponent
-          errorType={ErrorType.FETCH_MEETING}
-          message={error.message}
-        />
-      );
-    }
-  } else {
-    redirect(`/my-voyage/${teamId}/sprints/`);
-  }
-
   // Get current sprint number
-  const { number } = getCurrentSprint(voyageData.sprints) as Sprint;
+  const { number } = sprintsAdapter.getCurrentSprint({
+    currentDate,
+    sprints: sprints.sprints,
+  }) as Sprint;
+
   const currentSprintNumber = number;
 
   // Redirect if a user tries to access a sprint which hasn't started yet
   if (sprintNumber > currentSprintNumber) {
-    redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
+    router.push(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
   }
 
   // Check if a checkin form for the current sprint has been submitted
-  const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(user, sprintNumber);
-
-  // Check if a voyage project has been submitted
-  const voyageProjectIsSubmitted = getVoyageProjectStatus(user, teamId);
+  const sprintCheckinIsSubmitted = sprintsAdapter.getSprintCheckinStatus({
+    user,
+    sprintNum: sprintNumber,
+  });
 
   return (
     <div className="flex w-full flex-col gap-y-10">
@@ -185,24 +126,23 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
       <SprintActions
         params={params}
         sprintCheckinIsSubmitted={sprintCheckinIsSubmitted}
-        voyageProjectIsSubmitted={voyageProjectIsSubmitted}
+        voyageProjectIsSubmitted={isVoyageProjectSubmitted}
         currentSprintNumber={currentSprintNumber}
       />
       <MeetingOverview
-        title={meetingData.title!}
-        dateTime={meetingData.dateTime!}
-        meetingLink={meetingData.meetingLink!}
-        description={meetingData.description!}
+        title={data.title!}
+        dateTime={data.dateTime!}
+        meetingLink={data.meetingLink!}
+        description={data.description!}
       />
-      <MeetingProvider voyage={voyageData} meeting={meetingData} />
-      <Agendas params={params} topics={agendaData} />
+      <Agendas params={params} topics={data.agendas!} />
       <Sections
         params={params}
-        notes={meetingData.notes}
-        planning={sectionsData.find(
+        notes={data.notes}
+        planning={data.formResponseMeeting!.find(
           (section) => section.form.id === Number(Forms.planning),
         )}
-        review={sectionsData.find(
+        review={data.formResponseMeeting!.find(
           (section) => section.form.id === Number(Forms.review),
         )}
       />
