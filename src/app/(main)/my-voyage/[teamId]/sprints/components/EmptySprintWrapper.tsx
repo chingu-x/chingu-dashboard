@@ -1,7 +1,7 @@
 "use client";
 
 import "reflect-metadata";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import type { Sprint } from "@chingu-x/modules/sprints";
 import ProgressStepper from "./ProgressStepper";
 import EmptySprintState from "./EmptySprintState";
@@ -27,12 +27,15 @@ export default function EmptySprintWrapper({
   const sprintNumber = Number(params.sprintNumber);
   const user = useUser();
   const sprints = useSprint();
+  const router = useRouter();
+
   useCheckCurrentVoyageTeam({ user, teamId });
+
   const isVoyageProjectSubmitted =
     voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)!;
 
   if (isVoyageProjectSubmitted) {
-    redirect(`/my-voyage/${teamId}/sprints/`);
+    router.push(`/my-voyage/${teamId}/sprints/`);
   }
 
   // Check if a meeting exists
@@ -51,11 +54,11 @@ export default function EmptySprintWrapper({
 
   // Redirect if a user tries to access a sprint which hasn't started yet
   if (sprintNumber > currentSprintNumber) {
-    redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
+    router.push(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
     // If a user tries to access this page directly, check if the current sprint's meetingId exists.
     // If so, redirect to the existing meeting page.
   } else if (meeting) {
-    redirect(
+    router.push(
       `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`,
     );
   } else {
