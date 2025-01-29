@@ -17,11 +17,11 @@ export default function DropDown({ openState }: { openState?: boolean }) {
 
   const currentVoyage = activeVoyage?.voyageTeam.name
     ? `Team - Tier ${activeVoyage.voyageTeam.name
-      .split("-")[1]
-      .split("tier")[1]
-      .toUpperCase()} ${activeVoyage.voyageTeam.name
-      .split("-")[0]
-      .toUpperCase()}`
+        .split("-")[1]
+        .split("tier")[1]
+        .toUpperCase()} ${activeVoyage.voyageTeam.name
+        .split("-")[0]
+        .toUpperCase()}`
     : "Please join a voyage to see your status information.";
   const closed = "hidden";
   const open =
