@@ -1,33 +1,21 @@
-import { redirect } from "next/navigation";
+"use client";
 
-import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
+import "reflect-metadata";
+import { redirect } from "next/navigation";
+import type { Sprint } from "@chingu-x/modules/sprints";
 import ProgressStepper from "./ProgressStepper";
 import EmptySprintState from "./EmptySprintState";
 import SprintActions from "./SprintActions";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
-
-import EmptySprintProvider from "@/myVoyage/sprints/providers/EmptySprintProvider";
-import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { type Voyage, type Sprint } from "@/store/features/sprint/sprintSlice";
-import { getUser } from "@/utils/getUser";
-import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import routePaths from "@/utils/routePaths";
+import { currentDate } from "@/utils/getCurrentSprint";
 import {
   getSprintCheckinIsStatus,
   getVoyageProjectStatus,
 } from "@/utils/getFormStatus";
-import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
-import { ErrorType } from "@/utils/error";
-import ErrorComponent from "@/components/Error";
-
-function getMeeting(sprints: Sprint[], sprintNumber: number) {
-  const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
-
-  if (sprint?.teamMeetingsData && sprint?.teamMeetingsData.length > 0)
-    return sprint.teamMeetingsData[0];
-  return null;
-}
+import { useSprint, useUser } from "@/store/hooks";
+import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
+import { sprintsAdapter, voyageTeamAdapter } from "@/utils/adapters";
 
 interface EmptySprintWrapperProps {
   params: {
@@ -36,64 +24,31 @@ interface EmptySprintWrapperProps {
   };
 }
 
-export default async function EmptySprintWrapper({
+export default function EmptySprintWrapper({
   params,
 }: EmptySprintWrapperProps) {
-  const teamId = Number(params.teamId);
+  const { teamId } = params;
   const sprintNumber = Number(params.sprintNumber);
+  const user = useUser();
+  const sprints = useSprint();
+  useCheckCurrentVoyageTeam({ user, teamId });
 
-  let voyageData: Voyage;
-
-  const [user, error] = await getUser();
-
-  const { currentTeam, projectSubmitted } = getCurrentVoyageTeam({
-    teamId,
-    user,
-    error: null,
-  });
-
-  if (currentTeam && projectSubmitted) {
+  if (voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)) {
     redirect(`/my-voyage/${teamId}/sprints/`);
   }
 
-  const { errorResponse, data } = await getCurrentVoyageData({
-    user,
-    error,
-    teamId,
-    args: { teamId },
-    func: fetchSprints,
+  // Check if a meeting exists
+  const meeting = sprintsAdapter.getMeeting({
+    sprints: sprints.sprints,
+    sprintNumber,
   });
 
-  if (errorResponse) {
-    return (
-      <ErrorComponent
-        errorType={ErrorType.FETCH_VOYAGE_DATA}
-        message={errorResponse}
-      />
-    );
-  }
-
-  if (data) {
-    const [res, error] = data;
-
-    if (error) {
-      return (
-        <ErrorComponent
-          errorType={ErrorType.FETCH_SPRINT}
-          message={error.message}
-        />
-      );
-    }
-    voyageData = res!;
-  } else {
-    redirect(routePaths.dashboardPage());
-  }
-
-  // Check if a meeting exists
-  const meeting = getMeeting(voyageData.sprints, sprintNumber);
-
   // Get current sprint number
-  const { number } = getCurrentSprint(voyageData.sprints) as Sprint;
+  const { number } = sprintsAdapter.getCurrentSprint({
+    currentDate,
+    sprints: sprints.sprints,
+  }) as Sprint;
+
   const currentSprintNumber = number;
 
   // Redirect if a user tries to access a sprint which hasn't started yet
@@ -137,7 +92,6 @@ export default async function EmptySprintWrapper({
           currentSprintNumber={currentSprintNumber}
         />
         <EmptySprintState />
-        <EmptySprintProvider voyage={voyageData} />
       </div>
     );
   }

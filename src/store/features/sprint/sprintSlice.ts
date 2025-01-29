@@ -23,25 +23,25 @@ export const sprintSlice = createSlice({
       ...state,
       ...action.payload,
     }),
-    fetchMeeting: (state, action: PayloadAction<Meeting>) => {
-      const sprintId = action.payload.sprint?.id;
+    // fetchMeeting: (state, action: PayloadAction<Meeting>) => {
+    //   const sprintId = action.payload.sprint?.id;
 
-      const updatedSprints = state.voyage.sprints.map((sprint) => {
-        if (sprint.id === sprintId) {
-          return { ...sprint, teamMeetingsData: [action.payload] };
-        }
-        return sprint;
-      });
+    //   const updatedSprints = state.voyage.sprints.map((sprint) => {
+    //     if (sprint.id === sprintId) {
+    //       return { ...sprint, teamMeetingsData: [action.payload] };
+    //     }
+    //     return sprint;
+    //   });
 
-      state.voyage.sprints = updatedSprints;
-      state.loading = true;
-    },
-    setSprintsLoadingTrue: (state) => {
-      state.loading = true;
-    },
-    setSprintsLoadingFalse: (state) => {
-      state.loading = false;
-    },
+    //   state.voyage.sprints = updatedSprints;
+    //   state.loading = true;
+    // },
+    // setSprintsLoadingTrue: (state) => {
+    //   state.loading = true;
+    // },
+    // setSprintsLoadingFalse: (state) => {
+    //   state.loading = false;
+    // },
   },
   extraReducers(builder) {
     builder.addCase(PURGE, () => {
@@ -53,9 +53,9 @@ export const sprintSlice = createSlice({
 
 export const {
   fetchSprints,
-  fetchMeeting,
-  setSprintsLoadingTrue,
-  setSprintsLoadingFalse,
+  // fetchMeeting,
+  // setSprintsLoadingTrue,
+  // setSprintsLoadingFalse,
 } = sprintSlice.actions;
 
 export default sprintSlice.reducer;
