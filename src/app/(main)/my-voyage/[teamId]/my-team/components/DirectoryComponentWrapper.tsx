@@ -3,14 +3,12 @@
 import "reflect-metadata";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import type { GetMyTeamClientRequestDto } from "@chingu-x/modules/my-team";
 import { useEffect } from "react";
 import TeamMember from "./TeamMember";
 import { fetchTeamDirectory } from "@/store/features/my-team/myTeam";
 import { CacheTag } from "@/utils/cacheTag";
 import { useAppDispatch, useMyTeam, useUser } from "@/store/hooks";
 import { myTeamAdapter } from "@/utils/adapters";
-import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
 import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
 import ErrorComponent from "@/components/Error";
@@ -25,7 +23,6 @@ interface TeamDirectoryProps {
 export default function DirectoryComponentWrapper({
   params,
 }: TeamDirectoryProps) {
-  const router = useRouter();
   const user = useUser();
   const myTeam = useMyTeam();
   const dispatch = useAppDispatch();
