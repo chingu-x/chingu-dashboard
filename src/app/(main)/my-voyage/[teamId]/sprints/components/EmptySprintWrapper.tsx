@@ -9,10 +9,6 @@ import SprintActions from "./SprintActions";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
 import { currentDate } from "@/utils/getCurrentSprint";
-import {
-  getSprintCheckinIsStatus,
-  getVoyageProjectStatus,
-} from "@/utils/getFormStatus";
 import { useSprint, useUser } from "@/store/hooks";
 import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
 import { sprintsAdapter, voyageTeamAdapter } from "@/utils/adapters";
@@ -64,10 +60,10 @@ export default function EmptySprintWrapper({
     );
   } else {
     // Check if a checkin form for the current sprint has been submitted
-    const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
+    const sprintCheckinIsSubmitted = sprintsAdapter.getSprintCheckinStatus({
       user,
-      sprintNumber,
-    );
+      sprintNum: sprintNumber,
+    });
 
     return (
       <div className="flex w-full flex-col gap-y-10">
