@@ -14,6 +14,7 @@ import { getUserState } from "@/store/features/user/userSlice";
 import Spinner from "@/components/Spinner";
 import { CacheTag } from "@/utils/cacheTag";
 import { userAdapter } from "@/utils/adapters";
+import { currentDate } from "@/utils/getCurrentSprint";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -30,7 +31,7 @@ export default function Layout({ children }: LayoutProps) {
   });
 
   async function getUserQuery() {
-    return await userAdapter.getUser();
+    return await userAdapter.fetchUser({ currentDate });
   }
 
   if (isPending) {
