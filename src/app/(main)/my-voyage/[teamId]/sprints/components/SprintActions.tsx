@@ -13,6 +13,7 @@ import {
 
 import Button from "@/components/Button";
 import routePaths from "@/utils/routePaths";
+import { sprintsAdapter } from "@/utils/adapters";
 
 interface SprintActionsProps {
   params: {
@@ -37,8 +38,13 @@ export default function SprintActions({
     params.sprintNumber,
   ];
 
-  const isCurrentSprint = sprintNumber === currentSprintNumber.toString();
-  const submitVoyageIsAllowed = sprintNumber === "5" || sprintNumber === "6";
+  const isCurrentSprint = sprintsAdapter.isCurrentSprint({
+    sprintNumber,
+    currentSprintNumber,
+  });
+  const submitVoyageIsAllowed = sprintsAdapter.isVoyageProjestSubmissionAllowed(
+    { sprintNumber },
+  );
 
   function renderWeeklyCheckinButton() {
     if (sprintCheckinIsSubmitted) {

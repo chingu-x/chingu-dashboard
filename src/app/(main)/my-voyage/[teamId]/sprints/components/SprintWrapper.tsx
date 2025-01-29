@@ -3,6 +3,7 @@
 import "reflect-metadata";
 import { useRouter } from "next/navigation";
 import type { Sprint } from "@chingu-x/modules/sprints";
+import { Forms } from "@chingu-x/modules/forms";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import ProgressStepper from "./ProgressStepper";
@@ -13,7 +14,6 @@ import SprintActions from "./SprintActions";
 import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import Banner from "@/components/banner/Banner";
 import { currentDate } from "@/utils/getCurrentSprint";
-import { Forms } from "@/utils/form/formsEnums";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
 import { useAppDispatch, useSprint, useUser } from "@/store/hooks";

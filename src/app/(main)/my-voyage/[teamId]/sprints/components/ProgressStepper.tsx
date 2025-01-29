@@ -5,6 +5,7 @@ import { RocketLaunchIcon } from "@heroicons/react/24/outline";
 import Stepper, { type SteppersItem } from "@/components/Stepper";
 import { useSprint } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
+import { sprintMeetingAdapter } from "@/utils/adapters";
 
 function getStatus(sprintNumber: number, currentSprintNumber: number) {
   if (sprintNumber < currentSprintNumber) {
@@ -28,8 +29,10 @@ export default function ProgressStepper({
   const { sprints } = useSprint();
 
   function handleClick(sprintNumber: number) {
-    const meetingId = sprints.find((sprint) => sprint.number === sprintNumber)!
-      .teamMeetings[0];
+    const meetingId = sprintMeetingAdapter.getCurrentSprintMeetingId({
+      sprints,
+      sprintNumber,
+    });
 
     if (meetingId) {
       router.push(
