@@ -1,7 +1,7 @@
 "use client";
 
 import "reflect-metadata";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import type { Sprint } from "@chingu-x/modules/sprints";
 import ProgressStepper from "./ProgressStepper";
 import EmptySprintState from "./EmptySprintState";
