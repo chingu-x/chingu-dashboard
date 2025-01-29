@@ -32,8 +32,10 @@ export default function EmptySprintWrapper({
   const user = useUser();
   const sprints = useSprint();
   useCheckCurrentVoyageTeam({ user, teamId });
+  const isVoyageProjectSubmitted =
+    voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)!;
 
-  if (voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)) {
+  if (isVoyageProjectSubmitted) {
     redirect(`/my-voyage/${teamId}/sprints/`);
   }
 
@@ -67,9 +69,6 @@ export default function EmptySprintWrapper({
       sprintNumber,
     );
 
-    // Check if a voyage project has been submitted
-    const voyageProjectIsSubmitted = getVoyageProjectStatus(user, teamId);
-
     return (
       <div className="flex w-full flex-col gap-y-10">
         <VoyagePageBannerContainer
@@ -88,7 +87,7 @@ export default function EmptySprintWrapper({
         <SprintActions
           params={params}
           sprintCheckinIsSubmitted={sprintCheckinIsSubmitted}
-          voyageProjectIsSubmitted={voyageProjectIsSubmitted}
+          voyageProjectIsSubmitted={isVoyageProjectSubmitted}
           currentSprintNumber={currentSprintNumber}
         />
         <EmptySprintState />
