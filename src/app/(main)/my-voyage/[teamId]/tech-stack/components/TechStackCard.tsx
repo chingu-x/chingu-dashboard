@@ -9,6 +9,7 @@ import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
 import { AvatarGroup } from "@chingu-x/components/avatar-group";
 import { Tooltip } from "@chingu-x/components/tooltip";
+import { Button } from "@chingu-x/components/button";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
@@ -19,7 +20,6 @@ import {
 } from "@/myVoyage/tech-stack/techStackService";
 import getTechCategory from "@/myVoyage/tech-stack/components/getTechCategory";
 import TextInput from "@/components/inputs/TextInput";
-import Button from "@/components/Button";
 import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
 import { useUser, useAppDispatch, useAppSelector } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";

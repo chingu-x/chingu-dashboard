@@ -1,5 +1,5 @@
 import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/20/solid";
-import Button from "@/components/Button";
+import { Button } from "@chingu-x/components/button";
 
 interface SortingButtonProps {
   onClick: () => void;

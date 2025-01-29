@@ -2,8 +2,8 @@
 
 import { useCallback } from "react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { Button } from "@chingu-x/components/button";
 import Modal from "./Modal";
-import Button from "@/components/Button";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
 

@@ -1,8 +1,8 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { Banner } from "@chingu-x/components/banner";
 import Image from "next/image";
+import { Button } from "@chingu-x/components/button";
 import { ContainerState } from "./SignInContainer";
-import Button from "@/components/Button";
 import { useAppDispatch } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { resetPasswordRequestEmail } from "@/app/(auth)/authService";

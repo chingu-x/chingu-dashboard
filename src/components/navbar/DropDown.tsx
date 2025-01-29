@@ -2,7 +2,7 @@
 
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import Button from "@/components/Button";
+import { Button } from "@chingu-x/components/button";
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 import { serverSignOut } from "@/app/(auth)/authService";

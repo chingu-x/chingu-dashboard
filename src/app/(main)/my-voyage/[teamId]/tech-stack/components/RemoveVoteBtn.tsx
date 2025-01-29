@@ -1,5 +1,5 @@
+import { Button } from "@chingu-x/components/button";
 import { removeTechItemVote } from "@/myVoyage/tech-stack/techStackService";
-import Button from "@/components/Button";
 import useServerAction from "@/hooks/useServerAction";
 import Spinner from "@/components/Spinner";
 import { useAppDispatch } from "@/store/hooks";
