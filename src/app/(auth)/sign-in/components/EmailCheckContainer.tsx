@@ -1,13 +1,14 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { type RequestResetPasswordDto } from "@chingu-x/modules/auth";
-import { ContainerState } from "@/app/(auth)/sign-in/page";
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 import Button from "@/components/Button";
-import Banner from "@/components/banner/Banner";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Spinner from "@/components/Spinner";
 import { authAdapter } from "@/utils/adapters";
+import { ContainerState } from "@/app/(auth)/sign-in/page";
 
 type ResendEmailContainerProp = {
   email: string;
@@ -59,11 +60,28 @@ function EmailCheckContainer({
       </p>
       <div>
         <Banner
-          imageLight="/img/link_retro_mac_light.png"
-          imageDark="/img/link_retro_mac_dark.png"
+          imageLight={
+            <Image
+              src="/img/link_retro_mac_light.png"
+              alt="Email confirmation light image"
+              fill={true}
+              sizes="168px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
+          imageDark={
+            <Image
+              src="/img/link_retro_mac_dark.png"
+              alt="Email confirmation dark image"
+              fill={true}
+              sizes="168px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
           height="h-[171px]"
           width="w-[168px]"
-          alt="Email confirmation image"
         />
       </div>
       <div className="flex flex-col items-center">

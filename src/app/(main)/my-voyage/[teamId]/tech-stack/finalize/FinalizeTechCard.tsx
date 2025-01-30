@@ -1,5 +1,8 @@
 import { useEffect, useRef } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { Avatar } from "@chingu-x/components/avatar";
+import Image from "next/image";
+import { AvatarGroup } from "@chingu-x/components/avatar-group";
 import type {
   FinalizeTechCardProps,
   Vote,
@@ -7,8 +10,6 @@ import type {
   FinalizedItem,
 } from "./types";
 import Button from "@/components/Button";
-import AvatarGroup from "@/components/avatar/AvatarGroup";
-import Avatar from "@/components/avatar/Avatar";
 
 export default function FinalizeTechCard({
   title,
@@ -70,12 +71,14 @@ export default function FinalizeTechCard({
         <h2 className="text-base font-semibold">{title}</h2>
         <AvatarGroup>
           {techItemVotes.map((vote: Vote) => (
-            <Avatar
-              key={vote.votedBy.member.id}
-              image={vote.votedBy.member.avatar}
-              width={24}
-              height={24}
-            />
+            <Avatar key={vote.votedBy.member.id}>
+              <Image
+                src={vote.votedBy.member.avatar}
+                alt="voter's avatar"
+                width={24}
+                height={24}
+              />
+            </Avatar>
           ))}
         </AvatarGroup>
       </div>

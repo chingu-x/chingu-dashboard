@@ -1,15 +1,33 @@
-import Banner from "@/components/banner/Banner";
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 
 export default function AuthBannerContainer() {
   return (
     <div className="flex h-[486px] flex-col justify-center">
       <div>
         <Banner
-          imageLight="/img/login_image_light.png"
-          imageDark="/img/login_image_dark.png"
+          imageLight={
+            <Image
+              src="/img/login_image_light.png"
+              alt="Login light image"
+              fill={true}
+              sizes="628px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
+          imageDark={
+            <Image
+              src="/img/login_image_dark.png"
+              alt="Login dark image"
+              fill={true}
+              sizes="628px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
           height="h-[300px]"
           width="w-[628px]"
-          alt="Login image"
         />
       </div>
 

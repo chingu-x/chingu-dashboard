@@ -1,12 +1,30 @@
-import Banner from "@/components/banner/Banner";
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 
 export default function PreVoyageBanner() {
   return (
     <div className="flex w-full grow flex-col rounded-2xl bg-base-200 px-[80px] pb-6 pt-[70px]">
       <Banner
-        imageLight="/img/pre_voyage_light.png"
-        imageDark="/img/pre_voyage_dark.png"
-        alt="Pre Voyage banner image"
+        imageLight={
+          <Image
+            src="/img/pre_voyage_light.png"
+            alt="Pre Voyage light banner image"
+            fill={true}
+            sizes="w-full"
+            priority
+            style={{ objectFit: "contain" }}
+          />
+        }
+        imageDark={
+          <Image
+            src="/img/pre_voyage_dark.png"
+            alt="Pre Voyage dark banner image"
+            fill={true}
+            sizes="w-full"
+            priority
+            style={{ objectFit: "contain" }}
+          />
+        }
         height="h-[437px]"
         width="w-full"
       />

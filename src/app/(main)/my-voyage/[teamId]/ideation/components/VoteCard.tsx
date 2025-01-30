@@ -1,6 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { Avatar } from "@chingu-x/components/avatar";
+import Image from "next/image";
+import { AvatarGroup } from "@chingu-x/components/avatar-group";
 import Button from "@/components/Button";
 import {
   type ProjectIdeaVotes,
@@ -10,13 +13,11 @@ import { useAppDispatch, useIdeation, useModal, useUser } from "@/store/hooks";
 import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
-import AvatarGroup from "@/components/avatar/AvatarGroup";
-import Avatar from "@/components/avatar/Avatar";
 import {
   addIdeationVote,
   removeIdeationVote,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import { onOpenModal } from "@/store/features/modal/modalSlice";
 import Tooltip from "@/components/Tooltip";
 
 interface VoteCardProps {
@@ -143,17 +144,21 @@ function VoteCard({ projectIdeaId, users, className }: VoteCardProps) {
               hovered={tooltipHovered === user.votedBy.member.id}
             >
               <Avatar
-                customClassName="border border-base-content"
-                width={24}
-                height={24}
-                image={user.votedBy.member.avatar}
+                customClassName="border border-base-content h-6 w-6"
                 onMouseEnter={() => {
                   setTooltipHovered(user.votedBy.member.id);
                 }}
                 onMouseLeave={() => {
                   setTooltipHovered("");
                 }}
-              />
+              >
+                <Image
+                  src={user.votedBy.member.avatar}
+                  alt={`${user.votedBy.member.firstName}'s avatar`}
+                  width={24}
+                  height={24}
+                ></Image>
+              </Avatar>
             </Tooltip>
           ))}
         </AvatarGroup>

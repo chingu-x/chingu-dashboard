@@ -2,7 +2,9 @@
 
 import React from "react";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
-import Badge from "@/components/badge/Badge";
+import { Badge } from "@chingu-x/components/badge";
+import { Avatar } from "@chingu-x/components/avatar";
+import Image from "next/image";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 
@@ -50,12 +52,19 @@ function ResourceItem({
         <p className="mb-1 text-left text-base font-semibold">{title}</p>
         <div className="flex">
           <p className="mr-2 text-base font-medium">Shared by</p>
-          <Badge
-            title={userName}
-            variant="primary"
-            isAvatarBadge={true}
-            avatarUrlImage={userAvatarUrl}
-          />
+          {/* TO DO: replace undefined with default avatar when it is ready. */}
+          <Badge title={userName}>
+            {userAvatarUrl ? (
+              <Avatar customClassName="h-4 w-4">
+                <Image
+                  src={userAvatarUrl}
+                  alt={`${userName}'s avatar`}
+                  width={16}
+                  height={16}
+                />
+              </Avatar>
+            ) : undefined}
+          </Badge>
         </div>
       </div>
       <ArrowTopRightOnSquareIcon className="m-7 h-6 w-6 shrink-0 text-base-300 group-hover:stroke-base-300" />

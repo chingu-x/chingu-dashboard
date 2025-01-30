@@ -1,12 +1,14 @@
 import { redirect } from "next/navigation";
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
+import { BannerContainer } from "@chingu-x/components/banner-container";
 import ContributionCard from "./ContributionCard";
 import CreateIdeationContainer from "./CreateIdeationContainer";
 import FinalizedIdeationCard from "./FinalizedIdeationCard";
 import IdeationContainer from "./IdeationContainer";
 import IdeationProvider from "./IdeationProvider";
 import VoteCard from "./VoteCard";
-import Banner from "@/components/banner/Banner";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
+import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 import ErrorComponent from "@/components/Error";
 
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
@@ -19,7 +21,6 @@ import { type AsyncActionResponse } from "@/utils/handleAsync";
 import { GET } from "@/utils/requests";
 import routePaths from "@/utils/routePaths";
 import { ErrorType } from "@/utils/error";
-import { type FetchIdeationsProps } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
 
 // import { ideation } from "./fixtures/ideation";
 
@@ -138,9 +139,26 @@ export default async function IdeationComponentWrapper({
                 </p>
               </div>
               <Banner
-                imageLight="/img/empty_ideation_light.png"
-                imageDark="/img/empty_ideation_dark.png"
-                alt="ideation_banner"
+                imageLight={
+                  <Image
+                    src="/img/empty_ideation_light.png"
+                    alt="Light ideation banner"
+                    fill={true}
+                    sizes="540px"
+                    priority
+                    style={{ objectFit: "contain" }}
+                  />
+                }
+                imageDark={
+                  <Image
+                    src="/img/empty_ideation_dark.png"
+                    alt="Dark ideation banner"
+                    fill={true}
+                    sizes="540px"
+                    priority
+                    style={{ objectFit: "contain" }}
+                  />
+                }
                 height="h-[290px]"
                 width="w-[540px]"
               />
@@ -176,20 +194,37 @@ export default async function IdeationComponentWrapper({
 
   return (
     <>
-      <VoyagePageBannerContainer
+      <BannerContainer
         title="Ideation"
         description="Okay, time to put on your thinking caps and channel your inner
           creativity! What kind of amazing, mind-blowing project idea do you
           have that will make SpaceX jealous? Let's hear it!"
       >
         <Banner
-          imageLight="/img/ideation_banner_light.png"
-          imageDark="/img/ideation_banner_dark.png"
-          alt="ideation_banner"
+          imageLight={
+            <Image
+              src="/img/ideation_banner_light.png"
+              alt="Light ideation banner"
+              fill={true}
+              sizes="276px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
+          imageDark={
+            <Image
+              src="/img/ideation_banner_dark.png"
+              alt="Dark ideation banner"
+              fill={true}
+              sizes="276px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
           height="h-[200px]"
           width="w-[276px]"
         />
-      </VoyagePageBannerContainer>
+      </BannerContainer>
       <div className="flex flex-col items-center gap-y-10">
         <IdeationProvider payload={projectIdeas} />
         {renderProjects()}

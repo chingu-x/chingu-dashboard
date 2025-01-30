@@ -2,11 +2,12 @@
 
 import "reflect-metadata";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import type { Sprint } from "@chingu-x/modules/sprints";
+import { BannerContainer } from "@chingu-x/components/banner-container";
+import { Banner } from "@chingu-x/components/banner";
 import VoyageSubmittedMessage from "./VoyageSubmittedMessage";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
-import Banner from "@/components/banner/Banner";
 import { currentDate } from "@/utils/getCurrentSprint";
 import { CacheTag } from "@/utils/cacheTag";
 import { ErrorType } from "@/utils/error";
@@ -65,18 +66,35 @@ export default function RedirectToCurrentSprintWrapper({
   if (voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)) {
     return (
       <div className="flex w-full flex-col gap-y-10">
-        <VoyagePageBannerContainer
+        <BannerContainer
           title="Sprints"
           description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
         >
           <Banner
-            imageLight="/img/sprints_banner_light.png"
-            imageDark="/img/sprints_banner_dark.png"
-            alt="sprints_banner"
+            imageLight={
+              <Image
+                src="/img/sprints_banner_light.png"
+                alt="Light sprints banner"
+                fill={true}
+                sizes="276px"
+                priority
+                style={{ objectFit: "contain" }}
+              />
+            }
+            imageDark={
+              <Image
+                src="/img/sprints_banner_dark.png"
+                alt="Dark sprints banner"
+                fill={true}
+                sizes="276px"
+                priority
+                style={{ objectFit: "contain" }}
+              />
+            }
             height="h-[200px]"
             width="w-[276px]"
           />
-        </VoyagePageBannerContainer>
+        </BannerContainer>
         <VoyageSubmittedMessage />
       </div>
     );
