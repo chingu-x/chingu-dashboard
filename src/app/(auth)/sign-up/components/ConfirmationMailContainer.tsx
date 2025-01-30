@@ -1,5 +1,6 @@
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 import Button from "@/components/Button";
-import Banner from "@/components/banner/Banner";
 
 function ConfirmationMailContainer() {
   return (
@@ -9,11 +10,28 @@ function ConfirmationMailContainer() {
       </p>
       <div>
         <Banner
-          imageLight="/img/retro_mac_light.png"
-          imageDark="/img/retro_mac_dark.png"
+          imageLight={
+            <Image
+              src="/img/retro_mac_light.png"
+              alt="Light email verification image"
+              fill={true}
+              sizes="168px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
+          imageDark={
+            <Image
+              src="/img/retro_mac_dark.png"
+              alt="Dark email verification image"
+              fill={true}
+              sizes="168px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
           height="h-[171px]"
           width="w-[168px]"
-          alt="Email verification image"
         />
       </div>
       <div className="flex flex-col items-center">

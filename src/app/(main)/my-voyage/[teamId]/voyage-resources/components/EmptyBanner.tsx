@@ -1,4 +1,5 @@
-import Banner from "@/components/banner/Banner";
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 
 export default function EmptyBanner() {
   return (
@@ -15,9 +16,26 @@ export default function EmptyBanner() {
         </p>
       </div>
       <Banner
-        imageLight="/img/empty_resources_light.png"
-        imageDark="/img/empty_resources_dark.png"
-        alt="desk"
+        imageLight={
+          <Image
+            src="/img/empty_resources_light.png"
+            alt="Light desk"
+            fill={true}
+            sizes="500px"
+            priority
+            style={{ objectFit: "contain" }}
+          />
+        }
+        imageDark={
+          <Image
+            src="/img/empty_resources_dark.png"
+            alt="Dark desk"
+            fill={true}
+            sizes="500px"
+            priority
+            style={{ objectFit: "contain" }}
+          />
+        }
         height="h-[500px]"
         width="w-[500px]"
       />

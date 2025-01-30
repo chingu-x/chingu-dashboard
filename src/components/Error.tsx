@@ -3,11 +3,13 @@
 import { startTransition } from "react";
 import { useRouter } from "next/navigation";
 
+import { Banner } from "@chingu-x/components/banner";
+
+import Image from "next/image";
 import Button from "./Button";
 
 import routePaths from "@/utils/routePaths";
 import { type ErrorType } from "@/utils/error";
-import Banner from "@/components/banner/Banner";
 
 interface ErrorProps {
   message: string;
@@ -33,9 +35,24 @@ export default function ErrorComponent({
   return (
     <div className="mx-auto flex h-[calc(100vh-155px)] w-full max-w-[628px] flex-col items-center justify-center gap-y-6">
       <Banner
-        imageLight="/img/error_light.png"
-        imageDark="/img/error_dark.png"
-        alt="error_banner"
+        imageLight={
+          <Image
+            src="/img/error_light.png"
+            alt="Login light error image"
+            fill={true}
+            sizes="484px"
+            priority
+          />
+        }
+        imageDark={
+          <Image
+            src="/img/error_dark.png"
+            alt="Login dark error image"
+            fill={true}
+            sizes="484px"
+            priority
+          />
+        }
         height="h-[315px]"
         width="w-[484px]"
       />

@@ -1,9 +1,11 @@
 import { redirect } from "next/navigation";
 
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
+import { BannerContainer } from "@chingu-x/components/banner-container";
 import DirectoryProvider from "./DirectoryProvider";
 import TeamMember from "./TeamMember";
 
-import Banner from "@/components/banner/Banner";
 import ErrorComponent from "@/components/Error";
 
 import { type TeamDirectory } from "@/store/features/directory/directorySlice";
@@ -15,7 +17,6 @@ import { CacheTag } from "@/utils/cacheTag";
 import { type User } from "@/store/features/user/userSlice";
 import { getUser } from "@/utils/getUser";
 import { getTimezone } from "@/utils/getTimezone";
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
 import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import { ErrorType } from "@/utils/error";
 
@@ -126,18 +127,35 @@ export default async function DirectoryComponentWrapper({
 
   return (
     <>
-      <VoyagePageBannerContainer
+      <BannerContainer
         title="Directory"
         description="Behold, your mighty band of teammates! If you want them to plan with precision and prowess, make sure your deets are up to date, or else prepare for some serious spreadsheet confusion!"
       >
         <Banner
-          imageLight="/img/directory_banner_light.png"
-          imageDark="/img/directory_banner_dark.png"
-          alt="directory_banner"
+          imageLight={
+            <Image
+              src="/img/directory_banner_light.png"
+              alt="Light directory banner"
+              fill={true}
+              sizes="276px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
+          imageDark={
+            <Image
+              src="/img/directory_banner_dark.png"
+              alt="Dark directory banner"
+              fill={true}
+              sizes="276px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
           height="h-[200px]"
           width="w-[276px]"
         />
-      </VoyagePageBannerContainer>
+      </BannerContainer>
       <DirectoryProvider payload={teamDirectory} />
       {/* For screens > 1920px */}
       <div className="flex w-full flex-col gap-y-10 rounded-2xl border border-transparent bg-transparent p-10 pb-4 text-base-300 3xl:gap-y-0 3xl:bg-base-200">

@@ -1,5 +1,8 @@
 import { redirect } from "next/navigation";
 
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
+import { BannerContainer } from "@chingu-x/components/banner-container";
 import ProgressStepper from "./ProgressStepper";
 import MeetingOverview from "./meetingOverview/MeetingOverview";
 import Agendas from "./agenda/Agendas";
@@ -7,9 +10,6 @@ import Sections from "./sections/Sections";
 import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
 import SprintActions from "./SprintActions";
 import MeetingProvider from "@/myVoyage/sprints/providers/MeetingProvider";
-
-import VoyagePageBannerContainer from "@/components/banner/VoyagePageBannerContainer";
-import Banner from "@/components/banner/Banner";
 
 import {
   type FetchMeetingProps,
@@ -167,18 +167,35 @@ export default async function SprintWrapper({ params }: SprintWrapperProps) {
 
   return (
     <div className="flex w-full flex-col gap-y-10">
-      <VoyagePageBannerContainer
+      <BannerContainer
         title="Sprints"
         description="A sprint agenda helps the team stay on track, communicate well, and improve. Basically, it's like speed dating for developers. Except we're not looking for a soulmate, we're just trying to get some quality work done."
       >
         <Banner
-          imageLight="/img/sprints_banner_light.png"
-          imageDark="/img/sprints_banner_dark.png"
-          alt="sprints_banner"
+          imageLight={
+            <Image
+              src="/img/sprints_banner_light.png"
+              alt="Light sprints banner"
+              fill={true}
+              sizes="276px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
+          imageDark={
+            <Image
+              src="/img/sprints_banner_dark.png"
+              alt="Dark sprints banner"
+              fill={true}
+              sizes="276px"
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          }
           height="h-[200px]"
           width="w-[276px]"
         />
-      </VoyagePageBannerContainer>
+      </BannerContainer>
 
       <ProgressStepper currentSprintNumber={currentSprintNumber} />
       <SprintActions
