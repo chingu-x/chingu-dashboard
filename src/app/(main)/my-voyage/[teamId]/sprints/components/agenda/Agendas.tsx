@@ -4,13 +4,13 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
+import type { Agenda } from "@chingu-x/modules/sprint-meeting";
 import NoAgendasState from "./NoAgendasState";
 import AgendaTopic from "./AgendaTopic";
 import AgendaHeader from "./AgendaHeader";
 
 import routePaths from "@/utils/routePaths";
 import Divider from "@/myVoyage/sprints/components/Divider";
-import { type Agenda } from "@/store/features/sprint/sprintSlice";
 import useServerAction from "@/hooks/useServerAction";
 import { changeAgendaTopicStatus } from "@/myVoyage/sprints/sprintsService";
 import { useAppDispatch } from "@/store/hooks";
@@ -26,7 +26,6 @@ interface AgendasProps {
 }
 
 export default function Agendas({ params, topics }: AgendasProps) {
-  topics = topics.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt));
   const [teamId, meetingId, sprintNumber] = [
     Number(params.teamId),
     Number(params.meetingId),
