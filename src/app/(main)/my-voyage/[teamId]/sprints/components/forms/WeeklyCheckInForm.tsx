@@ -11,7 +11,6 @@ import BaseFormPage from "@/components/form/BaseFormPage";
 import { submitCheckInForm } from "@/myVoyage/sprints/sprintsService";
 import FormInput from "@/components/form/FormInput";
 
-
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { createValidationSchema } from "@/utils/form/createValidationSchema";
