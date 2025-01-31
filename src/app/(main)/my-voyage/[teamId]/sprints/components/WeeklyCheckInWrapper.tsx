@@ -100,7 +100,7 @@ export default function WeeklyCheckInWrapper({
       voyageTeam: myTeam,
     })!;
 
-    return await formsAdapter.getWeeklyCheckinForm({
+    return await formsAdapter.fetchWeeklyCheckinForm({
       voyageTeamRoles,
       currentUserVoyageRole,
     });
