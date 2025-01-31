@@ -2,12 +2,12 @@ import { type Dispatch, type SetStateAction } from "react";
 import { Banner } from "@chingu-x/components/banner";
 import Image from "next/image";
 import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
 import { ContainerState } from "./SignInContainer";
 import { useAppDispatch } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import Spinner from "@/components/Spinner";
 
 type ResendEmailContainerProp = {
   email: string;

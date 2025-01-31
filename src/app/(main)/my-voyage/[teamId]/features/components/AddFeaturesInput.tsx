@@ -5,13 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { addFeature } from "@/myVoyage/features/featuresService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import Spinner from "@/components/Spinner";
 
 interface AddFeaturesInputProps {
   handleClick: () => void;

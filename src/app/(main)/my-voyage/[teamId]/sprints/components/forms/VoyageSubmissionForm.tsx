@@ -6,11 +6,11 @@ import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
 import BaseFormPage from "@/components/form/BaseFormPage";
 import { submitVoyageProjectForm } from "@/myVoyage/sprints/sprintsService";
 import FormInput from "@/components/form/FormInput";
 
-import Spinner from "@/components/Spinner";
 
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";

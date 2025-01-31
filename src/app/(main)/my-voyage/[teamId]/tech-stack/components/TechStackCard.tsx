@@ -10,6 +10,7 @@ import Image from "next/image";
 import { AvatarGroup } from "@chingu-x/components/avatar-group";
 import { Tooltip } from "@chingu-x/components/tooltip";
 import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
@@ -24,7 +25,6 @@ import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
 import { useUser, useAppDispatch, useAppSelector } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import Spinner from "@/components/Spinner";
 import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
 import { validateTextInput } from "@/utils/form/validateInput";
 

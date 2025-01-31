@@ -1,5 +1,6 @@
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
 import createFinalList from "./utils/createFinalList";
 import editFinalList from "./utils/editFinalList";
 import {
@@ -7,7 +8,6 @@ import {
   finalizeTechStack,
 } from "@/app/(main)/my-voyage/[teamId]/tech-stack/techStackService";
 import type { ConfirmationButtonProps } from "@/app/(main)/my-voyage/[teamId]/tech-stack/finalize/types";
-import Spinner from "@/components/Spinner";
 import { useAppDispatch } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import { onOpenModal } from "@/store/features/modal/modalSlice";

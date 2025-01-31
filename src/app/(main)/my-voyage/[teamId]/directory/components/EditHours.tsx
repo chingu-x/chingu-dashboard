@@ -5,13 +5,13 @@ import { useParams } from "next/navigation";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { type SetStateAction, useEffect } from "react";
 import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";
 import { editHours } from "@/app/(main)/my-voyage/[teamId]/directory/directoryService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import useServerAction from "@/hooks/useServerAction";
-import Spinner from "@/components/Spinner";
 
 interface EditHoursProps {
   hrPerSprint: number;
