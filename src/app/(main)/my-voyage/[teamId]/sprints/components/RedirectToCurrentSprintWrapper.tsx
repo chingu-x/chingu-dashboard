@@ -14,9 +14,14 @@ import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
 import { useAppDispatch, useUser } from "@/store/hooks";
 import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
-import { sprintsAdapter, voyageTeamAdapter } from "@/utils/adapters";
+import {
+  myTeamAdapter,
+  sprintsAdapter,
+  voyageTeamAdapter,
+} from "@/utils/adapters";
 import Spinner from "@/components/Spinner";
 import { fetchSprints } from "@/store/features/sprint/sprintSlice";
+import { fetchTeamDirectory } from "@/store/features/my-team/myTeam";
 
 interface RedirectToCurrentSprintWrapperProps {
   params: {
@@ -35,11 +40,14 @@ export default function RedirectToCurrentSprintWrapper({
 
   const { isPending, isError, error, data } = useQuery({
     queryKey: [CacheTag.sprints, { teamId, user: `${user.id}` }],
-    queryFn: getSprintsQuery,
+    queryFn: fetchSprintsQuery,
   });
 
-  async function getSprintsQuery() {
-    return await sprintsAdapter.fetchSprints({ teamId });
+  async function fetchSprintsQuery() {
+    const sprints = await sprintsAdapter.fetchSprints({ teamId });
+    const myTeam = await myTeamAdapter.getMyTeam({ teamId, user });
+
+    return { sprints, myTeam };
   }
 
   if (isPending) {
@@ -60,7 +68,9 @@ export default function RedirectToCurrentSprintWrapper({
   }
 
   if (data) {
-    dispatch(fetchSprints(data));
+    const { sprints, myTeam } = data;
+    dispatch(fetchSprints(sprints));
+    dispatch(fetchTeamDirectory(myTeam));
   }
 
   if (voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)) {
@@ -101,7 +111,7 @@ export default function RedirectToCurrentSprintWrapper({
   }
 
   const { teamMeetings, number } = sprintsAdapter.getCurrentSprint({
-    sprints: data.sprints,
+    sprints: data.sprints.sprints,
     currentDate,
   }) as Sprint;
 

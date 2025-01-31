@@ -1,61 +1,28 @@
-import { redirect } from "next/navigation";
+"use client";
 
-import { fetchSprints } from "./RedirectToCurrentSprintWrapper";
+import "reflect-metadata";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import type {
+  FormQuestions,
+  TeamMemberForCheckbox,
+} from "@chingu-x/modules/forms";
+import { useEffect, useState } from "react";
+import type { Sprint } from "@chingu-x/modules/sprints";
 import WeeklyCheckInForm from "./forms/WeeklyCheckInForm";
-
-import { fetchTeamDirectory } from "@/app/(main)/my-voyage/[teamId]/my-team/components/DirectoryComponentWrapper";
-import { type Sprint, type Voyage } from "@/store/features/sprint/sprintSlice";
-import { getAccessToken } from "@/utils/getCookie";
-import { getUser } from "@/utils/getUser";
-import { GET } from "@/utils/requests";
 import { CacheTag } from "@/utils/cacheTag";
-import { handleAsync } from "@/utils/handleAsync";
-import { type AsyncActionResponse } from "@/utils/handleAsync";
-import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
 import routePaths from "@/utils/routePaths";
-import { Forms, UserRole } from "@/utils/form/formsEnums";
-import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
-import { getSprintCheckinIsStatus } from "@/utils/getFormStatus";
-import { getCurrentSprint } from "@/utils/getCurrentSprint";
-import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
+import { currentDate } from "@/utils/getCurrentSprint";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
-
-interface FetchFormQuestionsProps {
-  formId: number;
-}
-
-interface FetchFormQuestionsResponse {
-  id: number;
-  title: string;
-  description: string;
-  questions: Question[];
-}
-
-export async function fetchFormQuestions({
-  formId,
-}: FetchFormQuestionsProps): Promise<
-  AsyncActionResponse<FetchFormQuestionsResponse>
-> {
-  let cache: CacheTag;
-
-  if (formId === Number(Forms.checkIn)) {
-    cache = CacheTag.checkInForm;
-  } else if (formId === Number(Forms.submitProject)) {
-    cache = CacheTag.submitVoyageForm;
-  }
-
-  const token = getAccessToken();
-  const fetchFormAsync = () =>
-    GET<FetchFormQuestionsResponse>(
-      `api/v1/forms/${formId}`,
-      token,
-      "force-cache",
-      cache,
-    );
-
-  return await handleAsync(fetchFormAsync);
-}
+import { useMyTeam, useSprint, useUser } from "@/store/hooks";
+import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
+import {
+  formsAdapter,
+  sprintsAdapter,
+  voyageTeamAdapter,
+} from "@/utils/adapters";
+import Spinner from "@/components/Spinner";
 
 interface WeeklyCheckInWrapperProps {
   params: {
@@ -64,197 +31,124 @@ interface WeeklyCheckInWrapperProps {
   };
 }
 
-export default async function WeeklyCheckInWrapper({
+export default function WeeklyCheckInWrapper({
   params,
 }: WeeklyCheckInWrapperProps) {
   const sprintNumber = Number(params.sprintNumber);
-  const teamId = Number(params.teamId);
-
-  let voyageData: Voyage;
+  const { teamId } = params;
+  const sprints = useSprint();
+  const user = useUser();
+  const myTeam = useMyTeam();
+  const router = useRouter();
   let teamMembers = [] as TeamMemberForCheckbox[];
+  const voyageTeamMemberId = voyageTeamAdapter.getCurrentVoyageUserId(user);
+  const [weeklyCheckinFormQuestions, setWeeklyCheckinFormQuestions] =
+    useState<FormQuestions>();
+  const [currentSprintNumber, setCurrentSprintNumber] = useState<number>();
 
-  let description = "";
-  let questions = [] as Question[];
+  useCheckCurrentVoyageTeam({ user, teamId });
 
-  let hasProductOwner = false;
-  let hasScrumMaster = false;
-  let isScrumMaster = false;
-  let isProductOwner = false;
+  useEffect(() => {
+    if (sprints.sprints.length === 0 || myTeam.voyageTeamMembers.length === 0) {
+      router.push(routePaths.sprintsPage(teamId));
+    }
+  }, [sprints, myTeam, teamId, router]);
 
-  const [user, error] = await getUser();
+  // Check if a user wants to submit a checkin form for the current sprint.
+  useEffect(() => {
+    if (sprints.sprints.length > 0) {
+      const { number } = sprintsAdapter.getCurrentSprint({
+        currentDate,
+        sprints: sprints.sprints,
+      }) as Sprint;
 
-  const { errorResponse, data } = await getCurrentVoyageData({
+      setCurrentSprintNumber(number);
+    }
+  }, [sprints]);
+
+  if (currentSprintNumber && currentSprintNumber !== sprintNumber) {
+    router.push(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
+  }
+
+  // Check if a checkin form for the current sprint has been submitted.
+  const sprintCheckinIsSubmitted = sprintsAdapter.getSprintCheckinStatus({
     user,
-    error,
-    teamId,
-    args: { teamId },
-    func: fetchSprints,
+    sprintNum: sprintNumber,
   });
 
-  if (errorResponse) {
+  if (sprintCheckinIsSubmitted) {
+    router.push(
+      routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString()),
+    );
+  }
+
+  const { isPending, isError, error, data } = useQuery({
+    queryKey: [
+      CacheTag.checkInForm,
+      { teamId, user: `${user.id}`, sprintNumber },
+    ],
+    queryFn: fetchWeeklyCheckinFormQuery,
+  });
+
+  async function fetchWeeklyCheckinFormQuery() {
+    const voyageTeamRoles = voyageTeamAdapter.getVoyageMemberRoles({
+      voyageTeam: myTeam,
+    });
+
+    const currentUserVoyageRole = voyageTeamAdapter.getCurrentUserVoyageRole({
+      user,
+      voyageTeam: myTeam,
+    })!;
+
+    return await formsAdapter.getWeeklyCheckinForm({
+      voyageTeamRoles,
+      currentUserVoyageRole,
+    });
+  }
+
+  useEffect(() => {
+    if (data) {
+      setWeeklyCheckinFormQuestions(data);
+    }
+  }, [data]);
+
+  if (isPending) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (isError) {
     return (
       <ErrorComponent
-        errorType={ErrorType.FETCH_VOYAGE_DATA}
-        message={errorResponse}
+        errorType={ErrorType.FETCH_FORM_QUESTIONS}
+        message={error.message}
       />
     );
   }
 
-  if (data) {
-    const [res, error] = data;
-
-    if (error) {
-      return (
-        <ErrorComponent
-          errorType={ErrorType.FETCH_SPRINT}
-          message={error.message}
-        />
-      );
-    }
-    voyageData = res!;
-
-    // Check if a user wants to submit a checkin form for the current sprint.
-    const { number } = getCurrentSprint(voyageData.sprints) as Sprint;
-    const currentSprintNumber = number;
-
-    if (currentSprintNumber !== sprintNumber) {
-      redirect(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
-    } else {
-      // Check if a checkin form for the current sprint has been submitted.
-      const sprintCheckinIsSubmitted = getSprintCheckinIsStatus(
-        user,
-        sprintNumber,
-      );
-
-      if (sprintCheckinIsSubmitted) {
-        redirect(
-          routePaths.emptySprintPage(
-            teamId.toString(),
-            sprintNumber.toString(),
-          ),
-        );
-      }
-
-      // Fetch teamDirectory
-      const [res, error] = await fetchTeamDirectory({ teamId, user });
-      if (res) {
-        let voyageTeamMemberId: number | undefined;
-        if (user && user.voyageTeamMembers) {
-          voyageTeamMemberId = getCurrentVoyageTeam({
-            teamId,
-            user,
-            error,
-          }).voyageTeamMemberId;
-        }
-
-        // Check if a team has a product owner or a scrum muster and if a user is a team has a product owner or a scrum muster
-        hasScrumMaster = !!res.voyageTeamMembers.find(
-          (member) =>
-            member.voyageRole.name === UserRole.scrumMaster.toString(),
-        );
-
-        hasProductOwner = !!res.voyageTeamMembers.find(
-          (member) =>
-            member.voyageRole.name === UserRole.productOwner.toString(),
-        );
-
-        const currentUserRole = res.voyageTeamMembers.find(
-          (member) => member.id === voyageTeamMemberId,
-        )?.voyageRole.name;
-
-        isScrumMaster = currentUserRole === UserRole.scrumMaster.toString();
-
-        isProductOwner = currentUserRole === UserRole.productOwner.toString();
-
-        // Get all teamMembers except for the current user
-        if (voyageTeamMemberId) {
-          teamMembers = res.voyageTeamMembers
-            .map((member) => ({
-              id: member.id,
-              avatar: member.member.avatar,
-              firstName: member.member.firstName,
-              lastName: member.member.lastName,
-            }))
-            .filter((member) => member.id !== voyageTeamMemberId);
-        }
-      }
-
-      if (error) {
-        return (
-          <ErrorComponent
-            errorType={ErrorType.FETCH_TEAM_DIRECTORY}
-            message={error.message}
-          />
-        );
-      }
-
-      // Fetch general checkin form
-      const [formRes, formError] = await fetchFormQuestions({
-        formId: Forms.checkIn,
-      });
-
-      if (formError) {
-        return (
-          <ErrorComponent
-            errorType={ErrorType.FETCH_FORM_QUESTIONS}
-            message={formError.message}
-          />
-        );
-      }
-
-      if (formRes && formRes?.description) description = formRes.description;
-      if (formRes && formRes?.questions) questions = formRes.questions;
-
-      // Fetch PO checkin questions (form)
-      if (hasProductOwner && !isProductOwner) {
-        const [POformRes, POformError] = await fetchFormQuestions({
-          formId: Forms.checkinPO,
-        });
-
-        if (POformError) {
-          return (
-            <ErrorComponent
-              errorType={ErrorType.FETCH_FORM_QUESTIONS}
-              message={POformError.message}
-            />
-          );
-        }
-
-        if (POformRes && POformRes?.questions)
-          questions = [...questions, ...POformRes.questions];
-      }
-
-      // Fetch SM checkin questions (form)
-      if (hasScrumMaster && !isScrumMaster) {
-        const [SMformRes, SMformError] = await fetchFormQuestions({
-          formId: Forms.checkinSM,
-        });
-
-        if (SMformError) {
-          return (
-            <ErrorComponent
-              errorType={ErrorType.FETCH_FORM_QUESTIONS}
-              message={SMformError.message}
-            />
-          );
-        }
-
-        if (SMformRes && SMformRes?.questions)
-          questions = [...questions, ...SMformRes.questions];
-      }
-
-      questions = questions.sort((a, b) => a.order - b.order);
-    }
-  } else {
-    redirect(routePaths.dashboardPage());
+  // Get all teamMembers except for the current user
+  if (voyageTeamMemberId) {
+    teamMembers = myTeam.voyageTeamMembers
+      .map((member) => ({
+        id: member.id,
+        avatar: member.member.avatar,
+        firstName: member.member.firstName,
+        lastName: member.member.lastName,
+      }))
+      .filter((member) => member.id !== voyageTeamMemberId);
   }
 
   return (
-    <WeeklyCheckInForm
-      params={params}
-      description={description}
-      questions={questions}
-      teamMembers={teamMembers}
-    />
+    weeklyCheckinFormQuestions && (
+      <WeeklyCheckInForm
+        params={params}
+        description={weeklyCheckinFormQuestions.description}
+        questions={weeklyCheckinFormQuestions.questions}
+        teamMembers={teamMembers}
+      />
+    )
   );
 }

@@ -6,6 +6,7 @@ import type { VoyageTeamClientAdapter } from "@chingu-x/modules/voyage-team";
 import type { MyTeamClientAdapter } from "@chingu-x/modules/my-team";
 import type { SprintsClientAdapter } from "@chingu-x/modules/sprints";
 import type { SprintMeetingClientAdapter } from "@chingu-x/modules/sprint-meeting";
+import type { FormsClientAdapter } from "@chingu-x/modules/forms";
 
 export const authAdapter = resolve<AuthClientAdapter>(TYPES.AuthClientAdapter);
 
@@ -25,4 +26,8 @@ export const sprintsAdapter = resolve<SprintsClientAdapter>(
 
 export const sprintMeetingAdapter = resolve<SprintMeetingClientAdapter>(
   TYPES.SprintMeetingClientAdapter,
+);
+
+export const formsAdapter = resolve<FormsClientAdapter>(
+  TYPES.FormsClientAdapter,
 );
