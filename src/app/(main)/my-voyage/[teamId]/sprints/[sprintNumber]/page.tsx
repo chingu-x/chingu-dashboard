@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-import Spinner from "@/components/Spinner";
 import EmptySprintWrapper from "@/myVoyage/sprints/components/EmptySprintWrapper";
 
 interface EmptySprintPageProps {
@@ -10,9 +8,5 @@ interface EmptySprintPageProps {
 }
 
 export default function EmptySprintPage({ params }: EmptySprintPageProps) {
-  return (
-    <Suspense fallback={<Spinner />}>
-      <EmptySprintWrapper params={params} />
-    </Suspense>
-  );
+  return <EmptySprintWrapper params={params} />;
 }
