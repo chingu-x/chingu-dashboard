@@ -1,4 +1,8 @@
-import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {
+  type PayloadAction,
+  createAction,
+  createSlice,
+} from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { PURGE } from "redux-persist";
 import type { VoyageSprint } from "@chingu-x/modules/sprints";
@@ -44,6 +48,14 @@ export const sprintSlice = createSlice({
     builder.addCase(clientSignOut, () => initialState);
   },
 });
+
+export interface SubmitWeeklyCheckinPayload {
+  sprintId: number;
+}
+
+export const submitWeeklyCheckin = createAction<SubmitWeeklyCheckinPayload>(
+  "sprint/submitWeeklyCheckin",
+);
 
 export const { fetchSprints, fetchMeeting } = sprintSlice.actions;
 

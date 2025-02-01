@@ -20,6 +20,7 @@ import routePaths from "@/utils/routePaths";
 import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
 import { formsAdapter, voyageTeamAdapter } from "@/utils/adapters";
 import { CacheTag } from "@/utils/cacheTag";
+import { submitWeeklyCheckin } from "@/store/features/sprint/sprintSlice";
 
 interface WeeklyCheckingFormProps {
   params: {
@@ -66,6 +67,7 @@ export default function WeeklyCheckingForm({
       router.push(
         routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString()),
       );
+      dispatch(submitWeeklyCheckin({ sprintId }));
       dispatch(onOpenModal({ type: "checkInSuccess" }));
     },
     // TODO: update error handling

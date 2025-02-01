@@ -1,6 +1,10 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { type User } from "@chingu-x/modules/user";
 import { clientSignOut } from "@/store/features/auth/authSlice";
+import {
+  submitWeeklyCheckin,
+  SubmitWeeklyCheckinPayload,
+} from "../sprint/sprintSlice";
 
 const initialState: User = {
   id: "",
@@ -35,6 +39,13 @@ export const userSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(clientSignOut, () => initialState);
+    builder.addCase(
+      submitWeeklyCheckin,
+      (state, action: PayloadAction<SubmitWeeklyCheckinPayload>) => {
+        const { sprintId } = action.payload;
+        state.sprintCheckIn = [...state.sprintCheckIn, sprintId];
+      },
+    );
   },
 });
 
