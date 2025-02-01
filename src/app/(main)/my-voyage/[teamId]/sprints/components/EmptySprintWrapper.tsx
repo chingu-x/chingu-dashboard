@@ -46,7 +46,7 @@ export default function EmptySprintWrapper({
   });
 
   // Get current sprint number
-  const { number } = sprintsAdapter.getCurrentSprint({
+  const { number, id } = sprintsAdapter.getCurrentSprint({
     currentDate,
     sprints: sprints.sprints,
   }) as Sprint;
@@ -66,7 +66,7 @@ export default function EmptySprintWrapper({
     // Check if a checkin form for the current sprint has been submitted
     const sprintCheckinIsSubmitted = sprintsAdapter.getSprintCheckinStatus({
       user,
-      sprintNum: sprintNumber,
+      sprintNum: id,
     });
 
     return (
