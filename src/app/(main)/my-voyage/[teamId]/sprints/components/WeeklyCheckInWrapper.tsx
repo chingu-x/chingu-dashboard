@@ -44,8 +44,6 @@ export default function WeeklyCheckInWrapper({
   const voyageTeamMemberId = voyageTeamAdapter.getCurrentVoyageUserId(user);
   const [weeklyCheckinFormQuestions, setWeeklyCheckinFormQuestions] =
     useState<FormQuestions>();
-  const [currentSprintNumber, setCurrentSprintNumber] = useState<number>();
-  const [sprintId, setSprintId] = useState<number>();
 
   useCheckCurrentVoyageTeam({ user, teamId });
 
@@ -56,17 +54,13 @@ export default function WeeklyCheckInWrapper({
   }, [sprints, myTeam, teamId, router]);
 
   // Check if a user wants to submit a checkin form for the current sprint.
-  useEffect(() => {
-    if (sprints.sprints.length > 0) {
-      const { number, id } = sprintsAdapter.getCurrentSprint({
-        currentDate,
-        sprints: sprints.sprints,
-      }) as Sprint;
 
-      setCurrentSprintNumber(number);
-      setSprintId(id);
-    }
-  }, [sprints]);
+  const { number, id } = sprintsAdapter.getCurrentSprint({
+    currentDate,
+    sprints: sprints.sprints,
+  }) as Sprint;
+
+  const currentSprintNumber = number;
 
   if (currentSprintNumber && currentSprintNumber !== sprintNumber) {
     router.push(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
@@ -75,7 +69,7 @@ export default function WeeklyCheckInWrapper({
   // Check if a checkin form for the current sprint has been submitted.
   const sprintCheckinIsSubmitted = sprintsAdapter.getSprintCheckinStatus({
     user,
-    sprintId: sprintNumber,
+    sprintId: id,
   });
 
   if (sprintCheckinIsSubmitted) {
@@ -150,7 +144,7 @@ export default function WeeklyCheckInWrapper({
         description={weeklyCheckinFormQuestions.description}
         questions={weeklyCheckinFormQuestions.questions}
         teamMembers={teamMembers}
-        sprintId={sprintId!}
+        sprintId={id}
       />
     )
   );

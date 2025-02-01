@@ -69,8 +69,6 @@ export default function EmptySprintWrapper({
       sprintId: id,
     });
 
-    console.log(sprintCheckinIsSubmitted);
-
     return (
       <div className="flex w-full flex-col gap-y-10">
         <BannerContainer
