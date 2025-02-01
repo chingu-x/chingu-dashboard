@@ -44,10 +44,7 @@ export default function RedirectToCurrentSprintWrapper({
   });
 
   async function fetchSprintsQuery() {
-    const sprints = await sprintsAdapter.fetchSprints({ teamId });
-    const myTeam = await myTeamAdapter.getMyTeam({ teamId, user });
-
-    return { sprints, myTeam };
+    return await sprintsAdapter.fetchSprints({ teamId });
   }
 
   if (isPending) {
@@ -68,9 +65,7 @@ export default function RedirectToCurrentSprintWrapper({
   }
 
   if (data) {
-    const { sprints, myTeam } = data;
-    dispatch(fetchSprints(sprints));
-    dispatch(fetchTeamDirectory(myTeam));
+    dispatch(fetchSprints(data));
   }
 
   if (voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)) {
@@ -111,7 +106,7 @@ export default function RedirectToCurrentSprintWrapper({
   }
 
   const { teamMeetings, number } = sprintsAdapter.getCurrentSprint({
-    sprints: data.sprints.sprints,
+    sprints: data.sprints,
     currentDate,
   }) as Sprint;
 
