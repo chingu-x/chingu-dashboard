@@ -3,8 +3,8 @@ import { type User } from "@chingu-x/modules/user";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 import {
   submitWeeklyCheckin,
-  SubmitWeeklyCheckinPayload,
-} from "../sprint/sprintSlice";
+  type SubmitWeeklyCheckinPayload,
+} from "@/store/features/sprint/sprintSlice";
 
 const initialState: User = {
   id: "",
