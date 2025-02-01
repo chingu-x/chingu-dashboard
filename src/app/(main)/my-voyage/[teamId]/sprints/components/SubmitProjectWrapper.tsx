@@ -1,15 +1,18 @@
-import { redirect } from "next/navigation";
+"use client";
 
-import { fetchFormQuestions } from "./WeeklyCheckInWrapper";
+import "reflect-metadata";
+import { useRouter } from "next/navigation";
+import type { Sprint } from "@chingu-x/modules/sprints";
+import { useQuery } from "@tanstack/react-query";
 import VoyageSubmissionForm from "./forms/VoyageSubmissionForm";
-
-import { getUser } from "@/utils/getUser";
-import { getCurrentVoyageData } from "@/utils/getCurrentVoyageData";
-import routePaths from "@/utils/routePaths";
-import { Forms } from "@/utils/form/formsEnums";
-import { type Question } from "@/utils/form/types";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
+import { useSprint, useUser } from "@/store/hooks";
+import { formsAdapter, sprintsAdapter } from "@/utils/adapters";
+import { currentDate } from "@/utils/getCurrentSprint";
+import { CacheTag } from "@/utils/cacheTag";
+import Spinner from "@/components/Spinner";
+import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
 
 interface SubmitProjectWrapperProps {
   params: {
@@ -18,60 +21,60 @@ interface SubmitProjectWrapperProps {
   };
 }
 
-export default async function SubmitProjectWrapper({
+export default function SubmitProjectWrapper({
   params,
 }: SubmitProjectWrapperProps) {
-  const teamId = Number(params.teamId);
-  let title = "";
-  let description = "";
-  let questions = [] as Question[];
+  const { teamId } = params;
+  const sprintNumber = Number(params.sprintNumber);
+  const user = useUser();
+  const sprints = useSprint();
+  const router = useRouter();
 
-  const [user, error] = await getUser();
+  useCheckCurrentVoyageTeam({ user, teamId });
 
-  // TODO: chech if already submitted
+  const { number } = sprintsAdapter.getCurrentSprint({
+    currentDate,
+    sprints: sprints.sprints,
+  }) as Sprint;
 
-  const { errorResponse, data } = await getCurrentVoyageData({
-    user,
-    error,
-    teamId,
-    args: { formId: Forms.submitProject },
-    func: fetchFormQuestions,
+  const currentSprintNumber = number;
+
+  if (currentSprintNumber && currentSprintNumber !== sprintNumber) {
+    router.push(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
+  }
+
+  const { isPending, isError, error, data } = useQuery({
+    queryKey: [CacheTag.submitVoyageForm, { teamId, user: `${user.id}` }],
+    queryFn: fetchVoyageProjectSubmitFormQuery,
   });
 
-  if (errorResponse) {
+  async function fetchVoyageProjectSubmitFormQuery() {
+    return await formsAdapter.fetchSubmitVoyageProjectForm();
+  }
+
+  if (isPending) {
     return (
-      <ErrorComponent
-        errorType={ErrorType.FETCH_VOYAGE_DATA}
-        message={errorResponse}
-      />
+      <div className="flex min-h-screen items-center justify-center">
+        <Spinner />
+      </div>
     );
   }
 
-  if (data) {
-    const [res, error] = data;
-
-    if (res?.title) title = res?.title;
-    if (res?.description) description = res?.description;
-    if (res?.questions) questions = res?.questions;
-
-    if (error) {
-      return (
-        <ErrorComponent
-          errorType={ErrorType.FETCH_FORM_QUESTIONS}
-          message={error.message}
-        />
-      );
-    }
-  } else {
-    redirect(routePaths.dashboardPage());
+  if (isError) {
+    return (
+      <ErrorComponent
+        errorType={ErrorType.FETCH_FORM_QUESTIONS}
+        message={error.message}
+      />
+    );
   }
 
   return (
     <VoyageSubmissionForm
       params={params}
-      title={title}
-      description={description}
-      questions={questions}
+      title={data.title}
+      description={data.description}
+      questions={data.questions}
     />
   );
 }
