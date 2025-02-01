@@ -75,7 +75,7 @@ export default function WeeklyCheckInWrapper({
   // Check if a checkin form for the current sprint has been submitted.
   const sprintCheckinIsSubmitted = sprintsAdapter.getSprintCheckinStatus({
     user,
-    sprintNum: sprintNumber,
+    sprintId: sprintNumber,
   });
 
   if (sprintCheckinIsSubmitted) {

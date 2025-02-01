@@ -105,7 +105,7 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
   // Check if a checkin form for the current sprint has been submitted
   const sprintCheckinIsSubmitted = sprintsAdapter.getSprintCheckinStatus({
     user,
-    sprintNum: id,
+    sprintId: id,
   });
 
   return (
