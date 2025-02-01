@@ -45,6 +45,7 @@ export default function WeeklyCheckInWrapper({
   const [weeklyCheckinFormQuestions, setWeeklyCheckinFormQuestions] =
     useState<FormQuestions>();
   const [currentSprintNumber, setCurrentSprintNumber] = useState<number>();
+  const [sprintId, setSprintId] = useState<number>();
 
   useCheckCurrentVoyageTeam({ user, teamId });
 
@@ -57,12 +58,13 @@ export default function WeeklyCheckInWrapper({
   // Check if a user wants to submit a checkin form for the current sprint.
   useEffect(() => {
     if (sprints.sprints.length > 0) {
-      const { number } = sprintsAdapter.getCurrentSprint({
+      const { number, id } = sprintsAdapter.getCurrentSprint({
         currentDate,
         sprints: sprints.sprints,
       }) as Sprint;
 
       setCurrentSprintNumber(number);
+      setSprintId(id);
     }
   }, [sprints]);
 
@@ -84,7 +86,7 @@ export default function WeeklyCheckInWrapper({
 
   const { isPending, isError, error, data } = useQuery({
     queryKey: [
-      CacheTag.checkInForm,
+      CacheTag.weeklyCheckInForm,
       { teamId, user: `${user.id}`, sprintNumber },
     ],
     queryFn: fetchWeeklyCheckinFormQuery,
@@ -148,6 +150,7 @@ export default function WeeklyCheckInWrapper({
         description={weeklyCheckinFormQuestions.description}
         questions={weeklyCheckinFormQuestions.questions}
         teamMembers={teamMembers}
+        sprintId={sprintId!}
       />
     )
   );

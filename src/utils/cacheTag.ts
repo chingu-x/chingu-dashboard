@@ -17,6 +17,7 @@ export enum CacheTag {
   sprint4 = "sprint-4",
   sprint5 = "sprint-5",
   sprint6 = "sprint-6",
-  checkInForm = "checkInForm",
+  weeklyCheckInForm = "weeklyCheckInForm",
+  submitWeeklyCheckinForm = "submitWeeklyCheckinForm",
   submitVoyageForm = "submitVoyageForm",
 }

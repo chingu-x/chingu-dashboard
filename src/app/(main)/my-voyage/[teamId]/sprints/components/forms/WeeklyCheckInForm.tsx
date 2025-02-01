@@ -4,22 +4,22 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type {
+  SubmitWeeklyCheckinFormClientRequestDto,
+  SubmitWeeklyCheckinFormResponseDto,
+} from "@chingu-x/modules/forms";
 import BaseFormPage from "@/components/form/BaseFormPage";
-import { submitCheckInForm } from "@/myVoyage/sprints/sprintsService";
 import FormInput from "@/components/form/FormInput";
-
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
-
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { createValidationSchema } from "@/utils/form/createValidationSchema";
-import useServerAction from "@/hooks/useServerAction";
 import routePaths from "@/utils/routePaths";
-import { createFormResponseBody } from "@/utils/form/createFormResponseBody";
 import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
-import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
+import { formsAdapter, voyageTeamAdapter } from "@/utils/adapters";
+import { CacheTag } from "@/utils/cacheTag";
 
 interface WeeklyCheckingFormProps {
   params: {
@@ -29,6 +29,7 @@ interface WeeklyCheckingFormProps {
   description: string;
   questions: Question[];
   teamMembers: TeamMemberForCheckbox[];
+  sprintId: number;
 }
 
 export default function WeeklyCheckingForm({
@@ -36,19 +37,43 @@ export default function WeeklyCheckingForm({
   description,
   questions,
   teamMembers,
+  sprintId,
 }: WeeklyCheckingFormProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
+  const user = useUser();
   const [teamId, sprintNumber] = [
     Number(params.teamId),
     Number(params.sprintNumber),
   ];
 
-  const user = useUser();
-  const { voyageTeamMemberId } = getCurrentVoyageTeam({
-    teamId,
-    user,
-    error: null,
+  const { mutate, isPending } = useMutation<
+    SubmitWeeklyCheckinFormResponseDto,
+    Error,
+    SubmitWeeklyCheckinFormClientRequestDto
+  >({
+    mutationFn: submitWeeklyCheckinFormMutation,
+    mutationKey: [CacheTag.submitWeeklyCheckinForm],
+    onSuccess: () => {
+      queryClient.removeQueries({
+        queryKey: [
+          CacheTag.sprints,
+          CacheTag.sprintMeetingId,
+          CacheTag.weeklyCheckInForm,
+        ],
+      });
+      router.push(
+        routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString()),
+      );
+      dispatch(onOpenModal({ type: "checkInSuccess" }));
+    },
+    // TODO: update error handling
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
   });
 
   const { validationSchema, defaultValues } = createValidationSchema(questions);
@@ -65,37 +90,23 @@ export default function WeeklyCheckingForm({
     defaultValues,
   });
 
-  const {
-    runAction: submitCheckInFormAction,
-    isLoading: submitCheckInFormLoading,
-    setIsLoading: setSubmitCheckInFormLoading,
-  } = useServerAction(submitCheckInForm);
-
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    const responses = createFormResponseBody({ data, questions });
-
-    const [res, error] = await submitCheckInFormAction({
+  async function submitWeeklyCheckinFormMutation({
+    data,
+    questions,
+    voyageTeamMemberId,
+    sprintId,
+  }: SubmitWeeklyCheckinFormClientRequestDto): Promise<SubmitWeeklyCheckinFormResponseDto> {
+    return await formsAdapter.submitWeeklyCheckinForm({
+      data,
+      questions,
       voyageTeamMemberId,
-      sprintId: Number(sprintNumber),
-      responses,
+      sprintId,
     });
+  }
 
-    if (res) {
-      router.push(
-        routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString()),
-      );
-      dispatch(onOpenModal({ type: "checkInSuccess" }));
-    }
-
-    if (error) {
-      dispatch(
-        onOpenModal({
-          type: "error",
-          content: { message: error.message },
-        }),
-      );
-    }
-    setSubmitCheckInFormLoading(false);
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+    const voyageTeamMemberId = voyageTeamAdapter.getCurrentVoyageUserId(user)!;
+    mutate({ data, questions, voyageTeamMemberId, sprintId });
   };
 
   return (
@@ -126,11 +137,11 @@ export default function WeeklyCheckingForm({
         <Button
           type="submit"
           title="submit"
-          disabled={submitCheckInFormLoading}
+          disabled={isPending}
           size="lg"
           variant="primary"
         >
-          {submitCheckInFormLoading ? <Spinner /> : "Submit Check In"}
+          {isPending ? <Spinner /> : "Submit Check In"}
         </Button>
       </form>
     </BaseFormPage>
