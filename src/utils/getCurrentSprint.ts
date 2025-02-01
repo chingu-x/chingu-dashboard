@@ -4,7 +4,7 @@ import type { Sprints } from "@chingu-x/modules/sprints";
 import { isWithinInterval } from "date-fns";
 
 export const currentDate =
-  process.env.NODE_ENV === "development" ? new Date(2024, 8, 27) : new Date();
+  process.env.NODE_ENV === "development" ? new Date(2024, 9, 10) : new Date();
 
 export function getCurrentSprint(
   sprints: {

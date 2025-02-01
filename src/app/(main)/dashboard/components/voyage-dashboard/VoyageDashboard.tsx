@@ -16,7 +16,7 @@ import TechStackStateContent from "./TechStackStateContent";
 import ResourcesStateContent from "./ResourcesStateContent";
 import { type Event, getDashboardData } from "./getDashboardData";
 import VoyageSupport from "@/app/(main)/dashboard/components/shared/VoyageSupport";
-import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
+// import EmptySprintProvider from "@/app/(main)/my-voyage/[teamId]/sprints/providers/EmptySprintProvider";
 import { getUser } from "@/utils/getUser";
 import type { Sprint, Voyage } from "@/store/features/sprint/sprintSlice";
 import { type FeaturesList } from "@/store/features/features/featuresSlice";
@@ -183,7 +183,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
           </DashboardWidget>
         </div>
       </div>
-      <EmptySprintProvider voyage={voyageData} />
+      {/* <EmptySprintProvider voyage={voyageData} /> */}
       <ResourcesProvider payload={projectResources} />
       <FeaturesProvider payload={features} />
       <IdeationProvider payload={projectIdeas} />

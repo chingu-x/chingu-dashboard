@@ -3,11 +3,8 @@
 import "reflect-metadata";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import type {
-  FormQuestions,
-  TeamMemberForCheckbox,
-} from "@chingu-x/modules/forms";
-import { useEffect, useState } from "react";
+import type { TeamMemberForCheckbox } from "@chingu-x/modules/forms";
+import { useEffect } from "react";
 import type { Sprint } from "@chingu-x/modules/sprints";
 import { CacheTag } from "@/utils/cacheTag";
 import routePaths from "@/utils/routePaths";
@@ -40,8 +37,6 @@ export default function WeeklyCheckInPage({ params }: WeeklyCheckInPageProps) {
   const router = useRouter();
   let teamMembers = [] as TeamMemberForCheckbox[];
   const voyageTeamMemberId = voyageTeamAdapter.getCurrentVoyageUserId(user);
-  const [weeklyCheckinFormQuestions, setWeeklyCheckinFormQuestions] =
-    useState<FormQuestions>();
 
   useCheckCurrentVoyageTeam({ user, teamId });
 
@@ -100,12 +95,6 @@ export default function WeeklyCheckInPage({ params }: WeeklyCheckInPageProps) {
     });
   }
 
-  useEffect(() => {
-    if (data) {
-      setWeeklyCheckinFormQuestions(data);
-    }
-  }, [data]);
-
   if (isPending) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -136,14 +125,12 @@ export default function WeeklyCheckInPage({ params }: WeeklyCheckInPageProps) {
   }
 
   return (
-    weeklyCheckinFormQuestions && (
-      <WeeklyCheckInForm
-        params={params}
-        description={weeklyCheckinFormQuestions.description}
-        questions={weeklyCheckinFormQuestions.questions}
-        teamMembers={teamMembers}
-        sprintId={id}
-      />
-    )
+    <WeeklyCheckInForm
+      params={params}
+      description={data.description}
+      questions={data.questions}
+      teamMembers={teamMembers}
+      sprintId={id}
+    />
   );
 }

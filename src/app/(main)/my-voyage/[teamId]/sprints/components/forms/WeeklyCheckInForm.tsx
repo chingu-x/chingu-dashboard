@@ -120,22 +120,20 @@ export default function WeeklyCheckingForm({
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-y-10"
       >
-        {questions
-          .sort((a, b) => a.order - b.order)
-          .map((question) => {
-            const { id } = question;
+        {questions.map((question) => {
+          const { id } = question;
 
-            return (
-              <div key={`question ${id}`}>
-                <FormInput
-                  question={question}
-                  register={register}
-                  errors={errors}
-                  teamMembers={teamMembers}
-                />
-              </div>
-            );
-          })}
+          return (
+            <div key={`question ${id}`}>
+              <FormInput
+                question={question}
+                register={register}
+                errors={errors}
+                teamMembers={teamMembers}
+              />
+            </div>
+          );
+        })}
         <Button
           type="submit"
           title="submit"
