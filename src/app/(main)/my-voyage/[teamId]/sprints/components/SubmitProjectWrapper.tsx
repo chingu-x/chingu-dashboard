@@ -44,7 +44,10 @@ export default function SubmitProjectWrapper({
   }
 
   const { isPending, isError, error, data } = useQuery({
-    queryKey: [CacheTag.submitVoyageForm, { teamId, user: `${user.id}` }],
+    queryKey: [
+      CacheTag.voyageProjectSubmissionForm,
+      { teamId, user: `${user.id}` },
+    ],
     queryFn: fetchVoyageProjectSubmitFormQuery,
   });
 

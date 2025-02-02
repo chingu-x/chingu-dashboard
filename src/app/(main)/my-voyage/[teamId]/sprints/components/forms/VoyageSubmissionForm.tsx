@@ -4,21 +4,22 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type {
+  SubmitVoyageProjectFormClientRequestDto,
+  SubmitVoyageProjectFormResponseDto,
+} from "@chingu-x/modules/forms";
 import BaseFormPage from "@/components/form/BaseFormPage";
-import { submitVoyageProjectForm } from "@/myVoyage/sprints/sprintsService";
 import FormInput from "@/components/form/FormInput";
-
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
-
 import { useAppDispatch, useUser } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { createValidationSchema } from "@/utils/form/createValidationSchema";
-import useServerAction from "@/hooks/useServerAction";
 import routePaths from "@/utils/routePaths";
-import { createFormResponseBody } from "@/utils/form/createFormResponseBody";
 import { type Question } from "@/utils/form/types";
+import { CacheTag } from "@/utils/cacheTag";
+import { formsAdapter, voyageTeamAdapter } from "@/utils/adapters";
 
 interface VoyageSubmissionFormProps {
   params: {
@@ -38,12 +39,38 @@ export default function VoyageSubmissionForm({
 }: VoyageSubmissionFormProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
+  const user = useUser();
   const [teamId, sprintNumber] = [params.teamId, params.sprintNumber];
 
-  const { voyageTeamMembers } = useUser();
-  const voyageTeamId = voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name == "Active",
-  )?.voyageTeamId;
+  const { mutate, isPending } = useMutation<
+    SubmitVoyageProjectFormResponseDto,
+    Error,
+    SubmitVoyageProjectFormClientRequestDto
+  >({
+    mutationFn: submitVoyageProjectFormMutation,
+    mutationKey: [CacheTag.submitVoyageProjectForm],
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.removeQueries({
+        queryKey: [
+          CacheTag.sprints,
+          CacheTag.sprintMeetingId,
+          CacheTag.weeklyCheckInForm,
+        ],
+      });
+      router.push(
+        routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString()),
+      );
+      // dispatch(submitWeeklyCheckin({ sprintId }));
+    },
+    // TODO: update error handling
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
 
   const { validationSchema, defaultValues } = createValidationSchema(questions);
   type ValidationSchema = z.infer<typeof validationSchema>;
@@ -57,35 +84,21 @@ export default function VoyageSubmissionForm({
     defaultValues,
   });
 
-  const {
-    runAction: submitVoyageProjectFormAction,
-    isLoading: submitVoyageProjectFormLoading,
-    setIsLoading: setSubmitVoyageProjectFormLoading,
-  } = useServerAction(submitVoyageProjectForm);
-
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    const responses = createFormResponseBody({ data, questions });
-
-    const [res, error] = await submitVoyageProjectFormAction({
-      voyageTeamId: voyageTeamId!,
-      responses,
+  async function submitVoyageProjectFormMutation({
+    data,
+    questions,
+    voyageTeamId,
+  }: SubmitVoyageProjectFormClientRequestDto): Promise<SubmitVoyageProjectFormResponseDto> {
+    return await formsAdapter.submitVoyageProjectForm({
+      data,
+      questions,
+      voyageTeamId,
     });
+  }
 
-    if (res) {
-      router.push(
-        routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString()),
-      );
-    }
-
-    if (error) {
-      dispatch(
-        onOpenModal({
-          type: "error",
-          content: { message: error.message },
-        }),
-      );
-    }
-    setSubmitVoyageProjectFormLoading(false);
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+    const voyageTeamId = Number(voyageTeamAdapter.getVoyageTeamId(user));
+    mutate({ data, questions, voyageTeamId });
   };
 
   return (
@@ -110,11 +123,11 @@ export default function VoyageSubmissionForm({
         <Button
           type="submit"
           title="submit"
-          disabled={submitVoyageProjectFormLoading}
+          disabled={isPending}
           size="lg"
           variant="primary"
         >
-          {submitVoyageProjectFormLoading ? <Spinner /> : "Submit Voyage"}
+          {isPending ? <Spinner /> : "Submit Voyage"}
         </Button>
       </form>
     </BaseFormPage>

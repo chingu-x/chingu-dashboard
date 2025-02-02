@@ -57,6 +57,10 @@ export const submitWeeklyCheckin = createAction<SubmitWeeklyCheckinPayload>(
   "sprint/submitWeeklyCheckin",
 );
 
+// export const submitVoyageProject = createAction<SubmitVoyageProjectPayload>(
+//   "sprint/submitWeeklyCheckin",
+// );
+
 export const { fetchSprints, fetchMeeting } = sprintSlice.actions;
 
 export default sprintSlice.reducer;

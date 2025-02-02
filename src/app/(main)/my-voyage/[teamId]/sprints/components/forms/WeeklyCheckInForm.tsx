@@ -56,7 +56,8 @@ export default function WeeklyCheckingForm({
   >({
     mutationFn: submitWeeklyCheckinFormMutation,
     mutationKey: [CacheTag.submitWeeklyCheckinForm],
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log(data);
       queryClient.removeQueries({
         queryKey: [
           CacheTag.sprints,
