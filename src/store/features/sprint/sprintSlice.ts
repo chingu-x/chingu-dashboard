@@ -53,13 +53,17 @@ export interface SubmitWeeklyCheckinPayload {
   sprintId: number;
 }
 
+export interface SubmitVoyageProjectPayload {
+  teamId: number;
+}
+
 export const submitWeeklyCheckin = createAction<SubmitWeeklyCheckinPayload>(
   "sprint/submitWeeklyCheckin",
 );
 
-// export const submitVoyageProject = createAction<SubmitVoyageProjectPayload>(
-//   "sprint/submitWeeklyCheckin",
-// );
+export const submitVoyageProject = createAction<SubmitVoyageProjectPayload>(
+  "sprint/submitVoyageProject",
+);
 
 export const { fetchSprints, fetchMeeting } = sprintSlice.actions;
 

@@ -20,6 +20,7 @@ import routePaths from "@/utils/routePaths";
 import { type Question } from "@/utils/form/types";
 import { CacheTag } from "@/utils/cacheTag";
 import { formsAdapter, voyageTeamAdapter } from "@/utils/adapters";
+import { submitVoyageProject } from "@/store/features/sprint/sprintSlice";
 
 interface VoyageSubmissionFormProps {
   params: {
@@ -41,7 +42,7 @@ export default function VoyageSubmissionForm({
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const user = useUser();
-  const [teamId, sprintNumber] = [params.teamId, params.sprintNumber];
+  const [teamId, sprintNumber] = [Number(params.teamId), params.sprintNumber];
 
   const { mutate, isPending } = useMutation<
     SubmitVoyageProjectFormResponseDto,
@@ -50,8 +51,7 @@ export default function VoyageSubmissionForm({
   >({
     mutationFn: submitVoyageProjectFormMutation,
     mutationKey: [CacheTag.submitVoyageProjectForm],
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
       queryClient.removeQueries({
         queryKey: [
           CacheTag.sprints,
@@ -59,10 +59,8 @@ export default function VoyageSubmissionForm({
           CacheTag.weeklyCheckInForm,
         ],
       });
-      router.push(
-        routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString()),
-      );
-      // dispatch(submitWeeklyCheckin({ sprintId }));
+      router.push(routePaths.emptySprintPage(teamId.toString(), sprintNumber));
+      dispatch(submitVoyageProject({ teamId }));
     },
     // TODO: update error handling
     onError: (error: Error) => {
