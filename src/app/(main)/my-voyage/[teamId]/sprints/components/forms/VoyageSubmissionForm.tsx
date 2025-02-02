@@ -6,6 +6,7 @@ import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type {
+  Question,
   SubmitVoyageProjectFormClientRequestDto,
   SubmitVoyageProjectFormResponseDto,
 } from "@chingu-x/modules/forms";
@@ -17,7 +18,6 @@ import { useAppDispatch, useUser } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { createValidationSchema } from "@/utils/form/createValidationSchema";
 import routePaths from "@/utils/routePaths";
-import { type Question } from "@/utils/form/types";
 import { CacheTag } from "@/utils/cacheTag";
 import { formsAdapter, voyageTeamAdapter } from "@/utils/adapters";
 import { submitVoyageProject } from "@/store/features/sprint/sprintSlice";
