@@ -3,7 +3,7 @@ import { type User } from "@chingu-x/modules/user";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 import {
   submitVoyageProject,
-  SubmitVoyageProjectPayload,
+  type SubmitVoyageProjectPayload,
   submitWeeklyCheckin,
   type SubmitWeeklyCheckinPayload,
 } from "@/store/features/sprint/sprintSlice";
