@@ -3,12 +3,17 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { format } from "date-fns-tz";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { LinkIcon } from "@heroicons/react/24/outline";
 
+import type {
+  AddMeetingClientRequestDto,
+  AddMeetingResponseDto,
+  Meeting,
+} from "@chingu-x/modules/sprint-meeting";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Button from "@/components/Button";
 import DateTimePicker from "@/components/inputs/DateTimePicker";
 import TextInput from "@/components/inputs/TextInput";
@@ -20,13 +25,14 @@ import {
   validateTextInput,
 } from "@/utils/form/validateInput";
 import { useSprint, useAppDispatch, useUser } from "@/store/hooks";
-import { type Meeting } from "@/store/features/sprint/sprintSlice";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import useServerAction from "@/hooks/useServerAction";
-import { addMeeting, editMeeting } from "@/myVoyage//sprints/sprintsService";
+import { editMeeting } from "@/myVoyage//sprints/sprintsService";
 import routePaths from "@/utils/routePaths";
 import { persistor } from "@/store/store";
 import convertStringToDate from "@/utils/convertStringToDate";
+import { sprintMeetingAdapter } from "@/utils/adapters";
+import { CacheTag } from "@/utils/cacheTag";
 
 export default function MeetingForm() {
   const router = useRouter();
@@ -36,23 +42,20 @@ export default function MeetingForm() {
     meetingId: string;
   }>();
   const [teamId, sprintNumber, meetingId] = [
-    Number(params.teamId),
-    Number(params.sprintNumber),
-    Number(params.meetingId),
+    params.teamId,
+    params.sprintNumber,
+    params.meetingId,
   ];
 
   const dispatch = useAppDispatch();
-  const {
-    voyage: { sprints },
-  } = useSprint();
+  const queryClient = useQueryClient();
+  const { sprints } = useSprint();
   const { timezone } = useUser();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [meetingData, setMeetingData] = useState<Meeting>();
   const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
 
-  const { startDate, endDate } = sprints.find(
-    (sprint) => sprint.number === sprintNumber,
-  )!;
+  const sprint = sprints.find((sprint) => sprint.number === +sprintNumber)!;
 
   const validationSchema = z.object({
     title: validateTextInput({
@@ -65,8 +68,8 @@ export default function MeetingForm() {
       required: true,
     }),
     dateTime: validateDateTimeInput({
-      minDate: convertStringToDate(startDate, timezone),
-      maxDate: convertStringToDate(endDate, timezone),
+      minDate: convertStringToDate(sprint?.startDate, timezone),
+      maxDate: convertStringToDate(sprint?.endDate, timezone),
       timezone,
     }),
     meetingLink: validateTextInput({
@@ -82,12 +85,6 @@ export default function MeetingForm() {
     isLoading: editMeetingLoading,
     setIsLoading: setEditMeetingLoading,
   } = useServerAction(editMeeting);
-
-  const {
-    runAction: addMeetingAction,
-    isLoading: addMeetingLoading,
-    setIsLoading: setAddMeetingLoading,
-  } = useServerAction(addMeeting);
 
   const {
     register,
@@ -111,81 +108,85 @@ export default function MeetingForm() {
     });
   };
 
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    const dateTime = format(data.dateTime, "yyyy-MM-dd HH:mm:ssXXX", {
-      timeZone: timezone,
-    });
-
-    const newData =
-      data.meetingLink === ""
-        ? { description: data.description, title: data.title }
-        : {
-          description: data.description,
-          title: data.title,
-          meetingLink: data.meetingLink,
-        };
-
-    if (editMode) {
-      const [res, error] = await editMeetingAction({
-        ...newData,
-        dateTime,
-        meetingId,
-        sprintNumber,
+  const { mutate, isPending } = useMutation<
+    AddMeetingResponseDto,
+    Error,
+    AddMeetingClientRequestDto
+  >({
+    mutationFn: addMeetingMutation,
+    onSuccess: (data) => {
+      queryClient.removeQueries({
+        queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
       });
+      router.push(
+        routePaths.sprintWeekPage(
+          teamId.toString(),
+          sprintNumber.toString(),
+          data.id.toString(),
+        ),
+      );
+    },
+    // TODO: update error handling
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
 
-      if (res) {
-        router.push(
-          routePaths.sprintWeekPage(
-            teamId.toString(),
-            sprintNumber.toString(),
-            meetingId.toString(),
-          ),
-        );
-      }
+  async function addMeetingMutation({
+    data,
+    teamId,
+    sprintNumber,
+    timezone,
+  }: AddMeetingClientRequestDto): Promise<AddMeetingResponseDto> {
+    return await sprintMeetingAdapter.addMeeting({
+      data,
+      teamId,
+      sprintNumber,
+      timezone,
+    });
+  }
 
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-
-        setEditMeetingLoading(false);
-      }
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+    if (editMode) {
+      // const [res, error] = await editMeetingAction({
+      //   ...newData,
+      //   dateTime,
+      //   meetingId,
+      //   sprintNumber,
+      // });
+      // if (res) {
+      //   router.push(
+      //     routePaths.sprintWeekPage(
+      //       teamId.toString(),
+      //       sprintNumber.toString(),
+      //       meetingId.toString(),
+      //     ),
+      //   );
+      // }
+      // if (error) {
+      //   dispatch(
+      //     onOpenModal({ type: "error", content: { message: error.message } }),
+      //   );
+      //   setEditMeetingLoading(false);
+      // }
     } else {
-      const payload = { ...newData, dateTime, teamId, sprintNumber };
-
-      const [res, error] = await addMeetingAction(payload);
-
-      if (res) {
-        router.push(
-          routePaths.sprintWeekPage(
-            teamId.toString(),
-            sprintNumber.toString(),
-            res.id.toString(),
-          ),
-        );
-      }
-
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-        setAddMeetingLoading(false);
-      }
+      mutate({ data, teamId, sprintNumber, timezone });
     }
   };
 
   useEffect(() => {
     if (params.meetingId) {
-      const meeting = sprints.find(
-        (sprint) =>
-          sprint.teamMeetingsData &&
-          sprint.teamMeetingsData[0].id === +params.meetingId,
-      );
+      const meeting = sprintMeetingAdapter.getCurrentSprintMeeting({
+        sprints,
+        meetingId,
+      });
 
       setMeetingData(meeting as Meeting);
       setEditMode(true);
     }
-  }, [params.meetingId, sprints]);
+  }, [params.meetingId, sprints, meetingId]);
 
   useEffect(() => {
     if (meetingData && meetingData.dateTime) {
@@ -297,7 +298,7 @@ export default function MeetingForm() {
   );
 
   function renderButtonContent() {
-    if (editMeetingLoading || addMeetingLoading) {
+    if (editMeetingLoading || isPending) {
       return <Spinner />;
     }
 
@@ -356,9 +357,7 @@ export default function MeetingForm() {
         <Button
           type="submit"
           title="submit"
-          disabled={
-            !isDirty || !isValid || editMeetingLoading || addMeetingLoading
-          }
+          disabled={!isDirty || !isValid || editMeetingLoading || isPending}
           size="lg"
           variant="primary"
         >

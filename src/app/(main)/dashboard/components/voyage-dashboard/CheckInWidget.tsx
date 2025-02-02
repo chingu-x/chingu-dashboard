@@ -57,7 +57,7 @@ function CheckInWidget({
   }
 
   const getBadgeValue = (userDate: Date): string => {
-    const currentSprintEndDate = sprintsData.voyage.sprints.find(
+    const currentSprintEndDate = sprintsData.sprints.find(
       (sprint) => sprint.number === currentSprintNumber,
     )?.endDate;
 
