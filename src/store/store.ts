@@ -10,6 +10,7 @@ import myTeamReducer from "./features/my-team/myTeamSlice";
 import sprintReducer from "./features/sprint/sprintSlice";
 import featuresReducer from "./features/features/featuresSlice";
 import techStackReducer from "./features/techStack/techStackSlice";
+import sprintMeetingReducer from "./features/sprint-meeting/sprintMeetingSlice";
 
 const createNoopStorage = () => ({
   getItem() {
@@ -44,6 +45,7 @@ export const rootReducer = combineReducers({
   features: featuresReducer,
   resources: resourceReducer,
   sprint: sprintReducer,
+  sprintMeeting: sprintMeetingReducer,
   techStack: techStackReducer,
 });
 

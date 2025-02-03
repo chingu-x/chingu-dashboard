@@ -26,7 +26,7 @@ import {
 } from "@/utils/adapters";
 import { CacheTag } from "@/utils/cacheTag";
 import Spinner from "@/components/Spinner";
-import { fetchMeeting } from "@/store/features/sprint/sprintSlice";
+import { fetchMeeting } from "@/store/features/sprint-meeting/sprintMeetingSlice";
 
 interface SprintWrapperProps {
   params: {

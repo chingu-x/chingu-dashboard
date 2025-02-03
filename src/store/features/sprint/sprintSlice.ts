@@ -6,7 +6,6 @@ import {
 import storage from "redux-persist/lib/storage";
 import { PURGE } from "redux-persist";
 import type { VoyageSprint } from "@chingu-x/modules/sprints";
-import type { Meeting } from "@chingu-x/modules/sprint-meeting";
 import { clientSignOut } from "@/store/features/auth/authSlice";
 
 const initialState: VoyageSprint = {
@@ -28,18 +27,6 @@ export const sprintSlice = createSlice({
       ...state,
       ...action.payload,
     }),
-    fetchMeeting: (state, action: PayloadAction<Meeting>) => {
-      const sprintId = action.payload.sprint?.id;
-
-      const updatedSprints = state.sprints.map((sprint) => {
-        if (sprint.id === sprintId) {
-          return { ...sprint, teamMeetingsData: [action.payload] };
-        }
-        return sprint;
-      });
-
-      state.sprints = updatedSprints;
-    },
   },
   extraReducers(builder) {
     builder.addCase(PURGE, () => {
@@ -65,6 +52,6 @@ export const submitVoyageProject = createAction<SubmitVoyageProjectPayload>(
   "sprint/submitVoyageProject",
 );
 
-export const { fetchSprints, fetchMeeting } = sprintSlice.actions;
+export const { fetchSprints } = sprintSlice.actions;
 
 export default sprintSlice.reducer;

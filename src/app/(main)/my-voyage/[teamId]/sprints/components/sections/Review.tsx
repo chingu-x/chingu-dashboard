@@ -51,9 +51,7 @@ export default function Review() {
     Number(params.meetingId),
   ];
 
-  const {
-    voyage: { sprints },
-  } = useSprint();
+  const { sprints } = useSprint();
 
   useEffect(() => {
     const sprint = sprints[sprintNumber - 1];
