@@ -6,7 +6,7 @@ import authReducer from "./features/auth/authSlice";
 import ideationReducer from "./features/ideation/ideationSlice";
 import resourceReducer from "./features/resources/resourcesSlice";
 import userReducer from "./features/user/userSlice";
-import myTeamReducer from "./features/my-team/myTeam";
+import myTeamReducer from "./features/my-team/myTeamSlice";
 import sprintReducer from "./features/sprint/sprintSlice";
 import featuresReducer from "./features/features/featuresSlice";
 import techStackReducer from "./features/techStack/techStackSlice";

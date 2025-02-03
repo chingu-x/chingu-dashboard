@@ -4,7 +4,7 @@ import "reflect-metadata";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import TeamMember from "./TeamMember";
-import { fetchTeamDirectory } from "@/store/features/my-team/myTeam";
+import { fetchTeamDirectory } from "@/store/features/my-team/myTeamSlice";
 import { CacheTag } from "@/utils/cacheTag";
 import { useAppDispatch, useMyTeam, useUser } from "@/store/hooks";
 import { myTeamAdapter } from "@/utils/adapters";
