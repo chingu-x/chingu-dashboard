@@ -5,9 +5,9 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
 import { Button } from "@chingu-x/components/button";
+import { IconButton } from "@chingu-x/components/icon-button";
 import Label from "./Label";
 import FieldMessage from "./FieldMessage";
-import IconButton from "@/components/IconButton";
 
 import { cn } from "@/lib/utils";
 
