@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { useCallback } from "react";
+import { Button } from "@chingu-x/components/button";
+import { Modal } from "@chingu-x/components/modal";
 import ModalSection from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ModalSection";
 import { CheckboxGroupItem } from "@/components/inputs/CheckBoxGroup/CheckboxGroupItem";
-import Modal from "@/components/modals/Modal";
-import { Button } from "@chingu-x/components/button";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal, useResource } from "@/store/hooks";
 
