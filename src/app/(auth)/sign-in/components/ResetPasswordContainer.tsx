@@ -4,7 +4,10 @@ import Link from "next/link";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type Dispatch, type SetStateAction } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { type RequestResetPasswordDto } from "@chingu-x/modules/auth";
+import type {
+  RequestResetPasswordClientRequestDto,
+  RequestResetPasswordResponseDto,
+} from "@chingu-x/modules/auth";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
@@ -36,9 +39,9 @@ function ResetPasswordContainer({
   const dispatch = useAppDispatch();
 
   const { mutate, isPending } = useMutation<
-    void,
+    RequestResetPasswordResponseDto,
     Error,
-    RequestResetPasswordDto
+    RequestResetPasswordClientRequestDto
   >({
     mutationFn: requestResetPasswordMutation,
     onSuccess: (_, variables) => {
@@ -55,7 +58,7 @@ function ResetPasswordContainer({
 
   async function requestResetPasswordMutation({
     email,
-  }: RequestResetPasswordDto): Promise<void> {
+  }: RequestResetPasswordClientRequestDto): Promise<RequestResetPasswordResponseDto> {
     return await authAdapter.requestResetPassword({ email });
   }
 
