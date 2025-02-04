@@ -3,7 +3,10 @@ import { useSearchParams } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { type ResetPasswordDto } from "@chingu-x/modules/auth";
+import type {
+  ResetPasswordClientRequestDto,
+  ResetPasswordResponseDto,
+} from "@chingu-x/modules/auth";
 import TextInput from "@/components/inputs/TextInput";
 import Button from "@/components/Button";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
@@ -32,7 +35,11 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   const token = searchParams.get("token");
   const dispatch = useAppDispatch();
 
-  const { mutate, isPending } = useMutation<void, Error, ResetPasswordDto>({
+  const { mutate, isPending } = useMutation<
+    ResetPasswordResponseDto,
+    Error,
+    ResetPasswordClientRequestDto
+  >({
     mutationFn: resetPasswordMutation,
     onSuccess: () => {
       onClick();
@@ -48,7 +55,7 @@ function NewPasswordContainer({ onClick }: NewPasswordContainerProps) {
   async function resetPasswordMutation({
     password,
     token,
-  }: ResetPasswordDto): Promise<void> {
+  }: ResetPasswordClientRequestDto): Promise<ResetPasswordResponseDto> {
     return await authAdapter.resetPassword({ password, token });
   }
 
