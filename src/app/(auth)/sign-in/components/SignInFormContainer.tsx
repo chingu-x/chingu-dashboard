@@ -4,7 +4,10 @@ import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import type { LoginRequestDto, LoginResponseDto } from "@chingu-x/modules/auth";
+import type {
+  LoginClientRequestDto,
+  LoginResponseDto,
+} from "@chingu-x/modules/auth";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
@@ -44,7 +47,7 @@ function SignInFormContainer({
   const { mutate, isPending } = useMutation<
     LoginResponseDto,
     Error,
-    LoginRequestDto
+    LoginClientRequestDto
   >({
     mutationFn: loginMutation,
     onSuccess: () => {
@@ -71,7 +74,7 @@ function SignInFormContainer({
   async function loginMutation({
     email,
     password,
-  }: LoginRequestDto): Promise<LoginResponseDto> {
+  }: LoginClientRequestDto): Promise<LoginResponseDto> {
     return await authAdapter.login({ email, password });
   }
 
