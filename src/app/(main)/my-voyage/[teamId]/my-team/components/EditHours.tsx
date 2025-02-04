@@ -6,7 +6,7 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { type SetStateAction, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import type {
-  EditHoursRequestDto,
+  EditHoursClientRequestDto,
   EditHoursResponseDto,
 } from "@chingu-x/modules/my-team";
 import TextInput from "@/components/inputs/TextInput";
@@ -42,7 +42,7 @@ export default function EditHours({
   handleClick,
 }: EditHoursProps) {
   const params = useParams<{ teamId: string }>();
-  const teamId = Number(params.teamId);
+  const { teamId } = params;
   const dispatch = useAppDispatch();
   const user = useUser();
 
@@ -60,7 +60,7 @@ export default function EditHours({
   const { mutate, isPending } = useMutation<
     EditHoursResponseDto,
     Error,
-    EditHoursRequestDto
+    EditHoursClientRequestDto
   >({
     mutationFn: editHoursMutation,
     onSuccess: (_, variables) => {
@@ -85,7 +85,7 @@ export default function EditHours({
   async function editHoursMutation({
     teamId,
     hrPerSprint,
-  }: EditHoursRequestDto): Promise<EditHoursResponseDto> {
+  }: EditHoursClientRequestDto): Promise<EditHoursResponseDto> {
     return await myTeamAdapter.editHours({ teamId, hrPerSprint });
   }
 
