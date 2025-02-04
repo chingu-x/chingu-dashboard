@@ -108,7 +108,9 @@ export default function WeeklyCheckingForm({
   }
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    const voyageTeamMemberId = voyageTeamAdapter.getCurrentVoyageUserId(user)!;
+    const voyageTeamMemberId = voyageTeamAdapter.getCurrentVoyageUserId({
+      user,
+    })!;
     mutate({ data, questions, voyageTeamMemberId, sprintId });
   };
 

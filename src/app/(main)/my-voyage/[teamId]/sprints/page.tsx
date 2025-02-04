@@ -63,7 +63,7 @@ export default function SprintsPage({ params }: SprintsPageProps) {
     dispatch(fetchSprints(data));
   }
 
-  if (voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)) {
+  if (voyageTeamAdapter.getVoyageProjectSubmissionStatus({ user })) {
     return (
       <div className="flex w-full flex-col gap-y-10">
         <BannerContainer

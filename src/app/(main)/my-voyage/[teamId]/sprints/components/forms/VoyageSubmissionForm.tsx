@@ -95,7 +95,7 @@ export default function VoyageSubmissionForm({
   }
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    const voyageTeamId = Number(voyageTeamAdapter.getVoyageTeamId(user));
+    const voyageTeamId = Number(voyageTeamAdapter.getVoyageTeamId({ user }));
     mutate({ data, questions, voyageTeamId });
   };
 

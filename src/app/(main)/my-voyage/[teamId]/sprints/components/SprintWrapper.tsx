@@ -48,7 +48,7 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
   useCheckCurrentVoyageTeam({ user, teamId });
 
   const isVoyageProjectSubmitted =
-    voyageTeamAdapter.getVoyageProjectSubmissionStatus(user)!;
+    voyageTeamAdapter.getVoyageProjectSubmissionStatus({ user })!;
 
   if (isVoyageProjectSubmitted) {
     router.push(`/my-voyage/${teamId}/sprints/`);

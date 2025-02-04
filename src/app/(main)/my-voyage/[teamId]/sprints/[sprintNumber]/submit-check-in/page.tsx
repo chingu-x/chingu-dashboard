@@ -36,7 +36,7 @@ export default function WeeklyCheckInPage({ params }: WeeklyCheckInPageProps) {
   const myTeam = useMyTeam();
   const router = useRouter();
   let teamMembers = [] as TeamMemberForCheckbox[];
-  const voyageTeamMemberId = voyageTeamAdapter.getCurrentVoyageUserId(user);
+  const voyageTeamMemberId = voyageTeamAdapter.getCurrentVoyageUserId({ user });
 
   useCheckCurrentVoyageTeam({ user, teamId });
 
