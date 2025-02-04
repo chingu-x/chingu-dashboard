@@ -21,7 +21,12 @@ import {
   validateDateTimeInput,
   validateTextInput,
 } from "@/utils/form/validateInput";
-import { useSprint, useAppDispatch, useUser } from "@/store/hooks";
+import {
+  useSprint,
+  useAppDispatch,
+  useUser,
+  useSprintMeeting,
+} from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
 import { persistor } from "@/store/store";
@@ -45,6 +50,7 @@ export default function MeetingForm() {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const { sprints } = useSprint();
+  const sprintMeeting = useSprintMeeting();
   const { timezone } = useUser();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [meetingData, setMeetingData] = useState<Meeting>();
@@ -154,6 +160,7 @@ export default function MeetingForm() {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     if (editMode) {
+      console.log(data);
       // const [res, error] = await editMeetingAction({
       //   ...newData,
       //   dateTime,
@@ -183,14 +190,16 @@ export default function MeetingForm() {
   useEffect(() => {
     if (params.meetingId) {
       const meeting = sprintMeetingAdapter.getCurrentSprintMeeting({
-        sprints,
+        meeting: sprintMeeting,
         meetingId,
       });
+
+      console.log(meeting);
 
       setMeetingData(meeting as Meeting);
       setEditMode(true);
     }
-  }, [params.meetingId, sprints, meetingId]);
+  }, [params.meetingId, sprintMeeting, meetingId]);
 
   useEffect(() => {
     if (meetingData && meetingData.dateTime) {

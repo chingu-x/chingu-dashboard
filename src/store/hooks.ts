@@ -18,6 +18,8 @@ export const useFinalizedIdeation = () =>
   );
 export const useMyTeam = () => useAppSelector((state) => state.myTeam);
 export const useSprint = () => useAppSelector((state) => state.sprint);
+export const useSprintMeeting = () =>
+  useAppSelector((state) => state.sprintMeeting);
 export const useResource = () => useAppSelector((state) => state.resources);
 export const useFeatures = () => useAppSelector((state) => state.features);
 export const useTechStack = () => useAppSelector((state) => state.techStack);
