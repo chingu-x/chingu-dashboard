@@ -65,7 +65,7 @@ function SignUpFormContainer({
         </div>
       </div>
       <div className="flex flex-col gap-3 pt-8">
-        <Button type="submit" title="submit" disabled>
+        <Button type="submit" title="submit">
           Join Now
         </Button>
         <Link
