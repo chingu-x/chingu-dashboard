@@ -5,9 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { LinkIcon } from "@heroicons/react/24/outline";
-
 import type {
   AddMeetingClientRequestDto,
   AddMeetingResponseDto,
@@ -19,19 +17,16 @@ import DateTimePicker from "@/components/inputs/DateTimePicker";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 import Spinner from "@/components/Spinner";
-
 import {
   validateDateTimeInput,
   validateTextInput,
 } from "@/utils/form/validateInput";
 import { useSprint, useAppDispatch, useUser } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import useServerAction from "@/hooks/useServerAction";
-import { editMeeting } from "@/myVoyage//sprints/sprintsService";
 import routePaths from "@/utils/routePaths";
 import { persistor } from "@/store/store";
 import convertStringToDate from "@/utils/convertStringToDate";
-import { sprintMeetingAdapter } from "@/utils/adapters";
+import { sprintMeetingAdapter, timezoneAdapter } from "@/utils/adapters";
 import { CacheTag } from "@/utils/cacheTag";
 
 export default function MeetingForm() {
@@ -53,7 +48,6 @@ export default function MeetingForm() {
   const { timezone } = useUser();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [meetingData, setMeetingData] = useState<Meeting>();
-  const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const sprint = sprints.find((sprint) => sprint.number === +sprintNumber)!;
 
@@ -81,12 +75,6 @@ export default function MeetingForm() {
   type ValidationSchema = z.infer<typeof validationSchema>;
 
   const {
-    runAction: editMeetingAction,
-    isLoading: editMeetingLoading,
-    setIsLoading: setEditMeetingLoading,
-  } = useServerAction(editMeeting);
-
-  const {
     register,
     handleSubmit,
     setValue,
@@ -108,7 +96,7 @@ export default function MeetingForm() {
     });
   };
 
-  const { mutate, isPending } = useMutation<
+  const { mutate: addMeeting, isPending: addMeetingPending } = useMutation<
     AddMeetingResponseDto,
     Error,
     AddMeetingClientRequestDto
@@ -119,14 +107,30 @@ export default function MeetingForm() {
         queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
       });
       router.push(
-        routePaths.sprintWeekPage(
-          teamId.toString(),
-          sprintNumber.toString(),
-          data.id.toString(),
-        ),
+        routePaths.sprintWeekPage(teamId, sprintNumber, data.id.toString()),
       );
     },
-    // TODO: update error handling
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
+
+  const { mutate: editMeeting, isPending: editMeetingPending } = useMutation<
+    AddMeetingResponseDto,
+    Error,
+    AddMeetingClientRequestDto
+  >({
+    mutationFn: addMeetingMutation,
+    onSuccess: (data) => {
+      queryClient.removeQueries({
+        queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
+      });
+      router.push(
+        routePaths.sprintWeekPage(teamId, sprintNumber, data.id.toString()),
+      );
+    },
     onError: (error: Error) => {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),
@@ -172,7 +176,7 @@ export default function MeetingForm() {
       //   setEditMeetingLoading(false);
       // }
     } else {
-      mutate({ data, teamId, sprintNumber, timezone });
+      addMeeting({ data, teamId, sprintNumber, timezone });
     }
   };
 
@@ -190,16 +194,17 @@ export default function MeetingForm() {
 
   useEffect(() => {
     if (meetingData && meetingData.dateTime) {
-      const dateTimeConvertedToDate = convertStringToDate(
-        meetingData?.dateTime,
-        timezone,
-      );
+      const meetingLongDateTimeFormat =
+        timezoneAdapter.getMeetingLongDateTimeFormat({
+          meetingDateTime: meetingData?.dateTime,
+          timezone,
+        });
 
       reset({
         title: meetingData?.title,
         description: meetingData?.description,
         meetingLink: meetingData?.meetingLink,
-        dateTime: dateTimeConvertedToDate,
+        dateTime: meetingLongDateTimeFormat,
       });
     }
   }, [meetingData, reset, timezone]);
@@ -211,94 +216,8 @@ export default function MeetingForm() {
     [],
   );
 
-  // This block is responsible for auto-save functionality. Right now nextjs does
-  // not have a way to intercept routes with app router. When that is implemented
-  // on their side, it will probably be better to go that method.
-
-  function asyncTimeout(ms: number) {
-    return new Promise((resolve) => {
-      setSaveTimeout(setTimeout(resolve, ms));
-    });
-  }
-
-  useEffect(() => {
-    async function autoSave() {
-      const meetingId = +params.meetingId;
-      const modifiedObject: { [key: string]: string | Date } = {};
-
-      if (meetingData) {
-        const watchedData = watch();
-
-        for (const key in watchedData) {
-          if (
-            watchedData.hasOwnProperty(key) &&
-            meetingData[key as keyof Meeting] !==
-              watchedData[key as keyof typeof watchedData]
-          ) {
-            modifiedObject[key as keyof Meeting] =
-              watchedData[key as keyof typeof watchedData];
-          }
-        }
-      }
-
-      const filteredData = {
-        teamId,
-        meetingId,
-        sprintNumber,
-        ...modifiedObject,
-      };
-
-      await asyncTimeout(5000);
-
-      const [res, error] = await editMeetingAction(filteredData);
-
-      if (res) {
-        setEditMeetingLoading(false);
-      }
-
-      if (error) {
-        dispatch(
-          onOpenModal({
-            type: "error",
-            content: { message: error.message },
-          }),
-        );
-        setEditMeetingLoading(false);
-      }
-    }
-
-    if (editMode && isDirty && isValid) {
-      void autoSave();
-    }
-  }, [
-    isValid,
-    isDirty,
-    meetingData,
-    watch,
-    editMode,
-    dispatch,
-    params.meetingId,
-    teamId,
-    sprintNumber,
-    editMeetingAction,
-    setEditMeetingLoading,
-    title,
-    description,
-    dateTime,
-    meetingLink,
-  ]);
-
-  useEffect(
-    () => () => {
-      if (saveTimeout) {
-        clearTimeout(saveTimeout);
-      }
-    },
-    [saveTimeout],
-  );
-
   function renderButtonContent() {
-    if (editMeetingLoading || isPending) {
+    if (editMeetingPending || addMeetingPending) {
       return <Spinner />;
     }
 
@@ -357,7 +276,9 @@ export default function MeetingForm() {
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid || editMeetingLoading || isPending}
+          disabled={
+            !isDirty || !isValid || editMeetingPending || addMeetingPending
+          }
           size="lg"
           variant="primary"
         >
