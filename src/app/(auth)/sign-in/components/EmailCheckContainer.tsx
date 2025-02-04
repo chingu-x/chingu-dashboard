@@ -1,6 +1,9 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { type RequestResetPasswordDto } from "@chingu-x/modules/auth";
+import type {
+  RequestResetPasswordClientRequestDto,
+  RequestResetPasswordResponseDto,
+} from "@chingu-x/modules/auth";
 import { Banner } from "@chingu-x/components/banner";
 import Image from "next/image";
 import Button from "@/components/Button";
@@ -22,9 +25,9 @@ function EmailCheckContainer({
   const dispatch = useAppDispatch();
 
   const { mutate, isPending } = useMutation<
-    void,
+    RequestResetPasswordResponseDto,
     Error,
-    RequestResetPasswordDto
+    RequestResetPasswordClientRequestDto
   >({
     mutationFn: requestResetPasswordMutation,
     // TODO: update error handling
@@ -37,7 +40,7 @@ function EmailCheckContainer({
 
   async function requestResetPasswordMutation({
     email,
-  }: RequestResetPasswordDto): Promise<void> {
+  }: RequestResetPasswordClientRequestDto): Promise<RequestResetPasswordResponseDto> {
     return await authAdapter.requestResetPassword({ email });
   }
 
