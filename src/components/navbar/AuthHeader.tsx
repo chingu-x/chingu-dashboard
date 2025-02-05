@@ -3,11 +3,11 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
-import { useAuth, useUser } from "@/store/hooks";
 import { Button } from "@chingu-x/components/button";
-import Bell from "@/components/navbar/Bell";
-import DropDown from "@/components/navbar/DropDown";
+import { Bell } from "@chingu-x/components/navbar";
+import { useAuth, useUser } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
+import UserDropDown from "@/components/navbar/UserDropDown";
 
 const notificationCount = 4;
 
@@ -48,7 +48,7 @@ export default function AuthHeader() {
           <Image src={avatar} alt="user avatar" width={34} height={34} />
         </Avatar>
 
-        <DropDown openState={isMenuOpen} />
+        <UserDropDown openState={isMenuOpen} />
       </div>
     </>
   ) : (
