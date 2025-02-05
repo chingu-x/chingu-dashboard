@@ -17,11 +17,11 @@ export default function UserDropDown({ openState }: { openState?: boolean }) {
 
   const currentVoyage = activeVoyage?.voyageTeam.name
     ? `Team - Tier ${activeVoyage.voyageTeam.name
-      .split("-")[1]
-      .split("tier")[1]
-      .toUpperCase()} ${activeVoyage.voyageTeam.name
-      .split("-")[0]
-      .toUpperCase()}`
+        .split("-")[1]
+        .split("tier")[1]
+        .toUpperCase()} ${activeVoyage.voyageTeam.name
+        .split("-")[0]
+        .toUpperCase()}`
     : "Please join a voyage to see your status information.";
 
   async function handleClick() {
@@ -41,9 +41,7 @@ export default function UserDropDown({ openState }: { openState?: boolean }) {
   return (
     <DropDown openState={openState}>
       <div className="rounded-lg bg-secondary-content p-2 text-xs [&>*]:m-1">
-        <p className="text-[10px] font-medium text-neutral-focus">
-          My Voyage:
-        </p>
+        <p className="text-[10px] font-medium text-neutral-focus">My Voyage:</p>
         {activeVoyage?.voyageTeam.name ? (
           <p className="border border-transparent text-base font-medium text-base-300">
             {currentVoyage}
