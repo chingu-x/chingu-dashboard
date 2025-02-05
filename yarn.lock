@@ -1607,9 +1607,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chingu-x/components@npm:^0.9.1":
-  version: 0.9.1
-  resolution: "@chingu-x/components@npm:0.9.1"
+"@chingu-x/components@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "@chingu-x/components@npm:0.10.0"
   dependencies:
     "@heroicons/react": "npm:^2.2.0"
     class-variance-authority: "npm:^0.7.1"
@@ -1621,7 +1621,7 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
     tailwindcss: ^3.0.0
-  checksum: 68da17cd489ee1fe060b9b77ecfc68456c7e87b19f5f65eeb98c13db1137607f99be174b8647bae57c6f38fe63f9dc2ecb22de823ae2b1700703e288b902ad1a
+  checksum: 67bd9811369da82ad643759c88650d3fcee408234325bf0762b737735773f73d99c018378248042a24d842639f8c5748120f5665eb795b530598a25880229897
   languageName: node
   linkType: hard
 
@@ -7678,7 +7678,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "chingu_dashboard@workspace:."
   dependencies:
-    "@chingu-x/components": "npm:^0.9.1"
+    "@chingu-x/components": "npm:^0.10.0"
     "@commitlint/cli": "npm:^19.6.1"
     "@commitlint/config-conventional": "npm:^19.6.0"
     "@hello-pangea/dnd": "npm:^16.3.0"
