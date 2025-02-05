@@ -123,26 +123,26 @@ export default function MeetingForm() {
     },
   });
 
-  const { mutate: editMeeting, isPending: editMeetingPending } = useMutation<
-    AddMeetingResponseDto,
-    Error,
-    AddMeetingClientRequestDto
-  >({
-    mutationFn: addMeetingMutation,
-    onSuccess: (data) => {
-      queryClient.removeQueries({
-        queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
-      });
-      router.push(
-        routePaths.sprintWeekPage(teamId, sprintNumber, data.id.toString()),
-      );
-    },
-    onError: (error: Error) => {
-      dispatch(
-        onOpenModal({ type: "error", content: { message: error.message } }),
-      );
-    },
-  });
+  // const { mutate: editMeeting, isPending: editMeetingPending } = useMutation<
+  //   AddMeetingResponseDto,
+  //   Error,
+  //   AddMeetingClientRequestDto
+  // >({
+  //   mutationFn: addMeetingMutation,
+  //   onSuccess: (data) => {
+  //     queryClient.removeQueries({
+  //       queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
+  //     });
+  //     router.push(
+  //       routePaths.sprintWeekPage(teamId, sprintNumber, data.id.toString()),
+  //     );
+  //   },
+  //   onError: (error: Error) => {
+  //     dispatch(
+  //       onOpenModal({ type: "error", content: { message: error.message } }),
+  //     );
+  //   },
+  // });
 
   async function addMeetingMutation({
     data,
@@ -189,12 +189,10 @@ export default function MeetingForm() {
 
   useEffect(() => {
     if (params.meetingId) {
-      const meeting = sprintMeetingAdapter.getCurrentSprintMeeting({
+      const meeting = sprintMeetingAdapter.getSprintMeeting({
         meeting: sprintMeeting,
         meetingId,
       });
-
-      console.log(meeting);
 
       setMeetingData(meeting as Meeting);
       setEditMode(true);
@@ -226,7 +224,7 @@ export default function MeetingForm() {
   );
 
   function renderButtonContent() {
-    if (editMeetingPending || addMeetingPending) {
+    if (addMeetingPending) {
       return <Spinner />;
     }
 
@@ -285,9 +283,7 @@ export default function MeetingForm() {
         <Button
           type="submit"
           title="submit"
-          disabled={
-            !isDirty || !isValid || editMeetingPending || addMeetingPending
-          }
+          disabled={!isDirty || !isValid || addMeetingPending}
           size="lg"
           variant="primary"
         >

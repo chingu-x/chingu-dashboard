@@ -8,7 +8,13 @@ export const sprintMeetingSlice = createSlice({
   initialState,
   reducers: {
     fetchMeeting: (state, action: PayloadAction<Meeting>) => {
-      state.push(action.payload);
+      const meeting = state.find((meeting) => meeting.id === action.payload.id);
+
+      if (!meeting) {
+        state.push(action.payload);
+      }
+
+      return;
     },
     editMeeting: (state, action: PayloadAction<Meeting>) =>
       state.map((meeting) => {

@@ -19,8 +19,6 @@ export default function DateTimeComponent({
 
   const dateTimeConvertedToDate = convertStringToDate(dateTime, timezone);
 
-  console.log(dateTimeConvertedToDate);
-
   const getMeetingDate = () => {
     if (isToday(dateTimeConvertedToDate)) return "today";
     if (isTomorrow(dateTimeConvertedToDate)) return "tomorrow";
