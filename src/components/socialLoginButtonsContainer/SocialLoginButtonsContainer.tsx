@@ -7,15 +7,9 @@ function SocialLoginButtonsContainer() {
         Continue using your social accounts
       </p>
       <div className="flex gap-x-6">
-        <SocialButton variant="github">
-          Github
-        </SocialButton>
-        <SocialButton variant="discord">
-          Discord
-        </SocialButton>
-        <SocialButton variant="linkedin">
-          LinkedIn
-        </SocialButton>
+        <SocialButton variant="github">Github</SocialButton>
+        <SocialButton variant="discord">Discord</SocialButton>
+        <SocialButton variant="linkedin">LinkedIn</SocialButton>
       </div>
     </>
   );
