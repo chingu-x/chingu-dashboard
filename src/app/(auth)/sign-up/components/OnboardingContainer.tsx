@@ -39,13 +39,13 @@ export default function OnboardingContainer() {
     },
     {
       isActive: currentStep === 5,
-      name: "Sprint 3",
+      name: "Onboarding step 3",
       onClickEvent: () => goToStep(5),
       status: getStatus(5, currentStep),
     },
     {
       isActive: currentStep === 7,
-      name: "Sprint 4",
+      name: "Onboarding step 4",
       onClickEvent: () => goToStep(7),
       status: getStatus(7, currentStep),
     },
@@ -67,7 +67,6 @@ export default function OnboardingContainer() {
     }
   };
 
-  // Render the current step content
   const renderStepContent = () => {
     switch (currentStep) {
       case 0:
@@ -75,7 +74,7 @@ export default function OnboardingContainer() {
       case 1:
         return (
           <>
-            <div>
+            <div className="py-10">
               <TextInput
                 id="firstName"
                 label="First Name"
@@ -101,7 +100,16 @@ export default function OnboardingContainer() {
           </div>
         );
       case 3:
-        return <div>What features are you most excited about</div>;
+        return (
+          <div className="py-10">
+            <h2 className="text-2xl font-semibold text-base-300">
+              What features are you most excited about?
+            </h2>
+            <p className="text-sm font-medium leading-4 text-base-300">
+              (Maximum 3)
+            </p>
+          </div>
+        );
       case 4:
         return (
           <div className="flex h-full max-w-xl items-center justify-center">
@@ -114,11 +122,7 @@ export default function OnboardingContainer() {
           </div>
         );
       case 5:
-        return (
-          <div className="flex h-full max-w-xl items-center justify-center">
-            How did you hear about us
-          </div>
-        );
+        return <div className="py-10">How did you hear about us</div>;
       case 6:
         return (
           <div className="flex h-full max-w-xl items-center justify-center">
@@ -132,7 +136,7 @@ export default function OnboardingContainer() {
         );
       case 7:
         return (
-          <div className="flex h-full max-w-xl items-center justify-center">
+          <div className="py-10">
             If you are on LinkedIn what is your profile URL?
           </div>
         );
