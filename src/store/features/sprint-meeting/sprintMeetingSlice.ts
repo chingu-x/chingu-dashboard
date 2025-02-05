@@ -1,19 +1,7 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { Meeting } from "@chingu-x/modules/sprint-meeting";
 
-const initialState: Meeting[] = [
-  {
-    id: 0,
-    sprint: undefined,
-    title: "",
-    description: "",
-    dateTime: "",
-    meetingLink: "",
-    notes: "",
-    agendas: [],
-    formResponseMeeting: [],
-  },
-];
+const initialState: Meeting[] = [];
 
 export const sprintMeetingSlice = createSlice({
   name: "sprintMeeting",
