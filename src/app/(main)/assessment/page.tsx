@@ -1,5 +1,5 @@
 import React from "react";
-import AssessmentResults from "@/components/assessment/AssessmentResults";
+import AssessmentResults from "@/components/assessment/results/AssessmentResults";
 
 export default function AssessmentDashboard() {
   return (
