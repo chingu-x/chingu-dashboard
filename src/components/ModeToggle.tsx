@@ -18,13 +18,17 @@ export default function ModeToggle() {
 
   // If enableSystem is true and the active theme is "system" (when a user firsts visits a website), resolvedTheme returns whether the system preference resolved to "dark" or "light".
   // So we need to set theme to resolvedTheme first time the user visits, but next time the theme is gonna come from localStorage
-  const activeTheme = theme === "system" && resolvedTheme ? resolvedTheme : theme;
+  const activeTheme =
+    theme === "system" && resolvedTheme ? resolvedTheme : theme;
 
   const toggleTheme = () => {
     setTheme(activeTheme === "light" ? "dark" : "light");
   };
 
   return (
-    <ModeToggleButton theme={activeTheme as "light" | "dark"} onChange={toggleTheme} />
+    <ModeToggleButton
+      theme={activeTheme as "light" | "dark"}
+      onChange={toggleTheme}
+    />
   );
 }
