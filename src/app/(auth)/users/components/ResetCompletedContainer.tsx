@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { Banner } from "@chingu-x/components/banner";
+import Image from "next/image";
 import Button from "@/components/Button";
 import routePaths from "@/utils/routePaths";
-import Banner from "@/components/banner/Banner";
 
 function ResetCompletedContainer() {
   return (
@@ -10,11 +11,28 @@ function ResetCompletedContainer() {
         Password Reset!
       </p>
       <Banner
-        imageLight="/img/diamond_light.png"
-        imageDark="/img/diamond_dark.png"
+        imageLight={
+          <Image
+            src="/img/diamond_light.png"
+            alt="Light Reset Password Image"
+            fill={true}
+            sizes="125px"
+            priority
+            style={{ objectFit: "contain" }}
+          />
+        }
+        imageDark={
+          <Image
+            src="/img/diamond_dark.png"
+            alt="Dark Reset Password Image"
+            fill={true}
+            sizes="125px"
+            priority
+            style={{ objectFit: "contain" }}
+          />
+        }
         height="h-[112px]"
         width="w-[125px]"
-        alt="Reset Password Image"
       />
       <p className="pb-8 text-center text-xl font-medium text-base-300">
         Password Reset Successfully
