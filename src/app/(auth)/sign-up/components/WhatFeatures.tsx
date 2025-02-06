@@ -15,41 +15,42 @@ const optionsDataFirstCol: Option[] = [
   },
   {
     id: "2",
-    title: "Data Analytics",
-    description: "Real-time insights and reporting dashboard",
+    title: "Support",
+    description: "Help when I get stuck on a coding problem",
   },
   {
     id: "3",
-    title: "Custom Integration",
-    description: "Connect with your favorite tools seamlessly",
+    title: "Challenge",
+    description: "Getting out of my comfort zone",
   },
   {
     id: "4",
-    title: "Team Collaboration",
-    description: "Work together efficiently with your team",
+    title: "Specific Study Groups",
+    description: "Either the #YDKJS or P1xt Guide study-groups",
   },
 ];
 
 const optionsDataSecondCol: Option[] = [
   {
     id: "5",
-    title: "Solidarity",
-    description: "Being in a group of friendly coders who share my goals",
+    title: "Teamwork",
+    description: "Having access to team project experiences",
   },
   {
     id: "6",
-    title: "Data Analytics",
-    description: "Real-time insights and reporting dashboard",
+    title: "Accountability",
+    // eslint-disable-next-line quotes
+    description: 'Having an "Accountability Buddy" to help me stay motivated',
   },
   {
     id: "7",
-    title: "Custom Integration",
-    description: "Connect with your favorite tools seamlessly",
+    title: "Workshops",
+    description: "Video discussions topics and help sessions",
   },
   {
     id: "8",
-    title: "Team Collaboration",
-    description: "Work together efficiently with your team",
+    title: "Pair Programming",
+    description: "Collaborative problem solving with peers",
   },
 ];
 
