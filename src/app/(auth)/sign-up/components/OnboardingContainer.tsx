@@ -6,11 +6,12 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import WelcomeChingu from "./WelcomeChingu";
 import WhatFeatures from "./WhatFeatures";
+import HowDidYouHear from "./HowDidYouHear";
+import LinkedInUrl from "./LinkedInUrl";
 import Button from "@/components/Button";
 import type { SteppersItem } from "@/components/Stepper";
 import Stepper from "@/components/Stepper";
 import TextInput from "@/components/inputs/TextInput";
-
 
 export default function OnboardingContainer() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -115,7 +116,7 @@ export default function OnboardingContainer() {
           </div>
         );
       case 5:
-        return <div className="py-10">How did you hear about us</div>;
+        return <HowDidYouHear />;
       case 6:
         return (
           <div className="flex h-full max-w-xl items-center justify-center">
@@ -128,11 +129,7 @@ export default function OnboardingContainer() {
           </div>
         );
       case 7:
-        return (
-          <div className="py-10">
-            If you are on LinkedIn what is your profile URL?
-          </div>
-        );
+        return <LinkedInUrl />;
       default:
         return <WelcomeChingu handleBegin={handleNext} />;
     }
