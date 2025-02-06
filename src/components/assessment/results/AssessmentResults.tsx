@@ -1,10 +1,12 @@
 import TierDisplay from "@/components/assessment/ui/TierDisplay";
 import ButtonsController from "@/components/assessment/ui/ButtonsController";
+import ConfettiScreen from "@/components/assessment/ui/ConfettiScreen";
 
 export default function AssessmentResultsPage() {
   return (
-    <div className="relative left-[581px] top-[354px] flex h-[480px] w-[814px] flex-col items-center justify-center gap-[42px] overflow-hidden bg-white text-black">
-      <div className="flex w-full flex-col">
+    <div className="relative h-screen w-full">
+      <ConfettiScreen className="absolute inset-0 z-0 h-full w-full" />
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
         <div className="text-center">
           After analyzing your results, <br />
           We&apos;ve concluded that you are a ... <br />
