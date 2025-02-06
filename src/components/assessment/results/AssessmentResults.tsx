@@ -1,7 +1,7 @@
 import TierDisplay from "@/components/assessment/ui/TierDisplay";
 import ButtonsController from "@/components/assessment/ui/ButtonsController";
 import ConfettiScreen from "@/components/assessment/ui/ConfettiScreen";
-// import ResultsLoading from "@/components/assessment/ui/ResultsLoading";
+import ResultsLoading from "@/components/assessment/ui/ResultsLoading";
 
 export default function AssessmentResultsPage() {
   return (
@@ -16,7 +16,7 @@ export default function AssessmentResultsPage() {
         <ButtonsController />
       </div>
 
-      {/* <ResultsLoading /> */}
+      <ResultsLoading />
     </div>
   );
 }

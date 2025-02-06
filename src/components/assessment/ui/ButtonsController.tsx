@@ -1,6 +1,6 @@
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import Button from "@/components/Button";
 import QuizButton from "@/components/assessment/ui/QuizButton";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 // import VoyagePageButton from "@/components/sidebar/VoyagePageButton";
 
 export default function ButtonsController() {

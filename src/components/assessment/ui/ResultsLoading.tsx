@@ -1,9 +1,9 @@
-import analyzing_results from "@/public/img/analyzing_results.png";
+import Image from "next/image";
 
 export default function ResultsLoading() {
   return (
     <div className="flex h-screen items-center justify-center">
-      <img
+      <Image
         src="/img/analyzing_results.png"
         alt="Analyzing Results"
         className="animate-bounce-custom"

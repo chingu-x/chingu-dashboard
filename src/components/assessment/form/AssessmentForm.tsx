@@ -1,7 +1,7 @@
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import Header from "@/components/assessment/ui/Header";
 import RadioGroupItem from "@/components/inputs/RadioGroup/RadioGroupItem";
 import Button from "@/components/Button";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 
 export default function AssessmentForm() {
   return (
@@ -11,7 +11,7 @@ export default function AssessmentForm() {
         <p className="mb-4">Do you have experience with HTML and CSS?</p>
         <div className="flex flex-col justify-center gap-4">
           <RadioGroupItem
-            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border-b border-l border-r border-t border-gray-400 px-16 pb-16 pt-16"
+            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border border-gray-400 p-16"
             id="none"
             label={
               <div>
@@ -20,7 +20,7 @@ export default function AssessmentForm() {
             }
           />
           <RadioGroupItem
-            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border-b border-l border-r border-t border-gray-400 px-16 pb-16 pt-16"
+            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border border-gray-400 p-16"
             id="beginner"
             label={
               <div>
@@ -30,7 +30,7 @@ export default function AssessmentForm() {
             }
           />
           <RadioGroupItem
-            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border-b border-l border-r border-t border-gray-400 px-16 pb-16 pt-16"
+            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border border-gray-400 p-16"
             id="intermediate"
             label={
               <div>
@@ -40,7 +40,7 @@ export default function AssessmentForm() {
             }
           />
           <RadioGroupItem
-            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border-b border-l border-r border-t border-gray-400 px-16 pb-16 pt-16"
+            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border border-gray-400 p-16"
             id="advanced"
             label={
               <div>
@@ -53,12 +53,12 @@ export default function AssessmentForm() {
             }
           />
         </div>
-        <div className="flex w-full items-center justify-center gap-[42px] rounded-tl-[16px] border border-gray-300 bg-opacity-70 pt-[40px]">
-          <Button className="w-full !bg-[#F5F5F5] py-[10px] text-black">
+        <div className="flex w-full items-center justify-center gap-[42px] rounded-tl-[16px] border border-gray-300 pt-[40px]">
+          <Button className="w-full !bg-[#F5F5F5]/70 py-[10px] text-black">
             <ArrowLeftIcon className="mr-2 h-4 w-4" />
             Back
           </Button>
-          <Button className="w-full !bg-[#217A56] py-[10px]">
+          <Button className="w-full !bg-[#217A56]/70 py-[10px]">
             Continue
             <ArrowRightIcon className="ml-2 h-4 w-4 text-white" />
           </Button>
