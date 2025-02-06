@@ -5,8 +5,8 @@ import AssessmentForm from "@/components/assessment/form/AssessmentForm";
 export default function AssessmentDashboard() {
   return (
     <div>
-      {/* <AssessmentResults /> */}
-      <AssessmentForm />
+      <AssessmentResults />
+      {/* <AssessmentForm /> */}
     </div>
   );
 }
