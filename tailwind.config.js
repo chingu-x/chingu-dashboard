@@ -4,9 +4,19 @@ module.exports = {
   content: [
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
+      animation: {
+        "bounce-custom": "jump 1.5s ease-in-out infinite",
+      },
+      keyframes: {
+        jump: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-15px)" },
+        },
+      },
       screens: {
         "3xl": "1920px",
       },
