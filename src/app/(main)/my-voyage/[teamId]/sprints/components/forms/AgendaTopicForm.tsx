@@ -13,7 +13,6 @@ import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/utils/form/validateInput";
 import { useSprint, useAppDispatch } from "@/store/hooks";
-import { type Agenda } from "@/store/features/sprint/sprintSlice";
 import useServerAction from "@/hooks/useServerAction";
 import {
   addAgendaTopic,
@@ -24,6 +23,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
 import { persistor } from "@/store/store";
+import { Agenda } from "@chingu-x/modules/sprint-meeting";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -54,12 +54,9 @@ export default function AgendaTopicForm() {
   ];
 
   const dispatch = useAppDispatch();
-  const {
-    voyage: { sprints },
-  } = useSprint();
+  const { sprints } = useSprint();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [topicData, setTopicData] = useState<Agenda>();
-  const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const {
     runAction: editAgendaTopicAction,
@@ -185,89 +182,6 @@ export default function AgendaTopicForm() {
       void persistor.purge();
     },
     [],
-  );
-
-  // This block is responsible for auto-save functionality. Right now nextjs does
-  // not have a way to intercept routes with app router. When that is implemented
-  // on their side, it will probably be better to go that method.
-
-  function asyncTimeout(ms: number) {
-    return new Promise((resolve) => {
-      setSaveTimeout(setTimeout(resolve, ms));
-    });
-  }
-
-  useEffect(() => {
-    async function autoSave() {
-      const modifiedObject: { [key: string]: string | Date } = {};
-
-      if (topicData) {
-        const watchedData = watch();
-
-        for (const key in watchedData) {
-          if (
-            watchedData.hasOwnProperty(key) &&
-            topicData[key as keyof Agenda] !==
-              watchedData[key as keyof typeof watchedData]
-          ) {
-            modifiedObject[key as keyof Agenda] =
-              watchedData[key as keyof typeof watchedData];
-          }
-        }
-      }
-
-      const filteredData = {
-        agendaId,
-        sprintNumber,
-        ...modifiedObject,
-      };
-
-      await asyncTimeout(5000);
-
-      const [res, error] = await editAgendaTopicAction(filteredData);
-
-      if (res) {
-        setEditAgendaTopicLoading(false);
-      }
-
-      if (error) {
-        dispatch(
-          onOpenModal({
-            type: "error",
-            content: { message: error.message },
-          }),
-        );
-        setEditAgendaTopicLoading(false);
-      }
-    }
-
-    if (editMode && isDirty && isValid) {
-      void autoSave();
-    }
-  }, [
-    isValid,
-    isDirty,
-    topicData,
-    watch,
-    editMode,
-    dispatch,
-    params.meetingId,
-    teamId,
-    agendaId,
-    sprintNumber,
-    editAgendaTopicAction,
-    setEditAgendaTopicLoading,
-    title,
-    description,
-  ]);
-
-  useEffect(
-    () => () => {
-      if (saveTimeout) {
-        clearTimeout(saveTimeout);
-      }
-    },
-    [saveTimeout],
   );
 
   function renderButtonContent() {

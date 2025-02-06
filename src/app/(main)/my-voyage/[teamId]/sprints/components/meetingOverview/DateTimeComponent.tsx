@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { useUser } from "@/store/hooks";

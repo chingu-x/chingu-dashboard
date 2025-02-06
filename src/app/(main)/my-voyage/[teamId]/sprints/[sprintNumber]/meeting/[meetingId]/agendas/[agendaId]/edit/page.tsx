@@ -1,8 +1,9 @@
-import { redirect } from "next/navigation";
+"use client";
+
+import "reflect-metadata";
 import TopicForm from "@/myVoyage/sprints/components/forms/AgendaTopicForm";
-import { getCurrentVoyageTeam } from "@/utils/getCurrentVoyageTeam";
-import routePaths from "@/utils/routePaths";
-import { getUser } from "@/utils/getUser";
+import { useUser } from "@/store/hooks";
+import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
 
 interface EditTopicPageProps {
   params: {
@@ -10,20 +11,10 @@ interface EditTopicPageProps {
   };
 }
 
-export default async function EditTopicPage({ params }: EditTopicPageProps) {
-  const teamId = Number(params.teamId);
+export default function EditTopicPage({ params }: EditTopicPageProps) {
+  const { teamId } = params;
+  const user = useUser();
 
-  const [user, error] = await getUser();
-
-  const { err, currentTeam } = getCurrentVoyageTeam({ user, error, teamId });
-
-  if (err) {
-    return err;
-  }
-
-  if (currentTeam) {
-    return <TopicForm />;
-  }
-
-  redirect(routePaths.dashboardPage());
+  useCheckCurrentVoyageTeam({ user, teamId });
+  return <TopicForm />;
 }

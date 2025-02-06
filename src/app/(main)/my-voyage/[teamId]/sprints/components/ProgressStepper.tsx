@@ -34,8 +34,6 @@ export default function ProgressStepper({
       sprintNumber,
     });
 
-    console.log(meetingId);
-
     if (meetingId) {
       router.push(
         routePaths.sprintWeekPage(
