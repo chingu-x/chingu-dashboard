@@ -1,4 +1,6 @@
 import RadioGroupItem from "@/components/inputs/RadioGroup/RadioGroupItem";
+import Button from "@/components/Button";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 
 export default function AssessmentForm() {
   return (
@@ -47,6 +49,16 @@ export default function AssessmentForm() {
             </div>
           }
         />
+      </div>
+      <div className="flex w-full items-center justify-center gap-[42px] rounded-tl-[16px] border border-gray-300 bg-opacity-70 pt-[40px]">
+        <Button className="w-full !bg-[#F5F5F5] py-[10px] text-black">
+          <ArrowLeftIcon className="mr-2 h-4 w-4" />
+          Back
+        </Button>
+        <Button className="w-full !bg-[#217A56] py-[10px]">
+          Continue
+          <ArrowRightIcon className="ml-2 h-4 w-4 text-white" />
+        </Button>
       </div>
     </div>
   );
