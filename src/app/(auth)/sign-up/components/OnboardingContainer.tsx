@@ -5,10 +5,12 @@ import { useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import WelcomeChingu from "./WelcomeChingu";
+import WhatFeatures from "./WhatFeatures";
 import Button from "@/components/Button";
 import type { SteppersItem } from "@/components/Stepper";
 import Stepper from "@/components/Stepper";
 import TextInput from "@/components/inputs/TextInput";
+
 
 export default function OnboardingContainer() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -100,16 +102,7 @@ export default function OnboardingContainer() {
           </div>
         );
       case 3:
-        return (
-          <div className="py-10">
-            <h2 className="text-2xl font-semibold text-base-300">
-              What features are you most excited about?
-            </h2>
-            <p className="text-sm font-medium leading-4 text-base-300">
-              (Maximum 3)
-            </p>
-          </div>
-        );
+        return <WhatFeatures />;
       case 4:
         return (
           <div className="flex h-full max-w-xl items-center justify-center">
