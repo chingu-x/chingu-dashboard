@@ -7,7 +7,7 @@ export default function ButtonsController() {
   return (
     <div className="w-full max-w-[814px] space-y-4">
       <QuizButton />
-      <div className="flex w-full items-center justify-center gap-[42px] rounded-tl-[16px] border border-gray-300 bg-opacity-70 pt-[40px]">
+      <div className="flex w-full items-center justify-center gap-[42px] rounded-tl-[16px] bg-opacity-70 pt-[40px]">
         <Button className="w-full !bg-[#F5F5F5] py-[10px] text-black">
           <ArrowLeftIcon className="mr-2 h-4 w-4" />
           Back to Self Assessment Page
