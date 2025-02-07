@@ -16,7 +16,7 @@ export default function AssessmentPage() {
           alt="home"
           width={231}
           height={200}
-          className="h-[200px] h-auto w-[231px] w-auto"
+          className="h-[200px] w-[231px]"
         />
         <div
           alt="header-intro"

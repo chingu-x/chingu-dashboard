@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { createContext } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 
 export default function ResultsLoading() {
