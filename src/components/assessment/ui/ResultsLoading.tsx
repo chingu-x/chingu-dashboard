@@ -4,7 +4,7 @@ export default function ResultsLoading() {
   return (
     <div className="flex h-screen items-center justify-center">
       <Image
-        src="/img/analyzing_results.png"
+        src="/img/assessment/analyzing_results.png"
         alt="Analyzing Results"
         className="animate-bounce-custom"
       />
