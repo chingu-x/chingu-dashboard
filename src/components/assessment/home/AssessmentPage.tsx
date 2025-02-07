@@ -4,22 +4,22 @@ import Button from "@/components/Button";
 export default function AssessmentPage() {
   return (
     <div
-      alt="component-container"
+      aria-label="component-container"
       className="left-[250px] mt-[76px] flex h-[547px] w-[1478px] flex-col items-center justify-center gap-[75px] px-[40px]"
     >
       <div
-        alt="header"
+        aria-label="header"
         className="flex min-h-[200px] w-[1300px] min-w-[895px] flex-row items-center justify-center gap-[40px] rounded-[16px] text-2xl font-light"
       >
         <Image
           src="/img/assessment/home.png"
-          alt="home"
+          aria-label="home"
           width={231}
           height={200}
           className="h-[200px] w-[231px]"
         />
         <div
-          alt="header-intro"
+          aria-label="header-intro"
           className="flex flex-col items-start justify-center"
         >
           <p className="h-[40px] w-[700px] text-left text-[39px] leading-[40px]">
@@ -33,15 +33,15 @@ export default function AssessmentPage() {
         </div>
       </div>
       <div
-        alt="tile-row"
+        aria-label="tile-row"
         className="flex h-[192px] w-[1398px] flex-row gap-[40px]"
       >
         <div
-          alt="tile"
+          aria-label="tile"
           className="flex h-[192px] w-[439px] flex-col items-center justify-center gap-[24px] rounded-[16px] bg-[#F5F5F5] p-[24px]"
         >
           <p
-            alt="tile-name"
+            aria-label="tile-name"
             className="h-[30px] w-[283px] text-center text-[25px] font-semibold leading-[30px]"
           >
             Front End Development
@@ -54,11 +54,11 @@ export default function AssessmentPage() {
           </Button>
         </div>
         <div
-          alt="tile"
+          aria-label="tile"
           className="flex h-[192px] w-[439.33px] flex-col items-center justify-center gap-[24px] rounded-[16px] bg-[#F5F5F5] p-[24px]"
         >
           <p
-            alt="tile-name"
+            aria-label="tile-name"
             className="h-[30px] w-[283px] text-center text-[25px] font-semibold leading-[30px]"
           >
             Back End Development
@@ -71,11 +71,11 @@ export default function AssessmentPage() {
           </Button>
         </div>
         <div
-          alt="tile"
+          aria-label="tile"
           className="flex h-[192px] w-[439.33px] flex-col items-center justify-center gap-[24px] rounded-[16px] bg-[#E3E5EB] p-[24px]"
         >
           <p
-            alt="tile-name"
+            aria-label="tile-name"
             className="h-[30px] w-[283px] text-center text-[25px] font-semibold leading-[30px]"
           >
             UX Design
