@@ -5,18 +5,16 @@ import ResultsLoading from "@/components/assessment/ui/ResultsLoading";
 
 export default function AssessmentResultsPage() {
   return (
-    <div className="relative h-screen w-full">
-      <ConfettiScreen className="absolute inset-0 z-0 h-full w-full" />
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
-        <div className="text-center">
-          After analyzing your results, <br />
-          We&apos;ve concluded that you are a ... <br />
-        </div>
-        <TierDisplay />
-        <ButtonsController />
+    <div className="w-screen">
+      <ConfettiScreen />
+      {/* <div className="absolute flex flex-col items-center justify-center"> */}
+      <div className="text-center">
+        After analyzing your results, <br />
+        We&apos;ve concluded that you are a ... <br />
       </div>
-
-      <ResultsLoading />
+      <TierDisplay />
+      <ButtonsController />
+      {/* <ResultsLoading /> */}
     </div>
   );
 }

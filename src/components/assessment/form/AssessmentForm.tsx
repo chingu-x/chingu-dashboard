@@ -58,7 +58,7 @@ export default function AssessmentForm() {
             <ArrowLeftIcon className="mr-2 h-4 w-4" />
             Back
           </Button>
-          <Button className="w-full !bg-[#217A56]/70 py-[10px]">
+          <Button variant="primary" size="xxl">
             Continue
             <ArrowRightIcon className="ml-2 h-4 w-4 text-white" />
           </Button>

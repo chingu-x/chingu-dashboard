@@ -7,6 +7,8 @@ export default function ResultsLoading() {
         src="/img/analyzing_results.png"
         alt="Analyzing Results"
         className="animate-bounce-custom"
+        width={30}
+        height={30}
       />
       ;
     </div>
