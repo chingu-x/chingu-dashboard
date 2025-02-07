@@ -13,7 +13,7 @@ export default function AssessmentPage() {
       >
         <Image
           src="/img/assessment/home.png"
-          aria-label="home"
+          alt="home"
           width={231}
           height={200}
           className="h-[200px] w-[231px]"
