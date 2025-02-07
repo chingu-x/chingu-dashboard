@@ -16,7 +16,7 @@ export default function AssessmentPage() {
           alt="home"
           width={231}
           height={200}
-          className="h-[200px] w-[231px]"
+          className="h-[200px] h-auto w-[231px] w-auto"
         />
         <div
           alt="header-intro"
@@ -42,14 +42,14 @@ export default function AssessmentPage() {
         >
           <p
             alt="tile-name"
-            className="font-inter decoration-skip-ink h-[30px] w-[283px] text-center text-[25px] font-semibold leading-[30px]"
+            className="h-[30px] w-[283px] text-center text-[25px] font-semibold leading-[30px]"
           >
             Front End Development
           </p>
-          <p className="font-inter h-[19px] w-[8px] text-center text-[16px] font-medium leading-[19px] text-[#000000]">
+          <p className="h-[19px] w-[8px] text-center text-[16px] font-medium leading-[19px] text-[#000000]">
             -
           </p>
-          <Button className="font-inter h-[47px] w-[207px] w-full gap-[8px] rounded-lg bg-[#217A56] px-[22px] py-[14px] text-[16px] font-semibold leading-[19px] text-[#F5F5F5]">
+          <Button className="h-[47px] w-[207px] gap-[8px] rounded-lg bg-[#217A56] px-[22px] py-[14px] text-[16px] font-semibold leading-[19px] text-[#F5F5F5]">
             Take Assessment
           </Button>
         </div>
@@ -59,14 +59,14 @@ export default function AssessmentPage() {
         >
           <p
             alt="tile-name"
-            className="font-inter decoration-skip-ink h-[30px] w-[283px] text-center text-[25px] font-semibold leading-[30px]"
+            className="h-[30px] w-[283px] text-center text-[25px] font-semibold leading-[30px]"
           >
             Back End Development
           </p>
-          <p className="font-inter h-[19px] w-[8px] text-center text-[16px] font-medium leading-[19px] text-[#000000]">
+          <p className="h-[19px] w-[8px] text-center text-[16px] font-medium leading-[19px] text-[#000000]">
             -
           </p>
-          <Button className="font-inter h-[47px] w-[207px] w-full gap-[8px] rounded-lg bg-[#217A56] px-[22px] py-[14px] text-[16px] font-semibold leading-[19px] text-[#F5F5F5]">
+          <Button className="h-[47px] w-[207px] gap-[8px] rounded-lg bg-[#217A56] px-[22px] py-[14px] text-[16px] font-semibold leading-[19px] text-[#F5F5F5]">
             Take Assessment
           </Button>
         </div>
@@ -76,14 +76,14 @@ export default function AssessmentPage() {
         >
           <p
             alt="tile-name"
-            className="font-inter decoration-skip-ink h-[30px] w-[283px] text-center text-[25px] font-semibold leading-[30px]"
+            className="h-[30px] w-[283px] text-center text-[25px] font-semibold leading-[30px]"
           >
             UX Design
           </p>
-          <p className="font-inter h-[19px] w-[8px] text-center text-[16px] font-medium leading-[19px] text-[#000000]">
+          <p className="h-[19px] w-[8px] text-center text-[16px] font-medium leading-[19px] text-[#000000]">
             -
           </p>
-          <Button className="font-inter h-[47px] w-[207px] w-full gap-[8px] rounded-lg bg-[#217A56] px-[22px] py-[14px] text-[16px] font-semibold leading-[19px] text-[#F5F5F5]">
+          <Button className="h-[47px] w-[207px] gap-[8px] rounded-lg bg-[#217A56] px-[22px] py-[14px] text-[16px] font-semibold leading-[19px] text-[#F5F5F5]">
             Coming Soon
           </Button>
         </div>
