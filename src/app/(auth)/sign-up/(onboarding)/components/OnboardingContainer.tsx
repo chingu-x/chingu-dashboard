@@ -1,7 +1,4 @@
 /* eslint-disable indent */
-"use client";
-
-import { useState } from "react";
 import WelcomeChingu from "./WelcomeChingu";
 import OnboardingImage from "./OnboardingImage";
 import WhatFeatures from "@/app/(auth)/sign-up/(onboarding)/components/WhatFeatures";
@@ -11,10 +8,12 @@ import type { SteppersItem } from "@/components/Stepper";
 import Stepper from "@/components/Stepper";
 import TextInput from "@/components/inputs/TextInput";
 import OnboardingNavigation from "@/app/(auth)/sign-up/(onboarding)/components/OnboardingNavigation";
+import { useOnboardingStep } from "@/app/(auth)/sign-up/(onboarding)/hooks/useOnboardingStep";
 
 export default function OnboardingContainer() {
-  const [currentStep, setCurrentStep] = useState(0);
   const totalSteps = 7;
+  const { currentStep, goToStep, handleNext, handleBack } =
+    useOnboardingStep(totalSteps);
   // Condition to show stepper
   const showStepper = [1, 3, 5, 7].includes(currentStep);
 
@@ -52,22 +51,6 @@ export default function OnboardingContainer() {
       status: getStatus(7, currentStep),
     },
   ];
-
-  const goToStep = (stepNumber: number) => {
-    setCurrentStep(stepNumber);
-  };
-
-  const handleNext = () => {
-    if (currentStep < totalSteps) {
-      setCurrentStep((prev) => prev + 1);
-    }
-  };
-
-  const handleBack = () => {
-    if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
-    }
-  };
 
   const renderStepContent = () => {
     switch (currentStep) {
