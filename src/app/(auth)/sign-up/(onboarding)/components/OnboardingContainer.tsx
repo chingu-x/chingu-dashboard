@@ -3,8 +3,8 @@
 
 import { useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
 import WelcomeChingu from "./WelcomeChingu";
+import OnboardingImage from "./OnboardingImage";
 import WhatFeatures from "@/app/(auth)/sign-up/(onboarding)/components/WhatFeatures";
 import HowDidYouHear from "@/app/(auth)/sign-up/(onboarding)/components/HowDidYouHear";
 import LinkedInUrl from "@/app/(auth)/sign-up/(onboarding)/components/LinkedInUrl";
@@ -93,40 +93,29 @@ export default function OnboardingContainer() {
         );
       case 2:
         return (
-          <div className="flex h-full max-w-xl items-center justify-center">
-            <Image
-              width={812}
-              height={435}
-              src="/img/onboarding_image_1.png"
-              alt="onboarding image 1"
-            />
-          </div>
+          <OnboardingImage
+            src="/img/onboarding_image_1.png"
+            alt="onboarding image 1"
+            height={435}
+          />
         );
       case 3:
         return <WhatFeatures />;
       case 4:
         return (
-          <div className="flex h-full max-w-xl items-center justify-center">
-            <Image
-              width={812}
-              height={395}
-              src="/img/onboarding_image_2.png"
-              alt="onboarding image 2"
-            />
-          </div>
+          <OnboardingImage
+            src="/img/onboarding_image_2.png"
+            alt="onboarding image 2"
+          />
         );
       case 5:
         return <HowDidYouHear />;
       case 6:
         return (
-          <div className="flex h-full max-w-xl items-center justify-center">
-            <Image
-              width={812}
-              height={395}
-              src="/img/onboarding_image_3.png"
-              alt="onboarding image 3"
-            />
-          </div>
+          <OnboardingImage
+            src="/img/onboarding_image_3.png"
+            alt="onboarding image 3"
+          />
         );
       case 7:
         return <LinkedInUrl />;
