@@ -16,7 +16,7 @@ export const sprintMeetingSlice = createSlice({
 
       return;
     },
-    editMeeting: (state, action: PayloadAction<Meeting>) =>
+    editMeetingState: (state, action: PayloadAction<Meeting>) =>
       state.map((meeting) => {
         if (meeting.id === action.payload.id) {
           return { ...meeting, ...action.payload };
@@ -27,6 +27,6 @@ export const sprintMeetingSlice = createSlice({
   },
 });
 
-export const { fetchMeeting } = sprintMeetingSlice.actions;
+export const { fetchMeeting, editMeetingState } = sprintMeetingSlice.actions;
 
 export default sprintMeetingSlice.reducer;

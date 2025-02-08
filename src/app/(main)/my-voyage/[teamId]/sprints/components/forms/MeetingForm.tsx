@@ -9,6 +9,8 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 import type {
   AddMeetingClientRequestDto,
   AddMeetingResponseDto,
+  EditMeetingClientRequestDto,
+  EditMeetingResponseDto,
   Meeting,
 } from "@chingu-x/modules/sprint-meeting";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -33,6 +35,7 @@ import { persistor } from "@/store/store";
 import convertStringToDate from "@/utils/convertStringToDate";
 import { sprintMeetingAdapter, timezoneAdapter } from "@/utils/adapters";
 import { CacheTag } from "@/utils/cacheTag";
+import { editMeetingState } from "@/store/features/sprint-meeting/sprintMeetingSlice";
 
 export default function MeetingForm() {
   const router = useRouter();
@@ -92,7 +95,7 @@ export default function MeetingForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  const { title, description, dateTime, meetingLink } = watch();
+  const { dateTime } = watch();
 
   const setCustomValue = (id: "dateTime", value: Date) => {
     setValue(id, value, {
@@ -123,26 +126,27 @@ export default function MeetingForm() {
     },
   });
 
-  // const { mutate: editMeeting, isPending: editMeetingPending } = useMutation<
-  //   AddMeetingResponseDto,
-  //   Error,
-  //   AddMeetingClientRequestDto
-  // >({
-  //   mutationFn: addMeetingMutation,
-  //   onSuccess: (data) => {
-  //     queryClient.removeQueries({
-  //       queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
-  //     });
-  //     router.push(
-  //       routePaths.sprintWeekPage(teamId, sprintNumber, data.id.toString()),
-  //     );
-  //   },
-  //   onError: (error: Error) => {
-  //     dispatch(
-  //       onOpenModal({ type: "error", content: { message: error.message } }),
-  //     );
-  //   },
-  // });
+  const { mutate: editMeeting, isPending: editMeetingPending } = useMutation<
+    EditMeetingResponseDto,
+    Error,
+    EditMeetingClientRequestDto
+  >({
+    mutationFn: editMeetingMutation,
+    onSuccess: (data) => {
+      queryClient.removeQueries({
+        queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
+      });
+      router.push(
+        routePaths.sprintWeekPage(teamId, sprintNumber, data.id.toString()),
+      );
+      dispatch(editMeetingState(data));
+    },
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
 
   async function addMeetingMutation({
     data,
@@ -158,30 +162,21 @@ export default function MeetingForm() {
     });
   }
 
+  async function editMeetingMutation({
+    meetingId,
+    timezone,
+    ...data
+  }: EditMeetingClientRequestDto): Promise<EditMeetingResponseDto> {
+    return await sprintMeetingAdapter.editMeeting({
+      meetingId,
+      timezone,
+      ...data,
+    });
+  }
+
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     if (editMode) {
-      console.log(data);
-      // const [res, error] = await editMeetingAction({
-      //   ...newData,
-      //   dateTime,
-      //   meetingId,
-      //   sprintNumber,
-      // });
-      // if (res) {
-      //   router.push(
-      //     routePaths.sprintWeekPage(
-      //       teamId.toString(),
-      //       sprintNumber.toString(),
-      //       meetingId.toString(),
-      //     ),
-      //   );
-      // }
-      // if (error) {
-      //   dispatch(
-      //     onOpenModal({ type: "error", content: { message: error.message } }),
-      //   );
-      //   setEditMeetingLoading(false);
-      // }
+      editMeeting({ timezone, meetingId, ...data });
     } else {
       addMeeting({ data, teamId, sprintNumber, timezone });
     }
@@ -224,7 +219,7 @@ export default function MeetingForm() {
   );
 
   function renderButtonContent() {
-    if (addMeetingPending) {
+    if (addMeetingPending || editMeetingPending) {
       return <Spinner />;
     }
 
@@ -283,7 +278,9 @@ export default function MeetingForm() {
         <Button
           type="submit"
           title="submit"
-          disabled={!isDirty || !isValid || addMeetingPending}
+          disabled={
+            !isDirty || !isValid || addMeetingPending || editMeetingPending
+          }
           size="lg"
           variant="primary"
         >
