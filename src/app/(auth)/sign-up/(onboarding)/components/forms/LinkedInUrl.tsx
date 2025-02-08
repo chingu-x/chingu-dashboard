@@ -1,9 +1,10 @@
 import { LinkIcon } from "@heroicons/react/24/outline";
 import TextInput from "@/components/inputs/TextInput";
+import FormWrapper from "@/app/(auth)/sign-up/(onboarding)/components/forms/FormWrapper";
 
 export default function LinkedInUrl() {
   return (
-    <div className="flex flex-col gap-8 py-10">
+    <FormWrapper>
       <h2 className="text-2xl font-semibold text-base-300">
         If you are on LinkedIn what is your profile URL?
       </h2>
@@ -18,6 +19,6 @@ export default function LinkedInUrl() {
           inputGroupContent={<LinkIcon />}
         />
       </div>
-    </div>
+    </FormWrapper>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CheckboxGroup from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
+import FormWrapper from "@/app/(auth)/sign-up/(onboarding)/components/forms/FormWrapper";
 
 interface Option {
   id: string;
@@ -99,7 +100,7 @@ export default function WhatFeatures() {
   const optionsSecondCol = optionsDataSecondCol.map(formatOption);
 
   return (
-    <div className="py-10">
+    <FormWrapper>
       <h2 className="text-2xl font-semibold text-base-300">
         What features are you most excited about?
       </h2>
@@ -118,6 +119,6 @@ export default function WhatFeatures() {
           name="features"
         />
       </div>
-    </div>
+    </FormWrapper>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import RadioGroupItem from "@/components/inputs/RadioGroup/RadioGroupItem";
+import FormWrapper from "@/app/(auth)/sign-up/(onboarding)/components/forms/FormWrapper";
 
 interface Option {
   id: string;
@@ -33,7 +34,7 @@ export default function HowDidYouHear() {
   };
 
   return (
-    <div className="">
+    <FormWrapper>
       <h2 className="text-2xl font-semibold text-base-300">
         How did you hear about us?
       </h2>
@@ -59,6 +60,6 @@ export default function HowDidYouHear() {
           </div>
         ))}
       </div>
-    </div>
+    </FormWrapper>
   );
 }
