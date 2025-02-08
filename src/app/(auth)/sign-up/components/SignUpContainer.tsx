@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import SignUpFormContainer from "./SignUpFormContainer";
-import OnboardingContainer from "./OnboardingContainer";
+import OnboardingContainer from "../(onboarding)/components/OnboardingContainer";
 import SocialLoginButtonsContainer from "@/components/socialLoginButtonsContainer/SocialLoginButtonsContainer";
 import AuthBannerContainer from "@/app/(auth)/components/AuthBannerContainer";
 
