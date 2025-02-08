@@ -2,16 +2,15 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import WelcomeChingu from "./WelcomeChingu";
 import OnboardingImage from "./OnboardingImage";
 import WhatFeatures from "@/app/(auth)/sign-up/(onboarding)/components/WhatFeatures";
 import HowDidYouHear from "@/app/(auth)/sign-up/(onboarding)/components/HowDidYouHear";
 import LinkedInUrl from "@/app/(auth)/sign-up/(onboarding)/components/LinkedInUrl";
-import Button from "@/components/Button";
 import type { SteppersItem } from "@/components/Stepper";
 import Stepper from "@/components/Stepper";
 import TextInput from "@/components/inputs/TextInput";
+import OnboardingNavigation from "@/app/(auth)/sign-up/(onboarding)/components/OnboardingNavigation";
 
 export default function OnboardingContainer() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -139,25 +138,12 @@ export default function OnboardingContainer() {
         </div>
         {renderStepContent()}
       </div>
-      {/* buttons container */}
-      {currentStep > 0 && (
-        <div className="flex w-full justify-center bg-base-content py-6">
-          <div className="flex w-[800px] justify-center gap-10">
-            <Button variant={"outline"} className="w-full" onClick={handleBack}>
-              <ArrowLeftIcon className="h-[18px] w-[18px]" />
-              Back
-            </Button>
-            <Button
-              className="w-full"
-              onClick={handleNext}
-              disabled={currentStep === totalSteps}
-            >
-              {currentStep === totalSteps ? "Submit" : "Continue"}
-              <ArrowRightIcon className="h-[18px] w-[18px]" />
-            </Button>
-          </div>
-        </div>
-      )}
+      <OnboardingNavigation
+        currentStep={currentStep}
+        totalSteps={totalSteps}
+        onBack={handleBack}
+        onNext={handleNext}
+      />
     </div>
   );
 }
