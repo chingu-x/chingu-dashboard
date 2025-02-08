@@ -6,7 +6,7 @@ import ResultsLoading from "@/components/assessment/ui/ResultsLoading";
 export default function AssessmentResultsPage() {
   return (
     <div className="w-screen">
-      <ConfettiScreen />
+      <ConfettiScreen className="absolute inset-0" />
       {/* <div className="absolute flex flex-col items-center justify-center"> */}
       <div className="text-center">
         After analyzing your results, <br />
