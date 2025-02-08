@@ -3,7 +3,7 @@ import { Button } from "@chingu-x/components/button";
 import Image from "next/image";
 
 interface WelcomeChinguProps {
-  handleBegin: () => void;
+  handleBegin?: () => void;
 }
 
 export default function WelcomeChingu({ handleBegin }: WelcomeChinguProps) {
