@@ -14,7 +14,7 @@ export default function AssessmentResultsPage() {
       </div>
       <TierDisplay />
       <ButtonsController />
-      {/* <ResultsLoading /> */}
+      <ResultsLoading />
     </div>
   );
 }
