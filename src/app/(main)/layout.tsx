@@ -34,13 +34,6 @@ export default function Layout({ children }: LayoutProps) {
     return await userAdapter.fetchUser({ currentDate });
   }
 
-  if (isPending) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Spinner />
-      </div>
-    );
-  }
   if (isError) {
     router.push(routePaths.signIn());
   }
@@ -64,7 +57,13 @@ export default function Layout({ children }: LayoutProps) {
         <Sidebar />
         <main className="flex w-full flex-1 flex-col items-center overflow-y-auto p-10">
           <div className="flex w-full max-w-[1500px] flex-col gap-y-10">
-            {children}
+            {isPending ? (
+              <div className="flex min-h-screen items-center justify-center">
+                <Spinner />
+              </div>
+            ) : (
+              children
+            )}
           </div>
         </main>
       </div>

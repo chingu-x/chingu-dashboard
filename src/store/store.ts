@@ -32,7 +32,7 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["ideation", "sprint"],
+  whitelist: ["ideation", "sprint", "user"],
 };
 
 // Root reducer should be used as import directly only for tests
