@@ -12,7 +12,11 @@ import SprintActions from "./SprintActions";
 import { currentDate } from "@/utils/getCurrentSprint";
 import { useSprint, useUser } from "@/store/hooks";
 import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
-import { sprintsAdapter, voyageTeamAdapter } from "@/utils/adapters";
+import {
+  sprintMeetingAdapter,
+  sprintsAdapter,
+  voyageTeamAdapter,
+} from "@/utils/adapters";
 
 interface EmptySprintWrapperProps {
   params: {
@@ -40,7 +44,7 @@ export default function EmptySprintWrapper({
   }
 
   // Check if a meeting exists
-  const meeting = sprintsAdapter.getMeeting({
+  const meetingId = sprintMeetingAdapter.getSprintMeetingId({
     sprints: sprints.sprints,
     sprintNumber,
   });
@@ -58,9 +62,9 @@ export default function EmptySprintWrapper({
     router.push(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
     // If a user tries to access this page directly, check if the current sprint's meetingId exists.
     // If so, redirect to the existing meeting page.
-  } else if (meeting) {
+  } else if (meetingId) {
     router.push(
-      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meeting.id}`,
+      `/my-voyage/${teamId}/sprints/${sprintNumber}/meeting/${meetingId}`,
     );
   } else {
     // Check if a checkin form for the current sprint has been submitted

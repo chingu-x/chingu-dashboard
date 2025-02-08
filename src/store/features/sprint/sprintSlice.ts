@@ -6,7 +6,9 @@ import {
 import storage from "redux-persist/lib/storage";
 import { PURGE } from "redux-persist";
 import type { VoyageSprint } from "@chingu-x/modules/sprints";
+import type { AddMeetingResponseDto } from "@chingu-x/modules/sprint-meeting";
 import { clientSignOut } from "@/store/features/auth/authSlice";
+import { addMeetingState } from "@/store/features/sprint-meeting/sprintMeetingSlice";
 
 const initialState: VoyageSprint = {
   id: 0,
@@ -33,6 +35,19 @@ export const sprintSlice = createSlice({
       void storage.removeItem("persist:root");
     });
     builder.addCase(clientSignOut, () => initialState);
+    builder.addCase(
+      addMeetingState,
+      (state, action: PayloadAction<AddMeetingResponseDto>) => {
+        const sprintIndex = state.sprints.findIndex(
+          (sprint) => sprint.id === action.payload.sprintId,
+        );
+
+        state.sprints[sprintIndex] = {
+          ...state.sprints[sprintIndex],
+          teamMeetings: [action.payload.id],
+        };
+      },
+    );
   },
 });
 

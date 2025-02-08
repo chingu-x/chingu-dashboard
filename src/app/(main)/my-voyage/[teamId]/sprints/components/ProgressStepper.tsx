@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { RocketLaunchIcon } from "@heroicons/react/24/outline";
 import Stepper, { type SteppersItem } from "@/components/Stepper";
-import { useSprintMeeting } from "@/store/hooks";
+import { useSprint } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 import { sprintMeetingAdapter } from "@/utils/adapters";
 
@@ -26,11 +26,11 @@ export default function ProgressStepper({
 }: ProgressStepperProps) {
   const router = useRouter();
   const params = useParams<{ teamId: string; sprintNumber: string }>();
-  const meeting = useSprintMeeting();
+  const sprints = useSprint();
 
   function handleClick(sprintNumber: number) {
     const meetingId = sprintMeetingAdapter.getSprintMeetingId({
-      meeting,
+      sprints: sprints.sprints,
       sprintNumber,
     });
 

@@ -35,7 +35,10 @@ import { persistor } from "@/store/store";
 import convertStringToDate from "@/utils/convertStringToDate";
 import { sprintMeetingAdapter, timezoneAdapter } from "@/utils/adapters";
 import { CacheTag } from "@/utils/cacheTag";
-import { editMeetingState } from "@/store/features/sprint-meeting/sprintMeetingSlice";
+import {
+  addMeetingState,
+  editMeetingState,
+} from "@/store/features/sprint-meeting/sprintMeetingSlice";
 
 export default function MeetingForm() {
   const router = useRouter();
@@ -115,6 +118,7 @@ export default function MeetingForm() {
       queryClient.removeQueries({
         queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
       });
+      dispatch(addMeetingState(data));
       router.push(
         routePaths.sprintWeekPage(teamId, sprintNumber, data.id.toString()),
       );

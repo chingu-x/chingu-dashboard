@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { Sprint } from "@chingu-x/modules/sprints";
 import { BannerContainer } from "@chingu-x/components/banner-container";
 import { Banner } from "@chingu-x/components/banner";
+import { useEffect } from "react";
 import VoyageSubmittedMessage from "./components/VoyageSubmittedMessage";
 import { currentDate } from "@/utils/getCurrentSprint";
 import { CacheTag } from "@/utils/cacheTag";
@@ -42,6 +43,12 @@ export default function SprintsPage({ params }: SprintsPageProps) {
     return await sprintsAdapter.fetchSprints({ teamId });
   }
 
+  useEffect(() => {
+    if (data) {
+      dispatch(fetchSprints(data));
+    }
+  }, [data, dispatch]);
+
   if (isPending) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -57,10 +64,6 @@ export default function SprintsPage({ params }: SprintsPageProps) {
         message={error.message}
       />
     );
-  }
-
-  if (data) {
-    dispatch(fetchSprints(data));
   }
 
   if (voyageTeamAdapter.getVoyageProjectSubmissionStatus({ user })) {

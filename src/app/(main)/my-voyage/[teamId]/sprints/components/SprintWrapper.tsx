@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import type { Sprint } from "@chingu-x/modules/sprints";
 import { Forms } from "@chingu-x/modules/forms";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { BannerContainer } from "@chingu-x/components/banner-container";
 import { Banner } from "@chingu-x/components/banner";
 import ProgressStepper from "./ProgressStepper";
@@ -27,6 +26,7 @@ import {
 import { CacheTag } from "@/utils/cacheTag";
 import Spinner from "@/components/Spinner";
 import { fetchMeeting } from "@/store/features/sprint-meeting/sprintMeetingSlice";
+import routePaths from "@/utils/routePaths";
 
 interface SprintWrapperProps {
   params: {
@@ -38,14 +38,17 @@ interface SprintWrapperProps {
 
 export default function SprintWrapper({ params }: SprintWrapperProps) {
   const { teamId } = params;
-  const sprintNumber = Number(params.sprintNumber);
-  const meetingId = Number(params.meetingId);
+  const { sprintNumber, meetingId } = params;
   const user = useUser();
   const sprints = useSprint();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   useCheckCurrentVoyageTeam({ user, teamId });
+
+  if (sprints.sprints.length < 1) {
+    router.push(routePaths.sprintsPage(teamId));
+  }
 
   const isVoyageProjectSubmitted =
     voyageTeamAdapter.getVoyageProjectSubmissionStatus({ user })!;
@@ -66,11 +69,9 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
     return await sprintMeetingAdapter.fetchMeeting({ meetingId });
   }
 
-  useEffect(() => {
-    if (data) {
-      dispatch(fetchMeeting(data));
-    }
-  }, [data, dispatch]);
+  if (data) {
+    dispatch(fetchMeeting(data));
+  }
 
   if (isPending) {
     return (
@@ -98,7 +99,7 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
   const currentSprintNumber = number;
 
   // Redirect if a user tries to access a sprint which hasn't started yet
-  if (sprintNumber > currentSprintNumber) {
+  if (Number(sprintNumber) > currentSprintNumber) {
     router.push(`/my-voyage/${teamId}/sprints/${currentSprintNumber}/`);
   }
 
