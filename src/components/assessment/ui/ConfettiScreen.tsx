@@ -9,9 +9,7 @@ interface ConfettiScreenProps {
 
 export default function ConfettiScreen({ className }: ConfettiScreenProps) {
   return (
-    <div
-      className={`flex h-screen w-screen items-center justify-center bg-white ${className}`}
-    >
+    <div className={`h-full w-full ${className}`}>
       <Lottie animationData={confettiAnimation} loop={false} />
     </div>
   );
