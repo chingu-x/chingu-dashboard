@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import RadioGroupItem from "@/components/inputs/RadioGroup/RadioGroupItem";
 import FormWrapper from "@/app/(auth)/sign-up/(onboarding)/components/forms/FormWrapper";
+import QuestionHeader from "@/app/(auth)/sign-up/(onboarding)/components/forms/QuestionHeader";
+import FormSpacer from "@/app/(auth)/sign-up/(onboarding)/components/forms/FormsSpacer";
+import OptionalLabel from "@/app/(auth)/sign-up/(onboarding)/components/forms/OptionalLabel";
 
 interface Option {
   id: string;
@@ -35,13 +38,9 @@ export default function HowDidYouHear() {
 
   return (
     <FormWrapper>
-      <h2 className="text-2xl font-semibold text-base-300">
-        How did you hear about us?
-      </h2>
-      <div className="h-[19px]"></div>
-      <p className="h-8 w-full text-right text-[10px] font-medium text-neutral">
-        (optional)
-      </p>
+      <QuestionHeader>How did you hear about us?</QuestionHeader>
+      <FormSpacer />
+      <OptionalLabel />
       <div className="grid grid-cols-2 gap-4">
         {options.map((option) => (
           <div

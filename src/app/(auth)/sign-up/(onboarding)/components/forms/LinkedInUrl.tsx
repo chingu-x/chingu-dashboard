@@ -1,17 +1,19 @@
 import { LinkIcon } from "@heroicons/react/24/outline";
 import TextInput from "@/components/inputs/TextInput";
 import FormWrapper from "@/app/(auth)/sign-up/(onboarding)/components/forms/FormWrapper";
+import QuestionHeader from "@/app/(auth)/sign-up/(onboarding)/components/forms/QuestionHeader";
+import FormSpacer from "@/app/(auth)/sign-up/(onboarding)/components/forms/FormsSpacer";
+import OptionalLabel from "@/app/(auth)/sign-up/(onboarding)/components/forms/OptionalLabel";
 
 export default function LinkedInUrl() {
   return (
     <FormWrapper>
-      <h2 className="text-2xl font-semibold text-base-300">
+      <QuestionHeader>
         If you are on LinkedIn what is your profile URL?
-      </h2>
+      </QuestionHeader>
+      <FormSpacer />
       <div>
-        <p className="w-full text-right text-[10px] font-medium text-neutral">
-          (optional)
-        </p>
+        <OptionalLabel />
         <TextInput
           id="url"
           placeholder="e.g. https://www.linkedin.com/yourprofile"

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import CheckboxGroup from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
 import FormWrapper from "@/app/(auth)/sign-up/(onboarding)/components/forms/FormWrapper";
+import QuestionHeader from "@/app/(auth)/sign-up/(onboarding)/components/forms/QuestionHeader";
+import FormSpacer from "@/app/(auth)/sign-up/(onboarding)/components/forms/FormsSpacer";
 
 interface Option {
   id: string;
@@ -101,12 +103,11 @@ export default function WhatFeatures() {
 
   return (
     <FormWrapper>
-      <h2 className="text-2xl font-semibold text-base-300">
-        What features are you most excited about?
-      </h2>
+      <QuestionHeader>What features are you most excited about?</QuestionHeader>
       <p className="mb-6 text-sm font-medium leading-4 text-base-300">
         (Maximum 3)
       </p>
+      <FormSpacer />
       <div className="grid grid-cols-2 gap-x-8 gap-y-6">
         <CheckboxGroup
           options={optionsFirstCol}
