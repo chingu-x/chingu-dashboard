@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { Question } from "@chingu-x/modules/forms";
 import type {
-  Question,
-  SubmitVoyageProjectFormClientRequestDto,
-  SubmitVoyageProjectFormResponseDto,
-} from "@chingu-x/modules/forms";
+  SubmitVoyageProjectClientRequestDto,
+  SubmitVoyageProjectResponseDto,
+} from "@chingu-x/modules/sprints";
 import BaseFormPage from "@/components/form/BaseFormPage";
 import FormInput from "@/components/form/FormInput";
 import Button from "@/components/Button";
@@ -19,7 +19,7 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { createValidationSchema } from "@/utils/form/createValidationSchema";
 import routePaths from "@/utils/routePaths";
 import { CacheTag } from "@/utils/cacheTag";
-import { formsAdapter, voyageTeamAdapter } from "@/utils/adapters";
+import { sprintsAdapter, voyageTeamAdapter } from "@/utils/adapters";
 import { submitVoyageProject } from "@/store/features/sprint/sprintSlice";
 
 interface VoyageSubmissionFormProps {
@@ -45,9 +45,9 @@ export default function VoyageSubmissionForm({
   const [teamId, sprintNumber] = [Number(params.teamId), params.sprintNumber];
 
   const { mutate, isPending } = useMutation<
-    SubmitVoyageProjectFormResponseDto,
+    SubmitVoyageProjectResponseDto,
     Error,
-    SubmitVoyageProjectFormClientRequestDto
+    SubmitVoyageProjectClientRequestDto
   >({
     mutationFn: submitVoyageProjectFormMutation,
     mutationKey: [CacheTag.submitVoyageProjectForm],
@@ -86,8 +86,8 @@ export default function VoyageSubmissionForm({
     data,
     questions,
     voyageTeamId,
-  }: SubmitVoyageProjectFormClientRequestDto): Promise<SubmitVoyageProjectFormResponseDto> {
-    return await formsAdapter.submitVoyageProjectForm({
+  }: SubmitVoyageProjectClientRequestDto): Promise<SubmitVoyageProjectResponseDto> {
+    return await sprintsAdapter.submitVoyageProject({
       data,
       questions,
       voyageTeamId,
