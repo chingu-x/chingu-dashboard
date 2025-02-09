@@ -1,3 +1,4 @@
+"use client";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import Header from "@/components/assessment/ui/Header";
 import RadioGroupItem from "@/components/inputs/RadioGroup/RadioGroupItem";
@@ -5,13 +6,24 @@ import Button from "@/components/Button";
 
 export default function AssessmentForm() {
   return (
-    <>
+    <div>
       <Header />
-      <div className="absolute left-[583px] top-[318px] h-[580px] w-[812px] gap-[42px] p-20">
-        <p className="mb-4">Do you have experience with HTML and CSS?</p>
-        <div className="flex flex-col justify-center gap-4">
+      <div
+        aria-label="question-container"
+        className="w-full max-w-[812px] gap-[24px] rounded-[16px] bg-[#F5F5F5] p-[40px]"
+      >
+        <p
+          aria-label="question"
+          className="max-w-[650px] text-[25px] font-semibold leading-[30px] text-[#16171A]"
+        >
+          Do you have experience with HTML and CSS?
+        </p>
+        <div
+          aria-label="radio-buttons"
+          className="flex w-[650px] flex-col justify-center gap-[24px]"
+        >
           <RadioGroupItem
-            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border border-gray-400 p-16"
+            className="w-full gap-[16px] rounded-[8px] border border-[#9CA1AA] p-[16px] shadow-md shadow-[#4C515B0D]"
             id="none"
             label={
               <div>
@@ -20,7 +32,7 @@ export default function AssessmentForm() {
             }
           />
           <RadioGroupItem
-            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border border-gray-400 p-16"
+            className="w-full gap-[16px] rounded-[8px] border border-[#9CA1AA] p-[16px] shadow-md shadow-[#4C515B0D]"
             id="beginner"
             label={
               <div>
@@ -30,7 +42,7 @@ export default function AssessmentForm() {
             }
           />
           <RadioGroupItem
-            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border border-gray-400 p-16"
+            className="w-full gap-[16px] rounded-[8px] border border-[#9CA1AA] p-[16px] shadow-md shadow-[#4C515B0D]"
             id="intermediate"
             label={
               <div>
@@ -40,7 +52,7 @@ export default function AssessmentForm() {
             }
           />
           <RadioGroupItem
-            className="h-[68px] w-full min-w-[300px] gap-4 rounded-tl-md border border-gray-400 p-16"
+            className="w-full gap-[16px] rounded-[8px] border border-[#9CA1AA] p-[16px] shadow-md shadow-[#4C515B0D]"
             id="advanced"
             label={
               <div>
@@ -53,17 +65,18 @@ export default function AssessmentForm() {
             }
           />
         </div>
-        <div className="flex w-full items-center justify-center gap-[42px] rounded-tl-[16px] border border-gray-300 pt-[40px]">
-          <Button className="w-full !bg-[#F5F5F5]/70 py-[10px] text-black">
-            <ArrowLeftIcon className="mr-2 h-4 w-4" />
-            Back
-          </Button>
-          <Button variant="primary" size="xxl">
-            Continue
-            <ArrowRightIcon className="ml-2 h-4 w-4 text-white" />
-          </Button>
-        </div>
       </div>
-    </>
+
+      <div className="w-max[812px] flex w-full items-center justify-center gap-[40px] rounded-tl-[16px] border border-gray-300 pt-[40px]">
+        <Button className="w-full !bg-[#F5F5F5]/70 py-[10px] text-black">
+          <ArrowLeftIcon className="mr-2 h-4 w-4" />
+          Back
+        </Button>
+        <Button variant="primary" size="xxl">
+          Continue
+          <ArrowRightIcon className="ml-2 h-4 w-4 text-white" />
+        </Button>
+      </div>
+    </div>
   );
 }
