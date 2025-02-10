@@ -1,9 +1,10 @@
+import { Navbar } from "@chingu-x/components/navbar";
 import Sidebar from "@/components/sidebar/Sidebar";
-import Navbar from "@/components/navbar/Navbar";
 import ModeToggle from "@/components/ModeToggle";
 import AuthHeader from "@/components/navbar/AuthHeader";
 import { getUser } from "@/utils/getUser";
 import AuthProvider from "@/app/(auth)/AuthProvider";
+import ChinguMenu from "@/components/navbar/ChinguMenu";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,7 +16,7 @@ export default async function Layout({ children }: LayoutProps) {
   return (
     <div className="flex h-screen w-screen flex-col">
       <AuthProvider user={user} error={error} />
-      <Navbar>
+      <Navbar logo={<ChinguMenu />}>
         <>
           <ModeToggle />
           <>

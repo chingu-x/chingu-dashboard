@@ -3,13 +3,13 @@
 import { format, isSameDay, getUnixTime, getMonth, getYear } from "date-fns";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
+import { Button } from "@chingu-x/components/button";
 import { useCalendarLogic } from "./Calendar.logic";
 import { useEventsLogic } from "./Events.logic";
 import Cell from "./components/Cell";
 import EventItem from "./components/EventItem";
 import Legend from "./components/Legend";
 import type { Event } from "@/dashboard/components/voyage-dashboard/getDashboardData";
-import Button from "@/components/Button";
 import type { Sprint } from "@/store/features/sprint/sprintSlice";
 
 interface CalendarProps {

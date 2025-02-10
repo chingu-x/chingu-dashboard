@@ -1,4 +1,4 @@
-import Alert from "@/components/Alert";
+import { Alert } from "@chingu-x/components/alert";
 
 export default function FinalizeIdeationBanner() {
   return (

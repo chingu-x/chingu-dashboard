@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Button from "@/components/Button";
+import { Button } from "@chingu-x/components/button";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 

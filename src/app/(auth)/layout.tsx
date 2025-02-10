@@ -1,6 +1,7 @@
+import { Navbar } from "@chingu-x/components/navbar";
 import ModeToggle from "@/components/ModeToggle";
-import Navbar from "@/components/navbar/Navbar";
 import AuthBannerContainer from "@/app/(auth)/components/AuthBannerContainer";
+import ChinguMenu from "@/components/navbar/ChinguMenu";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,7 +10,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <div className="flex h-screen w-screen flex-col">
-      <Navbar>
+      <Navbar logo={<ChinguMenu />}>
         <div className="pr-2">
           <ModeToggle />
         </div>

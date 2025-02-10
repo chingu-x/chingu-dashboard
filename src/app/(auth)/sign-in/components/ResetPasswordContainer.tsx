@@ -3,15 +3,15 @@ import * as z from "zod";
 import Link from "next/link";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type Dispatch, type SetStateAction } from "react";
+import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
 import { resetPasswordRequestEmail } from "@/app/(auth)/authService";
-import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { validateTextInput } from "@/utils/form/validateInput";
 import routePaths from "@/utils/routePaths";
 import useServerAction from "@/hooks/useServerAction";
-import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
   email: validateTextInput({

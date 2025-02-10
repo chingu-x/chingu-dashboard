@@ -1,6 +1,6 @@
 import { Suspense } from "react";
+import { Spinner } from "@chingu-x/components/spinner";
 import TechStackComponentWrapper from "./components/TechStackComponentWrapper";
-import Spinner from "@/components/Spinner";
 
 interface TechStackPageProps {
   params: {

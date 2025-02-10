@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Badge } from "@chingu-x/components/badge";
 import Image from "next/image";
 import { Avatar } from "@chingu-x/components/avatar";
-import Button from "@/components/Button";
+import { Button } from "@chingu-x/components/button";
 import { type VoyageMember } from "@/store/features/ideation/ideationSlice";
 import { useUser } from "@/store/hooks";
 import { cn } from "@/lib/utils";

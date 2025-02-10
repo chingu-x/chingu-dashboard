@@ -3,9 +3,9 @@ import { TrashIcon } from "@heroicons/react/20/solid";
 import { Badge } from "@chingu-x/components/badge";
 import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
+import { IconButton } from "@chingu-x/components/icon-button";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import IconButton from "@/components/IconButton";
 import { deleteResource } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
 
 interface ResourceCardProps {

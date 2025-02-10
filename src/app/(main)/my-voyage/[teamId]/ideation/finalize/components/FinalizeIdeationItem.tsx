@@ -3,8 +3,8 @@ import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
 import { AvatarGroup } from "@chingu-x/components/avatar-group";
+import { Button } from "@chingu-x/components/button";
 import { type FinalizedIdeation } from "./FinalizeIdeationList";
-import Button from "@/components/Button";
 import { type ProjectIdeaVotes } from "@/store/features/ideation/ideationSlice";
 
 interface FinalizeIdeationItemProps {

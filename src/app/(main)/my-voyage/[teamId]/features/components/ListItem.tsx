@@ -2,6 +2,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
+import { Spinner } from "@chingu-x/components/spinner";
 import Card from "./Card";
 import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
@@ -10,7 +11,6 @@ import useServerAction from "@/hooks/useServerAction";
 import { editFeature } from "@/myVoyage/features/featuresService";
 import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
   description: validateTextInput({

@@ -3,13 +3,13 @@ import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Avatar } from "@chingu-x/components/avatar";
 import Image from "next/image";
 import { AvatarGroup } from "@chingu-x/components/avatar-group";
+import { Button } from "@chingu-x/components/button";
 import type {
   FinalizeTechCardProps,
   Vote,
   SelectedItems,
   FinalizedItem,
 } from "./types";
-import Button from "@/components/Button";
 
 export default function FinalizeTechCard({
   title,

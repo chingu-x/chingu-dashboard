@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
+import { Spinner } from "@chingu-x/components/spinner";
 import SubmitProjectWrapper from "@/myVoyage/sprints/components/SubmitProjectWrapper";
-import Spinner from "@/components/Spinner";
 
 interface VoyageSubmissionPageProps {
   params: {

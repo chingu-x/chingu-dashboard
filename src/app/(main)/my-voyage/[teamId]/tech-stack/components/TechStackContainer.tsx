@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { Button } from "@chingu-x/components/button";
 import TechStackCard from "./TechStackCard";
 import FinalizedTechStackCard from "./FinalizedTechStackCard";
 import { getSelectedTechItems } from "@/app/(main)/my-voyage/[teamId]/tech-stack/finalize/utils/getSelectedTechItems";
-import Button from "@/components/Button";
 import type { TechStackData } from "@/store/features/techStack/techStackSlice";
 import routePaths from "@/utils/routePaths";
 

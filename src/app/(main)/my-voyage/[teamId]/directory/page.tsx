@@ -1,6 +1,6 @@
 import { Suspense } from "react";
+import { Spinner } from "@chingu-x/components/spinner";
 import DirectoryComponentWrapper from "./components/DirectoryComponentWrapper";
-import Spinner from "@/components/Spinner";
 
 interface DirectoryPageProps {
   params: {
