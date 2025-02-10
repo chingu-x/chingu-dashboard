@@ -10,11 +10,11 @@ export default function AssessmentForm() {
       <Header />
       <div
         aria-label="question-container"
-        className="w-full max-w-[812px] gap-[24px] rounded-[16px] bg-[#F5F5F5] p-[40px]"
+        className="mb-[42px] mt-[286px] w-full max-w-[812px] gap-[24px] rounded-[16px] bg-[#F5F5F5] p-[40px]"
       >
         <p
           aria-label="question"
-          className="max-w-[650px] text-[25px] font-semibold leading-[30px] text-[#16171A]"
+          className="mb-[32px] max-w-[650px] text-[25px] font-semibold leading-[30px] text-[#16171A]"
         >
           Do you have experience with HTML and CSS?
         </p>
@@ -67,12 +67,12 @@ export default function AssessmentForm() {
         </div>
       </div>
 
-      <div className="w-max[812px] flex w-full items-center justify-center gap-[40px] rounded-tl-[16px] border border-gray-300 pt-[40px]">
-        <Button className="w-full !bg-[#F5F5F5]/70 py-[10px] text-black">
+      <div className="w-max[812px] flex w-full items-center justify-center gap-[40px]">
+        <Button className="h-[60px] w-[386px] w-full rounded-[8px] border border-[#9CA1AA] !bg-[#F5F5F5]/70 px-[26px] py-[18px] text-black">
           <ArrowLeftIcon className="mr-2 h-4 w-4" />
           Back
         </Button>
-        <Button variant="primary" size="xxl">
+        <Button className="h-[60px] w-[386px] w-full rounded-[8px] border border-[#9CA1AA] !bg-[#217A56] px-[26px] py-[18px] text-white">
           Continue
           <ArrowRightIcon className="ml-2 h-4 w-4 text-white" />
         </Button>
