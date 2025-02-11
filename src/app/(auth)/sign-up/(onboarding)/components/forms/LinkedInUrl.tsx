@@ -8,10 +8,12 @@ import OptionalLabel from "@/app/(auth)/sign-up/(onboarding)/components/forms/Op
 export default function LinkedInUrl() {
   return (
     <FormWrapper>
-      <QuestionHeader>
-        If you are on LinkedIn what is your profile URL?
-      </QuestionHeader>
-      <FormSpacer />
+      <div>
+        <QuestionHeader>
+          If you are on LinkedIn what is your profile URL?
+        </QuestionHeader>
+        <FormSpacer />
+      </div>
       <div>
         <OptionalLabel />
         <TextInput
