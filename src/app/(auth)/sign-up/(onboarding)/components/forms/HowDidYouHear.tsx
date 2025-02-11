@@ -38,26 +38,30 @@ export default function HowDidYouHear() {
 
   return (
     <FormWrapper>
-      <QuestionHeader>How did you hear about us?</QuestionHeader>
-      <FormSpacer />
-      <OptionalLabel />
-      <div className="grid grid-cols-2 gap-4">
-        {options.map((option) => (
-          <div
-            className="w-[317px] cursor-pointer rounded-lg border border-neutral-content p-4"
-            key={option.id}
-            onClick={() => handleChange(option.value)}
-          >
-            <RadioGroupItem
-              id={option.id}
-              label={option.label}
-              checked={selectedOption === option.value}
-              onChange={() => handleChange(option.value)}
-              name="how_did_you_hear"
-              className="text-sm font-semibold text-base-300"
-            />
-          </div>
-        ))}
+      <div>
+        <QuestionHeader>How did you hear about us?</QuestionHeader>
+        <FormSpacer />
+      </div>
+      <div>
+        <OptionalLabel />
+        <div className="grid grid-cols-2 gap-4">
+          {options.map((option) => (
+            <div
+              className="w-[317px] cursor-pointer rounded-lg border border-neutral-content p-4"
+              key={option.id}
+              onClick={() => handleChange(option.value)}
+            >
+              <RadioGroupItem
+                id={option.id}
+                label={option.label}
+                checked={selectedOption === option.value}
+                onChange={() => handleChange(option.value)}
+                name="how_did_you_hear"
+                className="text-sm font-semibold text-base-300"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </FormWrapper>
   );
