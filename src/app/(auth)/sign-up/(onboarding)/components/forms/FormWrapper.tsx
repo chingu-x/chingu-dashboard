@@ -3,5 +3,5 @@ interface FormWrapperProps {
 }
 
 export default function FormWrapper({ children }: FormWrapperProps) {
-  return <div className="py-10">{children}</div>;
+  return <div className="flex flex-col gap-1 py-10">{children}</div>;
 }
