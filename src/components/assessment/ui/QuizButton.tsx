@@ -2,10 +2,8 @@ import Button from "@/components/Button";
 
 export default function QuizButton() {
   return (
-    <div className="flex w-full items-center justify-center rounded-tl-[16px] pt-[40px]">
-      <Button className="w-full bg-[#A3CEE9] py-[10px] text-black">
-        Retake Quiz
-      </Button>
-    </div>
+    <Button className="flex w-full items-center justify-center gap-[8px] rounded-[8px] bg-[#A3CEE9] px-[26px] py-[18px] text-[20px] text-black">
+      Retake Quiz
+    </Button>
   );
 }

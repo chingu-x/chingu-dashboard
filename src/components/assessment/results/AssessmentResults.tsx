@@ -5,10 +5,9 @@ import ResultsLoading from "@/components/assessment/ui/ResultsLoading";
 
 export default function AssessmentResultsPage() {
   return (
-    <div className="w-screen">
+    <div className="absolute left-[581px] top-[354px] flex h-[480px] w-[814px] flex-col items-center justify-center gap-[42px]">
       <ConfettiScreen className="absolute inset-0" />
-      {/* <div className="absolute flex flex-col items-center justify-center"> */}
-      <div className="text-center">
+      <div className="flex h-[90px] w-[650px] max-w-[650px] items-center justify-center text-center text-[25px] font-semibold leading-[30px] tracking-[0%] text-[#16171A]">
         After analyzing your results, <br />
         We&apos;ve concluded that you are a ... <br />
       </div>
