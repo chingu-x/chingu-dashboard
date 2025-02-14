@@ -1607,20 +1607,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chingu-x/components@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "@chingu-x/components@npm:0.8.0"
+"@chingu-x/components@npm:^0.10.3":
+  version: 0.10.3
+  resolution: "@chingu-x/components@npm:0.10.3"
   dependencies:
     "@heroicons/react": "npm:^2.2.0"
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"
     framer-motion: "npm:^11.17.0"
+    react-datepicker: "npm:^6.1.0"
     tailwind-merge: "npm:^2.5.5"
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
     tailwindcss: ^3.0.0
-  checksum: d5d6d80854ec09c7055ba9f299619beba6bc7c2040bec5ad02c2b13632db9e573fe68b6fb0f13431806f842d52e33d669b72ae3e1afd4f8fd02762409c2dd847
+  checksum: 62c8d3a8eb19e8f6bc6a8269d4e2aeaf52c87e2b47f6677dc9121acba2e57d7e73ad2126b1707d25f70db0af7e8d167a24a6e52495f6cde55a2a73da8ed49ba4
   languageName: node
   linkType: hard
 
@@ -7677,7 +7678,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "chingu_dashboard@workspace:."
   dependencies:
-    "@chingu-x/components": "npm:^0.8.0"
+    "@chingu-x/components": "npm:^0.10.3"
     "@commitlint/cli": "npm:^19.6.1"
     "@commitlint/config-conventional": "npm:^19.6.0"
     "@hello-pangea/dnd": "npm:^16.3.0"
