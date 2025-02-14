@@ -1,15 +1,17 @@
 import { Stepper } from "@chingu-x/components/stepper";
 import type { SteppersItem } from "@/components/Stepper";
 
-interface AseessmentStepperProps {
+interface AssessmentStepperProps {
   currentStep: number;
   goToStep: (step: number) => void;
+  className: string;
 }
 
-export function AseessmentStepper({
+export default function AssessmentStepper({
   currentStep,
   goToStep,
-}: AseessmentStepperProps) {
+  className = "",
+}: AssessmentStepperProps) {
   const totalQuestions = 60;
   const questionsPerStep = 6;
   const totalSteps = totalQuestions / questionsPerStep;
@@ -32,7 +34,7 @@ export function AseessmentStepper({
 
       return {
         isActive: currentStep === stepQuestionIndex,
-        name: `Assessment question ${stepNumber}`,
+        name: `Page ${stepNumber}`,
         onClickEvent: () => goToStep(stepQuestionIndex),
         status: getStatus(stepQuestionIndex, currentStep),
       };
@@ -44,8 +46,8 @@ export function AseessmentStepper({
   if (!showStepper) return null;
 
   return (
-    <div className="max-w-xl p-6">
-      <Stepper styleType="chips" stepperWidth="w-[420px]" steppers={steppers} />
+    <div className={`flex justify-center text-black ${className || ""}`}>
+      <Stepper styleType="chips" stepperWidth="w-1/2" steppers={steppers} />
     </div>
   );
 }
