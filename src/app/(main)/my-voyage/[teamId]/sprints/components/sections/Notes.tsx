@@ -13,8 +13,9 @@ import Spinner from "@/components/Spinner";
 import { validateTextInput } from "@/utils/form/validateInput";
 import useServerAction from "@/hooks/useServerAction";
 import { editMeeting } from "@/myVoyage/sprints/sprintsService";
-import { useAppDispatch, useSprint } from "@/store/hooks";
+import { useAppDispatch, useSprint, useSprintMeeting } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { sprintMeetingAdapter } from "@/utils/adapters";
 
 const validationSchema = z.object({
   notes: validateTextInput({
@@ -33,19 +34,24 @@ export default function Notes() {
     meetingId: string;
   }>();
 
-  const [sprintNumber, meetingId] = [
-    Number(params.sprintNumber),
-    Number(params.meetingId),
-  ];
+  const [sprintNumber, meetingId] = [params.sprintNumber, params.meetingId];
 
-  const { sprints } = useSprint();
+  // const { sprints } = useSprint();
+  const meeting = useSprintMeeting();
 
   useEffect(() => {
-    const sprint = sprints[sprintNumber - 1];
-    if (sprint.teamMeetingsData && sprint.teamMeetingsData.length) {
-      setData(sprint.teamMeetingsData[0].notes);
-    }
-  }, [sprints, sprintNumber]);
+    // const sprint = sprints[sprintNumber - 1];
+    // if (sprint.teamMeetingsData && sprint.teamMeetingsData.length) {
+    //   setData(sprint.teamMeetingsData[0].notes);
+    // }
+
+    const meetingNote = sprintMeetingAdapter.getSprintMeeting({
+      meeting,
+      meetingId,
+    })?.notes;
+
+    setData(meetingNote);
+  }, [meeting, meetingId]);
 
   const {
     register,

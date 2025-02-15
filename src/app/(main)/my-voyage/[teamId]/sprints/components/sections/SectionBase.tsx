@@ -7,12 +7,20 @@ import {
   ChevronUpIcon,
   PlusCircleIcon,
 } from "@heroicons/react/24/outline";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type {
+  EditMeetingClientRequestDto,
+  EditMeetingResponseDto,
+} from "@chingu-x/modules/sprint-meeting";
 import { cn } from "@/lib/utils";
 import useServerAction from "@/hooks/useServerAction";
-import { addSection, editMeeting } from "@/myVoyage/sprints/sprintsService";
-import { useAppDispatch } from "@/store/hooks";
+import { addSection } from "@/myVoyage/sprints/sprintsService";
+import { useAppDispatch, useUser } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { Forms } from "@/utils/form/formsEnums";
+import { CacheTag } from "@/utils/cacheTag";
+import { sprintMeetingAdapter } from "@/utils/adapters";
+import Spinner from "@/components/Spinner";
 
 interface SectionBaseProps {
   params: {
@@ -36,13 +44,42 @@ export default function SectionBase({
   children,
   reorderSections,
 }: SectionBaseProps) {
-  const [meetingId, sprintNumber] = [
-    Number(params.meetingId),
-    Number(params.sprintNumber),
-  ];
-
+  const [meetingId, sprintNumber] = [params.meetingId, params.sprintNumber];
+  const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+
+  const { mutate: editMeeting, isPending: editMeetingPending } = useMutation<
+    EditMeetingResponseDto,
+    Error,
+    EditMeetingClientRequestDto
+  >({
+    mutationFn: editMeetingMutation,
+    onSuccess: () => {
+      queryClient.removeQueries({
+        queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
+      });
+
+      reorderSections && reorderSections(title);
+      setIsOpen(true);
+    },
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
+
+  async function editMeetingMutation({
+    meetingId,
+  }: EditMeetingClientRequestDto): Promise<EditMeetingResponseDto> {
+    const notes = "";
+
+    return await sprintMeetingAdapter.editMeeting({
+      meetingId,
+      notes,
+    });
+  }
 
   // Planning & Retrospective&Review Sections Action
   const {
@@ -50,13 +87,6 @@ export default function SectionBase({
     isLoading: addSectionLoading,
     setIsLoading: setAddSectionLoading,
   } = useServerAction(addSection);
-
-  // Notes Section Action
-  const {
-    runAction: editMeetingAction,
-    isLoading: editMeetingLoading,
-    setIsLoading: setEditMeetingLoading,
-  } = useServerAction(editMeeting);
 
   useEffect(() => {
     if (isAdded) setIsOpen(true);
@@ -81,24 +111,7 @@ export default function SectionBase({
         setAddSectionLoading(false);
       }
     } else {
-      const notes = "";
-      const [res, error] = await editMeetingAction({
-        sprintNumber,
-        meetingId,
-        notes,
-      });
-      if (res) {
-        reorderSections && reorderSections(title);
-        setIsOpen(true);
-      }
-
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-
-        setEditMeetingLoading(false);
-      }
+      editMeeting({ meetingId });
     }
   };
 
@@ -161,9 +174,13 @@ export default function SectionBase({
             type="button"
             onClick={handleAddSection}
             aria-label="add section"
-            disabled={addSectionLoading || editMeetingLoading}
+            disabled={addSectionLoading || editMeetingPending}
           >
-            <PlusCircleIcon className="h-10 w-10 text-base-300" />
+            {editMeetingPending ? (
+              <Spinner />
+            ) : (
+              <PlusCircleIcon className="h-10 w-10 text-base-300" />
+            )}
           </button>
         )}
         <AnimatePresence mode="popLayout">
