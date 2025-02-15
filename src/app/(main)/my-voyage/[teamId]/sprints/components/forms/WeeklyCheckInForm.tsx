@@ -44,10 +44,7 @@ export default function WeeklyCheckingForm({
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const user = useUser();
-  const [teamId, sprintNumber] = [
-    Number(params.teamId),
-    Number(params.sprintNumber),
-  ];
+  const [teamId, sprintNumber] = [params.teamId, params.sprintNumber];
 
   const { mutate, isPending } = useMutation<
     SubmitWeeklyCheckinResponseDto,
@@ -64,13 +61,10 @@ export default function WeeklyCheckingForm({
           CacheTag.weeklyCheckInForm,
         ],
       });
-      router.push(
-        routePaths.emptySprintPage(teamId.toString(), sprintNumber.toString()),
-      );
+      router.push(routePaths.emptySprintPage(teamId, sprintNumber));
       dispatch(submitWeeklyCheckin({ sprintId }));
       dispatch(onOpenModal({ type: "checkInSuccess" }));
     },
-    // TODO: update error handling
     onError: (error: Error) => {
       dispatch(
         onOpenModal({ type: "error", content: { message: error.message } }),

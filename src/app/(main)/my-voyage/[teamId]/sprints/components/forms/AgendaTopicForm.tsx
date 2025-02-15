@@ -7,15 +7,20 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TrashIcon } from "@heroicons/react/20/solid";
 
+import type {
+  AddAgendaTopicClientRequestDto,
+  AddAgendaTopicResponseDto,
+  Agenda,
+} from "@chingu-x/modules/sprint-meeting";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/utils/form/validateInput";
-import { useSprint, useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useSprintMeeting } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
 import {
-  addAgendaTopic,
   editAgendaTopic,
   deleteAgendaTopic,
 } from "@/myVoyage/sprints/sprintsService";
@@ -23,7 +28,8 @@ import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
 import { persistor } from "@/store/store";
-import { Agenda } from "@chingu-x/modules/sprint-meeting";
+import { sprintMeetingAdapter } from "@/utils/adapters";
+import { CacheTag } from "@/utils/cacheTag";
 
 const validationSchema = z.object({
   title: validateTextInput({
@@ -47,14 +53,15 @@ export default function AgendaTopicForm() {
     agendaId: string;
   }>();
   const [teamId, sprintNumber, meetingId, agendaId] = [
-    Number(params.teamId),
-    Number(params.sprintNumber),
-    Number(params.meetingId),
-    Number(params.agendaId),
+    params.teamId,
+    params.sprintNumber,
+    params.meetingId,
+    params.agendaId,
   ];
 
+  const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
-  const { sprints } = useSprint();
+  const sprintMeeting = useSprintMeeting();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [topicData, setTopicData] = useState<Agenda>();
 
@@ -64,11 +71,43 @@ export default function AgendaTopicForm() {
     setIsLoading: setEditAgendaTopicLoading,
   } = useServerAction(editAgendaTopic);
 
-  const {
-    runAction: addAgendaTopicAction,
-    isLoading: addAgendaTopicLoading,
-    setIsLoading: setAddTopicLoading,
-  } = useServerAction(addAgendaTopic);
+  const { mutate: addAgenda, isPending: addAgendaPending } = useMutation<
+    AddAgendaTopicResponseDto,
+    Error,
+    AddAgendaTopicClientRequestDto
+  >({
+    mutationFn: addAgendaMutation,
+    onSuccess: (data) => {
+      queryClient.removeQueries({
+        queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
+      });
+
+      router.push(
+        routePaths.sprintWeekPage(
+          teamId.toString(),
+          sprintNumber.toString(),
+          meetingId.toString(),
+        ),
+      );
+    },
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
+
+  async function addAgendaMutation({
+    meetingId,
+    title,
+    description,
+  }: AddAgendaTopicClientRequestDto): Promise<AddAgendaTopicResponseDto> {
+    return await sprintMeetingAdapter.addAgendaTopic({
+      meetingId,
+      title,
+      description,
+    });
+  }
 
   const {
     register,
@@ -108,25 +147,9 @@ export default function AgendaTopicForm() {
         setEditAgendaTopicLoading(false);
       }
     } else {
-      const payload = { ...data, meetingId, sprintNumber };
-      const [res, error] = await addAgendaTopicAction(payload);
+      const payload = { ...data, meetingId };
 
-      if (res) {
-        router.push(
-          routePaths.sprintWeekPage(
-            teamId.toString(),
-            sprintNumber.toString(),
-            meetingId.toString(),
-          ),
-        );
-      }
-
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-        setAddTopicLoading(false);
-      }
+      addAgenda(payload);
     }
   };
 
@@ -157,25 +180,23 @@ export default function AgendaTopicForm() {
 
   useEffect(() => {
     if (sprintNumber && agendaId) {
-      const sprint = sprints.find((sprint) => sprint.number === sprintNumber);
-
-      const topic =
-        sprint?.teamMeetingsData &&
-        sprint.teamMeetingsData[0].agendas?.find(
-          (topic) => topic.id === agendaId,
-        );
+      const topic = sprintMeetingAdapter.getAgendaById({
+        meeting: sprintMeeting,
+        meetingId,
+        agendaId,
+      });
 
       setTopicData(topic);
       setEditMode(true);
     }
-  }, [sprintNumber, agendaId, sprints]);
+  }, [sprintNumber, agendaId, meetingId, sprintMeeting]);
 
-  useEffect(() => {
-    reset({
-      title: topicData?.title,
-      description: topicData?.description,
-    });
-  }, [topicData, reset]);
+  // useEffect(() => {
+  //   reset({
+  //     title: topicData?.title,
+  //     description: topicData?.description,
+  //   });
+  // }, [topicData, reset]);
 
   useEffect(
     () => () => {
@@ -185,7 +206,7 @@ export default function AgendaTopicForm() {
   );
 
   function renderButtonContent() {
-    if (editAgendaTopicLoading || addAgendaTopicLoading) {
+    if (editAgendaTopicLoading || addAgendaPending) {
       return <Spinner />;
     }
 
@@ -244,10 +265,7 @@ export default function AgendaTopicForm() {
             type="submit"
             title="submit"
             disabled={
-              !isDirty ||
-              !isValid ||
-              editAgendaTopicLoading ||
-              addAgendaTopicLoading
+              !isDirty || !isValid || editAgendaTopicLoading || addAgendaPending
             }
             size="lg"
             variant="primary"
