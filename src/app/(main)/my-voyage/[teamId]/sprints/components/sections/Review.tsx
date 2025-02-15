@@ -6,12 +6,12 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 
+import type { Section } from "@chingu-x/modules/sprint-meeting";
 import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
 import { validateTextInput } from "@/utils/form/validateInput";
-import { type Section } from "@/store/features/sprint/sprintSlice";
 import { ReviewQuestions, Forms } from "@/utils/form/formsEnums";
 import useServerAction from "@/hooks/useServerAction";
 import {

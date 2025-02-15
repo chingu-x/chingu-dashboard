@@ -6,16 +6,21 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type {
+  EditMeetingClientRequestDto,
+  EditMeetingResponseDto,
+} from "@chingu-x/modules/sprint-meeting";
 import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
 import { validateTextInput } from "@/utils/form/validateInput";
-import useServerAction from "@/hooks/useServerAction";
-import { editMeeting } from "@/myVoyage/sprints/sprintsService";
-import { useAppDispatch, useSprint, useSprintMeeting } from "@/store/hooks";
+import { useAppDispatch, useSprintMeeting } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { sprintMeetingAdapter } from "@/utils/adapters";
+import { CacheTag } from "@/utils/cacheTag";
+import { editMeetingState } from "@/store/features/sprint-meeting/sprintMeetingSlice";
 
 const validationSchema = z.object({
   notes: validateTextInput({
@@ -33,18 +38,12 @@ export default function Notes() {
     sprintNumber: string;
     meetingId: string;
   }>();
+  const queryClient = useQueryClient();
 
-  const [sprintNumber, meetingId] = [params.sprintNumber, params.meetingId];
-
-  // const { sprints } = useSprint();
+  const [meetingId] = [params.meetingId];
   const meeting = useSprintMeeting();
 
   useEffect(() => {
-    // const sprint = sprints[sprintNumber - 1];
-    // if (sprint.teamMeetingsData && sprint.teamMeetingsData.length) {
-    //   setData(sprint.teamMeetingsData[0].notes);
-    // }
-
     const meetingNote = sprintMeetingAdapter.getSprintMeeting({
       meeting,
       meetingId,
@@ -53,48 +52,46 @@ export default function Notes() {
     setData(meetingNote);
   }, [meeting, meetingId]);
 
+  const { mutate: editMeeting, isPending: editMeetingPending } = useMutation<
+    EditMeetingResponseDto,
+    Error,
+    EditMeetingClientRequestDto
+  >({
+    mutationFn: editMeetingMutation,
+    onSuccess: (data) => {
+      queryClient.removeQueries({
+        queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
+      });
+      dispatch(editMeetingState(data));
+    },
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
+
+  async function editMeetingMutation({
+    meetingId,
+    ...data
+  }: EditMeetingClientRequestDto): Promise<EditMeetingResponseDto> {
+    return await sprintMeetingAdapter.editMeeting({
+      meetingId,
+      ...data,
+    });
+  }
+
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
 
-  const {
-    runAction: editMeetingAction,
-    isLoading: editMeetingLoading,
-    setIsLoading: setEditMeetingLoading,
-  } = useServerAction(editMeeting);
-
-  useEffect(() => {
-    reset({
-      notes: data,
-    });
-  }, [data, reset]);
-
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
-    const [res, error] = await editMeetingAction({
-      ...data,
-      meetingId,
-      sprintNumber,
-    });
-
-    if (res) {
-      reset({ ...data });
-    }
-
-    if (error) {
-      dispatch(
-        onOpenModal({
-          type: "error",
-          content: { message: error.message },
-        }),
-      );
-    }
-    setEditMeetingLoading(false);
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+    editMeeting({ meetingId, ...data });
   };
 
   return (
@@ -115,9 +112,9 @@ export default function Notes() {
         variant="outline"
         size="md"
         className="min-w-[75px] self-center"
-        disabled={!isDirty || !isValid || editMeetingLoading}
+        disabled={!isDirty || !isValid || editMeetingPending}
       >
-        {editMeetingLoading ? <Spinner /> : "Save"}
+        {editMeetingPending ? <Spinner /> : "Save"}
       </Button>
     </form>
   );
