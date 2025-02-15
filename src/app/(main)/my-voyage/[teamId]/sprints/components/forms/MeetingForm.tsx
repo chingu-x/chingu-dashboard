@@ -32,7 +32,6 @@ import {
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
 import { persistor } from "@/store/store";
-import convertStringToDate from "@/utils/convertStringToDate";
 import { sprintMeetingAdapter, timezoneAdapter } from "@/utils/adapters";
 import { CacheTag } from "@/utils/cacheTag";
 import {
@@ -61,7 +60,17 @@ export default function MeetingForm() {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [meetingData, setMeetingData] = useState<Meeting>();
 
-  const sprint = sprints.find((sprint) => sprint.number === +sprintNumber)!;
+  const sprintStartDate = timezoneAdapter.getSprintStartDateBySprintNumber({
+    sprints,
+    sprintNumber,
+    timezone,
+  });
+
+  const sprintEndDate = timezoneAdapter.getSprintEndDateBySprintNumber({
+    sprints,
+    sprintNumber,
+    timezone,
+  });
 
   const validationSchema = z.object({
     title: validateTextInput({
@@ -74,8 +83,8 @@ export default function MeetingForm() {
       required: true,
     }),
     dateTime: validateDateTimeInput({
-      minDate: convertStringToDate(sprint?.startDate, timezone),
-      maxDate: convertStringToDate(sprint?.endDate, timezone),
+      minDate: sprintStartDate,
+      maxDate: sprintEndDate,
       timezone,
     }),
     meetingLink: validateTextInput({
