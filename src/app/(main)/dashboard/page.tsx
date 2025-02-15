@@ -3,17 +3,17 @@ import { getUser } from "@/utils/getUser";
 import routePaths from "@/utils/routePaths";
 
 async function DashboardPage() {
-  const [user] = await getUser();
+  // const [user] = await getUser();
 
-  const teamMember = user?.voyageTeamMembers.find(
-    (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
-  );
+  // const teamMember = user?.voyageTeamMembers.find(
+  //   (voyage) => voyage.voyageTeam.voyage.status.name === "Active",
+  // );
 
-  if (teamMember) {
-    redirect(
-      routePaths.VoyageMemberDashboardPage(teamMember?.voyageTeamId.toString()),
-    );
-  }
+  // if (teamMember) {
+  //   redirect(
+  //     routePaths.VoyageMemberDashboardPage(teamMember?.voyageTeamId.toString()),
+  //   );
+  // }
 
   return <div>Default Dashboard</div>;
 }

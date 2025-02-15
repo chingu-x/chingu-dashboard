@@ -7,13 +7,13 @@ import {
   LightBulbIcon,
 } from "@heroicons/react/24/outline";
 
+import type { Section } from "@chingu-x/modules/sprint-meeting";
+import { Forms } from "@chingu-x/modules/forms";
 import Notes from "./Notes";
 import Planning from "./Planning";
 import Review from "./Review";
 import SectionBase from "./SectionBase";
 import Divider from "@/app/(main)/my-voyage/[teamId]/sprints/components/Divider";
-import { type Section } from "@/store/features/sprint/sprintSlice";
-import { Forms } from "@/utils/form/formsEnums";
 
 interface SectionsProps {
   params: {
