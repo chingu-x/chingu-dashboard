@@ -67,12 +67,12 @@ export default function AssessmentForm() {
         </div>
       </div>
 
-      <div className="w-max[812px] flex w-full items-center justify-center gap-[40px]">
-        <Button className="h-[60px] w-[386px] w-full rounded-[8px] border border-[#9CA1AA] !bg-[#F5F5F5]/70 px-[26px] py-[18px] text-black">
+      <div className="w-max-[812px] flex w-[386px] items-center justify-center gap-[40px]">
+        <Button className="h-[60px] w-full rounded-[8px] border border-[#9CA1AA] !bg-[#F5F5F5]/70 px-[26px] py-[18px] text-black">
           <ArrowLeftIcon className="mr-2 h-4 w-4" />
           Back
         </Button>
-        <Button className="h-[60px] w-[386px] w-full rounded-[8px] border border-[#9CA1AA] !bg-[#217A56] px-[26px] py-[18px] text-white">
+        <Button className="h-[60px] w-full rounded-[8px] border border-[#9CA1AA] !bg-[#217A56] px-[26px] py-[18px] text-white">
           Continue
           <ArrowRightIcon className="ml-2 h-4 w-4 text-white" />
         </Button>

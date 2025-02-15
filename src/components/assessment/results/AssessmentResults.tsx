@@ -20,7 +20,7 @@ export default function AssessmentResultsPage() {
       ) : (
         <>
           <ConfettiScreen className="absolute inset-0" />
-          <div className="flex h-[90px] w-[650px] max-w-[650px] items-center justify-center text-center text-[25px] font-semibold leading-[30px] tracking-[0%] text-[#16171A]">
+          <div className="flex h-[90px] w-[650px] max-w-[650px] items-center justify-center text-center text-[25px] font-semibold leading-[30px] tracking-normal text-[#16171A]">
             After analyzing your results, <br />
             We&apos;ve concluded that you are a ... <br />
           </div>

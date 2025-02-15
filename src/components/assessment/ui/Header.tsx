@@ -11,8 +11,8 @@ export default function Header() {
 
   return (
     <div className="absolute left-[250px] top-[75px] flex w-full px-[24px]">
-      <div className="w-[163px] flex-shrink-0">
-        <Button className="h-[40px] w-full gap-[8px] rounded-tl-[8px] border border-[#217A56] border-gray-400 bg-[#F5F5F5] px-[20px] py-[12px] text-black">
+      <div className="w-[163px] shrink-0">
+        <Button className="h-[40px] w-full gap-[8px] rounded-tl-[8px] border border-[#217A56] bg-[#F5F5F5] px-[20px] py-[12px] text-black">
           Exit Assessment
         </Button>
       </div>
