@@ -11,6 +11,8 @@ import type {
   AddAgendaTopicClientRequestDto,
   AddAgendaTopicResponseDto,
   Agenda,
+  EditAgendaTopicClientRequestDto,
+  EditAgendaTopicResponseDto,
 } from "@chingu-x/modules/sprint-meeting";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Button from "@/components/Button";
@@ -19,11 +21,7 @@ import Textarea from "@/components/inputs/Textarea";
 
 import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch, useSprintMeeting } from "@/store/hooks";
-import useServerAction from "@/hooks/useServerAction";
-import {
-  editAgendaTopic,
-  deleteAgendaTopic,
-} from "@/myVoyage/sprints/sprintsService";
+import { deleteAgendaTopic } from "@/myVoyage/sprints/sprintsService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
@@ -65,12 +63,6 @@ export default function AgendaTopicForm() {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [topicData, setTopicData] = useState<Agenda>();
 
-  const {
-    runAction: editAgendaTopicAction,
-    isLoading: editAgendaTopicLoading,
-    setIsLoading: setEditAgendaTopicLoading,
-  } = useServerAction(editAgendaTopic);
-
   const { mutate: addAgenda, isPending: addAgendaPending } = useMutation<
     AddAgendaTopicResponseDto,
     Error,
@@ -82,13 +74,27 @@ export default function AgendaTopicForm() {
         queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
       });
 
-      router.push(
-        routePaths.sprintWeekPage(
-          teamId.toString(),
-          sprintNumber.toString(),
-          meetingId.toString(),
-        ),
+      router.push(routePaths.sprintWeekPage(teamId, sprintNumber, meetingId));
+    },
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
       );
+    },
+  });
+
+  const { mutate: editAgenda, isPending: editAgendaPending } = useMutation<
+    EditAgendaTopicResponseDto,
+    Error,
+    EditAgendaTopicClientRequestDto
+  >({
+    mutationFn: editAgendaMutation,
+    onSuccess: (data) => {
+      queryClient.removeQueries({
+        queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
+      });
+
+      router.push(routePaths.sprintWeekPage(teamId, sprintNumber, meetingId));
     },
     onError: (error: Error) => {
       dispatch(
@@ -109,6 +115,18 @@ export default function AgendaTopicForm() {
     });
   }
 
+  async function editAgendaMutation({
+    agendaId,
+    title,
+    description,
+  }: EditAgendaTopicClientRequestDto): Promise<EditAgendaTopicResponseDto> {
+    return await sprintMeetingAdapter.editAgendaTopic({
+      agendaId,
+      title,
+      description,
+    });
+  }
+
   const {
     register,
     handleSubmit,
@@ -122,30 +140,11 @@ export default function AgendaTopicForm() {
 
   const { title, description } = watch();
 
-  const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     if (editMode) {
-      const [res, error] = await editAgendaTopicAction({
-        ...data,
-        agendaId,
-        sprintNumber,
-      });
+      const payload = { ...data, agendaId };
 
-      if (res) {
-        router.push(
-          routePaths.sprintWeekPage(
-            teamId.toString(),
-            sprintNumber.toString(),
-            meetingId.toString(),
-          ),
-        );
-      }
-
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-        setEditAgendaTopicLoading(false);
-      }
+      editAgenda(payload);
     } else {
       const payload = { ...data, meetingId };
 
@@ -206,7 +205,7 @@ export default function AgendaTopicForm() {
   );
 
   function renderButtonContent() {
-    if (editAgendaTopicLoading || addAgendaPending) {
+    if (editAgendaPending || addAgendaPending) {
       return <Spinner />;
     }
 
@@ -265,7 +264,7 @@ export default function AgendaTopicForm() {
             type="submit"
             title="submit"
             disabled={
-              !isDirty || !isValid || editAgendaTopicLoading || addAgendaPending
+              !isDirty || !isValid || editAgendaPending || addAgendaPending
             }
             size="lg"
             variant="primary"
