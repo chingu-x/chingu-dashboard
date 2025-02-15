@@ -9,15 +9,15 @@ import {
 } from "@heroicons/react/24/outline";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type {
+  AddSprintMeetingSectionClientRequestDto,
+  AddSprintMeetingSectionResponseDto,
   EditMeetingClientRequestDto,
   EditMeetingResponseDto,
 } from "@chingu-x/modules/sprint-meeting";
+import { Forms } from "@chingu-x/modules/forms";
 import { cn } from "@/lib/utils";
-import useServerAction from "@/hooks/useServerAction";
-import { addSection } from "@/myVoyage/sprints/sprintsService";
-import { useAppDispatch, useUser } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { Forms } from "@/utils/form/formsEnums";
 import { CacheTag } from "@/utils/cacheTag";
 import { sprintMeetingAdapter } from "@/utils/adapters";
 import Spinner from "@/components/Spinner";
@@ -44,11 +44,12 @@ export default function SectionBase({
   children,
   reorderSections,
 }: SectionBaseProps) {
-  const [meetingId, sprintNumber] = [params.meetingId, params.sprintNumber];
+  const [meetingId] = [params.meetingId];
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
+  // notes section
   const { mutate: editMeeting, isPending: editMeetingPending } = useMutation<
     EditMeetingResponseDto,
     Error,
@@ -81,35 +82,48 @@ export default function SectionBase({
     });
   }
 
-  // Planning & Retrospective&Review Sections Action
+  // Planning & Retrospective&Review Sections
   const {
-    runAction: addSectionAction,
-    isLoading: addSectionLoading,
-    setIsLoading: setAddSectionLoading,
-  } = useServerAction(addSection);
+    mutate: addSprintMeetingSection,
+    isPending: addSprintMeetingSectionPending,
+  } = useMutation<
+    AddSprintMeetingSectionResponseDto,
+    Error,
+    AddSprintMeetingSectionClientRequestDto
+  >({
+    mutationFn: addSprintMeetingSectionMutation,
+    onSuccess: () => {
+      queryClient.removeQueries({
+        queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
+      });
+
+      reorderSections && reorderSections(title);
+      setIsOpen(true);
+    },
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
+
+  async function addSprintMeetingSectionMutation({
+    meetingId,
+    formId,
+  }: AddSprintMeetingSectionClientRequestDto): Promise<AddSprintMeetingSectionResponseDto> {
+    return await sprintMeetingAdapter.addSprintMeetingSection({
+      meetingId,
+      formId,
+    });
+  }
 
   useEffect(() => {
     if (isAdded) setIsOpen(true);
   }, [isAdded]);
 
-  const handleAddSection = async () => {
+  const handleAddSection = () => {
     if (id !== Number(Forms.notes)) {
-      const [res, error] = await addSectionAction({
-        sprintNumber,
-        meetingId,
-        formId: id,
-      });
-      if (res) {
-        reorderSections && reorderSections(title);
-      }
-
-      if (error) {
-        dispatch(
-          onOpenModal({ type: "error", content: { message: error.message } }),
-        );
-
-        setAddSectionLoading(false);
-      }
+      addSprintMeetingSection({ formId: id, meetingId });
     } else {
       editMeeting({ meetingId });
     }
@@ -118,6 +132,14 @@ export default function SectionBase({
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
+
+  function renderButtonContent() {
+    if (addSprintMeetingSectionPending || editMeetingPending) {
+      return <Spinner />;
+    }
+
+    return <PlusCircleIcon className="h-10 w-10 text-base-300" />;
+  }
 
   const panelVariants: Variants = {
     initial: {
@@ -174,13 +196,9 @@ export default function SectionBase({
             type="button"
             onClick={handleAddSection}
             aria-label="add section"
-            disabled={addSectionLoading || editMeetingPending}
+            disabled={addSprintMeetingSectionPending || editMeetingPending}
           >
-            {editMeetingPending ? (
-              <Spinner />
-            ) : (
-              <PlusCircleIcon className="h-10 w-10 text-base-300" />
-            )}
+            {renderButtonContent()}
           </button>
         )}
         <AnimatePresence mode="popLayout">
