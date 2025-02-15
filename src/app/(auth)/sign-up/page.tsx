@@ -1,5 +1,5 @@
 import SignUpContainer from "./components/SignUpContainer";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return <SignUpContainer />;
 }
