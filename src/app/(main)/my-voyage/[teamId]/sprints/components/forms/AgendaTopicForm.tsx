@@ -23,6 +23,7 @@ import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch, useSprintMeeting } from "@/store/hooks";
 import { deleteAgendaTopic } from "@/myVoyage/sprints/sprintsService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { addAgendaState } from "@/store/features/sprint-meeting/sprintMeetingSlice";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
 import { persistor } from "@/store/store";
@@ -73,6 +74,8 @@ export default function AgendaTopicForm() {
       queryClient.removeQueries({
         queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
       });
+
+      dispatch(addAgendaState(data));
 
       router.push(routePaths.sprintWeekPage(teamId, sprintNumber, meetingId));
     },
@@ -131,7 +134,6 @@ export default function AgendaTopicForm() {
     register,
     handleSubmit,
     watch,
-    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
@@ -178,7 +180,7 @@ export default function AgendaTopicForm() {
   }
 
   useEffect(() => {
-    if (sprintNumber && agendaId) {
+    if (agendaId) {
       const topic = sprintMeetingAdapter.getAgendaById({
         meeting: sprintMeeting,
         meetingId,
@@ -188,14 +190,7 @@ export default function AgendaTopicForm() {
       setTopicData(topic);
       setEditMode(true);
     }
-  }, [sprintNumber, agendaId, meetingId, sprintMeeting]);
-
-  // useEffect(() => {
-  //   reset({
-  //     title: topicData?.title,
-  //     description: topicData?.description,
-  //   });
-  // }, [topicData, reset]);
+  }, [agendaId, meetingId, sprintMeeting]);
 
   useEffect(
     () => () => {

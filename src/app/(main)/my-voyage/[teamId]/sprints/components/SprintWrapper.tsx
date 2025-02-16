@@ -16,7 +16,12 @@ import SprintActions from "./SprintActions";
 import { currentDate } from "@/utils/getCurrentSprint";
 import { ErrorType } from "@/utils/error";
 import ErrorComponent from "@/components/Error";
-import { useAppDispatch, useSprint, useUser } from "@/store/hooks";
+import {
+  useAppDispatch,
+  useSprint,
+  useSprintMeeting,
+  useUser,
+} from "@/store/hooks";
 import useCheckCurrentVoyageTeam from "@/hooks/useCheckCurrentVoyageTeam";
 import {
   sprintMeetingAdapter,
@@ -41,6 +46,7 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
   const { sprintNumber, meetingId } = params;
   const user = useUser();
   const sprints = useSprint();
+  const sprintMeeting = useSprintMeeting();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -49,6 +55,11 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
   if (sprints.sprints.length < 1) {
     router.push(routePaths.sprintsPage(teamId));
   }
+
+  const agendas = sprintMeetingAdapter.getSprintMeeting({
+    meeting: sprintMeeting,
+    meetingId,
+  })?.agendas;
 
   const isVoyageProjectSubmitted =
     voyageTeamAdapter.getVoyageProjectSubmissionStatus({ user })!;
@@ -154,7 +165,7 @@ export default function SprintWrapper({ params }: SprintWrapperProps) {
         meetingLink={data.meetingLink!}
         description={data.description!}
       />
-      <Agendas params={params} topics={data.agendas!} />
+      <Agendas params={params} topics={agendas!} />
       <Sections
         params={params}
         notes={data.notes}

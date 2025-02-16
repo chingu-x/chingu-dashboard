@@ -1,6 +1,7 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type {
   AddMeetingResponseDto,
+  Agenda,
   Meeting,
 } from "@chingu-x/modules/sprint-meeting";
 
@@ -36,10 +37,35 @@ export const sprintMeetingSlice = createSlice({
           return meeting;
         }
       }),
+    addAgendaState: (state, action: PayloadAction<Agenda>) => {
+      const { teamMeetingId } = action.payload;
+
+      const meeting = state.find((m) => m.id === teamMeetingId);
+
+      meeting?.agendas?.push(action.payload);
+    },
+    editAgendaState: (state, action: PayloadAction<Agenda>) => {
+      const { id, teamMeetingId } = action.payload;
+      const meeting = state.find((m) => m.id === teamMeetingId);
+
+      const agendaIndex = meeting?.agendas?.findIndex(
+        (agenda) => agenda.id === id && agenda.teamMeetingId === teamMeetingId,
+      );
+
+      if (agendaIndex !== -1) {
+        meeting!.agendas![agendaIndex!] = {
+          ...action.payload,
+        };
+      }
+    },
   },
 });
 
-export const { fetchMeeting, addMeetingState, editMeetingState } =
-  sprintMeetingSlice.actions;
+export const {
+  fetchMeeting,
+  addMeetingState,
+  editMeetingState,
+  addAgendaState,
+} = sprintMeetingSlice.actions;
 
 export default sprintMeetingSlice.reducer;
