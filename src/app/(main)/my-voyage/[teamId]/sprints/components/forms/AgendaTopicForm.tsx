@@ -23,7 +23,10 @@ import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch, useSprintMeeting } from "@/store/hooks";
 import { deleteAgendaTopic } from "@/myVoyage/sprints/sprintsService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
-import { addAgendaState } from "@/store/features/sprint-meeting/sprintMeetingSlice";
+import {
+  addAgendaState,
+  editAgendaState,
+} from "@/store/features/sprint-meeting/sprintMeetingSlice";
 import routePaths from "@/utils/routePaths";
 import Spinner from "@/components/Spinner";
 import { persistor } from "@/store/store";
@@ -96,6 +99,8 @@ export default function AgendaTopicForm() {
       queryClient.removeQueries({
         queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
       });
+
+      dispatch(editAgendaState(data));
 
       router.push(routePaths.sprintWeekPage(teamId, sprintNumber, meetingId));
     },

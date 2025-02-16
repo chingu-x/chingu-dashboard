@@ -66,6 +66,7 @@ export const {
   addMeetingState,
   editMeetingState,
   addAgendaState,
+  editAgendaState,
 } = sprintMeetingSlice.actions;
 
 export default sprintMeetingSlice.reducer;
