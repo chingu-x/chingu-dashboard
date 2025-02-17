@@ -5,10 +5,6 @@ import { useState } from "react";
 import Modal from "./Modal";
 import Spinner from "@/components/Spinner";
 import Button from "@/components/Button";
-import type {
-  DeleteFunctionsMap,
-  DeleteProps,
-} from "@/store/features/modal/modalSlice";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
 

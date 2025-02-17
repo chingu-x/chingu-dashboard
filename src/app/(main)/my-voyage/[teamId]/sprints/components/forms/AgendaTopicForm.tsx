@@ -31,6 +31,7 @@ import { deleteAgendaTopic } from "@/myVoyage/sprints/sprintsService";
 import { onCloseModal, onOpenModal } from "@/store/features/modal/modalSlice";
 import {
   addAgendaState,
+  deleteAgendaState,
   editAgendaState,
 } from "@/store/features/sprint-meeting/sprintMeetingSlice";
 import routePaths from "@/utils/routePaths";
@@ -152,7 +153,7 @@ export default function AgendaTopicForm() {
         queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
       });
 
-      // dispatch(editAgendaState(data));
+      dispatch(deleteAgendaState(data));
       dispatch(onCloseModal());
       router.push(routePaths.sprintWeekPage(teamId, sprintNumber, meetingId));
     },
@@ -172,14 +173,11 @@ export default function AgendaTopicForm() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isDirty, isValid },
   } = useForm<ValidationSchema>({
     mode: "onTouched",
     resolver: zodResolver(validationSchema),
   });
-
-  const { title, description } = watch();
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     if (editMode) {

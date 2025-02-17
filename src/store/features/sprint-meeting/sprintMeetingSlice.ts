@@ -70,7 +70,12 @@ export const sprintMeetingSlice = createSlice({
     deleteAgendaState: (
       state,
       action: PayloadAction<DeleteAgendaTopicResponseDto>,
-    ) => {},
+    ) => {
+      const { id, teamMeetingId } = action.payload;
+      const meeting = state.find((m) => m.id === teamMeetingId);
+
+      meeting!.agendas = meeting?.agendas?.filter((agenda) => agenda.id !== id);
+    },
   },
 });
 
@@ -80,6 +85,7 @@ export const {
   editMeetingState,
   addAgendaState,
   editAgendaState,
+  deleteAgendaState,
 } = sprintMeetingSlice.actions;
 
 export default sprintMeetingSlice.reducer;

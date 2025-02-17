@@ -4,17 +4,6 @@ import type {
   DeleteAgendaTopicClientRequestDto,
   DeleteAgendaTopicResponseDto,
 } from "@chingu-x/modules/sprint-meeting";
-import {
-  type DeleteResourceProps,
-  type DeleteResourceResponse,
-} from "@/myVoyage/voyage-resources/resourcesService";
-import { type DeleteFeatureProps } from "@/myVoyage/features/featuresService";
-import { type DeleteTechItemProps } from "@/app/(main)/my-voyage/[teamId]/tech-stack/techStackService";
-import type {
-  DeleteIdeationProps,
-  DeleteIdeationResponse,
-} from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
-import { deleteAgendaMutation } from "@/app/(main)/my-voyage/[teamId]/sprints/components/forms/AgendaTopicForm";
 
 export type ModalType =
   | "error"
@@ -63,11 +52,7 @@ export interface DeletePayload {
   deleteFunction?: DeleteFunctionTypes;
 }
 
-export type DeleteProps = DeleteAgendaTopicProps | DeleteIdeationsProps;
-
-interface DeleteIdeationsProps {
-  teamId: string;
-}
+export type DeleteProps = DeleteAgendaTopicProps;
 
 interface DeleteAgendaTopicProps {
   agendaId: string;
