@@ -11,10 +11,16 @@ import type {
   AddAgendaTopicClientRequestDto,
   AddAgendaTopicResponseDto,
   Agenda,
+  DeleteAgendaTopicClientRequestDto,
+  DeleteAgendaTopicResponseDto,
   EditAgendaTopicClientRequestDto,
   EditAgendaTopicResponseDto,
 } from "@chingu-x/modules/sprint-meeting";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  type UseMutateFunction,
+} from "@tanstack/react-query";
 import Button from "@/components/Button";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
@@ -22,7 +28,7 @@ import Textarea from "@/components/inputs/Textarea";
 import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch, useSprintMeeting } from "@/store/hooks";
 import { deleteAgendaTopic } from "@/myVoyage/sprints/sprintsService";
-import { onOpenModal } from "@/store/features/modal/modalSlice";
+import { onCloseModal, onOpenModal } from "@/store/features/modal/modalSlice";
 import {
   addAgendaState,
   editAgendaState,
@@ -89,6 +95,18 @@ export default function AgendaTopicForm() {
     },
   });
 
+  async function addAgendaMutation({
+    meetingId,
+    title,
+    description,
+  }: AddAgendaTopicClientRequestDto): Promise<AddAgendaTopicResponseDto> {
+    return await sprintMeetingAdapter.addAgendaTopic({
+      meetingId,
+      title,
+      description,
+    });
+  }
+
   const { mutate: editAgenda, isPending: editAgendaPending } = useMutation<
     EditAgendaTopicResponseDto,
     Error,
@@ -111,18 +129,6 @@ export default function AgendaTopicForm() {
     },
   });
 
-  async function addAgendaMutation({
-    meetingId,
-    title,
-    description,
-  }: AddAgendaTopicClientRequestDto): Promise<AddAgendaTopicResponseDto> {
-    return await sprintMeetingAdapter.addAgendaTopic({
-      meetingId,
-      title,
-      description,
-    });
-  }
-
   async function editAgendaMutation({
     agendaId,
     title,
@@ -133,6 +139,34 @@ export default function AgendaTopicForm() {
       title,
       description,
     });
+  }
+
+  const { mutate: deleteAgenda } = useMutation<
+    DeleteAgendaTopicResponseDto,
+    Error,
+    DeleteAgendaTopicClientRequestDto
+  >({
+    mutationFn: deleteAgendaMutation,
+    onSuccess: (data) => {
+      queryClient.removeQueries({
+        queryKey: [CacheTag.sprints, CacheTag.sprintMeetingId],
+      });
+
+      // dispatch(editAgendaState(data));
+      dispatch(onCloseModal());
+      router.push(routePaths.sprintWeekPage(teamId, sprintNumber, meetingId));
+    },
+    onError: (error: Error) => {
+      dispatch(
+        onOpenModal({ type: "error", content: { message: error.message } }),
+      );
+    },
+  });
+
+  async function deleteAgendaMutation({
+    agendaId,
+  }: DeleteAgendaTopicClientRequestDto): Promise<DeleteAgendaTopicResponseDto> {
+    return await sprintMeetingAdapter.deleteAgendaTopic({ agendaId });
   }
 
   const {
@@ -160,11 +194,6 @@ export default function AgendaTopicForm() {
   };
 
   function handleDelete() {
-    const route = routePaths.sprintWeekPage(
-      teamId.toString(),
-      sprintNumber.toString(),
-      meetingId.toString(),
-    );
     dispatch(
       onOpenModal({
         type: "confirmation",
@@ -176,9 +205,10 @@ export default function AgendaTopicForm() {
           cancelText: "Keep It",
         },
         payload: {
-          params: { agendaId, sprintNumber },
-          redirect: { router, route },
-          deleteFunction: deleteAgendaTopic,
+          params: {
+            agendaId,
+          },
+          deleteFunction: deleteAgenda,
         },
       }),
     );

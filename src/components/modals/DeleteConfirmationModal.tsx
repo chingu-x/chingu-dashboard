@@ -1,26 +1,40 @@
 "use client";
 
 import { TrashIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
 import Modal from "./Modal";
 import Spinner from "@/components/Spinner";
 import Button from "@/components/Button";
+import type {
+  DeleteFunctionsMap,
+  DeleteProps,
+} from "@/store/features/modal/modalSlice";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
-import useDelete from "@/hooks/useDelete";
 
 export default function DeleteConfirmationModal() {
   const { isOpen, payload } = useModal();
+  const { params, deleteFunction } = payload || {};
   const modal = useModal();
   const dispatch = useAppDispatch();
-
-  const { handleDelete, isLoading } = useDelete(payload!);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleClose = () => {
     dispatch(onCloseModal());
   };
 
+  function handleDelete() {
+    if (deleteFunction && params) {
+      setLoading(true);
+
+      deleteFunction(params, {
+        onSettled: () => setLoading(false),
+      });
+    }
+  }
+
   function renderDeleteButtonContent() {
-    if (isLoading) {
+    if (loading) {
       return <Spinner />;
     }
 
@@ -51,7 +65,7 @@ export default function DeleteConfirmationModal() {
           size="lg"
           variant="error"
           type="button"
-          disabled={isLoading}
+          disabled={loading}
           onClick={handleDelete}
           className="w-1/2"
         >

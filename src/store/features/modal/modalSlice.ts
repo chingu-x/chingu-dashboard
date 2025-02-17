@@ -1,29 +1,20 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import type { UseMutateFunction } from "@tanstack/react-query";
+import type {
+  DeleteAgendaTopicClientRequestDto,
+  DeleteAgendaTopicResponseDto,
+} from "@chingu-x/modules/sprint-meeting";
 import {
   type DeleteResourceProps,
   type DeleteResourceResponse,
-  type deleteResource,
 } from "@/myVoyage/voyage-resources/resourcesService";
-import {
-  type DeleteFeatureProps,
-  type deleteFeature,
-} from "@/myVoyage/features/featuresService";
-import { type AsyncActionResponse } from "@/utils/handleAsync";
-import {
-  type DeleteAgendaTopicProps,
-  type DeleteAgendaTopicResponse,
-  type deleteAgendaTopic,
-} from "@/app/(main)/my-voyage/[teamId]/sprints/sprintsService";
-import {
-  type DeleteTechItemProps,
-  type deleteTechItem,
-} from "@/app/(main)/my-voyage/[teamId]/tech-stack/techStackService";
+import { type DeleteFeatureProps } from "@/myVoyage/features/featuresService";
+import { type DeleteTechItemProps } from "@/app/(main)/my-voyage/[teamId]/tech-stack/techStackService";
 import type {
-  deleteIdeation,
   DeleteIdeationProps,
   DeleteIdeationResponse,
 } from "@/app/(main)/my-voyage/[teamId]/ideation/ideationService";
+import { deleteAgendaMutation } from "@/app/(main)/my-voyage/[teamId]/sprints/components/forms/AgendaTopicForm";
 
 export type ModalType =
   | "error"
@@ -37,14 +28,14 @@ interface ModalState {
   type: ModalType | undefined;
   isOpen: boolean;
   content?: ContentPayload;
-  payload?: Payload;
+  payload?: DeletePayload;
 }
 
 export interface BaseModalOpenActionPayload {
   id?: number;
   type: Exclude<ModalType, "error" | "confirmation">;
   content?: ContentPayload;
-  payload?: Payload;
+  payload?: DeletePayload;
 }
 
 export interface ErrorModalOpenActionPayload
@@ -57,7 +48,7 @@ export interface ConfirmationModalOpenActionPayload
   extends Omit<BaseModalOpenActionPayload, "type"> {
   type: "confirmation";
   content: Required<ContentPayload>;
-  payload: Required<Payload>;
+  payload: Required<DeletePayload>;
 }
 
 export interface ContentPayload {
@@ -67,36 +58,27 @@ export interface ContentPayload {
   cancelText?: string;
 }
 
-export interface Payload {
+export interface DeletePayload {
   params?: DeleteProps;
-  redirect?: Redirect | null;
-  deleteFunction?:
-    | typeof deleteIdeation
-    | typeof deleteResource
-    | typeof deleteFeature
-    | typeof deleteAgendaTopic
-    | typeof deleteTechItem;
+  deleteFunction?: DeleteFunctionTypes;
 }
 
-export type ActionType<X, Y> = (arg: X) => Promise<AsyncActionResponse<Y>>;
+export type DeleteProps = DeleteAgendaTopicProps | DeleteIdeationsProps;
 
-export type DeleteProps =
-  | DeleteIdeationProps
-  | DeleteResourceProps
-  | DeleteFeatureProps
-  | DeleteAgendaTopicProps
-  | DeleteTechItemProps;
-
-export type DeleteResponse =
-  | DeleteIdeationResponse
-  | DeleteResourceResponse
-  | DeleteAgendaTopicResponse
-  | void;
-
-export interface Redirect {
-  router?: AppRouterInstance;
-  route?: string;
+interface DeleteIdeationsProps {
+  teamId: string;
 }
+
+interface DeleteAgendaTopicProps {
+  agendaId: string;
+}
+
+type DeleteFunctionTypes = UseMutateFunction<
+  DeleteAgendaTopicResponseDto,
+  Error,
+  DeleteAgendaTopicClientRequestDto,
+  unknown
+>;
 
 export type ModalOpenActionPayload =
   | BaseModalOpenActionPayload
@@ -115,7 +97,10 @@ export const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    onOpenModal: (state, action: PayloadAction<ModalOpenActionPayload>) => {
+    onOpenModal: (
+      state: ModalState,
+      action: PayloadAction<ModalOpenActionPayload>,
+    ) => {
       const { id, type, content, payload } = action.payload;
 
       state.id = id;

@@ -1,7 +1,10 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type {
+  AddAgendaTopicResponseDto,
   AddMeetingResponseDto,
-  Agenda,
+  DeleteAgendaTopicResponseDto,
+  EditAgendaTopicResponseDto,
+  EditMeetingResponseDto,
   Meeting,
 } from "@chingu-x/modules/sprint-meeting";
 
@@ -29,7 +32,7 @@ export const sprintMeetingSlice = createSlice({
 
       return;
     },
-    editMeetingState: (state, action: PayloadAction<Meeting>) =>
+    editMeetingState: (state, action: PayloadAction<EditMeetingResponseDto>) =>
       state.map((meeting) => {
         if (meeting.id === action.payload.id) {
           return { ...meeting, ...action.payload };
@@ -37,14 +40,20 @@ export const sprintMeetingSlice = createSlice({
           return meeting;
         }
       }),
-    addAgendaState: (state, action: PayloadAction<Agenda>) => {
+    addAgendaState: (
+      state,
+      action: PayloadAction<AddAgendaTopicResponseDto>,
+    ) => {
       const { teamMeetingId } = action.payload;
 
       const meeting = state.find((m) => m.id === teamMeetingId);
 
       meeting?.agendas?.push(action.payload);
     },
-    editAgendaState: (state, action: PayloadAction<Agenda>) => {
+    editAgendaState: (
+      state,
+      action: PayloadAction<EditAgendaTopicResponseDto>,
+    ) => {
       const { id, teamMeetingId } = action.payload;
       const meeting = state.find((m) => m.id === teamMeetingId);
 
@@ -58,6 +67,10 @@ export const sprintMeetingSlice = createSlice({
         };
       }
     },
+    deleteAgendaState: (
+      state,
+      action: PayloadAction<DeleteAgendaTopicResponseDto>,
+    ) => {},
   },
 });
 
