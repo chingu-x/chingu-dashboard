@@ -6,7 +6,7 @@ import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Button } from "@chingu-x/components/button";
 import { Spinner } from "@chingu-x/components/spinner";
-import TextInput from "@/components/inputs/TextInput";
+import { TextInput } from "@chingu-x/components/inputs";
 import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";

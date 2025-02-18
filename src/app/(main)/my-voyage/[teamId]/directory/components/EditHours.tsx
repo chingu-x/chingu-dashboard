@@ -6,7 +6,7 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { type SetStateAction, useEffect } from "react";
 import { Button } from "@chingu-x/components/button";
 import { Spinner } from "@chingu-x/components/spinner";
-import TextInput from "@/components/inputs/TextInput";
+import { TextInput } from "@chingu-x/components/inputs";
 import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch } from "@/store/hooks";
 import { editHours } from "@/app/(main)/my-voyage/[teamId]/directory/directoryService";

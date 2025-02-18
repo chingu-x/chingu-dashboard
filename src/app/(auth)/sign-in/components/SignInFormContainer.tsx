@@ -5,9 +5,9 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@chingu-x/components/button";
 import { Spinner } from "@chingu-x/components/spinner";
+import { TextInput } from "@chingu-x/components/inputs";
 import { serverSignIn } from "@/app/(auth)/authService";
 
-import TextInput from "@/components/inputs/TextInput";
 import { validateTextInput } from "@/utils/form/validateInput";
 import { clientSignIn } from "@/store/features/auth/authSlice";
 import { onOpenModal } from "@/store/features/modal/modalSlice";

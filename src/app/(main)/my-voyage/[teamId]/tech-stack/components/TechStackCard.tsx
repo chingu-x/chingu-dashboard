@@ -11,6 +11,7 @@ import { AvatarGroup } from "@chingu-x/components/avatar-group";
 import { Tooltip } from "@chingu-x/components/tooltip";
 import { Button } from "@chingu-x/components/button";
 import { Spinner } from "@chingu-x/components/spinner";
+import { TextInput } from "@chingu-x/components/inputs";
 import GetIcon from "./GetIcons";
 import AddVoteBtn from "./AddVoteBtn";
 import RemoveVoteBtn from "./RemoveVoteBtn";
@@ -20,7 +21,6 @@ import {
   editTechItem,
 } from "@/myVoyage/tech-stack/techStackService";
 import getTechCategory from "@/myVoyage/tech-stack/components/getTechCategory";
-import TextInput from "@/components/inputs/TextInput";
 import type { TechStackItem } from "@/store/features/techStack/techStackSlice";
 import { useUser, useAppDispatch, useAppSelector } from "@/store/hooks";
 import useServerAction from "@/hooks/useServerAction";
