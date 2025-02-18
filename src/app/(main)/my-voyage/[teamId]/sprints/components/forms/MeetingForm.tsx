@@ -11,8 +11,8 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@chingu-x/components/button";
 import { Spinner } from "@chingu-x/components/spinner";
-import { DateTimePicker, TextInput } from "@chingu-x/components/inputs";
-import Textarea from "@/components/inputs/Textarea";
+import { DateTimePicker, TextInput, Textarea } from "@chingu-x/components/inputs";
+
 
 import {
   validateDateTimeInput,

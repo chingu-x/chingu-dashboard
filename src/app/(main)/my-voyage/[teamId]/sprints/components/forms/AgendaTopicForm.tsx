@@ -9,8 +9,7 @@ import { TrashIcon } from "@heroicons/react/20/solid";
 
 import { Button } from "@chingu-x/components/button";
 import { Spinner } from "@chingu-x/components/spinner";
-import { TextInput } from "@chingu-x/components/inputs";
-import Textarea from "@/components/inputs/Textarea";
+import { TextInput, Textarea } from "@chingu-x/components/inputs";
 
 import { validateTextInput } from "@/utils/form/validateInput";
 import { useSprint, useAppDispatch } from "@/store/hooks";

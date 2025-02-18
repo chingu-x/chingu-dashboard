@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 
 import { Button } from "@chingu-x/components/button";
 import { Spinner } from "@chingu-x/components/spinner";
-import Textarea from "@/components/inputs/Textarea";
+import { Textarea } from "@chingu-x/components/inputs";
 
 import { validateTextInput } from "@/utils/form/validateInput";
 import useServerAction from "@/hooks/useServerAction";
