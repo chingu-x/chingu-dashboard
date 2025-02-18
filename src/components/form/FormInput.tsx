@@ -3,11 +3,10 @@
 import { type FieldErrors, type UseFormRegister } from "react-hook-form";
 import { LinkIcon } from "@heroicons/react/24/outline";
 
-import { TextInput, Textarea } from "@chingu-x/components/inputs";
+import { TextInput, Textarea, Label } from "@chingu-x/components/inputs";
 import { LabelContent } from "./LabelContent";
 
 import FormInputContainer from "@/components/form/FormInputContainer";
-import Label from "@/components/inputs/Label";
 import RadioGroupVertical from "@/components/inputs/RadioGroup/RadioGroupVertical";
 import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
 import RadioGroupHorizontal from "@/components/inputs/RadioGroup/RadioGroupHorizontal";

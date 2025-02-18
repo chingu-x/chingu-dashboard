@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Label from "@/components/inputs/Label";
+import { Label } from "@chingu-x/components/inputs";
 import { cn } from "@/lib/utils";
 
 type groupLayoutTypes = "vertical" | "horizontal" | "rating";
