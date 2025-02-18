@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@chingu-x/components/button";
 import { Spinner } from "@chingu-x/components/spinner";
-import BaseFormPage from "@/components/form/BaseFormPage";
+import { BaseFormPage } from "@chingu-x/components/form";
 import { submitVoyageProjectForm } from "@/myVoyage/sprints/sprintsService";
 import FormInput from "@/components/form/FormInput";
 
