@@ -1,13 +1,12 @@
 import Image from "next/image";
 
 
-import { type RadioInputProps, type CheckboxInputProps } from "@chingu-x/components/inputs";
+import { type RadioInputProps, type CheckboxInputProps, LabelContent } from "@chingu-x/components/inputs";
 import {
   type Question,
   type SubQuestion,
   type TeamMemberForCheckbox,
 } from "./types";
-import { LabelContent } from "@/components/form/LabelContent";
 
 export function getTextInCurlyBrackets(text: string) {
   const regExp = /[^{\}]+(?=})/g;
