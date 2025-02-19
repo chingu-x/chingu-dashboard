@@ -1,10 +1,10 @@
-import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import StoreProvider from "@/components/providers/StoreProvider";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import ModalProvider from "@/components/providers/ModalProvider";
 import "@chingu-x/components/styles";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Chingu Dashboard",
