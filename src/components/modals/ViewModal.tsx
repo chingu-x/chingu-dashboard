@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { useCallback } from "react";
+import { Button } from "@chingu-x/components/button";
+import { Modal } from "@chingu-x/components/modal";
+import { CheckboxInput } from "@chingu-x/components/inputs";
 import ModalSection from "@/app/(main)/my-voyage/[teamId]/voyage-resources/components/ModalSection";
-import { CheckboxGroupItem } from "@/components/inputs/CheckBoxGroup/CheckboxGroupItem";
-import Modal from "@/components/modals/Modal";
-import Button from "@/components/Button";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal, useResource } from "@/store/hooks";
 
@@ -59,7 +59,7 @@ export default function ViewModal() {
           <p className="mb-2 font-bold">
             Would you like to see this message again?
           </p>
-          <CheckboxGroupItem
+          <CheckboxInput
             id="confirmation"
             label="Don't ask me this again when opening resources links"
             className="text-base-300 hover:[&>*:nth-child(3)]:text-neutral-focus"

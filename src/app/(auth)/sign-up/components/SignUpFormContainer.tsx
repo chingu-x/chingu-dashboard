@@ -2,8 +2,8 @@ import Link from "next/link";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Button from "@/components/Button";
-import TextInput from "@/components/inputs/TextInput";
+import { Button } from "@chingu-x/components/button";
+import { TextInput } from "@chingu-x/components/inputs";
 import { validateTextInput } from "@/utils/form/validateInput";
 import routePaths from "@/utils/routePaths";
 

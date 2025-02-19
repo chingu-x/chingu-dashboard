@@ -7,9 +7,9 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TrashIcon } from "@heroicons/react/20/solid";
 
-import Button from "@/components/Button";
-import TextInput from "@/components/inputs/TextInput";
-import Textarea from "@/components/inputs/Textarea";
+import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
+import { TextInput, Textarea } from "@chingu-x/components/inputs";
 
 import { validateTextInput } from "@/utils/form/validateInput";
 import { useSprint, useAppDispatch } from "@/store/hooks";
@@ -22,7 +22,6 @@ import {
 } from "@/myVoyage/sprints/sprintsService";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import routePaths from "@/utils/routePaths";
-import Spinner from "@/components/Spinner";
 import { persistor } from "@/store/store";
 
 const validationSchema = z.object({

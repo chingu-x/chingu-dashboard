@@ -5,6 +5,10 @@ import { format } from "date-fns";
 import Calendar from "./Calendar";
 import { rootReducer } from "@/store/store";
 
+jest.mock("@chingu-x/components/button", () => ({
+  Button: () => "MockedButton",
+}));
+
 describe("Calendar Component", () => {
   // not the best test. maybe refactor to e2e test later
   it("displays the month and year on a single line", () => {

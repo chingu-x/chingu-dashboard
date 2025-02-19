@@ -3,14 +3,14 @@ import { useParams } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinkIcon } from "@heroicons/react/24/outline";
+import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
+import { TextInput } from "@chingu-x/components/inputs";
 import { useAppDispatch } from "@/store/hooks";
 import { validateTextInput } from "@/utils/form/validateInput";
-import Button from "@/components/Button";
-import TextInput from "@/components/inputs/TextInput";
 import { onOpenModal } from "@/store/features/modal/modalSlice";
 import { addResource } from "@/app/(main)/my-voyage/[teamId]/voyage-resources/resourcesService";
 import useServerAction from "@/hooks/useServerAction";
-import Spinner from "@/components/Spinner";
 
 const validationSchema = z.object({
   url: validateTextInput({

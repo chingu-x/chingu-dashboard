@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { Button } from "@chingu-x/components/button";
 import type { SelectedItems, TechItem, TechStackItem } from "./types";
 import { checkIfFinalized } from "./utils/checkIfFinalized";
 import { getSelectedTechItems } from "./utils/getSelectedTechItems";
 import GetIcon from "@/myVoyage/tech-stack/components/GetIcons";
-import Button from "@/components/Button";
 import { useTechStack } from "@/store/hooks";
 import FinalizeTechCard from "@/app/(main)/my-voyage/[teamId]/tech-stack/finalize/FinalizeTechCard";
 import ConfirmationButton from "@/app/(main)/my-voyage/[teamId]/tech-stack/finalize/ConfirmationButton";

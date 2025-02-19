@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
+import { Spinner } from "@chingu-x/components/spinner";
 import RedirectToCurrentSprintWrapper from "./components/RedirectToCurrentSprintWrapper";
-import Spinner from "@/components/Spinner";
 
 interface SprintsPageProps {
   params: {

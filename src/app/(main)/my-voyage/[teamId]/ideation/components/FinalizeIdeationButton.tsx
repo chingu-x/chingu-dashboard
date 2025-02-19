@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import Button from "@/components/Button";
+import { Button } from "@chingu-x/components/button";
 import routePaths from "@/utils/routePaths";
 import { useIdeation } from "@/store/hooks";
 
