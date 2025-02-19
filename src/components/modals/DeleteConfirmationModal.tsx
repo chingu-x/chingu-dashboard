@@ -1,9 +1,9 @@
 "use client";
 
 import { TrashIcon } from "@heroicons/react/20/solid";
-import Modal from "./Modal";
-import Spinner from "@/components/Spinner";
-import Button from "@/components/Button";
+import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
+import { Modal } from "@chingu-x/components/modal";
 import { onCloseModal } from "@/store/features/modal/modalSlice";
 import { useAppDispatch, useModal } from "@/store/hooks";
 import useDelete from "@/hooks/useDelete";

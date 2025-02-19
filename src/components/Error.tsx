@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Banner } from "@chingu-x/components/banner";
 
 import Image from "next/image";
-import Button from "./Button";
+import { Button } from "@chingu-x/components/button";
 
 import routePaths from "@/utils/routePaths";
 import { type ErrorType } from "@/utils/error";

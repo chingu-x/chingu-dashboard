@@ -6,13 +6,13 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { useState, useEffect } from "react";
-import Button from "@/components/Button";
+import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
 import { validateTextInput } from "@/utils/form/validateInput";
 import { useAppDispatch, useIdeation } from "@/store/hooks";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";
-import Spinner from "@/components/Spinner";
 import {
   editIdeation,
   type EditIdeationProps,

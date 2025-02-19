@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { Button } from "@chingu-x/components/button";
 import FinalizeIdeationItem from "./FinalizeIdeationItem";
 import ConfirmationButton from "./ConfirmationButton";
-import Button from "@/components/Button";
 import { useIdeation } from "@/store/hooks";
 import routePaths from "@/utils/routePaths";
 import { type IdeationData } from "@/store/features/ideation/ideationSlice";

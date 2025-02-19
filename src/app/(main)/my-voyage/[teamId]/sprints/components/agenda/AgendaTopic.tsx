@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { CheckCircleIcon as CheckCircleIconSolid } from "@heroicons/react/24/solid";
 
-import IconButton from "@/components/IconButton";
+import { IconButton } from "@chingu-x/components/icon-button";
 import { type Agenda } from "@/app/(main)/my-voyage/[teamId]/sprints/components/fixtures/Meeting";
 import { cn } from "@/lib/utils";
 

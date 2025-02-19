@@ -9,11 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { LinkIcon } from "@heroicons/react/24/outline";
 
-import Button from "@/components/Button";
-import DateTimePicker from "@/components/inputs/DateTimePicker";
+import { Button } from "@chingu-x/components/button";
+import { Spinner } from "@chingu-x/components/spinner";
+import { DateTimePicker } from "@chingu-x/components/inputs";
 import TextInput from "@/components/inputs/TextInput";
 import Textarea from "@/components/inputs/Textarea";
-import Spinner from "@/components/Spinner";
 
 import {
   validateDateTimeInput,

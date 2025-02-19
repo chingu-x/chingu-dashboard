@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
+import { Spinner } from "@chingu-x/components/spinner";
 import VoyageDashboard from "./VoyageDashboard";
-import Spinner from "@/components/Spinner";
 
 interface VoyageDashboardPageProps {
   teamId?: string;

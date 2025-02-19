@@ -3,8 +3,8 @@ import {
   ClipboardDocumentListIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
+import { Button } from "@chingu-x/components/button";
 import routePaths from "@/utils/routePaths";
-import Button from "@/components/Button";
 
 interface AgendaHeaderProps {
   teamId: number;
