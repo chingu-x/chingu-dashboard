@@ -3,12 +3,11 @@
 import { type FieldErrors, type UseFormRegister } from "react-hook-form";
 import { LinkIcon } from "@heroicons/react/24/outline";
 
-import { TextInput, Textarea, Label, RadioGroupVertical, RadioGroupHorizontal, RadioGroupRating } from "@chingu-x/components/inputs";
+import { TextInput, Textarea, Label, RadioGroupVertical, RadioGroupHorizontal, RadioGroupRating, CheckboxGroupVertical } from "@chingu-x/components/inputs";
 import { LabelContent } from "./LabelContent";
 
 import FormInputContainer from "@/components/form/FormInputContainer";
 
-import CheckboxGroupVertical from "@/components/inputs/CheckBoxGroup/CheckboxGroupVertical";
 import { getOptions, getTextInCurlyBrackets } from "@/utils/form/helpers";
 import { type Question, type TeamMemberForCheckbox } from "@/utils/form/types";
 

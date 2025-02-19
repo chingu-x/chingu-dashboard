@@ -1,13 +1,12 @@
 import Image from "next/image";
 
+
+import { type RadioInputProps, type CheckboxInputProps } from "@chingu-x/components/inputs";
 import {
   type Question,
   type SubQuestion,
   type TeamMemberForCheckbox,
 } from "./types";
-
-import { type RadioGroupItemProps } from "@/components/inputs/RadioGroup/RadioGroupItem";
-import { type CheckboxGroupItemProps } from "@/components/inputs/CheckBoxGroup/CheckboxGroupItem";
 import { LabelContent } from "@/components/form/LabelContent";
 
 export function getTextInCurlyBrackets(text: string) {
@@ -37,7 +36,7 @@ export function getOptions({
     text,
     optionGroup,
   } = question;
-  const options: RadioGroupItemProps[] | CheckboxGroupItemProps[] = [];
+  const options: RadioInputProps[] | CheckboxInputProps[] = [];
 
   if (
     (name === "radio" ||
