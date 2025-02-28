@@ -1,0 +1,16 @@
+"use client";
+import dynamic from "next/dynamic";
+import confettiAnimation from "@/public/lotties/assessment_confetti.json";
+
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
+interface ConfettiScreenProps {
+  className: string;
+}
+
+export default function ConfettiScreen({ className }: ConfettiScreenProps) {
+  return (
+    <div className={`h-full w-full ${className}`}>
+      <Lottie animationData={confettiAnimation} loop={false} />
+    </div>
+  );
+}

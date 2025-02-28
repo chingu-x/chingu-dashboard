@@ -106,7 +106,7 @@ async function VoyageDashboard({ teamId }: VoyageDashboardProps) {
   }));
 
   return (
-    <div className="flex w-full flex-col gap-x-6 max-[1470px]:gap-y-6 min-[1470px]:grid min-[1470px]:grid-cols-2">
+    <div className="flex w-full flex-col gap-x-6 p-10 max-[1470px]:gap-y-6 min-[1470px]:grid min-[1470px]:grid-cols-2">
       <div className="col-span-1 flex grow-[2] flex-col gap-y-6">
         <CalendarWidget
           sprintsData={sprintsData ?? undefined}
